@@ -1,0 +1,15 @@
+src/Eppie.App/.vs/
+src/Eppie.App/Eppie.App.Mobile/Eppie.App.Mobile.csproj.user
+src/Eppie.App/Eppie.App.Mobile/bin/
+src/Eppie.App/Eppie.App.Mobile/obj/
+src/Eppie.App/Eppie.App.Skia.Gtk/Eppie.App.Skia.Gtk.csproj.user
+src/Eppie.App/Eppie.App.Skia.Gtk/bin/
+src/Eppie.App/Eppie.App.Skia.Gtk/obj/
+src/Eppie.App/Eppie.App.Wasm/Eppie.App.Wasm.csproj.user
+src/Eppie.App/Eppie.App.Wasm/bin/
+src/Eppie.App/Eppie.App.Wasm/obj/
+src/Eppie.App/Eppie.App.Windows/Eppie.App.Windows.csproj.user
+src/Eppie.App/Eppie.App.Windows/bin/
+src/Eppie.App/Eppie.App.Windows/obj/
+src/Eppie.App/Eppie.App/bin/
+src/Eppie.App/Eppie.App/obj/
