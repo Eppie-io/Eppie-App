@@ -1,0 +1,112 @@
+###############################################################################
+#
+#   Copyright 2023 Eppie(https://eppie.io)
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+#
+###############################################################################
+
+name: Build the Uno project
+
+description: Runs building the Uno project on different platforms
+
+inputs:
+  project-map:
+    description: Json with project map
+    required: true
+    type: string
+
+  configuration:
+    description: Defines the build configuration
+    required: false
+    type: string
+    default: Debug
+
+  target:
+    description: Defines the build target platform
+    required: false
+    type: choice
+    default: default
+    options:
+    - default
+    - android
+    - gtk
+    - ios
+    - macos
+    - wasm
+    - win-x64
+    - win-x86
+    - win-arm64
+
+runs:
+  using: "composite"
+  steps:
+    - name: Build with msbuild
+      id: build-initializer
+      shell: bash
+      run: |
+        case ${{ inputs.target }} in
+          android)
+            echo 'project-file=${{ fromJSON(inputs.project-map).android }}' >> $GITHUB_OUTPUT
+            echo 'build-properties=-property:TargetFramework=net7.0-android' >> $GITHUB_OUTPUT
+            echo 'builder-type=dotnet' >> $GITHUB_OUTPUT
+            ;;
+          gtk)
+            echo 'project-file=${{ fromJSON(inputs.project-map).gtk }}' >> $GITHUB_OUTPUT
+            echo 'build-properties=' >> $GITHUB_OUTPUT
+            echo 'builder-type=dotnet' >> $GITHUB_OUTPUT
+            ;;
+          ios)
+            echo 'project-file=${{ fromJSON(inputs.project-map).ios }}' >> $GITHUB_OUTPUT
+            echo 'build-properties=-property:TargetFramework=net7.0-ios' >> $GITHUB_OUTPUT
+            echo 'builder-type=dotnet' >> $GITHUB_OUTPUT
+            ;;
+          macos)
+            echo 'project-file=${{ fromJSON(inputs.project-map).macos }}' >> $GITHUB_OUTPUT
+            echo 'build-properties=-property:TargetFramework=net7.0-maccatalyst' >> $GITHUB_OUTPUT
+            echo 'builder-type=dotnet' >> $GITHUB_OUTPUT
+            ;;
+          wasm)
+            echo 'project-file=${{ fromJSON(inputs.project-map).wasm }}' >> $GITHUB_OUTPUT
+            echo 'build-properties=' >> $GITHUB_OUTPUT
+            echo 'builder-type=dotnet' >> $GITHUB_OUTPUT
+            ;;
+          win-x64)
+            echo 'project-file=${{ fromJSON(inputs.project-map).windows }}' >> $GITHUB_OUTPUT
+            echo 'build-properties=-property:Platform=x64' >> $GITHUB_OUTPUT
+            echo 'builder-type=msbuild' >> $GITHUB_OUTPUT
+            ;;
+          win-x86)
+            echo 'project-file=${{ fromJSON(inputs.project-map).windows }}' >> $GITHUB_OUTPUT
+            echo 'build-properties=-property:Platform=x86' >> $GITHUB_OUTPUT
+            echo 'builder-type=msbuild' >> $GITHUB_OUTPUT
+            ;;
+          win-arm64)
+            echo 'project-file=${{ fromJSON(inputs.project-map).windows }}' >> $GITHUB_OUTPUT
+            echo 'build-properties=-property:Platform=arm64' >> $GITHUB_OUTPUT
+            echo 'builder-type=msbuild' >> $GITHUB_OUTPUT
+            ;;
+          *)
+            echo 'project-file=${{ fromJSON(inputs.project-map).solution }}' >> $GITHUB_OUTPUT
+            echo 'build-properties=' >> $GITHUB_OUTPUT
+            echo 'builder-type=msbuild' >> $GITHUB_OUTPUT
+            ;;
+        esac
+
+    - name: Build project
+      uses: ./.github/actions/build-project
+      with:
+        project-file: ${{ steps.build-initializer.outputs.project-file }}
+        project-configuration: ${{ inputs.configuration }}
+        build-properties: ${{ steps.build-initializer.outputs.build-properties }}
+        builder-type: ${{ steps.build-initializer.outputs.builder-type }}
