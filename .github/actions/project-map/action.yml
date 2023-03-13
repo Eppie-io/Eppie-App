@@ -1,0 +1,82 @@
+###############################################################################
+#
+#   Copyright 2023 Eppie(https://eppie.io)
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+#
+###############################################################################
+
+name: Project file map
+
+description: Sets project file map
+
+inputs:
+  solution-file:
+    description: Solution file path
+    type: string
+    required: true
+
+  android-project-file:
+    description: Android project file path
+    type: string
+    required: true
+
+  gtk-project-file:
+    description: GTK project file path
+    type: string
+    required: true
+
+  ios-project-file:
+    description: iOS project file path
+    type: string
+    required: true
+
+  macos-project-file:
+    description: MacOS project file path
+    type: string
+    required: true
+
+  wasm-project-file:
+    description: Wasm project file path
+    type: string
+    required: true
+
+  windows-project-file:
+    description: Windows project file path
+    type: string
+    required: true
+outputs:
+  map:
+    value: ${{ steps.init-projects.outputs.map }}
+runs:
+  using: "composite"
+
+  steps:
+    - id: init-projects
+      shell: bash
+      run: |
+        map=$(cat << EOF
+          {
+            "solution":"${{ inputs.solution-file }}",
+            "android":"${{ inputs.android-project-file }}",
+            "gtk":"${{ inputs.gtk-project-file }}",
+            "ios":"${{ inputs.ios-project-file }}",
+            "macos":"${{ inputs.macos-project-file }}",
+            "wasm":"${{ inputs.wasm-project-file }}",
+            "windows":"${{ inputs.windows-project-file }}",
+          }
+        EOF
+        )
+        echo "map<<EOF" >> $GITHUB_OUTPUT
+        echo "$map" >> $GITHUB_OUTPUT
+        echo "EOF" >> $GITHUB_OUTPUT

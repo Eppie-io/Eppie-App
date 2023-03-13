@@ -1,0 +1,85 @@
+###############################################################################
+#
+#   Copyright 2023 Eppie(https://eppie.io)
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+#
+###############################################################################
+
+name: "Build solution"
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+
+  build:
+    runs-on: windows-latest
+
+    strategy:
+      matrix:
+        configuration: [ Debug, Release ]
+        target: [ android, gtk, ios, macos, wasm, win-x64, win-x86, win-arm64 ]
+
+    env:
+      configuration: ${{ matrix.configuration }}
+      target: ${{ matrix.target }}
+
+      dotnet-version: '7.0.x'
+
+      name: Eppie.App
+      root-dirictory: src/Eppie.App
+
+      # template: root/name/name.target/name.target.csproj
+      project-file-template: '{0}/{1}.{2}/{1}.{2}.csproj'
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+        submodules: recursive
+
+    - name: Install .NET Core
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: ${{ env.dotnet-version }}
+
+    - name: Setup msbuild
+      uses: microsoft/setup-msbuild@v1
+
+    - name: Initialize project file paths
+      id: init-projects
+      uses: ./.github/actions/project-map
+      with:
+        solution-file: "${{ format('{0}/{1}.sln', env.root-dirictory, env.name) }}"
+        android-project-file: "${{ format(env.project-file-template, env.root-dirictory, env.name, 'Mobile') }}"
+        gtk-project-file: "${{ format(env.project-file-template, env.root-dirictory, env.name, 'Skia.Gtk') }}"
+        ios-project-file: "${{ format(env.project-file-template, env.root-dirictory, env.name, 'Mobile') }}"
+        macos-project-file: "${{ format(env.project-file-template, env.root-dirictory, env.name, 'Mobile') }}"
+        wasm-project-file: "${{ format(env.project-file-template, env.root-dirictory, env.name, 'Wasm') }}"
+        windows-project-file: "${{ format(env.project-file-template, env.root-dirictory, env.name, 'Windows') }}"
+
+    - name: Setup the Uno Platform
+      uses: ./.github/actions/setup-uno-platform
+
+    - name: Build
+      uses: ./.github/actions/build-uno-project
+      with:
+        project-map: ${{ steps.init-projects.outputs.map }}
+        configuration: ${{ env.configuration }}
+        target: ${{ env.target }}
