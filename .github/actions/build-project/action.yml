@@ -52,7 +52,7 @@ runs:
   steps:
     - name: Build with msbuild
       if: ${{ inputs.builder-type == 'msbuild' }}
-      run: msbuild ${{ inputs.project-file }} -nologo -restore -verbosity:normal -property:Configuration=${{ inputs.project-configuration }} ${{ inputs.build-properties }}
+      run: msbuild ${{ inputs.project-file }} -nologo -restore -verbosity:minimal -consoleLoggerParameters:Summary -property:Configuration=${{ inputs.project-configuration }} ${{ inputs.build-properties }}
       shell: pwsh
 
     - name: Build with dotnet
