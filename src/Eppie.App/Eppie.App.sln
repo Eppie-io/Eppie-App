@@ -5,15 +5,20 @@ VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platforms", "Platforms", "{5BCA10ED-13E5-4E5A-8A42-37BC6A48EA18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eppie.App", "Eppie.App\Eppie.App.csproj", "{1C7A3491-48D9-4861-9318-FD34EE0F4425}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eppie.App", "Eppie.App\Eppie.App.csproj", "{1C7A3491-48D9-4861-9318-FD34EE0F4425}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eppie.App.Wasm", "Eppie.App.Wasm\Eppie.App.Wasm.csproj", "{227BD424-864A-4411-8B8E-E31638E175E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eppie.App.Wasm", "Eppie.App.Wasm\Eppie.App.Wasm.csproj", "{227BD424-864A-4411-8B8E-E31638E175E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eppie.App.Mobile", "Eppie.App.Mobile\Eppie.App.Mobile.csproj", "{12144038-D15E-465A-81F6-AEC510BDEBE1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eppie.App.Mobile", "Eppie.App.Mobile\Eppie.App.Mobile.csproj", "{12144038-D15E-465A-81F6-AEC510BDEBE1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eppie.App.Skia.Gtk", "Eppie.App.Skia.Gtk\Eppie.App.Skia.Gtk.csproj", "{70733E27-1B1D-43EB-B44B-17131C8E7822}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eppie.App.Skia.Gtk", "Eppie.App.Skia.Gtk\Eppie.App.Skia.Gtk.csproj", "{70733E27-1B1D-43EB-B44B-17131C8E7822}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eppie.App.Windows", "Eppie.App.Windows\Eppie.App.Windows.csproj", "{5501C6C2-A565-419A-AEFB-A4E7F8301B55}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eppie.App.Windows", "Eppie.App.Windows\Eppie.App.Windows.csproj", "{5501C6C2-A565-419A-AEFB-A4E7F8301B55}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BA72CAAF-E15C-4933-9A09-7927902B533F}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

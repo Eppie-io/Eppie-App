@@ -1,22 +1,21 @@
-﻿///////////////////////////////////////////////////////////////////////////////
-//
-//   Copyright 2023 Eppie(https://eppie.io)
-//
-//   Licensed under the Apache License, Version 2.0 (the "License");
-//   you may not use this file except in compliance with the License.
-//   You may obtain a copy of the License at
-//
-//       http://www.apache.org/licenses/LICENSE-2.0
-//
-//   Unless required by applicable law or agreed to in writing, software
-//   distributed under the License is distributed on an "AS IS" BASIS,
-//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//   See the License for the specific language governing permissions and
-//   limitations under the License.
-//
-///////////////////////////////////////////////////////////////////////////////
+﻿// ---------------------------------------------------------------------------- //
+//                                                                              //
+//   Copyright 2023 Eppie(https://eppie.io)                                     //
+//                                                                              //
+//   Licensed under the Apache License, Version 2.0 (the "License"),            //
+//   you may not use this file except in compliance with the License.           //
+//   You may obtain a copy of the License at                                    //
+//                                                                              //
+//       http://www.apache.org/licenses/LICENSE-2.0                             //
+//                                                                              //
+//   Unless required by applicable law or agreed to in writing, software        //
+//   distributed under the License is distributed on an "AS IS" BASIS,          //
+//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.   //
+//   See the License for the specific language governing permissions and        //
+//   limitations under the License.                                             //
+//                                                                              //
+// ---------------------------------------------------------------------------- //
 
-using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
@@ -56,15 +55,15 @@ namespace Eppie.App
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
 #if DEBUG
-		if (System.Diagnostics.Debugger.IsAttached)
-		{
-			// this.DebugSettings.EnableFrameRateCounter = true;
-		}
+            if (System.Diagnostics.Debugger.IsAttached)
+            {
+                // this.DebugSettings.EnableFrameRateCounter = true;
+            }
 #endif
 
 #if NET6_0_OR_GREATER && WINDOWS && !HAS_UNO
-		MainWindow = new Window();
-		MainWindow.Activate();
+            MainWindow = new Window();
+            MainWindow.Activate();
 #else
             MainWindow = Microsoft.UI.Xaml.Window.Current;
 #endif
