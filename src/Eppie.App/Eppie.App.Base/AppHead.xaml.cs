@@ -25,7 +25,7 @@ namespace Eppie.App
     ///
     /// Your own code may be placed in the Eppie.App/AppBase.cs class.
     /// </summary>
-    public sealed partial class AppHead : App
+    public sealed partial class AppHead : CommonApp
     {
         static AppHead()
             => InitializeLogging();

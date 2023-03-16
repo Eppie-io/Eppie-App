@@ -11,5 +11,6 @@ src/Eppie.App/Eppie.App.Wasm/obj/
 src/Eppie.App/Eppie.App.Windows/Eppie.App.Windows.csproj.user
 src/Eppie.App/Eppie.App.Windows/bin/
 src/Eppie.App/Eppie.App.Windows/obj/
+src/Eppie.App/Eppie.App/Eppie.App.csproj.user
 src/Eppie.App/Eppie.App/bin/
 src/Eppie.App/Eppie.App/obj/

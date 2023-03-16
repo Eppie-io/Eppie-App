@@ -17,12 +17,15 @@
 // ---------------------------------------------------------------------------- //
 
 using Microsoft.UI.Xaml.Controls;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Eppie.App
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
+
+    [SuppressMessage("Design", "CA1010:Generic interface should also be implemented", Justification = "The type 'Page' indirectly inherits 'IEnumerable' from the Microsoft.WinUI type 'FrameworkElement'")]
     public sealed partial class MainPage : Page
     {
         public MainPage()

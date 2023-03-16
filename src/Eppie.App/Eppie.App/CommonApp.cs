@@ -28,7 +28,8 @@ namespace Eppie.App
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
-    public partial class App : Application
+
+    public partial class CommonApp : Application
     {
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -38,7 +39,7 @@ namespace Eppie.App
         /// If you're looking for App.xaml.cs, the file is present in each platform head
         /// of the solution.
         /// </remarks>
-        public App()
+        public CommonApp()
         {
         }
 
@@ -54,6 +55,11 @@ namespace Eppie.App
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
+            if (args is null)
+            {
+                throw new ArgumentNullException(nameof(args));
+            }
+
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
             {

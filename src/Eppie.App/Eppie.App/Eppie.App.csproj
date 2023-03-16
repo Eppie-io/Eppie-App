@@ -15,7 +15,7 @@
   <PropertyGroup>
     <!-- Ensures the .xr.xml files are generated in a proper layout folder -->
     <GenerateLibraryLayout>true</GenerateLibraryLayout>
-    <AnalysisLevel>6.0-minimum</AnalysisLevel>
+    <AnalysisLevel>6.0-all</AnalysisLevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-windows10.0.18362|AnyCPU'">
     <WarningLevel>9999</WarningLevel>
