@@ -13,6 +13,7 @@ updates:
     reviewers:
       - "al-kau"
       - "ValeraFinebits"
+    open-pull-requests-limit: 20
     
   # Maintain dependencies for gitsubmodule
   - package-ecosystem: "gitsubmodule"
