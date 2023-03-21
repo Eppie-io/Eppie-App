@@ -55,7 +55,7 @@
     <PackageReference Include="Uno.UI.Adapter.Microsoft.Extensions.Logging" Version="4.8.15" />
     <PackageReference Include="Uno.Wasm.Bootstrap" Version="7.0.19" />
     <PackageReference Include="Uno.Wasm.Bootstrap.DevServer" Version="7.0.19" />
-    <PackageReference Include="Uno.WinUI.Lottie" Version="4.7.44" />
+    <PackageReference Include="Uno.WinUI.Lottie" Version="4.8.15" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Eppie.App\Eppie.App.csproj" />
