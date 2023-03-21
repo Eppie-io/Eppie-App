@@ -3,6 +3,7 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>net7.0</TargetFramework>
     <NoWarn>NU1701</NoWarn>
+    <AnalysisLevel>6.0-all</AnalysisLevel>
 		
 	</PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
@@ -23,6 +24,14 @@
     <!-- <WasmShellMonoRuntimeExecutionMode>InterpreterAndAOT</WasmShellMonoRuntimeExecutionMode> -->
     <!-- Temporarily uncomment to generate an AOT profile https://aka.platform.uno/wasm-aot-profile -->
     <!-- <WasmShellGenerateAOTProfile>true</WasmShellGenerateAOTProfile> -->
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <WarningLevel>9999</WarningLevel>
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <WarningLevel>9999</WarningLevel>
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
     <Content Include="Assets\SplashScreen.png" />
