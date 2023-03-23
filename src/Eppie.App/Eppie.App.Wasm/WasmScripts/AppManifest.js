@@ -1,7 +1,3 @@
-﻿var UnoAppManifest = {
-
-    splashScreenImage: "Assets/SplashScreen.png",
-    splashScreenColor: "transparent",
+var UnoAppManifest = {
     displayName: "Eppie.App"
-
 }

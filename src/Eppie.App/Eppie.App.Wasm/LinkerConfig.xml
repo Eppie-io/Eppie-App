@@ -1,8 +1,8 @@
-﻿<linker>
-  <assembly fullname="Eppie.App.Wasm" />
-  <assembly fullname="Microsoft.Extensions.Options" />
+<linker>
+	<assembly fullname="Eppie.App" />
+	<assembly fullname="Eppie.App.Wasm" />
 
-	<!-- 
+	<!--
   Uncomment this section when using JSON.NET
   <assembly fullname="System.Core">
 	  <type fullname="System.Linq.Expressions*" />

@@ -33,6 +33,6 @@
     "Component.Android.SDK32",
     "Microsoft.VisualStudio.Workload.NetCrossPlat",
     "Microsoft.VisualStudio.Workload.NetCoreTools",
-    "Microsoft.VisualStudio.ComponentGroup.Maui.All",
+    "Microsoft.VisualStudio.ComponentGroup.Maui.All"
   ]
 }

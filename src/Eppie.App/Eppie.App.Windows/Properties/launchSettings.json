@@ -1,7 +1,0 @@
-{
-  "profiles": {
-    "Eppie.App.Windows": {
-      "commandName": "MsixPackage"
-    }
-  }
-}

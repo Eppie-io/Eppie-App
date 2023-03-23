@@ -1,0 +1,10 @@
+{
+  "profiles": {
+	"Eppie.App.Windows (Package)": {
+	  "commandName": "MsixPackage"
+	},
+	"Eppie.App.Windows (Unpackaged)": {
+	  "commandName": "Project"
+	}
+  }
+}
