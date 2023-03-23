@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eppie.App", "Eppie.App\Eppie.App.csproj", "{B937C24F-7640-4EF4-B2DD-EACE246A3C60}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eppie.App", "Eppie.App\Eppie.App.csproj", "{B937C24F-7640-4EF4-B2DD-EACE246A3C60}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platforms", "Platforms", "{2A586DBF-0AF2-4041-AB8F-75E2CB0CCFC8}"
 EndProject
@@ -14,6 +14,11 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eppie.App.Wasm", "Eppie.App.Wasm\Eppie.App.Wasm.csproj", "{B9386DF4-5A24-43E3-9CE4-3169EE8472D9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eppie.App.Skia.Gtk", "Eppie.App.Skia.Gtk\Eppie.App.Skia.Gtk.csproj", "{F5DAEB7E-C226-4727-AB36-56363C96DBC0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E48B8EEA-6DB1-4129-AB62-B438EC436C25}"
+	ProjectSection(SolutionItems) = preProject
+		Settings.XamlStyler = Settings.XamlStyler
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
