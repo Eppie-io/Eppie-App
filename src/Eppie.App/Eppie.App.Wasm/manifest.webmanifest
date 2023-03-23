@@ -1,0 +1,10 @@
+{
+  "background_color": "#ffffff",
+  "description": "Eppie.App",
+  "display": "standalone",
+  "name": "Eppie.App",
+  "short_name": "Eppie.App",
+  "start_url": "/index.html",
+  "theme_color": "#ffffff",
+  "scope": "/"
+}
