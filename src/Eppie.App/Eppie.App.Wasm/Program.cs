@@ -18,7 +18,7 @@
 
 namespace Eppie.App.Wasm
 {
-    public class Program
+    public static class Program
     {
         private static App? _app;
 
