@@ -51,7 +51,7 @@
 		<PackageReference Include="Uno.Resizetizer" Version="1.0.2" />
 		<PackageReference Include="Uno.WinUI" Version="4.8.15" />
 		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.2.230313.1" />
-		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.755" />
+		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.756" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
 		<PackageReference Include="Uno.Extensions.Configuration" Version="2.3.2" />
 		<PackageReference Include="Uno.Extensions.Logging.WinUI" Version="2.3.2" />
