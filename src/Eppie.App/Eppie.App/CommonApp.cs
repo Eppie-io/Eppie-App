@@ -18,13 +18,18 @@
 
 namespace Eppie.App
 {
-    public class App : Application
+    public class CommonApp : Application
     {
         private static Window? _window;
         public static IHost? Host { get; private set; }
 
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
+            if (args is null)
+            {
+                throw new ArgumentNullException(nameof(args));
+            }
+
             var builder = this.CreateBuilder(args)
 
                 .Configure(host => host
@@ -42,7 +47,7 @@ namespace Eppie.App
                     }, enableUnoLogging: true)
                     .UseConfiguration(configure: configBuilder =>
                         configBuilder
-                            .EmbeddedSource<App>()
+                            .EmbeddedSource<CommonApp>()
                             .Section<AppConfig>()
                     )
                     // Enable localization (see appsettings.json for supported languages)

@@ -16,8 +16,11 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Eppie.App
 {
+    [SuppressMessage("Design", "CA1010:Generic interface should also be implemented", Justification = "The type 'Page' indirectly inherits 'IEnumerable' from the Microsoft.WinUI type 'FrameworkElement'")]
     public sealed partial class MainPage : Page
     {
         public MainPage()
