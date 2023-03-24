@@ -18,6 +18,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E48B8EEA-6DB1-4129-AB62-B438EC436C25}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		Settings.XamlStyler = Settings.XamlStyler
 	EndProjectSection
 EndProject
 Global
