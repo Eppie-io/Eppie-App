@@ -3,7 +3,7 @@
 		<OutputType Condition="'$(Configuration)'=='Release'">WinExe</OutputType>
 		<OutputType Condition="'$(Configuration)'=='Debug'">Exe</OutputType>
 		<TargetFramework>net7.0</TargetFramework>
-		<AnalysisLevel>6.0-recommended</AnalysisLevel>
+		<AnalysisLevel>6.0-all</AnalysisLevel>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 	  <WarningLevel>9999</WarningLevel>
