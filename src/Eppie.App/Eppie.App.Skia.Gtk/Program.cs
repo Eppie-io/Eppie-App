@@ -21,7 +21,7 @@ using Uno.UI.Runtime.Skia;
 
 namespace Eppie.App.Skia.Gtk
 {
-    public class Program
+    public static class Program
     {
         public static void Main(string[] args)
         {
