@@ -20,7 +20,7 @@ namespace Eppie.App.Wasm
 {
     public class Program
     {
-        private static App? _app;
+        private static CommonApp? _app;
 
         public static int Main(string[] args)
         {

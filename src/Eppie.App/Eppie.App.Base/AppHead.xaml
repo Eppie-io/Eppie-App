@@ -14,20 +14,20 @@
     limitations under the License.
 -->
 
-<local:App x:Class="Eppie.App.AppHead"
-           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-           xmlns:local="using:Eppie.App"
-           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-           xmlns:wasm="http://platform.uno/wasm"
-           mc:Ignorable="wasm">
+<local:CommonApp x:Class="Eppie.App.AppHead"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:local="using:Eppie.App"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:wasm="http://platform.uno/wasm"
+                 mc:Ignorable="wasm">
 
-    <local:App.Resources>
+    <local:CommonApp.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="ms-appx:///Eppie.App/AppResources.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-    </local:App.Resources>
+    </local:CommonApp.Resources>
 
-</local:App>
+</local:CommonApp>
