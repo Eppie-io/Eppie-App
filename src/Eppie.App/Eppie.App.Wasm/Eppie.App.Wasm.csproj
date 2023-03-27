@@ -6,7 +6,7 @@
 		<!-- Disabled due to issue with Central Package Management with implicit using -->
 		<ImplicitUsings>disable</ImplicitUsings>
 		<AppDesignerFolder>Properties</AppDesignerFolder>
-		<AnalysisLevel>6.0-recommended</AnalysisLevel>
+		<AnalysisLevel>6.0-all</AnalysisLevel>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)'=='Debug'">
 		<MonoRuntimeDebuggerEnabled>true</MonoRuntimeDebuggerEnabled>
