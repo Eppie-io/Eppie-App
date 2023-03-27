@@ -15,7 +15,7 @@
 		<!-- <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained> -->
 		<!-- This bundles the .NET Core libraries (Uncomment for packaged builds)  -->
 		<SelfContained>true</SelfContained>
-		<AnalysisLevel>6.0-recommended</AnalysisLevel>
+		<AnalysisLevel>6.0-all</AnalysisLevel>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
 	  <WarningLevel>9999</WarningLevel>
