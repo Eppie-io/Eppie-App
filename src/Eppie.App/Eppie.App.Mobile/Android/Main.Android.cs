@@ -39,10 +39,15 @@ namespace Eppie.App.Droid
 
         private static void ConfigureUniversalImageLoader()
         {
+#pragma warning disable CA2000 // Dispose objects before losing scope
+            // ImageLoader.Instance.Init(config) calls 'global::System.GC.KeepAlive(configuration)'
+
             // Create global configuration and initialize ImageLoader with this config
             ImageLoaderConfiguration config = new ImageLoaderConfiguration
                 .Builder(Context)
                 .Build();
+
+#pragma warning restore CA2000 // Dispose objects before losing scope
 
             ImageLoader.Instance.Init(config);
 
