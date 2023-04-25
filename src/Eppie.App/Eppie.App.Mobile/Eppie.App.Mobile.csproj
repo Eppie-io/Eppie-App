@@ -4,7 +4,7 @@
 		<SingleProject>true</SingleProject>
 		<OutputType>Exe</OutputType>
 		<!-- Display name -->
-		<ApplicationTitle>Eppie.App</ApplicationTitle>
+		<ApplicationTitle>Eppie</ApplicationTitle>
 		<!-- App Identifier -->
 		<ApplicationId>io.eppie.app</ApplicationId>
 		<ApplicationIdGuid>408A31BB-2525-481E-BA18-B9DACF4CA4AD</ApplicationIdGuid>
