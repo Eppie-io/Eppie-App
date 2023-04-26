@@ -41,6 +41,8 @@
 		<string>Media.xcassets/iconapp.appiconset</string>
 		<key>UIApplicationSupportsIndirectInputEvents</key>
 		<true/>
+		<key>CFBundleIdentifier</key>
+		<string>io.eppie.app</string>
 
 		<!--
 		Adjust this to your application's encryption usage.
