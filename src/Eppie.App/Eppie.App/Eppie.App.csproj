@@ -50,7 +50,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Uno.WinUI" Version="4.8.24" />
+		<PackageReference Include="Uno.WinUI" Version="4.8.33" />
 		<PackageReference Include="Uno.Resizetizer" Version="1.0.4" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
 		<PackageReference Include="Uno.Extensions.Configuration" Version="2.3.10" />
