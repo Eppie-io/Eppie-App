@@ -60,7 +60,7 @@
 		<PackageReference Include="Uno.Resizetizer" Version="1.0.4" />
 		<PackageReference Include="Microsoft.Windows.Compatibility" Version="7.0.1" />
 		<PackageReference Include="Uno.Wasm.Bootstrap" Version="7.0.23" />
-		<PackageReference Include="Uno.Wasm.Bootstrap.DevServer" Version="7.0.20" />
+		<PackageReference Include="Uno.Wasm.Bootstrap.DevServer" Version="7.0.23" />
 		<PackageReference Include="Uno.WinUI.WebAssembly" Version="4.8.33" />
 		<PackageReference Include="Uno.WinUI.RemoteControl" Version="4.8.33" Condition="'$(Configuration)'=='Debug'" />
 		<PackageReference Include="Uno.UI.Adapter.Microsoft.Extensions.Logging" Version="4.8.33" />
