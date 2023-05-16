@@ -25,7 +25,7 @@
 		<PackageReference Include="Uno.Extensions.Logging.WinUI" Version="2.3.11" />
 		<PackageReference Include="Uno.Toolkit.WinUI" Version="2.5.8" />
 		<PackageReference Include="Uno.Extensions.Hosting.WinUI" Version="2.3.11" />
-		<PackageReference Include="Uno.Extensions.Localization.WinUI" Version="2.3.10" />
+		<PackageReference Include="Uno.Extensions.Localization.WinUI" Version="2.3.11" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="7.0.0" />
 		<PackageReference Include="SkiaSharp.Views.Uno.WinUI" Version="2.88.3" />
 		<PackageReference Include="SkiaSharp.Skottie" Version="2.88.3" />
