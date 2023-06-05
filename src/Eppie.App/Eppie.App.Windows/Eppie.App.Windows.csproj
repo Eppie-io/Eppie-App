@@ -56,7 +56,7 @@
 		<PackageReference Include="Uno.Extensions.Configuration" Version="2.4.1" />
 		<PackageReference Include="Uno.Extensions.Logging.WinUI" Version="2.4.1" />
 		<PackageReference Include="Uno.Toolkit.WinUI" Version="3.0.4" />
-		<PackageReference Include="Uno.Extensions.Hosting.WinUI" Version="2.3.11" />
+		<PackageReference Include="Uno.Extensions.Hosting.WinUI" Version="2.4.1" />
 		<PackageReference Include="Uno.Extensions.Localization.WinUI" Version="2.3.11" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="7.0.0" />
 		<PackageReference Include="Uno.Core.Extensions.Logging.Singleton" Version="4.0.1" />
