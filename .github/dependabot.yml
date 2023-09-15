@@ -13,6 +13,7 @@ updates:
     reviewers:
       - "al-kau"
       - "ValeraFinebits"
+      - "anatolse"
     open-pull-requests-limit: 20
     
   # Maintain dependencies for gitsubmodule
@@ -23,3 +24,4 @@ updates:
     reviewers:
       - "al-kau"
       - "ValeraFinebits"
+      - "anatolse"
