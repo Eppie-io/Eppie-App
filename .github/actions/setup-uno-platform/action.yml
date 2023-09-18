@@ -47,5 +47,5 @@ runs:
       shell: bash
 
     - name: Run uno.check
-      run: uno-check -v --ci --non-interactive --fix --skip androidsdk --skip androidemulator --skip xcode --skip gtk3 --skip vswin --skip vsmac ${{ steps.set-manifest.outputs.cli-arg }}
+      run: uno-check --verbose --ci --non-interactive --fix --target webassembly --target ios --target android --target macos --target linux --target win32 --skip xcode --skip vswin --skip vsmac --skip wsl --skip edgewebview2 --skip androidemulator ${{ steps.set-manifest.outputs.cli-arg }}
       shell: bash
