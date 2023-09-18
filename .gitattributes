@@ -1,6 +1,65 @@
-###############################################################################
-# Set default behavior to automatically normalize line endings.
-###############################################################################
+# Set default behavior to: automatically normalize line endings 
 
 * text=auto
-*.sh text eol=lf
+
+
+# Set file behavior to: treat as text
+
+.editorconfig           text
+**/.editorconfig        text
+.gitattributes          text
+**/.gitattributes       text
+.gitignore              text
+**/.gitignore           text
+*.c                     text
+*.config                text
+*.cpp                   text
+*.cs                    text diff=csharp
+*.css                   text
+*.cxx                   text
+*.h                     text
+*.htm                   text diff=html
+*.html                  text diff=html
+*.js                    text
+*.json                  text
+*.md                    text
+*.resx                  text
+*.svg                   text
+*.xaml                  text
+*.xml                   text
+*.yaml                  text
+*.yml                   text
+
+
+# Win artifacts
+
+*.bat                   text eol=crlf
+*.cmd                   text eol=crlf
+*.ps1                   text eol=crlf
+
+# Unix artifacts
+
+*.bash                  text eol=lf
+*.sh                    text eol=lf
+
+
+# Set file behavior to: treat as binary
+
+*.dll                   binary
+*.so                    binary
+
+*.7z                    binary
+*.gz                    binary
+*.tar                   binary
+*.tar.gz                binary
+*.tgz                   binary
+*.xz                    binary
+*.zip                   binary
+
+*.gif                   binary
+*.ico                   binary
+*.jpg                   binary
+*.jpeg                  binary
+*.png                   binary
+
+*.ttf                   binary
