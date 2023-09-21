@@ -39,7 +39,8 @@ jobs:
       configuration: ${{ matrix.configuration }}
       target: ${{ matrix.target }}
 
-      dotnet-version: '7.0.x'
+      dotnet-uno-version: '7.0.400'
+      dotnet-latest-version: '7.0.x'
 
       name: Eppie.App
       root-dirictory: src/Eppie.App
@@ -53,6 +54,16 @@ jobs:
       with:
         fetch-depth: 0
         submodules: recursive
+
+    - name: Install .NET Core (uno platform requirement)
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: ${{ env.dotnet-uno-version }}
+
+    - name: Install the latest .NET Core version
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: ${{ env.dotnet-latest-version }}
 
     - name: Install .NET Core
       uses: actions/setup-dotnet@v3
