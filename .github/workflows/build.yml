@@ -65,11 +65,6 @@ jobs:
       with:
         dotnet-version: ${{ env.dotnet-latest-version }}
 
-    - name: Install .NET Core
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: ${{ env.dotnet-version }}
-
     - name: Setup msbuild
       uses: microsoft/setup-msbuild@v1
 
