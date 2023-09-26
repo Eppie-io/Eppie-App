@@ -57,7 +57,7 @@
 		<PackageReference Include="Uno.Extensions.Localization.WinUI" Version="2.5.11" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="7.0.0" />
 		<PackageReference Include="Uno.Extensions.Logging.OSLog" Version="1.6.0" />
-		<PackageReference Include="Uno.UI.Adapter.Microsoft.Extensions.Logging" Version="4.10.22" />
+		<PackageReference Include="Uno.UI.Adapter.Microsoft.Extensions.Logging" Version="4.10.25" />
 		<PackageReference Include="Uno.WinUI.RemoteControl" Version="4.10.22" Condition="'$(Configuration)'=='Debug'" />
 	</ItemGroup>
 	<Choose>
