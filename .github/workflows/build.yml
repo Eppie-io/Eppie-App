@@ -62,7 +62,8 @@ jobs:
       run: |
         $json = Invoke-WebRequest -Uri ${{ env.uno-check-manifest-uri }} | ConvertFrom-Json
         $version = $json.check.variables.DOTNET_SDK_VERSION
-        echo 'dotnet-sdk-version=$version' >> $GITHUB_OUTPUT
+        echo "DOTNET_SDK_VERSION $version"
+        echo "dotnet-sdk-version=$version" >> $GITHUB_OUTPUT
 
     - name: Install .NET Core (uno platform requirement)
       uses: actions/setup-dotnet@v3
