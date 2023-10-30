@@ -39,7 +39,6 @@ jobs:
       configuration: ${{ matrix.configuration }}
       target: ${{ matrix.target }}
 
-      dotnet-uno-version: '7.0.400'
       dotnet-latest-version: '7.0.x'
 
       uno-check-manifest-uri: 'https://raw.githubusercontent.com/unoplatform/uno.check/main/manifests/uno.ui.manifest.json'
