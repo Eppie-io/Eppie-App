@@ -42,6 +42,8 @@ jobs:
       dotnet-uno-version: '7.0.400'
       dotnet-latest-version: '7.0.x'
 
+      uno-check-manifest-uri: 'https://raw.githubusercontent.com/unoplatform/uno.check/main/manifests/uno.ui.manifest.json'
+
       name: Eppie.App
       root-dirictory: src/Eppie.App
 
@@ -55,10 +57,18 @@ jobs:
         fetch-depth: 0
         submodules: recursive
 
+    - name: Uno check manifest
+      id: uno-check-manifest
+      shell: pwsh
+      run: |
+        $json = Invoke-WebRequest -Uri ${{ env.uno-check-manifest-uri }} | ConvertFrom-Json
+        $version = $json.check.variables.DOTNET_SDK_VERSION
+        echo 'dotnet-sdk-version=$version' >> $GITHUB_OUTPUT
+
     - name: Install .NET Core (uno platform requirement)
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: ${{ env.dotnet-uno-version }}
+        dotnet-version: ${{ steps.uno-check-manifest.outputs.dotnet-sdk-version }}
 
     - name: Install the latest .NET Core version
       uses: actions/setup-dotnet@v3
