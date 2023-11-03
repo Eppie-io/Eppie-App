@@ -19,7 +19,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Uno.Resizetizer" Version="1.2.0" />
-		<PackageReference Include="Uno.WinUI.Skia.Gtk" Version="4.10.26" />
+		<PackageReference Include="Uno.WinUI.Skia.Gtk" Version="5.0.19" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
 		<PackageReference Include="Uno.Extensions.Configuration" Version="3.0.10" />
 		<PackageReference Include="Uno.Extensions.Logging.WinUI" Version="2.5.11" />
