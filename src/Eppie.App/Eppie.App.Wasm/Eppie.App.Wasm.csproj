@@ -67,7 +67,7 @@
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
 		<PackageReference Include="Uno.Extensions.Configuration" Version="3.0.10" />
 		<PackageReference Include="Uno.Extensions.Logging.WebAssembly.Console" Version="1.7.0" />
-		<PackageReference Include="Uno.Extensions.Logging.WinUI" Version="2.5.11" />
+		<PackageReference Include="Uno.Extensions.Logging.WinUI" Version="3.0.10" />
 		<PackageReference Include="Uno.Toolkit.WinUI" Version="4.2.22" />
 		<PackageReference Include="Uno.Extensions.Hosting.WinUI" Version="2.5.11" />
 		<PackageReference Include="Uno.Extensions.Localization.WinUI" Version="2.5.11" />
