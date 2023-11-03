@@ -49,7 +49,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Uno.Resizetizer" Version="1.2.0" />
-		<PackageReference Include="Uno.WinUI" Version="4.10.26" />
+		<PackageReference Include="Uno.WinUI" Version="5.0.19" />
 		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.231008000" />
 		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.2428" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
