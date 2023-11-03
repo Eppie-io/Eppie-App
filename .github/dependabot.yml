@@ -15,6 +15,10 @@ updates:
       - "ValeraFinebits"
       - "anatolse"
     open-pull-requests-limit: 20
+    groups:
+      UnoPlatform:
+        patterns:
+          - "Uno.*"
     
   # Maintain dependencies for gitsubmodule
   - package-ecosystem: "gitsubmodule"
