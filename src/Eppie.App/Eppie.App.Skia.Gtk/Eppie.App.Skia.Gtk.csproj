@@ -23,7 +23,7 @@
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
 		<PackageReference Include="Uno.Extensions.Configuration" Version="3.0.10" />
 		<PackageReference Include="Uno.Extensions.Logging.WinUI" Version="3.0.10" />
-		<PackageReference Include="Uno.Toolkit.WinUI" Version="5.0.15" />
+		<PackageReference Include="Uno.Toolkit.WinUI" Version="5.0.17" />
 		<PackageReference Include="Uno.Extensions.Hosting.WinUI" Version="3.0.10" />
 		<PackageReference Include="Uno.Extensions.Localization.WinUI" Version="3.0.10" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="7.0.0" />
