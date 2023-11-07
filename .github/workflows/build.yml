@@ -91,6 +91,8 @@ jobs:
 
     - name: Setup the Uno Platform
       uses: ./.github/actions/setup-uno-platform
+      with:
+        uno-manifest: ${{ env.uno-check-manifest-uri }}
 
     - name: Build
       uses: ./.github/actions/build-uno-project
