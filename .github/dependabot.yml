@@ -19,6 +19,9 @@ updates:
       UnoPlatform:
         patterns:
           - "Uno.*"
+      Microsoft:
+        patterns:
+          - "Microsoft.*"
     
   # Maintain dependencies for gitsubmodule
   - package-ecosystem: "gitsubmodule"
