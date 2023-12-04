@@ -21,31 +21,54 @@ name: Setup the Uno Platform
 description: Sets up the Uno Platform and dependencies
 
 inputs:
-  uno-manifest:
+  uno-check-manifest-uri:
+    type: string
     description: Alternative uno-check manifest file path or URL
     required: false
 
   uno-check-version:
+    type: string
     description: uno-check version
     required: false
 
 runs:
   using: "composite"
   steps:
-    - id: set-version
+    - id: uno-check-version-option
       if: ${{ inputs.uno-check-version != null && inputs.uno-check-version != '' }}
       run: echo 'cli-arg=--version ${{ inputs.uno-check-version }}' >> $GITHUB_OUTPUT
       shell: bash
 
-    - id: set-manifest
-      if: ${{ inputs.uno-manifest != null && inputs.uno-manifest != '' }}
-      run: echo 'cli-arg=--manifest ${{ inputs.uno-manifest }}' >> $GITHUB_OUTPUT
+    - id: uno-check-manifest-option
+      if: ${{ inputs.uno-check-manifest-uri != null && inputs.uno-check-manifest-uri != '' }}
+      run: echo 'cli-arg=--manifest ${{ inputs.uno-check-manifest-uri }}' >> $GITHUB_OUTPUT
       shell: bash
 
     - name: Update uno.check
-      run: dotnet tool update --global uno.check ${{ steps.set-version.outputs.cli-arg }} --add-source https://api.nuget.org/v3/index.json
+      run: dotnet tool update --global uno.check ${{ steps.uno-check-version-option.outputs.cli-arg }} --add-source https://api.nuget.org/v3/index.json
       shell: bash
 
+    - name: Download uno-check manifest
+      id: uno-check-manifest
+      uses: ./.github/actions/uno-check-manifest
+      with: 
+        update-uno-check: false
+        uno-check-manifest-uri: ${{ inputs.uno-check-manifest-uri }}
+
+    - name: Get .NET version (The Uno Platform requirement)
+      id: dotnet-uno-version
+      shell: bash
+      run: |
+        version="${{ fromJson(env.uno-check-manifest).check.variables.DOTNET_SDK_VERSION }}"
+        echo "version=$version" >> $GITHUB_OUTPUT
+      env:
+          uno-check-manifest: ${{ steps.uno-check-manifest.outputs.uno-check-manifest-json }}
+
+    - name: Setup .NET (The Uno Platform requirement)
+      uses: actions/setup-dotnet@3447fd6a9f9e57506b15f895c5b76d3b197dc7c2 # v3.2.0
+      with:
+        dotnet-version: ${{ steps.dotnet-uno-version.outputs.version }}
+
     - name: Run uno.check
-      run: uno-check --verbose --ci --non-interactive --fix --target webassembly --target ios --target android --target macos --target linux --target win32 --skip xcode --skip vswin --skip vsmac --skip wsl --skip edgewebview2 --skip androidemulator ${{ steps.set-manifest.outputs.cli-arg }}
+      run: uno-check --verbose --ci --non-interactive --fix --target webassembly --target ios --target android --target macos --target linux --target win32 --skip xcode --skip vswin --skip vsmac --skip wsl --skip edgewebview2 --skip androidemulator ${{ steps.uno-check-manifest-option.outputs.cli-arg }}
       shell: bash
