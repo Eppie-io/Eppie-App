@@ -19,6 +19,7 @@ on:
     branches: [ "main" ]
   schedule:
     - cron: '36 7 * * 1'
+  workflow_dispatch:
 
 env:
   dotnet-version: '8.x'
