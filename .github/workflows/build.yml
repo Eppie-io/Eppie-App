@@ -39,9 +39,7 @@ jobs:
       configuration: ${{ matrix.configuration }}
       target: ${{ matrix.target }}
 
-      dotnet-latest-version: '7.0.x'
-
-      uno-check-manifest-uri: 'https://raw.githubusercontent.com/unoplatform/uno.check/main/manifests/uno.ui.manifest.json'
+      dotnet-version: '8.x'
 
       name: Eppie.App
       root-dirictory: src/Eppie.App
@@ -51,31 +49,18 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
       with:
         fetch-depth: 0
         submodules: recursive
 
-    - name: Uno check manifest
-      id: uno-check-manifest
-      shell: pwsh
-      run: |
-        $json = Invoke-WebRequest -Uri ${{ env.uno-check-manifest-uri }} | ConvertFrom-Json
-        $version = $json.check.variables.DOTNET_SDK_VERSION
-        "dotnet-sdk-version=$version" | Write-Output >> $env:GITHUB_OUTPUT
-        
-    - name: Install .NET Core (uno platform requirement)
-      uses: actions/setup-dotnet@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@3447fd6a9f9e57506b15f895c5b76d3b197dc7c2 # v3.2.0
       with:
-        dotnet-version: ${{ steps.uno-check-manifest.outputs.dotnet-sdk-version }}
-
-    - name: Install the latest .NET Core version
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: ${{ env.dotnet-latest-version }}
+        dotnet-version: ${{ env.dotnet-version }}
 
     - name: Setup msbuild
-      uses: microsoft/setup-msbuild@v1
+      uses: microsoft/setup-msbuild@1ff57057b5cfdc39105cd07a01d78e9b0ea0c14c # v1.3.1
 
     - name: Initialize project file paths
       id: init-projects
@@ -91,8 +76,6 @@ jobs:
 
     - name: Setup the Uno Platform
       uses: ./.github/actions/setup-uno-platform
-      with:
-        uno-manifest: ${{ env.uno-check-manifest-uri }}
 
     - name: Build
       uses: ./.github/actions/build-uno-project
