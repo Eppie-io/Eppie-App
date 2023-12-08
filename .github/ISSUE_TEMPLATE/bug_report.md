@@ -1,38 +1,81 @@
----
-name: Bug report
-about: Create a report to help us improve
-title: ''
-labels: ''
-assignees: ''
+name: 🐞 Bug
+title: '[BUG] <title>'
+description: File a bug report
+labels: ["bug", "to verify"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report! Please make sure to add as much detail as you can.
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Please give a detailed description of the issue that you're seeing. You can add screenshots and videos as well. 
+      placeholder: Tell us what you see!
+    validations:
+      required: true
+  - type: textarea
+    id: repro-steps
+    attributes:
+      label: Steps to Reproduce
+      description: Describe all the steps we need to take to show the behavior that you have observed. Also, include what you expected to happen and what did actually happen.
+      placeholder: |
+        1. Create a File > New App
+        2. Add a `Button` like so: `<Button Text="this is a bug" />`
+        3. Click the added button and observe the bug 🐞
 
----
+        Expected outcome: a bug was added
+        Actual outcome: a ladybug appeared
+    validations:
+      required: true
+  - type: dropdown
+    id: platform-with-bug
+    attributes:
+      label: Platform with bug
+      description: What Platform is this bug affecting?
+      options:
+        - Core
+        - Android
+        - iOS
+        - MacCatalyst
+        - Windows
+        - GTK
+        - Linux Framebuffer
+        - WPF
+        - WebAssembly
+        - Other
+    validations:
+      required: true
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+  - type: dropdown
+    id: platforms-affected
+    attributes:
+      label: Affected platforms
+      description: Select all or any platform that you see this issue on. This helps us determine if it's something platform-specific or in the core. If you were only able to test on 1 platform, please check the last option to inform us about that.
+      multiple: true
+      options:
+        - Android
+        - iOS
+        - MacCatalyst
+        - Windows
+        - GTK
+        - WebAssembly
+        - Other
+        - I was *not* able test on other platforms
+    validations:
+      required: true
 
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+  - type: textarea
+    id: workaround
+    attributes:
+      label: Did you find any workaround?
+      description: Did you find any workaround for this issue? This can unblock other people while waiting for this issue to be resolved or even give us a hint on how to fix this.
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
-
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
-
-**Desktop (please complete the following information):**
- - OS: [e.g. iOS]
- - Browser [e.g. chrome, safari]
- - Version [e.g. 22]
-
-**Smartphone (please complete the following information):**
- - Device: [e.g. iPhone6]
- - OS: [e.g. iOS8.1]
- - Browser [e.g. stock browser, safari]
- - Version [e.g. 22]
-
-**Additional context**
-Add any other context about the problem here.
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output
+      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for back ticks.
+      render: shell
