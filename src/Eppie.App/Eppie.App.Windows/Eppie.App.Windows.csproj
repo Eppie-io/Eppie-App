@@ -49,7 +49,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Uno.Resizetizer" Version="1.2.1" />
-		<PackageReference Include="Uno.WinUI" Version="5.0.48" />
+		<PackageReference Include="Uno.WinUI" Version="5.0.64" />
 		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.231115000" />
 		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.2428" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
@@ -60,7 +60,7 @@
 		<PackageReference Include="Uno.Extensions.Localization.WinUI" Version="3.0.11" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="8.0.0" />
 		<PackageReference Include="Uno.Core.Extensions.Logging.Singleton" Version="4.0.1" />
-		<PackageReference Include="Uno.UI.Adapter.Microsoft.Extensions.Logging" Version="5.0.48" />
+		<PackageReference Include="Uno.UI.Adapter.Microsoft.Extensions.Logging" Version="5.0.64" />
 	</ItemGroup>
 
 	<ItemGroup>
