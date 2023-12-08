@@ -42,8 +42,6 @@ body:
         - MacCatalyst
         - Windows
         - GTK
-        - Linux Framebuffer
-        - WPF
         - WebAssembly
         - Other
     validations:
@@ -61,7 +59,7 @@ body:
         - MacCatalyst
         - Windows
         - GTK
-        - WebAssembly
+        - Linux Framebuffer
         - Other
         - I was *not* able test on other platforms
     validations:
