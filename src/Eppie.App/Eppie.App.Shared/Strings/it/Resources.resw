@@ -1,0 +1,989 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AboutApp.Text" xml:space="preserve">
+    <value>About</value>
+    <comment>About application page title</comment>
+  </data>
+  <data name="AboutAppNavigationItem.Content" xml:space="preserve">
+    <value>About</value>
+    <comment>Navigation item to open 'About' page</comment>
+  </data>
+  <data name="IdentityManagerNavigationItem.Content" xml:space="preserve">
+    <value>Identity manager</value>
+    <comment>Navigation item for open Identity Manager page</comment>
+  </data>
+  <data name="AddEmailAccountFirst" xml:space="preserve">
+    <value>You need to connect at least one email account first.</value>
+    <comment>Dialog text when user wants to send new message without any email account connected</comment>
+  </data>
+  <data name="Address.Text" xml:space="preserve">
+    <value>Address</value>
+    <comment>Input field caption for server address</comment>
+  </data>
+  <data name="MessageFilter.PlaceholderText" xml:space="preserve">
+    <value>Search</value>
+    <comment>Text displayed in Search Messages control when no search text is entered</comment>
+  </data>
+  <data name="AllMessages.Text" xml:space="preserve">
+    <value>All messages</value>
+    <comment>The header for the list with messages from all email boxes</comment>
+  </data>
+  <data name="AllMessagesNavigationItem.Content" xml:space="preserve">
+    <value>All messages</value>
+    <comment>Navigation item for display all mail messages</comment>
+  </data>
+  <data name="NewMessageNavigationItem.Content" xml:space="preserve">
+    <value>Compose email</value>
+    <comment>Navigation item for create new mail message</comment>
+  </data>
+  <data name="Apply.Content" xml:space="preserve">
+    <value>Apply</value>
+    <comment>Apply button content</comment>
+  </data>
+  <data name="JoinWaitingList.Content" xml:space="preserve">
+    <value>Join the waiting list</value>
+    <comment>JoinWaitingList button content</comment>
+  </data>
+  <data name="AppSettings.Text" xml:space="preserve">
+    <value>Settings</value>
+    <comment>The title for application settings</comment>
+  </data>
+  <data name="IdentityManagerTitle.Text" xml:space="preserve">
+    <value>Identity Manager</value>
+    <comment>The title for Identity Manager page</comment>
+  </data>
+  <data name="AttachButton.Label" xml:space="preserve">
+    <value>Attach files</value>
+    <comment>Text for attach button</comment>
+  </data>
+  <data name="AttachButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Attach files</value>
+    <comment>The tooltip for attach button</comment>
+  </data>
+  <data name="AttachedFiles.Title" xml:space="preserve">
+    <value>Attached files:</value>
+    <comment>Title for list of attached files</comment>
+  </data>
+  <data name="AuthenticationError" xml:space="preserve">
+    <value>Authentification error</value>
+    <comment>Notification text when authentification failed</comment>
+  </data>
+  <data name="BackButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Back</value>
+    <comment>The tooltip for back button</comment>
+  </data>
+  <data name="Cancel.Content" xml:space="preserve">
+    <value>Cancel</value>
+    <comment>Cancel button content</comment>
+  </data>
+  <data name="CantSendMessages" xml:space="preserve">
+    <value>You can't send messages</value>
+    <comment>Dialog title when user wants to send new message without any email account connected</comment>
+  </data>
+  <data name="ChangePasswordPageText" xml:space="preserve">
+    <value>Change master password.</value>
+    <comment>Text on "Change password" page</comment>
+  </data>
+  <data name="ChangeMasterPasswordButton.Content" xml:space="preserve">
+    <value>Change master password</value>
+    <comment>Text on "Change master password" button</comment>
+  </data>
+  <data name="ConfirmSeedPhraseButton.Content" xml:space="preserve">
+    <value>Confirm recovery phrase</value>
+    <comment>Text on "Confirm recovery phrase" button</comment>
+  </data>  
+  <data name="CheckEmailNotification" xml:space="preserve">
+    <value>Check email</value>
+    <comment>Notification message that is shown when user needs to check entered email</comment>
+  </data>
+  <data name="CheckPasswordNotification" xml:space="preserve">
+    <value>Check password</value>
+    <comment>Notification message that is shown when user needs to check entered password</comment>
+  </data>
+  <data name="ConfirmPassword.Text" xml:space="preserve">
+    <value>Confirm password</value>
+    <comment>Input field caption for confirm password</comment>
+  </data>
+  <data name="ConnectionError" xml:space="preserve">
+    <value>Connection error</value>
+    <comment>Notification text when connection to server failed</comment>
+  </data>
+  <data name="Copyright.Text" xml:space="preserve">
+    <value>© All rights reserved.</value>
+    <comment>Finebits copyright label</comment>
+  </data>
+  <data name="CurrentPassword.Text" xml:space="preserve">
+    <value>Current password</value>
+    <comment>Input field caption for current password</comment>
+  </data>
+  <data name="DeleteButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Delete</value>
+    <comment>The tooltip for delete button</comment>
+  </data>
+  <data name="DeleteButton.Label" xml:space="preserve">
+    <value>Delete</value>
+    <comment>Text on Delete button</comment>
+  </data>
+  <data name="MarkAsReadButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Mark as read</value>
+    <comment>The tooltip for Mark as read button</comment>
+  </data>
+  <data name="MarkAsReadButton.Label" xml:space="preserve">
+    <value>Mark as read</value>
+    <comment>Text on Mark as read button</comment>
+  </data>
+  <data name="MarkAsUnreadButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Mark as unread</value>
+    <comment>The tooltip for Mark as unread button</comment>
+  </data>
+  <data name="MarkAsUnreadButton.Label" xml:space="preserve">
+    <value>Mark as unread</value>
+    <comment>Text on Mark as unread button</comment>
+  </data>
+  <data name="Developer.Text" xml:space="preserve">
+    <value>Developer:</value>
+    <comment>A label for the application developer</comment>
+  </data>
+  <data name="ConnectedServicesSettings.Text" xml:space="preserve">
+    <value>Your services</value>
+    <comment>Settings for a single email account</comment>
+  </data>
+  <data name="EmailAddress.Text" xml:space="preserve">
+    <value>Email address</value>
+    <comment>Input field caption for email address</comment>
+  </data>
+  <data name="TwoFactorCode.Text" xml:space="preserve">
+    <value>Two factor authentication code</value>
+    <comment>Input field caption for two factor authentication code</comment>
+  </data>
+  <data name="EnableImapMessage" xml:space="preserve">
+    <value>IMAP is disabled for '{0}'.
+You need to enable IMAP for this account first and try again.</value>
+    <comment>Message text when failed to add account because IMAP is disabled in email account settings</comment>
+  </data>
+  <data name="EnterPasswordPageText" xml:space="preserve">
+    <value>Welcome back!</value>
+    <comment>Text on "Enter password" page</comment>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+    <comment>ContentDialog title for error message</comment>
+  </data>
+  <data name="FailedToAddAccountTitle" xml:space="preserve">
+    <value>Failed to add account</value>
+    <comment>Message title when failed to add account</comment>
+  </data>
+  <data name="FieldIsEmptyNotification" xml:space="preserve">
+    <value>Cannot be empty</value>
+    <comment>Notification message that is shown when input field is empty</comment>
+  </data>
+  <data name="AuthorizationProblem" xml:space="preserve">
+    <value>Authorization problem</value>
+    <comment>The title of the service authorization problem</comment>
+  </data>
+  <data name="AuthenticationProblem" xml:space="preserve">
+    <value>Authentication problem</value>
+    <comment>The title of the service authentication problem</comment>
+  </data>
+  <data name="GoToSettings" xml:space="preserve">
+    <value>Go to settings</value>
+    <comment>The button whicth leads to the service's settings</comment>
+  </data>
+  <data name="AccessDenied" xml:space="preserve">
+    <value>Access is denied</value>
+    <comment>Notification message shown when access to email server is denied</comment>
+  </data>
+  <data name="IncomingServer.Text" xml:space="preserve">
+    <value>Incoming email server</value>
+    <comment>Caption for incoming email server settings</comment>
+  </data>
+  <data name="IncorrectPassword" xml:space="preserve">
+    <value>Incorrect password</value>
+    <comment>Message shown when password is incorrect</comment>
+  </data>
+  <data name="MessageFrom.Text" xml:space="preserve">
+    <value>From:</value>
+    <comment>Caption for sender of the message</comment>
+  </data>
+  <data name="MessageSubject.Text" xml:space="preserve">
+    <value>Subject:</value>
+    <comment>Caption for the subject of the message</comment>
+  </data>
+  <data name="MessageTo.Text" xml:space="preserve">
+    <value>To:</value>
+    <comment>Caption for the receiver of the message</comment>
+  </data>
+  <data name="CopyTo.Text" xml:space="preserve">
+    <value>Copy:</value>
+    <comment>Caption for the copy receiver of the message</comment>
+  </data>
+  <data name="HiddenCopyTo.Text" xml:space="preserve">
+    <value>Hidden copy:</value>
+    <comment>Caption for the copy receiver of the message</comment>
+  </data>
+  <data name="MsgBtnOk" xml:space="preserve">
+    <value>Ok</value>
+    <comment>ContentDialog button Ok content</comment>
+  </data>
+  <data name="MessageButtonCancel" xml:space="preserve">
+    <value>Cancel</value>
+    <comment>Messsage ContentDialog Cancel button content</comment>
+  </data>
+  <data name="NewMessage.Text" xml:space="preserve">
+    <value>New message</value>
+    <comment>New message page header</comment>
+  </data>
+  <data name="OkButton.Content" xml:space="preserve">
+    <value>Ok</value>
+    <comment>Button Ok</comment>
+  </data>
+  <data name="OutgoingServer.Text" xml:space="preserve">
+    <value>Outgoing email server</value>
+    <comment>Caption for outgoing email server settings</comment>
+  </data>
+  <data name="Password.Text" xml:space="preserve">
+    <value>Enter password</value>
+    <comment>Input field caption for password</comment>
+  </data>
+  <data name="MailboxPassword.Text" xml:space="preserve">
+    <value>Enter mailbox password</value>
+    <comment>Input field caption for mailbox password</comment>
+  </data>
+  <data name="PasswordIsTheSameNotification" xml:space="preserve">
+    <value>Is the same as current</value>
+    <comment>Notification message shown when new password is the same as current</comment>
+  </data>
+  <data name="PasswordsDontMatchNotification" xml:space="preserve">
+    <value>Should match password</value>
+    <comment>Notification message shown when passwords do not match</comment>
+  </data>
+  <data name="Port.Text" xml:space="preserve">
+    <value>Port</value>
+    <comment>Input field caption for server port</comment>
+  </data>
+  <data name="Protocol.Text" xml:space="preserve">
+    <value>Protocol</value>
+    <comment>Caption for select network protocol</comment>
+  </data>
+  <data name="Publisher.Text" xml:space="preserve">
+    <value>Publisher:</value>
+    <comment>A label for the application publisher</comment>
+  </data>
+  <data name="RememberPassword.Content" xml:space="preserve">
+    <value>Remember my password</value>
+    <comment>Checkbox text for option to remeber pasword</comment>
+  </data>
+  <data name="RemoveAccountButton.Content" xml:space="preserve">
+    <value>Remove account</value>
+    <comment>Remove account button text in account settings</comment>
+  </data>
+  <data name="HybridAddressButton.Content" xml:space="preserve">
+    <value>Create hybrid address</value>
+    <comment>Create hybrid address button text in account settings</comment>
+  </data>
+  <data name="RemoveAccountDialogAcceptText" xml:space="preserve">
+    <value>Remove</value>
+    <comment>Accept button text for dialog shown when user wants to remove e-mail account from the list</comment>
+  </data>
+  <data name="RemoveAccountDialogMessage" xml:space="preserve">
+    <value>This action will remove account from the list</value>
+    <comment>Dialog message shown when user wants to remove e-mail account from the list</comment>
+  </data>
+  <data name="RemoveAccountDialogRejectText" xml:space="preserve">
+    <value>Cancel</value>
+    <comment>Cancel button text for dialog shown when user wants to remove e-mail account from the list</comment>
+  </data>
+  <data name="RemoveAccountDialogTitle" xml:space="preserve">
+    <value>Attention</value>
+    <comment>The title of the dialog shown when user wants to remove e-mail account from the list</comment>
+  </data>
+  <data name="ReplyButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Reply</value>
+    <comment>The tooltip for reply button</comment>
+  </data>
+  <data name="ReplyButton.Label" xml:space="preserve">
+    <value>Reply</value>
+    <comment>Text on Reply button</comment>
+  </data>
+  <data name="ReplyAllButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Reply All</value>
+    <comment>The tooltip for Reply All button</comment>
+  </data>
+  <data name="ReplyAllButton.Label" xml:space="preserve">
+    <value>Reply All</value>
+    <comment>Text on Reply All button</comment>
+  </data>
+  <data name="ForwardButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Forward</value>
+    <comment>The tooltip for Forward email button</comment>
+  </data>
+  <data name="ForwardButton.Label" xml:space="preserve">
+    <value>Forward</value>
+    <comment>Text on Forward email button</comment>
+  </data>
+  <data name="SeedGenerateAcceptButton.Content" xml:space="preserve">
+    <value>I confirm that this seed phrase is safely stored by me</value>
+    <comment>Accept seed phrase button content</comment>
+  </data>
+  <data name="SeedGenerateHeader.Text" xml:space="preserve">
+    <value>Your new seed phrase:</value>
+    <comment>Header text on new seed phrase screen</comment>
+  </data>
+  <data name="SeedGenerateOtherButton.Content" xml:space="preserve">
+    <value>Generate other seed</value>
+    <comment>Generate new seed phrase button</comment>
+  </data>
+  <data name="SeedPhraseNotValidAction" xml:space="preserve">
+    <value>Ok</value>
+    <comment>Close button text of the message shown when user entered incorrect seed phrase</comment>
+  </data>
+  <data name="SeedPhraseNotValidMessage" xml:space="preserve">
+    <value>Seed phrase is not valid</value>
+    <comment>Message text shown when user entered incorrect seed phrase</comment>
+  </data>
+  <data name="SeedPhraseNotValidTitle" xml:space="preserve">
+    <value>Error</value>
+    <comment>Message title shown when user entered incorrect seed phrase</comment>
+  </data>
+  <data name="SeedRestoreAcceptButton.Content" xml:space="preserve">
+    <value>Accept</value>
+    <comment>Restore seed page accept button</comment>
+  </data>
+  <data name="SeedRestoreSyncWithQRButton.Content" xml:space="preserve">
+    <value>Sync with QR</value>
+    <comment>Restore seed page Sync with QR button</comment>
+  </data>
+  <data name="SeedRestoreHeader.Text" xml:space="preserve">
+    <value>Enter a secret phrase to connect to a decentralized network</value>
+    <comment>Restore seed page header</comment>
+  </data>
+  <data name="SeedRestoreEnterSeedphraseExplanationLabel.Text" xml:space="preserve">
+    <value>Once connected, the application will import your mail and settings from the decentralized network</value>
+    <comment>Enter seed-phrase explanation label</comment>
+  </data>
+  <data name="SeedWordDoesNotMatch" xml:space="preserve">
+    <value>Does not match with seed</value>
+    <comment>Notification message shown when entered word does not match</comment>
+  </data>
+  <data name="SeedWordIsEmpty" xml:space="preserve">
+    <value>Please enter the word</value>
+    <comment>Notification message shown when user left word filed empty</comment>
+  </data>
+  <data name="SeedWordNoInDictionary" xml:space="preserve">
+    <value>Word doesn't exist in mnemonic dictionary</value>
+    <comment>Validation error for seed phrase word</comment>
+  </data>
+  <data name="SendButton.Label" xml:space="preserve">
+    <value>Send</value>
+    <comment>Text for send button</comment>
+  </data>
+  <data name="SendButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Send</value>
+    <comment>The tooltip for send button</comment>
+  </data>
+  <data name="SenderName.Text" xml:space="preserve">
+    <value>Send your messages using this name</value>
+    <comment>Input field caption for sender name</comment>
+  </data>
+  <data name="SetPasswordPageText" xml:space="preserve">
+    <value>Set database password.</value>
+    <comment>Text on "Set password" page</comment>
+  </data>
+  <data name="SettingsNavigationItem.Content" xml:space="preserve">
+    <value>Settings</value>
+    <comment>Navigation item for open Settings page</comment>
+  </data>
+  <data name="SettingsPageHeader.Text" xml:space="preserve">
+    <value>Settings Page</value>
+    <comment>Settings page header</comment>
+  </data>
+  <data name="Thanks.Text" xml:space="preserve">
+    <value>Thanks:</value>
+    <comment>A label for the list of used open source libraries</comment>
+  </data>
+  <data name="SupportLabel.Text" xml:space="preserve">
+    <value>Support:</value>
+    <comment>A label for the support email</comment>
+  </data>  
+  <data name="Version.Text" xml:space="preserve">
+    <value>Version:</value>
+    <comment>A label for the application version</comment>
+  </data>
+  <data name="WelcomePageCreateAccountButton.Text" xml:space="preserve">
+    <value>New account</value>
+    <comment>Create account button text on WelcomePage</comment>
+  </data>
+  <data name="WelcomePageCreateAccountButtonSubtext.Text" xml:space="preserve">
+    <value>Create new account via seed-phrase</value>
+    <comment>Create account button subtext on WelcomePage</comment>
+  </data>
+  <data name="WelcomePageHeader.Text" xml:space="preserve">
+    <value>Create decentralized account on your device</value>
+    <comment>New user welcome page text</comment>
+  </data>
+  <data name="WelcomePageRestoreAccountButton.Text" xml:space="preserve">
+    <value>Connect account</value>
+    <comment>Restore account button text on WelcomePage</comment>
+  </data>
+  <data name="WelcomePageRestoreAccountButtonSubtext.Text" xml:space="preserve">
+    <value>Connect yor existing account via seed-phrase</value>
+    <comment>Restore account button subtext on WelcomePage</comment>
+  </data>
+  <data name="LocalLogoutButton.Content" xml:space="preserve">
+    <value>Logout</value>
+    <comment>Logout and wipe all local application data button text in settings</comment>
+  </data>
+  <data name="WipeAllDataDialogAcceptText" xml:space="preserve">
+    <value>Wipe</value>
+    <comment>Accept button text for dialog shown when user wants to wipe all application data</comment>
+  </data>
+  <data name="WipeAllDataDialogMessage" xml:space="preserve">
+    <value>This action will completely wipe all local application data.</value>
+    <comment>Dialog message shown when user wants to wipe all application data</comment>
+  </data>
+  <data name="WipeAllDataDialogRejectText" xml:space="preserve">
+    <value>Cancel</value>
+    <comment>Cancel button text for dialog shown when user wants to wipe all application data</comment>
+  </data>
+  <data name="WipeAllDataDialogTitle" xml:space="preserve">
+    <value>Attention</value>
+    <comment>The title of the dialog shown when user wants to wipe all application data</comment>
+  </data>
+  <data name="SeedGenerateCopyButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Copy seed phrase (Ctrl+C)</value>
+    <comment>Tooltip for Copy seed phrase button</comment>
+  </data>
+  <data name="MessageEncrypted.Content" xml:space="preserve">
+    <value>Encrypt</value>
+    <comment>Encryption enable checkbox text on NewMessage view</comment>
+  </data>
+  <data name="MessageSigned.Content" xml:space="preserve">
+    <value>Sign</value>
+    <comment>Signature enable checkbox text on NewMessage view</comment>
+  </data>
+  <data name="SeedRestorePasteButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Paste seed phrase (Ctrl+V)</value>
+    <comment>Restore seed page paste phrase button</comment>
+  </data>
+  <data name="PgpKeysButton.Content" xml:space="preserve">
+    <value>PGP keys</value>
+    <comment>Go to PGP keys management page button content</comment>
+  </data>
+  <data name="PgpKeyImportButton.Content" xml:space="preserve">
+    <value>Import key from file</value>
+    <comment>Import PGP key from file button content</comment>
+  </data>
+  <data name="PgpKeyCopyButton.Content" xml:space="preserve">
+    <value>Copy key to clipboard</value>
+    <comment>Copy PGP key to clipboard button content</comment>
+  </data>
+  <data name="PgpKeyExportButton.Content" xml:space="preserve">
+    <value>Export key to file</value>
+    <comment>Export PGP key to file button content</comment>
+  </data>
+  <data name="PgpKeySendButton.Content" xml:space="preserve">
+    <value>Send key by email</value>
+    <comment>Send PGP key by email button content</comment>
+  </data>
+  <data name="PgpKeyAlgorithm.Text" xml:space="preserve">
+    <value>Algorithm</value>
+    <comment>Pgp key details cipher algorithm text label</comment>
+  </data>
+  <data name="PgpKeyCreationTime.Text" xml:space="preserve">
+    <value>Created</value>
+    <comment>Pgp key details creation time text label</comment>
+  </data>
+  <data name="PgpKeyExpires.Text" xml:space="preserve">
+    <value>Expires</value>
+    <comment>Pgp key details expiration time text label</comment>
+  </data>
+  <data name="PgpKeyFingerprint.Text" xml:space="preserve">
+    <value>Fingerprint</value>
+    <comment>Pgp key details fingerprint text label</comment>
+  </data>
+  <data name="PgpKeyId.Text" xml:space="preserve">
+    <value>KeyID</value>
+    <comment>Pgp key details ID text label</comment>
+  </data>
+  <data name="PgpKeyUserIdentity.Text" xml:space="preserve">
+    <value>User identity</value>
+    <comment>Pgp key details user identity text label</comment>
+  </data>
+  <data name="PgpKeyExpiresNever" xml:space="preserve">
+    <value>Never</value>
+    <comment>Text meaning that PGP key never expires</comment>
+  </data>
+  <data name="PgpPublicKeyShareMessageSubject" xml:space="preserve">
+    <value>Public PGP key shared</value>
+    <comment>Default subject of email message with shared public PGP key</comment>
+  </data>
+  <data name="PgpKeyImportErrorMessageTitle" xml:space="preserve">
+    <value>Public key import failed.</value>
+    <comment>Title of message about public key import fail</comment>
+  </data>
+  <data name="PgpKeyAlgorithmUnknownMessage" xml:space="preserve">
+    <value>Unknown public key algorithm. Key can't be imported.</value>
+    <comment>Can't import public key. Public key with unknown algorithm</comment>
+  </data>
+  <data name="PgpKeyAlreadyExistMessage" xml:space="preserve">
+    <value>Public key with same identifier already exist. Key can't be imported.</value>
+    <comment>Can't import public key. Key with same identifier already exist message</comment>
+  </data>
+  <data name="PgpKeyImportErrorMessage" xml:space="preserve">
+    <value>Can't import public key.</value>
+    <comment>Can't import public key common error message</comment>
+  </data>
+  <data name="PgpKeyExportErrorMessage" xml:space="preserve">
+    <value>Error happened during public key export.</value>
+    <comment>Message about public key export fail</comment>
+  </data>
+  <data name="PgpKeyExportErrorMessageTitle" xml:space="preserve">
+    <value>Public key export failed</value>
+    <comment>Title of message about public key export fail</comment>
+  </data>
+  <data name="CryptoContextErrorMessageTitle" xml:space="preserve">
+    <value>Cryptographic action can't be performed.</value>
+    <comment>Title of message saying that cryptographic action can't be performed.</comment>
+  </data>
+  <data name="BackupErrorMessageTitle" xml:space="preserve">
+    <value>Backup processing failed.</value>
+    <comment>Title of message saying that backup action failed.</comment>
+  </data>
+  <data name="DecryptionErrorMessage" xml:space="preserve">
+    <value>Can't decrypt message.</value>
+    <comment>Message saying that error happened during decryption.</comment>
+  </data>
+  <data name="EncryptionErrorMessage" xml:space="preserve">
+    <value>Can't encrypt message.</value>
+    <comment>Message saying that encryption error happened.</comment>
+  </data>
+  <data name="NoPublicKeyMessage" xml:space="preserve">
+    <value>No public key.</value>
+    <comment>Message saying that no public key for action.</comment>
+  </data>
+  <data name="NoSecretKeyMessage" xml:space="preserve">
+    <value>No secret key.</value>
+    <comment>Message saying that no secret key for action.</comment>
+  </data>
+  <data name="SignatureVerificationErrorMessage" xml:space="preserve">
+    <value>Can't verify message signature.</value>
+    <comment>Message saying that message signature can't be verified.</comment>
+  </data>
+  <data name="SigningErrorMessage" xml:space="preserve">
+    <value>Can't sign message.</value>
+    <comment>Message saying that signing error happened.</comment>
+  </data>
+  <data name="PgpKeyImportFromFileMessage" xml:space="preserve">
+    <value>From file</value>
+    <comment>Which file key import failed from message</comment>
+  </data>
+  <data name="FailedToReceiveNewMessagesErrorMessage" xml:space="preserve">
+    <value>Failed to receive new messages.</value>
+    <comment>Message text shown when failed to receive new messages</comment>
+  </data>
+  <data name="NewMessagesCheckFailedErrorTitle" xml:space="preserve">
+    <value>Check for new messages</value>
+    <comment>Message title shown when failed to check for new email messages</comment>
+  </data>
+  <data name="FailedToReceiveNewMessagesFromErrorMessage" xml:space="preserve">
+    <value>Failed to receive new messages from:</value>
+    <comment>Message text shown when failed to receive new messages from list of emails below</comment>
+  </data>
+  <data name="ExportBackupButton.Text" xml:space="preserve">
+    <value>Backup to file</value>
+    <comment>Backup export to file button text in settings</comment>
+  </data>
+  <data name="ExportBackupButtonSubtext.Text" xml:space="preserve">
+    <value>Export all data and settings to the backup.</value>
+    <comment>Backup export to file button subtext in settings</comment>
+  </data>
+  <data name="ImportBackupButton.Text" xml:space="preserve">
+    <value>Restore from file</value>
+    <comment>Backup import from file button text in settings</comment>
+  </data>
+  <data name="ImportBackupButtonSubtext.Text" xml:space="preserve">
+    <value>Import all data and settings from the backup.</value>
+    <comment>Backup import from file button subext in settings</comment>
+  </data>
+  <data name="BackupBuildErrorMessageTitle" xml:space="preserve">
+    <value>Backup creation failed</value>
+    <comment>Title of message saying that backup building failed.</comment>
+  </data>
+  <data name="BackupParsingErrorMessageTitle" xml:space="preserve">
+    <value>Backup restoration failed</value>
+    <comment>Title of message saying that backup parsing failed.</comment>
+  </data>
+  <data name="BackupProtectionErrorMessage" xml:space="preserve">
+    <value>Backup data protection error</value>
+    <comment>Message saying that action with backup data protection failed.</comment>
+  </data>
+  <data name="BackupProtectionErrorMessageTitle" xml:space="preserve">
+    <value>Backup protection action failed</value>
+    <comment>Title of message saying that action with backup data protection failed.</comment>
+  </data>
+  <data name="BackupSerializationErrorMessage" xml:space="preserve">
+    <value>Backup data serialization failed</value>
+    <comment>Message saying that backup data serialization failed.</comment>
+  </data>
+  <data name="BackupVerificationErrorMessage" xml:space="preserve">
+    <value>Backup data verification failed</value>
+    <comment>Message saying that action with backup data verification failed.</comment>
+  </data>
+  <data name="NotBackupPackageErrorMessage" xml:space="preserve">
+    <value>This is not a backup package</value>
+    <comment>Message saying that package is not a backup data.</comment>
+  </data>
+  <data name="UnknownBackupProtectionErrorMessage" xml:space="preserve">
+    <value>Unknown backup data protection format</value>
+    <comment>Message saying that backup data protection format is unknown.</comment>
+  </data>
+  <data name="ContactsTab.Header" xml:space="preserve">
+    <value>Contacts</value>
+    <comment>The header for Tab with list of contacts</comment>
+  </data>
+  <data name="MailboxesTab.Header" xml:space="preserve">
+    <value>Mailboxes</value>
+    <comment>The header for Tab with list of mailboxes (user connected e-mail accounts)</comment>
+  </data>
+  <data name="ContactMessagesPageHeader.Text" xml:space="preserve">
+    <value>Correspondence with</value>
+    <comment>The header of the page with list of messages from or sent to selected contact</comment>
+  </data>
+  <data name="MessageHeadLines" xml:space="preserve">
+    <value>
+
+________________________________________________________________________________
+From: {0}
+Sent: {1}
+To: {2}
+Subject: {3}
+
+{4}</value>
+    <comment>Title for forwarded message. {0} - from email. {1} - sent time. {2} - to email. {3} - email subject. {4} - original email text.</comment>
+  </data>
+  <data name="ChangeContactAvatarMenuItem.Text" xml:space="preserve">
+    <value>Change avatar</value>
+    <comment>Text of the context menu item that changes contact's avatar</comment>
+  </data>
+  <data name="RemoveContactMenuItem.Text" xml:space="preserve">
+    <value>Remove</value>
+    <comment>The text of context menu item that removes contact from address book</comment>
+  </data>
+  <data name="SeedPhraseNotInitializedMessage" xml:space="preserve">
+    <value>Please initialize Seed phrase.</value>
+    <comment>Message text shown when user not initialized seed phrase</comment>
+  </data>
+  <data name="SeedPhraseNotInitializedTitle" xml:space="preserve">
+    <value>Seed phrase is not initialized.</value>
+    <comment>Message title shown when user not initialized seed phrase</comment>
+  </data>
+  <data name="SaveAttachmentButton.Label" xml:space="preserve">
+    <value>Save</value>
+    <comment>Text for save attached file button</comment>
+  </data>
+  <data name="SaveAttachmentButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Save</value>
+    <comment>The tooltip for save attached file button</comment>
+  </data>
+  <data name="OpenAttachmentButton.Label" xml:space="preserve">
+    <value>Open</value>
+    <comment>Text for save attached file button</comment>
+  </data>
+  <data name="OpenAttachmentButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Open</value>
+    <comment>The tooltip for save attached file button</comment>
+  </data>
+  <data name="DeleteAttachmentButton.Label" xml:space="preserve">
+    <value>Delete</value>
+    <comment>Text for Delete attached file button</comment>
+  </data>
+  <data name="DeleteAttachmentButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Delete</value>
+    <comment>The tooltip for Delete attached file button</comment>
+  </data>
+  <data name="UpdateButton.Label" xml:space="preserve">
+    <value>Update</value>
+    <comment>Text for Update emails list button</comment>
+  </data>
+  <data name="UpdateButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Update</value>
+    <comment>The tooltip for Update emails list button</comment>
+  </data>
+  <data name="SelectionModeButton.Label" xml:space="preserve">
+    <value>Selection mode</value>
+    <comment>Text for Selection mode button</comment>
+  </data>
+  <data name="SelectionModeButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Selection mode</value>
+    <comment>The tooltip for Selection mode button</comment>
+  </data>
+  <data name="EmailDoesntMatchNotification" xml:space="preserve">
+    <value>The entered email address {0} doesn't match the settings</value>
+    <comment>Notification message is shown when emails do not match</comment>
+  </data>
+  <data name="AccountAccessDeniedNotification" xml:space="preserve">
+    <value>Cannot access email account</value>
+    <comment>Notification message is shown when access to account is denied</comment>
+  </data>
+  <data name="SignInButton.Content" xml:space="preserve">
+    <value>Sign in</value>
+    <comment>'Sign in' button content</comment>
+  </data>
+  <data name="OrderByNameContactComparerLabel" xml:space="preserve">
+    <value>Order by name</value>
+    <comment>Label of contact comparer displayed in sorting variants for contacts that sorts contacts by name ascending</comment>
+  </data>
+  <data name="OrderByTimeContactComparerLabel" xml:space="preserve">
+    <value>Order by time</value>
+    <comment>Label of contact comparer displayed in sorting variants for contacts that sorts contacts by last message time</comment>
+  </data>
+  <data name="ContactFilter.PlaceholderText" xml:space="preserve">
+    <value>Search</value>
+    <comment>Text displayed in Search Contacts control when no search text is entered</comment>
+  </data>
+  <data name="ClearFlagButton.Label" xml:space="preserve">
+    <value>Clear flag</value>
+    <comment>Text on Clear flag button</comment>
+  </data>
+  <data name="ClearFlagButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Clear flag</value>
+    <comment>The tooltip for Clear flag button</comment>
+  </data>
+  <data name="SetFlagButton.Label" xml:space="preserve">
+    <value>Set flag</value>
+    <comment>Text on Set flag button</comment>
+  </data>
+  <data name="SetFlagButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Set flag</value>
+    <comment>The tooltip for Set flag button</comment>
+  </data>
+  <data name="AllMessagesFilterLabel" xml:space="preserve">
+    <value>All messages</value>
+    <comment>The label for option (in dropdown list with filters) which means that no filter is applied for messages (all messages must be shown)</comment>
+  </data>
+  <data name="FlaggedMessagesFilterLabel" xml:space="preserve">
+    <value>Flagged</value>
+    <comment>The label for option (in dropdown list with filters) which means that only flagged messages are shown</comment>
+  </data>
+  <data name="MessagesWithAttachmentFilterLabel" xml:space="preserve">
+    <value>With attachments</value>
+    <comment>The label for option (in dropdown list with filters) which means that only messages with attachments are shown</comment>
+  </data>
+  <data name="UnreadMessagesFilterLabel" xml:space="preserve">
+    <value>Unread</value>
+    <comment>The label for option (in dropdown list with filters) which means that only unread messages are shown</comment>
+  </data>
+  <data name="SendErrorReportTitle" xml:space="preserve">
+    <value>Would you like to send an error report?</value>
+    <comment>Title in the error message dialog</comment>
+  </data>
+  <data name="ErrorReportEmailTitle" xml:space="preserve">
+    <value>An error report</value>
+    <comment>Title in the email message with error report</comment>
+  </data>
+  <data name="MessageDecentralized.Content" xml:space="preserve">
+    <value>Send decentralized</value>
+    <comment>Send message using decentralized simulation</comment>
+  </data>
+  <data name="BackupAccountSettingsCheckBox.Content" xml:space="preserve">
+    <value>Enable data backup for this account</value>
+    <comment>The label for option Enable backup for Account settings</comment>
+  </data>
+  <data name="BackupAccountMessagesCheckBox.Content" xml:space="preserve">
+    <value>Enable backup of downloaded emails for this account</value>
+    <comment>The label for option Enable backup for downloaded emails</comment>
+  </data>
+  <data name="CancelMessagesDeleteButton.Content" xml:space="preserve">
+    <value>Undo</value>
+    <comment>Text of the button which cancels deleting messages</comment>
+  </data>
+  <data name="MessageWasDeleted" xml:space="preserve">
+    <value>Message was deleted</value>
+    <comment>The title of InfoBar shown after message was deleted</comment>
+  </data>
+  <data name="NumberOfMessagesWereDeleted" xml:space="preserve">
+    <value>{0} messages were deleted</value>
+    <comment>The title of InfoBar shown after number={0} messages were deleted</comment>
+  </data>
+  <data name="ValueCantBeNegativeNotification" xml:space="preserve">
+    <value>Value can't be negative</value>
+    <comment>Notification message shown when user enters negative integer number</comment>
+  </data>
+  <data name="ValueIsNotNumberNotification" xml:space="preserve">
+    <value>Value is not a number</value>
+    <comment>Notification message shown when user enters text that can't be converted to integer number</comment>
+  </data>
+  <data name="BackupLabel.Text" xml:space="preserve">
+    <value>Backup</value>
+    <comment>The label of section with backup options on settings page</comment>
+  </data>
+  <data name="CheckNewMessagesIntervalLabel.Text" xml:space="preserve">
+    <value>Check new messages interval (in minutes)</value>
+    <comment>The label of input field to enter check messages interval value in minutes</comment>
+  </data>
+  <data name="P2PLabel.Text" xml:space="preserve">
+    <value>[P2P]</value>
+    <comment>The label shown for decentarilzed messages</comment>
+  </data>
+  <data name="OrderByUnreadContactComparerLabel" xml:space="preserve">
+    <value>Order by unread</value>
+    <comment>Label of contact comparer displayed in sorting variants for contacts that displays contacts with unread messages first then contacts without unread messages. Each of these two groups with contacts are sorted by last message time.</comment>
+  </data>
+  <data name="NewEmailsReceivedMessage" xml:space="preserve">
+    <value>New emails received.</value>
+    <comment>Text for a toast notification when new emails are received</comment>
+  </data>
+  <data name="WelcomePageLicenseButton.Content" xml:space="preserve">
+    <value>End user license agreement</value>
+    <comment>Text for a license agreement button</comment>
+  </data>
+  <data name="SeedGenerateWelcomeToWeb3.Text" xml:space="preserve">
+    <value>Welcome to Web3!</value>
+    <comment>A label with Welcoming to Web3</comment>
+  </data>
+  <data name="WelcomePageLicenseExplanationLabel.Text" xml:space="preserve">
+    <value>By using the application, you agree to the terms:</value>
+    <comment>License explanation text</comment>
+  </data>
+  <data name="SeedRestoreEnterSeedphraseLabel.Text" xml:space="preserve">
+    <value>Enter your recovery phrase (12 words):</value>
+    <comment>Label welcoming enter revovery phrase</comment>
+  </data>
+  <data name="ForgotPassword.Content" xml:space="preserve">
+    <value>Forgot password?</value>
+    <comment>Password reset button</comment>
+  </data>
+  <data name="SupportedServices.Text" xml:space="preserve">
+    <value>Supported services</value>
+    <comment>Supported services page title </comment>
+  </data>
+  <data name="ConnectServiceButton.Content" xml:space="preserve">
+    <value>Connect service</value>
+    <comment>Connect service button text</comment>
+  </data>
+  <data name="SystemDefaultLanguage" xml:space="preserve">
+    <value>(System default)</value>
+    <comment>This captions appears as an item in the select language combobox. Selecting this item will change the language of the application to the system default language</comment>
+  </data>
+  <data name="RestartApplication" xml:space="preserve">
+    <value>You have to restart {0} for the changes to take effect.</value>
+    <comment>This message appears after user select language. We need to restart {app name} for apply new language.</comment>
+  </data>
+</root>

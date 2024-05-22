@@ -1,0 +1,83 @@
+﻿<UserControl
+    x:Class="Tuvi.App.Shared.Controls.ContactsListControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Tuvi.App.Shared.Controls"
+    xmlns:viewmodels="using:Tuvi.App.ViewModels"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:behaviors="using:Tuvi.App.Shared.Behaviors"
+    xmlns:winui="using:Microsoft.UI.Xaml.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <UserControl.Resources>
+        
+        <DataTemplate x:Key="ContactItemTemplate" x:DataType="viewmodels:ContactItem">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="8" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.ContextFlyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem x:Uid="ChangeContactAvatarMenuItem"
+                                        Tag="{x:Bind }"
+                                        Click="ChangeContactAvatarMenuItemClick" />
+                        <MenuFlyoutItem x:Uid="RemoveContactMenuItem"
+                                        Tag="{x:Bind }"
+                                        Click="RemoveContactMenuItemClick" />
+                    </MenuFlyout>
+                </Grid.ContextFlyout>
+
+                <PersonPicture Grid.RowSpan="2"
+                               DisplayName="{x:Bind DisplayName, Mode=OneWay}"
+                               ProfilePicture="{x:Bind AvatarInfo, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}"
+                               Width="48"
+                               Height="48" />
+
+                <TextBlock Grid.Column="2"
+                           Text="{x:Bind DisplayName, Mode=OneWay}" />
+
+                <TextBlock Grid.Row="1"
+                           Grid.Column="2"
+                           Text="{x:Bind Email.Address, Mode=OneWay}"
+                           Opacity="0.6" />
+
+                <winui:InfoBadge Grid.RowSpan="2"
+                                 Grid.Column="3"
+                                 Value="{x:Bind UnreadMessagesCount, Mode=OneWay}"
+                                 Visibility="{x:Bind UnreadMessagesCount, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}"                                     
+                                 Margin="8,0,4,0"/>
+
+            </Grid>
+        </DataTemplate>
+
+        <Style x:Key="ContactItemContainerStyle" BasedOn="{StaticResource DefaultListViewItemContainerStyle}" TargetType="ListViewItem">
+            <Setter Property="Padding" Value="4" />
+        </Style>
+        
+    </UserControl.Resources>
+
+    <Grid>
+        <ListView ItemsSource="{x:Bind ContactsModel.Contacts, Mode=OneWay}"
+                  SelectedItem="{x:Bind ContactsModel.SelectedContact, Mode=TwoWay}"
+                  ItemTemplate="{StaticResource ContactItemTemplate}"
+                  ItemContainerStyle="{StaticResource ContactItemContainerStyle}"
+                  IsItemClickEnabled="True"
+                  SelectionMode="Single"
+                  Padding="0,0,20,0">
+            <interactivity:Interaction.Behaviors>
+                <behaviors:ListViewItemClickBehavior ClickCommand="{x:Bind ContactsModel.ContactClickCommand, Mode=OneWay}" />
+            </interactivity:Interaction.Behaviors>
+        </ListView>
+    </Grid>
+</UserControl>

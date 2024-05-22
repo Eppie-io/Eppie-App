@@ -1,0 +1,104 @@
+﻿<local:SeedRestorePageBase
+    x:Class="Tuvi.App.Shared.Views.SeedRestorePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Tuvi.App.Shared.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:win="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:not_win="http://uno.ui/not_win"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:controls="using:Tuvi.App.Shared.Controls"
+    xmlns:viewmodels="using:Tuvi.App.ViewModels"
+    xmlns:behaviors="using:Tuvi.App.Shared.Behaviors"
+    xmlns:extensions="using:Tuvi.App.Shared.Extensions"
+    mc:Ignorable="d not_win"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <local:SeedRestorePageBase.DataContext>
+        <viewmodels:SeedRestorePageViewModel />
+    </local:SeedRestorePageBase.DataContext>
+
+    <interactivity:Interaction.Behaviors>
+        <behaviors:DialogBehavior ApplyCommand="{x:Bind ViewModel.AcceptSeedCommand}" 
+                                  CancelCommand="{x:Bind ViewModel.BackCommand}"
+                                  HandleErrorCommand="{x:Bind ViewModel.HandleErrorCommand}" />
+    </interactivity:Interaction.Behaviors>
+
+    <Grid Padding="120,0">
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0">
+
+          <TextBlock Text="{x:Bind AppName}"
+                     Margin="0,50,0,20"
+                     Style="{StaticResource PageTitleTextStyle}" />
+
+          <Button x:Uid="BackButton"
+                  VerticalAlignment="Center"
+                  Command="{x:Bind ViewModel.BackCommand}">
+            <SymbolIcon Symbol="Back" />
+          </Button>
+          
+          <TextBlock x:Uid="SeedRestoreHeader"
+                     HorizontalAlignment="Left"
+                     MaxWidth="400"
+                     Margin="0,18"
+                     Style="{StaticResource PageSubtitleTextStyle}" />
+
+          <TextBlock x:Uid="SeedRestoreEnterSeedphraseExplanationLabel"
+                     HorizontalAlignment="Left"
+                     MaxWidth="400"
+                     Margin="0,18"
+                     Style="{StaticResource CaptionTextBlockStyle}" />
+          
+          <TextBlock x:Uid="SeedRestoreEnterSeedphraseLabel"
+                     HorizontalAlignment="Left"
+                     MaxWidth="400"
+                     Margin="0,8"
+                     Style="{StaticResource NormalTextStyle}" />
+          
+        </StackPanel>
+
+      <StackPanel Grid.Row="1" Orientation="Horizontal">
+        
+        <TextBox MinWidth="400"
+                 HorizontalAlignment="Left"
+                 IsTextPredictionEnabled="False"
+                 IsSpellCheckEnabled="False"
+                 InputScope="Password"
+                 TextChanging="OnChangingSeed"
+                 Text="{x:Bind ViewModel.SeedPhrase.CleanText, Mode=TwoWay}" />
+        
+
+        <Button x:Uid="SeedRestorePasteButton">
+          <interactivity:Interaction.Behaviors>
+            <behaviors:PasteFromClipboardBehavior PasteCommand="{x:Bind ViewModel.PasteSeedCommand, Mode=OneWay}" />
+          </interactivity:Interaction.Behaviors>
+          <SymbolIcon Symbol="Paste" />
+        </Button>
+        
+      </StackPanel>      
+                
+      <StackPanel Grid.Row="2" 
+                  Orientation="Horizontal"
+                  Margin="0,18" >
+          
+            <Button x:Uid="SeedRestoreAcceptButton"
+                    Margin="4"
+                    Style="{StaticResource AccentButtonStyle}"
+                    Command="{x:Bind ViewModel.AcceptSeedCommand, Mode=OneWay}" />
+
+            <Button x:Uid="SeedRestoreSyncWithQRButton"
+                    Margin="4"
+                    Command="{x:Bind ViewModel.AcceptSeedCommand, Mode=OneWay}" />
+        
+        </StackPanel>
+
+    </Grid>
+</local:SeedRestorePageBase>
