@@ -10,6 +10,4 @@
 [submodule "gitmodules/TuviBase32EConverterLib"]
 	path = gitmodules/TuviBase32EConverterLib
 	url = https://github.com/Eppie-io/TuviBase32EConverterLib.git
-[submodule "gitmodules/console-toolkit"]
-	path = gitmodules/console-toolkit
-	url = https://github.com/Eppie-io/console-toolkit.git
+
