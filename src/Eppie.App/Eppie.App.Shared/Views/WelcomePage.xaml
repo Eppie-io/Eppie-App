@@ -1,0 +1,77 @@
+﻿<local:WelcomePageBase
+    x:Class="Tuvi.App.Shared.Views.WelcomePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Tuvi.App.Shared.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="using:Tuvi.App.ViewModels"
+    xmlns:extensions="using:Tuvi.App.Shared.Extensions"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <local:WelcomePageBase.DataContext>
+        <viewmodels:WelcomePageViewModel />
+    </local:WelcomePageBase.DataContext>
+
+    <Grid Padding="120,0">
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+      <StackPanel Grid.Row="0">
+
+        <TextBlock Text="{x:Bind AppName}"
+                   Margin="0,50"
+                   Style="{StaticResource PageTitleTextStyle}" />
+        
+        <TextBlock x:Uid="WelcomePageHeader"
+                   Margin="0,18"
+                   Style="{StaticResource PageSubtitleTextStyle}" />
+      </StackPanel>
+        
+        
+        <StackPanel Grid.Row="1"
+                    Orientation="Vertical"
+                    HorizontalAlignment="Left">
+
+          <Button HorizontalAlignment="Stretch"
+                  HorizontalContentAlignment="Left"
+                  Margin="0,8"
+                  Style="{StaticResource AccentButtonStyle}"
+                  Command="{x:Bind ViewModel.CreateAccountCommand}">
+            <Button.Content>
+              <StackPanel Margin="8">
+                <TextBlock x:Uid="WelcomePageCreateAccountButton"
+                           Style="{StaticResource NormalTextStyle}"
+                           FontWeight="Semibold" />
+                <TextBlock x:Uid="WelcomePageCreateAccountButtonSubtext"
+                           Style="{StaticResource CaptionTextStyle}" />
+              </StackPanel>
+            </Button.Content>
+          </Button>
+          <Button HorizontalAlignment="Stretch"
+                  HorizontalContentAlignment="Left"
+                  Margin="0,8"
+                  Command="{x:Bind ViewModel.RestoreAccountCommand}" >
+            <Button.Content>
+              <StackPanel Margin="8">
+                <TextBlock x:Uid="WelcomePageRestoreAccountButton"
+                           Style="{StaticResource NormalTextStyle}"
+                           FontWeight="Semibold"/>
+                <TextBlock x:Uid="WelcomePageRestoreAccountButtonSubtext"
+                           Style="{StaticResource CaptionTextStyle}" />
+              </StackPanel>              
+            </Button.Content>
+          </Button>
+          <TextBlock x:Uid="WelcomePageLicenseExplanationLabel"
+                     Style="{StaticResource NormalTextStyle}"
+                     Margin="0,8"/>          
+          <HyperlinkButton x:Uid="WelcomePageLicenseButton"
+                             extensions:HyperlinkExtension.Link="{x:Bind LicenseLink}" />
+        </StackPanel>
+        
+    </Grid>
+</local:WelcomePageBase>

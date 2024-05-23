@@ -1,0 +1,345 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>6279c845-92f8-4333-ab99-3d213163593c</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Tuvi.UI.Shared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="$(MSBuildThisFileDirectory)App.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Authorization\AuthConfig.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\ObjectToFileBehavior.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\ClipboardBehaviorBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\CopyToClipboardBehavior.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\DialogBehavior.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\FileBehavior.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\ListViewItemClickBehavior.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\ItemClickCommandBehavior.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\PasteFromClipboardBehavior.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\TreeViewItemInvokeBehavior.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\AccountSettingsControl.xaml.cs">
+      <DependentUpon>AccountSettingsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\AttachmentListControl.xaml.cs">
+      <DependentUpon>AttachmentListControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\BaseUserControl.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\ContactsListControl.xaml.cs">
+      <DependentUpon>ContactsListControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\DecentralizedAccountSettingsControl.xaml.cs">
+      <DependentUpon>DecentralizedAccountSettingsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\EmailsInputControl.xaml.cs">
+      <DependentUpon>EmailsInputControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\LanguageSelectionControl.xaml.cs">
+      <DependentUpon>LanguageSelectionControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\MailBoxesListControl.xaml.cs">
+      <DependentUpon>MailBoxesListControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\NavPanelTabControl.xaml.cs">
+      <DependentUpon>NavPanelTabControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\PromptTextInputControl.xaml.cs">
+      <DependentUpon>PromptTextInputControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\ProtonAccountSettingsControl.xaml.cs">
+      <DependentUpon>ProtonAccountSettingsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\EmailProvidersListControl.xaml.cs">
+      <DependentUpon>EmailProvidersListControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\ErrorControl.xaml.cs">
+      <DependentUpon>ErrorControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\MessageListControl.xaml.cs">
+      <DependentUpon>MessageListControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\PasswordControl.xaml.cs">
+      <DependentUpon>PasswordControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\RichTextEditor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\BitmapSourceConverters.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\BitmapTools.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\NotificationManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\DispatcherService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\WebViewExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\AttachedCommands.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\HyperlinkExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\TextDocumentExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IncrementalLoading\IncrementalLoadingCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\UITools.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\ErrorHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\FilePickerService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\LauncherService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\LocalizationService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\NavigationService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\MessageService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\NotificationService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\LocalSettingsService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Tools\ElementHierarchyTools.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\BasePage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\AboutPage.xaml.cs">
+      <DependentUpon>AboutPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\AccountSettingsPage.xaml.cs">
+      <DependentUpon>AccountSettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\AllMessagesPage.xaml.cs">
+      <DependentUpon>AllMessagesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\ContactMessagesPage.xaml.cs">
+      <DependentUpon>ContactMessagesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\DecentralizedAccountSettingsPage.xaml.cs">
+      <DependentUpon>DecentralizedAccountSettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\FolderMessagesPage.xaml.cs">
+      <DependentUpon>FolderMessagesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\IdentityManagerPage.xaml.cs">
+      <DependentUpon>IdentityManagerPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\MessagePage.xaml.cs">
+      <DependentUpon>MessagePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\NewMessagePage.xaml.cs">
+      <DependentUpon>NewMessagePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\PasswordPage.xaml.cs">
+      <DependentUpon>PasswordPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\PgpKeyPage.xaml.cs">
+      <DependentUpon>PgpKeyPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\PgpKeysPage.xaml.cs">
+      <DependentUpon>PgpKeysPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\ProtonAccountSettingsPage.xaml.cs">
+      <DependentUpon>ProtonAccountSettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\SelectEmailProviderPage.xaml.cs">
+      <DependentUpon>SelectEmailProviderPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\WelcomePage.xaml.cs">
+      <DependentUpon>WelcomePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\SeedGeneratePage.xaml.cs">
+      <DependentUpon>SeedGeneratePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\SeedRestorePage.xaml.cs">
+      <DependentUpon>SeedRestorePage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)Controls\AccountSettingsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Controls\AttachmentListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Controls\ContactsListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Controls\DecentralizedAccountSettingsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Controls\EmailsInputControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Controls\LanguageSelectionControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Controls\MailBoxesListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Controls\NavPanelTabControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Controls\PromptTextInputControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Controls\ProtonAccountSettingsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Controls\EmailProvidersListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Controls\ErrorControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Controls\PasswordControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Converters\TuviMailConvertersDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)StaticResources\StaticStringResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Styles\NavigationViewStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Styles\TuviMailStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\AboutPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\AccountSettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Controls\MessageListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\AllMessagesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\ContactMessagesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\DecentralizedAccountSettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\FolderMessagesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\IdentityManagerPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\MessagePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\NewMessagePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\PasswordPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\ProtonAccountSettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\PgpKeyPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\PgpKeysPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\SelectEmailProviderPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\SettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\WelcomePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\SeedGeneratePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\SeedRestorePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\af\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\ar\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\be\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\ca\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\cs\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\da\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\de\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\el\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\en\Resources.resw">
+      <SubType>Designer</SubType>
+    </PRIResource>
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\es\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\et\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\fi\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\fr\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\he\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\hu\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\it\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\ja\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\ko\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\lv\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\nl\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\no\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\pl\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\pt-BR\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\pt\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\ro\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\ru\Resources.resw">
+      <SubType>Designer</SubType>
+    </PRIResource>
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\sr-Cyrl\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\sv\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\tr\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\uk\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\vi\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\zh-CN\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\zh-TW\Resources.resw" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Common\" />
+  </ItemGroup>
+</Project>

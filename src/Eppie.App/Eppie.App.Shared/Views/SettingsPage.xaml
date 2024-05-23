@@ -1,0 +1,122 @@
+﻿<local:SettingsPageBase
+    x:Class="Tuvi.App.Shared.Views.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Tuvi.App.Shared.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="using:Tuvi.App.ViewModels"
+    xmlns:extensions="using:Tuvi.App.Shared.Extensions"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:behaviors="using:Tuvi.App.Shared.Behaviors"
+    xmlns:controls="using:Tuvi.App.Shared.Controls"
+    Loaded="OnLoaded"
+    mc:Ignorable="d">
+
+    <local:SettingsPageBase.DataContext>
+        <viewmodels:SettingsPageViewModel/>
+    </local:SettingsPageBase.DataContext>
+
+    <Grid Padding="36,0,0,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel>
+
+          <StackPanel Orientation="Horizontal"
+                   VerticalAlignment="Center"
+                   Margin="4,4,4,16"
+                   Height="40">
+            
+            <SymbolIcon Symbol="Setting"
+                      Margin="12,0,12,0"/>
+
+            <TextBlock x:Uid="AppSettings"
+                       Margin="0,0,4,0"
+                       Style="{StaticResource PageSubtitleTextStyle}"
+                       VerticalAlignment="Center" />
+          </StackPanel>
+            
+          <TextBlock Text="Language"
+                     Style="{StaticResource NormalTextStyle}"
+                     Margin="8,0,0,0"/>
+          
+          <TextBlock Text="{x:Bind ViewModel.RestartMessage, Mode=OneWay}"
+                     TextWrapping="Wrap"
+                     FontStyle="Italic"
+                     MaxWidth="310"
+                     HorizontalAlignment="Left"
+                     Margin="8,8,0,4"
+                     Visibility="{x:Bind ViewModel.ShowRestartMessage, Mode=OneWay}" />
+
+          <controls:LanguageSelectionControl x:Name="LanguageSelector"
+                                             Margin="8"
+                                             LanguageChangedHandler="OnLanguageChanged" />
+
+          <Button HorizontalAlignment="Stretch"
+                  HorizontalContentAlignment="Left"
+                  Margin="8">
+            <interactivity:Interaction.Behaviors>
+              <behaviors:FileBehavior Command="{x:Bind ViewModel.ExportBackupCommand, Mode=OneWay}" />
+            </interactivity:Interaction.Behaviors>
+            <Button.Content>
+              <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                  <SymbolIcon Symbol="SaveLocal"/>
+                  <TextBlock x:Uid="ExportBackupButton"
+                             Margin="8"
+                             Style="{StaticResource NormalTextStyle}" />
+                </StackPanel>
+                <TextBlock x:Uid="ExportBackupButtonSubtext"
+                           Margin="28,0,0,8"
+                           Style="{StaticResource CaptionTextStyle}" />
+              </StackPanel>
+            </Button.Content>
+          </Button>
+
+          <Button HorizontalAlignment="Stretch"
+                  HorizontalContentAlignment="Left"
+                  Margin="8">
+            <interactivity:Interaction.Behaviors>
+              <behaviors:FileBehavior Command="{x:Bind ViewModel.ImportBackupCommand, Mode=OneWay}" />
+            </interactivity:Interaction.Behaviors>
+            <Button.Content>
+              <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                  <SymbolIcon Symbol="OpenFile"/>
+                  <TextBlock x:Uid="ImportBackupButton"
+                             Margin="8"
+                             Style="{StaticResource NormalTextStyle}" />
+                </StackPanel>
+                <TextBlock x:Uid="ImportBackupButtonSubtext"
+                           Margin="28,0,0,8"
+                           Style="{StaticResource CaptionTextStyle}" />
+              </StackPanel>
+            </Button.Content>
+          </Button>
+
+          <Button x:Uid="PgpKeysButton"
+                  Command="{x:Bind ViewModel.PgpKeysCommand}"
+                  HorizontalAlignment="Stretch"
+                  Margin="8,8" />
+
+          <Button x:Uid="ChangeMasterPasswordButton"
+                  Command="{x:Bind ViewModel.ChangeMasterPasswordCommand}"
+                  HorizontalAlignment="Stretch"
+                  Margin="8,8" />
+          
+          <Button x:Uid="ConfirmSeedPhraseButton"
+                  Command="{x:Bind ViewModel.ConfirmSeedPhraseCommand}"
+                  HorizontalAlignment="Stretch"
+                  Margin="8,8" />
+
+            <Button x:Uid="LocalLogoutButton"
+                    Command="{x:Bind ViewModel.WipeApplicationDataCommand}" 
+                    HorizontalAlignment="Stretch"
+                    Margin="8,8" />
+        </StackPanel>
+
+    </Grid>
+</local:SettingsPageBase>
