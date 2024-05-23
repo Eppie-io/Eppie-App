@@ -185,11 +185,11 @@
       <Project>{A642CE08-F1BF-411F-8C4A-B733E70129BE}</Project>
       <Name>Eppie.App.ViewModels</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\Sources\TuviMail\Tuvi.App.Converters\Tuvi.App.Converters.csproj">
+    <ProjectReference Include="..\Tuvi.App.Converters\Tuvi.App.Converters.csproj">
       <Project>{4dfa7f97-4150-46b2-85fe-3880cabfe2e4}</Project>
       <Name>Tuvi.App.Converters</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\Sources\TuviMail\Tuvi.OAuth2\Tuvi.OAuth2.csproj">
+    <ProjectReference Include="..\Tuvi.OAuth2\Tuvi.OAuth2.csproj">
       <Project>{c8cc6989-6a89-4a2e-97c9-6b265d742650}</Project>
       <Name>Tuvi.OAuth2</Name>
     </ProjectReference>

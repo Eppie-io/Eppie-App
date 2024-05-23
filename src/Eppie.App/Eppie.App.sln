@@ -29,9 +29,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComponentBuilder", "..\..\g
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eppie.App.ViewModels", "Eppie.App.ViewModels\Eppie.App.ViewModels.csproj", "{A642CE08-F1BF-411F-8C4A-B733E70129BE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tuvi.App.Converters", "..\..\..\..\Sources\TuviMail\Tuvi.App.Converters\Tuvi.App.Converters.csproj", "{A22C27DB-AD30-4A47-83C3-635373E92A6B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tuvi.App.Converters", "Tuvi.App.Converters\Tuvi.App.Converters.csproj", "{A22C27DB-AD30-4A47-83C3-635373E92A6B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tuvi.OAuth2", "..\..\..\..\Sources\TuviMail\Tuvi.OAuth2\Tuvi.OAuth2.csproj", "{3FA0B738-99A3-4A62-A133-19555EE874F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tuvi.OAuth2", "Tuvi.OAuth2\Tuvi.OAuth2.csproj", "{3FA0B738-99A3-4A62-A133-19555EE874F1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeyDerivation", "..\..\gitmodules\TuviPgpLib\gitmodules\TuviKeyDerivationLib\KeyDerivationInterface\KeyDerivation.csproj", "{64CDABB6-EE8C-406C-8FB9-E74CB8E5558B}"
 EndProject
