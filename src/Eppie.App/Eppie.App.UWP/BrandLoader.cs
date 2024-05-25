@@ -27,6 +27,21 @@ namespace Tuvi.App.Shared.Models
         }
     }
 
+    class Loader_Eppie_Dev : BrandInfo
+    {
+        public static readonly string[] NameIds = new string[] { "<NAMEID>", "<NAMEID>" };
+        public Loader_Eppie_Dev()
+        {
+            Values = new Dictionary<string, string>()
+            {
+                {"AppName", "Eppie (development)"},
+                {"Support", "beta@eppie.io"},
+                {"Homepage", "https://eppie.io"},
+                {"License", "https://eppie.io"}
+            };
+        }
+    }
+
     internal class BrandLoader : IBrandService
     {
         private BrandInfo _loader;
@@ -38,7 +53,7 @@ namespace Tuvi.App.Shared.Models
             }
             else
             {
-                _loader = new Loader_Eppie();
+                _loader = new Loader_Eppie_Dev();
             }
         }
 
