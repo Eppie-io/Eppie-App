@@ -226,7 +226,7 @@
     <comment>Notification text when connection to server failed</comment>
   </data>
   <data name="Copyright.Text" xml:space="preserve">
-    <value>© Finebits. Усе правы абароненыя.</value>
+    <value>© Усе правы абароненыя.</value>
     <comment>Copyright label</comment>
   </data>
   <data name="CurrentPassword.Text" xml:space="preserve">
