@@ -29,7 +29,7 @@
 
   <Applications>
     <Application Id="App"
-      Executable="TuviMail.exe"
+      Executable="Eppie.exe"
       EntryPoint="Tuvi.App.App">
       <uap:VisualElements
         DisplayName="Eppie"

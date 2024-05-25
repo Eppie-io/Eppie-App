@@ -56,7 +56,7 @@
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TuviMail</RootNamespace>
-    <AssemblyName>TuviMail</AssemblyName>
+    <AssemblyName>Eppie</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.19041.0</TargetPlatformVersion>
@@ -185,9 +185,9 @@
       <Project>{A642CE08-F1BF-411F-8C4A-B733E70129BE}</Project>
       <Name>Eppie.App.ViewModels</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Tuvi.App.Converters\Tuvi.App.Converters.csproj">
-      <Project>{4dfa7f97-4150-46b2-85fe-3880cabfe2e4}</Project>
-      <Name>Tuvi.App.Converters</Name>
+    <ProjectReference Include="..\Eppie.App.Converters\Eppie.App.Converters.csproj">
+      <Project>{A22C27DB-AD30-4A47-83C3-635373E92A6B}</Project>
+      <Name>Eppie.App.Converters</Name>
     </ProjectReference>
     <ProjectReference Include="..\Tuvi.OAuth2\Tuvi.OAuth2.csproj">
       <Project>{c8cc6989-6a89-4a2e-97c9-6b265d742650}</Project>

@@ -23,13 +23,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eppie.App.UWP", "Eppie.App.UWP\Eppie.App.UWP.csproj", "{000A2DA8-CF61-4BC3-B30F-112D7F4D549F}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "TuviMail.Shared", "Eppie.App.Shared\TuviMail.Shared.shproj", "{EF95CBFF-8992-4963-A1CA-B3F66959AE11}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Eppie.App.Shared", "Eppie.App.Shared\Eppie.App.Shared.shproj", "{EF95CBFF-8992-4963-A1CA-B3F66959AE11}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComponentBuilder", "..\..\gitmodules\TuviCore\Sources\ComponentBuilder\ComponentBuilder.csproj", "{715272FB-3F9D-4890-8FE5-63AC58307E2F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eppie.App.ViewModels", "Eppie.App.ViewModels\Eppie.App.ViewModels.csproj", "{A642CE08-F1BF-411F-8C4A-B733E70129BE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tuvi.App.Converters", "Tuvi.App.Converters\Tuvi.App.Converters.csproj", "{A22C27DB-AD30-4A47-83C3-635373E92A6B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eppie.App.Converters", "Eppie.App.Converters\Eppie.App.Converters.csproj", "{A22C27DB-AD30-4A47-83C3-635373E92A6B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tuvi.OAuth2", "Tuvi.OAuth2\Tuvi.OAuth2.csproj", "{3FA0B738-99A3-4A62-A133-19555EE874F1}"
 EndProject
