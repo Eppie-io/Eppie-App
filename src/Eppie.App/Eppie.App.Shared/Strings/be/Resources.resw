@@ -208,7 +208,7 @@
   <data name="ConfirmSeedPhraseButton.Content" xml:space="preserve">
     <value>Confirm recovery phrase</value>
     <comment>Text on "Confirm recovery phrase" button</comment>
-  </data>  
+  </data>
   <data name="CheckEmailNotification" xml:space="preserve">
     <value>Check email</value>
     <comment>Notification message that is shown when user needs to check entered email</comment>
@@ -226,8 +226,8 @@
     <comment>Notification text when connection to server failed</comment>
   </data>
   <data name="Copyright.Text" xml:space="preserve">
-    <value>© Finebits. Усе правы абароненыя.</value>
-    <comment>Finebits copyright label</comment>
+    <value>© Усе правы абароненыя.</value>
+    <comment>Copyright label</comment>
   </data>
   <data name="CurrentPassword.Text" xml:space="preserve">
     <value>Бягучы пароль</value>
@@ -521,7 +521,7 @@ You need to enable IMAP for this account first and try again.</value>
   <data name="SupportLabel.Text" xml:space="preserve">
     <value>Support:</value>
     <comment>A label for the support email</comment>
-  </data>  
+  </data>
   <data name="Version.Text" xml:space="preserve">
     <value>Version:</value>
     <comment>A label for the application version</comment>

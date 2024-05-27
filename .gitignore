@@ -15,4 +15,14 @@ src/Eppie.App/Eppie.App/bin/
 src/Eppie.App/Eppie.App/obj/
 src/Eppie.App/Eppie.App.ViewModels/bin/
 src/Eppie.App/Eppie.App.ViewModels/obj/
-src/Eppie.App/Eppie.App.Shared/TuviMail.Shared.shproj.user
+src/Eppie.App/Eppie.App.UWP/obj/
+src/Eppie.App/Eppie.App.UWP/.vs/
+src/Eppie.App/Eppie.App.UWP/bin/
+src/Eppie.App/Eppie.App.UWP/BundleArtifacts/
+src/Eppie.App/Eppie.App.UWP/Eppie.App.UWP.csproj.user
+src/Eppie.App/Tuvi.OAuth2/obj/
+src/Eppie.App/Tuvi.OAuth2/bin/
+src/Eppie.App/Eppie.App.Converters/obj/
+src/Eppie.App/Eppie.App.Converters/bin/
+src/Eppie.App/Eppie.App.Converters/Converters.csproj.user
+src/Eppie.App/Eppie.App.Shared/Eppie.App.Shared.shproj.user

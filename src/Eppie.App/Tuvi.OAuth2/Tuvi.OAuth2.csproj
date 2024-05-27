@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AnalysisLevel>6.0-all</AnalysisLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Finebits.Authorization.OAuth2" Version="0.3.0-alpha" />
+    <PackageReference Include="Finebits.Authorization.OAuth2.AuthenticationBroker.Desktop" Version="0.3.0-alpha" />
+    <PackageReference Include="Finebits.Authorization.OAuth2.Google" Version="0.3.0-alpha" />
+    <PackageReference Include="Finebits.Authorization.OAuth2.Outlook" Version="0.3.0-alpha" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core\Tuvi.Core.csproj" />
+  </ItemGroup>
+
+</Project>
