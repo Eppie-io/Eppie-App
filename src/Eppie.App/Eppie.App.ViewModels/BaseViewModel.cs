@@ -123,8 +123,10 @@ namespace Tuvi.App.ViewModels
             var isSeedInitialized = await Core.GetSecurityManager().IsSeedPhraseInitializedAsync().ConfigureAwait(true);
             if (accounts.Count >= 0 && isSeedInitialized)
             {
-                // TODO: Implement decentralized backup
-                const string uploadUrl = "http://localhost:7071/api/UploadBackupFunction";
+                // Test node URI
+                const string uploadUrl = "https://testnet.eppie.io/api/UploadBackupFunction?code=1";
+                // Local node URI
+                //const string uploadUrl = "http://localhost:7071/api/UploadBackupFunction";
 
                 var fingerprint = Core.GetBackupManager().GetBackupKeyFingerprint();
 
