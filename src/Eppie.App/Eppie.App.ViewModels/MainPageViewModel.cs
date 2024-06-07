@@ -410,8 +410,10 @@ namespace Tuvi.App.ViewModels
 
                 await UpdateContactsUnreadCountAsync().ConfigureAwait(true);
 
-                // TODO: Implement decentralized backup
-                const string downloadUrl = "http://localhost:7071/api/DownloadBackupFunction?name=";
+                // Test node URI
+                const string downloadUrl = "https://testnet.eppie.io/api/DownloadBackupFunction?code=1&name=";
+                // Local node URI
+                //const string downloadUrl = "http://localhost:7071/api/DownloadBackupFunction?name=";
 
                 await Core.RestoreFromBackupIfNeededAsync(new Uri(downloadUrl)).ConfigureAwait(true);
             }
