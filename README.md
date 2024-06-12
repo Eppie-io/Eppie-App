@@ -24,6 +24,11 @@ Eppie is early in development. The p2p part is not publicly available at the mom
 
 ## Install from Microsoft Store
 Preview version is available at Microsoft Store.
+<p align="left">
+  <a href="https://apps.microsoft.com/detail/Eppie%20Mail%20Preview/9n3r8xkz16c5?mode=direct&cid=github">
+    <img src="https://get.microsoft.com/images/en-us%20light.svg" width="200" alt="Download" />
+  </a>
+</p>
 
 ## Download latest binaries
 WIP
