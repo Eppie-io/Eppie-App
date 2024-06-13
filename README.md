@@ -1,4 +1,4 @@
-# Eppie — pen protocol encrypted p2p email
+# Eppie — open protocol encrypted p2p email
 
 [![Crowdin](https://badges.crowdin.net/e/8fee200a40ee70ffd3fa6b7d8d23deee/localized.svg)](https://eppie.crowdin.com/eppie)
 
