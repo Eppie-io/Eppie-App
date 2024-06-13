@@ -1,8 +1,6 @@
-# Eppie-App
+# Eppie — pen protocol encrypted p2p email
 
 [![Crowdin](https://badges.crowdin.net/e/8fee200a40ee70ffd3fa6b7d8d23deee/localized.svg)](https://eppie.crowdin.com/eppie)
-
-Open protocol encrypted p2p email.
 
 ## Intro
 [Eppie](https://eppie.io) is a next-gen _providerless_ email that allows its users to own their accounts, addresses and data. In addition to its own p2p network Eppie can communicate with other popular decentralized networks, like Ethereum, and is capable of interacting with conventional IMAP/SMTP email. It is beautiful and easy to use, just like a normal email client.
@@ -22,13 +20,15 @@ Eppie is early in development. The p2p part is not publicly available at the mom
 - Local account created with [BIP39 standard](https://bitcoinwiki.org/wiki/mnemonic-phrase) Seed-Phrase.
 - Encrypted local backup.
 
-## Install from Microsoft Store
-Preview version is available at Microsoft Store.
+## Install from Microsoft Store, App Store or Google Play
+There's a preview version currently available at Microsoft Store.
 <p align="left">
   <a href="https://apps.microsoft.com/detail/Eppie%20Mail%20Preview/9n3r8xkz16c5?mode=direct&cid=github">
     <img src="https://get.microsoft.com/images/en-us%20light.svg" width="200" alt="Download" />
   </a>
 </p>
+
+WIP
 
 ## Download latest binaries
 WIP
@@ -51,5 +51,5 @@ First of all this is a pretty ambitiois project and we are greateful beyond meas
 
 [Here](https://eppie.crowdin.com/eppie) you can help Eppie with localization.
 
-Also, feel free to [subscripe](https://eppie.io) to our waiting list.
+Also, feel free to [subscripe](https://eppie.io) to our waiting list. We might invite you for an interview or beta testing.
 
