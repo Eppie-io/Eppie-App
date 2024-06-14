@@ -3,6 +3,7 @@
 [![LicenseBadge](https://img.shields.io/github/license/Eppie-io/Eppie-App.svg)](https://raw.githubusercontent.com/Eppie-io/Eppie-App/main/LICENSE)
 [![Build and Test](https://img.shields.io/github/actions/workflow/status/Eppie-io/Eppie-App/build.yml?logo=github&branch=main&event=push)](https://github.com/Eppie-io/Eppie-App/actions/workflows/build.yml?query=branch%3Amain+event%3Apush)
 [![Crowdin](https://badges.crowdin.net/e/8fee200a40ee70ffd3fa6b7d8d23deee/localized.svg)](https://eppie.crowdin.com/eppie)
+[![Release](https://img.shields.io/github/v/release/Eppie-io/Eppie-App)](https://github.com/Eppie-io/Eppie-App/releases/latest)
 
 ## Intro
 
