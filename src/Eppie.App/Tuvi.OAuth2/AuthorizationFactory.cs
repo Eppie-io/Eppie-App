@@ -37,8 +37,8 @@ namespace Tuvi.OAuth2
 
     public class AuthorizationConfiguration
     {
-        public Func<IAuthenticationBroker> AuthenticationBrokerCreator { get; set; }
-        public Func<GoogleConfiguration> GoogleConfigurationCreator { get; set; }
-        public Func<OutlookConfiguration> OutlookConfigurationCreator { get; set; }
+        public Func<IAuthenticationBroker>? AuthenticationBrokerCreator { get; set; }
+        public Func<GoogleConfiguration>? GoogleConfigurationCreator { get; set; }
+        public Func<OutlookConfiguration>? OutlookConfigurationCreator { get; set; }
     }
 }

@@ -8,7 +8,7 @@ namespace Tuvi.OAuth2
 {
     public class AuthorizationProvider
     {
-        public static AuthorizationProvider Create(HttpClient httpClient, Func<IAuthenticationBroker> brokerCreator, Func<GoogleConfiguration> googleConfigCreator, Func<OutlookConfiguration> outlookConfigCreator)
+        public static AuthorizationProvider Create(HttpClient httpClient, Func<IAuthenticationBroker>? brokerCreator, Func<GoogleConfiguration>? googleConfigCreator, Func<OutlookConfiguration>? outlookConfigCreator)
         {
             return new AuthorizationProvider(httpClient, brokerCreator, googleConfigCreator, outlookConfigCreator);
         }
@@ -20,7 +20,7 @@ namespace Tuvi.OAuth2
         private readonly Func<GoogleConfiguration> _googleConfigurationCreator;
         private readonly Func<OutlookConfiguration> _outlookConfigurationCreator;
 
-        private AuthorizationProvider(HttpClient httpClient, Func<IAuthenticationBroker> brokerCreator, Func<GoogleConfiguration> googleConfigCreator, Func<OutlookConfiguration> outlookConfigCreator)
+        private AuthorizationProvider(HttpClient httpClient, Func<IAuthenticationBroker>? brokerCreator, Func<GoogleConfiguration>? googleConfigCreator, Func<OutlookConfiguration>? outlookConfigCreator)
         {
             if (httpClient is null)
             {
