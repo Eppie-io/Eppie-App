@@ -5,7 +5,7 @@ namespace Tuvi.App.Converters
 {
     public abstract class ValueToStringConverter<T> : IValueConverter
     {
-        public T DefaultValue { get; set; }
+        public T? DefaultValue { get; set; }
 
         public string DefaultString { get; set; }
 
@@ -15,18 +15,18 @@ namespace Tuvi.App.Converters
             DefaultString = "";
         }
 
-        public virtual string Convert(T value)
+        public virtual string? Convert(T value)
         {
-            return value.ToString();
+            return value?.ToString();
         }
         public abstract T ConvertBack(string value);
 
-        public object Convert(object value, Type targetType, object parameter, string language)
+        public object? Convert(object value, Type targetType, object parameter, string language)
         {
             return value != null ? Convert((T)value) : DefaultString;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        public object? ConvertBack(object value, Type targetType, object parameter, string language)
         {
             return value != null ? ConvertBack((string)value) : DefaultValue;
         }

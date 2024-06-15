@@ -10,10 +10,10 @@ namespace Tuvi.App.Converters
 {
     public class BoolToValueConverter<T> : IValueConverter
     {
-        public T FalseValue { get; set; }
-        public T TrueValue { get; set; }
+        public T? FalseValue { get; set; }
+        public T? TrueValue { get; set; }
 
-        public object Convert(object value, Type targetType, object parameter, string language)
+        public object? Convert(object value, Type targetType, object parameter, string language)
         {
             if (value == null)
                 return FalseValue;
@@ -46,9 +46,9 @@ namespace Tuvi.App.Converters
 
     public class BoolToResourceConverter : BoolToStringConverter
     {
-        private ResourceLoader _resourceLoader;
-        private string _resource;
-        public String Resource
+        private ResourceLoader? _resourceLoader;
+        private string? _resource;
+        public String? Resource
         {
             get { return _resource; }
             set
@@ -61,8 +61,8 @@ namespace Tuvi.App.Converters
             }
         }
 
-        private string _falseKey;
-        public String FalseKey
+        private string? _falseKey;
+        public String? FalseKey
         {
             get { return _falseKey; }
             set
@@ -73,8 +73,8 @@ namespace Tuvi.App.Converters
             }
         }
 
-        private string _trueKey;
-        public String TrueKey
+        private string? _trueKey;
+        public String? TrueKey
         {
             get { return _trueKey; }
             set
@@ -105,12 +105,12 @@ namespace Tuvi.App.Converters
 
             if (TrueKey != null && TrueValue == null)
             {
-                TrueValue = _resourceLoader.GetString(TrueKey);
+                TrueValue = _resourceLoader?.GetString(TrueKey);
             }
 
             if (FalseKey != null && FalseValue == null)
             {
-                FalseValue = _resourceLoader.GetString(FalseKey);
+                FalseValue = _resourceLoader?.GetString(FalseKey);
             }
         }
     }
