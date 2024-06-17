@@ -1,13 +1,11 @@
-# To get started with Dependabot version updates, you'll need to specify which
-# package ecosystems to update and where the package manifests are located.
 # Please see the documentation for all configuration options:
 # https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
 
 version: 2
 updates:
-  # Maintain dependencies for NuGet
+
   - package-ecosystem: "nuget"
-    directory: "/src/Eppie.App/" # Location of package manifests
+    directory: "/src/Eppie.App/"                    # Path to '*.sln' directory
     schedule:
       interval: "daily"
     reviewers:
@@ -22,17 +20,36 @@ updates:
       Microsoft:
         patterns:
           - "Microsoft.*"
-    
-  # Maintain dependencies for gitsubmodule
+
   - package-ecosystem: "gitsubmodule"
-    directory: "/" # Location of package manifests
+    directory: "/"                                  # Path to '.gitmodules' directory
     schedule:
       interval: "daily"
     reviewers:
       - "al-kau"
       - "ValeraFinebits"
       - "anatolse"
+    open-pull-requests-limit: 20
     groups:
       submodules:
         patterns:
           - "*"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"                                  # Workflow files stored in the default location
+    schedule:
+      interval: "monthly"
+    reviewers:
+      - "al-kau"
+      - "anatolse"
+      - "ValeraFinebits"
+    groups:
+      Common-actions:
+        patterns:
+          - "actions/*"
+      Finebits-actions:
+        patterns:
+          - "finebits/*"
+      GitHub-actions:
+        patterns:
+          - "github/*"
