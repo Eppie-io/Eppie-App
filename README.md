@@ -44,7 +44,7 @@ You may download the latest release for your system:
 
 ### Windows binaries
 
-- [EppieMail-x86-x64-ARM64.msixbundle](https://github.com/Eppie-io/Eppie-App/releases/lates/download/Eppie.App-x86-x64-ARM64.msixbundle)
+- [Eppie.App-x86-x64-ARM64.msixbundle](https://github.com/Eppie-io/Eppie-App/releases/latest/download/Eppie.App-x86-x64-ARM64.msixbundle)
 
 ### Linux binaries
 
