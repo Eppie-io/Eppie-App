@@ -54,6 +54,10 @@
           <controls:LanguageSelectionControl x:Name="LanguageSelector"
                                              Margin="8"
                                              LanguageChangedHandler="OnLanguageChanged" />
+          
+          <HyperlinkButton Content="Could you help us with translations?"
+                           Margin="0,0,0,8"
+                           extensions:HyperlinkExtension.Link="https://eppie.crowdin.com/eppie"/> 
 
           <Button HorizontalAlignment="Stretch"
                   HorizontalContentAlignment="Left"
