@@ -38,7 +38,23 @@ There's a preview version currently available at Microsoft Store.
 
 WIP
 
-## Download latest binaries
+## Downloads
+
+You may download the latest release for your system:
+
+### Windows installer
+
+- [Eppie.App-x86-x64-ARM64.msixbundle](https://github.com/Eppie-io/Eppie-App/releases/latest/download/Eppie.App-x86-x64-ARM64.msixbundle)
+
+### Linux binaries
+
+WIP
+
+### macOS binaries
+
+WIP
+
+### Android binaries
 
 WIP
 
