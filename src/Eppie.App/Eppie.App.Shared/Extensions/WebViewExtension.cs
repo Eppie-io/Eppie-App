@@ -5,22 +5,24 @@ namespace Tuvi.App.Shared.Extensions
 {
 	public static class WebViewExtension
 	{
-        public static string GetStringSource(DependencyObject obj)
+        public static string GetStringSourceWithDisabledJavaScript(DependencyObject obj)
         {
-            return (string)obj?.GetValue(StringSourceProperty);
+            return (string)obj?.GetValue(StringSourceWithDisabledJavaScriptProperty);
         }
 
-        public static void SetStringSource(DependencyObject obj, string value)
+        public static void SetStringSourceWithDisabledJavaScript(DependencyObject obj, string value)
         {
-            obj?.SetValue(StringSourceProperty, value);
+            obj?.SetValue(StringSourceWithDisabledJavaScriptProperty, value);
         }
 
-        public static readonly DependencyProperty StringSourceProperty =
-            DependencyProperty.RegisterAttached("StringSource", typeof(string), typeof(WebViewExtension), new PropertyMetadata("", OnStringSourcePropertyChanged));
-        private static void OnStringSourcePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        public static readonly DependencyProperty StringSourceWithDisabledJavaScriptProperty =
+            DependencyProperty.RegisterAttached("StringSourceWithDisabledJavaScript", typeof(string), typeof(WebViewExtension), new PropertyMetadata("", OnStringSourceWithDisabledJavaScriptPropertyChanged));
+        private static void OnStringSourceWithDisabledJavaScriptPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is WebView webView)
             {
+                webView.Settings.IsJavaScriptEnabled = false;
+
                 webView.NavigateToString(e.NewValue as string ?? "");
             }
         }
