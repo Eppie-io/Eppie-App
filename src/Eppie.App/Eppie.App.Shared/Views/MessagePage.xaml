@@ -233,7 +233,7 @@
               BorderBrush="#FFE0E0E0"
               BorderThickness="1">
 
-            <WebView extensions:WebViewExtension.StringSource="{x:Bind ViewModel.MessageInfo.MessageHtmlBody, Mode=OneWay}"
+            <WebView extensions:WebViewExtension.StringSourceWithDisabledJavaScript="{x:Bind ViewModel.MessageInfo.MessageHtmlBody, Mode=OneWay}"
                      Visibility="{x:Bind ViewModel.MessageInfo.HasHtmlBody, Mode=OneWay}" />
 
             <ScrollViewer Padding="4"
