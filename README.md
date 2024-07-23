@@ -42,27 +42,58 @@ WIP
 
 You may download the latest release for your system:
 
-### Windows installer
+### Windows Installer
 
 - [Eppie.App-x86-x64-ARM64.msixbundle](https://github.com/Eppie-io/Eppie-App/releases/latest/download/Eppie.App-x86-x64-ARM64.msixbundle)
 
-### Linux binaries
+### Linux Binaries
 
 WIP
 
-### macOS binaries
+### macOS Binaries
 
 WIP
 
-### Android binaries
+### Android Binaries
 
 WIP
 
-## Build from source
+## Build from Source Code
 
-WIP
+### Universal Windows Project
 
-## Planned features
+#### Prerequisites
+
+- OS: Windows 10 or later
+- IDE: Visual Studio 2022 with installed workloads and components:
+  - .Net Multi-platform App UI development
+    - Android SDK setup (with Android SDK Platform 31)
+    - .NET profiling tools
+    - Xamarin
+  - Windows application development
+    - Universal Windows Platform tools
+    - Windows 11 SDK (10.0.22621.0)
+    - Windows 10 SDK (10.0.19041.0)
+
+> [!NOTE]
+> You can add the **Android SDK Platform 31** api in the **Platforms** tab in the **Android SDK Manager**  
+> **Visual Studio Menu**: **Tools** &#10148; **Android** &#10148; **Android SDK Manager**
+
+#### To Clone
+
+```console
+git clone --recursive https://github.com/Eppie-io/Eppie-App.git eppie-app
+```
+
+#### To Build and Launch
+
+1. Open the **src/Eppie.App/Eppie.App.sln** file in the Visual Studio
+2. Set the **Eppie.App.UWP** project as your starting project
+3. Select **x64** platform
+4. Start building the solution (**Visual Studio Menu**: **Build** &#10148; **Build Solution**)
+5. Launch the **Eppie.App.UWP** project (**Visual Studio Menu**: **Debug** &#10148; **Start Debugging**)
+
+## Planned Features
 
 As the project matures more features will be added, including but not limited to
 
