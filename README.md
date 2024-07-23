@@ -93,6 +93,14 @@ git clone --recursive https://github.com/Eppie-io/Eppie-App.git eppie-app
 4. Start building the solution (**Visual Studio Menu**: **Build** &#10148; **Build Solution**)
 5. Launch the **Eppie.App.UWP** project (**Visual Studio Menu**: **Debug** &#10148; **Start Debugging**)
 
+### Linux
+
+WIP
+
+### macOS
+
+WIP
+
 ## Planned Features
 
 As the project matures more features will be added, including but not limited to
