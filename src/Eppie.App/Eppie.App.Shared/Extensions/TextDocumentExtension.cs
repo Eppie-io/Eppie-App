@@ -166,15 +166,13 @@ namespace Tuvi.App.Shared.Extensions
 
             float OpenNewFontSpan()
             {
-                string strColour = txtRange.CharacterFormat.ForegroundColor.ToString();
                 float fontSize = txtRange.CharacterFormat.Size;
                 string strFntName = txtRange.CharacterFormat.Name;
                 strHTML.Append("<span style=\"font-family:")
                        .Append(strFntName)
                        .Append("; font-size: ")
                        .Append(fontSize)
-                       .Append("pt; color: #")
-                       .Append(strColour.Substring(3))
+                       .Append("pt;")
                        .Append("\">");
                 return fontSize;
             }
