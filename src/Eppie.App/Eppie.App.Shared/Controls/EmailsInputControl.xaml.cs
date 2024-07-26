@@ -143,6 +143,11 @@ namespace Tuvi.App.Shared.Controls
 
         private ContactItem GetMatchedItem(string searchText)
         {
+            if(string.IsNullOrWhiteSpace(searchText))
+            {
+                return null;
+            }
+
             return Contacts.FirstOrDefault(contact => StringHelper.AreEmailsEqual(contact.Email.Address, searchText));
         }
 
