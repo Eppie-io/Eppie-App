@@ -25,7 +25,7 @@ body:
     attributes:
       label: Subtasks
       description: Please list the actions and subtasks here.
-      placeholder: >
+      placeholder: |
         - [ ] new action
         - [ ] #1 @user
         - [ ] #2
