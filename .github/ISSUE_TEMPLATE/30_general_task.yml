@@ -1,0 +1,40 @@
+name: 📝 New Task
+description: Describe a task that needs to be done. 
+title: "[Task] <title>"
+labels: ["task"]
+body:
+  - type: markdown
+    attributes:
+      value: '## Creating a task'
+  - type: markdown
+    attributes:
+      value: >
+        This form should be used by team members only, to create new work task.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: A clear description of what needs to be done.
+      placeholder: Enter description...      
+    validations:
+      required: true
+
+  - type: textarea
+    id: subtasks
+    attributes:
+      label: Subtasks
+      description: Please list the actions and subtasks here.
+      placeholder: >
+        - [ ] new action
+        - [ ] #1 @user
+        - [ ] #2
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: "Is there any additional information or context regarding the task? Background information, links, or related tasks are welcome."
+      placeholder: Add any other context or information about the task here.
