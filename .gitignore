@@ -28,3 +28,5 @@ src/Eppie.App/Eppie.App.Converters/Converters.csproj.user
 src/Eppie.App/Eppie.App.Shared/Eppie.App.Shared.shproj.user
 src/Tests/Eppie.App.ViewModels.Tests/obj/
 src/Tests/Eppie.App.ViewModels.Tests/bin/
+src/Eppie.App/Eppie.App.UWP/AppPackages/
+.vs/
