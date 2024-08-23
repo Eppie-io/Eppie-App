@@ -16,7 +16,7 @@ body:
   - type: textarea
     id: current-behavior
     attributes:
-      label: Current behavior
+      label: Current Behavior
       description: A description of what you're experiencing.
     validations:
       required: true
@@ -60,7 +60,7 @@ body:
   - type: dropdown
     id: platforms-affected
     attributes:
-      label: Affected platforms
+      label: Affected Platforms
       description: Please select platforms where the issue can be reproduced.
       multiple: true
       options:
@@ -73,6 +73,7 @@ body:
         - Windows (Desktop)
         - Windows (UWP)
         - Windows (WinUI)
+        - Other
 
     validations:
       required: true
@@ -80,7 +81,7 @@ body:
   - type: input
     id: operating-system
     attributes:
-      label: Operating system
+      label: Operating System
       description: What operating system version are you using?
       placeholder: Windows 11 Version 23H2 (OS Build 22631.4037)
     validations:
@@ -98,12 +99,12 @@ body:
   - type: markdown
     attributes:
       value: |
-        ## Additional information
+        ## Additional Information
 
   - type: textarea
     id: logfiles
     attributes:
-      label: Log files
+      label: Log Files
       description: If possible, please attach log file with log level set to debug.
       placeholder: Drag and drop your log files here!
     validations:
@@ -112,7 +113,7 @@ body:
   - type: textarea
     id: extrainfo
     attributes:
-      label: Anything else we need to know?
+      label: Is There Anything Else We Should Know?
       description: Anything that will give us more context about the issue!
     validations:
       required: false
