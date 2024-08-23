@@ -25,7 +25,7 @@ Please check if your pull request fulfills the following requirements:
 - [ ] [The pull request is labeled](#pull-request-labels)
 - [ ] [Affected platforms are labeled](#platform-labels)
 - [ ] Commits follow the [Conventional Commits specification](https://www.conventionalcommits.org/en/v1.0.0/#summary)
-- [ ] The code is commented, especially in difficult to understand places
+- [ ] There are no difficult to understand places left without comments
 - [ ] The changes do not generate new warnings
 
 > [!NOTE]
@@ -73,6 +73,7 @@ Please check if your pull request fulfills the following requirements:
 > - `platform/desktop` - pull requests that are related to the desktop
 > - `platform/ios` - pull requests that are related to the iOS platform
 > - `platform/macos` - pull requests that are related to the macOS platform
+> - `platform/other` - pull requests that are related to an unknown platform
 > - `platform/uwp` - pull requests that are related to the Universal Windows Platform
 > - `platform/wasm` - pull requests that are related to the WebAssembly platform
 > - `platform/winui` - pull requests that are related to the WinUI platform
