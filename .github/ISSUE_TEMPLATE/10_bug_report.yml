@@ -1,49 +1,59 @@
-name: 🐞 Bug Report
+name: '🐞 Bug Report'
 title: '[BUG] <title>'
 description: File a bug report
-labels: ["bug", "to verify"]
-assignees: []
+labels: ['kind/bug']
 body:
   - type: markdown
     attributes:
       value: |
         Thanks for taking the time to fill out this bug report! Please make sure to add as much detail as you can.
-  - type: textarea
-    id: description
+
+  - type: markdown
     attributes:
-      label: Description
-      description: Please give a detailed description of the issue that you're seeing. You can add screenshots and videos as well. 
-      placeholder: Tell us what you see!
+      value: |
+        ## Description
+
+  - type: textarea
+    id: current-behavior
+    attributes:
+      label: Current behavior
+      description: A description of what you're experiencing.
     validations:
       required: true
+
   - type: textarea
-    id: repro-steps
+    id: expected-behavior
+    attributes:
+      label: Expected Behavior
+      description: A description of what you expected to happen.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps-to-reproduce
     attributes:
       label: Steps to Reproduce
-      description: Describe all the steps we need to take to show the behavior that you have observed. Also, include what you expected to happen and what did actually happen.
+      description: |
+        Describe all the steps we need to take to show the behavior that you have observed.
       placeholder: |
-        1. Create a File > New App
-        2. Add a `Button` like so: `<Button Text="this is a bug" />`
-        3. Click the added button and observe the bug 🐞
-
-        Expected outcome: a bug was added
-        Actual outcome: a ladybug appeared
+        1. Go to '...'
+        2. Click on '...'
+        3. Scroll down to '...'
+        4. See error
     validations:
       required: true
-  - type: dropdown
-    id: platform-with-bug
+
+  - type: markdown
     attributes:
-      label: Platform with bug
-      description: What Platform is this bug affecting?
-      options:
-        - Core
-        - Android
-        - iOS
-        - MacCatalyst
-        - Windows
-        - GTK
-        - WebAssembly
-        - Other
+      value: |
+        ## Environment
+
+  - type: input
+    id: app-version
+    attributes:
+      label: Application Version
+      description: What version of the app or commit hash are you using?
+      placeholder: e.g., 'v1.0.0', 'commit c96f934'
     validations:
       required: true
 
@@ -51,29 +61,58 @@ body:
     id: platforms-affected
     attributes:
       label: Affected platforms
-      description: Select all or any platform that you see this issue on. This helps us determine if it's something platform-specific or in the core. If you were only able to test on 1 platform, please check the last option to inform us about that.
+      description: Please select platforms where the issue can be reproduced.
       multiple: true
       options:
         - Android
         - iOS
-        - MacCatalyst
-        - Windows
-        - GTK
+        - Linux (Desktop)
+        - macOS (Desktop)
+        - macOS (MacCatalyst)
         - WebAssembly
-        - Other
-        - I was *not* able test on other platforms
+        - Windows (Desktop)
+        - Windows (UWP)
+        - Windows (WinUI)
+
     validations:
       required: true
 
-  - type: textarea
-    id: workaround
+  - type: input
+    id: operating-system
     attributes:
-      label: Did you find any workaround?
-      description: Did you find any workaround for this issue? This can unblock other people while waiting for this issue to be resolved or even give us a hint on how to fix this.
+      label: Operating system
+      description: What operating system version are you using?
+      placeholder: Windows 11 Version 23H2 (OS Build 22631.4037)
+    validations:
+      required: true
+
+  - type: input
+    id: browser-version
+    attributes:
+      label: "Browser Version"
+      description: What version of browser are you using?
+      placeholder: Microsoft Edge (Version 127.0.2651.105)
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: |
+        ## Additional information
 
   - type: textarea
-    id: logs
+    id: logfiles
     attributes:
-      label: Relevant log output
-      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for back ticks.
-      render: shell
+      label: Log files
+      description: If possible, please attach log file with log level set to debug.
+      placeholder: Drag and drop your log files here!
+    validations:
+      required: false
+
+  - type: textarea
+    id: extrainfo
+    attributes:
+      label: Anything else we need to know?
+      description: Anything that will give us more context about the issue!
+    validations:
+      required: false
