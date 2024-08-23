@@ -13,7 +13,7 @@ Please read the following before submitting:
 ## Description
 <!-- Please describe the changes that this pull request introduces. -->
 
-## Other information
+## Other Information
 <!-- Please provide any additional information if necessary. -->
 
 ## Pull Request Checklist
