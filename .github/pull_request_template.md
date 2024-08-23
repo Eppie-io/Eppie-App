@@ -54,7 +54,7 @@ Please check if your pull request fulfills the following requirements:
 > - `type/documentation` - pull requests that only change **documentation**
 > - **`type/feature`** - pull requests that add **new features**
 > - **`type/fix`** - pull requests that fix a **bug**
-> - **`type/language`** - pull requests that change **translation**
+> - **`type/localization`** - pull requests that change **translation**
 > - **`type/performance`** - pull requests that improve **performance**
 > - `type/refactor` - pull requests that **refactor** a section of code
 > - `type/style` - pull requests that change **code styles**
@@ -62,7 +62,7 @@ Please check if your pull request fulfills the following requirements:
 > - **`ignore-for-release`** - for pull requests that do **not need** to be appeared in **release notes**
 >
 > ---
-> A pull request appears in the release notes if it has one of the labels: `type/breaking-change`, `type/feature`, `type/fix`, `type/language`, `type/performance`
+> A pull request appears in the release notes if it has one of the labels: `type/breaking-change`, `type/feature`, `type/fix`, `type/localization`, `type/performance`
 >
 > </details>
 >
