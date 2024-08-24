@@ -53,7 +53,7 @@ updates:
       - "anatolse"
       - "ValeraFinebits"
     commit-message:
-      prefix: "build"
+      prefix: "ci"
       include: "scope"
     groups:
       Common-actions:
