@@ -29,4 +29,9 @@ src/Eppie.App/Eppie.App.Shared/Eppie.App.Shared.shproj.user
 src/Tests/Eppie.App.ViewModels.Tests/obj/
 src/Tests/Eppie.App.ViewModels.Tests/bin/
 src/Eppie.App/Eppie.App.UWP/AppPackages/
-.vs/
+
+## a new project
+source/Eppie.App/.vs/
+source/Eppie.App/Eppie.App/Eppie.App.csproj.user
+source/Eppie.App/Eppie.App/bin/
+source/Eppie.App/Eppie.App/obj/
