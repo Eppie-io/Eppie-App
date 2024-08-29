@@ -1,0 +1,12 @@
+Uno platform (v5.3.21.31) Template configuration:
+- Framework: .NET 8.0
+- Platforms: Android, iOS, WebAssembly, macOS (Catalyst), Windows, Desktop
+- Presentation: MVVM
+- Markup: XAML
+- Theme: Fluent, Theme Service
+- Extensions: Dependency Injection, Configuration, Localization, Serilog
+- Features: Toolkit
+- Application: ID, Publisher
+- Authentication: None
+- Testing: None
+- CI Pipeline: None
