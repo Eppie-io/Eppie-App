@@ -44,5 +44,6 @@
       ThemeService;
     </UnoFeatures>
   </PropertyGroup>
+  <Import Project="..\Eppie.App.Shared\Eppie.App.Shared.projitems" Label="Shared" />
 
 </Project>

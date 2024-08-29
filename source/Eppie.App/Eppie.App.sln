@@ -16,6 +16,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eppie.App.UWP", "Eppie.App.UWP\Eppie.App.UWP.csproj", "{CAE118DC-8F0D-476E-A64A-AE165C754C92}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Eppie.App.Shared", "Eppie.App.Shared\Eppie.App.Shared.shproj", "{C4918D44-FB8A-442F-BDE5-69106B2DA412}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -96,5 +98,10 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1BCAC5D9-CEF8-4D64-8F16-3A0FEE49CF42}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Eppie.App.Shared\Eppie.App.Shared.projitems*{0d949175-5a8b-4474-9f7b-529a1b5ad025}*SharedItemsImports = 5
+		Eppie.App.Shared\Eppie.App.Shared.projitems*{c4918d44-fb8a-442f-bde5-69106b2da412}*SharedItemsImports = 13
+		Eppie.App.Shared\Eppie.App.Shared.projitems*{cae118dc-8f0d-476e-a64a-ae165c754c92}*SharedItemsImports = 4
 	EndGlobalSection
 EndGlobal
