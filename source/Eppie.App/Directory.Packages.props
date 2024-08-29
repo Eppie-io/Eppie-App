@@ -12,5 +12,7 @@
 
   <ItemGroup>
     <PackageVersion Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.2.14" />
+    <PackageVersion Include="Microsoft.UI.Xaml" Version="2.8.6" />
+    <PackageVersion Include="Uno.Toolkit.UI" Version="6.1.8" />
   </ItemGroup>
 </Project>
