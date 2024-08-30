@@ -8,9 +8,10 @@
         <StackPanel HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     utu:SafeArea.Insets="VisibleBounds">
-            <TextBlock HorizontalAlignment="Center"
-                       AutomationProperties.AutomationId="HelloTextBlock"
-                       Text="Hello Uno Platform!" />
+            <TextBlock HorizontalAlignment="Center" AutomationProperties.AutomationId="HelloTextBlock">
+                <Run x:Uid="GreetingPhrase" />
+                <Run Text="{x:Bind AppVersion}" />
+            </TextBlock>
         </StackPanel>
     </ScrollViewer>
 </Page>

@@ -19,4 +19,12 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\en\Resources.resw">
+      <SubType>Designer</SubType>
+    </PRIResource>
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\fr\Resources.resw">
+      <SubType>Designer</SubType>
+    </PRIResource>
+  </ItemGroup>
 </Project>
