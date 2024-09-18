@@ -49,7 +49,7 @@ jobs:
         id: build-config
         uses: finebits/github-actions/toolset/select-configuration@8f808eb66ee57460326283fdeedde8c63986be00 # v1.6.0-prerelease
         with:
-          json-file: ./.github/configuration/build.json
+          json-file: ./.github/configurations/build.json
           keywords: "all"
 
   build:
