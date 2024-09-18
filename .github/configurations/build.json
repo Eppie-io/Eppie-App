@@ -5,7 +5,7 @@
             "all"
         ],
         "os": [
-            "windwos-latest"
+            "windows-latest"
         ],
         "project":"./source/Eppie.App/Eppie.App/Eppie.App.csproj",
         "build": {
@@ -36,7 +36,7 @@
             "all"
         ],
         "os": [
-            "windwos-latest"
+            "windows-latest"
         ],
         "project":"./source/Eppie.App/Eppie.App.UWP/Eppie.App.UWP.csproj",
         "build": {
