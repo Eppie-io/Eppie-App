@@ -1,6 +1,6 @@
 ###############################################################################
 #
-#   Copyright 2023 Eppie(https://eppie.io)
+#   Copyright 2024 Eppie(https://eppie.io)
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -16,24 +16,49 @@
 #
 ###############################################################################
 
+---
+
 name: "Build solution"
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+on: # yamllint disable-line rule:truthy
   workflow_dispatch:
+  push:
+    branches:
+      - main
+      - release/**
+  pull_request:
+    branches:
+      - main
+      - release/**
 
 jobs:
 
-  build:
-    runs-on: windows-latest
+  prepare:
+    runs-on: ubuntu-latest
 
+    outputs:
+      matrix: ${{ steps.build-config.outputs.matrix }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+        with:
+          fetch-depth: 0
+
+      - name: config
+        id: build-config
+        uses: finebits/github-actions/toolset/select-configuration@8f808eb66ee57460326283fdeedde8c63986be00 # v1.6.0-prerelease
+        with:
+          json-file: ./.github/configuration/build.json
+          keywords: "all"
+
+  build:
+
+    needs: prepare
     strategy:
-      matrix:
-        configuration: [ Debug, Release ]
-        target: [ android, gtk, ios, macos, wasm, win-x64, win-x86, win-arm64 ]
+      matrix: ${{ fromJson(needs.prepare.outputs.matrix) }}
+
+    runs-on: ${{ matrix.os }}
 
     env:
       configuration: ${{ matrix.configuration }}
@@ -41,45 +66,40 @@ jobs:
 
       dotnet-version: '8.x'
 
-      name: Eppie.App
-      root-dirictory: src/Eppie.App
-
-      # template: root/name/name.target/name.target.csproj
-      project-file-template: '{0}/{1}.{2}/{1}.{2}.csproj'
-
     steps:
-    - name: Checkout
-      uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
-      with:
-        fetch-depth: 0
-        submodules: recursive
+      - name: Checkout
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+        with:
+          fetch-depth: 0
+          submodules: recursive
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@6bd8b7f7774af54e05809fcc5431931b3eb1ddee # v4.0.1
-      with:
-        dotnet-version: ${{ env.dotnet-version }}
+      - name: Setup .NET
+        uses: actions/setup-dotnet@6bd8b7f7774af54e05809fcc5431931b3eb1ddee # v4.0.1
+        with:
+          dotnet-version: ${{ env.dotnet-version }}
 
-    - name: Setup msbuild
-      uses: microsoft/setup-msbuild@6fb02220983dee41ce7ae257b6f4d8f9bf5ed4ce # v2.0.0
+      - name: Setup msbuild
+        uses: microsoft/setup-msbuild@6fb02220983dee41ce7ae257b6f4d8f9bf5ed4ce # v2.0.0
 
-    - name: Initialize project file paths
-      id: init-projects
-      uses: ./.github/actions/project-map
-      with:
-        solution-file: "${{ format('{0}/{1}.sln', env.root-dirictory, env.name) }}"
-        android-project-file: "${{ format(env.project-file-template, env.root-dirictory, env.name, 'Mobile') }}"
-        gtk-project-file: "${{ format(env.project-file-template, env.root-dirictory, env.name, 'Skia.Gtk') }}"
-        ios-project-file: "${{ format(env.project-file-template, env.root-dirictory, env.name, 'Mobile') }}"
-        macos-project-file: "${{ format(env.project-file-template, env.root-dirictory, env.name, 'Mobile') }}"
-        wasm-project-file: "${{ format(env.project-file-template, env.root-dirictory, env.name, 'Wasm') }}"
-        windows-project-file: "${{ format(env.project-file-template, env.root-dirictory, env.name, 'Windows') }}"
+      - name: Setup the Uno Platform
+        uses: finebits/github-actions/devhub/uno-platform/setup@8f808eb66ee57460326283fdeedde8c63986be00 # v1.6.0-prerelease
 
-    - name: Setup the Uno Platform
-      uses: ./.github/actions/setup-uno-platform
+      - name: Build via dotnet
+        if: ${{ matrix.build.tool == 'dotnet' }}
+        shell: bash
+        run: |
+          project=${{ matrix.project }}
+          configuration=${{ matrix.build.configuration }}
+          extra_options=${{ matrix.build.extra }}
 
-    - name: Build
-      uses: ./.github/actions/build-uno-project
-      with:
-        project-map: ${{ steps.init-projects.outputs.map }}
-        configuration: ${{ env.configuration }}
-        target: ${{ env.target }}
+          dotnet build --configuration=$configuration $extra_options $project
+
+      - name: Build via msbuild
+        if: ${{ matrix.build.tool == 'msbuild' }}
+        shell: bash
+        run: |
+          project=${{ matrix.project }}
+          configuration=${{ matrix.build.configuration }}
+          extra_options=${{ matrix.build.extra }}
+
+          msbuild --target:Rebuild -restore:True -property:Configuration=$configuration $extra_options $project

@@ -1,0 +1,48 @@
+[
+    {
+        "keywords": [
+            "uno",
+            "all"
+        ],
+        "os": [
+            "windwos-latest"
+        ],
+        "project":"./source/Eppie.App/Eppie.App/Eppie.App.csproj",
+        "build": {
+            "tool": "msbuild",
+            "configuration": "release",
+            "extra": "-verbosity:detailed"
+        }
+    },
+    {
+        "keywords": [
+            "uno",
+            "all"
+        ],
+        "os": [
+            "macos-latest",
+            "ubuntu-latest"
+        ],
+        "project":"./source/Eppie.App/Eppie.App/Eppie.App.csproj",
+        "build": {
+            "tool": "dotnet",
+            "configuration": "release",
+            "extra": "--verbosity"
+        }
+    },
+    {
+        "keywords": [
+            "uwp",
+            "all"
+        ],
+        "os": [
+            "windwos-latest"
+        ],
+        "project":"./source/Eppie.App/Eppie.App.UWP/Eppie.App.UWP.csproj",
+        "build": {
+            "tool": "msbuild",
+            "configuration": "release",
+            "extra": "-verbosity:detailed"
+        }
+    }
+]
