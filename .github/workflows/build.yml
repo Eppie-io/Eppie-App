@@ -56,7 +56,7 @@ jobs:
 
     needs: prepare
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix: ${{ fromJson(needs.prepare.outputs.matrix) }}
 
     runs-on: ${{ matrix.os }}
