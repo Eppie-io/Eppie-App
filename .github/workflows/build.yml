@@ -58,7 +58,7 @@ jobs:
     strategy:
       matrix: ${{ fromJson(needs.prepare.outputs.matrix) }}
 
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ fromJson(matrix.os) }}
 
     env:
       configuration: ${{ matrix.configuration }}
@@ -79,13 +79,15 @@ jobs:
           dotnet-version: ${{ env.dotnet-version }}
 
       - name: Setup msbuild
+        if: matrix.prerequisites.msbuild == 'true'
         uses: microsoft/setup-msbuild@6fb02220983dee41ce7ae257b6f4d8f9bf5ed4ce # v2.0.0
 
       - name: Setup the Uno Platform
+        if: matrix.prerequisites.uno-platform == 'true'
         uses: finebits/github-actions/devhub/uno-platform/setup@6fdb3f66a81cb4c285a41ae140b47ab3c5eb4864 # v1.6.0-prerelease
 
       - name: Build via dotnet
-        if: ${{ matrix.build.tool == 'dotnet' }}
+        if: matrix.build.tool == 'dotnet'
         shell: bash
         run: |
           project=${{ matrix.project }}
@@ -95,11 +97,11 @@ jobs:
           dotnet build --configuration=$configuration $extra_options $project
 
       - name: Build via msbuild
-        if: ${{ matrix.build.tool == 'msbuild' }}
-        shell: bash
+        if: matrix.build.tool == 'msbuild' && runner.os != 'Windows'
+        shell: pwsh
         run: |
-          project=${{ matrix.project }}
-          configuration=${{ matrix.build.configuration }}
-          extra_options=${{ matrix.build.extra }}
+          $project=${{ matrix.project }}
+          $configuration=${{ matrix.build.configuration }}
+          $extra_options=${{ matrix.build.extra }}
 
           msbuild --target:Rebuild -restore:True -property:Configuration=$configuration $extra_options $project
