@@ -94,8 +94,9 @@ jobs:
           project='${{ matrix.project }}'
           configuration='${{ matrix.build.configuration }}'
           extra_options='${{ matrix.build.extra }}'
+          framework='${{ matrix.build.framework }}'
 
-          dotnet build --configuration=$configuration $extra_options $project
+          dotnet build --configuration=$configuration --framework=$framework $extra_options $project
 
       - name: Build via msbuild
         if: matrix.build.tool == 'msbuild' && runner.os == 'Windows'
@@ -105,4 +106,7 @@ jobs:
           $configuration='${{ matrix.build.configuration }}'
           $extra_options='${{ matrix.build.extra }}'
 
-          msbuild --target:Rebuild -restore:True -property:Configuration=$configuration $extra_options $project
+          $framework='${{ matrix.build.framework }}'
+          $framework_option=$( if($framework) {"-property:TargetFramework=$framework"} else {""} )
+
+          msbuild --target:Rebuild -restore:True -property:Configuration=$configuration $framework_option $extra_options $project
