@@ -13,7 +13,7 @@
         "build": {
             "tool": "msbuild",
             "configuration": "release",
-            "extra": "-verbosity:detailed"
+            "extra": "-verbosity:normal"
         }
     },
     {
@@ -30,7 +30,7 @@
         "build": {
             "tool": "dotnet",
             "configuration": "release",
-            "extra": "--verbosity"
+            "extra": "--verbosity=normal"
         }
     },
     {
@@ -47,7 +47,7 @@
         "build": {
             "tool": "dotnet",
             "configuration": "release",
-            "extra": "--verbosity"
+            "extra": "--verbosity=normal"
         }
     },
     {
@@ -64,7 +64,7 @@
         "build": {
             "tool": "msbuild",
             "configuration": "release",
-            "extra": "-verbosity:detailed"
+            "extra": "-verbosity:normal"
         }
     }
 ]
