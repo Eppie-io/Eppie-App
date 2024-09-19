@@ -223,7 +223,7 @@
         "build": {
             "tool": "msbuild",
             "configuration": "release",
-            "framework": "",
+            "framework": "uap10.0.19041",
             "extra": "-verbosity:minimal -consoleLoggerParameters:Summary"
         }
     }
