@@ -58,7 +58,7 @@ jobs:
     strategy:
       matrix: ${{ fromJson(needs.prepare.outputs.matrix) }}
 
-    runs-on: ${{ fromJson(matrix.os) }}
+    runs-on: ${{ matrix.os }}
 
     env:
       configuration: ${{ matrix.configuration }}
@@ -97,7 +97,7 @@ jobs:
           dotnet build --configuration=$configuration $extra_options $project
 
       - name: Build via msbuild
-        if: matrix.build.tool == 'msbuild' && runner.os != 'Windows'
+        if: matrix.build.tool == 'msbuild' && runner.os == 'Windows'
         shell: pwsh
         run: |
           $project=${{ matrix.project }}

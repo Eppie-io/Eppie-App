@@ -4,9 +4,7 @@
             "uno",
             "all"
         ],
-        "os": [
-            "windows-latest"
-        ],
+        "os": "windows-latest",
         "project": "./source/Eppie.App/Eppie.App/Eppie.App.csproj",
         "prerequisites": {
             "msbuild": "true",
@@ -23,10 +21,24 @@
             "uno",
             "all"
         ],
-        "os": [
-            "macos-latest",
-            "ubuntu-latest"
+        "os": "ubuntu-latest",
+        "project": "./source/Eppie.App/Eppie.App/Eppie.App.csproj",
+        "prerequisites": {
+            "msbuild": "false",
+            "uno-platform": "true"
+        },
+        "build": {
+            "tool": "dotnet",
+            "configuration": "release",
+            "extra": "--verbosity"
+        }
+    },
+    {
+        "keywords": [
+            "uno",
+            "all"
         ],
+        "os": "macos-latest",
         "project": "./source/Eppie.App/Eppie.App/Eppie.App.csproj",
         "prerequisites": {
             "msbuild": "false",
@@ -43,9 +55,7 @@
             "uwp",
             "all"
         ],
-        "os": [
-            "windows-latest"
-        ],
+        "os": "windows-latest",
         "project": "./source/Eppie.App/Eppie.App.UWP/Eppie.App.UWP.csproj",
         "prerequisites": {
             "msbuild": "true",
