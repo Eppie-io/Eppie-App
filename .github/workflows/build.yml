@@ -89,8 +89,7 @@ jobs:
       - name: Check configs
         shell: bash
         run: |
-          config='${{ steps.build-config.outputs.config-json }}'
-          length=$( echo $config | jq '.include | length' )
+          length=$( echo '${{ steps.build-config.outputs.config-json }}' | jq '. | length' )
 
           if(( $length == 0 )); then
             echo "::error::No suitable build configuration found"
