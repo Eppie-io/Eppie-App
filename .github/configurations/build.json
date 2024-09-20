@@ -16,7 +16,7 @@
             "tool": "dotnet",
             "configuration": "release",
             "framework": "net8.0-desktop",
-            "extra": "--verbosity=minimal"
+            "extra": "--verbosity=minimal --nologo"
         }
     },
     {
@@ -36,7 +36,7 @@
             "tool": "dotnet",
             "configuration": "release",
             "framework": "net8.0-desktop",
-            "extra": "--verbosity=minimal"
+            "extra": "--verbosity=minimal --nologo"
         }
     },
     {
@@ -56,7 +56,7 @@
             "tool": "dotnet",
             "configuration": "release",
             "framework": "net8.0-desktop",
-            "extra": "--verbosity=minimal"
+            "extra": "--verbosity=minimal --nologo"
         }
     },
 
@@ -78,7 +78,7 @@
             "tool": "dotnet",
             "configuration": "release",
             "framework": "net8.0-browserwasm",
-            "extra": "--verbosity=minimal"
+            "extra": "--verbosity=minimal --nologo"
         }
     },
     {
@@ -98,7 +98,7 @@
             "tool": "dotnet",
             "configuration": "release",
             "framework": "net8.0-browserwasm",
-            "extra": "--verbosity=minimal"
+            "extra": "--verbosity=minimal --nologo"
         }
     },
     {
@@ -118,7 +118,7 @@
             "tool": "dotnet",
             "configuration": "release",
             "framework": "net8.0-browserwasm",
-            "extra": "--verbosity=minimal"
+            "extra": "--verbosity=minimal --nologo"
         }
     },
 
@@ -161,7 +161,7 @@
             "tool": "dotnet",
             "configuration": "release",
             "framework": "net8.0-ios",
-            "extra": "--verbosity=minimal"
+            "extra": "--verbosity=minimal --nologo"
         }
     },
 
@@ -182,11 +182,30 @@
             "tool": "dotnet",
             "configuration": "release",
             "framework": "net8.0-maccatalyst",
-            "extra": "--verbosity=minimal"
+            "extra": "--verbosity=minimal --nologo"
         }
     },
 
-
+    {
+        "keywords": [
+            "android",
+            "windows",
+            "uno",
+            "all"
+        ],
+        "os": "windows-latest",
+        "project": "./source/Eppie.App/Eppie.App/Eppie.App.csproj",
+        "prerequisites": {
+            "msbuild": "false",
+            "uno-platform": "true"
+        },
+        "build": {
+            "tool": "dotnet",
+            "configuration": "release",
+            "framework": "net8.0-android",
+            "extra": "--verbosity=minimal --nologo"
+        }
+    },
     {
         "keywords": [
             "android",
@@ -204,7 +223,27 @@
             "tool": "dotnet",
             "configuration": "release",
             "framework": "net8.0-android",
-            "extra": "--verbosity=minimal"
+            "extra": "--verbosity=minimal --nologo"
+        }
+    },
+    {
+        "keywords": [
+            "android",
+            "macos",
+            "uno",
+            "all"
+        ],
+        "os": "macos-latest",
+        "project": "./source/Eppie.App/Eppie.App/Eppie.App.csproj",
+        "prerequisites": {
+            "msbuild": "false",
+            "uno-platform": "true"
+        },
+        "build": {
+            "tool": "dotnet",
+            "configuration": "release",
+            "framework": "net8.0-android",
+            "extra": "--verbosity=minimal --nologo"
         }
     },
 
@@ -212,6 +251,7 @@
         "keywords": [
             "uwp",
             "windows",
+            "autobuild",
             "all"
         ],
         "os": "windows-latest",
@@ -225,6 +265,23 @@
             "configuration": "release",
             "framework": "uap10.0.19041",
             "extra": "-verbosity:minimal -consoleLoggerParameters:Summary"
+        }
+    },
+
+    {
+        "keywords": [
+            "autobuild"
+        ],
+        "os": "windows-latest",
+        "project": "./source/Eppie.App/Eppie.App/Eppie.App.csproj",
+        "prerequisites": {
+            "msbuild": "false",
+            "uno-platform": "true"
+        },
+        "build": {
+            "tool": "dotnet",
+            "configuration": "release",
+            "extra": "--verbosity=minimal --nologo"
         }
     }
 ]

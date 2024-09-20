@@ -22,6 +22,28 @@ name: "Build solution"
 
 on: # yamllint disable-line rule:truthy
   workflow_dispatch:
+    inputs:
+      framework:
+        type: choice
+        default: all
+        options:
+          - desktop
+          - wasm
+          - winui
+          - ios
+          - macos
+          - android
+          - uwp
+          - all
+      os:
+        type: choice
+        default: all
+        options:
+          - windows
+          - linux
+          - macos
+          - all
+
   push:
     branches:
       - main
@@ -45,12 +67,24 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Initializing default keywords
+        if: github.event_name != 'workflow_dispatch'
+        shell: bash
+        run: |
+          echo "BUILD_CONFIG_KEYWORDS=autobuild" >> $GITHUB_ENV
+
+      - name: Read input keywords
+        if: github.event_name == 'workflow_dispatch'
+        shell: bash
+        run: |
+          echo "BUILD_CONFIG_KEYWORDS=${{ github.event.inputs.framework }},${{ github.event.inputs.os }}" >> $GITHUB_ENV
+
       - name: config
         id: build-config
         uses: finebits/github-actions/toolset/select-configuration@4a126d80a11c5fdc83ce884d3d23dffb30bc4495 # v2.0.0
         with:
           json-file: ./.github/configurations/build.json
-          keywords: "all"
+          keywords: ${{ env.BUILD_CONFIG_KEYWORDS }}
 
   build:
     name: ${{ matrix.os }} ${{ matrix.build.framework }} '${{ matrix.project }}'
@@ -95,8 +129,9 @@ jobs:
           configuration='${{ matrix.build.configuration }}'
           extra_options='${{ matrix.build.extra }}'
           framework='${{ matrix.build.framework }}'
+          framework_option=$([ "$framework" != "" ] && echo "--framework=$framework" || echo "")
 
-          dotnet build --configuration=$configuration --framework=$framework $extra_options $project
+          dotnet build --configuration=$configuration $framework_option $extra_options $project
 
       - name: Build via msbuild
         if: matrix.build.tool == 'msbuild' && runner.os == 'Windows'
@@ -106,5 +141,6 @@ jobs:
           $configuration='${{ matrix.build.configuration }}'
           $extra_options=$('${{ matrix.build.extra }}' -split '\s+')
           $framework='${{ matrix.build.framework }}'
+          $framework_option=$( if($framework) {"-property:TargetFramwork=$framework"} else {""} )
 
-          msbuild -target:Rebuild -restore:True -property:Configuration=$configuration -property:TargetFramework=$framework $extra_options $project
+          msbuild -target:Rebuild -restore:True -property:Configuration=$configuration $framework_option $extra_options $project
