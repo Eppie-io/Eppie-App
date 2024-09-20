@@ -47,7 +47,7 @@ jobs:
 
       - name: config
         id: build-config
-        uses: finebits/github-actions/toolset/select-configuration@6fdb3f66a81cb4c285a41ae140b47ab3c5eb4864 # v1.6.0-prerelease
+        uses: finebits/github-actions/toolset/select-configuration@4a126d80a11c5fdc83ce884d3d23dffb30bc4495 # v2.0.0
         with:
           json-file: ./.github/configurations/build.json
           keywords: "all"
@@ -85,7 +85,7 @@ jobs:
 
       - name: Setup the Uno Platform
         if: matrix.prerequisites.uno-platform == 'true'
-        uses: finebits/github-actions/devhub/uno-platform/setup@6fdb3f66a81cb4c285a41ae140b47ab3c5eb4864 # v1.6.0-prerelease
+        uses: finebits/github-actions/devhub/uno-platform/setup@4a126d80a11c5fdc83ce884d3d23dffb30bc4495 # v2.0.0
 
       - name: Build via dotnet
         if: matrix.build.tool == 'dotnet'
