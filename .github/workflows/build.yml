@@ -79,12 +79,23 @@ jobs:
         run: |
           echo "BUILD_CONFIG_KEYWORDS=${{ github.event.inputs.framework }},${{ github.event.inputs.os }}" >> $GITHUB_ENV
 
-      - name: config
+      - name: Select configs
         id: build-config
         uses: finebits/github-actions/toolset/select-configuration@4a126d80a11c5fdc83ce884d3d23dffb30bc4495 # v2.0.0
         with:
           json-file: ./.github/configurations/build.json
           keywords: ${{ env.BUILD_CONFIG_KEYWORDS }}
+
+      - name: Check configs
+        shell: bash
+        run: |
+          config='${{ steps.build-config.outputs.config-json }}'
+          length=$( echo $config | jq '.include | length' )
+
+          if(( $length == 0 )); then
+            echo "::error::No suitable build configuration found"
+            exit 1
+          fi
 
   build:
     name: ${{ matrix.os }} ${{ matrix.build.framework }} '${{ matrix.project }}'
