@@ -7,7 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eppie.App", "Eppie.App\Eppi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E0155D4F-50A1-4EAD-A5DF-2080ECDF1C72}"
 	ProjectSection(SolutionItems) = preProject
-		.gitignore = .gitignore
 		Directory.Build.props = Directory.Build.props
 		Directory.Build.targets = Directory.Build.targets
 		Directory.Packages.props = Directory.Packages.props
@@ -84,6 +83,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeyDerivationLib", "..\..\gitmodules\TuviPgpLib\gitmodules\TuviKeyDerivationLib\KeyDerivationLib\KeyDerivationLib.csproj", "{67FE37F2-DB0D-48CC-9F0F-FDD86A22290A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TuviBase32EConverterLib", "..\..\gitmodules\TuviBase32EConverterLib\TuviBytesToEmailConverterLib\TuviBase32EConverterLib\TuviBase32EConverterLib.csproj", "{865EE4F1-BC60-4C15-B31B-C681B430BB7F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eppie.App.ViewModels", "Eppie.App.ViewModels\Eppie.App.ViewModels.csproj", "{2DA63E2A-A0AC-4C55-B912-04D8970BCED3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -719,6 +720,26 @@ Global
 		{865EE4F1-BC60-4C15-B31B-C681B430BB7F}.Release|x64.Build.0 = Release|Any CPU
 		{865EE4F1-BC60-4C15-B31B-C681B430BB7F}.Release|x86.ActiveCfg = Release|Any CPU
 		{865EE4F1-BC60-4C15-B31B-C681B430BB7F}.Release|x86.Build.0 = Release|Any CPU
+		{2DA63E2A-A0AC-4C55-B912-04D8970BCED3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DA63E2A-A0AC-4C55-B912-04D8970BCED3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DA63E2A-A0AC-4C55-B912-04D8970BCED3}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{2DA63E2A-A0AC-4C55-B912-04D8970BCED3}.Debug|ARM.Build.0 = Debug|Any CPU
+		{2DA63E2A-A0AC-4C55-B912-04D8970BCED3}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{2DA63E2A-A0AC-4C55-B912-04D8970BCED3}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{2DA63E2A-A0AC-4C55-B912-04D8970BCED3}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2DA63E2A-A0AC-4C55-B912-04D8970BCED3}.Debug|x64.Build.0 = Debug|Any CPU
+		{2DA63E2A-A0AC-4C55-B912-04D8970BCED3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2DA63E2A-A0AC-4C55-B912-04D8970BCED3}.Debug|x86.Build.0 = Debug|Any CPU
+		{2DA63E2A-A0AC-4C55-B912-04D8970BCED3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DA63E2A-A0AC-4C55-B912-04D8970BCED3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DA63E2A-A0AC-4C55-B912-04D8970BCED3}.Release|ARM.ActiveCfg = Release|Any CPU
+		{2DA63E2A-A0AC-4C55-B912-04D8970BCED3}.Release|ARM.Build.0 = Release|Any CPU
+		{2DA63E2A-A0AC-4C55-B912-04D8970BCED3}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{2DA63E2A-A0AC-4C55-B912-04D8970BCED3}.Release|ARM64.Build.0 = Release|Any CPU
+		{2DA63E2A-A0AC-4C55-B912-04D8970BCED3}.Release|x64.ActiveCfg = Release|Any CPU
+		{2DA63E2A-A0AC-4C55-B912-04D8970BCED3}.Release|x64.Build.0 = Release|Any CPU
+		{2DA63E2A-A0AC-4C55-B912-04D8970BCED3}.Release|x86.ActiveCfg = Release|Any CPU
+		{2DA63E2A-A0AC-4C55-B912-04D8970BCED3}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -757,6 +778,7 @@ Global
 		{30893AD4-3EBB-4EED-A4E7-4709A6B86A33} = {A59DE721-B0CD-47ED-8839-368A819C95EB}
 		{67FE37F2-DB0D-48CC-9F0F-FDD86A22290A} = {A59DE721-B0CD-47ED-8839-368A819C95EB}
 		{865EE4F1-BC60-4C15-B31B-C681B430BB7F} = {A59DE721-B0CD-47ED-8839-368A819C95EB}
+		{2DA63E2A-A0AC-4C55-B912-04D8970BCED3} = {BAADA1AF-033B-4254-9B27-CA301F69EEFE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1BCAC5D9-CEF8-4D64-8F16-3A0FEE49CF42}
