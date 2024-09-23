@@ -51,5 +51,8 @@
   <ItemGroup>
     <None Include="..\Eppie.App.Shared\Views\*.xaml" Visible="false" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Eppie.App.ViewModels\Eppie.App.ViewModels.csproj" />
+  </ItemGroup>
 
 </Project>
