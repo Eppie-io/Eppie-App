@@ -150,6 +150,12 @@
     <PackageReference Include="Microsoft.UI.Xaml" />
     <PackageReference Include="Uno.Toolkit.UI" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Eppie.App.ViewModels\Eppie.App.ViewModels.csproj">
+      <Project>{2da63e2a-a0ac-4c55-b912-04d8970bced3}</Project>
+      <Name>Eppie.App.ViewModels</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="..\Eppie.App.Shared\Eppie.App.Shared.projitems" Label="Shared" />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
