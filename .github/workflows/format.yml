@@ -39,9 +39,11 @@ jobs:
     
     strategy:
       matrix:
-        project:
-          - "source/Eppie.App/Eppie.App/Eppie.App.csproj"
-          - "source/Eppie.App/Eppie.App.UWP/Eppie.App.UWP.csproj"
+        include:
+          - project: "source/Eppie.App/Eppie.App/Eppie.App.csproj"
+            uno: "true"
+          - project: "source/Eppie.App/Eppie.App.UWP/Eppie.App.UWP.csproj"
+            uno: "false"
 
     runs-on: ubuntu-latest
 
@@ -60,8 +62,9 @@ jobs:
         with:
           dotnet-version: ${{ env.dotnet-version }}
 
-      - name: Restore
-        run: dotnet restore "${{ matrix.project }}"
+      - name: Setup the Uno Platform
+        if: matrix.uno == 'true'
+        uses: finebits/github-actions/devhub/uno-platform/setup@4a126d80a11c5fdc83ce884d3d23dffb30bc4495 # v2.0.0
 
       - name: Verify format
-        run:  dotnet format "${{ matrix.project }}" --verify-no-changes --no-restore
+        run:  dotnet format "${{ matrix.project }}" --verify-no-changes
