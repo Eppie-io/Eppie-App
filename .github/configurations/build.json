@@ -133,14 +133,14 @@
         "os": "windows-latest",
         "project": "./source/Eppie.App/Eppie.App/Eppie.App.csproj",
         "prerequisites": {
-            "msbuild": "true",
+            "msbuild": "false",
             "uno-platform": "true"
         },
         "build": {
-            "tool": "msbuild",
+            "tool": "dotnet",
             "configuration": "release",
             "framework": "net8.0-windows10.0.19041",
-            "extra": "-verbosity:minimal -consoleLoggerParameters:Summary"
+            "extra": "--verbosity=minimal --nologo"
         }
     },
 
@@ -263,7 +263,6 @@
         "build": {
             "tool": "msbuild",
             "configuration": "release",
-            "framework": "uap10.0.19041",
             "extra": "-verbosity:minimal -consoleLoggerParameters:Summary"
         }
     },
