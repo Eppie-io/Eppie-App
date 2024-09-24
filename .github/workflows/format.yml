@@ -67,4 +67,4 @@ jobs:
         uses: finebits/github-actions/devhub/uno-platform/setup@4a126d80a11c5fdc83ce884d3d23dffb30bc4495 # v2.0.0
 
       - name: Verify format
-        run:  dotnet format "${{ matrix.project }}" --verify-no-changes
+        run:  dotnet format "${{ matrix.project }}" --verify-no-changes --severity=error
