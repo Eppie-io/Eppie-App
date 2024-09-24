@@ -2,7 +2,7 @@ namespace Eppie.App;
 
 public class Program
 {
-    private static App? _app;
+    private static App _app;
 
     public static int Main(string[] args)
     {
