@@ -99,7 +99,7 @@ jobs:
           fi
 
   build:
-    name: ${{ matrix.os }} ${{ matrix.build.framework }} '${{ matrix.project }}'
+    name: ${{ matrix.build.framework }} ${{ matrix.os }} '${{ matrix.project }}'
     needs: prepare
     strategy:
       fail-fast: true
@@ -153,6 +153,6 @@ jobs:
           $configuration='${{ matrix.build.configuration }}'
           $extra_options=$('${{ matrix.build.extra }}' -split '\s+')
           $framework='${{ matrix.build.framework }}'
-          $framework_option=$( if($framework) {"-property:TargetFramwork=$framework"} else {""} )
+          $framework_option=$( if($framework) {"-property:TargetFramework=$framework"} else {""} )
 
           msbuild -target:Rebuild -restore:True -property:Configuration=$configuration $framework_option $extra_options $project
