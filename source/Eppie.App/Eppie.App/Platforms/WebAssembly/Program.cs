@@ -1,13 +1,14 @@
-namespace Eppie.App;
-
-public class Program
+namespace Eppie.App
 {
-    private static App _app;
-
-    public static int Main(string[] args)
+    public class Program
     {
-        Microsoft.UI.Xaml.Application.Start(_ => _app = new App());
+        private static App _app;
 
-        return 0;
+        public static int Main(string[] args)
+        {
+            Microsoft.UI.Xaml.Application.Start(_ => _app = new App());
+
+            return 0;
+        }
     }
 }
