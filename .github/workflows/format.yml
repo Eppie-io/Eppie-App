@@ -1,0 +1,66 @@
+###############################################################################
+#
+#   Copyright 2024 Eppie(https://eppie.io)
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+#
+###############################################################################
+
+---
+
+name: "Format check"
+
+on: # yamllint disable-line rule:truthy
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - release/**
+      - feature/296-upgrading-to-uno-platform-5 # temporarily
+  pull_request:
+    branches:
+      - main
+      - release/**
+      - feature/296-upgrading-to-uno-platform-5 # temporarily
+
+jobs:
+
+  format-check:
+    
+    strategy:
+      matrix:
+        project:
+          - "./source/Eppie.App/Eppie.App/Eppie.App.csproj"
+          - "./source/Eppie.App/Eppie.App.UWP/Eppie.App.UWP.csproj"
+
+    runs-on: ubuntu-latest
+
+    env:
+      dotnet-version: '8.x'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+        with:
+          fetch-depth: 0
+          submodules: recursive
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@6bd8b7f7774af54e05809fcc5431931b3eb1ddee # v4.0.1
+        with:
+          dotnet-version: ${{ env.dotnet-version }}
+
+      - name: Build via dotnet
+        shell: bash
+        run: |
+          dotnet format "${{ matrix.project }}" --verify-no-changes
