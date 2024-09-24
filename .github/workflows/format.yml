@@ -60,8 +60,8 @@ jobs:
         with:
           dotnet-version: ${{ env.dotnet-version }}
 
-      - name: Restore tool
-        run: dotnet tool restore
+      - name: Restore
+        run: dotnet restore "${{ matrix.project }}"
 
       - name: Verify format
         run:  dotnet format "${{ matrix.project }}" --verify-no-changes --no-restore
