@@ -40,8 +40,8 @@ jobs:
     strategy:
       matrix:
         project:
-          - "./source/Eppie.App/Eppie.App/Eppie.App.csproj"
-          - "./source/Eppie.App/Eppie.App.UWP/Eppie.App.UWP.csproj"
+          - "source/Eppie.App/Eppie.App/Eppie.App.csproj"
+          - "source/Eppie.App/Eppie.App.UWP/Eppie.App.UWP.csproj"
 
     runs-on: ubuntu-latest
 
