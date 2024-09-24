@@ -99,7 +99,7 @@ jobs:
           fi
 
   build:
-    name: ${{ matrix.os }} ${{ matrix.build.framework }} '${{ matrix.project }}'
+    name: ${{ matrix.build.framework }} ${{ matrix.os }} '${{ matrix.project }}'
     needs: prepare
     strategy:
       fail-fast: true
