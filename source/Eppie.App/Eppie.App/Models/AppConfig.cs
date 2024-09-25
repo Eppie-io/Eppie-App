@@ -1,6 +1,7 @@
-namespace Eppie.App.Models;
-
-public record AppConfig
+namespace Eppie.App.Models
 {
-    public string Environment { get; init; }
+    public record AppConfig
+    {
+        public string Environment { get; init; }
+    }
 }
