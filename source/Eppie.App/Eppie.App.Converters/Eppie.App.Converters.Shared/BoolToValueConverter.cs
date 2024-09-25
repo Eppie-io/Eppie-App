@@ -1,19 +1,29 @@
-﻿using System;
+using System;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Text;
+
+#if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media;
+#else
+using Microsoft.UI.Text;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Data;
+using Microsoft.UI.Xaml.Media;
+#endif
 
+// ToDo: Change namespace
 namespace Tuvi.App.Converters
 {
     public class BoolToValueConverter<T> : IValueConverter
     {
-        public T? FalseValue { get; set; }
-        public T? TrueValue { get; set; }
+        public T FalseValue { get; set; }
+        public T TrueValue { get; set; }
 
-        public object? Convert(object value, Type targetType, object parameter, string language)
+        public object Convert(object value, Type targetType, object parameter, string language)
         {
             if (value == null)
                 return FalseValue;
@@ -46,9 +56,9 @@ namespace Tuvi.App.Converters
 
     public class BoolToResourceConverter : BoolToStringConverter
     {
-        private ResourceLoader? _resourceLoader;
-        private string? _resource;
-        public String? Resource
+        private ResourceLoader _resourceLoader;
+        private string _resource;
+        public String Resource
         {
             get { return _resource; }
             set
@@ -61,8 +71,8 @@ namespace Tuvi.App.Converters
             }
         }
 
-        private string? _falseKey;
-        public String? FalseKey
+        private string _falseKey;
+        public String FalseKey
         {
             get { return _falseKey; }
             set
@@ -73,8 +83,8 @@ namespace Tuvi.App.Converters
             }
         }
 
-        private string? _trueKey;
-        public String? TrueKey
+        private string _trueKey;
+        public String TrueKey
         {
             get { return _trueKey; }
             set

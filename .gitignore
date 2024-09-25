@@ -33,9 +33,14 @@ src/Eppie.App/Eppie.App.UWP/AppPackages/
 ## a new project
 source/Eppie.App/.vs/
 source/Eppie.App/Eppie.App/.vs/
-source/Eppie.App/Eppie.App/Eppie.App.csproj.user
 source/Eppie.App/Eppie.App/bin/
 source/Eppie.App/Eppie.App/obj/
+source/Eppie.App/Eppie.App/Eppie.App.csproj.user
+source/Eppie.App/Eppie.App.Converters/Eppie.App.Converters.Uno/bin/
+source/Eppie.App/Eppie.App.Converters/Eppie.App.Converters.Uno/obj/
+source/Eppie.App/Eppie.App.Converters/Eppie.App.Converters.UWP/.vs/
+source/Eppie.App/Eppie.App.Converters/Eppie.App.Converters.UWP/bin/
+source/Eppie.App/Eppie.App.Converters/Eppie.App.Converters.UWP/obj/
 source/Eppie.App/Eppie.App.UWP/.vs/
 source/Eppie.App/Eppie.App.UWP/Eppie.App.UWP.csproj.user
 source/Eppie.App/Eppie.App.UWP/bin/
