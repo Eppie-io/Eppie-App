@@ -1,8 +1,15 @@
 using System;
 using System.Globalization;
+
+#if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
+#else
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Data;
+#endif
 
+// ToDo: Change namespace
 namespace Tuvi.App.Converters
 {
     public class TimeSpanToDoubleConverter : IValueConverter

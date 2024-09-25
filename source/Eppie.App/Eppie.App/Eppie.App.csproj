@@ -45,14 +45,17 @@
     </UnoFeatures>
     <DefaultLanguage>en</DefaultLanguage>
   </PropertyGroup>
-  <Import Project="..\Eppie.App.Shared\Eppie.App.Shared.projitems" Label="Shared" />
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\ComponentBuilder\ComponentBuilder.csproj" />
+    <ProjectReference Include="..\Eppie.App.Converters\Eppie.App.Converters.Uno\Eppie.App.Converters.Uno.csproj" />
+    <ProjectReference Include="..\Eppie.App.ViewModels\Eppie.App.ViewModels.csproj" />
+  </ItemGroup>
+
+  <Import Project="..\Eppie.App.Shared\Eppie.App.Shared.projitems" Label="Shared" />
   <!-- This hides references to shared .xaml files from the "Eppie.App.Shared" project. -->
   <ItemGroup>
     <None Include="..\Eppie.App.Shared\Views\*.xaml" Visible="false" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Eppie.App.ViewModels\Eppie.App.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>
