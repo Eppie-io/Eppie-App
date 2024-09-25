@@ -1,19 +1,21 @@
 using Uno.UI.Runtime.Skia;
 
-namespace Eppie.App;
-public class Program
+namespace Eppie.App
 {
-    [STAThread]
-    public static void Main(string[] args)
+    public class Program
     {
-        var host = SkiaHostBuilder.Create()
-            .App(() => new App())
-            .UseX11()
-            .UseLinuxFrameBuffer()
-            .UseMacOS()
-            .UseWindows()
-            .Build();
+        [STAThread]
+        public static void Main(string[] args)
+        {
+            var host = SkiaHostBuilder.Create()
+                .App(() => new App())
+                .UseX11()
+                .UseLinuxFrameBuffer()
+                .UseMacOS()
+                .UseWindows()
+                .Build();
 
-        host.Run();
+            host.Run();
+        }
     }
 }

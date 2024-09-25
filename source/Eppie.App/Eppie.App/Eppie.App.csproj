@@ -44,6 +44,7 @@
       ThemeService;
     </UnoFeatures>
     <DefaultLanguage>en</DefaultLanguage>
+    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
   </PropertyGroup>
 
   <ItemGroup>
