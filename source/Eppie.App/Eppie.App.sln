@@ -7,6 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eppie.App", "Eppie.App\Eppi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E0155D4F-50A1-4EAD-A5DF-2080ECDF1C72}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		Directory.Build.props = Directory.Build.props
 		Directory.Build.targets = Directory.Build.targets
 		Directory.Packages.props = Directory.Packages.props
@@ -84,7 +85,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeyDerivationLib", "..\..\g
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TuviBase32EConverterLib", "..\..\gitmodules\TuviBase32EConverterLib\TuviBytesToEmailConverterLib\TuviBase32EConverterLib\TuviBase32EConverterLib.csproj", "{865EE4F1-BC60-4C15-B31B-C681B430BB7F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eppie.App.ViewModels", "Eppie.App.ViewModels\Eppie.App.ViewModels.csproj", "{2DA63E2A-A0AC-4C55-B912-04D8970BCED3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eppie.App.ViewModels", "Eppie.App.ViewModels\Eppie.App.ViewModels.csproj", "{2DA63E2A-A0AC-4C55-B912-04D8970BCED3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
