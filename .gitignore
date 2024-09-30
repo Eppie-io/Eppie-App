@@ -47,3 +47,5 @@ source/Eppie.App/Eppie.App.UWP/bin/
 source/Eppie.App/Eppie.App.UWP/obj/
 source/Eppie.App/Eppie.App.ViewModels/bin/
 source/Eppie.App/Eppie.App.ViewModels/obj/
+source/Eppie.App/Eppie.Authorization.OAuth2/bin
+source/Eppie.App/Eppie.Authorization.OAuth2/obj
