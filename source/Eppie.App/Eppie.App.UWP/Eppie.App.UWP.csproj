@@ -155,6 +155,10 @@
       <Project>{5dce27ba-aa10-469f-9897-0e679764943f}</Project>
       <Name>ComponentBuilder</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core.Entities\Tuvi.Core.Entities.csproj">
+      <Project>{1e363987-165e-4ea6-a0e1-fad82b7c0633}</Project>
+      <Name>Tuvi.Core.Entities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Eppie.App.Converters\Eppie.App.Converters.UWP\Eppie.App.Converters.UWP.csproj">
       <Project>{d392835a-52ae-4529-aac0-52d3189cb461}</Project>
       <Name>Eppie.App.Converters.UWP</Name>
