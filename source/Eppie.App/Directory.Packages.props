@@ -9,6 +9,8 @@
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
   <ItemGroup>
+    <PackageVersion Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageVersion Include="EmailValidation" Version="1.2.0" />
     <PackageVersion Include="Finebits.Authorization.OAuth2" Version="0.3.1-alpha" />
     <PackageVersion Include="Finebits.Authorization.OAuth2.AuthenticationBroker.Desktop" Version="0.3.1-alpha" />
     <PackageVersion Include="Finebits.Authorization.OAuth2.Google" Version="0.3.1-alpha" />
