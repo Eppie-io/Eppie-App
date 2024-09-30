@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Tuvi.Core.Entities;
 
@@ -33,7 +33,7 @@ namespace Tuvi.OAuth2
             return CreateOAuth2Account(mailService, null, null);
         }
 
-        public static Account CreateOAuth2Account(MailService mailService, string? email, string? refreshToken)
+        public static Account CreateOAuth2Account(MailService mailService, string email, string refreshToken)
         {
             var accountData = Account.Default;
 
@@ -70,11 +70,11 @@ namespace Tuvi.OAuth2
     internal class DefaultAccountData
     {
         public MailProtocol IncomingMailProtocol { get; set; } = MailProtocol.IMAP;
-        public string? IncomingServerAddress { get; set; }
+        public string IncomingServerAddress { get; set; }
         public int IncomingServerPort { get; set; } = 993;
 
         public MailProtocol OutgoingMailProtocol { get; set; } = MailProtocol.SMTP;
-        public string? OutgoingServerAddress { get; set; }
+        public string OutgoingServerAddress { get; set; }
         public int OutgoingServerPort { get; set; } = 465; // SSL
     }
 }
