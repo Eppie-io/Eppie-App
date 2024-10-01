@@ -99,7 +99,7 @@ jobs:
           fi
 
   build:
-    name: ${{ matrix.build.framework }} ${{ matrix.os }} '${{ matrix.project }}'
+    name: ${{ matrix.build.framework }} ${{ matrix.os }} '${{ matrix.build.project }}'
     needs: prepare
     strategy:
       fail-fast: true
@@ -133,11 +133,29 @@ jobs:
         if: matrix.prerequisites.uno-platform == 'true'
         uses: finebits/github-actions/devhub/uno-platform/setup@4a126d80a11c5fdc83ce884d3d23dffb30bc4495 # v2.0.0
 
+      - name: Restore via dotnet
+        if: matrix.restore.tool == 'dotnet'
+        shell: bash
+        run: |
+          project='${{ matrix.restore.project }}'
+          extra_options='${{ matrix.restore.extra }}'
+
+          dotnet restore $extra_options $project
+
+      - name: Restore via msbuild
+        if: matrix.restore.tool == 'msbuild' && runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $project='${{ matrix.restore.project }}'
+          $extra_options=$('${{ matrix.restore.extra }}' -split '\s+')
+
+          msbuild -target:Restore $extra_options $project
+
       - name: Build via dotnet
         if: matrix.build.tool == 'dotnet'
         shell: bash
         run: |
-          project='${{ matrix.project }}'
+          project='${{ matrix.build.project }}'
           configuration='${{ matrix.build.configuration }}'
           extra_options='${{ matrix.build.extra }}'
           framework='${{ matrix.build.framework }}'
@@ -149,7 +167,7 @@ jobs:
         if: matrix.build.tool == 'msbuild' && runner.os == 'Windows'
         shell: pwsh
         run: |
-          $project='${{ matrix.project }}'
+          $project='${{ matrix.build.project }}'
           $configuration='${{ matrix.build.configuration }}'
           $extra_options=$('${{ matrix.build.extra }}' -split '\s+')
           $framework='${{ matrix.build.framework }}'

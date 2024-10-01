@@ -7,13 +7,18 @@
             "all"
         ],
         "os": "windows-latest",
-        "project": "./source/Eppie.App/Eppie.App/Eppie.App.csproj",
         "prerequisites": {
             "msbuild": "false",
             "uno-platform": "true"
         },
+        "restore": {
+            "tool": "dotnet",
+            "project": "./source/Eppie.App/Eppie.App.sln",
+            "extra": "--verbosity=minimal --nologo"
+        },
         "build": {
             "tool": "dotnet",
+            "project": "./source/Eppie.App/Eppie.App/Eppie.App.csproj",
             "configuration": "release",
             "framework": "net8.0-desktop",
             "extra": "--verbosity=minimal --nologo"
@@ -27,13 +32,18 @@
             "all"
         ],
         "os": "ubuntu-latest",
-        "project": "./source/Eppie.App/Eppie.App/Eppie.App.csproj",
         "prerequisites": {
             "msbuild": "false",
             "uno-platform": "true"
         },
+        "restore": {
+            "tool": "dotnet",
+            "project": "./source/Eppie.App/Eppie.App.sln",
+            "extra": "--verbosity=minimal --nologo"
+        },
         "build": {
             "tool": "dotnet",
+            "project": "./source/Eppie.App/Eppie.App/Eppie.App.csproj",
             "configuration": "release",
             "framework": "net8.0-desktop",
             "extra": "--verbosity=minimal --nologo"
@@ -47,13 +57,18 @@
             "all"
         ],
         "os": "macos-latest",
-        "project": "./source/Eppie.App/Eppie.App/Eppie.App.csproj",
         "prerequisites": {
             "msbuild": "false",
             "uno-platform": "true"
         },
+        "restore": {
+            "tool": "dotnet",
+            "project": "./source/Eppie.App/Eppie.App.sln",
+            "extra": "--verbosity=minimal --nologo"
+        },
         "build": {
             "tool": "dotnet",
+            "project": "./source/Eppie.App/Eppie.App/Eppie.App.csproj",
             "configuration": "release",
             "framework": "net8.0-desktop",
             "extra": "--verbosity=minimal --nologo"
@@ -69,13 +84,18 @@
             "all"
         ],
         "os": "windows-latest",
-        "project": "./source/Eppie.App/Eppie.App/Eppie.App.csproj",
         "prerequisites": {
             "msbuild": "false",
             "uno-platform": "true"
         },
+        "restore": {
+            "tool": "dotnet",
+            "project": "./source/Eppie.App/Eppie.App.sln",
+            "extra": "--verbosity=minimal --nologo"
+        },
         "build": {
             "tool": "dotnet",
+            "project": "./source/Eppie.App/Eppie.App/Eppie.App.csproj",
             "configuration": "release",
             "framework": "net8.0-browserwasm",
             "extra": "--verbosity=minimal --nologo"
@@ -89,13 +109,18 @@
             "all"
         ],
         "os": "ubuntu-latest",
-        "project": "./source/Eppie.App/Eppie.App/Eppie.App.csproj",
         "prerequisites": {
             "msbuild": "false",
             "uno-platform": "true"
         },
+        "restore": {
+            "tool": "dotnet",
+            "project": "./source/Eppie.App/Eppie.App.sln",
+            "extra": "--verbosity=minimal --nologo"
+        },
         "build": {
             "tool": "dotnet",
+            "project": "./source/Eppie.App/Eppie.App/Eppie.App.csproj",
             "configuration": "release",
             "framework": "net8.0-browserwasm",
             "extra": "--verbosity=minimal --nologo"
@@ -109,13 +134,18 @@
             "all"
         ],
         "os": "macos-latest",
-        "project": "./source/Eppie.App/Eppie.App/Eppie.App.csproj",
         "prerequisites": {
             "msbuild": "false",
             "uno-platform": "true"
         },
+        "restore": {
+            "tool": "dotnet",
+            "project": "./source/Eppie.App/Eppie.App.sln",
+            "extra": "--verbosity=minimal --nologo"
+        },
         "build": {
             "tool": "dotnet",
+            "project": "./source/Eppie.App/Eppie.App/Eppie.App.csproj",
             "configuration": "release",
             "framework": "net8.0-browserwasm",
             "extra": "--verbosity=minimal --nologo"
@@ -131,13 +161,18 @@
             "all"
         ],
         "os": "windows-latest",
-        "project": "./source/Eppie.App/Eppie.App/Eppie.App.csproj",
         "prerequisites": {
             "msbuild": "true",
             "uno-platform": "true"
         },
+        "restore": {
+            "tool": "msbuild",
+            "project": "./source/Eppie.App/Eppie.App.sln",
+            "extra": "-verbosity:minimal -consoleLoggerParameters:Summary"
+        },
         "build": {
             "tool": "msbuild",
+            "project": "./source/Eppie.App/Eppie.App/Eppie.App.csproj",
             "configuration": "release",
             "framework": "net8.0-windows10.0.19041",
             "extra": "-verbosity:minimal -consoleLoggerParameters:Summary"
@@ -152,13 +187,18 @@
             "all"
         ],
         "os": "macos-latest",
-        "project": "./source/Eppie.App/Eppie.App/Eppie.App.csproj",
         "prerequisites": {
             "msbuild": "false",
             "uno-platform": "true"
         },
+        "restore": {
+            "tool": "dotnet",
+            "project": "./source/Eppie.App/Eppie.App.sln",
+            "extra": "--verbosity=minimal --nologo"
+        },
         "build": {
             "tool": "dotnet",
+            "project": "./source/Eppie.App/Eppie.App/Eppie.App.csproj",
             "configuration": "release",
             "framework": "net8.0-ios",
             "extra": "--verbosity=minimal --nologo"
@@ -173,13 +213,18 @@
             "all"
         ],
         "os": "macos-latest",
-        "project": "./source/Eppie.App/Eppie.App/Eppie.App.csproj",
         "prerequisites": {
             "msbuild": "false",
             "uno-platform": "true"
         },
+        "restore": {
+            "tool": "dotnet",
+            "project": "./source/Eppie.App/Eppie.App.sln",
+            "extra": "--verbosity=minimal --nologo"
+        },
         "build": {
             "tool": "dotnet",
+            "project": "./source/Eppie.App/Eppie.App/Eppie.App.csproj",
             "configuration": "release",
             "framework": "net8.0-maccatalyst",
             "extra": "--verbosity=minimal --nologo"
@@ -194,13 +239,18 @@
             "all"
         ],
         "os": "windows-latest",
-        "project": "./source/Eppie.App/Eppie.App/Eppie.App.csproj",
         "prerequisites": {
             "msbuild": "false",
             "uno-platform": "true"
         },
+        "restore": {
+            "tool": "dotnet",
+            "project": "./source/Eppie.App/Eppie.App.sln",
+            "extra": "--verbosity=minimal --nologo"
+        },
         "build": {
             "tool": "dotnet",
+            "project": "./source/Eppie.App/Eppie.App/Eppie.App.csproj",
             "configuration": "release",
             "framework": "net8.0-android",
             "extra": "--verbosity=minimal --nologo"
@@ -214,13 +264,18 @@
             "all"
         ],
         "os": "ubuntu-latest",
-        "project": "./source/Eppie.App/Eppie.App/Eppie.App.csproj",
         "prerequisites": {
             "msbuild": "false",
             "uno-platform": "true"
         },
+        "restore": {
+            "tool": "dotnet",
+            "project": "./source/Eppie.App/Eppie.App.sln",
+            "extra": "--verbosity=minimal --nologo"
+        },
         "build": {
             "tool": "dotnet",
+            "project": "./source/Eppie.App/Eppie.App/Eppie.App.csproj",
             "configuration": "release",
             "framework": "net8.0-android",
             "extra": "--verbosity=minimal --nologo"
@@ -234,13 +289,18 @@
             "all"
         ],
         "os": "macos-latest",
-        "project": "./source/Eppie.App/Eppie.App/Eppie.App.csproj",
         "prerequisites": {
             "msbuild": "false",
             "uno-platform": "true"
         },
+        "restore": {
+            "tool": "dotnet",
+            "project": "./source/Eppie.App/Eppie.App.sln",
+            "extra": "--verbosity=minimal --nologo"
+        },
         "build": {
             "tool": "dotnet",
+            "project": "./source/Eppie.App/Eppie.App/Eppie.App.csproj",
             "configuration": "release",
             "framework": "net8.0-android",
             "extra": "--verbosity=minimal --nologo"
@@ -255,13 +315,18 @@
             "all"
         ],
         "os": "windows-latest",
-        "project": "./source/Eppie.App/Eppie.App.UWP/Eppie.App.UWP.csproj",
         "prerequisites": {
             "msbuild": "true",
             "uno-platform": "false"
         },
+        "restore": {
+            "tool": "msbuild",
+            "project": "./source/Eppie.App/Eppie.App.sln",
+            "extra": "-verbosity:minimal -consoleLoggerParameters:Summary"
+        },
         "build": {
             "tool": "msbuild",
+            "project": "./source/Eppie.App/Eppie.App.UWP/Eppie.App.UWP.csproj",
             "configuration": "release",
             "extra": "-verbosity:minimal -consoleLoggerParameters:Summary"
         }
@@ -272,13 +337,18 @@
             "autobuild"
         ],
         "os": "windows-latest",
-        "project": "./source/Eppie.App/Eppie.App/Eppie.App.csproj",
         "prerequisites": {
             "msbuild": "true",
             "uno-platform": "true"
         },
+        "restore": {
+            "tool": "msbuild",
+            "project": "./source/Eppie.App/Eppie.App.sln",
+            "extra": "-verbosity:minimal -consoleLoggerParameters:Summary"
+        },
         "build": {
             "tool": "msbuild",
+            "project": "./source/Eppie.App/Eppie.App/Eppie.App.csproj",
             "configuration": "release",
             "extra": "-verbosity:minimal -consoleLoggerParameters:Summary"
         }
