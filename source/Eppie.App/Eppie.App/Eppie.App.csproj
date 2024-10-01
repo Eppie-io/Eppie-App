@@ -49,6 +49,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\ComponentBuilder\ComponentBuilder.csproj" />
+    <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core.Backup\Tuvi.Core.Backup.csproj" />
+    <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core.Logging\Tuvi.Core.Logging.csproj" />
+    <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core.Mail.Impl\Tuvi.Core.Mail.Impl.csproj" />
+    <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core.Mail\Tuvi.Core.Mail.csproj" />
+    <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core\Tuvi.Core.csproj" />
+    <ProjectReference Include="..\..\..\gitmodules\TuviPgpLib\TuviPgpLib\TuviPgpLib.csproj" />
     <ProjectReference Include="..\Eppie.App.Converters\Eppie.App.Converters.Uno\Eppie.App.Converters.Uno.csproj" />
     <ProjectReference Include="..\Eppie.App.ViewModels\Eppie.App.ViewModels.csproj" />
   </ItemGroup>

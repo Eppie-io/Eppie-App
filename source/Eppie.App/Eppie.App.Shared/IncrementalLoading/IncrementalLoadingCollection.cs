@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -7,7 +7,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using Tuvi.App.ViewModels;
 using Windows.Foundation;
+
+#if WINDOWS_UWP
 using Windows.UI.Xaml.Data;
+#else 
+using Microsoft.UI.Xaml.Data;
+#endif
 
 namespace Tuvi.App.IncrementalLoading
 {

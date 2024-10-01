@@ -155,9 +155,33 @@
       <Project>{5dce27ba-aa10-469f-9897-0e679764943f}</Project>
       <Name>ComponentBuilder</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core.Backup\Tuvi.Core.Backup.csproj">
+      <Project>{d7e6f7a8-6d95-462d-9f41-8e55f6ba0fbb}</Project>
+      <Name>Tuvi.Core.Backup</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core.Entities\Tuvi.Core.Entities.csproj">
       <Project>{1e363987-165e-4ea6-a0e1-fad82b7c0633}</Project>
       <Name>Tuvi.Core.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core.Logging\Tuvi.Core.Logging.csproj">
+      <Project>{c4d11ff0-3cb0-4b07-be17-56f35f6e8937}</Project>
+      <Name>Tuvi.Core.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core.Mail.Impl\Tuvi.Core.Mail.Impl.csproj">
+      <Project>{610c1259-9bc9-4ea8-8c0a-6d32c6d7690e}</Project>
+      <Name>Tuvi.Core.Mail.Impl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core.Mail\Tuvi.Core.Mail.csproj">
+      <Project>{d77b09a4-b06a-4c2e-8fe2-a499dc1f0522}</Project>
+      <Name>Tuvi.Core.Mail</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core\Tuvi.Core.csproj">
+      <Project>{ebd69008-dab3-41b1-88c4-a7f82b41e8d8}</Project>
+      <Name>Tuvi.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\gitmodules\TuviPgpLib\TuviPgpLib\TuviPgpLib.csproj">
+      <Project>{93c3844c-03b2-4c24-9070-16ba1971758e}</Project>
+      <Name>TuviPgpLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\Eppie.App.Converters\Eppie.App.Converters.UWP\Eppie.App.Converters.UWP.csproj">
       <Project>{d392835a-52ae-4529-aac0-52d3189cb461}</Project>
