@@ -8,9 +8,9 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace Tuvi.App.Shared.Tools
 {
-	public static class ElementHierarchyTools
-	{
-		public static Frame GetMainFrame(FrameworkElement frameworkElement)
+    public static class ElementHierarchyTools
+    {
+        public static Frame GetMainFrame(FrameworkElement frameworkElement)
         {
             if (frameworkElement == null) return null;
 

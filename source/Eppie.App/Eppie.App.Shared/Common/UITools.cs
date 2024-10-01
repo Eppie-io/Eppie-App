@@ -42,7 +42,7 @@ namespace Tuvi.App.Shared.Common
             finally
             {
                 _mutex.Release();
-            }            
+            }
         }
 
         public static async Task<bool> ShowDialogAsync(string title, string message, string acceptButtonText, string rejectButtonText)
@@ -61,12 +61,12 @@ namespace Tuvi.App.Shared.Common
 
                 var result = await messageDialog.ShowAsync();
 
-                return result == ContentDialogResult.Primary;                
+                return result == ContentDialogResult.Primary;
             }
             finally
             {
                 _mutex.Release();
-            }            
+            }
         }
 
         public static async Task<bool> ShowErrorMessageAsync(string title, string message, string acceptButtonText, string rejectButtonText)
