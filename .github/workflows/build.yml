@@ -155,4 +155,4 @@ jobs:
           $framework='${{ matrix.build.framework }}'
           $framework_option=$( if($framework) {"-property:TargetFramework=$framework"} else {""} )
 
-          msbuild -target:Rebuild -restore:True -property:Configuration=$configuration $framework_option $extra_options $project
+          msbuild -target:Build -property:Configuration=$configuration $framework_option $extra_options $project
