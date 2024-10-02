@@ -88,6 +88,6 @@ namespace Tuvi.App.Shared.Models
         public string GetHomepage()
         {
             return GetString("Homepage");
-        }      
+        }
     }
 }

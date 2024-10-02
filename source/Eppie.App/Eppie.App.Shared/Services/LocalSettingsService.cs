@@ -23,7 +23,7 @@ namespace Tuvi.App.Shared.Services
         #region Set/Get option
 
         private ApplicationDataContainer AppLocalSettings { get { return ApplicationData.Current.LocalSettings; } }
-        
+
         private void SetOption<T>(T value, [CallerMemberName] string key = null)
         {
             try

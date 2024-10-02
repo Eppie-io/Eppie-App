@@ -19,7 +19,7 @@ namespace Tuvi.App.Shared.Services
 
                 UpdateBadge(badgeXml);
             }
-            catch(NotImplementedException)
+            catch (NotImplementedException)
             {
                 //ignore for now
             }
@@ -38,7 +38,7 @@ namespace Tuvi.App.Shared.Services
         }
 
         public static void ShowToastNotification(string message)
-        {            
+        {
             var xml = $@"<toast>
     <visual>
         <binding template='ToastGeneric'>
