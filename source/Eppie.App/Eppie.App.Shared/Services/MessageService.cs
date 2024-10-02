@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Tuvi.Core.Backup;
 using Tuvi.Core.Entities;
 using Tuvi.Core.Entities.Exceptions;
+// ToDo: move file 'Exceptions.cs' from Tuvi.Core.Mail.Impl to Tuvi.Core.Mail
 using Tuvi.Core.Mail.Impl;
 using Tuvi.App.ViewModels;
 using Tuvi.App.ViewModels.Common;

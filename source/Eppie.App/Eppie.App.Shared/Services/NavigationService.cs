@@ -101,7 +101,7 @@ namespace Tuvi.App.Shared.Services
 
         public void ExitApplication()
         {
-            Application.Current.Exit();
+            Application.Current.Exit(); // ToDo: Uno0001
         }
 
         public void ClearHistory()
