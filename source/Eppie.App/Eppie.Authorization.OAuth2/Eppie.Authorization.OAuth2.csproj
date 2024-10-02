@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Finebits.Authorization.OAuth2" />
+    <PackageReference Include="Finebits.Authorization.OAuth2.AuthenticationBroker.Desktop" />
+    <PackageReference Include="Finebits.Authorization.OAuth2.Google" />
+    <PackageReference Include="Finebits.Authorization.OAuth2.Outlook" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core.Entities\Tuvi.Core.Entities.csproj" />
+    <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core\Tuvi.Core.csproj" />
+  </ItemGroup>
+
+</Project>

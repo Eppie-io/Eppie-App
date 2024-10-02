@@ -1,0 +1,17 @@
+﻿<Page x:Class="Eppie.App.Shared.Views.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="using:Eppie.App.Shared.Views"
+      xmlns:utu="using:Uno.Toolkit.UI"
+      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <ScrollViewer>
+        <StackPanel HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    utu:SafeArea.Insets="VisibleBounds">
+            <TextBlock HorizontalAlignment="Center" AutomationProperties.AutomationId="HelloTextBlock">
+                <Run x:Uid="GreetingPhrase" />
+                <Run Text="{x:Bind AppVersion}" />
+            </TextBlock>
+        </StackPanel>
+    </ScrollViewer>
+</Page>
