@@ -11,11 +11,6 @@
             "msbuild": "false",
             "uno-platform": "true"
         },
-        "restore": {
-            "tool": "dotnet",
-            "project": "./source/Eppie.App/Eppie.App.sln",
-            "extra": "--verbosity=minimal --nologo"
-        },
         "build": {
             "tool": "dotnet",
             "project": "./source/Eppie.App/Eppie.App/Eppie.App.csproj",
@@ -36,11 +31,6 @@
             "msbuild": "false",
             "uno-platform": "true"
         },
-        "restore": {
-            "tool": "dotnet",
-            "project": "./source/Eppie.App/Eppie.App.sln",
-            "extra": "--verbosity=minimal --nologo"
-        },
         "build": {
             "tool": "dotnet",
             "project": "./source/Eppie.App/Eppie.App/Eppie.App.csproj",
@@ -60,11 +50,6 @@
         "prerequisites": {
             "msbuild": "false",
             "uno-platform": "true"
-        },
-        "restore": {
-            "tool": "dotnet",
-            "project": "./source/Eppie.App/Eppie.App.sln",
-            "extra": "--verbosity=minimal --nologo"
         },
         "build": {
             "tool": "dotnet",
@@ -88,11 +73,6 @@
             "msbuild": "false",
             "uno-platform": "true"
         },
-        "restore": {
-            "tool": "dotnet",
-            "project": "./source/Eppie.App/Eppie.App.sln",
-            "extra": "--verbosity=minimal --nologo"
-        },
         "build": {
             "tool": "dotnet",
             "project": "./source/Eppie.App/Eppie.App/Eppie.App.csproj",
@@ -113,11 +93,6 @@
             "msbuild": "false",
             "uno-platform": "true"
         },
-        "restore": {
-            "tool": "dotnet",
-            "project": "./source/Eppie.App/Eppie.App.sln",
-            "extra": "--verbosity=minimal --nologo"
-        },
         "build": {
             "tool": "dotnet",
             "project": "./source/Eppie.App/Eppie.App/Eppie.App.csproj",
@@ -137,11 +112,6 @@
         "prerequisites": {
             "msbuild": "false",
             "uno-platform": "true"
-        },
-        "restore": {
-            "tool": "dotnet",
-            "project": "./source/Eppie.App/Eppie.App.sln",
-            "extra": "--verbosity=minimal --nologo"
         },
         "build": {
             "tool": "dotnet",
@@ -191,11 +161,6 @@
             "msbuild": "false",
             "uno-platform": "true"
         },
-        "restore": {
-            "tool": "dotnet",
-            "project": "./source/Eppie.App/Eppie.App.sln",
-            "extra": "--verbosity=minimal --nologo"
-        },
         "build": {
             "tool": "dotnet",
             "project": "./source/Eppie.App/Eppie.App/Eppie.App.csproj",
@@ -216,11 +181,6 @@
         "prerequisites": {
             "msbuild": "false",
             "uno-platform": "true"
-        },
-        "restore": {
-            "tool": "dotnet",
-            "project": "./source/Eppie.App/Eppie.App.sln",
-            "extra": "--verbosity=minimal --nologo"
         },
         "build": {
             "tool": "dotnet",
@@ -243,11 +203,6 @@
             "msbuild": "false",
             "uno-platform": "true"
         },
-        "restore": {
-            "tool": "dotnet",
-            "project": "./source/Eppie.App/Eppie.App.sln",
-            "extra": "--verbosity=minimal --nologo"
-        },
         "build": {
             "tool": "dotnet",
             "project": "./source/Eppie.App/Eppie.App/Eppie.App.csproj",
@@ -268,11 +223,6 @@
             "msbuild": "false",
             "uno-platform": "true"
         },
-        "restore": {
-            "tool": "dotnet",
-            "project": "./source/Eppie.App/Eppie.App.sln",
-            "extra": "--verbosity=minimal --nologo"
-        },
         "build": {
             "tool": "dotnet",
             "project": "./source/Eppie.App/Eppie.App/Eppie.App.csproj",
@@ -292,11 +242,6 @@
         "prerequisites": {
             "msbuild": "false",
             "uno-platform": "true"
-        },
-        "restore": {
-            "tool": "dotnet",
-            "project": "./source/Eppie.App/Eppie.App.sln",
-            "extra": "--verbosity=minimal --nologo"
         },
         "build": {
             "tool": "dotnet",
