@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Tuvi.App.ViewModels.Services;
@@ -88,6 +88,6 @@ namespace Tuvi.App.Shared.Models
         public string GetHomepage()
         {
             return GetString("Homepage");
-        }      
+        }
     }
 }

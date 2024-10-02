@@ -1,8 +1,14 @@
-﻿using Tuvi.App.ViewModels.Services;
+using Tuvi.App.ViewModels.Services;
 using System;
 using System.Linq;
+
+#if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+#else 
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+#endif
 
 namespace Tuvi.App.Shared.Services
 {
@@ -95,7 +101,7 @@ namespace Tuvi.App.Shared.Services
 
         public void ExitApplication()
         {
-            Application.Current.Exit();
+            Application.Current.Exit(); // ToDo: Uno0001
         }
 
         public void ClearHistory()

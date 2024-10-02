@@ -1,21 +1,26 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Tuvi.Core.Backup;
 using Tuvi.Core.Entities;
 using Tuvi.Core.Entities.Exceptions;
-using Tuvi.App.Shared.Models;
+// ToDo: move file 'Exceptions.cs' from Tuvi.Core.Mail.Impl to Tuvi.Core.Mail
 using Tuvi.Core.Mail.Impl;
 using Tuvi.App.ViewModels;
 using Tuvi.App.ViewModels.Common;
 using Tuvi.App.ViewModels.Services;
 using TuviPgpLib.Entities;
 using Windows.ApplicationModel.Resources;
+
+#if WINDOWS_UWP
 using Windows.UI.Xaml;
+#else 
+using Microsoft.UI.Xaml;
+#endif
 
 namespace Tuvi.App.Shared.Services
 {
-    public class MessageService : ITuviMailMessageService
+    public partial class MessageService : ITuviMailMessageService
     {
         private ResourceLoader Loader { get; } = ResourceLoader.GetForCurrentView();
 
@@ -199,8 +204,8 @@ namespace Tuvi.App.Shared.Services
 
         private void SendErrorReport(string message)
         {
-            var brand = new BrandLoader();
-            var navigationService = (Application.Current as App).NavigationService;
+            var brand = new Models.BrandLoader();
+            var navigationService = GetNavigationService();
             var messageData = new ErrorReportNewMessageData(brand.GetSupport(), Loader.GetString("ErrorReportEmailTitle"), message);
             navigationService?.Navigate(nameof(NewMessagePageViewModel), messageData);
         }
