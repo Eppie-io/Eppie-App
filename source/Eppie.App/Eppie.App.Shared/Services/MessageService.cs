@@ -1,17 +1,21 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Tuvi.Core.Backup;
 using Tuvi.Core.Entities;
 using Tuvi.Core.Entities.Exceptions;
-using Tuvi.App.Shared.Models;
 using Tuvi.Core.Mail.Impl;
 using Tuvi.App.ViewModels;
 using Tuvi.App.ViewModels.Common;
 using Tuvi.App.ViewModels.Services;
 using TuviPgpLib.Entities;
 using Windows.ApplicationModel.Resources;
+
+#if WINDOWS_UWP
 using Windows.UI.Xaml;
+#else 
+using Microsoft.UI.Xaml;
+#endif
 
 namespace Tuvi.App.Shared.Services
 {
