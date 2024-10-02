@@ -26,6 +26,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\LocalizationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\LocalSettingsService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\MessageService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\MessageService.Uno.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\MessageService.UWP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\NavigationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\NotificationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Tools\ElementHierarchyTools.cs" />

@@ -19,7 +19,7 @@ using Microsoft.UI.Xaml;
 
 namespace Tuvi.App.Shared.Services
 {
-    public class MessageService : ITuviMailMessageService
+    public partial class MessageService : ITuviMailMessageService
     {
         private ResourceLoader Loader { get; } = ResourceLoader.GetForCurrentView();
 
@@ -203,8 +203,8 @@ namespace Tuvi.App.Shared.Services
 
         private void SendErrorReport(string message)
         {
-            var brand = new BrandLoader();
-            var navigationService = (Application.Current as App).NavigationService;
+            var brand = new Models.BrandLoader();
+            var navigationService = GetNavigationService();
             var messageData = new ErrorReportNewMessageData(brand.GetSupport(), Loader.GetString("ErrorReportEmailTitle"), message);
             navigationService?.Navigate(nameof(NewMessagePageViewModel), messageData);
         }
