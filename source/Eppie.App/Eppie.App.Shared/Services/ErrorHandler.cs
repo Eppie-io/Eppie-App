@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Tuvi.Core.Logging;
@@ -26,7 +26,7 @@ namespace Tuvi.App.Shared.Services
 
         public async void OnError(Exception e, bool silent)
         {
-            this.Log().LogError(e, "");
+            LoggingExtension.Log(this).LogError(e, "");
             try
             {
                 if (Dispatcher.HasThreadAccess)
