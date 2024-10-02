@@ -1,7 +1,7 @@
 #if !WINDOWS_UWP
 
-using Tuvi.App.ViewModels.Services;
 using Microsoft.UI.Xaml;
+using Tuvi.App.ViewModels.Services;
 
 namespace Tuvi.App.Shared.Services
 {

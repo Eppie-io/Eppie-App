@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using Tuvi.Core.Logging;
 using Tuvi.App.ViewModels.Services;
+using Tuvi.Core.Logging;
 using Windows.UI.Core;
 
 namespace Tuvi.App.Shared.Services
