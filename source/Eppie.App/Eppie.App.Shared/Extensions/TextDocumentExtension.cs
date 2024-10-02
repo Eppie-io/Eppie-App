@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Globalization;
 using System.Text;
 using Windows.UI.Text;
@@ -101,11 +101,11 @@ namespace Tuvi.App.Shared.Extensions
                 throw new ArgumentNullException(nameof(document));
             }
 
-            document.GetText(TextGetOptions.None, out string text);
+            document.GetText(TextGetOptions.None, out string text); // ToDo: warning Uno0001
 
             // it seems that we have a bug in rich edit and we always get extra '\r, cut it off
             int endPosition = text.Length == 0 ? text.Length : text.Length - 1;
-            ITextRange txtRange = document.GetRange(0, endPosition);
+            ITextRange txtRange = document.GetRange(0, endPosition); // ToDo: warning Uno0001
 
             var strHTML = new StringBuilder("<html><head></head><body>");
 
@@ -119,44 +119,44 @@ namespace Tuvi.App.Shared.Extensions
 
             for (int i = 0; i < endPosition; i++)
             {
-                txtRange.SetRange(i, i + 1);
+                txtRange.SetRange(i, i + 1); // ToDo: warning Uno0001
 
                 if (i == 0)
                 {
                     shtSize = OpenNewFontSpan();
                 }
 
-                if (txtRange.CharacterFormat.Size != shtSize)
+                if (txtRange.CharacterFormat.Size != shtSize) // ToDo: warning Uno0001
                 {
                     strHTML.Append("</span>");
                     shtSize = OpenNewFontSpan();
                 }
 
                 // bullet
-                bool appendToOutput = bulletList.Process(txtRange.ParagraphFormat.ListType == MarkerType.Bullet, txtRange.Character);
+                bool appendToOutput = bulletList.Process(txtRange.ParagraphFormat.ListType == MarkerType.Bullet, txtRange.Character); // ToDo: warning Uno0001
 
                 // numbering
-                appendToOutput = numberedList.Process(txtRange.ParagraphFormat.ListType == MarkerType.LowercaseRoman, txtRange.Character);
+                appendToOutput = numberedList.Process(txtRange.ParagraphFormat.ListType == MarkerType.LowercaseRoman, txtRange.Character); // ToDo: warning Uno0001
 
                 // new line should be placed here, right after list processing, to assure that we correctly processed list items
-                if (appendToOutput && txtRange.Character == Convert.ToChar(13))
+                if (appendToOutput && txtRange.Character == Convert.ToChar(13)) // ToDo: warning Uno0001
                 {
                     strHTML.Append("<br/>");
                     appendToOutput = false;
                 }
 
                 // bold
-                boldProcessor.Process(txtRange.CharacterFormat.Bold == FormatEffect.On);
+                boldProcessor.Process(txtRange.CharacterFormat.Bold == FormatEffect.On); // ToDo: warning Uno0001
 
                 // italic
-                italicProcessor.Process(txtRange.CharacterFormat.Italic == FormatEffect.On);
+                italicProcessor.Process(txtRange.CharacterFormat.Italic == FormatEffect.On); // ToDo: warning Uno0001
 
                 // underline
-                underlineProcessor.Process(txtRange.CharacterFormat.Underline == UnderlineType.Single);
+                underlineProcessor.Process(txtRange.CharacterFormat.Underline == UnderlineType.Single); // ToDo: warning Uno0001
 
                 if (appendToOutput)
                 {
-                    strHTML.Append(txtRange.Character);
+                    strHTML.Append(txtRange.Character); // ToDo: warning Uno0001
                 }
             }
 
@@ -166,8 +166,8 @@ namespace Tuvi.App.Shared.Extensions
 
             float OpenNewFontSpan()
             {
-                float fontSize = txtRange.CharacterFormat.Size;
-                string strFntName = txtRange.CharacterFormat.Name;
+                float fontSize = txtRange.CharacterFormat.Size; // ToDo: warning Uno0001
+                string strFntName = txtRange.CharacterFormat.Name; // ToDo: warning Uno0001
                 strHTML.Append("<span style=\"font-family:")
                        .Append(strFntName)
                        .Append("; font-size: ")
