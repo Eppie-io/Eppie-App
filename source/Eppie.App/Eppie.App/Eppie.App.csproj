@@ -57,6 +57,7 @@
     <ProjectReference Include="..\..\..\gitmodules\TuviPgpLib\TuviPgpLib\TuviPgpLib.csproj" />
     <ProjectReference Include="..\Eppie.App.Converters\Eppie.App.Converters.Uno\Eppie.App.Converters.Uno.csproj" />
     <ProjectReference Include="..\Eppie.App.ViewModels\Eppie.App.ViewModels.csproj" />
+    <ProjectReference Include="..\Eppie.Authorization.OAuth2\Eppie.Authorization.OAuth2.csproj" />
   </ItemGroup>
 
   <Import Project="..\Eppie.App.Shared\Eppie.App.Shared.projitems" Label="Shared" />

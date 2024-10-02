@@ -1,4 +1,4 @@
-﻿#if (!HAS_UNO)
+#if WINDOWS_UWP
 
 using System;
 using Finebits.Authorization.OAuth2.Google;
