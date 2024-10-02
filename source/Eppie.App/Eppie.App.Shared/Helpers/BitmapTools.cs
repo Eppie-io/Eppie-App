@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using Windows.Graphics.Imaging;
 using Windows.Storage;
@@ -18,7 +18,7 @@ namespace Tuvi.App.Shared.Helpers
         {
             using (var imageStream = await sourceFile.OpenReadAsync())
             {
-                var decoder = await BitmapDecoder.CreateAsync(imageStream);
+                var decoder = await BitmapDecoder.CreateAsync(imageStream); // ToDo: warning Uno0001: Windows.Graphics.Imaging.BitmapDecoder.*
 
                 var originalPixelWidth = decoder.PixelWidth;
                 var originalPixelHeight = decoder.PixelHeight;
@@ -72,10 +72,10 @@ namespace Tuvi.App.Shared.Helpers
         private static async Task<byte[]> GetPixelDataAsync(BitmapDecoder decoder, uint startPointX, uint startPointY,
             uint width, uint height, uint scaledWidth, uint scaledHeight)
         {
-            var transform = new BitmapTransform();
+            var transform = new BitmapTransform(); // ToDo: warning Uno0001: Windows.Graphics.Imaging.BitmapTransform.*
             transform.InterpolationMode = BitmapInterpolationMode.Linear;
 
-            var bounds = new BitmapBounds();
+            var bounds = new BitmapBounds(); // ToDo: warning Uno0001: Windows.Graphics.Imaging.BitmapBounds.*
             bounds.X = startPointX;
             bounds.Y = startPointY;
             bounds.Height = height;
@@ -92,7 +92,7 @@ namespace Tuvi.App.Shared.Helpers
                 transform,
                 ExifOrientationMode.IgnoreExifOrientation,
                 ColorManagementMode.ColorManageToSRgb);
-            var pixels = pix.DetachPixelData();
+            var pixels = pix.DetachPixelData(); // ToDo: warning Uno0001: Windows.Graphics.Imaging.PixelDataProvider.DetachPixelData()
             return pixels;
         }
     }
