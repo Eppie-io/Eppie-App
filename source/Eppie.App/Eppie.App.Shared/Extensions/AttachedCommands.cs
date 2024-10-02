@@ -8,8 +8,8 @@ using Microsoft.UI.Xaml;
 
 namespace Tuvi.App.Shared.Extensions
 {
-	public static class AttachedCommands
-	{
+    public static class AttachedCommands
+    {
         public static readonly DependencyProperty ClickCommandProperty =
             DependencyProperty.RegisterAttached("ClickCommand", typeof(ICommand), typeof(AttachedCommands), new PropertyMetadata(null));
 

@@ -8,8 +8,8 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace Tuvi.App.Shared.Extensions
 {
-	public static class WebViewExtension
-	{
+    public static class WebViewExtension
+    {
         public static string GetStringSourceWithDisabledJavaScript(DependencyObject obj)
         {
             return (string)obj?.GetValue(StringSourceWithDisabledJavaScriptProperty);

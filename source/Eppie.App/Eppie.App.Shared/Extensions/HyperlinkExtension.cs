@@ -10,7 +10,7 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace Tuvi.App.Shared.Extensions
 {
-	public static class HyperlinkExtension
+    public static class HyperlinkExtension
     {
         public static string GetLink(DependencyObject obj)
         {
