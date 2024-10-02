@@ -1,6 +1,12 @@
-﻿using System;
+using System;
+
+#if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+#else
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+#endif
 
 namespace Tuvi.App.Shared.Extensions
 {
