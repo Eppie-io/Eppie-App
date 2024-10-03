@@ -9,7 +9,7 @@ namespace Tuvi.App.Shared.Services
     {
         private INavigationService GetNavigationService()
         {
-            return (Application.Current as Eppie.App.UWP.App).NavigationService;
+            return (Application.Current as Eppie.App.Shared.App).NavigationService;
         }
     }
 }

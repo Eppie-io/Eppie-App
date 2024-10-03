@@ -1,3 +1,5 @@
+#if WINDOWS_UWP
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,15 +18,13 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-namespace Eppie.App.UWP
+namespace Eppie.App.Shared
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
-    sealed partial class App : Application
+    public partial class App : Application
     {
-        public INavigationService NavigationService { get; private set; }
-
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -101,3 +101,5 @@ namespace Eppie.App.UWP
         }
     }
 }
+
+#endif
