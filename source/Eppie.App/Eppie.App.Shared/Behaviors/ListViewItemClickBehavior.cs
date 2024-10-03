@@ -44,7 +44,7 @@ namespace Tuvi.App.Shared.Behaviors
             if (ClickCommand != null && ClickCommand.CanExecute(e?.ClickedItem))
             {
                 ClickCommand.Execute(e?.ClickedItem);
-            }            
+            }
         }
     }
 }
