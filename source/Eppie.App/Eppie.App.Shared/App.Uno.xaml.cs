@@ -1,12 +1,11 @@
-using Tuvi.App.ViewModels.Services;
+#if !WINDOWS_UWP
+
 using Uno.Resizetizer;
 
-namespace Eppie.App
+namespace Eppie.App.Shared
 {
     public partial class App : Application
     {
-        public INavigationService NavigationService { get; private set; }
-
         /// <summary>
         /// Initializes the singleton application object. This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -103,3 +102,5 @@ namespace Eppie.App
         }
     }
 }
+
+#endif

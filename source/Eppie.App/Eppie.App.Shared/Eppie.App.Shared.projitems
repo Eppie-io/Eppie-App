@@ -9,12 +9,6 @@
     <Import_RootNamespace>Eppie.App.Shared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Page Include="$(MSBuildThisFileDirectory)Views\MainPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Authorization\AuthConfig.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Authorization\AuthConfig.UWP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Authorization\WindowsAuthenticationBroker.UWP.cs" />
@@ -31,21 +25,38 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\LocalizationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\LocalSettingsService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\MessageService.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\MessageService.Uno.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\MessageService.UWP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\NavigationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\NotificationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Tools\ElementHierarchyTools.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)App.Uno.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)App.UWP.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ApplicationDefinition Include="$(MSBuildThisFileDirectory)App.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
     <Page Include="$(MSBuildThisFileDirectory)Converters\TuviMailConvertersDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)StaticResources\StaticStringResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

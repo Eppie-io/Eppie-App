@@ -205,7 +205,7 @@ namespace Tuvi.App.Shared.Services
         private void SendErrorReport(string message)
         {
             var brand = new Models.BrandLoader();
-            var navigationService = GetNavigationService();
+            var navigationService = (Application.Current as Eppie.App.Shared.App).NavigationService;
             var messageData = new ErrorReportNewMessageData(brand.GetSupport(), Loader.GetString("ErrorReportEmailTitle"), message);
             navigationService?.Navigate(nameof(NewMessagePageViewModel), messageData);
         }
