@@ -1,7 +1,6 @@
 ﻿<ResourceDictionary
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Tuvi.App.Shared.StaticResources">
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <x:String x:Key="PlatformUnoName">Uno Platform</x:String>
     <x:String x:Key="PlatformUnoLink">https://platform.uno/</x:String>
