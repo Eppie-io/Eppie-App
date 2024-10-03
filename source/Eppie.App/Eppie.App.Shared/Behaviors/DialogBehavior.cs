@@ -1,9 +1,17 @@
-﻿using Microsoft.Xaml.Interactivity;
+using Microsoft.Xaml.Interactivity;
 using System;
 using System.Windows.Input;
 using Windows.System;
+
+#if WINDOWS_UWP
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Controls;
+#else 
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Controls;
+#endif
 
 namespace Tuvi.App.Shared.Behaviors
 {
@@ -50,7 +58,7 @@ namespace Tuvi.App.Shared.Behaviors
 			}
 		}
 
-		private void OnKeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
+		private void OnKeyDown(object sender, KeyRoutedEventArgs e)
 		{
 			try
 			{

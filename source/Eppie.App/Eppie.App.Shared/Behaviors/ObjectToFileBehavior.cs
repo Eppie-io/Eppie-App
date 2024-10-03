@@ -1,7 +1,12 @@
 using Tuvi.Core.Entities;
 using System;
 using Tuvi.App.ViewModels.Services;
+
+#if WINDOWS_UWP
 using Windows.UI.Xaml;
+#else 
+using Microsoft.UI.Xaml;
+#endif
 
 namespace Tuvi.App.Shared.Behaviors
 {

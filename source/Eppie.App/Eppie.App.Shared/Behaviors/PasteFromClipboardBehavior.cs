@@ -1,5 +1,10 @@
-﻿using System.Windows.Input;
+using System.Windows.Input;
+
+#if WINDOWS_UWP
 using Windows.UI.Xaml;
+#else 
+using Microsoft.UI.Xaml;
+#endif
 
 namespace Tuvi.App.Shared.Behaviors
 {

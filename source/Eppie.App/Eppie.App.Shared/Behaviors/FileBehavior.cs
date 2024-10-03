@@ -1,11 +1,17 @@
-﻿using Microsoft.Xaml.Interactivity;
+using Microsoft.Xaml.Interactivity;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Tuvi.App.Services;
 using Tuvi.App.ViewModels.Services;
+
+#if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+#else 
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+#endif
 
 namespace Tuvi.App.Shared.Behaviors
 {

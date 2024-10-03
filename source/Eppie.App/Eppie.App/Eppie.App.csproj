@@ -66,4 +66,11 @@
     <None Include="..\Eppie.App.Shared\Views\*.xaml" Visible="false" />
   </ItemGroup>
 
+  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0-windows10.0.19041'">
+    <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' != 'net8.0-windows10.0.19041'">
+    <PackageReference Include="Uno.Microsoft.Xaml.Behaviors.WinUI.Managed" />
+  </ItemGroup>
+
 </Project>
