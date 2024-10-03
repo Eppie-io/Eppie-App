@@ -18,6 +18,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Authorization\AuthConfig.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Authorization\AuthConfig.UWP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Authorization\WindowsAuthenticationBroker.UWP.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\BitmapSourceConverters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\BitmapTools.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IncrementalLoading\IncrementalLoadingCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\UITools.cs" />
@@ -38,6 +39,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)Converters\TuviMailConvertersDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\en\Resources.resw">
