@@ -1,8 +1,14 @@
-﻿using Tuvi.Core.Entities;
+using Tuvi.Core.Entities;
 using System;
 using System.Runtime.InteropServices.WindowsRuntime;
+
+#if WINDOWS_UWP
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media.Imaging;
+#else 
+using Microsoft.UI.Xaml.Data;
+using Microsoft.UI.Xaml.Media.Imaging;
+#endif
 
 namespace Tuvi.App.Shared.Converters
 {
