@@ -13,6 +13,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Authorization\AuthConfig.UWP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Authorization\WindowsAuthenticationBroker.UWP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BitmapSourceConverters.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\AttachedCommands.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\HyperlinkExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\TextDocumentExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\WebViewExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\BitmapTools.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IncrementalLoading\IncrementalLoadingCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\UITools.cs" />
