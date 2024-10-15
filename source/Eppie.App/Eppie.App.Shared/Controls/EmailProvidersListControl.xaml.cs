@@ -1,11 +1,14 @@
-﻿using System;
+using System;
 using System.Collections.ObjectModel;
 using Tuvi.App.ViewModels;
-using Windows.UI;
+
+#if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Media;
+#else
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+#endif
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 

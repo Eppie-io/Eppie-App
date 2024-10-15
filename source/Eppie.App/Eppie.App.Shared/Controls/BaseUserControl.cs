@@ -1,6 +1,11 @@
-﻿using Tuvi.Core.Entities;
+using Tuvi.Core.Entities;
 using System;
+
+#if WINDOWS_UWP
 using Windows.UI.Xaml.Controls;
+#else
+using Microsoft.UI.Xaml.Controls;
+#endif
 
 namespace Tuvi.App.Shared.Controls
 {

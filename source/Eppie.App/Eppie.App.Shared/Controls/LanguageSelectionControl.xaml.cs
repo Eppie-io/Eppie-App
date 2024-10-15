@@ -1,11 +1,16 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Windows.ApplicationModel.Resources;
+using Windows.Globalization;
+
+#if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.Globalization;
-using Windows.UI.Xaml.Media;
+#else
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+#endif
 
 namespace Tuvi.App.Shared.Controls
 {
