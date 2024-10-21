@@ -71,6 +71,11 @@
 
         <win:Grid>
 
+            <!-- Now it's off.
+                 Use CommunityToolkit.Uwp.Controls.TokenizingTextBox and CommunityToolkit.WinUI.Controls.TokenizingTextBox
+                 look at: https://platform.uno/docs/articles/platform-specific-xaml.html
+                 look at: https://github.com/unoplatform/uno/discussions/12009
+            -->
             <uwp_toolkit_controls:TokenizingTextBox SuggestedItemTemplate="{StaticResource SuggestContactItemTemplate}"
                                                     TokenItemTemplate="{StaticResource TokenContactItemTemplate}"
                                                     TokenDelimiter=";"
