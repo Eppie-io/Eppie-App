@@ -19,6 +19,8 @@
     <PackageVersion Include="Microsoft.UI.Xaml" Version="2.8.6" />
     <PackageVersion Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.9" />
     <PackageVersion Include="Microsoft.Xaml.Behaviors.Uwp.Managed" Version="2.0.1" />
+    <!-- Deprecated. Use CommunityToolkit.Uwp.Controls.TokenizingTextBox and CommunityToolkit.WinUI.Controls.TokenizingTextBox -->
+    <PackageVersion Include="Microsoft.Toolkit.Uwp.UI.Controls" Version="7.1.3" /> 
     <PackageVersion Include="Uno.Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.4.2" />
     <PackageVersion Include="Uno.Toolkit.UI" Version="6.1.8" />
   </ItemGroup>

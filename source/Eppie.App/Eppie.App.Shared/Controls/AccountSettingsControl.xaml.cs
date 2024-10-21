@@ -1,7 +1,13 @@
-﻿using System;
+using System;
 using Tuvi.App.ViewModels;
+
+#if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+#else
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+#endif
 
 namespace Tuvi.App.Shared.Controls
 {
@@ -17,7 +23,7 @@ namespace Tuvi.App.Shared.Controls
 
         private static void OnModelChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
-            if(dependencyObject is AccountSettingsControl control)
+            if (dependencyObject is AccountSettingsControl control)
             {
                 control.BasicAccountSettingsModel = control.AccountSettingsModel as BasicAccountSettingsModel;
             }

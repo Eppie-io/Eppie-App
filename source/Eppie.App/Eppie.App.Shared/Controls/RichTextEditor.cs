@@ -1,4 +1,4 @@
-﻿#if NETFX_CORE
+#if WINDOWS_UWP
 using Tuvi.App.Shared.Extensions;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;

@@ -1,12 +1,18 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using EmailValidation;
 using Tuvi.Core.Entities;
 using Tuvi.App.ViewModels;
+
+#if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+#else
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+#endif
 
 namespace Tuvi.App.Shared.Controls
 {
@@ -129,7 +135,7 @@ namespace Tuvi.App.Shared.Controls
             {
                 var email = new EmailAddress(text);
 
-                if(EmailValidator.Validate(email.IsHybrid ? email.StandardAddress : text, allowTopLevelDomains: true))
+                if (EmailValidator.Validate(email.IsHybrid ? email.StandardAddress : text, allowTopLevelDomains: true))
                 {
                     contact = new ContactItem()
                     {
@@ -143,7 +149,7 @@ namespace Tuvi.App.Shared.Controls
 
         private ContactItem GetMatchedItem(string searchText)
         {
-            if(string.IsNullOrWhiteSpace(searchText))
+            if (string.IsNullOrWhiteSpace(searchText))
             {
                 return null;
             }

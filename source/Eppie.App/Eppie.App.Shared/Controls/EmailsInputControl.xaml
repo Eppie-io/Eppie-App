@@ -5,10 +5,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:uwp_toolkit_controls="http://uno.ui/uwp#using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:win="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:not_win="http://uno.ui/not_win"
-    mc:Ignorable="d not_win"
+    mc:Ignorable="d not_win uwp_toolkit_controls"
     d:DesignHeight="300"
     d:DesignWidth="400">
 
@@ -70,12 +70,18 @@
     <Grid>
 
         <win:Grid>
-            <controls:TokenizingTextBox SuggestedItemTemplate="{StaticResource SuggestContactItemTemplate}"
-                                        TokenItemTemplate="{StaticResource TokenContactItemTemplate}"
-                                        TokenDelimiter=";"
-                                        TextChanged="SuggestBox_TextChanged"
-                                        TokenItemAdding="SuggestBox_TokenItemAdding"
-                                        ItemsSource="{x:Bind SelectedContacts, Mode=OneWay}" />
+
+            <!-- Now it's off.
+                 Use CommunityToolkit.Uwp.Controls.TokenizingTextBox and CommunityToolkit.WinUI.Controls.TokenizingTextBox
+                 look at: https://platform.uno/docs/articles/platform-specific-xaml.html
+                 look at: https://github.com/unoplatform/uno/discussions/12009
+            -->
+            <uwp_toolkit_controls:TokenizingTextBox SuggestedItemTemplate="{StaticResource SuggestContactItemTemplate}"
+                                                    TokenItemTemplate="{StaticResource TokenContactItemTemplate}"
+                                                    TokenDelimiter=";"
+                                                    TextChanged="SuggestBox_TextChanged"
+                                                    TokenItemAdding="SuggestBox_TokenItemAdding"
+                                                    ItemsSource="{x:Bind SelectedContacts, Mode=OneWay}" />
         </win:Grid>
         <!-- TokenizingTextBox is not available in Uno (is only available in UWP) -->
         <!-- TODO: Replace with TokenizingTextBox or similar control in future -->

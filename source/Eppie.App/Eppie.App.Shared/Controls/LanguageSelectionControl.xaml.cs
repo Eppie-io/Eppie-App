@@ -1,11 +1,16 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Windows.ApplicationModel.Resources;
+using Windows.Globalization;
+
+#if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.Globalization;
-using Windows.UI.Xaml.Media;
+#else
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+#endif
 
 namespace Tuvi.App.Shared.Controls
 {
@@ -25,7 +30,7 @@ namespace Tuvi.App.Shared.Controls
         public event EventHandler<string> LanguageChangedHandler;
         private static readonly ResourceLoader Loader = ResourceLoader.GetForCurrentView();
 
-        private List<ComboBoxValue> _values  = new List<ComboBoxValue>();
+        private List<ComboBoxValue> _values = new List<ComboBoxValue>();
         private bool _selectionInited;
         private string _selectedValue;
 
@@ -73,7 +78,7 @@ namespace Tuvi.App.Shared.Controls
         {
             _values.Add(new ComboBoxValue { DisplayName = lang.DisplayName, LanguageTag = lang.LanguageTag });
         }
-        
+
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var combo = sender as ComboBox;
