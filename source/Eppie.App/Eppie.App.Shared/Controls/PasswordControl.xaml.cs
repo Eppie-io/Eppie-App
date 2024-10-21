@@ -60,7 +60,7 @@ namespace Tuvi.App.Shared.Controls
         }
         public static readonly DependencyProperty IsPasswordVisibleProperty =
             DependencyProperty.Register(nameof(IsPasswordVisible), typeof(bool), typeof(PasswordControl), new PropertyMetadata(true));
-        
+
         public bool IsConfirmPasswordVisible
         {
             get { return (bool)GetValue(IsConfirmPasswordVisibleProperty); }
@@ -75,5 +75,5 @@ namespace Tuvi.App.Shared.Controls
         }
     }
 
-    
+
 }

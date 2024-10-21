@@ -23,7 +23,7 @@ namespace Tuvi.App.Shared.Controls
         }
         public static readonly DependencyProperty ItemsProperty =
             DependencyProperty.Register(nameof(Items), typeof(ObservableCollection<EmailProviderInfo>), typeof(EmailProvidersListControl), new PropertyMetadata(null));
-        
+
         public EmailProviderInfo SelectedItem
         {
             get { return (EmailProviderInfo)GetValue(SelectedItemProperty); }
@@ -31,7 +31,7 @@ namespace Tuvi.App.Shared.Controls
         }
         public static readonly DependencyProperty SelectedItemProperty =
             DependencyProperty.Register(nameof(SelectedItem), typeof(EmailProviderInfo), typeof(EmailProvidersListControl), new PropertyMetadata(null));
-        
+
         public EmailProvidersListControl()
         {
             this.InitializeComponent();

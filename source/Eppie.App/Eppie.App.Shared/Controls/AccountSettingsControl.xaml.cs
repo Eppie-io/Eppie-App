@@ -23,7 +23,7 @@ namespace Tuvi.App.Shared.Controls
 
         private static void OnModelChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
-            if(dependencyObject is AccountSettingsControl control)
+            if (dependencyObject is AccountSettingsControl control)
             {
                 control.BasicAccountSettingsModel = control.AccountSettingsModel as BasicAccountSettingsModel;
             }
