@@ -6,8 +6,14 @@ using Tuvi.App.ViewModels;
 using Windows.ApplicationModel.Resources;
 using Windows.ApplicationModel.Resources.Core;
 using Windows.Globalization;
+
+#if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+#else
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+#endif
 
 namespace Tuvi.App.Shared.Views
 {
@@ -29,7 +35,7 @@ namespace Tuvi.App.Shared.Views
 
         private void InitLanguage()
         {
-            LanguageSelector.InitSelection((Application.Current as App).LocalSettingsService.Language);
+            LanguageSelector.InitSelection((Application.Current as Eppie.App.Shared.App).LocalSettingsService.Language);
         }
 
         private void OnLanguageChanged(object sender, string language)

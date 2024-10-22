@@ -1,5 +1,10 @@
 using Tuvi.App.ViewModels;
+
+#if WINDOWS_UWP
 using Windows.UI.Xaml;
+#else
+using Microsoft.UI.Xaml;
+#endif
 
 namespace Tuvi.App.Shared.Views
 {
@@ -13,7 +18,7 @@ namespace Tuvi.App.Shared.Views
         {
             this.InitializeComponent();
 
-            ViewModel.SetAuthProvider((Application.Current as App)?.AuthProvider);
+            ViewModel.SetAuthProvider((Application.Current as Eppie.App.Shared.App)?.AuthProvider);
         }
     }
 }

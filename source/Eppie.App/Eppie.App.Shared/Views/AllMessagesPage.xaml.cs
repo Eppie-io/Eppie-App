@@ -1,7 +1,12 @@
 using System.Linq;
 using Tuvi.App.IncrementalLoading;
 using Tuvi.App.ViewModels;
+
+#if WINDOWS_UWP
 using Windows.UI.Xaml.Navigation;
+#else
+using Microsoft.UI.Xaml.Navigation;
+#endif
 
 namespace Tuvi.App.Shared.Views
 {

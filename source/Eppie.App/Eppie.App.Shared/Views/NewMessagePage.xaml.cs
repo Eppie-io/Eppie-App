@@ -1,8 +1,16 @@
 using System;
-using Tuvi.App.Helpers;
+// this is missing
+//using Tuvi.App.Helpers;
 using Tuvi.App.ViewModels;
 using Tuvi.Core.Entities;
+
+#if WINDOWS_UWP
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;
+#else
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Input;
+#endif
 
 namespace Tuvi.App.Shared.Views
 {
@@ -17,13 +25,13 @@ namespace Tuvi.App.Shared.Views
             this.InitializeComponent();
         }
 
-        private void DecentralizedChecked(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void DecentralizedChecked(object sender, RoutedEventArgs e)
         {
             ViewModel.IsEncrypted = true;
             ViewModel.IsSigned = true;
         }
 
-        private void onFromChanged(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void onFromChanged(object sender, RoutedEventArgs e)
         {
             ViewModel.IsSigned
                 = ViewModel.IsEncrypted
@@ -35,21 +43,24 @@ namespace Tuvi.App.Shared.Views
         private bool _isEditingHtml = false;
         private async void OnEmailBodyTapped(object sender, TappedRoutedEventArgs e)
         {
-            if (_isEditingHtml) return;
 
-            try
-            {
-                _isEditingHtml = true;
-                ViewModel.HtmlBody = await HtmlHelper.EditHtmlAsync(ViewModel.HtmlBody);
-            }
-            catch (Exception ex)
-            {
-                ViewModel.OnError(ex);
-            }
-            finally
-            {
-                _isEditingHtml = false;
-            }
+            // ToDo:
+
+            //if (_isEditingHtml) return;
+
+            //try
+            //{
+            //    _isEditingHtml = true;
+            //    ViewModel.HtmlBody = await HtmlHelper.EditHtmlAsync(ViewModel.HtmlBody);
+            //}
+            //catch (Exception ex)
+            //{
+            //    ViewModel.OnError(ex);
+            //}
+            //finally
+            //{
+            //    _isEditingHtml = false;
+            //}
         }
 #endif
     }
