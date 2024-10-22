@@ -1,8 +1,8 @@
-﻿using Tuvi.Core.Entities;
-using Tuvi.App.ViewModels.Services;
 using System;
 using Tuvi.App.Services;
 using Tuvi.App.ViewModels;
+using Tuvi.App.ViewModels.Services;
+using Tuvi.Core.Entities;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 

@@ -1,13 +1,13 @@
-﻿using System;
-using Tuvi.Core.Entities;
+using System;
 using Tuvi.App.Helpers;
 using Tuvi.App.ViewModels;
+using Tuvi.Core.Entities;
 using Windows.UI.Xaml.Input;
 
 namespace Tuvi.App.Shared.Views
 {
     public partial class NewMessagePageBase : BasePage<NewMessagePageViewModel, BaseViewModel>
-    { 
+    {
     }
 
     public sealed partial class NewMessagePage : NewMessagePageBase

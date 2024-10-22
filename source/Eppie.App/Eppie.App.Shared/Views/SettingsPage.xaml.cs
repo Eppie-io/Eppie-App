@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using NBitcoin;
 using Newtonsoft.Json.Linq;
 using Tuvi.App.Shared.Models;
@@ -19,7 +19,7 @@ namespace Tuvi.App.Shared.Views
     {
         public SettingsPage()
         {
-            this.InitializeComponent();            
+            this.InitializeComponent();
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
@@ -36,6 +36,6 @@ namespace Tuvi.App.Shared.Views
         {
             var message = ResourceLoader.GetForCurrentView().GetString("RestartApplication");
             ViewModel.ChangeLanguage(language, message);
-        }       
+        }
     }
 }

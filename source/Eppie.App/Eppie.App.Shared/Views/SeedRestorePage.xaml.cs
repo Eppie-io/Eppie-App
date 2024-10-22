@@ -1,4 +1,4 @@
-﻿using Tuvi.App.Shared.Models;
+using Tuvi.App.Shared.Models;
 using Tuvi.App.ViewModels;
 using Windows.UI.Xaml.Controls;
 
@@ -9,7 +9,7 @@ namespace Tuvi.App.Shared.Views
     }
 
     public sealed partial class SeedRestorePage : SeedRestorePageBase
-    {   
+    {
         public SeedRestorePage()
         {
             this.InitializeComponent();

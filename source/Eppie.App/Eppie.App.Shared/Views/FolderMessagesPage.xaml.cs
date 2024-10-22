@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Tuvi.App.IncrementalLoading;
 using Tuvi.App.ViewModels;
 using Windows.UI.Xaml.Navigation;

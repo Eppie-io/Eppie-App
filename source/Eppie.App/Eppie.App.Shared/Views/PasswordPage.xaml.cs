@@ -1,8 +1,8 @@
-﻿using Tuvi.App.ViewModels;
+using Tuvi.App.ViewModels;
 
 namespace Tuvi.App.Shared.Views
 {
-	public partial class PasswordPageBase : BasePage<PasswordPageViewModel, BaseViewModel>
+    public partial class PasswordPageBase : BasePage<PasswordPageViewModel, BaseViewModel>
     {
     }
 

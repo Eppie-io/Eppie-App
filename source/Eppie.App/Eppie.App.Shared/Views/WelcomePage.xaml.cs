@@ -1,4 +1,4 @@
-﻿using Tuvi.App.Shared.Models;
+using Tuvi.App.Shared.Models;
 using Tuvi.App.ViewModels;
 
 namespace Tuvi.App.Shared.Views
@@ -16,7 +16,7 @@ namespace Tuvi.App.Shared.Views
                 var brand = new BrandLoader();
                 return brand.GetLicenseLink();
             }
-        }        
+        }
 
         public WelcomePage()
         {

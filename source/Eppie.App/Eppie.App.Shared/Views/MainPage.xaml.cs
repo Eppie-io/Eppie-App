@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using CommunityToolkit.Mvvm.Input;
 using Tuvi.App.Shared.Helpers;
 using Tuvi.App.ViewModels;
 using Windows.UI.Xaml.Controls;
-using CommunityToolkit.Mvvm.Input;
 using Windows.UI.Xaml.Navigation;
 
 namespace Tuvi.App.Shared.Views
