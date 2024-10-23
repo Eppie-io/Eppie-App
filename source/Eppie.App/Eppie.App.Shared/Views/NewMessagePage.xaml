@@ -238,12 +238,13 @@
         <Grid Grid.Row="3"
               BorderBrush="#FFE0E0E0"
               BorderThickness="1">
-            
-            <win:Grid>
+
+            <!-- ToDo: controls:RichTextEditor is off (now only uwp) -->
+            <!--<win:Grid>
                 <controls:RichTextEditor Text="{x:Bind ViewModel.TextBody, Mode=TwoWay}"
                                          Html="{x:Bind ViewModel.HtmlBody, Mode=TwoWay}"
                                          IsEnabled="{x:Bind ViewModel.LoadingContent, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}" />
-            </win:Grid>
+            </win:Grid>-->
 
             <xamarin:WebView extensions:WebViewExtension.StringSource="{x:Bind ViewModel.HtmlBody, Mode=OneWay}"
                              android:IsTapEnabled="True"

@@ -1,17 +1,22 @@
-﻿using System.Linq;
+using System.Linq;
 using Tuvi.App.IncrementalLoading;
 using Tuvi.App.ViewModels;
+
+#if WINDOWS_UWP
 using Windows.UI.Xaml.Navigation;
+#else
+using Microsoft.UI.Xaml.Navigation;
+#endif
 
 namespace Tuvi.App.Shared.Views
 {
-    public partial class AllMessagesPageBase : BasePage<AllMessagesPageViewModel, BaseViewModel>
+    public partial class FolderMessagesPageBase : BasePage<FolderMessagesPageViewModel, BaseViewModel>
     {
     }
 
-    public sealed partial class AllMessagesPage : AllMessagesPageBase
+    public sealed partial class FolderMessagesPage : FolderMessagesPageBase
     {
-        public AllMessagesPage()
+        public FolderMessagesPage()
         {
             this.InitializeComponent();
         }
@@ -23,13 +28,12 @@ namespace Tuvi.App.Shared.Views
         }
         private void InitializeMessageListAsIncrementalLoadingCollection()
         {
-            if (ViewModel is null ||
-                ViewModel.MessageList is IncrementalLoadingCollection<AllMessagesPageViewModel, MessageInfo>)
+            if (ViewModel is null)
             {
                 return;
             }
             var filterVariants = ViewModel.GetFilterVariants();
-            ViewModel.MessageList = new IncrementalLoadingCollection<AllMessagesPageViewModel, MessageInfo>(
+            ViewModel.MessageList = new IncrementalLoadingCollection<FolderMessagesPageViewModel, MessageInfo>(
                 ViewModel,
                 ViewModel.CancellationTokenSource,
                 itemsComparer: new DescOrderByDateMessageComparer(),

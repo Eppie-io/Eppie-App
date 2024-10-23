@@ -1,13 +1,23 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Tuvi.App.Shared.Models;
 using Tuvi.App.Shared.Services;
 using Tuvi.App.ViewModels;
 using Tuvi.Core.Entities;
+
+#if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
+using Windows.Devices.Input;
+#else
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Navigation;
+using Microsoft.UI.Input;
+#endif
 
 namespace Tuvi.App.Shared.Views
 {
@@ -38,7 +48,7 @@ namespace Tuvi.App.Shared.Views
 
         private void DataContextChangedImpl()
         {
-            var app = Application.Current as App;
+            var app = Application.Current as Eppie.App.Shared.App;
 
             ViewModel = DataContext as TViewModel;
             ViewModel.SetCore(() => app.Core);
@@ -123,7 +133,7 @@ namespace Tuvi.App.Shared.Views
 
         protected void ListViewSwipeContainer_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
-            if (e.Pointer.PointerDeviceType == Windows.Devices.Input.PointerDeviceType.Mouse || e.Pointer.PointerDeviceType == Windows.Devices.Input.PointerDeviceType.Pen)
+            if (e.Pointer.PointerDeviceType == PointerDeviceType.Mouse || e.Pointer.PointerDeviceType == PointerDeviceType.Pen)
             {
                 VisualStateManager.GoToState(sender as Control, "HoverButtonsShown", true);
             }
