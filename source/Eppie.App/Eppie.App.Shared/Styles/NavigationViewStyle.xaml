@@ -8,10 +8,12 @@
     xmlns:xamarin="http://uno.ui/xamarin"
     mc:Ignorable="d xamarin">
 
+<!-- ToDo: use Microsoft.UI.Xaml.Controls.NavigationView -->
     <Style x:Key="MainPageNavigationViewStyle" TargetType="NavigationView">
         <Setter Property="PaneToggleButtonStyle" Value="{StaticResource PaneToggleButtonStyle}" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="CompactPaneLength" Value="{ThemeResource NavigationViewCompactPaneLength}" />
+<!--
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="NavigationView">
@@ -99,7 +101,9 @@
                                 <VisualState x:Name="ListSizeCompact">
                                     <VisualState.Setters>
                                         <Setter Target="MenuItemsHost.HorizontalAlignment" Value="Left" />
+-->
                                         <!-- This is essentially a TemplateBinding: -->
+<!--
                                         <win:Setter Target="MenuItemsHost.Width" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=CompactPaneLength}" />
                                         <xamarin:Setter Target="MenuItemsHost.Width" Value="40" />
                                         <Setter Target="SettingsNavPaneItem.HorizontalAlignment" Value="Left" />
@@ -122,8 +126,10 @@
                                 <VisualState x:Name="TitleBarVisible" />
                                 <VisualState x:Name="TitleBarCollapsed">
                                     <VisualState.Setters>
+-->
                                         <!-- This element does not exist -->
                                         <!--<Setter Target="PaneButtonGrid.Margin" Value="0,32,0,0" />-->
+<!--
                                         <Setter Target="PaneContentGrid.Margin" Value="0,32,0,0" />
                                     </VisualState.Setters>
                                 </VisualState>
@@ -197,8 +203,9 @@
                                         VerticalContentAlignment="Stretch"
                                         HorizontalContentAlignment="Stretch"
                                         Grid.Column="2"/>
-
+-->
                                     <!-- Top nav list -->
+<!--
                                     <NavigationViewList AutomationProperties.LandmarkType="Navigation"
 														x:Name="TopNavMenuItemsHost"
 														Grid.Column="3"
@@ -235,8 +242,10 @@
                                             <Flyout Placement="Bottom">
                                                 <Flyout.FlyoutPresenterStyle>
                                                     <Style TargetType="FlyoutPresenter">
+-->
                                                         <!-- DefaultFlyoutPresenter style -->
                                                         <!-- Is required until https://github.com/unoplatform/uno/issues/119 is fixed -->
+<!--
                                                         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                                                         <Setter Property="VerticalContentAlignment" Value="Stretch" />
                                                         <Setter Property="IsTabStop" Value="False" />
@@ -281,10 +290,13 @@
                                                                 </ControlTemplate>
                                                             </Setter.Value>
                                                         </Setter>
+-->
                                                         <!-- End of DefaultFlyoutPresenter style -->
-
+<!--
                                                         <Setter Property="Padding" Value="0,8" />
+-->
                                                         <!-- Set negative top margin to make the flyout align exactly with the button -->
+<!--
                                                         <Setter Property="Margin" Value="0,-4,0,0" />
                                                     </Style>
                                                 </Flyout.FlyoutPresenterStyle>
@@ -345,31 +357,43 @@
                                 Grid.Row="1">
 
                                 <SplitView.Pane>
+-->
                                     <!--
 									InternalVisibleBoundsPadding is added to this control to make this template compatible
 									with notched devices by default. This behavior is not present in Microsoft's default UWP default.
 									-->
                                     <!--Deleted from tags
                                         uBehaviors:InternalVisibleBoundsPadding.PaddingMask="All"-->
+<!--
                                     <Grid 
                                         x:Name="PaneContentGrid"
                                         Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.LeftPaneVisibility}">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto" />
                                             <RowDefinition Height="0" />
+-->
                                             <!-- above button margin + back button space -->
+<!--
                                             <RowDefinition x:Name="PaneContentGridToggleButtonRow" Height="Auto" />
                                             <RowDefinition Height="Auto" />
+-->
                                             <!--changed-->
+<!--
                                             <RowDefinition Height="*" />
+-->
                                             <!--was: <RowDefinition Height="Auto" />-->
                                             <!--changed-->
+<!--
                                             <RowDefinition Height="0" />
+-->
                                             <!--was: <RowDefinition Height="8" />-->
                                             <!-- above list margin -->
                                             <!--changed-->
+<!--
                                             <RowDefinition Height="Auto" />
+-->
                                             <!--was: <RowDefinition Height="*" />-->
+<!--
                                             <RowDefinition Height="Auto" />
                                             <RowDefinition Height="Auto" />
                                             <RowDefinition Height="8" />
@@ -426,9 +450,10 @@
                                             VerticalContentAlignment="Stretch"
                                             HorizontalContentAlignment="Stretch"
                                             Grid.Row="4" />
-
+-->
                                         <!-- Left nav list -->
                                         <!--changed Margin="0,0,0,20" to Margin="0,0,0,0"-->
+<!--
                                         <NavigationViewList x:Name="MenuItemsHost" Grid.Row="6" Margin="0,0,0,0" SelectionMode="Single" IsItemClickEnabled="True" HorizontalAlignment="Stretch" SelectedItem="{TemplateBinding SelectedItem}" ItemTemplate="{TemplateBinding MenuItemTemplate}" ItemTemplateSelector="{TemplateBinding MenuItemTemplateSelector}" ItemContainerStyle="{TemplateBinding MenuItemContainerStyle}" ItemContainerStyleSelector="{TemplateBinding MenuItemContainerStyleSelector}" SingleSelectionFollowsFocus="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.SingleSelectionFollowsFocus}" />
 
                                         <ContentControl
@@ -467,7 +492,7 @@
                             </SplitView>
 
                         </Grid>
-
+-->
                         <!--
 							Notes:
 							- InternalVisibleBoundsPadding is added to this control to make this template compatible
@@ -478,6 +503,7 @@
                         <!--Deleted from tags
                               xmlns:uBehaviors="using:Uno.UI.Behaviors"
 							  uBehaviors:InternalVisibleBoundsPadding.PaddingMask="Top,Left"-->
+<!--
                         <Grid x:Name="PaneToggleButtonGrid"
 							  Margin="0,0,0,8"
 							  HorizontalAlignment="Left"
@@ -515,5 +541,6 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+-->
     </Style>
 </ResourceDictionary>
