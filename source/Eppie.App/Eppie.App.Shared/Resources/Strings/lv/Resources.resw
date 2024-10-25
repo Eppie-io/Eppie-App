@@ -118,11 +118,11 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AboutApp.Text" xml:space="preserve">
-    <value>About</value>
+    <value>Par</value>
     <comment>About application page title</comment>
   </data>
   <data name="AboutAppNavigationItem.Content" xml:space="preserve">
-    <value>About</value>
+    <value>Par</value>
     <comment>Navigation item to open 'About' page</comment>
   </data>
   <data name="IdentityManagerNavigationItem.Content" xml:space="preserve">
@@ -134,23 +134,23 @@
     <comment>Dialog text when user wants to send new message without any email account connected</comment>
   </data>
   <data name="Address.Text" xml:space="preserve">
-    <value>Address</value>
+    <value>Adrese</value>
     <comment>Input field caption for server address</comment>
   </data>
   <data name="MessageFilter.PlaceholderText" xml:space="preserve">
-    <value>Search</value>
+    <value>Meklēt</value>
     <comment>Text displayed in Search Messages control when no search text is entered</comment>
   </data>
   <data name="AllMessages.Text" xml:space="preserve">
-    <value>All messages</value>
+    <value>Visas vēstules</value>
     <comment>The header for the list with messages from all email boxes</comment>
   </data>
   <data name="AllMessagesNavigationItem.Content" xml:space="preserve">
-    <value>All messages</value>
+    <value>Visas vēstules</value>
     <comment>Navigation item for display all mail messages</comment>
   </data>
   <data name="NewMessageNavigationItem.Content" xml:space="preserve">
-    <value>Compose email</value>
+    <value>Sastādīt e-pastu</value>
     <comment>Navigation item for create new mail message</comment>
   </data>
   <data name="Apply.Content" xml:space="preserve">

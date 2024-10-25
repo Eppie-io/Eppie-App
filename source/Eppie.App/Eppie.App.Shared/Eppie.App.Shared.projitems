@@ -302,11 +302,38 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\en\Resources.resw">
-      <SubType>Designer</SubType>
-    </PRIResource>
-    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\fr\Resources.resw">
-      <SubType>Designer</SubType>
-    </PRIResource>
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\af\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\ar\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\be\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\ca\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\cs\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\da\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\de\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\el\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\en\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\es\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\et\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\fi\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\fr\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\he\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\hu\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\it\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\ja\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\ko\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\lv\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\nl\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\no\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\pl\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\pt-BR\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\pt\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\ro\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\ru\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\sr-Cyrl\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\sv\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\tr\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\uk\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\vi\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\zh-CN\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\zh-TW\Resources.resw" />
   </ItemGroup>
 </Project>

@@ -118,11 +118,11 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AboutApp.Text" xml:space="preserve">
-    <value>About</value>
+    <value>Пра праграму</value>
     <comment>About application page title</comment>
   </data>
   <data name="AboutAppNavigationItem.Content" xml:space="preserve">
-    <value>About</value>
+    <value>Пра праграму</value>
     <comment>Navigation item to open 'About' page</comment>
   </data>
   <data name="IdentityManagerNavigationItem.Content" xml:space="preserve">
@@ -134,27 +134,27 @@
     <comment>Dialog text when user wants to send new message without any email account connected</comment>
   </data>
   <data name="Address.Text" xml:space="preserve">
-    <value>Address</value>
+    <value>Адрас</value>
     <comment>Input field caption for server address</comment>
   </data>
   <data name="MessageFilter.PlaceholderText" xml:space="preserve">
-    <value>Search</value>
+    <value>Пошук</value>
     <comment>Text displayed in Search Messages control when no search text is entered</comment>
   </data>
   <data name="AllMessages.Text" xml:space="preserve">
-    <value>All messages</value>
+    <value>Усе паведамленні</value>
     <comment>The header for the list with messages from all email boxes</comment>
   </data>
   <data name="AllMessagesNavigationItem.Content" xml:space="preserve">
-    <value>All messages</value>
+    <value>Усе паведамленні</value>
     <comment>Navigation item for display all mail messages</comment>
   </data>
   <data name="NewMessageNavigationItem.Content" xml:space="preserve">
-    <value>Compose email</value>
+    <value>Напісаць ліст</value>
     <comment>Navigation item for create new mail message</comment>
   </data>
   <data name="Apply.Content" xml:space="preserve">
-    <value>Apply</value>
+    <value>Ужыць</value>
     <comment>Apply button content</comment>
   </data>
   <data name="JoinWaitingList.Content" xml:space="preserve">
@@ -162,7 +162,7 @@
     <comment>JoinWaitingList button content</comment>
   </data>
   <data name="AppSettings.Text" xml:space="preserve">
-    <value>Settings</value>
+    <value>Налады</value>
     <comment>The title for application settings</comment>
   </data>
   <data name="IdentityManagerTitle.Text" xml:space="preserve">
@@ -170,12 +170,12 @@
     <comment>The title for Identity Manager page</comment>
   </data>
   <data name="AttachButton.Label" xml:space="preserve">
-    <value>Attach files</value>
+    <value>Далучыць файл</value>
     <comment>Text for attach button</comment>
   </data>
   <!-- ToDo: use using:Windows.UI.Xaml.Controls for UWP; use using:Microsoft.UI.Xaml.Controls for Uno
   <data name="AttachButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Attach files</value>
+    <value>Далучыць файл</value>
     <comment>The tooltip for attach button</comment>
   </data>
   -->
@@ -189,12 +189,12 @@
   </data>
   <!-- ToDo: use using:Windows.UI.Xaml.Controls for UWP; use using:Microsoft.UI.Xaml.Controls for Uno
   <data name="BackButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Back</value>
+    <value>Назад</value>
     <comment>The tooltip for back button</comment>
   </data>
   -->
   <data name="Cancel.Content" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Скасаваць</value>
     <comment>Cancel button content</comment>
   </data>
   <data name="CantSendMessages" xml:space="preserve">
@@ -202,11 +202,11 @@
     <comment>Dialog title when user wants to send new message without any email account connected</comment>
   </data>
   <data name="ChangePasswordPageText" xml:space="preserve">
-    <value>Change master password.</value>
+    <value>Змяніць асноўны пароль.</value>
     <comment>Text on "Change password" page</comment>
   </data>
   <data name="ChangeMasterPasswordButton.Content" xml:space="preserve">
-    <value>Change master password</value>
+    <value>Змяніць асноўны пароль</value>
     <comment>Text on "Change master password" button</comment>
   </data>
   <data name="ConfirmSeedPhraseButton.Content" xml:space="preserve">
@@ -226,45 +226,45 @@
     <comment>Input field caption for confirm password</comment>
   </data>
   <data name="ConnectionError" xml:space="preserve">
-    <value>Connection error</value>
+    <value>Памылка злучэння</value>
     <comment>Notification text when connection to server failed</comment>
   </data>
   <data name="Copyright.Text" xml:space="preserve">
-    <value>© All rights reserved.</value>
+    <value>© Усе правы абароненыя.</value>
     <comment>Copyright label</comment>
   </data>
   <data name="CurrentPassword.Text" xml:space="preserve">
-    <value>Current password</value>
+    <value>Бягучы пароль</value>
     <comment>Input field caption for current password</comment>
   </data>
   <!-- ToDo: use using:Windows.UI.Xaml.Controls for UWP; use using:Microsoft.UI.Xaml.Controls for Uno
   <data name="DeleteButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Delete</value>
+    <value>Выдаліць</value>
     <comment>The tooltip for delete button</comment>
   </data>
   -->
   <data name="DeleteButton.Label" xml:space="preserve">
-    <value>Delete</value>
+    <value>Выдаліць</value>
     <comment>Text on Delete button</comment>
   </data>
   <!-- ToDo: use using:Windows.UI.Xaml.Controls for UWP; use using:Microsoft.UI.Xaml.Controls for Uno
   <data name="MarkAsReadButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Mark as read</value>
+    <value>Пазначыць як прачытанае</value>
     <comment>The tooltip for Mark as read button</comment>
   </data>
   -->
   <data name="MarkAsReadButton.Label" xml:space="preserve">
-    <value>Mark as read</value>
+    <value>Пазначыць як прачытанае</value>
     <comment>Text on Mark as read button</comment>
   </data>
   <!-- ToDo: use using:Windows.UI.Xaml.Controls for UWP; use using:Microsoft.UI.Xaml.Controls for Uno
   <data name="MarkAsUnreadButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Mark as unread</value>
+    <value>Пазначыць як непрачытанае</value>
     <comment>The tooltip for Mark as unread button</comment>
   </data>
   -->
   <data name="MarkAsUnreadButton.Label" xml:space="preserve">
-    <value>Mark as unread</value>
+    <value>Пазначыць як непрачытанае</value>
     <comment>Text on Mark as unread button</comment>
   </data>
   <data name="Developer.Text" xml:space="preserve">
@@ -276,11 +276,11 @@
     <comment>Settings for a single email account</comment>
   </data>
   <data name="EmailAddress.Text" xml:space="preserve">
-    <value>Email address</value>
+    <value>Адрас электроннай пошты</value>
     <comment>Input field caption for email address</comment>
   </data>
   <data name="TwoFactorCode.Text" xml:space="preserve">
-    <value>Two factor authentication code</value>
+    <value>Код двухфактарнай аўтэнтыфікацыі</value>
     <comment>Input field caption for two factor authentication code</comment>
   </data>
   <data name="EnableImapMessage" xml:space="preserve">
@@ -293,15 +293,15 @@ You need to enable IMAP for this account first and try again.</value>
     <comment>Text on "Enter password" page</comment>
   </data>
   <data name="Error" xml:space="preserve">
-    <value>Error</value>
+    <value>Памылка</value>
     <comment>ContentDialog title for error message</comment>
   </data>
   <data name="FailedToAddAccountTitle" xml:space="preserve">
-    <value>Failed to add account</value>
+    <value>Не атрымалася дадаць акаўнт</value>
     <comment>Message title when failed to add account</comment>
   </data>
   <data name="FieldIsEmptyNotification" xml:space="preserve">
-    <value>Cannot be empty</value>
+    <value>Не можа быць пустым</value>
     <comment>Notification message that is shown when input field is empty</comment>
   </data>
   <data name="AuthorizationProblem" xml:space="preserve">
@@ -321,11 +321,11 @@ You need to enable IMAP for this account first and try again.</value>
     <comment>Notification message shown when access to email server is denied</comment>
   </data>
   <data name="IncomingServer.Text" xml:space="preserve">
-    <value>Incoming email server</value>
+    <value>Сервер уваходнай пошты</value>
     <comment>Caption for incoming email server settings</comment>
   </data>
   <data name="IncorrectPassword" xml:space="preserve">
-    <value>Incorrect password</value>
+    <value>Няправільны пароль</value>
     <comment>Message shown when password is incorrect</comment>
   </data>
   <data name="MessageFrom.Text" xml:space="preserve">
