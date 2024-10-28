@@ -42,39 +42,46 @@ namespace Eppie.App.Shared
         /// <param name="e">Details about the launch request and process.</param>
         protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
-            Frame rootFrame = Window.Current.Content as Frame;
-
-            // Do not repeat app initialization when the Window already has content,
-            // just ensure that the window is active
-            if (rootFrame == null)
+            try
             {
-                rootFrame = CreateRootFrame();
+                Frame rootFrame = Window.Current.Content as Frame;
 
-                if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
+                // Do not repeat app initialization when the Window already has content,
+                // just ensure that the window is active
+                if (rootFrame == null)
                 {
-                    //TODO: Load state from previously suspended application
+                    rootFrame = CreateRootFrame();
+
+                    if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
+                    {
+                        //TODO: Load state from previously suspended application
+                    }
+
+                    // Place the frame in the current Window
+                    Window.Current.Content = rootFrame;
                 }
 
-                // Place the frame in the current Window
-                Window.Current.Content = rootFrame;
+                if (e.PrelaunchActivated == false)
+                {
+                    if (rootFrame.Content == null)
+                    {
+                        // does database exist
+                        if (await Core.IsFirstApplicationStartAsync().ConfigureAwait(true))
+                        {
+                            rootFrame.Navigate(typeof(WelcomePage));
+                        }
+                        else
+                        {
+                            rootFrame.Navigate(typeof(PasswordPage), PasswordActions.EnterPassword);
+                        }
+                    }
+                    // Ensure the current window is active
+                    Window.Current.Activate();
+                }
             }
-
-            if (e.PrelaunchActivated == false)
+            catch (Exception exception)
             {
-                if (rootFrame.Content == null)
-                {
-                    // does database exist
-                    if (await Core.IsFirstApplicationStartAsync().ConfigureAwait(true))
-                    {
-                        rootFrame.Navigate(typeof(WelcomePage));
-                    }
-                    else
-                    {
-                        rootFrame.Navigate(typeof(PasswordPage), PasswordActions.EnterPassword);
-                    }
-                }
-                // Ensure the current window is active
-                Window.Current.Activate();
+                OnError(exception);
             }
         }
 
