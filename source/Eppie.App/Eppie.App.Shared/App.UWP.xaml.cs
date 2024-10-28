@@ -35,35 +35,6 @@ namespace Eppie.App.Shared
     /// </summary>
     public partial class App : Application
     {
-        public static class DataHelper
-        {
-            public static string GetAppDataPath()
-            {
-                return ApplicationData.Current.LocalFolder.Path;
-            }
-        }
-
-        /// <summary>
-        /// Initializes the singleton application object.  This is the first line of authored code
-        /// executed, and as such is the logical equivalent of main() or WinMain().
-        /// </summary>
-        public App()
-        {
-            InitializeLogging();
-
-            InitializeComponent();
-
-            Suspending += OnSuspending;
-            UnhandledException += CurrentApp_UnhandledException;
-            TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
-
-            CreateAuth();
-            CreateCore();
-
-            LocalSettingsService = new LocalSettingsService();
-            ApplicationLanguages.PrimaryLanguageOverride = LocalSettingsService.Language;
-        }
-
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.
@@ -131,7 +102,6 @@ namespace Eppie.App.Shared
             deferral.Complete();
         }
 
-
         private Frame CreateRootFrame()
         {
             var frame = new Frame();
@@ -146,86 +116,9 @@ namespace Eppie.App.Shared
             return frame;
         }
 
-        private void CreateAuth()
+        private void SubscribeToPlatformSpecificEvents()
         {
-            AuthProvider = AuthorizationFactory.GetAuthorizationProvider(Tuvi.App.Shared.Authorization.AuthConfig.GetAuthorizationConfiguration());
-        }
-
-        private void CreateCore()
-        {
-            var tokenRefresher = AuthorizationFactory.GetTokenRefresher(AuthProvider);
-            Core = ComponentBuilder.Components.CreateTuviMailCore(Path.Combine(DataHelper.GetAppDataPath(), DataBaseFileName), new Tuvi.Core.ImplementationDetailsProvider("Tuvi seed", "Tuvi.Package", "backup@system.service.tuvi.com"), tokenRefresher);
-            _notificationManager = new NotificationManager(Core, OnError);
-            Core.WipeAllDataNeeded += OnWipeAllDataNeeded;
-        }
-
-        private void DisposeCore()
-        {
-            Core.WipeAllDataNeeded -= OnWipeAllDataNeeded;
-            if (Core is IDisposable d)
-            {
-                d.Dispose();
-            }
-        }
-
-        private async void OnWipeAllDataNeeded(object sender, EventArgs e)
-        {
-            try
-            {
-                // Dispose should be before await method 
-                DisposeCore();
-                CreateCore();
-                await RemoveTempFilesAsync().ConfigureAwait(true);
-            }
-            catch (Exception ex)
-            {
-                OnError(ex);
-            }
-        }
-
-        private async Task RemoveTempFilesAsync()
-        {
-            var tempFolder = ApplicationData.Current.TemporaryFolder;
-            foreach (var item in await tempFolder.GetItemsAsync())
-            {
-                try
-                {
-                    await item.DeleteAsync(StorageDeleteOption.PermanentDelete);
-                }
-                catch (Exception e)
-                {
-                    OnError(e);
-                }
-            }
-        }
-
-        private void CurrentApp_UnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
-        {
-            try
-            {
-                e.Handled = true;
-                OnError(e.Exception);
-            }
-            catch { }
-        }
-
-        private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
-        {
-            try
-            {
-                e.SetObserved();
-                OnError(e.Exception);
-            }
-            catch { }
-        }
-
-        private void OnError(Exception exception)
-        {
-            _errorHandler?.OnError(exception, false);
-        }
-
-        private static void InitializeLogging()
-        {
+            Suspending += OnSuspending;
         }
     }
 }
