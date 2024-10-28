@@ -6,15 +6,6 @@ namespace Eppie.App.Shared
 {
     public partial class App : Application
     {
-        /// <summary>
-        /// Initializes the singleton application object. This is the first line of authored code
-        /// executed, and as such is the logical equivalent of main() or WinMain().
-        /// </summary>
-        public App()
-        {
-            this.InitializeComponent();
-        }
-
         protected Window MainWindow { get; private set; }
         protected IHost Host { get; private set; }
 
@@ -99,6 +90,11 @@ namespace Eppie.App.Shared
             }
             // Ensure the current window is active
             MainWindow.Activate();
+        }
+
+        private void SubscribeToPlatformSpecificEvents()
+        {
+
         }
     }
 }
