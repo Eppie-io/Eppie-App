@@ -7,8 +7,8 @@
     <ProjectGuid>{D392835A-52AE-4529-AAC0-52D3189CB461}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Eppie.App.Converters.UWP</RootNamespace>
-    <AssemblyName>Eppie.App.Converters.UWP</AssemblyName>
+    <RootNamespace>Eppie.App.Converters</RootNamespace>
+    <AssemblyName>Eppie.App.Converters</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.22621.0</TargetPlatformVersion>

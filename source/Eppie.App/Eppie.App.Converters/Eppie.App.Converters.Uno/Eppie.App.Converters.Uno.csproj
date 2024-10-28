@@ -7,6 +7,8 @@
     <GenerateLibraryLayout>true</GenerateLibraryLayout>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>disable</Nullable>
+    <AssemblyName>Eppie.App.Converters</AssemblyName>
+    <RootNamespace>Eppie.App.Converters</RootNamespace>
 
     <!--
       UnoFeatures let's you quickly add and manage implicit package references based on the features you want to use.

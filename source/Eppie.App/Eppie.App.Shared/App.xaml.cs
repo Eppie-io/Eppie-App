@@ -1,3 +1,5 @@
+using Tuvi.App.Shared.Models;
+using Tuvi.App.Shared.Services;
 using Tuvi.App.ViewModels.Services;
 using Tuvi.Core;
 using Tuvi.OAuth2;
@@ -15,9 +17,14 @@ namespace Eppie.App.Shared
     /// </summary>
     public partial class App : Application
     {
+        private static string DataBaseFileName = "TuviMail.db";
+
         public INavigationService NavigationService { get; private set; }
         public ITuviMail Core { get; private set; }
         public ILocalSettingsService LocalSettingsService { get; private set; }
         public AuthorizationProvider AuthProvider { get; private set; }
+        private NotificationManager _notificationManager { get; set; }
+
+        private ErrorHandler _errorHandler;
     }
 }

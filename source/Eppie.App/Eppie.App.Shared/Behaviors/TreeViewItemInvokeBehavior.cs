@@ -24,19 +24,25 @@ namespace Tuvi.App.Shared.Behaviors
 
         protected override void OnAttached()
         {
-            //TODO: TVM-283 Remove when Microsoft fixes bug: https://github.com/microsoft/microsoft-ui-xaml/issues/4999
-            AssociatedObject.ItemInvoked -= OnItemInvoked;
-            // End
-            AssociatedObject.ItemInvoked += OnItemInvoked;
+            if (AssociatedObject != null)
+            {
+                //TODO: TVM-283 Remove when Microsoft fixes bug: https://github.com/microsoft/microsoft-ui-xaml/issues/4999
+                AssociatedObject.ItemInvoked -= OnItemInvoked;
+                // End
+                AssociatedObject.ItemInvoked += OnItemInvoked;
+            }
         }
 
         protected override void OnDetaching()
         {
-            //TODO: TVM-283 Remove when Microsoft fixes bug: https://github.com/microsoft/microsoft-ui-xaml/issues/4999
-            if (AssociatedObject.Parent == null)
-            // End
+            if (AssociatedObject != null)
             {
-                AssociatedObject.ItemInvoked -= OnItemInvoked;
+                //TODO: TVM-283 Remove when Microsoft fixes bug: https://github.com/microsoft/microsoft-ui-xaml/issues/4999
+                if (AssociatedObject.Parent == null)
+                // End
+                {
+                    AssociatedObject.ItemInvoked -= OnItemInvoked;
+                }
             }
         }
 
