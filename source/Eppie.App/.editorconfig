@@ -41,7 +41,7 @@ end_of_line = lf
 indent_size = 2
 
 [*.xaml]
-indent_size = 2
+indent_size = 4
 charset = utf-8-bom
 
 [*.xml]
