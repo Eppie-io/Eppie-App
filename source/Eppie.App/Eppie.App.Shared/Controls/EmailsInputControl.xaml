@@ -1,16 +1,15 @@
-﻿<UserControl
-    x:Class="Tuvi.App.Shared.Controls.EmailsInputControl"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:viewmodels="using:Tuvi.App.ViewModels" 
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:uwp_toolkit_controls="http://uno.ui/uwp#using:Microsoft.Toolkit.Uwp.UI.Controls"
-    xmlns:win="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:not_win="http://uno.ui/not_win"
-    mc:Ignorable="d not_win uwp_toolkit_controls"
-    d:DesignHeight="300"
-    d:DesignWidth="400">
+﻿<UserControl x:Class="Tuvi.App.Shared.Controls.EmailsInputControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:not_win="http://uno.ui/not_win"
+             xmlns:uwp_toolkit_controls="http://uno.ui/uwp#using:Microsoft.Toolkit.Uwp.UI.Controls"
+             xmlns:viewmodels="using:Tuvi.App.ViewModels"
+             xmlns:win="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             d:DesignHeight="300"
+             d:DesignWidth="400"
+             mc:Ignorable="d not_win uwp_toolkit_controls">
 
     <UserControl.Resources>
 
@@ -27,20 +26,20 @@
                 </Grid.ColumnDefinitions>
 
                 <PersonPicture Grid.RowSpan="2"
-                               DisplayName="{x:Bind FullName, Mode=OneWay}"
-                               ProfilePicture="{x:Bind AvatarInfo, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}"
                                Width="48"
-                               Height="48" />
+                               Height="48"
+                               DisplayName="{x:Bind FullName, Mode=OneWay}"
+                               ProfilePicture="{x:Bind AvatarInfo, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}" />
 
                 <TextBlock Grid.Column="2"
-                           Text="{x:Bind FullName, Mode=OneWay}"
-                           FontSize="16"/>
+                           FontSize="16"
+                           Text="{x:Bind FullName, Mode=OneWay}" />
 
                 <TextBlock Grid.Row="1"
                            Grid.Column="2"
-                           Text="{x:Bind Email.Address, Mode=OneWay}"
                            FontSize="12"
-                           Opacity="0.6" />
+                           Opacity="0.6"
+                           Text="{x:Bind Email.Address, Mode=OneWay}" />
 
             </Grid>
         </DataTemplate>
@@ -54,41 +53,43 @@
                 </Grid.ColumnDefinitions>
 
                 <PersonPicture Grid.RowSpan="2"
-                               DisplayName="{x:Bind FullName, Mode=OneWay}"
-                               ProfilePicture="{x:Bind AvatarInfo, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}"
                                Width="24"
-                               Height="24" Margin="0,4,0,0" />
+                               Height="24"
+                               Margin="0,4,0,0"
+                               DisplayName="{x:Bind FullName, Mode=OneWay}"
+                               ProfilePicture="{x:Bind AvatarInfo, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}" />
 
                 <TextBlock Grid.Column="2"
-                           Text="{x:Bind DisplayName, Mode=OneWay}" VerticalAlignment="Center" />
+                           VerticalAlignment="Center"
+                           Text="{x:Bind DisplayName, Mode=OneWay}" />
 
             </Grid>
         </DataTemplate>
 
     </UserControl.Resources>
-    
+
     <Grid>
 
         <win:Grid>
 
-            <!-- Now it's off.
-                 Use CommunityToolkit.Uwp.Controls.TokenizingTextBox and CommunityToolkit.WinUI.Controls.TokenizingTextBox
-                 look at: https://platform.uno/docs/articles/platform-specific-xaml.html
-                 look at: https://github.com/unoplatform/uno/discussions/12009
+            <!--
+                Now it's off.
+                Use CommunityToolkit.Uwp.Controls.TokenizingTextBox and CommunityToolkit.WinUI.Controls.TokenizingTextBox
+                look at: https://platform.uno/docs/articles/platform-specific-xaml.html
+                look at: https://github.com/unoplatform/uno/discussions/12009
             -->
-            <uwp_toolkit_controls:TokenizingTextBox SuggestedItemTemplate="{StaticResource SuggestContactItemTemplate}"
-                                                    TokenItemTemplate="{StaticResource TokenContactItemTemplate}"
-                                                    TokenDelimiter=";"
+            <uwp_toolkit_controls:TokenizingTextBox ItemsSource="{x:Bind SelectedContacts, Mode=OneWay}"
+                                                    SuggestedItemTemplate="{StaticResource SuggestContactItemTemplate}"
                                                     TextChanged="SuggestBox_TextChanged"
+                                                    TokenDelimiter=";"
                                                     TokenItemAdding="SuggestBox_TokenItemAdding"
-                                                    ItemsSource="{x:Bind SelectedContacts, Mode=OneWay}" />
+                                                    TokenItemTemplate="{StaticResource TokenContactItemTemplate}" />
         </win:Grid>
-        <!-- TokenizingTextBox is not available in Uno (is only available in UWP) -->
-        <!-- TODO: Replace with TokenizingTextBox or similar control in future -->
-        <!-- TVM-373 -->
+        <!--  TokenizingTextBox is not available in Uno (is only available in UWP)  -->
+        <!--  TODO: Replace with TokenizingTextBox or similar control in future  -->
+        <!--  TVM-373  -->
         <not_win:Grid>
-            <TextBox Text="{x:Bind SelectedContactsText, Mode=TwoWay}"
-                     IsSpellCheckEnabled="False"/>
+            <TextBox IsSpellCheckEnabled="False" Text="{x:Bind SelectedContactsText, Mode=TwoWay}" />
         </not_win:Grid>
 
     </Grid>
