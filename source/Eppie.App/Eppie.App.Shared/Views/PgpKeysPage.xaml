@@ -1,31 +1,29 @@
-﻿<local:PgpKeysPageBase
-    x:Class="Tuvi.App.Shared.Views.PgpKeysPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Tuvi.App.Shared.Views"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:viewmodels="using:Tuvi.App.ViewModels"
-    xmlns:keyEntities="using:TuviPgpLib.Entities"
-    xmlns:extensions="using:Tuvi.App.Shared.Extensions"
-    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-    xmlns:behaviors="using:Tuvi.App.Shared.Behaviors"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+﻿<local:PgpKeysPageBase x:Class="Tuvi.App.Shared.Views.PgpKeysPage"
+                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                       xmlns:behaviors="using:Tuvi.App.Shared.Behaviors"
+                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                       xmlns:extensions="using:Tuvi.App.Shared.Extensions"
+                       xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+                       xmlns:keyEntities="using:TuviPgpLib.Entities"
+                       xmlns:local="using:Tuvi.App.Shared.Views"
+                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                       xmlns:viewmodels="using:Tuvi.App.ViewModels"
+                       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                       mc:Ignorable="d">
 
     <local:PgpKeysPageBase.DataContext>
-        <viewmodels:PgpKeysPageViewModel/>
+        <viewmodels:PgpKeysPageViewModel />
     </local:PgpKeysPageBase.DataContext>
 
     <Grid Padding="16">
-        
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0"
-              Margin="0,0,0,4">
+        <Grid Grid.Row="0" Margin="0,0,0,4">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" />
@@ -35,8 +33,8 @@
 
             <Button x:Uid="PgpKeysBackButton"
                     Grid.Column="0"
-                    Command="{x:Bind ViewModel.BackCommand}"
-                    VerticalAlignment="Center">
+                    VerticalAlignment="Center"
+                    Command="{x:Bind ViewModel.BackCommand}">
                 <FontIcon Glyph="&#xE112;" />
             </Button>
 
@@ -51,15 +49,15 @@
         </Grid>
 
         <ScrollViewer Grid.Row="1"
-                      HorizontalScrollMode="Auto"
                       HorizontalScrollBarVisibility="Auto"
-                      VerticalScrollMode="Auto"
+                      HorizontalScrollMode="Auto"
                       VerticalScrollBarVisibility="Auto"
+                      VerticalScrollMode="Auto"
                       ZoomMode="Disabled">
 
-            <ListView ItemsSource="{x:Bind ViewModel.PgpKeys, Mode=OneWay}"
-                      SelectionMode="None"
-                      IsItemClickEnabled="True">
+            <ListView IsItemClickEnabled="True"
+                      ItemsSource="{x:Bind ViewModel.PgpKeys, Mode=OneWay}"
+                      SelectionMode="None">
 
                 <interactivity:Interaction.Behaviors>
                     <behaviors:ListViewItemClickBehavior ClickCommand="{x:Bind ViewModel.PgpKeyDetailsCommand, Mode=OneWay}" />
@@ -85,9 +83,9 @@
                 </ListView.ItemContainerStyle>
 
             </ListView>
-            
+
         </ScrollViewer>
 
     </Grid>
-    
+
 </local:PgpKeysPageBase>

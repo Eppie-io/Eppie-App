@@ -1,22 +1,21 @@
-﻿<local:NewMessagePageBase
-    x:Class="Tuvi.App.Shared.Views.NewMessagePage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Tuvi.App.Shared.Views"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:entities="using:Tuvi.Core.Entities"
-    xmlns:viewmodels="using:Tuvi.App.ViewModels"
-    xmlns:controls="using:Tuvi.App.Shared.Controls"
-    xmlns:extensions="using:Tuvi.App.Shared.Extensions"
-    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-    xmlns:behaviors="using:Tuvi.App.Shared.Behaviors"
-    xmlns:win="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:xamarin="http://uno.ui/xamarin"
-    xmlns:android="http://uno.ui/android"
-    xmlns:ios="http://uno.ui/ios"
-    mc:Ignorable="d xamarin android ios"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+﻿<local:NewMessagePageBase x:Class="Tuvi.App.Shared.Views.NewMessagePage"
+                          xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                          xmlns:android="http://uno.ui/android"
+                          xmlns:behaviors="using:Tuvi.App.Shared.Behaviors"
+                          xmlns:controls="using:Tuvi.App.Shared.Controls"
+                          xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                          xmlns:entities="using:Tuvi.Core.Entities"
+                          xmlns:extensions="using:Tuvi.App.Shared.Extensions"
+                          xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+                          xmlns:ios="http://uno.ui/ios"
+                          xmlns:local="using:Tuvi.App.Shared.Views"
+                          xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                          xmlns:viewmodels="using:Tuvi.App.ViewModels"
+                          xmlns:win="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                          xmlns:xamarin="http://uno.ui/xamarin"
+                          Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                          mc:Ignorable="d xamarin android ios">
 
     <local:NewMessagePageBase.DataContext>
         <viewmodels:NewMessagePageViewModel />
@@ -34,12 +33,15 @@
 
                 <SymbolIcon Symbol="Document" />
 
-                <TextBlock Grid.Column="1" Text="{x:Bind FileName, Mode=OneWay}" VerticalAlignment="Center" Margin="8,0,0,0" />
+                <TextBlock Grid.Column="1"
+                           Margin="8,0,0,0"
+                           VerticalAlignment="Center"
+                           Text="{x:Bind FileName, Mode=OneWay}" />
 
                 <CommandBar Grid.Column="2"
                             IsEnabled="{x:Bind IsEmpty, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
-                            OverflowButtonVisibility="Collapsed">                    
-                    
+                            OverflowButtonVisibility="Collapsed">
+
                     <AppBarButton x:Uid="SaveAttachmentButton"
                                   Icon="Save"
                                   Tag="{x:Bind}">
@@ -57,12 +59,12 @@
                     </AppBarButton>
 
                     <AppBarButton x:Uid="DeleteAttachmentButton"
-                                  Icon="Delete"
                                   Command="{x:Bind RemoveCommand, Mode=OneWay}"
-                                  CommandParameter="{x:Bind}"/>
-                    
+                                  CommandParameter="{x:Bind}"
+                                  Icon="Delete" />
+
                 </CommandBar>
-  
+
             </Grid>
         </DataTemplate>
 
@@ -76,8 +78,8 @@
             <RowDefinition Height="1*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        
-        
+
+
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -99,13 +101,11 @@
                     </interactivity:Interaction.Behaviors>
                 </AppBarButton>
 
-                <AppBarButton x:Uid="DeleteButton"                        
-                              Command="{x:Bind ViewModel.DeleteMessageAndGoBackCommand}">
+                <AppBarButton x:Uid="DeleteButton" Command="{x:Bind ViewModel.DeleteMessageAndGoBackCommand}">
                     <SymbolIcon Symbol="Delete" />
                 </AppBarButton>
-                
-                <AppBarButton x:Uid="SendButton"                        
-                              Command="{x:Bind ViewModel.SendMessageAndGoBackCommand}">
+
+                <AppBarButton x:Uid="SendButton" Command="{x:Bind ViewModel.SendMessageAndGoBackCommand}">
                     <SymbolIcon Symbol="Send" />
                 </AppBarButton>
             </CommandBar>
@@ -130,152 +130,145 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <!--Sender-->
+            <!--  Sender  -->
             <TextBlock x:Uid="MessageFrom"
                        Margin="0,4,4,0"
-                       FontWeight="Bold"
-                       VerticalAlignment="Center" />
+                       VerticalAlignment="Center"
+                       FontWeight="Bold" />
 
             <ComboBox Grid.Column="1"
                       Grid.ColumnSpan="2"
                       Margin="4,4,0,0"
+                      VerticalAlignment="Center"
                       ItemsSource="{x:Bind ViewModel.FromList, Mode=OneWay}"
                       SelectedItem="{x:Bind ViewModel.From, Mode=TwoWay}"
-                      SelectionChanged="onFromChanged"
-                      VerticalAlignment="Center">
+                      SelectionChanged="onFromChanged">
                 <ComboBox.ItemTemplate>
                     <DataTemplate x:DataType="entities:EmailAddress">
-                        <TextBlock Text="{x:Bind DisplayName, Mode=OneWay}"/>
+                        <TextBlock Text="{x:Bind DisplayName, Mode=OneWay}" />
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
 
-            <!--Receiver-->
+            <!--  Receiver  -->
             <TextBlock x:Uid="MessageTo"
                        Grid.Row="1"
                        Margin="0,4,4,0"
-                       FontWeight="Bold"
-                       VerticalAlignment="Center" />
+                       VerticalAlignment="Center"
+                       FontWeight="Bold" />
 
-            <controls:EmailsInputControl
-                       Grid.Row="1"
-                       Grid.Column="1"
-                       Grid.ColumnSpan="2"
-                       Margin="4,4,0,0"
-                       Contacts="{x:Bind ViewModel.Contacts, Mode=OneWay}"
-                       SelectedContacts="{x:Bind ViewModel.To, Mode=OneWay}"
-                       UntokenizedContact="{x:Bind ViewModel.UntokenizedContactTo, Mode=TwoWay}" />
+            <controls:EmailsInputControl Grid.Row="1"
+                                         Grid.Column="1"
+                                         Grid.ColumnSpan="2"
+                                         Margin="4,4,0,0"
+                                         Contacts="{x:Bind ViewModel.Contacts, Mode=OneWay}"
+                                         SelectedContacts="{x:Bind ViewModel.To, Mode=OneWay}"
+                                         UntokenizedContact="{x:Bind ViewModel.UntokenizedContactTo, Mode=TwoWay}" />
 
-            <!--Copy-->
+            <!--  Copy  -->
             <TextBlock x:Uid="CopyTo"
                        Grid.Row="2"
                        Margin="0,4,4,0"
-                       FontWeight="Bold"
-                       VerticalAlignment="Center" />
+                       VerticalAlignment="Center"
+                       FontWeight="Bold" />
 
-            <controls:EmailsInputControl
-                       Grid.Row="2"
-                       Grid.Column="1"
-                       Grid.ColumnSpan="2"
-                       Margin="4,4,0,0"
-                       Contacts="{x:Bind ViewModel.Contacts, Mode=OneWay}"
-                       SelectedContacts="{x:Bind ViewModel.Copy, Mode=OneWay}" />
+            <controls:EmailsInputControl Grid.Row="2"
+                                         Grid.Column="1"
+                                         Grid.ColumnSpan="2"
+                                         Margin="4,4,0,0"
+                                         Contacts="{x:Bind ViewModel.Contacts, Mode=OneWay}"
+                                         SelectedContacts="{x:Bind ViewModel.Copy, Mode=OneWay}" />
 
-            <!--Hidden copy-->
+            <!--  Hidden copy  -->
             <TextBlock x:Uid="HiddenCopyTo"
                        Grid.Row="3"
                        Margin="0,4,4,0"
-                       FontWeight="Bold"
-                       VerticalAlignment="Center" />
+                       VerticalAlignment="Center"
+                       FontWeight="Bold" />
 
-            <controls:EmailsInputControl
-                       Grid.Row="3"
-                       Grid.Column="1"
-                       Grid.ColumnSpan="2"
-                       Margin="4,4,0,0"
-                       Contacts="{x:Bind ViewModel.Contacts, Mode=OneWay}"
-                       SelectedContacts="{x:Bind ViewModel.HiddenCopy, Mode=OneWay}" />
+            <controls:EmailsInputControl Grid.Row="3"
+                                         Grid.Column="1"
+                                         Grid.ColumnSpan="2"
+                                         Margin="4,4,0,0"
+                                         Contacts="{x:Bind ViewModel.Contacts, Mode=OneWay}"
+                                         SelectedContacts="{x:Bind ViewModel.HiddenCopy, Mode=OneWay}" />
 
-            <!--Subject-->
+            <!--  Subject  -->
             <TextBlock x:Uid="MessageSubject"
                        Grid.Row="4"
                        Margin="0,4,4,0"
-                       FontWeight="Bold"
-                       VerticalAlignment="Center" />
+                       VerticalAlignment="Center"
+                       FontWeight="Bold" />
 
-            <controls:PromptTextInputControl
-                       Grid.Row="4"
-                       Grid.Column="1"
-                       Margin="4,4,0,0"
-                       Text="{x:Bind ViewModel.Subject, Mode=TwoWay}"/>
+            <controls:PromptTextInputControl Grid.Row="4"
+                                             Grid.Column="1"
+                                             Margin="4,4,0,0"
+                                             Text="{x:Bind ViewModel.Subject, Mode=TwoWay}" />
 
-            <!-- Encryption and signature -->
-            <CheckBox Grid.Row="5"
-                      x:Uid="MessageEncrypted"
+            <!--  Encryption and signature  -->
+            <CheckBox x:Uid="MessageEncrypted"
+                      Grid.Row="5"
                       Margin="0,4,4,0"
+                      VerticalAlignment="Center"
                       IsChecked="{x:Bind ViewModel.IsEncrypted, Mode=TwoWay}"
-                      IsEnabled="{x:Bind ViewModel.IsDecentralized, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
-                      VerticalAlignment="Center" />
+                      IsEnabled="{x:Bind ViewModel.IsDecentralized, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}" />
 
-            <CheckBox Grid.Row="5"
+            <CheckBox x:Uid="MessageSigned"
+                      Grid.Row="5"
                       Grid.Column="1"
-                      x:Uid="MessageSigned"
                       Margin="4,4,0,0"
+                      VerticalAlignment="Center"
                       IsChecked="{x:Bind ViewModel.IsSigned, Mode=TwoWay}"
-                      IsEnabled="{x:Bind ViewModel.IsDecentralized, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
-                      VerticalAlignment="Center" />
+                      IsEnabled="{x:Bind ViewModel.IsDecentralized, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}" />
 
-            <CheckBox Grid.Row="6"
-                      x:Uid="MessageDecentralized"
+            <CheckBox x:Uid="MessageDecentralized"
+                      Grid.Row="6"
                       Margin="0,4,4,0"
-                      IsChecked="{x:Bind ViewModel.IsDecentralized, Mode=TwoWay}"
-                      IsEnabled="{x:Bind ViewModel.From.IsHybrid, Mode=OneWay}"
+                      VerticalAlignment="Center"
                       Checked="DecentralizedChecked"
-                      VerticalAlignment="Center" />
+                      IsChecked="{x:Bind ViewModel.IsDecentralized, Mode=TwoWay}"
+                      IsEnabled="{x:Bind ViewModel.From.IsHybrid, Mode=OneWay}" />
         </Grid>
-        
-        <!--message body-->
+
+        <!--  message body  -->
         <Grid Grid.Row="3"
               BorderBrush="#FFE0E0E0"
               BorderThickness="1">
 
-            <!-- ToDo: controls:RichTextEditor is off (now only uwp) -->
+            <!--  ToDo: controls:RichTextEditor is off (now only uwp)  -->
             <!--<win:Grid>
                 <controls:RichTextEditor Text="{x:Bind ViewModel.TextBody, Mode=TwoWay}"
                                          Html="{x:Bind ViewModel.HtmlBody, Mode=TwoWay}"
                                          IsEnabled="{x:Bind ViewModel.LoadingContent, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}" />
             </win:Grid>-->
 
-            <xamarin:WebView extensions:WebViewExtension.StringSource="{x:Bind ViewModel.HtmlBody, Mode=OneWay}"
+            <xamarin:WebView HorizontalAlignment="Stretch"
+                             VerticalAlignment="Stretch"
                              android:IsTapEnabled="True"
                              android:Tapped="OnEmailBodyTapped"
+                             extensions:WebViewExtension.StringSource="{x:Bind ViewModel.HtmlBody, Mode=OneWay}"
                              ios:IsTapEnabled="True"
                              ios:Tapped="OnEmailBodyTapped"
-                             HorizontalAlignment="Stretch"
-                             VerticalAlignment="Stretch"
-                             IsEnabled="{x:Bind ViewModel.LoadingContent, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}">
-            </xamarin:WebView>
+                             IsEnabled="{x:Bind ViewModel.LoadingContent, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}" />
 
         </Grid>
 
-        <!--Wrapped to Grid because Android doesn't have Visibility=Collapsed for ProgressRing-->
+        <!--  Wrapped to Grid because Android doesn't have Visibility=Collapsed for ProgressRing  -->
         <Grid Grid.Row="3" Visibility="{x:Bind ViewModel.LoadingContent, Mode=OneWay}">
-            <ProgressRing
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                IsActive="True" />
+            <ProgressRing HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          IsActive="True" />
         </Grid>
 
 
-        <controls:AttachmentListControl
-            Grid.Row="4"
-            x:Uid="AttachedFiles"
-            IsTitleVisible="True"
-            ListAreaHeight="80"
-            ItemTemplate="{StaticResource RemovableAttachmentItemTemplate}"
-            Items="{x:Bind ViewModel.Attachments, Mode=OneWay}"
-            Visibility="{x:Bind ViewModel.HasAttachments, Mode=OneWay}"
-            Margin="0,16,0,0" />
+        <controls:AttachmentListControl x:Uid="AttachedFiles"
+                                        Grid.Row="4"
+                                        Margin="0,16,0,0"
+                                        IsTitleVisible="True"
+                                        ItemTemplate="{StaticResource RemovableAttachmentItemTemplate}"
+                                        Items="{x:Bind ViewModel.Attachments, Mode=OneWay}"
+                                        ListAreaHeight="80"
+                                        Visibility="{x:Bind ViewModel.HasAttachments, Mode=OneWay}" />
 
     </Grid>
 </local:NewMessagePageBase>
