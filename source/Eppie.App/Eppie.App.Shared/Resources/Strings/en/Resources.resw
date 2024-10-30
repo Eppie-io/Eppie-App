@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -124,6 +124,10 @@
   <data name="AboutAppNavigationItem.Content" xml:space="preserve">
     <value>About</value>
     <comment>Navigation item to open 'About' page</comment>
+  </data>
+  <data name="SupportDevelopmentNavigationItem.Content" xml:space="preserve">
+    <value>Support Development</value>
+    <comment>Navigation item to open 'Support Development' page</comment>
   </data>
   <data name="IdentityManagerNavigationItem.Content" xml:space="preserve">
     <value>Identity manager</value>
