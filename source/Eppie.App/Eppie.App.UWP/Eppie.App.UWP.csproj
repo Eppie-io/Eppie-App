@@ -180,6 +180,10 @@
       <Project>{d392835a-52ae-4529-aac0-52d3189cb461}</Project>
       <Name>Eppie.App.Converters.UWP</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Eppie.App.UI\Eppie.App.UI.UWP\Eppie.App.UI.UWP.csproj">
+      <Project>{a6c30ed1-6213-427e-b255-e5e8c69e6d0e}</Project>
+      <Name>Eppie.App.UI.UWP</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Eppie.App.ViewModels\Eppie.App.ViewModels.csproj">
       <Project>{2da63e2a-a0ac-4c55-b912-04d8970bced3}</Project>
       <Name>Eppie.App.ViewModels</Name>
