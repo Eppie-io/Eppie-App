@@ -8,7 +8,6 @@
                     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
                     xmlns:local="using:Tuvi.App.Shared.Views"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                    xmlns:prim="using:Microsoft.UI.Xaml.Controls.Primitives"
                     xmlns:viewmodels="using:Tuvi.App.ViewModels"
                     xmlns:winui="using:Microsoft.UI.Xaml.Controls"
                     xmlns:xamarin="http://uno.ui/xamarin"
