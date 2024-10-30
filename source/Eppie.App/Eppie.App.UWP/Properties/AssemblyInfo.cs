@@ -11,11 +11,11 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 
 // ToDo: Company name
-[assembly: AssemblyCompany("<ToDo>")]
+[assembly: AssemblyCompany("Tuvisoft")]
 [assembly: AssemblyProduct("Eppie.App.UWP")]
 
 // ToDo: Company name
-[assembly: AssemblyCopyright("Copyright © <ToDo> 2024")]
+[assembly: AssemblyCopyright("Copyright © Tuvisoft 2024")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
