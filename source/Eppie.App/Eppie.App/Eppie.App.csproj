@@ -55,7 +55,6 @@
     <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core.Mail\Tuvi.Core.Mail.csproj" />
     <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core\Tuvi.Core.csproj" />
     <ProjectReference Include="..\..\..\gitmodules\TuviPgpLib\TuviPgpLib\TuviPgpLib.csproj" />
-    <ProjectReference Include="..\Eppie.App.Converters\Eppie.App.Converters.Uno\Eppie.App.Converters.Uno.csproj" />
     <ProjectReference Include="..\Eppie.App.UI\Eppie.App.UI.Uno\Eppie.App.UI.Uno.csproj" />
     <ProjectReference Include="..\Eppie.App.ViewModels\Eppie.App.ViewModels.csproj" />
     <ProjectReference Include="..\Eppie.Authorization.OAuth2\Eppie.Authorization.OAuth2.csproj" />

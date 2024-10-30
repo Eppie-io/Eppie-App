@@ -219,10 +219,6 @@
       <Project>{93c3844c-03b2-4c24-9070-16ba1971758e}</Project>
       <Name>TuviPgpLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Eppie.App.Converters\Eppie.App.Converters.UWP\Eppie.App.Converters.UWP.csproj">
-      <Project>{d392835a-52ae-4529-aac0-52d3189cb461}</Project>
-      <Name>Eppie.App.Converters.UWP</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Eppie.App.UI\Eppie.App.UI.UWP\Eppie.App.UI.UWP.csproj">
       <Project>{a6c30ed1-6213-427e-b255-e5e8c69e6d0e}</Project>
       <Name>Eppie.App.UI.UWP</Name>
