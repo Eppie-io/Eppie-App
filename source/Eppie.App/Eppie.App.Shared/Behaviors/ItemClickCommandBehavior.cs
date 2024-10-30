@@ -12,6 +12,7 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace Tuvi.App.Shared.Behaviors
 {
+    // ToDo: it is not used and can be deleted
     public class ItemClickCommandBehavior : Behavior<ListViewBase>
     {
         private bool _isItemClickEnabledCachedValue;
