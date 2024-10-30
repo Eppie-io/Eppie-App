@@ -2,14 +2,15 @@ using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.UI.Xaml.Controls;
+using Tuvi.App.Shared.Extensions;
 using Tuvi.App.Shared.Helpers;
 using Tuvi.App.ViewModels;
 
 #if WINDOWS_UWP
-using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Navigation;
 #else
-using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 #endif
 
@@ -52,24 +53,17 @@ namespace Tuvi.App.Shared.Views
             }
         }
 
-        private void NavigationMenu_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        private void OnNavigationViewItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
         {
-            if (args.IsSettingsSelected)
+            if (args.IsSettingsInvoked)
             {
                 // When returning to the main page, clicking on the Settings menu did not work because it was already selected
                 NavigationMenu.SelectedItem = null;
                 ToggleSettingsPane();
             }
-            else
+            else if (args.InvokedItemContainer is DependencyObject dependencyObject)
             {
-                var selectedItem = (NavigationViewItem)args.SelectedItem;
-                if (selectedItem != null && selectedItem.Tag != null)
-                {
-                    string selectedItemTag = ((string)selectedItem.Tag);
-                    string pageName = "Tuvi.App.Shared.Views." + selectedItemTag;
-                    Type pageType = Type.GetType(pageName);
-                    contentFrame.Navigate(pageType);
-                }
+                AttachedCommands.GetClickCommand(dependencyObject)?.Execute(null);
             }
         }
 
@@ -166,9 +160,9 @@ namespace Tuvi.App.Shared.Views
             }
         }
 
-        private void OnElementClearing(Microsoft.UI.Xaml.Controls.ItemsRepeater sender, Microsoft.UI.Xaml.Controls.ItemsRepeaterElementClearingEventArgs args)
+        private void OnElementClearing(ItemsRepeater sender, ItemsRepeaterElementClearingEventArgs args)
         {
-            var infoBar = args.Element as Microsoft.UI.Xaml.Controls.InfoBar;
+            var infoBar = args.Element as InfoBar;
             if (infoBar != null)
             {
                 infoBar.IsOpen = true;
