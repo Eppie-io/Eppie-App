@@ -11,8 +11,10 @@
                     mc:Ignorable="d xamarin">
 
     <!--  Original style from https://github.com/microsoft/microsoft-ui-xaml/blob/v2.8.6/dev/NavigationView/NavigationView.xaml  -->
-
-    <Style x:Key="MainPageNavigationViewStyle" TargetType="controls:NavigationView">
+    <!--  Summary of modifications:  -->
+    <!--  1. Conditional setters are disabled.  -->
+    <!--  2. Heights of RowDefinitions are modified in the 'ItemsContainerGrid' element.  -->
+    <Style x:Key="DefaultNavigationViewStyle" TargetType="controls:NavigationView">
         <Setter Property="PaneToggleButtonStyle" Value="{StaticResource PaneToggleButtonStyle}" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="CompactPaneLength" Value="{ThemeResource NavigationViewCompactPaneLength}" />
@@ -365,11 +367,13 @@
                                         <!--  "Non header" content  -->
                                         <Grid x:Name="ItemsContainerGrid" Grid.Row="6">
                                             <Grid.RowDefinitions>
-                                                <RowDefinition Height="*" />
+                                                <!--  Modified: original xaml is <RowDefinition Height="*" />  -->
+                                                <RowDefinition Height="Auto" />
                                                 <!--  MenuItems  -->
                                                 <RowDefinition Height="Auto" />
                                                 <!--  Separator if overflow  -->
-                                                <RowDefinition Height="Auto" />
+                                                <!--  Modified: original xaml is <RowDefinition Height="Auto" />  -->
+                                                <RowDefinition Height="*" />
                                                 <!--  PaneFooter  -->
                                                 <RowDefinition Height="Auto" />
                                                 <!--  FooterItems  -->
@@ -667,5 +671,16 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+
+    <contract7Present:Style x:Key="MainNavigationViewStyle"
+                            BasedOn="{StaticResource DefaultNavigationViewStyle}"
+                            TargetType="controls:NavigationView">
+        <Setter Property="CornerRadius" Value="{ThemeResource OverlayCornerRadius}" />
+    </contract7Present:Style>
+
+    <contract7NotPresent:Style x:Key="MainNavigationViewStyle"
+                               BasedOn="{StaticResource DefaultNavigationViewStyle}"
+                               TargetType="controls:NavigationView" />
 
 </ResourceDictionary>

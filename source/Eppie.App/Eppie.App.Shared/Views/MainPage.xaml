@@ -56,7 +56,7 @@
                               Grid.Row="1"
                               IsBackButtonVisible="Collapsed"
                               ItemInvoked="OnNavigationViewItemInvoked"
-                              Style="{StaticResource MainPageNavigationViewStyle}">
+                              Style="{StaticResource MainNavigationViewStyle}">
             <winui:NavigationView.MenuItems>
                 <winui:NavigationViewItem x:Uid="NewMessageNavigationItem"
                                           extensions:AttachedCommands.ClickCommand="{x:Bind ViewModel.WriteNewMessageCommand}"
