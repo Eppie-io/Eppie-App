@@ -126,6 +126,12 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core.Entities\Tuvi.Core.Entities.csproj">
+      <Project>{1e363987-165e-4ea6-a0e1-fad82b7c0633}</Project>
+      <Name>Tuvi.Core.Entities</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="..\Eppie.App.UI.Shared\Eppie.App.UI.Shared.projitems" Label="Shared" />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

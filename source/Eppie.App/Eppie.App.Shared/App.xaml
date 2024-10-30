@@ -14,8 +14,7 @@
                 <ResourceDictionary Source="ms-appx:///StaticResources/StaticStringResources.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/NavigationViewStyle.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/TuviMailStyles.xaml" />
-                <ResourceDictionary Source="ms-appx:///Eppie.App.Converters/ConvertersDictionary.xaml" />
-                <ResourceDictionary Source="ms-appx:///Converters/TuviMailConvertersDictionary.xaml" />
+                <ResourceDictionary Source="ms-appx:///Eppie.App.UI/Converters/ConvertersDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <!--  Add resources here  -->

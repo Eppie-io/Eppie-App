@@ -41,4 +41,6 @@
         </converters:ConverterChain.Converters>
     </converters:ConverterChain>
 
+    <converters:ImageInfoToBitmapConverter x:Key="ImageInfoToBitmapConverter" />
+
 </ResourceDictionary>
