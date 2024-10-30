@@ -10,7 +10,7 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Media.Imaging;
 #endif
 
-namespace Tuvi.App.Shared.Converters
+namespace Tuvi.App.Converters
 {
     public class ImageInfoToBitmapConverter : IValueConverter
     {

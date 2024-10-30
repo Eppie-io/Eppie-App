@@ -39,4 +39,7 @@
   <ItemGroup>
     <None Include="..\Eppie.App.UI.Shared\*.xaml" Visible="false" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core.Entities\Tuvi.Core.Entities.csproj" />
+  </ItemGroup>
 </Project>
