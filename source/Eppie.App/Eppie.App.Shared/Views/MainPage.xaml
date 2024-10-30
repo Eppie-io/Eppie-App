@@ -82,6 +82,12 @@
             </winui:NavigationView.PaneFooter>
 
             <winui:NavigationView.FooterMenuItems>
+
+                <winui:NavigationViewItem x:Uid="SupportDevelopmentNavigationItem"
+                                          extensions:AttachedCommands.ClickCommand="{x:Bind ViewModel.SupportDevelopmentCommand}"
+                                          Icon="Shop"
+                                          SelectsOnInvoked="False" />
+
                 <winui:NavigationViewItem x:Uid="AboutAppNavigationItem"
                                           extensions:AttachedCommands.ClickCommand="{x:Bind ShowAboutPageCommand}"
                                           SelectsOnInvoked="False">
@@ -89,6 +95,7 @@
                         <FontIcon xamarin:FontFamily="/Assets/Fonts/segmdl2.ttf#" Glyph="&#xE946;" />
                     </winui:NavigationViewItem.Icon>
                 </winui:NavigationViewItem>
+
             </winui:NavigationView.FooterMenuItems>
 
             <SplitView x:Name="splitView"

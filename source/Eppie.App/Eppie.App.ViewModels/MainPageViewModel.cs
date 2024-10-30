@@ -340,6 +340,8 @@ namespace Tuvi.App.ViewModels
             }
         }
 
+        public ICommand SupportDevelopmentCommand => new RelayCommand(SupportDevelopment);
+
         public ObservableCollection<Problem> Problems { get; } = new ObservableCollection<Problem>();
 
         private async void NavigateToProton(EmailAddress emailAddress)
@@ -385,6 +387,11 @@ namespace Tuvi.App.ViewModels
             {
                 OnError(e);
             }
+        }
+
+        private void SupportDevelopment()
+        {
+            throw new NotImplementedException();
         }
 
         public IRelayCommand<Problem> CloseProblemCommand => new RelayCommand<Problem>(CloseProblem);
