@@ -340,7 +340,7 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        public ICommand SupportDevelopmentCommand => new RelayCommand(SupportDevelopment);
+        public ICommand SupportDevelopmentCommand => new AsyncRelayCommand(SupportDevelopmentAsync);
 
         public ObservableCollection<Problem> Problems { get; } = new ObservableCollection<Problem>();
 
@@ -389,9 +389,9 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        private void SupportDevelopment()
+        private async Task SupportDevelopmentAsync()
         {
-            throw new NotImplementedException();
+            await PurchaseService.BuySubscriptionAsunc();
         }
 
         public IRelayCommand<Problem> CloseProblemCommand => new RelayCommand<Problem>(CloseProblem);
