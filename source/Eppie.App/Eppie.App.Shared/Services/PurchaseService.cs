@@ -18,8 +18,8 @@ namespace Tuvi.App.Shared.Services
 
     public class SubscriptionProduct
     {
-        private string InAppOfferToken { get; set; }
-        private string ProductId { get; set; }
+        private string InAppOfferToken { get; }
+        private string ProductId { get; }
 
         public SubscriptionProduct(string token, string storeId)
         {
@@ -38,15 +38,15 @@ namespace Tuvi.App.Shared.Services
             return _storeContext;
         }
 
-        public async Task<bool> PurchaseAsync()
+        public async Task PurchaseAsync()
         {
             StoreContext context = StoreContext.GetDefault();
 
-            var id = ProductId;
+            const string productKind = "Durable";
+            string[] productKinds = { productKind };
 
-            string[] productKinds = { "Durable" };
             List<String> filterList = new List<string>(productKinds);
-            string[] storeIds = new string[] { id };
+            string[] storeIds = new string[] { ProductId };
 
             StoreProductQueryResult queryResult = await context.GetStoreProductsAsync(filterList, storeIds);
 
@@ -54,29 +54,8 @@ namespace Tuvi.App.Shared.Services
 
             if (subscription != null && !subscription.IsInUserCollection)
             {
-                StorePurchaseResult result = await subscription.RequestPurchaseAsync();
-
-                string extendedError = string.Empty;
-                if (result.ExtendedError != null)
-                {
-                    extendedError = result.ExtendedError.Message;
-                }
-
-                switch (result.Status)
-                {
-                    case StorePurchaseStatus.Succeeded:
-                        return true;
-
-                    case StorePurchaseStatus.NotPurchased:
-                        return false;
-
-
-                    default:
-                        return false;
-                }
+                await subscription.RequestPurchaseAsync();
             }
-
-            return false;
         }
     }
 }
