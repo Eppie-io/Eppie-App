@@ -4,6 +4,6 @@ namespace Tuvi.App.ViewModels.Services
 {
     public interface IPurchaseService
     {
-        Task BuySubscriptionAsunc();
+        Task BuySubscriptionAsync();
     }
 }

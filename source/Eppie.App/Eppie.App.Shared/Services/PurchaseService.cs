@@ -9,7 +9,7 @@ namespace Tuvi.App.Shared.Services
 {
     public class PurchaseService : IPurchaseService
     {
-        public Task BuySubscriptionAsunc()
+        public Task BuySubscriptionAsync()
         {            
             var subscription = new SubscriptionProduct("<InAppOfferToken>", "<ProductId>");
             return subscription.PurchaseAsync();
