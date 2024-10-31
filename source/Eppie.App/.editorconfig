@@ -167,5 +167,10 @@ csharp_style_expression_bodied_lambdas = true:silent
 csharp_style_expression_bodied_local_functions = false:silent
 
 [*.{cs,vb}]
-dotnet_diagnostic.IDE0160.severity = error
-dotnet_diagnostic.IDE0161.severity = none
+
+## Style
+
+dotnet_diagnostic.IDE0055.severity = error          # IDE0055: Formatting rule
+
+dotnet_diagnostic.IDE0160.severity = error          # IDE0160: Use block-scoped namespace
+dotnet_diagnostic.IDE0161.severity = none           # IDE0161: Use file-scoped namespace
