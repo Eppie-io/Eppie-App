@@ -4,6 +4,8 @@ using Tuvi.App.Shared.Models;
 using Tuvi.App.Shared.Services;
 using Tuvi.App.ViewModels;
 using Tuvi.Core.Entities;
+using Tuvi.App.ViewModels.Services;
+
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -60,6 +62,7 @@ namespace Tuvi.App.Shared.Views
             ViewModel.SetDispatcherService(new DispatcherService());
             ViewModel.SetBrandService(new BrandLoader());
             ViewModel.SetLauncherService(new LauncherService());
+            ViewModel.SetPurchaseService(new PurchaseService());
             AfterDataContextChanged();
         }
 

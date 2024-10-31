@@ -117,6 +117,12 @@ namespace Tuvi.App.ViewModels
             BrandService = brandService;
         }
 
+        protected IPurchaseService PurchaseService { get; private set; }
+        public void SetPurchaseService(IPurchaseService purchaseService)
+        {
+            PurchaseService = purchaseService;
+        }
+
         protected async Task BackupIfNeededAsync()
         {
             var accounts = await Core.GetAccountsAsync().ConfigureAwait(true);
