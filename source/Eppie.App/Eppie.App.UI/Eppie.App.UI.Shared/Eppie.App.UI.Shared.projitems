@@ -16,6 +16,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\TimeConverters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ValueToBoolConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\VisibilityConverters.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\AttachedCommands.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\HyperlinkExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\TextDocumentExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\WebViewExtension.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)Converters\ConvertersDictionary.xaml">
