@@ -1,6 +1,3 @@
-using System.Windows.Input;
-using CommunityToolkit.Mvvm.Input;
-
 namespace Tuvi.App.ViewModels
 {
     public class AboutPageViewModel : BaseViewModel

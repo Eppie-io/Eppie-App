@@ -1,4 +1,3 @@
-using System;
 using System.Collections.ObjectModel;
 using Tuvi.App.ViewModels;
 

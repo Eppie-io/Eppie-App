@@ -47,7 +47,7 @@ namespace Tuvi.App.Converters
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            switch(value)
+            switch (value)
             {
                 case IList list:
                     return list.Count > 0;

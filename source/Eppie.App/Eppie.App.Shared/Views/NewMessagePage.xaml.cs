@@ -1,4 +1,3 @@
-using System;
 // this is missing
 //using Tuvi.App.Helpers;
 using Tuvi.App.ViewModels;

@@ -1,11 +1,5 @@
-using System.Collections.Generic;
-using NBitcoin;
-using Newtonsoft.Json.Linq;
-using Tuvi.App.Shared.Models;
 using Tuvi.App.ViewModels;
 using Windows.ApplicationModel.Resources;
-using Windows.ApplicationModel.Resources.Core;
-using Windows.Globalization;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
