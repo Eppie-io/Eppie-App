@@ -125,11 +125,17 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" />
+    <PackageReference Include="Microsoft.UI.Xaml" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Uwp.Managed" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core.Entities\Tuvi.Core.Entities.csproj">
       <Project>{1e363987-165e-4ea6-a0e1-fad82b7c0633}</Project>
       <Name>Tuvi.Core.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Eppie.App.ViewModels\Eppie.App.ViewModels.csproj">
+      <Project>{2da63e2a-a0ac-4c55-b912-04d8970bced3}</Project>
+      <Name>Eppie.App.ViewModels</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="..\Eppie.App.UI.Shared\Eppie.App.UI.Shared.projitems" Label="Shared" />

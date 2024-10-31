@@ -13,15 +13,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Authorization\AuthConfig.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Authorization\AuthConfig.UWP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Authorization\WindowsAuthenticationBroker.UWP.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\ClipboardBehaviorBase.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\CopyToClipboardBehavior.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\DialogBehavior.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\FileBehavior.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\ItemClickCommandBehavior.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\ListViewItemClickBehavior.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\ObjectToFileBehavior.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\PasteFromClipboardBehavior.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\TreeViewItemInvokeBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\UITools.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\BaseUserControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\RichTextEditor.cs" />
