@@ -10,7 +10,7 @@ namespace Tuvi.App.Shared.Services
     public class PurchaseService : IPurchaseService
     {
         public Task BuySubscriptionAsync()
-        {            
+        {
             var subscription = new SubscriptionProduct("<InAppOfferToken>", "<ProductId>");
             return subscription.PurchaseAsync();
         }
@@ -64,14 +64,14 @@ namespace Tuvi.App.Shared.Services
 
                 switch (result.Status)
                 {
-                    case StorePurchaseStatus.Succeeded:                        
+                    case StorePurchaseStatus.Succeeded:
                         return true;
 
-                    case StorePurchaseStatus.NotPurchased:                        
+                    case StorePurchaseStatus.NotPurchased:
                         return false;
 
 
-                    default:                        
+                    default:
                         return false;
                 }
             }
