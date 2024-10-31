@@ -1,4 +1,3 @@
-using Tuvi.App.Shared.Models;
 using Tuvi.App.ViewModels;
 
 #if WINDOWS_UWP

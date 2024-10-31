@@ -1,8 +1,4 @@
-using System;
-using Tuvi.App.Services;
 using Tuvi.App.ViewModels;
-using Tuvi.App.ViewModels.Services;
-using Tuvi.Core.Entities;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
