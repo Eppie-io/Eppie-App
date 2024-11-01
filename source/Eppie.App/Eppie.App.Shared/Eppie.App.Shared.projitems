@@ -22,7 +22,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\NotificationManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\DispatcherService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ErrorHandler.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\FilePickerService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\PurchaseService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\LauncherService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\LocalizationService.cs" />
