@@ -1,19 +1,67 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Microsoft.Xaml.Interactivity;
 using Tuvi.App.ViewModels.Services;
-using Windows.Storage;
 using Windows.Storage.Pickers;
+using Windows.Storage;
 using Windows.System;
 
-namespace Tuvi.App.Services
+#if WINDOWS_UWP
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+#else
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+#endif
+
+namespace Tuvi.App.Shared.Behaviors
 {
-    internal class FilePickerService
+    public class FileBehavior : Behavior<Button>, IFileOperationProvider
     {
-        public static async Task SaveDataToFileAsync(string fileName, byte[] data)
+        public static readonly DependencyProperty CommandProperty =
+            DependencyProperty.Register(nameof(Command), typeof(ICommand), typeof(FileBehavior), new PropertyMetadata(null));
+
+        public ICommand Command
+        {
+            get { return (ICommand)GetValue(CommandProperty); }
+            set { SetValue(CommandProperty, value); }
+        }
+
+        public Task<IEnumerable<AttachedFileInfo>> LoadFilesAsync()
+        {
+            return SelectAndLoadFilesDataAsync();
+        }
+
+        public async Task SaveToFileAsync(byte[] data, string fileName)
+        {
+            await SaveDataToFileAsync(fileName, data).ConfigureAwait(true);
+        }
+
+        public async Task SaveToTempFileAndOpenAsync(byte[] data, string fileName)
+        {
+            await SaveDataToTempFileAndOpenAsync(fileName, data).ConfigureAwait(true);
+        }
+
+        protected override void OnAttached()
+        {
+            AssociatedObject.Click += OnClick;
+        }
+
+        protected override void OnDetaching()
+        {
+            AssociatedObject.Click -= OnClick;
+        }
+
+        protected virtual void OnClick(object sender, RoutedEventArgs e)
+        {
+            Command?.Execute(this);
+        }
+
+        private static async Task SaveDataToFileAsync(string fileName, byte[] data)
         {
             var picker = new FileSavePicker
             {
@@ -42,7 +90,7 @@ namespace Tuvi.App.Services
             }
         }
 
-        public static async Task SaveDataToTempFileAndOpenAsync(string fileName, byte[] data)
+        private static async Task SaveDataToTempFileAndOpenAsync(string fileName, byte[] data)
         {
             var tempFolder = ApplicationData.Current.TemporaryFolder;
             var file = await tempFolder.CreateFileAsync(fileName, CreationCollisionOption.GenerateUniqueName);
@@ -57,7 +105,7 @@ namespace Tuvi.App.Services
             }
         }
 
-        public static async Task<IEnumerable<AttachedFileInfo>> SelectAndLoadFilesDataAsync()
+        private static async Task<IEnumerable<AttachedFileInfo>> SelectAndLoadFilesDataAsync()
         {
             var attachedFiles = new List<AttachedFileInfo>();
 

@@ -9,6 +9,15 @@
     <Import_RootNamespace>Eppie.App.UI</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\ClipboardBehaviorBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\CopyToClipboardBehavior.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\DialogBehavior.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\FileBehavior.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\ItemClickCommandBehavior.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\ListViewItemClickBehavior.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\ObjectToFileBehavior.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\PasteFromClipboardBehavior.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\TreeViewItemInvokeBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BitmapSourceConverters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BoolToValueConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ConverterChain.cs" />
