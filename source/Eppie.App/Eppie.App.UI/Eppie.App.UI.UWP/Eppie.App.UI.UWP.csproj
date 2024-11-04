@@ -107,7 +107,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" />
-    <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls" />
+    <PackageReference Include="CommunityToolkit.Uwp.Controls.TokenizingTextBox" />
     <PackageReference Include="Microsoft.UI.Xaml" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Uwp.Managed" />
   </ItemGroup>
@@ -125,6 +125,10 @@
     <Page Include="Controls\EditMessageControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\EmailsInputControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\MessageControl.xaml">
       <SubType>Designer</SubType>
