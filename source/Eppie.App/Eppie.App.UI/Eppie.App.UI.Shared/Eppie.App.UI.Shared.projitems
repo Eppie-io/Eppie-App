@@ -31,6 +31,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\DecentralizedAccountSettingsControl.xaml.cs">
       <DependentUpon>DecentralizedAccountSettingsControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\EditMessageControl.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\EmailProvidersListControl.xaml.cs">
       <DependentUpon>EmailProvidersListControl.xaml</DependentUpon>
     </Compile>
@@ -62,7 +63,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ProtonAccountSettingsControl.xaml.cs">
       <DependentUpon>ProtonAccountSettingsControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\RichTextEditor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BitmapSourceConverters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BoolToValueConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ConverterChain.cs" />

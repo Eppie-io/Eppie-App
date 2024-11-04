@@ -1,9 +1,8 @@
-#if WINDOWS_UWP
 using Tuvi.App.Shared.Extensions;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace Tuvi.App.Shared.Controls
+namespace Eppie.App.UI.Controls
 {
     public class RichTextEditor : RichEditBox
     {
@@ -72,4 +71,3 @@ namespace Tuvi.App.Shared.Controls
         }
     }
 }
-#endif
