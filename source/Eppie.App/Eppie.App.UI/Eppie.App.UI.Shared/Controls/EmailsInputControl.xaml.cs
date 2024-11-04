@@ -112,7 +112,7 @@ namespace Tuvi.App.Shared.Controls
         }
 
 #if NETFX_CORE
-        private void SuggestBox_TokenItemAdding(object sender, Microsoft.Toolkit.Uwp.UI.Controls.TokenItemAddingEventArgs e)
+        private void SuggestBox_TokenItemAdding(object sender, CommunityToolkit.WinUI.Controls.TokenItemAddingEventArgs e)
         {
             var contact = GetContactItemFromText(e.TokenText);
 
