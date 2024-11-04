@@ -4,6 +4,7 @@
                           xmlns:android="http://uno.ui/android"
                           xmlns:behaviors="using:Tuvi.App.Shared.Behaviors"
                           xmlns:controls="using:Tuvi.App.Shared.Controls"
+                          xmlns:eppie_controls="using:Eppie.App.UI.Controls"
                           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                           xmlns:entities="using:Tuvi.Core.Entities"
                           xmlns:extensions="using:Tuvi.App.Shared.Extensions"
@@ -235,21 +236,9 @@
               BorderBrush="#FFE0E0E0"
               BorderThickness="1">
 
-            <!--  ToDo: controls:RichTextEditor is off (now only uwp)  -->
-            <!--<win:Grid>
-                <controls:RichTextEditor Text="{x:Bind ViewModel.TextBody, Mode=TwoWay}"
-                                         Html="{x:Bind ViewModel.HtmlBody, Mode=TwoWay}"
-                                         IsEnabled="{x:Bind ViewModel.LoadingContent, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}" />
-            </win:Grid>-->
-
-            <xamarin:WebView HorizontalAlignment="Stretch"
-                             VerticalAlignment="Stretch"
-                             android:IsTapEnabled="True"
-                             android:Tapped="OnEmailBodyTapped"
-                             extensions:WebViewExtension.StringSource="{x:Bind ViewModel.HtmlBody, Mode=OneWay}"
-                             ios:IsTapEnabled="True"
-                             ios:Tapped="OnEmailBodyTapped"
-                             IsEnabled="{x:Bind ViewModel.LoadingContent, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}" />
+            <eppie_controls:EditMessageControl Text="{x:Bind ViewModel.TextBody, Mode=TwoWay}"
+                                               Html="{x:Bind ViewModel.HtmlBody, Mode=TwoWay}"
+                                               IsEnabled="{x:Bind ViewModel.LoadingContent, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}" />
 
         </Grid>
 
