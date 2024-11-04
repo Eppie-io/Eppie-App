@@ -46,6 +46,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\MailBoxesListControl.xaml.cs">
       <DependentUpon>MailBoxesListControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\MessageControl.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\MessageListControl.xaml.cs">
       <DependentUpon>MessageListControl.xaml</DependentUpon>
     </Compile>
