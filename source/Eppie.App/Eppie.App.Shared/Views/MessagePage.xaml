@@ -3,16 +3,16 @@
                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                        xmlns:behaviors="using:Tuvi.App.Shared.Behaviors"
                        xmlns:controls="using:Tuvi.App.Shared.Controls"
+                       xmlns:eppie_controls="using:Eppie.App.UI.Controls"
                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                        xmlns:extensions="using:Tuvi.App.Shared.Extensions"
                        xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
                        xmlns:local="using:Tuvi.App.Shared.Views"
                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                       xmlns:not_win="http://uno.ui/not_win"
                        xmlns:viewmodels="using:Tuvi.App.ViewModels"
                        xmlns:win="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                        Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-                       mc:Ignorable="d not_win">
+                       mc:Ignorable="d">
 
     <local:MessagePageBase.DataContext>
         <viewmodels:MessagePageViewModel />
@@ -226,16 +226,9 @@
               BorderBrush="#FFE0E0E0"
               BorderThickness="1">
 
-            <!--  ToDo: WinAppSDK doesn't have WebView  -->
-            <not_win:WebView extensions:WebViewExtension.StringSourceWithDisabledJavaScript="{x:Bind ViewModel.MessageInfo.MessageHtmlBody, Mode=OneWay}" Visibility="{x:Bind ViewModel.MessageInfo.HasHtmlBody, Mode=OneWay}" />
-
-            <ScrollViewer Padding="4" Visibility="{x:Bind ViewModel.MessageInfo.HasHtmlBody, Converter={StaticResource InverseBoolToVisibilityConverter}, Mode=OneWay}">
-
-                <TextBlock IsTextSelectionEnabled="True"
-                           Style="{StaticResource MessageTextStyle}"
-                           Text="{x:Bind ViewModel.MessageInfo.MessageTextBody, Mode=OneWay}" />
-
-            </ScrollViewer>
+            <eppie_controls:MessageControl HasHtmlBody="{x:Bind ViewModel.MessageInfo.HasHtmlBody, Mode=OneWay}"
+                                           HtmlBody="{x:Bind ViewModel.MessageInfo.MessageHtmlBody, Mode=OneWay}"
+                                           TextBody="{x:Bind ViewModel.MessageInfo.MessageTextBody, Mode=OneWay}"/>
         </Grid>
 
         <!--  Wrapped to Grid because Android doesn't have Visibility=Collapsed for ProgressRing  -->
