@@ -7,8 +7,8 @@
     <GenerateLibraryLayout>true</GenerateLibraryLayout>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>disable</Nullable>
-    <AssemblyName>Eppie.App.UI</AssemblyName>
-    <RootNamespace>Eppie.App.UI</RootNamespace>
+    <AssemblyName>Eppie.App.Resources</AssemblyName>
+    <RootNamespace>Eppie.App.Resources</RootNamespace>
 
     <!--
       UnoFeatures let's you quickly add and manage implicit package references based on the features you want to use.
@@ -34,26 +34,7 @@
     <FrameworkReference Update="Microsoft.Windows.SDK.NET.Ref" TargetingPackVersion="10.0.22621.28" /> -->
   </ItemGroup>
 
-  <Import Project="..\Eppie.App.UI.Shared\Eppie.App.UI.Shared.projitems" Label="Shared" />
-  <!-- This hides references to shared .xaml files from the "Eppie.App.UI.Shared" project. -->
-  <ItemGroup>
-    <None Include="..\Eppie.App.UI.Shared\*.xaml" Visible="false" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core.Entities\Tuvi.Core.Entities.csproj" />
-    <ProjectReference Include="..\..\Eppie.App.Resources\Eppie.App.Resources.Uno\Eppie.App.Resources.Uno.csproj" />
-    <ProjectReference Include="..\..\Eppie.App.ViewModels\Eppie.App.ViewModels.csproj" />
-  </ItemGroup>
 
-  <!-- https://github.com/unoplatform/Uno.XamlBehaviors?tab=readme-ov-file#uno-platform-port-of-xaml-behaviors -->
-  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0-windows10.0.19041'">
-    <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" />
-  </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)' != 'net8.0-windows10.0.19041'">
-    <PackageReference Include="Uno.Microsoft.Xaml.Behaviors.WinUI.Managed" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controls\" />
-  </ItemGroup>
-
+  <Import Project="..\Eppie.App.Resources.Shared\Eppie.App.Resources.Shared.projitems" Label="Shared" />
+  
 </Project>
