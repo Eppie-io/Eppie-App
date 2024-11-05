@@ -13,14 +13,14 @@
         <ScrollViewer IsEnabled="{x:Bind IsLocked, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}">
             <StackPanel Margin="0,0,20,0" Orientation="Vertical">
 
-                <TextBlock x:Uid="EmailAddress" Margin="0,0,0,4" />
+                <TextBlock x:Uid="/Eppie.App.Resources/Resources/EmailAddress" Margin="0,0,0,4" />
                 <TextBox x:Name="EmailBox"
                          HorizontalAlignment="Stretch"
                          IsReadOnly="{x:Bind IsEmailReadOnly, Mode=OneWay}"
                          IsSpellCheckEnabled="False"
                          Text="{x:Bind AccountSettingsModel.Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-                <TextBlock x:Uid="Password" Margin="0,0,0,4" />
+                <TextBlock x:Uid="/Eppie.App.Resources/Resources/Password" Margin="0,0,0,4" />
 
                 <local:ErrorControl HorizontalAlignment="Stretch" Property="{x:Bind AccountSettingsModel.Password, Mode=OneWay}">
                     <local:ErrorControl.InnerContent>
@@ -28,7 +28,7 @@
                     </local:ErrorControl.InnerContent>
                 </local:ErrorControl>
 
-                <TextBlock x:Uid="MailboxPassword" Margin="0,0,0,4" />
+                <TextBlock x:Uid="/Eppie.App.Resources/Resources/MailboxPassword" Margin="0,0,0,4" />
 
                 <local:ErrorControl HorizontalAlignment="Stretch" Property="{x:Bind AccountSettingsModel.MailboxPassword, Mode=OneWay}">
                     <local:ErrorControl.InnerContent>
@@ -36,12 +36,12 @@
                     </local:ErrorControl.InnerContent>
                 </local:ErrorControl>
 
-                <TextBlock x:Uid="SenderName" Margin="0,16,0,4" />
+                <TextBlock x:Uid="/Eppie.App.Resources/Resources/SenderName" Margin="0,16,0,4" />
                 <controls:PromptTextInputControl HorizontalAlignment="Stretch"
                                                  IsSpellCheckEnabled="False"
                                                  Text="{x:Bind AccountSettingsModel.SenderName, Mode=TwoWay}" />
 
-                <TextBlock x:Uid="TwoFactorCode" Margin="0,0,0,4" />
+                <TextBlock x:Uid="/Eppie.App.Resources/Resources/TwoFactorCode" Margin="0,0,0,4" />
                 <TextBox x:Name="TwoFactorCodeBox"
                          HorizontalAlignment="Stretch"
                          IsSpellCheckEnabled="False"

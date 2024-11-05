@@ -38,25 +38,25 @@
                        Style="{StaticResource PageTitleTextStyle}"
                        Text="{x:Bind AppName}" />
 
-            <Button x:Uid="BackButton"
+            <Button x:Uid="/Eppie.App.Resources/Resources/BackButton"
                     VerticalAlignment="Center"
                     Command="{x:Bind ViewModel.BackCommand}">
                 <SymbolIcon Symbol="Back" />
             </Button>
 
-            <TextBlock x:Uid="SeedRestoreHeader"
+            <TextBlock x:Uid="/Eppie.App.Resources/Resources/SeedRestoreHeader"
                        MaxWidth="400"
                        Margin="0,18"
                        HorizontalAlignment="Left"
                        Style="{StaticResource PageSubtitleTextStyle}" />
 
-            <TextBlock x:Uid="SeedRestoreEnterSeedphraseExplanationLabel"
+            <TextBlock x:Uid="/Eppie.App.Resources/Resources/SeedRestoreEnterSeedphraseExplanationLabel"
                        MaxWidth="400"
                        Margin="0,18"
                        HorizontalAlignment="Left"
                        Style="{StaticResource CaptionTextBlockStyle}" />
 
-            <TextBlock x:Uid="SeedRestoreEnterSeedphraseLabel"
+            <TextBlock x:Uid="/Eppie.App.Resources/Resources/SeedRestoreEnterSeedphraseLabel"
                        MaxWidth="400"
                        Margin="0,8"
                        HorizontalAlignment="Left"
@@ -75,7 +75,7 @@
                      TextChanging="OnChangingSeed" />
 
 
-            <Button x:Uid="SeedRestorePasteButton">
+            <Button x:Uid="/Eppie.App.Resources/Resources/SeedRestorePasteButton">
                 <interactivity:Interaction.Behaviors>
                     <behaviors:PasteFromClipboardBehavior PasteCommand="{x:Bind ViewModel.PasteSeedCommand, Mode=OneWay}" />
                 </interactivity:Interaction.Behaviors>
@@ -88,12 +88,12 @@
                     Margin="0,18"
                     Orientation="Horizontal">
 
-            <Button x:Uid="SeedRestoreAcceptButton"
+            <Button x:Uid="/Eppie.App.Resources/Resources/SeedRestoreAcceptButton"
                     Margin="4"
                     Command="{x:Bind ViewModel.AcceptSeedCommand, Mode=OneWay}"
                     Style="{StaticResource AccentButtonStyle}" />
 
-            <Button x:Uid="SeedRestoreSyncWithQRButton"
+            <Button x:Uid="/Eppie.App.Resources/Resources/SeedRestoreSyncWithQRButton"
                     Margin="4"
                     Command="{x:Bind ViewModel.AcceptSeedCommand, Mode=OneWay}" />
 
