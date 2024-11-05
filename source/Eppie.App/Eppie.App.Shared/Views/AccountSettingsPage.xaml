@@ -38,13 +38,13 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <Button x:Uid="HybridAddressButton"
+            <Button x:Uid="/Eppie.App.Resources/Resources/HybridAddressButton"
                     Grid.Column="1"
                     Margin="4"
                     Command="{x:Bind ViewModel.CreateHybridAddress}"
                     Visibility="{x:Bind ViewModel.ShowHybridAddressButton, Mode=OneWay}" />
 
-            <Button x:Uid="RemoveAccountButton"
+            <Button x:Uid="/Eppie.App.Resources/Resources/RemoveAccountButton"
                     Grid.Column="2"
                     Margin="4"
                     Command="{x:Bind ViewModel.RemoveAccountCommand}"
@@ -71,19 +71,19 @@
                 <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
 
-            <Button x:Uid="Apply"
+            <Button x:Uid="/Eppie.App.Resources/Resources/Apply"
                     Margin="0,4,4,4"
                     HorizontalAlignment="Stretch"
                     Command="{x:Bind ViewModel.ApplySettingsCommand, Mode=OneWay}"
                     Visibility="{x:Bind ViewModel.IsSignInButtonVisible, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
 
-            <Button x:Uid="SignInButton"
+            <Button x:Uid="/Eppie.App.Resources/Resources/SignInButton"
                     Margin="0,4,4,4"
                     HorizontalAlignment="Stretch"
                     Command="{x:Bind ViewModel.SignInCommand, Mode=OneWay}"
                     Visibility="{x:Bind ViewModel.IsSignInButtonVisible, Mode=OneWay}" />
 
-            <Button x:Uid="Cancel"
+            <Button x:Uid="/Eppie.App.Resources/Resources/Cancel"
                     Grid.Column="1"
                     Margin="4,4,0,4"
                     HorizontalAlignment="Stretch"

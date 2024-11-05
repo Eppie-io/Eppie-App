@@ -31,14 +31,14 @@
                 <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
 
-            <Button x:Uid="PgpKeysBackButton"
+            <Button x:Uid="/Eppie.App.Resources/Resources/PgpKeysBackButton"
                     Grid.Column="0"
                     VerticalAlignment="Center"
                     Command="{x:Bind ViewModel.BackCommand}">
                 <FontIcon Glyph="&#xE112;" />
             </Button>
 
-            <Button x:Uid="PgpKeyImportButton"
+            <Button x:Uid="/Eppie.App.Resources/Resources/PgpKeyImportButton"
                     Grid.Column="2"
                     VerticalAlignment="Center">
                 <interactivity:Interaction.Behaviors>

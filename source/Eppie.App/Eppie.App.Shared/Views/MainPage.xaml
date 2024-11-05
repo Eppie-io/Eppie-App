@@ -57,18 +57,18 @@
                               ItemInvoked="OnNavigationViewItemInvoked"
                               Style="{StaticResource MainNavigationViewStyle}">
             <winui:NavigationView.MenuItems>
-                <winui:NavigationViewItem x:Uid="NewMessageNavigationItem"
+                <winui:NavigationViewItem x:Uid="/Eppie.App.Resources/Resources/NewMessageNavigationItem"
                                           extensions:AttachedCommands.ClickCommand="{x:Bind ViewModel.WriteNewMessageCommand}"
                                           Icon="Edit"
                                           SelectsOnInvoked="False" />
-                <winui:NavigationViewItem x:Uid="AllMessagesNavigationItem"
+                <winui:NavigationViewItem x:Uid="/Eppie.App.Resources/Resources/AllMessagesNavigationItem"
                                           extensions:AttachedCommands.ClickCommand="{x:Bind ShowAllMessagesCommand}"
                                           SelectsOnInvoked="False">
                     <winui:NavigationViewItem.Icon>
                         <FontIcon Glyph="&#xE119;" />
                     </winui:NavigationViewItem.Icon>
                 </winui:NavigationViewItem>
-                <winui:NavigationViewItem x:Uid="IdentityManagerNavigationItem"
+                <winui:NavigationViewItem x:Uid="/Eppie.App.Resources/Resources/IdentityManagerNavigationItem"
                                           extensions:AttachedCommands.ClickCommand="{x:Bind OpenIdentityManagerCommand}"
                                           SelectsOnInvoked="False">
                     <winui:NavigationViewItem.Icon>
@@ -83,12 +83,12 @@
 
             <winui:NavigationView.FooterMenuItems>
 
-                <winui:NavigationViewItem x:Uid="SupportDevelopmentNavigationItem"
+                <winui:NavigationViewItem x:Uid="/Eppie.App.Resources/Resources/SupportDevelopmentNavigationItem"
                                           extensions:AttachedCommands.ClickCommand="{x:Bind ViewModel.SupportDevelopmentCommand}"
                                           Icon="Shop"
                                           SelectsOnInvoked="False" />
 
-                <winui:NavigationViewItem x:Uid="AboutAppNavigationItem"
+                <winui:NavigationViewItem x:Uid="/Eppie.App.Resources/Resources/AboutAppNavigationItem"
                                           extensions:AttachedCommands.ClickCommand="{x:Bind ShowAboutPageCommand}"
                                           SelectsOnInvoked="False">
                     <winui:NavigationViewItem.Icon>
