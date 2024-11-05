@@ -34,7 +34,7 @@ namespace Tuvi.App.Shared.Views
 
         private void OnLanguageChanged(object sender, string language)
         {
-            var message = ResourceLoader.GetForCurrentView().GetString("RestartApplication");
+            var message = Eppie.App.Resources.StringProvider.GetInstance().GetString("RestartApplication");
             ViewModel.ChangeLanguage(language, message);
         }
     }

@@ -1,4 +1,5 @@
 using System;
+using Eppie.App.Resources;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Text;
 
@@ -56,7 +57,7 @@ namespace Tuvi.App.Converters
 
     public class BoolToResourceConverter : BoolToStringConverter
     {
-        private ResourceLoader _resourceLoader;
+        private StringProvider _stringProvider;
         private string _resource;
         public String Resource
         {
@@ -64,7 +65,7 @@ namespace Tuvi.App.Converters
             set
             {
                 _resource = value;
-                _resourceLoader = null;
+                _stringProvider = null;
                 FalseValue = null;
                 TrueValue = null;
                 Update();
@@ -97,15 +98,15 @@ namespace Tuvi.App.Converters
 
         private void UpdateResourceLoader()
         {
-            if (_resourceLoader != null) return;
+            if (_stringProvider != null) return;
 
             if (string.IsNullOrWhiteSpace(Resource))
             {
-                _resourceLoader = ResourceLoader.GetForCurrentView();
+                _stringProvider = StringProvider.GetInstance();
             }
             else
             {
-                _resourceLoader = ResourceLoader.GetForCurrentView(Resource);
+                _stringProvider = StringProvider.GetInstance(Resource);
             }
         }
 
@@ -115,12 +116,12 @@ namespace Tuvi.App.Converters
 
             if (TrueKey != null && TrueValue == null)
             {
-                TrueValue = _resourceLoader?.GetString(TrueKey);
+                TrueValue = _stringProvider?.GetString(TrueKey);
             }
 
             if (FalseKey != null && FalseValue == null)
             {
-                FalseValue = _resourceLoader?.GetString(FalseKey);
+                FalseValue = _stringProvider?.GetString(FalseKey);
             }
         }
     }
