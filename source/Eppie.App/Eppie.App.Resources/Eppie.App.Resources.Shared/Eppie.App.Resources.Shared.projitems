@@ -43,4 +43,7 @@
     <PRIResource Include="$(MSBuildThisFileDirectory)Strings\zh-CN\Resources.resw" />
     <PRIResource Include="$(MSBuildThisFileDirectory)Strings\zh-TW\Resources.resw" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)StringProvider.cs" />
+  </ItemGroup>
 </Project>

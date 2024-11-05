@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Eppie.App.Resources;
 using Windows.ApplicationModel.Resources;
 using Windows.Globalization;
 
@@ -28,7 +29,7 @@ namespace Tuvi.App.Shared.Controls
     public sealed partial class LanguageSelectionControl : UserControl
     {
         public event EventHandler<string> LanguageChangedHandler;
-        private static readonly ResourceLoader Loader = ResourceLoader.GetForCurrentView();
+        private static readonly StringProvider StringProvider = StringProvider.GetInstance();
 
         private List<ComboBoxValue> _values = new List<ComboBoxValue>();
         private bool _selectionInited;
@@ -43,7 +44,7 @@ namespace Tuvi.App.Shared.Controls
         {
             _values = new List<ComboBoxValue>
             {
-                new ComboBoxValue {DisplayName = Loader.GetString("SystemDefaultLanguage"), LanguageTag = ""}
+                new ComboBoxValue {DisplayName = StringProvider.GetString("SystemDefaultLanguage"), LanguageTag = ""}
             };
 
             IEnumerable<Language> orderedSupportedLanguages =
