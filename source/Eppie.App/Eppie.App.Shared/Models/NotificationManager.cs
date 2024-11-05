@@ -42,7 +42,7 @@ namespace Tuvi.App.Shared.Models
         {
             UpdateUnreadEmailsBadge();
 
-            var loader = ResourceLoader.GetForViewIndependentUse();
+            var loader = Eppie.App.Resources.StringProvider.GetInstance();
             NotificationService.ShowToastNotification(loader.GetString("NewEmailsReceivedMessage"));
         }
 

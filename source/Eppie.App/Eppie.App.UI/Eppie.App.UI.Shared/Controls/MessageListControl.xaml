@@ -43,7 +43,7 @@
                             HorizontalContentAlignment="Stretch"
                             Content="{x:Bind HeaderHolder, Mode=OneWay}" />
 
-            <AutoSuggestBox x:Uid="MessageFilter"
+            <AutoSuggestBox x:Uid="/Eppie.App.Resources/Resources/MessageFilter"
                             Grid.Column="1"
                             QueryIcon="Find"
                             Text="{x:Bind Messages.SearchFilter.SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -82,7 +82,7 @@
                        IsIconVisible="False"
                        IsOpen="{x:Bind IsDeleteInProcess, Mode=OneWay}">
             <winui:InfoBar.ActionButton>
-                <Button x:Uid="CancelMessagesDeleteButton" Command="{x:Bind CancelMessagesDeleteCommand, Mode=OneWay}" />
+                <Button x:Uid="/Eppie.App.Resources/Resources/CancelMessagesDeleteButton" Command="{x:Bind CancelMessagesDeleteCommand, Mode=OneWay}" />
             </winui:InfoBar.ActionButton>
         </winui:InfoBar>
 

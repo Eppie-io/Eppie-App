@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
-    <ProjectGuid>{A6C30ED1-6213-427E-B255-E5E8C69E6D0E}</ProjectGuid>
+    <ProjectGuid>{38F6F073-BD7A-4F8B-93EC-5EFEDCAD2390}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Eppie.App.UI</RootNamespace>
-    <AssemblyName>Eppie.App.UI</AssemblyName>
+    <RootNamespace>Eppie.App.Resources</RootNamespace>
+    <AssemblyName>Eppie.App.Resources</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.22621.0</TargetPlatformVersion>
@@ -101,45 +101,13 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Controls\RichTextEditor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\Eppie.App.UI.UWP.rd.xml" />
+    <EmbeddedResource Include="Properties\Eppie.App.Resources.UWP.rd.xml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" />
-    <PackageReference Include="CommunityToolkit.Uwp.Controls.TokenizingTextBox" />
-    <PackageReference Include="Microsoft.UI.Xaml" />
-    <PackageReference Include="Microsoft.Xaml.Behaviors.Uwp.Managed" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core.Entities\Tuvi.Core.Entities.csproj">
-      <Project>{1e363987-165e-4ea6-a0e1-fad82b7c0633}</Project>
-      <Name>Tuvi.Core.Entities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Eppie.App.Resources\Eppie.App.Resources.UWP\Eppie.App.Resources.UWP.csproj">
-      <Project>{38f6f073-bd7a-4f8b-93ec-5efedcad2390}</Project>
-      <Name>Eppie.App.Resources.UWP</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Eppie.App.ViewModels\Eppie.App.ViewModels.csproj">
-      <Project>{2da63e2a-a0ac-4c55-b912-04d8970bced3}</Project>
-      <Name>Eppie.App.ViewModels</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Controls\EditMessageControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\EmailsInputControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\MessageControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <Import Project="..\Eppie.App.UI.Shared\Eppie.App.UI.Shared.projitems" Label="Shared" />
+  <Import Project="..\Eppie.App.Resources.Shared\Eppie.App.Resources.Shared.projitems" Label="Shared" />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

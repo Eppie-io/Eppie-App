@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Eppie.App.Resources;
 using Tuvi.Core.Backup;
 using Tuvi.Core.Entities;
 using Tuvi.Core.Entities.Exceptions;
@@ -22,7 +23,7 @@ namespace Tuvi.App.Shared.Services
 {
     public partial class MessageService : ITuviMailMessageService
     {
-        private ResourceLoader Loader { get; } = ResourceLoader.GetForCurrentView();
+        private StringProvider StringProvider { get; } = StringProvider.GetInstance();
 
         private static Task ShowInfoMessageAsync(string title, string message, string closeButtonText)
         {
@@ -189,14 +190,14 @@ namespace Tuvi.App.Shared.Services
 
         private async Task ShowDefaultErrorMessageAsync(Exception exception)
         {
-            var title = Loader.GetString("SendErrorReportTitle");
+            var title = StringProvider.GetString("SendErrorReportTitle");
             var message = $"{exception.Message} \n {exception.StackTrace}";
             if (exception.InnerException != null)
             {
                 message += $"\n {exception.InnerException.Message} \n {exception.InnerException.StackTrace}";
             }
 
-            if (await ShowErrorMessageAsync(title, message, Loader.GetString("MsgBtnOk"), Loader.GetString("MessageButtonCancel")).ConfigureAwait(true))
+            if (await ShowErrorMessageAsync(title, message, StringProvider.GetString("MsgBtnOk"), StringProvider.GetString("MessageButtonCancel")).ConfigureAwait(true))
             {
                 SendErrorReport(message);
             }
@@ -206,64 +207,64 @@ namespace Tuvi.App.Shared.Services
         {
             var brand = new Models.BrandLoader();
             var navigationService = (Application.Current as Eppie.App.Shared.App).NavigationService;
-            var messageData = new ErrorReportNewMessageData(brand.GetSupport(), Loader.GetString("ErrorReportEmailTitle"), message);
+            var messageData = new ErrorReportNewMessageData(brand.GetSupport(), StringProvider.GetString("ErrorReportEmailTitle"), message);
             navigationService?.Navigate(nameof(NewMessagePageViewModel), messageData);
         }
 
         public Task ShowEnableImapMessageAsync(string forEmail)
         {
             return ShowInfoMessageAsync(
-                Loader.GetString("FailedToAddAccountTitle"),
-                string.Format(Loader.GetString("EnableImapMessage"), forEmail),
-                Loader.GetString("MsgBtnOk"));
+                StringProvider.GetString("FailedToAddAccountTitle"),
+                string.Format(StringProvider.GetString("EnableImapMessage"), forEmail),
+                StringProvider.GetString("MsgBtnOk"));
         }
         public Task ShowAddAccountMessageAsync()
         {
             return ShowInfoMessageAsync(
-                Loader.GetString("CantSendMessages"),
-                Loader.GetString("AddEmailAccountFirst"),
-                Loader.GetString("MsgBtnOk"));
+                StringProvider.GetString("CantSendMessages"),
+                StringProvider.GetString("AddEmailAccountFirst"),
+                StringProvider.GetString("MsgBtnOk"));
         }
         public Task ShowSeedPhraseNotValidMessageAsync()
         {
             return ShowInfoMessageAsync(
-                Loader.GetString("SeedPhraseNotValidTitle"),
-                Loader.GetString("SeedPhraseNotValidMessage"),
-                Loader.GetString("SeedPhraseNotValidAction"));
+                StringProvider.GetString("SeedPhraseNotValidTitle"),
+                StringProvider.GetString("SeedPhraseNotValidMessage"),
+                StringProvider.GetString("SeedPhraseNotValidAction"));
         }
         public Task ShowPgpPublicKeyAlreadyExistMessageAsync(string fileName = "")
         {
-            string message = Loader.GetString("PgpKeyAlreadyExistMessage");
+            string message = StringProvider.GetString("PgpKeyAlreadyExistMessage");
 
             if (!string.IsNullOrEmpty(fileName))
             {
-                string fromFile = Loader.GetString("PgpKeyImportFromFileMessage");
+                string fromFile = StringProvider.GetString("PgpKeyImportFromFileMessage");
                 message = $"{message}\n{fromFile}: '{fileName}'";
             }
 
             return ShowInfoMessageAsync(
-                Loader.GetString("PgpKeyImportErrorMessageTitle"),
+                StringProvider.GetString("PgpKeyImportErrorMessageTitle"),
                 message,
-                Loader.GetString("MsgBtnOk"));
+                StringProvider.GetString("MsgBtnOk"));
         }
         public Task ShowPgpUnknownPublicKeyAlgorithmMessageAsync(string fileName = "")
         {
-            string message = Loader.GetString("PgpKeyAlgorithmUnknownMessage");
+            string message = StringProvider.GetString("PgpKeyAlgorithmUnknownMessage");
 
             if (!string.IsNullOrEmpty(fileName))
             {
-                string fromFile = Loader.GetString("PgpKeyImportFromFileMessage");
+                string fromFile = StringProvider.GetString("PgpKeyImportFromFileMessage");
                 message = $"{message}\n{fromFile}: '{fileName}'";
             }
 
             return ShowInfoMessageAsync(
-                Loader.GetString("PgpKeyImportErrorMessageTitle"),
+                StringProvider.GetString("PgpKeyImportErrorMessageTitle"),
                 message,
-                Loader.GetString("MsgBtnOk"));
+                StringProvider.GetString("MsgBtnOk"));
         }
         public Task ShowPgpPublicKeyImportErrorMessageAsync(string detailedReason, string fileName = "")
         {
-            string message = Loader.GetString("PgpKeyImportErrorMessage");
+            string message = StringProvider.GetString("PgpKeyImportErrorMessage");
 
             if (string.IsNullOrEmpty(fileName))
             {
@@ -271,119 +272,119 @@ namespace Tuvi.App.Shared.Services
             }
             else
             {
-                string fromFile = Loader.GetString("PgpKeyImportFromFileMessage");
+                string fromFile = StringProvider.GetString("PgpKeyImportFromFileMessage");
                 message = $"{message}\n{fromFile}: '{fileName}'\n{detailedReason}";
             }
 
             return ShowInfoMessageAsync(
-                Loader.GetString("PgpKeyImportErrorMessageTitle"),
+                StringProvider.GetString("PgpKeyImportErrorMessageTitle"),
                 message,
-                Loader.GetString("MsgBtnOk"));
+                StringProvider.GetString("MsgBtnOk"));
         }
         private Task ShowPgpExportPublicKeyErrorMessageAsync(string detailedReason)
         {
             return ShowInfoMessageAsync(
-                Loader.GetString("PgpKeyExportErrorMessageTitle"),
-                $"{Loader.GetString("PgpKeyExportErrorMessage")}\n{detailedReason}",
-                Loader.GetString("MsgBtnOk"));
+                StringProvider.GetString("PgpKeyExportErrorMessageTitle"),
+                $"{StringProvider.GetString("PgpKeyExportErrorMessage")}\n{detailedReason}",
+                StringProvider.GetString("MsgBtnOk"));
         }
         private Task ShowNoSecretKeyErrorMessageAsync(string keyId)
         {
             return ShowInfoMessageAsync(
-                Loader.GetString("CryptoContextErrorMessageTitle"),
-                $"{Loader.GetString("NoSecretKeyMessage")}\nID: {keyId}",
-                Loader.GetString("MsgBtnOk"));
+                StringProvider.GetString("CryptoContextErrorMessageTitle"),
+                $"{StringProvider.GetString("NoSecretKeyMessage")}\nID: {keyId}",
+                StringProvider.GetString("MsgBtnOk"));
         }
         private Task ShowNoPublicKeyErrorMessageAsync(string keyId)
         {
             return ShowInfoMessageAsync(
-                Loader.GetString("CryptoContextErrorMessageTitle"),
-                $"{Loader.GetString("NoPublicKeyMessage")}\nEmail: {keyId}",
-                Loader.GetString("MsgBtnOk"));
+                StringProvider.GetString("CryptoContextErrorMessageTitle"),
+                $"{StringProvider.GetString("NoPublicKeyMessage")}\nEmail: {keyId}",
+                StringProvider.GetString("MsgBtnOk"));
         }
         private Task ShowEncryptionErrorMessageAsync(string detailedReason)
         {
             return ShowInfoMessageAsync(
-                Loader.GetString("CryptoContextErrorMessageTitle"),
-                $"{Loader.GetString("EncryptionErrorMessage")}\n{detailedReason}",
-                Loader.GetString("MsgBtnOk"));
+                StringProvider.GetString("CryptoContextErrorMessageTitle"),
+                $"{StringProvider.GetString("EncryptionErrorMessage")}\n{detailedReason}",
+                StringProvider.GetString("MsgBtnOk"));
         }
         private Task ShowSigningErrorMessageAsync(string detailedReason)
         {
             return ShowInfoMessageAsync(
-                Loader.GetString("CryptoContextErrorMessageTitle"),
-                $"{Loader.GetString("SigningErrorMessage")}\n{detailedReason}",
-                Loader.GetString("MsgBtnOk"));
+                StringProvider.GetString("CryptoContextErrorMessageTitle"),
+                $"{StringProvider.GetString("SigningErrorMessage")}\n{detailedReason}",
+                StringProvider.GetString("MsgBtnOk"));
         }
         private Task ShowDecryptionErrorMessageAsync(string detailedReason)
         {
             return ShowInfoMessageAsync(
-                Loader.GetString("CryptoContextErrorMessageTitle"),
-                $"{Loader.GetString("DecryptionErrorMessage")}\n{detailedReason}",
-                Loader.GetString("MsgBtnOk"));
+                StringProvider.GetString("CryptoContextErrorMessageTitle"),
+                $"{StringProvider.GetString("DecryptionErrorMessage")}\n{detailedReason}",
+                StringProvider.GetString("MsgBtnOk"));
         }
         private Task ShowSignatureVerificationErrorMessageAsync(string detailedReason)
         {
             return ShowInfoMessageAsync(
-                Loader.GetString("CryptoContextErrorMessageTitle"),
-                $"{Loader.GetString("SignatureVerificationErrorMessage")}\n{detailedReason}",
-                Loader.GetString("MsgBtnOk"));
+                StringProvider.GetString("CryptoContextErrorMessageTitle"),
+                $"{StringProvider.GetString("SignatureVerificationErrorMessage")}\n{detailedReason}",
+                StringProvider.GetString("MsgBtnOk"));
         }
         private Task ShowBackupDefaultErrorMessageAsync(string detailedReason)
         {
             return ShowInfoMessageAsync(
-                    Loader.GetString("BackupErrorMessageTitle"),
+                    StringProvider.GetString("BackupErrorMessageTitle"),
                     detailedReason,
-                    Loader.GetString("MsgBtnOk"));
+                    StringProvider.GetString("MsgBtnOk"));
         }
         private Task ShowBackupBuildDefaultErrorMessageAsync(string detailedReason)
         {
             return ShowInfoMessageAsync(
-                    Loader.GetString("BackupBuildErrorMessageTitle"),
+                    StringProvider.GetString("BackupBuildErrorMessageTitle"),
                     detailedReason,
-                    Loader.GetString("MsgBtnOk"));
+                    StringProvider.GetString("MsgBtnOk"));
         }
         private Task ShowBackupParsingDefaultErrorMessageAsync(string detailedReason)
         {
             return ShowInfoMessageAsync(
-                    Loader.GetString("BackupParsingErrorMessageTitle"),
+                    StringProvider.GetString("BackupParsingErrorMessageTitle"),
                     detailedReason,
-                    Loader.GetString("MsgBtnOk"));
+                    StringProvider.GetString("MsgBtnOk"));
         }
         private Task ShowBackupSerializationErrorMessageAsync()
         {
             return ShowInfoMessageAsync(
-                    Loader.GetString("BackupBuildErrorMessageTitle"),
-                    Loader.GetString("BackupSerializationErrorMessage"),
-                    Loader.GetString("MsgBtnOk"));
+                    StringProvider.GetString("BackupBuildErrorMessageTitle"),
+                    StringProvider.GetString("BackupSerializationErrorMessage"),
+                    StringProvider.GetString("MsgBtnOk"));
         }
         private Task ShowNotBackupPackageErrorMessageAsync()
         {
             return ShowInfoMessageAsync(
-                    Loader.GetString("BackupParsingErrorMessageTitle"),
-                    Loader.GetString("NotBackupPackageErrorMessage"),
-                    Loader.GetString("MsgBtnOk"));
+                    StringProvider.GetString("BackupParsingErrorMessageTitle"),
+                    StringProvider.GetString("NotBackupPackageErrorMessage"),
+                    StringProvider.GetString("MsgBtnOk"));
         }
         private Task ShowUnknownBackupProtectionErrorMessageAsync()
         {
             return ShowInfoMessageAsync(
-                    Loader.GetString("BackupParsingErrorMessageTitle"),
-                    Loader.GetString("UnknownBackupProtectionErrorMessage"),
-                    Loader.GetString("MsgBtnOk"));
+                    StringProvider.GetString("BackupParsingErrorMessageTitle"),
+                    StringProvider.GetString("UnknownBackupProtectionErrorMessage"),
+                    StringProvider.GetString("MsgBtnOk"));
         }
         private Task ShowBackupProtectionErrorMessageAsync()
         {
             return ShowInfoMessageAsync(
-                    Loader.GetString("BackupProtectionErrorMessageTitle"),
-                    Loader.GetString("BackupProtectionErrorMessage"),
-                    Loader.GetString("MsgBtnOk"));
+                    StringProvider.GetString("BackupProtectionErrorMessageTitle"),
+                    StringProvider.GetString("BackupProtectionErrorMessage"),
+                    StringProvider.GetString("MsgBtnOk"));
         }
         private Task ShowBackupVerificationErrorMessageAsync()
         {
             return ShowInfoMessageAsync(
-                    Loader.GetString("BackupParsingErrorMessageTitle"),
-                    Loader.GetString("BackupVerificationErrorMessage"),
-                    Loader.GetString("MsgBtnOk"));
+                    StringProvider.GetString("BackupParsingErrorMessageTitle"),
+                    StringProvider.GetString("BackupVerificationErrorMessage"),
+                    StringProvider.GetString("MsgBtnOk"));
         }
 
         private Task ShowCoreErrorMessageAsync(CoreException coreException)
@@ -403,7 +404,7 @@ namespace Tuvi.App.Shared.Services
             string message = string.Empty;
             if (newMessagesCheckFailedException.ErrorsCollection.Count > 0)
             {
-                message = Loader.GetString("FailedToReceiveNewMessagesFromErrorMessage");
+                message = StringProvider.GetString("FailedToReceiveNewMessagesFromErrorMessage");
                 foreach (var email in newMessagesCheckFailedException.ErrorsCollection.Select(e => e.Email.Address).Distinct())
                 {
                     message += $"\n {email}";
@@ -416,7 +417,7 @@ namespace Tuvi.App.Shared.Services
             }
             else
             {
-                message = Loader.GetString("FailedToReceiveNewMessagesErrorMessage");
+                message = StringProvider.GetString("FailedToReceiveNewMessagesErrorMessage");
             }
 
             if (newMessagesCheckFailedException.InnerException != null)
@@ -425,34 +426,34 @@ namespace Tuvi.App.Shared.Services
             }
 
             return ShowInfoMessageAsync(
-                Loader.GetString("NewMessagesCheckFailedErrorTitle"),
+                StringProvider.GetString("NewMessagesCheckFailedErrorTitle"),
                 message,
-                Loader.GetString("MsgBtnOk"));
+                StringProvider.GetString("MsgBtnOk"));
         }
 
         public Task<bool> ShowWipeAllDataDialogAsync()
         {
             return ShowDialogAsync(
-                Loader.GetString("WipeAllDataDialogTitle"),
-                Loader.GetString("WipeAllDataDialogMessage"),
-                Loader.GetString("WipeAllDataDialogAcceptText"),
-                Loader.GetString("WipeAllDataDialogRejectText"));
+                StringProvider.GetString("WipeAllDataDialogTitle"),
+                StringProvider.GetString("WipeAllDataDialogMessage"),
+                StringProvider.GetString("WipeAllDataDialogAcceptText"),
+                StringProvider.GetString("WipeAllDataDialogRejectText"));
         }
         public Task<bool> ShowRemoveAccountDialogAsync()
         {
             return ShowDialogAsync(
-                Loader.GetString("RemoveAccountDialogTitle"),
-                Loader.GetString("RemoveAccountDialogMessage"),
-                Loader.GetString("RemoveAccountDialogAcceptText"),
-                Loader.GetString("RemoveAccountDialogRejectText"));
+                StringProvider.GetString("RemoveAccountDialogTitle"),
+                StringProvider.GetString("RemoveAccountDialogMessage"),
+                StringProvider.GetString("RemoveAccountDialogAcceptText"),
+                StringProvider.GetString("RemoveAccountDialogRejectText"));
         }
 
         public Task ShowNeedToCreateSeedPhraseMessageAsync()
         {
             return ShowInfoMessageAsync(
-                Loader.GetString("SeedPhraseNotInitializedTitle"),
-                Loader.GetString("SeedPhraseNotInitializedMessage"),
-                Loader.GetString("MsgBtnOk"));
+                StringProvider.GetString("SeedPhraseNotInitializedTitle"),
+                StringProvider.GetString("SeedPhraseNotInitializedMessage"),
+                StringProvider.GetString("MsgBtnOk"));
         }
     }
 }
