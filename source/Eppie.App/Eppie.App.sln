@@ -97,6 +97,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eppie.App.UI.UWP", "Eppie.A
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Eppie.App.UI.Shared", "Eppie.App.UI\Eppie.App.UI.Shared\Eppie.App.UI.Shared.shproj", "{2443C114-C401-45FC-91DC-6C6F1EA97D58}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Eppie.App.Resources", "Eppie.App.Resources", "{E7FC4F46-E62D-4484-8EDE-D8CAF5A5A7C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eppie.App.Resources.Uno", "Eppie.App.Resources\Eppie.App.Resources.Uno\Eppie.App.Resources.Uno.csproj", "{D88E0CDD-00F3-46CB-B5A6-59A483CAD17B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eppie.App.Resources.UWP", "Eppie.App.Resources\Eppie.App.Resources.UWP\Eppie.App.Resources.UWP.csproj", "{38F6F073-BD7A-4F8B-93EC-5EFEDCAD2390}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Eppie.App.Resources.Shared", "Eppie.App.Resources\Eppie.App.Resources.Shared\Eppie.App.Resources.Shared.shproj", "{F51F0640-DED9-4BFB-AE43-7B11B60E6CC2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -811,6 +819,46 @@ Global
 		{A6C30ED1-6213-427E-B255-E5E8C69E6D0E}.Release|x64.Build.0 = Release|x64
 		{A6C30ED1-6213-427E-B255-E5E8C69E6D0E}.Release|x86.ActiveCfg = Release|x86
 		{A6C30ED1-6213-427E-B255-E5E8C69E6D0E}.Release|x86.Build.0 = Release|x86
+		{D88E0CDD-00F3-46CB-B5A6-59A483CAD17B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D88E0CDD-00F3-46CB-B5A6-59A483CAD17B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D88E0CDD-00F3-46CB-B5A6-59A483CAD17B}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{D88E0CDD-00F3-46CB-B5A6-59A483CAD17B}.Debug|ARM.Build.0 = Debug|Any CPU
+		{D88E0CDD-00F3-46CB-B5A6-59A483CAD17B}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{D88E0CDD-00F3-46CB-B5A6-59A483CAD17B}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{D88E0CDD-00F3-46CB-B5A6-59A483CAD17B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D88E0CDD-00F3-46CB-B5A6-59A483CAD17B}.Debug|x64.Build.0 = Debug|Any CPU
+		{D88E0CDD-00F3-46CB-B5A6-59A483CAD17B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D88E0CDD-00F3-46CB-B5A6-59A483CAD17B}.Debug|x86.Build.0 = Debug|Any CPU
+		{D88E0CDD-00F3-46CB-B5A6-59A483CAD17B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D88E0CDD-00F3-46CB-B5A6-59A483CAD17B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D88E0CDD-00F3-46CB-B5A6-59A483CAD17B}.Release|ARM.ActiveCfg = Release|Any CPU
+		{D88E0CDD-00F3-46CB-B5A6-59A483CAD17B}.Release|ARM.Build.0 = Release|Any CPU
+		{D88E0CDD-00F3-46CB-B5A6-59A483CAD17B}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{D88E0CDD-00F3-46CB-B5A6-59A483CAD17B}.Release|ARM64.Build.0 = Release|Any CPU
+		{D88E0CDD-00F3-46CB-B5A6-59A483CAD17B}.Release|x64.ActiveCfg = Release|Any CPU
+		{D88E0CDD-00F3-46CB-B5A6-59A483CAD17B}.Release|x64.Build.0 = Release|Any CPU
+		{D88E0CDD-00F3-46CB-B5A6-59A483CAD17B}.Release|x86.ActiveCfg = Release|Any CPU
+		{D88E0CDD-00F3-46CB-B5A6-59A483CAD17B}.Release|x86.Build.0 = Release|Any CPU
+		{38F6F073-BD7A-4F8B-93EC-5EFEDCAD2390}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{38F6F073-BD7A-4F8B-93EC-5EFEDCAD2390}.Debug|Any CPU.Build.0 = Debug|x64
+		{38F6F073-BD7A-4F8B-93EC-5EFEDCAD2390}.Debug|ARM.ActiveCfg = Debug|ARM
+		{38F6F073-BD7A-4F8B-93EC-5EFEDCAD2390}.Debug|ARM.Build.0 = Debug|ARM
+		{38F6F073-BD7A-4F8B-93EC-5EFEDCAD2390}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{38F6F073-BD7A-4F8B-93EC-5EFEDCAD2390}.Debug|ARM64.Build.0 = Debug|ARM64
+		{38F6F073-BD7A-4F8B-93EC-5EFEDCAD2390}.Debug|x64.ActiveCfg = Debug|x64
+		{38F6F073-BD7A-4F8B-93EC-5EFEDCAD2390}.Debug|x64.Build.0 = Debug|x64
+		{38F6F073-BD7A-4F8B-93EC-5EFEDCAD2390}.Debug|x86.ActiveCfg = Debug|x86
+		{38F6F073-BD7A-4F8B-93EC-5EFEDCAD2390}.Debug|x86.Build.0 = Debug|x86
+		{38F6F073-BD7A-4F8B-93EC-5EFEDCAD2390}.Release|Any CPU.ActiveCfg = Release|x64
+		{38F6F073-BD7A-4F8B-93EC-5EFEDCAD2390}.Release|Any CPU.Build.0 = Release|x64
+		{38F6F073-BD7A-4F8B-93EC-5EFEDCAD2390}.Release|ARM.ActiveCfg = Release|ARM
+		{38F6F073-BD7A-4F8B-93EC-5EFEDCAD2390}.Release|ARM.Build.0 = Release|ARM
+		{38F6F073-BD7A-4F8B-93EC-5EFEDCAD2390}.Release|ARM64.ActiveCfg = Release|ARM64
+		{38F6F073-BD7A-4F8B-93EC-5EFEDCAD2390}.Release|ARM64.Build.0 = Release|ARM64
+		{38F6F073-BD7A-4F8B-93EC-5EFEDCAD2390}.Release|x64.ActiveCfg = Release|x64
+		{38F6F073-BD7A-4F8B-93EC-5EFEDCAD2390}.Release|x64.Build.0 = Release|x64
+		{38F6F073-BD7A-4F8B-93EC-5EFEDCAD2390}.Release|x86.ActiveCfg = Release|x86
+		{38F6F073-BD7A-4F8B-93EC-5EFEDCAD2390}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -855,6 +903,10 @@ Global
 		{E66E9BBD-2F75-453F-83B9-709F67517261} = {81CA54E8-7F67-46D9-B576-938590F95453}
 		{A6C30ED1-6213-427E-B255-E5E8C69E6D0E} = {81CA54E8-7F67-46D9-B576-938590F95453}
 		{2443C114-C401-45FC-91DC-6C6F1EA97D58} = {81CA54E8-7F67-46D9-B576-938590F95453}
+		{E7FC4F46-E62D-4484-8EDE-D8CAF5A5A7C3} = {BAADA1AF-033B-4254-9B27-CA301F69EEFE}
+		{D88E0CDD-00F3-46CB-B5A6-59A483CAD17B} = {E7FC4F46-E62D-4484-8EDE-D8CAF5A5A7C3}
+		{38F6F073-BD7A-4F8B-93EC-5EFEDCAD2390} = {E7FC4F46-E62D-4484-8EDE-D8CAF5A5A7C3}
+		{F51F0640-DED9-4BFB-AE43-7B11B60E6CC2} = {E7FC4F46-E62D-4484-8EDE-D8CAF5A5A7C3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1BCAC5D9-CEF8-4D64-8F16-3A0FEE49CF42}
@@ -862,9 +914,12 @@ Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Eppie.App.Shared\Eppie.App.Shared.projitems*{0d949175-5a8b-4474-9f7b-529a1b5ad025}*SharedItemsImports = 5
 		Eppie.App.UI\Eppie.App.UI.Shared\Eppie.App.UI.Shared.projitems*{2443c114-c401-45fc-91dc-6c6f1ea97d58}*SharedItemsImports = 13
+		Eppie.App.Resources\Eppie.App.Resources.Shared\Eppie.App.Resources.Shared.projitems*{38f6f073-bd7a-4f8b-93ec-5efedcad2390}*SharedItemsImports = 4
 		Eppie.App.UI\Eppie.App.UI.Shared\Eppie.App.UI.Shared.projitems*{a6c30ed1-6213-427e-b255-e5e8c69e6d0e}*SharedItemsImports = 4
 		Eppie.App.Shared\Eppie.App.Shared.projitems*{c4918d44-fb8a-442f-bde5-69106b2da412}*SharedItemsImports = 13
 		Eppie.App.Shared\Eppie.App.Shared.projitems*{cae118dc-8f0d-476e-a64a-ae165c754c92}*SharedItemsImports = 4
+		Eppie.App.Resources\Eppie.App.Resources.Shared\Eppie.App.Resources.Shared.projitems*{d88e0cdd-00f3-46cb-b5a6-59a483cad17b}*SharedItemsImports = 5
 		Eppie.App.UI\Eppie.App.UI.Shared\Eppie.App.UI.Shared.projitems*{e66e9bbd-2f75-453f-83b9-709f67517261}*SharedItemsImports = 5
+		Eppie.App.Resources\Eppie.App.Resources.Shared\Eppie.App.Resources.Shared.projitems*{f51f0640-ded9-4bfb-ae43-7b11b60e6cc2}*SharedItemsImports = 13
 	EndGlobalSection
 EndGlobal
