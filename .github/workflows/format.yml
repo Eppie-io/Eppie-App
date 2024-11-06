@@ -26,12 +26,10 @@ on: # yamllint disable-line rule:truthy
     branches:
       - main
       - release/**
-      - feature/296-upgrading-to-uno-platform-5 # temporarily
   pull_request:
     branches:
       - main
       - release/**
-      - feature/296-upgrading-to-uno-platform-5 # temporarily
 
 jobs:
 
