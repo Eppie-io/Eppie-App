@@ -5,11 +5,11 @@
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
   IgnorableNamespaces="uap rescap">
 
-  <Identity  Name="Tuvisoft.Eppie" Version="1.0.0.0"/>
-  <Properties >
+  <Identity Name="Tuvisoft.Eppie" Version="1.0.0.0"/>
+  <Properties>
     <DisplayName>Eppie</DisplayName>
     <PublisherDisplayName>Finebits</PublisherDisplayName>
-  </Properties >
+  </Properties>
 
   <Dependencies>
     <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.17763.0" MaxVersionTested="10.0.19041.0" />
@@ -17,14 +17,46 @@
   </Dependencies>
 
   <Resources>
-    <Resource Language="x-generate"/>
+    <Resource Language="en" />
+    <Resource Language="af" />
+    <Resource Language="ar" />
+    <Resource Language="be" />
+    <Resource Language="ca" />
+    <Resource Language="cs" />
+    <Resource Language="da" />
+    <Resource Language="de" />
+    <Resource Language="el" />
+    <Resource Language="es" />
+    <Resource Language="et" />
+    <Resource Language="fi" />
+    <Resource Language="fr" />
+    <Resource Language="he" />
+    <Resource Language="hu" />
+    <Resource Language="it" />
+    <Resource Language="ja" />
+    <Resource Language="ko" />
+    <Resource Language="lv" />
+    <Resource Language="nl" />
+    <Resource Language="no" />
+    <Resource Language="pl" />
+    <Resource Language="pt" />
+    <Resource Language="pt-BR" />
+    <Resource Language="ro" />
+    <Resource Language="ru" />
+    <Resource Language="sr-Cyrl" />
+    <Resource Language="sv" />
+    <Resource Language="tr" />
+    <Resource Language="uk" />
+    <Resource Language="vi" />
+    <Resource Language="zh-CN" />
+    <Resource Language="zh-TW" />
   </Resources>
 
   <Applications>
     <Application Id="App"
       Executable="$targetnametoken$.exe"
       EntryPoint="$targetentrypoint$">
-      <uap:VisualElements  Description="Eppie App" DisplayName="Eppie">
+      <uap:VisualElements Description="Eppie App" DisplayName="Eppie">
         <uap:DefaultTile/>
       </uap:VisualElements >
     </Application>
