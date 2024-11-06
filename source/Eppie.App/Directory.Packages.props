@@ -1,0 +1,26 @@
+<Project ToolsVersion="15.0">
+  <!--
+    To update the version of Uno, you should instead update the Sdk version in the global.json file.
+
+    See https://aka.platform.uno/using-uno-sdk for more information.
+    See https://aka.platform.uno/using-uno-sdk#implicit-packages for more information regarding the Implicit Packages.
+  -->
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageVersion Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageVersion Include="CommunityToolkit.Uwp.Controls.TokenizingTextBox" Version="8.1.240916" />
+    <PackageVersion Include="EmailValidation" Version="1.2.0" />
+    <PackageVersion Include="Finebits.Authorization.OAuth2" Version="0.3.1-alpha" />
+    <PackageVersion Include="Finebits.Authorization.OAuth2.AuthenticationBroker.Desktop" Version="0.3.1-alpha" />
+    <PackageVersion Include="Finebits.Authorization.OAuth2.Google" Version="0.3.1-alpha" />
+    <PackageVersion Include="Finebits.Authorization.OAuth2.Outlook" Version="0.3.1-alpha" />
+    <PackageVersion Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.2.14" />
+    <PackageVersion Include="Microsoft.UI.Xaml" Version="2.8.6" />
+    <PackageVersion Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.9" />
+    <PackageVersion Include="Microsoft.Xaml.Behaviors.Uwp.Managed" Version="2.0.1" />
+    <PackageVersion Include="Uno.Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.4.2" />
+    <PackageVersion Include="Uno.Toolkit.UI" Version="6.1.8" />
+  </ItemGroup>
+</Project>

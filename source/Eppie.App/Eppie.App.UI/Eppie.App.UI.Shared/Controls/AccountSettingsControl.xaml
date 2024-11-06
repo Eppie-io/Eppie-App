@@ -1,0 +1,159 @@
+﻿<UserControl x:Class="Tuvi.App.Shared.Controls.AccountSettingsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="using:Tuvi.App.Shared.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="using:Tuvi.App.Shared.Controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DesignHeight="300"
+             d:DesignWidth="400"
+             mc:Ignorable="d">
+
+    <Grid>
+        <ScrollViewer IsEnabled="{x:Bind IsLocked, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}">
+            <StackPanel Margin="0,0,20,0" Orientation="Vertical">
+
+                <TextBlock x:Uid="/Eppie.App.Resources/Resources/EmailAddress" Margin="0,0,0,4" />
+                <local:ErrorControl HorizontalAlignment="Stretch" Property="{x:Bind AccountSettingsModel.Email, Mode=OneWay}">
+                    <local:ErrorControl.InnerContent>
+                        <TextBox x:Name="EmailBox"
+                                 IsReadOnly="{x:Bind IsEmailReadOnly, Mode=OneWay}"
+                                 IsSpellCheckEnabled="False"
+                                 Text="{x:Bind AccountSettingsModel.Email.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    </local:ErrorControl.InnerContent>
+                </local:ErrorControl>
+
+                <TextBlock x:Uid="/Eppie.App.Resources/Resources/SenderName" Margin="0,16,0,4" />
+                <controls:PromptTextInputControl HorizontalAlignment="Stretch"
+                                                 IsSpellCheckEnabled="False"
+                                                 Text="{x:Bind AccountSettingsModel.SenderName, Mode=TwoWay}" />
+
+                <StackPanel Margin="0,16,0,4" Visibility="{x:Bind BasicAccountSettingsModel, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}">
+
+                    <TextBlock x:Uid="/Eppie.App.Resources/Resources/Password" Margin="0,0,0,4" />
+
+                    <local:ErrorControl HorizontalAlignment="Stretch" Property="{x:Bind BasicAccountSettingsModel.Password, Mode=OneWay}">
+                        <local:ErrorControl.InnerContent>
+                            <PasswordBox x:Name="PasswordBox" Password="{x:Bind BasicAccountSettingsModel.Password.Value, Mode=TwoWay}" />
+                        </local:ErrorControl.InnerContent>
+                    </local:ErrorControl>
+
+                </StackPanel>
+
+                <StackPanel Margin="0,16,0,4" Visibility="{x:Bind InCompactMode, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+
+                    <TextBlock x:Uid="/Eppie.App.Resources/Resources/OutgoingServer"
+                               Margin="0,0,0,4"
+                               Style="{StaticResource NormalTextStyle}" />
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="7*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock x:Uid="/Eppie.App.Resources/Resources/Address" Margin="0,4,4,4" />
+                        <local:ErrorControl Grid.Row="1"
+                                            Margin="0,0,4,0"
+                                            HorizontalAlignment="Stretch"
+                                            Property="{x:Bind AccountSettingsModel.OutgoingServerAddress, Mode=OneWay}">
+                            <local:ErrorControl.InnerContent>
+                                <TextBox x:Name="OutgoingAddressBox"
+                                         IsSpellCheckEnabled="False"
+                                         Text="{x:Bind AccountSettingsModel.OutgoingServerAddress.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            </local:ErrorControl.InnerContent>
+                        </local:ErrorControl>
+
+
+                        <TextBlock x:Uid="/Eppie.App.Resources/Resources/Port"
+                                   Grid.Column="1"
+                                   Margin="4,4,0,4" />
+                        <controls:PromptTextInputControl Grid.Row="1"
+                                                         Grid.Column="1"
+                                                         Margin="4,0,0,0"
+                                                         HorizontalAlignment="Stretch"
+                                                         VerticalAlignment="Top"
+                                                         IsSpellCheckEnabled="False"
+                                                         Text="{x:Bind AccountSettingsModel.OutgoingServerPort, Mode=TwoWay, Converter={StaticResource IntToStringConverter}}" />
+
+                    </Grid>
+
+                    <TextBlock x:Uid="/Eppie.App.Resources/Resources/IncomingServer"
+                               Margin="0,16,0,4"
+                               Style="{StaticResource NormalTextStyle}" />
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="5*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock x:Uid="/Eppie.App.Resources/Resources/Protocol" Margin="0,4,4,4" />
+                        <ComboBox Grid.Row="1"
+                                  Margin="0,0,4,0"
+                                  HorizontalAlignment="Stretch"
+                                  ItemsSource="{x:Bind IncomingProtocolTypes, Mode=OneWay}"
+                                  SelectedItem="{x:Bind AccountSettingsModel.IncomingMailProtocol, Mode=TwoWay}" />
+
+                        <TextBlock x:Uid="/Eppie.App.Resources/Resources/Address"
+                                   Grid.Column="1"
+                                   Margin="4,4,4,4" />
+                        <local:ErrorControl Grid.Row="1"
+                                            Grid.Column="1"
+                                            Margin="4,0,4,0"
+                                            HorizontalAlignment="Stretch"
+                                            Property="{x:Bind AccountSettingsModel.IncomingServerAddress, Mode=OneWay}">
+                            <local:ErrorControl.InnerContent>
+                                <TextBox x:Name="IncomingAddressBox"
+                                         IsSpellCheckEnabled="False"
+                                         Text="{x:Bind AccountSettingsModel.IncomingServerAddress.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            </local:ErrorControl.InnerContent>
+                        </local:ErrorControl>
+
+                        <TextBlock x:Uid="/Eppie.App.Resources/Resources/Port"
+                                   Grid.Column="2"
+                                   Margin="4,4,0,4" />
+                        <controls:PromptTextInputControl Grid.Row="1"
+                                                         Grid.Column="2"
+                                                         Margin="4,0,0,0"
+                                                         HorizontalAlignment="Stretch"
+                                                         VerticalAlignment="Top"
+                                                         IsSpellCheckEnabled="False"
+                                                         Text="{x:Bind AccountSettingsModel.IncomingServerPort, Mode=TwoWay, Converter={StaticResource IntToStringConverter}}" />
+
+                    </Grid>
+
+                </StackPanel>
+
+                <StackPanel Margin="0,16,0,4">
+                    <TextBlock x:Uid="/Eppie.App.Resources/Resources/CheckNewMessagesIntervalLabel" Margin="0,0,0,4" />
+                    <local:ErrorControl HorizontalAlignment="Stretch" Property="{x:Bind AccountSettingsModel.SynchronizationInterval, Mode=OneWay}">
+                        <local:ErrorControl.InnerContent>
+                            <TextBox IsSpellCheckEnabled="False" Text="{x:Bind AccountSettingsModel.SynchronizationInterval.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </local:ErrorControl.InnerContent>
+                    </local:ErrorControl>
+                </StackPanel>
+
+                <StackPanel Margin="0,16,0,4">
+                    <TextBlock x:Uid="/Eppie.App.Resources/Resources/BackupLabel"
+                               Margin="0,0,0,4"
+                               Style="{StaticResource NormalTextStyle}" />
+                    <CheckBox x:Name="BackupAccountSettingsCheckBox"
+                              x:Uid="/Eppie.App.Resources/Resources/BackupAccountSettingsCheckBox"
+                              IsChecked="{x:Bind AccountSettingsModel.IsBackupAccountSettingsEnabled, Mode=TwoWay}" />
+                    <CheckBox x:Uid="/Eppie.App.Resources/Resources/BackupAccountMessagesCheckBox"
+                              IsChecked="{x:Bind AccountSettingsModel.IsBackupAccountMessagesEnabled, Mode=TwoWay}"
+                              Visibility="{Binding ElementName=BackupAccountSettingsCheckBox, Path=IsChecked}" />
+                </StackPanel>
+
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

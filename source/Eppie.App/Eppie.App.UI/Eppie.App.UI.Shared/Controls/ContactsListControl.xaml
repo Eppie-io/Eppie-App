@@ -1,0 +1,83 @@
+﻿<UserControl x:Class="Tuvi.App.Shared.Controls.ContactsListControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:behaviors="using:Tuvi.App.Shared.Behaviors"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+             xmlns:local="using:Tuvi.App.Shared.Controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewmodels="using:Tuvi.App.ViewModels"
+             xmlns:winui="using:Microsoft.UI.Xaml.Controls"
+             d:DesignHeight="300"
+             d:DesignWidth="400"
+             mc:Ignorable="d">
+
+    <UserControl.Resources>
+
+        <DataTemplate x:Key="ContactItemTemplate" x:DataType="viewmodels:ContactItem">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="8" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.ContextFlyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem x:Uid="/Eppie.App.Resources/Resources/ChangeContactAvatarMenuItem"
+                                        Click="ChangeContactAvatarMenuItemClick"
+                                        Tag="{x:Bind}" />
+                        <MenuFlyoutItem x:Uid="/Eppie.App.Resources/Resources/RemoveContactMenuItem"
+                                        Click="RemoveContactMenuItemClick"
+                                        Tag="{x:Bind}" />
+                    </MenuFlyout>
+                </Grid.ContextFlyout>
+
+                <PersonPicture Grid.RowSpan="2"
+                               Width="48"
+                               Height="48"
+                               DisplayName="{x:Bind DisplayName, Mode=OneWay}"
+                               ProfilePicture="{x:Bind AvatarInfo, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}" />
+
+                <TextBlock Grid.Column="2" Text="{x:Bind DisplayName, Mode=OneWay}" />
+
+                <TextBlock Grid.Row="1"
+                           Grid.Column="2"
+                           Opacity="0.6"
+                           Text="{x:Bind Email.Address, Mode=OneWay}" />
+
+                <winui:InfoBadge Grid.RowSpan="2"
+                                 Grid.Column="3"
+                                 Margin="8,0,4,0"
+                                 Visibility="{x:Bind UnreadMessagesCount, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}"
+                                 Value="{x:Bind UnreadMessagesCount, Mode=OneWay}" />
+
+            </Grid>
+        </DataTemplate>
+
+        <Style x:Key="ContactItemContainerStyle"
+               BasedOn="{StaticResource DefaultListViewItemContainerStyle}"
+               TargetType="ListViewItem">
+            <Setter Property="Padding" Value="4" />
+        </Style>
+
+    </UserControl.Resources>
+
+    <Grid>
+        <ListView Padding="0,0,20,0"
+                  IsItemClickEnabled="True"
+                  ItemContainerStyle="{StaticResource ContactItemContainerStyle}"
+                  ItemTemplate="{StaticResource ContactItemTemplate}"
+                  ItemsSource="{x:Bind ContactsModel.Contacts, Mode=OneWay}"
+                  SelectedItem="{x:Bind ContactsModel.SelectedContact, Mode=TwoWay}"
+                  SelectionMode="Single">
+            <interactivity:Interaction.Behaviors>
+                <behaviors:ListViewItemClickBehavior ClickCommand="{x:Bind ContactsModel.ContactClickCommand, Mode=OneWay}" />
+            </interactivity:Interaction.Behaviors>
+        </ListView>
+    </Grid>
+</UserControl>

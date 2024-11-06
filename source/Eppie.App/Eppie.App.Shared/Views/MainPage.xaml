@@ -1,0 +1,132 @@
+﻿<local:MainPageBase x:Class="Tuvi.App.Shared.Views.MainPage"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:behaviors="using:Tuvi.App.Shared.Behaviors"
+                    xmlns:controls="using:Tuvi.App.Shared.Controls"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:extensions="using:Tuvi.App.Shared.Extensions"
+                    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+                    xmlns:local="using:Tuvi.App.Shared.Views"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:viewmodels="using:Tuvi.App.ViewModels"
+                    xmlns:winui="using:Microsoft.UI.Xaml.Controls"
+                    xmlns:xamarin="http://uno.ui/xamarin"
+                    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                    NavigationCacheMode="Enabled"
+                    mc:Ignorable="d xamarin">
+
+    <local:MainPageBase.DataContext>
+        <viewmodels:MainPageViewModel />
+    </local:MainPageBase.DataContext>
+
+    <Grid x:Name="root">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <winui:ItemsRepeater x:Name="ProblemsList"
+                             MaxHeight="150"
+                             Margin="0,0,0,0"
+                             ElementClearing="OnElementClearing"
+                             ItemsSource="{x:Bind ViewModel.Problems, Mode=OneWay}">
+            <winui:ItemsRepeater.ItemTemplate>
+                <DataTemplate x:DataType="viewmodels:Problem">
+                    <winui:InfoBar Title="{x:Bind Title}"
+                                   HorizontalAlignment="Stretch"
+                                   Background="{ThemeResource InfoBarBackground}"
+                                   CloseButtonCommand="{x:Bind CloseCommand}"
+                                   CloseButtonCommandParameter="{x:Bind Mode=OneWay}"
+                                   IsClosable="True"
+                                   IsIconVisible="True"
+                                   IsOpen="True"
+                                   Message="{x:Bind Message}"
+                                   Severity="Warning">
+                        <winui:InfoBar.ActionButton>
+                            <Button Command="{x:Bind ActionCommand, Mode=OneWay}"
+                                    CommandParameter="{x:Bind Mode=OneWay}"
+                                    Content="{x:Bind SolutionText, Mode=OneWay}" />
+                        </winui:InfoBar.ActionButton>
+                    </winui:InfoBar>
+                </DataTemplate>
+            </winui:ItemsRepeater.ItemTemplate>
+        </winui:ItemsRepeater>
+
+        <winui:NavigationView x:Name="NavigationMenu"
+                              Grid.Row="1"
+                              IsBackButtonVisible="Collapsed"
+                              ItemInvoked="OnNavigationViewItemInvoked"
+                              Style="{StaticResource MainNavigationViewStyle}">
+            <winui:NavigationView.MenuItems>
+                <winui:NavigationViewItem x:Uid="/Eppie.App.Resources/Resources/NewMessageNavigationItem"
+                                          extensions:AttachedCommands.ClickCommand="{x:Bind ViewModel.WriteNewMessageCommand}"
+                                          Icon="Edit"
+                                          SelectsOnInvoked="False" />
+                <winui:NavigationViewItem x:Uid="/Eppie.App.Resources/Resources/AllMessagesNavigationItem"
+                                          extensions:AttachedCommands.ClickCommand="{x:Bind ShowAllMessagesCommand}"
+                                          SelectsOnInvoked="False">
+                    <winui:NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE119;" />
+                    </winui:NavigationViewItem.Icon>
+                </winui:NavigationViewItem>
+                <winui:NavigationViewItem x:Uid="/Eppie.App.Resources/Resources/IdentityManagerNavigationItem"
+                                          extensions:AttachedCommands.ClickCommand="{x:Bind OpenIdentityManagerCommand}"
+                                          SelectsOnInvoked="False">
+                    <winui:NavigationViewItem.Icon>
+                        <SymbolIcon Symbol="ContactInfo" />
+                    </winui:NavigationViewItem.Icon>
+                </winui:NavigationViewItem>
+            </winui:NavigationView.MenuItems>
+
+            <winui:NavigationView.PaneFooter>
+                <controls:NavPanelTabControl TabModel="{x:Bind ViewModel.NavPanelTabModel, Mode=OneWay}" Visibility="{x:Bind NavigationMenu.IsPaneOpen, Mode=OneWay}" />
+            </winui:NavigationView.PaneFooter>
+
+            <winui:NavigationView.FooterMenuItems>
+
+                <winui:NavigationViewItem x:Uid="/Eppie.App.Resources/Resources/SupportDevelopmentNavigationItem"
+                                          extensions:AttachedCommands.ClickCommand="{x:Bind ViewModel.SupportDevelopmentCommand}"
+                                          Icon="Shop"
+                                          SelectsOnInvoked="False" />
+
+                <winui:NavigationViewItem x:Uid="/Eppie.App.Resources/Resources/AboutAppNavigationItem"
+                                          extensions:AttachedCommands.ClickCommand="{x:Bind ShowAboutPageCommand}"
+                                          SelectsOnInvoked="False">
+                    <winui:NavigationViewItem.Icon>
+                        <FontIcon xamarin:FontFamily="/Assets/Fonts/segmdl2.ttf#" Glyph="&#xE946;" />
+                    </winui:NavigationViewItem.Icon>
+                </winui:NavigationViewItem>
+
+            </winui:NavigationView.FooterMenuItems>
+
+            <SplitView x:Name="splitView"
+                       CompactPaneLength="48"
+                       DisplayMode="Inline"
+                       IsPaneOpen="False"
+                       OpenPaneLength="360"
+                       PaneBackground="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}">
+                <SplitView.Pane>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <Frame x:Name="paneFrame" />
+
+                        <AppBarButton Grid.Column="1"
+                                      Width="48"
+                                      Height="48"
+                                      VerticalAlignment="Top"
+                                      Command="{x:Bind ClosePaneCommand}">
+                            <SymbolIcon Symbol="Cancel" />
+                        </AppBarButton>
+
+                    </Grid>
+                </SplitView.Pane>
+                <Frame x:Name="contentFrame" />
+            </SplitView>
+
+        </winui:NavigationView>
+
+    </Grid>
+</local:MainPageBase>

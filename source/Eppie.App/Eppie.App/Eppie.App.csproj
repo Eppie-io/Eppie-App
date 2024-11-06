@@ -1,0 +1,78 @@
+<Project Sdk="Uno.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net8.0-android;net8.0-ios;net8.0-maccatalyst;net8.0-windows10.0.19041;net8.0-browserwasm;net8.0-desktop</TargetFrameworks>
+
+    <OutputType>Exe</OutputType>
+    <UnoSingleProject>true</UnoSingleProject>
+
+    <!-- Display name -->
+    <ApplicationTitle>Eppie.App</ApplicationTitle>
+    <!-- App Identifier -->
+    <ApplicationId>io.eppie.app</ApplicationId>
+    <!-- Versions -->
+    <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+    <ApplicationVersion>1</ApplicationVersion>
+    <!-- Package Publisher -->
+    <ApplicationPublisher>Finebits OU</ApplicationPublisher>
+    <!-- Package Description -->
+    <Description>Eppie.App powered by Uno Platform.</Description>
+    <!--
+      If you encounter this error message:
+
+        error NETSDK1148: A referenced assembly was compiled using a newer version of Microsoft.Windows.SDK.NET.dll.
+        Please update to a newer .NET SDK in order to reference this assembly.
+
+      This means that the two packages below must be aligned with the "build" version number of
+      the "Microsoft.Windows.SDK.BuildTools" package above, and the "revision" version number
+      must be the highest found in https://www.nuget.org/packages/Microsoft.Windows.SDK.NET.Ref.
+    -->
+    <!-- <WindowsSdkPackageVersion>10.0.22621.28</WindowsSdkPackageVersion> -->
+
+    <!--
+      UnoFeatures let's you quickly add and manage implicit package references based on the features you want to use.
+      https://aka.platform.uno/singleproject-features
+    -->
+    <UnoFeatures>
+      Lottie;
+      Hosting;
+      Toolkit;
+      Logging;
+      LoggingSerilog;
+      Mvvm;
+      Configuration;
+      Localization;
+      ThemeService;
+    </UnoFeatures>
+    <DefaultLanguage>en</DefaultLanguage>
+    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\ComponentBuilder\ComponentBuilder.csproj" />
+    <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core.Backup\Tuvi.Core.Backup.csproj" />
+    <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core.Logging\Tuvi.Core.Logging.csproj" />
+    <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core.Mail.Impl\Tuvi.Core.Mail.Impl.csproj" />
+    <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core.Mail\Tuvi.Core.Mail.csproj" />
+    <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core\Tuvi.Core.csproj" />
+    <ProjectReference Include="..\..\..\gitmodules\TuviPgpLib\TuviPgpLib\TuviPgpLib.csproj" />
+    <ProjectReference Include="..\Eppie.App.Resources\Eppie.App.Resources.Uno\Eppie.App.Resources.Uno.csproj" />
+    <ProjectReference Include="..\Eppie.App.UI\Eppie.App.UI.Uno\Eppie.App.UI.Uno.csproj" />
+    <ProjectReference Include="..\Eppie.App.ViewModels\Eppie.App.ViewModels.csproj" />
+    <ProjectReference Include="..\Eppie.Authorization.OAuth2\Eppie.Authorization.OAuth2.csproj" />
+  </ItemGroup>
+
+  <Import Project="..\Eppie.App.Shared\Eppie.App.Shared.projitems" Label="Shared" />
+  <!-- This hides references to shared .xaml files from the "Eppie.App.Shared" project. -->
+  <ItemGroup>
+    <None Include="..\Eppie.App.Shared\Views\*.xaml" Visible="false" />
+  </ItemGroup>
+
+  <!-- https://github.com/unoplatform/Uno.XamlBehaviors?tab=readme-ov-file#uno-platform-port-of-xaml-behaviors -->
+  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0-windows10.0.19041'">
+    <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' != 'net8.0-windows10.0.19041'">
+    <PackageReference Include="Uno.Microsoft.Xaml.Behaviors.WinUI.Managed" />
+  </ItemGroup>
+
+</Project>

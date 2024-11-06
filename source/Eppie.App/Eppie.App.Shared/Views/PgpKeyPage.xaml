@@ -1,0 +1,162 @@
+﻿<local:PgpKeyPageBase x:Class="Tuvi.App.Shared.Views.PgpKeyPage"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:behaviors="using:Tuvi.App.Shared.Behaviors"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:extensions="using:Tuvi.App.Shared.Extensions"
+                      xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+                      xmlns:local="using:Tuvi.App.Shared.Views"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:viewmodels="using:Tuvi.App.ViewModels"
+                      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                      mc:Ignorable="d">
+
+    <local:PgpKeyPageBase.DataContext>
+        <viewmodels:PgpKeyPageViewModel />
+    </local:PgpKeyPageBase.DataContext>
+
+    <Grid Padding="16">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+        <Button x:Uid="/Eppie.App.Resources/Resources/PgpKeyBackButton"
+                Grid.Row="0"
+                VerticalAlignment="Center"
+                Command="{x:Bind ViewModel.BackCommand}">
+            <FontIcon Glyph="&#xE112;" />
+        </Button>
+
+        <ScrollViewer Grid.Row="1"
+                      HorizontalScrollBarVisibility="Auto"
+                      HorizontalScrollMode="Auto"
+                      VerticalScrollBarVisibility="Auto"
+                      VerticalScrollMode="Auto"
+                      ZoomMode="Disabled">
+
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <!--  UserIdentity  -->
+                <TextBlock x:Uid="/Eppie.App.Resources/Resources/PgpKeyUserIdentity"
+                           Grid.Row="0"
+                           Margin="0,4,4,0"
+                           VerticalAlignment="Center"
+                           FontWeight="Bold" />
+
+                <TextBlock Grid.Row="0"
+                           Grid.Column="1"
+                           Margin="4,4,0,0"
+                           VerticalAlignment="Center"
+                           Text="{x:Bind ViewModel.UserIdentity, Mode=OneWay}" />
+
+                <!--  Fingerprint  -->
+                <TextBlock x:Uid="/Eppie.App.Resources/Resources/PgpKeyFingerprint"
+                           Grid.Row="1"
+                           Margin="0,4,4,0"
+                           VerticalAlignment="Center"
+                           FontWeight="Bold" />
+
+                <TextBlock Grid.Row="1"
+                           Grid.Column="1"
+                           Margin="4,4,0,0"
+                           VerticalAlignment="Center"
+                           Text="{x:Bind ViewModel.Fingerprint, Mode=OneWay}" />
+
+                <!--  KeyId  -->
+                <TextBlock x:Uid="/Eppie.App.Resources/Resources/PgpKeyId"
+                           Grid.Row="2"
+                           Margin="0,4,4,0"
+                           VerticalAlignment="Center"
+                           FontWeight="Bold" />
+
+                <TextBlock Grid.Row="2"
+                           Grid.Column="1"
+                           Margin="4,4,0,0"
+                           VerticalAlignment="Center"
+                           Text="{x:Bind ViewModel.KeyId, Mode=OneWay}" />
+
+                <!--  Algorithm  -->
+                <TextBlock x:Uid="/Eppie.App.Resources/Resources/PgpKeyAlgorithm"
+                           Grid.Row="3"
+                           Margin="0,4,4,0"
+                           VerticalAlignment="Center"
+                           FontWeight="Bold" />
+
+                <TextBlock Grid.Row="3"
+                           Grid.Column="1"
+                           Margin="4,4,0,0"
+                           VerticalAlignment="Center"
+                           Text="{x:Bind ViewModel.Algorithm, Mode=OneWay}" />
+
+                <!--  Created  -->
+                <TextBlock x:Uid="/Eppie.App.Resources/Resources/PgpKeyCreationTime"
+                           Grid.Row="4"
+                           Margin="0,4,4,0"
+                           VerticalAlignment="Center"
+                           FontWeight="Bold" />
+
+                <TextBlock Grid.Row="4"
+                           Grid.Column="1"
+                           Margin="4,4,0,0"
+                           VerticalAlignment="Center"
+                           Text="{x:Bind ViewModel.Created, Mode=OneWay}" />
+
+                <!--  Expires  -->
+                <TextBlock x:Uid="/Eppie.App.Resources/Resources/PgpKeyExpires"
+                           Grid.Row="5"
+                           Margin="0,4,4,0"
+                           VerticalAlignment="Center"
+                           FontWeight="Bold" />
+
+                <TextBlock Grid.Row="5"
+                           Grid.Column="1"
+                           Margin="4,4,0,0"
+                           VerticalAlignment="Center"
+                           Text="{x:Bind ViewModel.Expires, Mode=OneWay}" />
+
+            </Grid>
+
+        </ScrollViewer>
+
+        <StackPanel Grid.Row="2"
+                    Orientation="Vertical"
+                    Spacing="4">
+
+            <Button x:Uid="/Eppie.App.Resources/Resources/PgpKeyCopyButton" VerticalAlignment="Center">
+                <interactivity:Interaction.Behaviors>
+                    <behaviors:CopyToClipboardBehavior CopyCommand="{x:Bind ViewModel.CopyPgpKeyCommand, Mode=OneWay}" />
+                </interactivity:Interaction.Behaviors>
+            </Button>
+
+            <Button x:Uid="/Eppie.App.Resources/Resources/PgpKeyExportButton" VerticalAlignment="Center">
+                <interactivity:Interaction.Behaviors>
+                    <behaviors:FileBehavior Command="{x:Bind ViewModel.ExportPgpKeyCommand, Mode=OneWay}" />
+                </interactivity:Interaction.Behaviors>
+            </Button>
+
+            <Button x:Uid="/Eppie.App.Resources/Resources/PgpKeySendButton"
+                    VerticalAlignment="Center"
+                    Command="{x:Bind ViewModel.SendPgpKeyCommand}" />
+
+        </StackPanel>
+
+    </Grid>
+</local:PgpKeyPageBase>

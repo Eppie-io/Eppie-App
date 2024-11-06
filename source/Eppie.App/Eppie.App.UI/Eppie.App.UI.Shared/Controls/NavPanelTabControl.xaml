@@ -1,0 +1,58 @@
+﻿<UserControl x:Class="Tuvi.App.Shared.Controls.NavPanelTabControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="using:Tuvi.App.Shared.Controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewmodels="using:Tuvi.App.ViewModels"
+             xmlns:winuicontrols="using:Microsoft.UI.Xaml.Controls"
+             d:DesignHeight="300"
+             d:DesignWidth="400"
+             mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <DataTemplate x:Key="ContactsTabViewItemTemplate" x:DataType="viewmodels:ContactsModel">
+            <winuicontrols:TabViewItem x:Uid="/Eppie.App.Resources/Resources/ContactsTab" IsClosable="False">
+                <winuicontrols:TabViewItem.IconSource>
+                    <winuicontrols:SymbolIconSource Symbol="Contact" />
+                </winuicontrols:TabViewItem.IconSource>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="1*" />
+                    </Grid.RowDefinitions>
+                    <ComboBox HorizontalAlignment="Stretch"
+                              ItemsSource="{x:Bind Contacts.SortingVariants}"
+                              SelectedItem="{Binding Contacts.ItemsComparer, Mode=TwoWay}" />
+                    <AutoSuggestBox x:Uid="/Eppie.App.Resources/Resources/ContactFilter"
+                                    Grid.Row="1"
+                                    QueryIcon="Find"
+                                    Text="{x:Bind Contacts.SearchFilter.SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <local:ContactsListControl Grid.Row="2" ContactsModel="{x:Bind Mode=OneWay}" />
+                </Grid>
+            </winuicontrols:TabViewItem>
+        </DataTemplate>
+
+        <DataTemplate x:Key="MailBoxesTabViewItemTemplate" x:DataType="viewmodels:MailBoxesModel">
+            <winuicontrols:TabViewItem x:Uid="/Eppie.App.Resources/Resources/MailboxesTab" IsClosable="False">
+                <winuicontrols:TabViewItem.IconSource>
+                    <winuicontrols:SymbolIconSource Symbol="Account" />
+                </winuicontrols:TabViewItem.IconSource>
+                <local:MailBoxesListControl MailBoxesModel="{x:Bind Mode=OneWay}" />
+            </winuicontrols:TabViewItem>
+        </DataTemplate>
+
+        <local:ControlModelTemplateSelector x:Key="ItemModelTemplateSelector"
+                                            ContactsModelTemplate="{StaticResource ContactsTabViewItemTemplate}"
+                                            MailBoxesModelTemplate="{StaticResource MailBoxesTabViewItemTemplate}" />
+    </UserControl.Resources>
+
+    <Grid>
+        <winuicontrols:TabView IsAddTabButtonVisible="False"
+                               SelectedItem="{x:Bind TabModel.SelectedItemModel, Mode=TwoWay}"
+                               TabItemTemplateSelector="{StaticResource ItemModelTemplateSelector}"
+                               TabItemsSource="{x:Bind TabModel.ItemModels, Mode=OneWay}"
+                               TabWidthMode="Equal" />
+    </Grid>
+</UserControl>

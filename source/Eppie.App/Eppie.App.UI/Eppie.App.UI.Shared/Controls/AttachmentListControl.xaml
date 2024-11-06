@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="Tuvi.App.Shared.Controls.AttachmentListControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:entities="using:Tuvi.Core.Entities"
+             xmlns:local="using:Tuvi.App.Shared.Controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DesignHeight="300"
+             d:DesignWidth="400"
+             mc:Ignorable="d">
+
+    <UserControl.Resources>
+
+        <Style x:Key="DefaultAttachmentsTitleStyle" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+
+        <Style x:Key="DefaultAttachmentItemStyle" TargetType="ListViewItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="Padding" Value="0" />
+        </Style>
+
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="4" />
+            <RowDefinition Height="{x:Bind ListAreaHeight, Mode=OneWay}" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Style="{StaticResource DefaultAttachmentsTitleStyle}"
+                   Text="{x:Bind Title, Mode=OneWay}"
+                   Visibility="{x:Bind IsTitleVisible, Mode=OneWay}" />
+
+        <ListView Grid.Row="2"
+                  ItemContainerStyle="{StaticResource DefaultAttachmentItemStyle}"
+                  ItemTemplate="{x:Bind ItemTemplate, Mode=OneWay}"
+                  ItemsSource="{x:Bind Items, Mode=OneWay}"
+                  SelectionMode="None" />
+
+    </Grid>
+</UserControl>
