@@ -1,9 +1,0 @@
-{
-  "solution": {
-    "path": "Eppie.App.sln",
-    "projects": [
-      "Eppie.App/Eppie.App.csproj",
-      "Eppie.App.Skia.Gtk/Eppie.App.Skia.Gtk.csproj"
-    ]
-  }
-}
