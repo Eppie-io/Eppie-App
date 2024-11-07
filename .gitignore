@@ -23,3 +23,13 @@ src/Eppie.App/Eppie.App.ViewModels/bin/
 src/Eppie.App/Eppie.App.ViewModels/obj/
 src/Eppie.App/Eppie.Authorization.OAuth2/bin
 src/Eppie.App/Eppie.Authorization.OAuth2/obj
+src/Tests/Tuvi.Core.Mail.Impl.Tests/obj/
+src/Tests/Tuvi.Core.Mail.Impl.Tests/bin/
+src/Tests/Tuvi.Core.Entities.Tests/obj/
+src/Tests/Tuvi.Core.Entities.Tests/bin/
+src/Tests/Tuvi.Core.DataStorage.Impl.Tests/obj/
+src/Tests/Tuvi.Core.DataStorage.Impl.Tests/bin/
+src/Tests/SecurityManagementTests/obj/
+src/Tests/SecurityManagementTests/bin/
+src/Tests/Eppie.App.ViewModels.Tests/obj/
+src/Tests/Eppie.App.ViewModels.Tests/bin/
