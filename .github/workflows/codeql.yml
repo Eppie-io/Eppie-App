@@ -77,7 +77,7 @@ jobs:
     - name: Autobuild
       uses: github/codeql-action/autobuild@461ef6c76dfe95d5c364de2f431ddbd31a417628 # v3.26.9
       with:
-        working-directory: ${{ github.workspace }}/source/Eppie.App
+        working-directory: ${{ github.workspace }}/src/Eppie.App
 
     # ℹ️ Command-line programs to run using the OS shell.
     # 📚 See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
