@@ -38,9 +38,9 @@ jobs:
     strategy:
       matrix:
         include:
-          - project: "source/Eppie.App/Eppie.App/Eppie.App.csproj"
+          - project: "src/Eppie.App/Eppie.App/Eppie.App.csproj"
             uno: "true"
-          - project: "source/Eppie.App/Eppie.App.UWP/Eppie.App.UWP.csproj"
+          - project: "src/Eppie.App/Eppie.App.UWP/Eppie.App.UWP.csproj"
             uno: "false"
 
     runs-on: ubuntu-latest
