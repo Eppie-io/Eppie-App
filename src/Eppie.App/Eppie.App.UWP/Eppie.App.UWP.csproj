@@ -214,7 +214,7 @@
       <Project>{ebd69008-dab3-41b1-88c4-a7f82b41e8d8}</Project>
       <Name>Tuvi.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\gitmodules\TuviPgpLib\TuviPgpLib\TuviPgpLib.csproj">
+    <ProjectReference Include="..\..\..\gitmodules\TuviCore\gitmodules\TuviPgpLib\TuviPgpLib\TuviPgpLib.csproj">
       <Project>{93c3844c-03b2-4c24-9070-16ba1971758e}</Project>
       <Name>TuviPgpLib</Name>
     </ProjectReference>

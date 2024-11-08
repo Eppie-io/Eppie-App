@@ -75,15 +75,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TuviRestClientLib", "..\..\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Crypto", "Crypto", "{A59DE721-B0CD-47ED-8839-368A819C95EB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TuviPgpLib", "..\..\gitmodules\TuviPgpLib\TuviPgpLib\TuviPgpLib.csproj", "{93C3844C-03B2-4C24-9070-16BA1971758E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TuviPgpLib", "..\..\gitmodules\TuviCore\gitmodules\TuviPgpLib\TuviPgpLib\TuviPgpLib.csproj", "{93C3844C-03B2-4C24-9070-16BA1971758E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TuviPgpLibImpl", "..\..\gitmodules\TuviPgpLib\TuviPgpLibImpl\TuviPgpLibImpl.csproj", "{6EA2E1E8-977A-40BB-9C3D-19514286686A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TuviPgpLibImpl", "..\..\gitmodules\TuviCore\gitmodules\TuviPgpLib\TuviPgpLibImpl\TuviPgpLibImpl.csproj", "{6EA2E1E8-977A-40BB-9C3D-19514286686A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeyDerivation", "..\..\gitmodules\TuviPgpLib\gitmodules\TuviKeyDerivationLib\KeyDerivationInterface\KeyDerivation.csproj", "{30893AD4-3EBB-4EED-A4E7-4709A6B86A33}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeyDerivation", "..\..\gitmodules\TuviCore\gitmodules\TuviPgpLib\gitmodules\TuviKeyDerivationLib\KeyDerivationInterface\KeyDerivation.csproj", "{30893AD4-3EBB-4EED-A4E7-4709A6B86A33}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeyDerivationLib", "..\..\gitmodules\TuviPgpLib\gitmodules\TuviKeyDerivationLib\KeyDerivationLib\KeyDerivationLib.csproj", "{67FE37F2-DB0D-48CC-9F0F-FDD86A22290A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeyDerivationLib", "..\..\gitmodules\TuviCore\gitmodules\TuviPgpLib\gitmodules\TuviKeyDerivationLib\KeyDerivationLib\KeyDerivationLib.csproj", "{67FE37F2-DB0D-48CC-9F0F-FDD86A22290A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TuviBase32EConverterLib", "..\..\gitmodules\TuviBase32EConverterLib\TuviBytesToEmailConverterLib\TuviBase32EConverterLib\TuviBase32EConverterLib.csproj", "{865EE4F1-BC60-4C15-B31B-C681B430BB7F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TuviBase32EConverterLib", "..\..\gitmodules\TuviCore\gitmodules\TuviBase32EConverterLib\TuviBytesToEmailConverterLib\TuviBase32EConverterLib\TuviBase32EConverterLib.csproj", "{865EE4F1-BC60-4C15-B31B-C681B430BB7F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eppie.App.ViewModels", "Eppie.App.ViewModels\Eppie.App.ViewModels.csproj", "{2DA63E2A-A0AC-4C55-B912-04D8970BCED3}"
 EndProject
