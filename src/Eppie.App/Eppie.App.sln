@@ -99,11 +99,15 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Eppie.App.UI.Shared", "Eppi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Eppie.App.Resources", "Eppie.App.Resources", "{E7FC4F46-E62D-4484-8EDE-D8CAF5A5A7C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eppie.App.Resources.Uno", "Eppie.App.Resources\Eppie.App.Resources.Uno\Eppie.App.Resources.Uno.csproj", "{D88E0CDD-00F3-46CB-B5A6-59A483CAD17B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eppie.App.Resources.Uno", "Eppie.App.Resources\Eppie.App.Resources.Uno\Eppie.App.Resources.Uno.csproj", "{D88E0CDD-00F3-46CB-B5A6-59A483CAD17B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eppie.App.Resources.UWP", "Eppie.App.Resources\Eppie.App.Resources.UWP\Eppie.App.Resources.UWP.csproj", "{38F6F073-BD7A-4F8B-93EC-5EFEDCAD2390}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Eppie.App.Resources.Shared", "Eppie.App.Resources\Eppie.App.Resources.Shared\Eppie.App.Resources.Shared.shproj", "{F51F0640-DED9-4BFB-AE43-7B11B60E6CC2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{CF472446-EF62-4D4F-BC18-E69774FEE8C9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eppie.App.ViewModels.Tests", "..\Tests\Eppie.App.ViewModels.Tests\Eppie.App.ViewModels.Tests.csproj", "{228114AE-3DD4-44C9-80A2-270A5F0B3728}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -859,6 +863,26 @@ Global
 		{38F6F073-BD7A-4F8B-93EC-5EFEDCAD2390}.Release|x64.Build.0 = Release|x64
 		{38F6F073-BD7A-4F8B-93EC-5EFEDCAD2390}.Release|x86.ActiveCfg = Release|x86
 		{38F6F073-BD7A-4F8B-93EC-5EFEDCAD2390}.Release|x86.Build.0 = Release|x86
+		{228114AE-3DD4-44C9-80A2-270A5F0B3728}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{228114AE-3DD4-44C9-80A2-270A5F0B3728}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{228114AE-3DD4-44C9-80A2-270A5F0B3728}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{228114AE-3DD4-44C9-80A2-270A5F0B3728}.Debug|ARM.Build.0 = Debug|Any CPU
+		{228114AE-3DD4-44C9-80A2-270A5F0B3728}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{228114AE-3DD4-44C9-80A2-270A5F0B3728}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{228114AE-3DD4-44C9-80A2-270A5F0B3728}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{228114AE-3DD4-44C9-80A2-270A5F0B3728}.Debug|x64.Build.0 = Debug|Any CPU
+		{228114AE-3DD4-44C9-80A2-270A5F0B3728}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{228114AE-3DD4-44C9-80A2-270A5F0B3728}.Debug|x86.Build.0 = Debug|Any CPU
+		{228114AE-3DD4-44C9-80A2-270A5F0B3728}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{228114AE-3DD4-44C9-80A2-270A5F0B3728}.Release|Any CPU.Build.0 = Release|Any CPU
+		{228114AE-3DD4-44C9-80A2-270A5F0B3728}.Release|ARM.ActiveCfg = Release|Any CPU
+		{228114AE-3DD4-44C9-80A2-270A5F0B3728}.Release|ARM.Build.0 = Release|Any CPU
+		{228114AE-3DD4-44C9-80A2-270A5F0B3728}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{228114AE-3DD4-44C9-80A2-270A5F0B3728}.Release|ARM64.Build.0 = Release|Any CPU
+		{228114AE-3DD4-44C9-80A2-270A5F0B3728}.Release|x64.ActiveCfg = Release|Any CPU
+		{228114AE-3DD4-44C9-80A2-270A5F0B3728}.Release|x64.Build.0 = Release|Any CPU
+		{228114AE-3DD4-44C9-80A2-270A5F0B3728}.Release|x86.ActiveCfg = Release|Any CPU
+		{228114AE-3DD4-44C9-80A2-270A5F0B3728}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -907,6 +931,7 @@ Global
 		{D88E0CDD-00F3-46CB-B5A6-59A483CAD17B} = {E7FC4F46-E62D-4484-8EDE-D8CAF5A5A7C3}
 		{38F6F073-BD7A-4F8B-93EC-5EFEDCAD2390} = {E7FC4F46-E62D-4484-8EDE-D8CAF5A5A7C3}
 		{F51F0640-DED9-4BFB-AE43-7B11B60E6CC2} = {E7FC4F46-E62D-4484-8EDE-D8CAF5A5A7C3}
+		{228114AE-3DD4-44C9-80A2-270A5F0B3728} = {CF472446-EF62-4D4F-BC18-E69774FEE8C9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1BCAC5D9-CEF8-4D64-8F16-3A0FEE49CF42}

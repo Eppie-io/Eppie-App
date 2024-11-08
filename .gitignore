@@ -23,3 +23,5 @@ src/Eppie.App/Eppie.App.ViewModels/bin/
 src/Eppie.App/Eppie.App.ViewModels/obj/
 src/Eppie.App/Eppie.Authorization.OAuth2/bin
 src/Eppie.App/Eppie.Authorization.OAuth2/obj
+src/Tests/Eppie.App.ViewModels.Tests/obj/
+src/Tests/Eppie.App.ViewModels.Tests/bin/
