@@ -25,7 +25,3 @@ src/Eppie.App/Eppie.Authorization.OAuth2/bin
 src/Eppie.App/Eppie.Authorization.OAuth2/obj
 src/Tests/Eppie.App.ViewModels.Tests/obj/
 src/Tests/Eppie.App.ViewModels.Tests/bin/
-gitmodules/TuviPgpLib/TuviPgpLibImpl/obj/
-gitmodules/TuviPgpLib/TuviPgpLib/obj/
-gitmodules/TuviPgpLib/gitmodules/TuviKeyDerivationLib/KeyDerivationLib/obj/
-gitmodules/TuviPgpLib/gitmodules/TuviKeyDerivationLib/KeyDerivationInterface/obj/
