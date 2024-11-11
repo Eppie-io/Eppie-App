@@ -1,6 +1,3 @@
 [submodule "gitmodules/TuviCore"]
 	path = gitmodules/TuviCore
 	url = https://github.com/Eppie-io/TuviCore.git
-[submodule "gitmodules/proton-cs-client"]
-	path = gitmodules/proton-cs-client
-	url = https://github.com/Eppie-io/proton-cs-client.git
