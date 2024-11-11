@@ -61,17 +61,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{06BC
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ProtonMail", "ProtonMail", "{26148D3A-1B2D-446E-9D75-3C1432DF1F00}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "proton-cs-client", "..\..\gitmodules\proton-cs-client\source\proton-cs-client\proton-cs-client.csproj", "{1E2A6BED-6CC4-4D9D-9B57-3FD83FB1A2C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "proton-cs-client", "..\..\gitmodules\TuviCore\gitmodules\proton-cs-client\source\proton-cs-client\proton-cs-client.csproj", "{1E2A6BED-6CC4-4D9D-9B57-3FD83FB1A2C8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TuviAuthProtonLib", "..\..\gitmodules\proton-cs-client\gitmodules\TuviAuthProtonLib\source\TuviAuthProtonLib\TuviAuthProtonLib.csproj", "{BDADE3EF-9165-42BD-95AD-BCAC7DF0FCF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TuviAuthProtonLib", "..\..\gitmodules\TuviCore\gitmodules\proton-cs-client\gitmodules\TuviAuthProtonLib\source\TuviAuthProtonLib\TuviAuthProtonLib.csproj", "{BDADE3EF-9165-42BD-95AD-BCAC7DF0FCF1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TuviProtonPrimitiveLib", "..\..\gitmodules\proton-cs-client\gitmodules\TuviAuthProtonLib\source\TuviProtonPrimitiveLib\TuviProtonPrimitiveLib.csproj", "{44539BAE-9468-4F5A-9E9A-54DF9956D450}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TuviProtonPrimitiveLib", "..\..\gitmodules\TuviCore\gitmodules\proton-cs-client\gitmodules\TuviAuthProtonLib\source\TuviProtonPrimitiveLib\TuviProtonPrimitiveLib.csproj", "{44539BAE-9468-4F5A-9E9A-54DF9956D450}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TuviSRPLib", "..\..\gitmodules\proton-cs-client\gitmodules\TuviAuthProtonLib\gitmodules\TuviSRPLib\TuviSRPLib\TuviSRPLib\TuviSRPLib.csproj", "{D05A693C-E751-4528-B149-DF64651095E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TuviSRPLib", "..\..\gitmodules\TuviCore\gitmodules\proton-cs-client\gitmodules\TuviAuthProtonLib\gitmodules\TuviSRPLib\TuviSRPLib\TuviSRPLib\TuviSRPLib.csproj", "{D05A693C-E751-4528-B149-DF64651095E2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProtonBase64Lib", "..\..\gitmodules\proton-cs-client\gitmodules\TuviAuthProtonLib\gitmodules\TuviSRPLib\TuviSRPLib\ProtonBase64Lib\ProtonBase64Lib.csproj", "{3C798C84-3D90-41DC-B3F3-A23E96068A47}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProtonBase64Lib", "..\..\gitmodules\TuviCore\gitmodules\proton-cs-client\gitmodules\TuviAuthProtonLib\gitmodules\TuviSRPLib\TuviSRPLib\ProtonBase64Lib\ProtonBase64Lib.csproj", "{3C798C84-3D90-41DC-B3F3-A23E96068A47}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TuviRestClientLib", "..\..\gitmodules\proton-cs-client\gitmodules\TuviAuthProtonLib\gitmodules\TuviRestClientLib\source\TuviRestClientLib\TuviRestClientLib.csproj", "{A317D097-ACF7-4C46-B719-DB443627008E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TuviRestClientLib", "..\..\gitmodules\TuviCore\gitmodules\proton-cs-client\gitmodules\TuviAuthProtonLib\gitmodules\TuviRestClientLib\source\TuviRestClientLib\TuviRestClientLib.csproj", "{A317D097-ACF7-4C46-B719-DB443627008E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Crypto", "Crypto", "{A59DE721-B0CD-47ED-8839-368A819C95EB}"
 EndProject
