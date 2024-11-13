@@ -96,6 +96,11 @@ namespace Eppie.App.Shared
         {
 
         }
+
+        private void InitializeNotifications()
+        {
+
+        }
     }
 }
 

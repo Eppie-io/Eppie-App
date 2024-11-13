@@ -27,6 +27,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Microsoft.Services.Store.Engagement;
 
 namespace Eppie.App.Shared
 {
@@ -126,6 +127,40 @@ namespace Eppie.App.Shared
         private void SubscribeToPlatformSpecificEvents()
         {
             Suspending += OnSuspending;
+        }
+        
+        private async void InitializeNotifications()
+        {
+            try
+            {
+                StoreServicesEngagementManager engagementManager = StoreServicesEngagementManager.GetDefault();
+                await engagementManager.RegisterNotificationChannelAsync();
+            }
+            catch (Exception ex)
+            {
+                OnError(ex);
+            }
+        }
+
+        protected override void OnActivated(IActivatedEventArgs args)
+        {
+            try
+            {
+                if (args is ToastNotificationActivatedEventArgs)
+                {
+                    var toastActivationArgs = args as ToastNotificationActivatedEventArgs;
+
+                    StoreServicesEngagementManager engagementManager = StoreServicesEngagementManager.GetDefault();
+                    string originalArgs = engagementManager.ParseArgumentsAndTrackAppLaunch(
+                        toastActivationArgs.Argument);
+                }
+
+                base.OnActivated(args);
+            }
+            catch (Exception e)
+            {
+                OnError(e);
+            }
         }
     }
 }
