@@ -58,11 +58,6 @@ jobs:
         with:
           dotnet-version: 8.x
 
-      - name: Setup .NET 9
-        uses: actions/setup-dotnet@6bd8b7f7774af54e05809fcc5431931b3eb1ddee # v4.0.1
-        with:
-          dotnet-version: 9.x
-
       - name: Setup the Uno Platform
         if: matrix.uno == 'true'
         uses: finebits/github-actions/devhub/uno-platform/setup@4a126d80a11c5fdc83ce884d3d23dffb30bc4495 # v2.0.0
