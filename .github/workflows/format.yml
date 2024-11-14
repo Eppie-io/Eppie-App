@@ -61,6 +61,8 @@ jobs:
       - name: Setup the Uno Platform
         if: matrix.uno == 'true'
         uses: finebits/github-actions/devhub/uno-platform/setup@4a126d80a11c5fdc83ce884d3d23dffb30bc4495 # v2.0.0
+        with:
+          uno-check-manifest: https://raw.githubusercontent.com/unoplatform/uno.check/95904fd037afa7714b695716dddfc5f4c2acf138/manifests/uno.ui.manifest.json  # "DOTNET_SDK_VERSION": "8.0.401"
 
       - name: Verify format
         run:  dotnet format "${{ matrix.project }}" --verify-no-changes --severity=error
