@@ -183,6 +183,7 @@
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" />
     <PackageReference Include="Microsoft.UI.Xaml" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Uwp.Managed" />
+    <PackageReference Include="System.Private.Uri" />
     <PackageReference Include="Uno.Toolkit.UI" />
   </ItemGroup>
   <ItemGroup>

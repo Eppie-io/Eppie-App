@@ -110,6 +110,7 @@
     <PackageReference Include="CommunityToolkit.Uwp.Controls.TokenizingTextBox" />
     <PackageReference Include="Microsoft.UI.Xaml" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Uwp.Managed" />
+    <PackageReference Include="System.Private.Uri" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core.Entities\Tuvi.Core.Entities.csproj">

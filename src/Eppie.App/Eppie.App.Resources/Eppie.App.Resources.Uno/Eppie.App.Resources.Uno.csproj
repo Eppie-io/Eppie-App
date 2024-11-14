@@ -34,6 +34,10 @@
     <FrameworkReference Update="Microsoft.Windows.SDK.NET.Ref" TargetingPackVersion="10.0.22621.28" /> -->
   </ItemGroup>
 
+  <ItemGroup>
+    <!-- 'System.Private.Uri' package is needed since updating from Uno 5.4.10 to 5.5.* -->
+    <PackageReference Include="System.Private.Uri" />
+  </ItemGroup>
 
   <Import Project="..\Eppie.App.Resources.Shared\Eppie.App.Resources.Shared.projitems" Label="Shared" />
   
