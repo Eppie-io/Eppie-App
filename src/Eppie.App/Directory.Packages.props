@@ -20,6 +20,8 @@
     <PackageVersion Include="Microsoft.UI.Xaml" Version="2.8.6" />
     <PackageVersion Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.9" />
     <PackageVersion Include="Microsoft.Xaml.Behaviors.Uwp.Managed" Version="2.0.1" />
+    <PackageVersion Include="System.IO.Packaging" Version="9.0.0" />
+    <PackageVersion Include="System.Private.Uri" Version="4.3.2" />
     <PackageVersion Include="Uno.Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.4.2" />
     <PackageVersion Include="Uno.Toolkit.UI" Version="6.1.8" />
   </ItemGroup>
