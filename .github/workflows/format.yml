@@ -40,13 +40,14 @@ jobs:
         include:
           - project: "src/Eppie.App/Eppie.App/Eppie.App.csproj"
             uno: "true"
-          - project: "src/Eppie.App/Eppie.App.UWP/Eppie.App.UWP.csproj"
-            uno: "false"
+          # https://github.com/dotnet/sdk/issues/43017  
+          # - project: "src/Eppie.App/Eppie.App.UWP/Eppie.App.UWP.csproj"
+          #  uno: "false"
 
     runs-on: ubuntu-latest
 
     env:
-      dotnet-version: '8.x'
+      dotnet-version: '9.x'
 
     steps:
       - name: Checkout
