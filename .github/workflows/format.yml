@@ -46,9 +46,6 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    env:
-      dotnet-version: '9.x'
-
     steps:
       - name: Checkout
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
@@ -56,10 +53,15 @@ jobs:
           fetch-depth: 0
           submodules: recursive
 
-      - name: Setup .NET
+      - name: Setup .NET 8
         uses: actions/setup-dotnet@6bd8b7f7774af54e05809fcc5431931b3eb1ddee # v4.0.1
         with:
-          dotnet-version: ${{ env.dotnet-version }}
+          dotnet-version: 8.x
+
+      - name: Setup .NET 9
+        uses: actions/setup-dotnet@6bd8b7f7774af54e05809fcc5431931b3eb1ddee # v4.0.1
+        with:
+          dotnet-version: 9.x
 
       - name: Setup the Uno Platform
         if: matrix.uno == 'true'
