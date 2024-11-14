@@ -10,6 +10,12 @@
     <AssemblyName>Eppie.App.UI</AssemblyName>
     <RootNamespace>Eppie.App.UI</RootNamespace>
 
+    <!-- WindowsSdkPackageVersion is needed since updating from Uno 5.4.10 to 5.5.* -->
+    <WindowsSdkPackageVersion>10.0.19041.38</WindowsSdkPackageVersion>
+
+    <!-- AllowUnsafeBlocks is needed since updating from Uno 5.4.10 to 5.5.* -->
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+
     <!--
       UnoFeatures let's you quickly add and manage implicit package references based on the features you want to use.
       https://aka.platform.uno/singleproject-features
