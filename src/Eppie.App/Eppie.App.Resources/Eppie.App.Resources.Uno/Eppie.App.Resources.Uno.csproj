@@ -10,12 +10,6 @@
     <AssemblyName>Eppie.App.Resources</AssemblyName>
     <RootNamespace>Eppie.App.Resources</RootNamespace>
 
-    <!-- WindowsSdkPackageVersion is needed since updating from Uno 5.4.10 to 5.5.* -->
-    <WindowsSdkPackageVersion>10.0.19041.38</WindowsSdkPackageVersion>
-
-    <!-- AllowUnsafeBlocks is needed since updating from Uno 5.4.10 to 5.5.* -->
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-
     <!--
       UnoFeatures let's you quickly add and manage implicit package references based on the features you want to use.
       https://aka.platform.uno/singleproject-features
@@ -41,7 +35,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!-- 'System.Private.Uri' package is needed since updating from Uno 5.4.10 to 5.5.* -->
+    <!-- The default version of the 'System.Private.Uri' package is 4.3.0, which has a vulnerability -->
     <PackageReference Include="System.Private.Uri" />
   </ItemGroup>
 
