@@ -11,14 +11,11 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Authorization\AuthConfig.Uno.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Authorization\AuthConfig.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Authorization\AuthConfig.UWP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Authorization\WindowsAuthenticationBroker.UWP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\BitmapTools.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\BrandLoader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\NotificationManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\DispatcherService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ErrorHandler.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\PurchaseService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\LauncherService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\LocalizationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\LocalSettingsService.cs" />
