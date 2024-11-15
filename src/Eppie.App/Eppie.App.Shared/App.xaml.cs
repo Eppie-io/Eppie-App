@@ -43,10 +43,18 @@ namespace Eppie.App.Shared
         /// </summary>
         public App()
         {
-            InitializeLogging();
-            InitializeComponent();
-            SubscribeToEvents();
-            ConfigureServices();
+            try
+            {
+                InitializeLogging();
+                InitializeComponent();
+                SubscribeToEvents();
+                ConfigureServices();
+                InitializeNotifications();
+            }
+            catch (Exception ex)
+            {
+                OnError(ex);
+            }
         }
 
         private static void InitializeLogging()
