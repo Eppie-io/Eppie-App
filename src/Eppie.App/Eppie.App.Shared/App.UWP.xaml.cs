@@ -128,7 +128,7 @@ namespace Eppie.App.Shared
         {
             Suspending += OnSuspending;
         }
-        
+
         private async void InitializeNotifications()
         {
             try
