@@ -11,7 +11,22 @@ namespace Tuvi.App.Shared.Authorization
     {
         public static AuthorizationConfiguration GetAuthorizationConfiguration()
         {
-            throw new NotImplementedException();
+            return new AuthorizationConfiguration
+            {
+                AuthenticationBrokerCreator = GetAuthenticationBroker,
+                GoogleConfigurationCreator = () => new GoogleConfiguration
+                {
+                    ClientId = "<ClientId>",
+                    RedirectUri = new Uri("<RedirectUri>"),
+                    ScopeList = GmailScope
+                },
+                OutlookConfigurationCreator = () => new OutlookConfiguration
+                {
+                    ClientId = "<ClientId>",
+                    RedirectUri = new Uri("<RedirectUri>"),
+                    ScopeList = OutlookScope
+                }
+            };
         }
     }
 }

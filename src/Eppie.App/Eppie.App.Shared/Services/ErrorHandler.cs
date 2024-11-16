@@ -11,8 +11,8 @@ namespace Tuvi.App.Shared.Services
     {
         private IMessageService MessageService { get; set; }
 
-        private readonly CoreDispatcher _dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
-        protected CoreDispatcher Dispatcher { get => _dispatcher; }
+        private readonly DispatcherService _dispatcher = new DispatcherService();
+        protected DispatcherService Dispatcher { get => _dispatcher; }
 
         public ErrorHandler()
         {
@@ -29,23 +29,16 @@ namespace Tuvi.App.Shared.Services
             LoggingExtension.Log(this).LogError(e, "");
             try
             {
-                if (Dispatcher.HasThreadAccess)
+                await Dispatcher.RunAsync(async () =>
                 {
-                    await OnErrorAsync(e, silent).ConfigureAwait(true);
-                }
-                else
-                {
-                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                    try
                     {
-                        try
-                        {
-                            await OnErrorAsync(e, silent).ConfigureAwait(true);
-                        }
-                        catch
-                        {
-                        }
-                    });
-                }
+                        await OnErrorAsync(e, silent).ConfigureAwait(true);
+                    }
+                    catch
+                    {
+                    }
+                });
             }
             catch
             {
