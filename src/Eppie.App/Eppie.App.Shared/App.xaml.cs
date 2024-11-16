@@ -43,10 +43,18 @@ namespace Eppie.App.Shared
         /// </summary>
         public App()
         {
-            InitializeLogging();
-            InitializeComponent();
-            SubscribeToEvents();
-            ConfigureServices();
+            try
+            {
+                InitializeLogging();
+                InitializeComponent();
+                SubscribeToEvents();
+                ConfigureServices();
+                InitializeNotifications();
+            }
+            catch (Exception ex)
+            {
+                OnError(ex);
+            }
         }
 
         private static void InitializeLogging()
@@ -91,6 +99,20 @@ namespace Eppie.App.Shared
             {
                 d.Dispose();
             }
+        }
+
+        private Frame CreateRootFrame()
+        {
+            var frame = new Frame();
+            frame.NavigationFailed += OnNavigationFailed;
+
+            // ToDo: use nameof(Tuvi.App.Shared.Views) and add dot(.) inside NavigationService
+            NavigationService = new NavigationService(frame, "Tuvi.App.Shared.Views.");
+
+            _errorHandler = new ErrorHandler();
+            _errorHandler.SetMessageService(new MessageService());
+
+            return frame;
         }
 
         private async void OnWipeAllDataNeeded(object sender, EventArgs e)
