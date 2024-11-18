@@ -32,17 +32,10 @@
 
         </DataTemplate>
 
-        <Style x:Key="DefaultProviderItemStyle" TargetType="ListViewItem">
-            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-            <Setter Property="Margin" Value="0" />
-            <Setter Property="Padding" Value="0" />
-        </Style>
-
     </UserControl.Resources>
 
     <Grid>
-        <ListView ItemContainerStyle="{StaticResource DefaultProviderItemStyle}"
-                  ItemTemplate="{StaticResource DefaultProviderItemTemplate}"
+        <ListView ItemTemplate="{StaticResource DefaultProviderItemTemplate}"
                   ItemsSource="{x:Bind Items, Mode=OneWay}"
                   SelectedItem="{x:Bind SelectedItem, Mode=TwoWay}" />
     </Grid>

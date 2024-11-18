@@ -59,18 +59,11 @@
             </Grid>
         </DataTemplate>
 
-        <Style x:Key="ContactItemContainerStyle"
-               BasedOn="{StaticResource DefaultListViewItemContainerStyle}"
-               TargetType="ListViewItem">
-            <Setter Property="Padding" Value="4" />
-        </Style>
-
     </UserControl.Resources>
 
     <Grid>
         <ListView Padding="0,0,20,0"
                   IsItemClickEnabled="True"
-                  ItemContainerStyle="{StaticResource ContactItemContainerStyle}"
                   ItemTemplate="{StaticResource ContactItemTemplate}"
                   ItemsSource="{x:Bind ContactsModel.Contacts, Mode=OneWay}"
                   SelectedItem="{x:Bind ContactsModel.SelectedContact, Mode=TwoWay}"

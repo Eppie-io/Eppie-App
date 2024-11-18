@@ -12,16 +12,6 @@
                        d:DesignWidth="400"
                        mc:Ignorable="d">
 
-    <local:BaseUserControl.Resources>
-
-        <Style x:Key="DefaultMessageItemStyle" TargetType="ListViewItem">
-            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-            <Setter Property="Margin" Value="0" />
-            <Setter Property="Padding" Value="0" />
-        </Style>
-
-    </local:BaseUserControl.Resources>
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -62,7 +52,6 @@
                   IncrementalLoadingThreshold="1"
                   IncrementalLoadingTrigger="Edge"
                   IsItemClickEnabled="True"
-                  ItemContainerStyle="{StaticResource DefaultMessageItemStyle}"
                   ItemTemplate="{x:Bind ItemTemplate}"
                   ItemsSource="{x:Bind Messages, Mode=OneWay}"
                   SelectionChanged="MessageListView_SelectionChanged"

@@ -76,12 +76,6 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
 
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="Padding" Value="8" />
-                    </Style>
-                </ListView.ItemContainerStyle>
-
             </ListView>
 
         </ScrollViewer>
