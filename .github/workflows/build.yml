@@ -111,7 +111,7 @@ jobs:
 
     steps:
       - name: Support longpaths
-        if: ${{ matrix.os == 'windows-latest'}}
+        if: ${{ runner.os == 'Windows'}}
         run: git config --system core.longpaths true
 
       - name: Checkout
@@ -139,7 +139,7 @@ jobs:
         uses: finebits/github-actions/toolset/select-configuration@4a126d80a11c5fdc83ce884d3d23dffb30bc4495 # v2.0.0
         with:
           json-file: ./.github/configurations/workload.json
-          keywords: $RUNNER_OS
+          keywords: ${{ runner.os }}
 
       - name: Install Workload
         if: matrix.prerequisites.uno-platform == 'true'
