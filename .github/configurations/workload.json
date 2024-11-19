@@ -1,0 +1,15 @@
+[
+    {
+        "keywords": [
+            "Windows",
+            "macOS"
+        ],
+        "workload-ids": "android ios maccatalyst macos maui"
+    },
+    {
+        "keywords": [
+            "Linux"
+        ],
+        "workload-ids": "android maui-android"
+    }
+]

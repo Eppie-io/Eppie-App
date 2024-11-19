@@ -79,7 +79,7 @@ jobs:
         run: |
           echo "BUILD_CONFIG_KEYWORDS=${{ github.event.inputs.framework }},${{ github.event.inputs.os }}" >> $GITHUB_ENV
 
-      - name: Select configs
+      - name: Select Build config
         id: build-config
         uses: finebits/github-actions/toolset/select-configuration@4a126d80a11c5fdc83ce884d3d23dffb30bc4495 # v2.0.0
         with:
@@ -120,14 +120,33 @@ jobs:
           fetch-depth: 0
           submodules: recursive
 
-      - name: Setup .NET 8
+      - name: Copy global.json
+        shell: bash
+        run: cp ./src/Eppie.App/global.json global.json
+
+      - name: Setup .NET
         uses: actions/setup-dotnet@6bd8b7f7774af54e05809fcc5431931b3eb1ddee # v4.0.1
         with:
-          dotnet-version: 8.x
+          global-json-file: global.json
 
       - name: Setup msbuild
         if: matrix.prerequisites.msbuild == 'true'
         uses: microsoft/setup-msbuild@6fb02220983dee41ce7ae257b6f4d8f9bf5ed4ce # v2.0.0
+
+      - name: Select Workload config
+        if: matrix.prerequisites.uno-platform == 'true'
+        id: workload-config
+        uses: finebits/github-actions/toolset/select-configuration@4a126d80a11c5fdc83ce884d3d23dffb30bc4495 # v2.0.0
+        with:
+          json-file: ./.github/configurations/workload.json
+          keywords: $RUNNER_OS
+
+      - name: Install Workload
+        if: matrix.prerequisites.uno-platform == 'true'
+        shell: bash
+        run: |
+          ids="${{ fromJson(steps.workload-config.outputs.config-json)[0].workload-ids }}"
+          dotnet workload install $ids --source "https://api.nuget.org/v3/index.json"
 
       - name: Setup the Uno Platform
         if: matrix.prerequisites.uno-platform == 'true'
