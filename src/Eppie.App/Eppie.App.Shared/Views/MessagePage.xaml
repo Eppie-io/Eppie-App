@@ -145,7 +145,7 @@
 
             <StackPanel Grid.Column="1" Orientation="Horizontal">
 
-                <TextBlock Margin="4,4,0,0" Text="{x:Bind ViewModel.MessageInfo.MessageSender, Mode=OneWay}" />
+                <TextBlock Margin="4,4,0,0" Text="{x:Bind ViewModel.MessageInfo.MessageSender, Mode=OneWay}" IsTextSelectionEnabled="True"/>
 
                 <FontIcon Margin="4,4,0,0"
                           FontSize="14"
@@ -168,7 +168,8 @@
 
             <TextBlock Grid.Column="1"
                        Margin="4,4,0,0"
-                       Text="{x:Bind ViewModel.MessageInfo.MessageReceiver, Mode=OneWay}" />
+                       Text="{x:Bind ViewModel.MessageInfo.MessageReceiver, Mode=OneWay}"
+                       IsTextSelectionEnabled="True" />
 
         </Grid>
 
@@ -186,7 +187,8 @@
 
             <TextBlock Grid.Column="1"
                        Margin="4,4,0,0"
-                       Text="{x:Bind ViewModel.MessageInfo.MessageCopy, Mode=OneWay}" />
+                       Text="{x:Bind ViewModel.MessageInfo.MessageCopy, Mode=OneWay}"
+                       IsTextSelectionEnabled="True" />
 
         </Grid>
 
@@ -218,7 +220,8 @@
 
             <TextBlock Grid.Column="1"
                        Margin="4,4,0,0"
-                       Text="{x:Bind ViewModel.MessageInfo.MessageSubject, Mode=OneWay}" />
+                       Text="{x:Bind ViewModel.MessageInfo.MessageSubject, Mode=OneWay}"
+                       IsTextSelectionEnabled="True" />
 
         </Grid>
 
