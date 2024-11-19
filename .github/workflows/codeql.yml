@@ -41,7 +41,7 @@ jobs:
 
     steps:
       - name: Support longpaths
-        if: ${{ runner.os == 'Windows'}}
+        if: runner.os == 'Windows'
         run: git config --system core.longpaths true
 
       - name: Checkout repository
@@ -54,6 +54,7 @@ jobs:
         uses: ./.github/actions/install-prerequisites
         with:
           uno-platform: ${{ matrix.language == 'csharp' }}
+          msbuild: ${{ matrix.language == 'csharp' }}
 
       # Initializes the CodeQL tools for scanning.
       - name: Initialize CodeQL
@@ -67,23 +68,17 @@ jobs:
           # Details on CodeQL's query packs refer to : https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#using-queries-in-ql-packs
           # queries: security-extended,security-and-quality
 
+      - name: Restore
+        if: matrix.language == 'csharp'
+        shell: pwsh
+        run: |
+          msbuild -target:Restore -verbosity:minimal -consoleLoggerParameters:Summary ./src/Eppie.App/Eppie.App.sln
 
-      # Autobuild attempts to build any compiled languages  (C/C++, C#, Go, or Java).
-      # If this step fails, then you should remove it and run the build manually (see below)
-      - name: Autobuild
-        uses: github/codeql-action/autobuild@461ef6c76dfe95d5c364de2f431ddbd31a417628 # v3.26.9
-        with:
-          working-directory: ${{ github.workspace }}/src/Eppie.App
-
-      # ℹ️ Command-line programs to run using the OS shell.
-      # 📚 See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
-
-      #   If the Autobuild fails above, remove it and uncomment the following three lines.
-      #   modify them (or add more) to build your code if your project, please refer to the EXAMPLE below for guidance.
-
-      # - run: |
-      #     echo "Run, Build Application using script"
-      #     ./location_of_script_within_repo/buildscript.sh
+      - name: Build
+        if: matrix.language == 'csharp'
+        shell: pwsh
+        run: |
+          msbuild -target:Rebuild -restore:True -property:Configuration=Debug -property:Platform="x64" -verbosity:minimal -consoleLoggerParameters:Summary ./src/Eppie.App/Eppie.App.sln
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@461ef6c76dfe95d5c364de2f431ddbd31a417628 # v3.26.9
