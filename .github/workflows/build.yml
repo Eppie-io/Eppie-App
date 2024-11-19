@@ -120,39 +120,11 @@ jobs:
           fetch-depth: 0
           submodules: recursive
 
-      - name: Copy global.json
-        shell: bash
-        run: cp ./src/Eppie.App/global.json global.json
-
-      - name: Setup .NET
-        uses: actions/setup-dotnet@6bd8b7f7774af54e05809fcc5431931b3eb1ddee # v4.0.1
+      - name: Install Prerequisites
+        uses: ./.github/actions/install-prerequisites
         with:
-          global-json-file: global.json
-
-      - name: Setup msbuild
-        if: matrix.prerequisites.msbuild == 'true'
-        uses: microsoft/setup-msbuild@6fb02220983dee41ce7ae257b6f4d8f9bf5ed4ce # v2.0.0
-
-      - name: Select Workload config
-        if: matrix.prerequisites.uno-platform == 'true'
-        id: workload-config
-        uses: finebits/github-actions/toolset/select-configuration@4a126d80a11c5fdc83ce884d3d23dffb30bc4495 # v2.0.0
-        with:
-          json-file: ./.github/configurations/workload.json
-          keywords: ${{ runner.os }}
-
-      - name: Install Workload
-        if: matrix.prerequisites.uno-platform == 'true'
-        shell: bash
-        run: |
-          ids="${{ fromJson(steps.workload-config.outputs.config-json)[0].workload-ids }}"
-          dotnet workload install $ids --source "https://api.nuget.org/v3/index.json"
-
-      - name: Setup the Uno Platform
-        if: matrix.prerequisites.uno-platform == 'true'
-        uses: finebits/github-actions/devhub/uno-platform/setup@4a126d80a11c5fdc83ce884d3d23dffb30bc4495 # v2.0.0
-        with:
-          uno-check-manifest: https://raw.githubusercontent.com/unoplatform/uno.check/95904fd037afa7714b695716dddfc5f4c2acf138/manifests/uno.ui.manifest.json  # "DOTNET_SDK_VERSION": "8.0.401"
+          uno-platform: ${{ matrix.prerequisites.uno-platform == 'true' }}
+          msbuild: ${{ matrix.prerequisites.msbuild == 'true' }}
 
       - name: Restore via dotnet
         if: matrix.restore.tool == 'dotnet'
