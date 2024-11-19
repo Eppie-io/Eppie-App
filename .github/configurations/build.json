@@ -266,7 +266,7 @@
         },
         "restore": {
             "tool": "msbuild",
-            "project": "./src/Eppie.App/Eppie.App.sln",
+            "project": "./src/Eppie.App/Eppie.App.UWP/Eppie.App.UWP.csproj",
             "extra": "-verbosity:minimal -consoleLoggerParameters:Summary"
         },
         "build": {
