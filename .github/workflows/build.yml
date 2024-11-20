@@ -114,7 +114,7 @@ jobs:
       - name: Initializing configuration
         shell: bash
         run: |
-          echo "BUILD_CONFIGURATION=${{ matrix.configuration }}" >> $GITHUB_ENV
+          echo "BUILD_CONFIGURATION=${{ matrix.build.configuration }}" >> $GITHUB_ENV
 
       - name: Read input configuration
         if: github.event_name == 'workflow_dispatch'
