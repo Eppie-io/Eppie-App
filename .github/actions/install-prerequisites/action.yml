@@ -41,18 +41,20 @@ runs:
   using: "composite"
 
   steps:
+    - name: Setup msbuild
+      if: inputs.msbuild == 'true'
+      uses: microsoft/setup-msbuild@6fb02220983dee41ce7ae257b6f4d8f9bf5ed4ce # v2.0.0
+
     - name: Copy global.json
+      if: inputs.uno-platform == 'true'
       shell: bash
       run: cp ${{ inputs.global-json }} global.json
 
     - name: Setup .NET
+      if: inputs.uno-platform == 'true'
       uses: actions/setup-dotnet@6bd8b7f7774af54e05809fcc5431931b3eb1ddee # v4.0.1
       with:
         global-json-file: global.json
-
-    - name: Setup msbuild
-      if: inputs.msbuild == 'true'
-      uses: microsoft/setup-msbuild@6fb02220983dee41ce7ae257b6f4d8f9bf5ed4ce # v2.0.0
 
     - name: Select Workload config
       if: inputs.uno-platform == 'true'
