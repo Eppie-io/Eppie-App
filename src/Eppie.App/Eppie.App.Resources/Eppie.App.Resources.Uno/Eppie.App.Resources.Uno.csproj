@@ -11,6 +11,8 @@
     <RootNamespace>Eppie.App.Resources</RootNamespace>
 
     <CsWinRTAotOptimizerEnabled>false</CsWinRTAotOptimizerEnabled>
+    <EmitCompilerGeneratedFiles>false</EmitCompilerGeneratedFiles>
+    <CompilerGeneratedFilesOutputPath>generated</CompilerGeneratedFilesOutputPath>
 
     <!--
       UnoFeatures let's you quickly add and manage implicit package references based on the features you want to use.

@@ -6,6 +6,8 @@
     <UnoSingleProject>true</UnoSingleProject>
 
     <CsWinRTAotOptimizerEnabled>false</CsWinRTAotOptimizerEnabled>
+    <EmitCompilerGeneratedFiles>false</EmitCompilerGeneratedFiles>
+    <CompilerGeneratedFilesOutputPath>generated</CompilerGeneratedFilesOutputPath>
 
     <!-- Display name -->
     <ApplicationTitle>Eppie.App</ApplicationTitle>
