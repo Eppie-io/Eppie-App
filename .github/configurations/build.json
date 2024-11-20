@@ -138,14 +138,14 @@
         "restore": {
             "tool": "msbuild",
             "project": "./src/Eppie.App/Eppie.App.sln",
-            "extra": "-verbosity:minimal -consoleLoggerParameters:Summary"
+            "extra": "-verbosity:minimal -consoleLoggerParameters:Summary -maxCpuCount"
         },
         "build": {
             "tool": "msbuild",
             "project": "./src/Eppie.App/Eppie.App/Eppie.App.csproj",
             "configuration": "release",
             "framework": "net8.0-windows10.0.19041",
-            "extra": "-verbosity:minimal -consoleLoggerParameters:Summary"
+            "extra": "-verbosity:minimal -consoleLoggerParameters:Summary -maxCpuCount"
         }
     },
 
@@ -256,7 +256,6 @@
         "keywords": [
             "uwp",
             "windows",
-            "autobuild",
             "all"
         ],
         "os": "windows-latest",
@@ -266,14 +265,14 @@
         },
         "restore": {
             "tool": "msbuild",
-            "project": "./src/Eppie.App/Eppie.App.sln",
-            "extra": "-verbosity:minimal -consoleLoggerParameters:Summary"
+            "project": "./src/Eppie.App/Eppie.App.UWP/Eppie.App.UWP.csproj",
+            "extra": "-verbosity:minimal -consoleLoggerParameters:Summary -maxCpuCount"
         },
         "build": {
             "tool": "msbuild",
             "project": "./src/Eppie.App/Eppie.App.UWP/Eppie.App.UWP.csproj",
             "configuration": "release",
-            "extra": "-verbosity:minimal -consoleLoggerParameters:Summary"
+            "extra": "-verbosity:minimal -consoleLoggerParameters:Summary -maxCpuCount"
         }
     },
 
@@ -288,9 +287,9 @@
         },
         "build": {
             "tool": "msbuild",
-            "project": "./src/Eppie.App/Eppie.App/Eppie.App.csproj",
-            "configuration": "release",
-            "extra": "-restore:True -verbosity:minimal -consoleLoggerParameters:Summary"
+            "project": "./src/Eppie.App/Eppie.App.sln",
+            "configuration": "debug",
+            "extra": "-restore:True -verbosity:minimal -consoleLoggerParameters:Summary -maxCpuCount"
         }
     }
 ]

@@ -5,6 +5,9 @@
     <OutputType>Exe</OutputType>
     <UnoSingleProject>true</UnoSingleProject>
 
+    <EmitCompilerGeneratedFiles>false</EmitCompilerGeneratedFiles>
+    <CompilerGeneratedFilesOutputPath>generated</CompilerGeneratedFilesOutputPath>
+
     <!-- Display name -->
     <ApplicationTitle>Eppie.App</ApplicationTitle>
     <!-- App Identifier -->
@@ -45,6 +48,12 @@
     </UnoFeatures>
     <DefaultLanguage>en</DefaultLanguage>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(RuntimeIdentifier)'==''">
+    <!-- Default values for command line builds -->
+    <RuntimeIdentifier Condition="$(TargetFramework.Contains('ios'))">iossimulator-x64</RuntimeIdentifier>
+    <RuntimeIdentifier Condition="$(TargetFramework.Contains('maccatalyst'))">maccatalyst-x64</RuntimeIdentifier>
   </PropertyGroup>
 
   <ItemGroup>
