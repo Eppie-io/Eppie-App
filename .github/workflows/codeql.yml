@@ -56,13 +56,6 @@ jobs:
           uno-platform: ${{ matrix.language == 'csharp' }}
           msbuild: ${{ matrix.language == 'csharp' }}
 
-      - name: Display .NET information
-        if: matrix.language == 'csharp'
-        shell: bash
-        run: |
-          dotnet --info
-          dotnet workload list
-
       # Initializes the CodeQL tools for scanning.
       - name: Initialize CodeQL
         uses: github/codeql-action/init@461ef6c76dfe95d5c364de2f431ddbd31a417628 # v3.26.9
@@ -75,17 +68,11 @@ jobs:
           # Details on CodeQL's query packs refer to : https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#using-queries-in-ql-packs
           # queries: security-extended,security-and-quality
 
-      - name: Restore
-        if: matrix.language == 'csharp'
-        shell: pwsh
-        run: |
-          msbuild -target:Restore -verbosity:minimal -consoleLoggerParameters:Summary ./src/Eppie.App/Eppie.App.sln
-
       - name: Build
         if: matrix.language == 'csharp'
         shell: pwsh
         run: |
-          msbuild -target:Rebuild -restore:True -property:Configuration=Debug -property:Platform="x64" -verbosity:minimal -consoleLoggerParameters:Summary ./src/Eppie.App/Eppie.App.sln
+          msbuild -target:Rebuild -restore:True -verbosity:minimal -consoleLoggerParameters:Summary ./src/Eppie.App/Eppie.App.sln
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@461ef6c76dfe95d5c364de2f431ddbd31a417628 # v3.26.9
