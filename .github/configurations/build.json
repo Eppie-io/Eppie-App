@@ -256,7 +256,6 @@
         "keywords": [
             "uwp",
             "windows",
-            "autobuild",
             "all"
         ],
         "os": "windows-latest",
@@ -279,7 +278,8 @@
 
     {
         "keywords": [
-            "autobuild"
+            "autobuild",
+            "all"
         ],
         "os": "windows-latest",
         "prerequisites": {
@@ -288,7 +288,7 @@
         },
         "build": {
             "tool": "msbuild",
-            "project": "./src/Eppie.App/Eppie.App/Eppie.App.csproj",
+            "project": "./src/Eppie.App/Eppie.App.sln",
             "configuration": "release",
             "extra": "-restore:True -verbosity:minimal -consoleLoggerParameters:Summary"
         }

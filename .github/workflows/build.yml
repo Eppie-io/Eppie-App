@@ -100,7 +100,7 @@ jobs:
     name: ${{ matrix.build.framework }} ${{ matrix.os }} '${{ matrix.build.project }}'
     needs: prepare
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix: ${{ fromJson(needs.prepare.outputs.matrix) }}
 
     runs-on: ${{ matrix.os }}
