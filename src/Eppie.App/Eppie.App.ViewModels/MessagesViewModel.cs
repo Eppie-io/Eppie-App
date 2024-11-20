@@ -65,6 +65,9 @@ namespace Tuvi.App.ViewModels
 
         public ICommand CancelMessagesDeleteCommand => new RelayCommand(CancelMessagesDelete);
 
+        public ICommand StartDragMessagesCommand => new RelayCommand<IList<object>>(StartDragMessages);
+
+
         private ManagedCollection<MessageInfo> _messageList;
         public ManagedCollection<MessageInfo> MessageList
         {
@@ -508,6 +511,11 @@ namespace Tuvi.App.ViewModels
             {
                 // If token source was disposed, do nothing
             }
+        }
+
+        private void StartDragMessages(IList<object> parameter)
+        {
+
         }
     }
 }

@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Input;
 using Tuvi.App.ViewModels;
+using Windows.ApplicationModel.DataTransfer;
+
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -106,6 +108,15 @@ namespace Tuvi.App.Shared.Controls
             DependencyProperty.Register(nameof(IsWaitingForMoreMessages), typeof(bool), typeof(MessageListControl), new PropertyMetadata(false));
 
 
+        public ICommand StartDragMessagesCommand
+        {
+            get { return (ICommand)GetValue(StartDragMessagesCommandProperty); }
+            set { SetValue(StartDragMessagesCommandProperty, value); }
+        }
+        public static readonly DependencyProperty StartDragMessagesCommandProperty =
+            DependencyProperty.Register(nameof(StartDragMessagesCommand), typeof(ICommand), typeof(MessageListControl), new PropertyMetadata(null));
+
+
         public MessageListControl()
         {
             this.InitializeComponent();
@@ -137,6 +148,17 @@ namespace Tuvi.App.Shared.Controls
             catch (Exception ex)
             {
                 OnError(ex);
+            }
+        }
+
+        private void MessageListView_DragItemsStarting(object sender, DragItemsStartingEventArgs e)
+        {
+            if (e.Items != null)
+            {
+                e.Data.SetText(nameof(MessageInfo));
+                e.Data.RequestedOperation = DataPackageOperation.Move;
+
+                StartDragMessagesCommand?.Execute(e.Items);
             }
         }
     }

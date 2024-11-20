@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -106,5 +107,9 @@ namespace Tuvi.App.ViewModels
             return Items.FirstOrDefault(item => item.Email.HasSameAddress(email));
         }
 
+        public void MoveMessages(MailBoxItem targetMailBoxItem)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

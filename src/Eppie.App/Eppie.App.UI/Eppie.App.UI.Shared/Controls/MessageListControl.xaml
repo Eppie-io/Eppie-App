@@ -59,6 +59,8 @@
                   Grid.Row="2"
                   Padding="0,0,20,0"
                   DataFetchSize="2"
+                  CanDragItems="True"
+                  AllowDrop="False"
                   IncrementalLoadingThreshold="1"
                   IncrementalLoadingTrigger="Edge"
                   IsItemClickEnabled="True"
@@ -66,7 +68,8 @@
                   ItemTemplate="{x:Bind ItemTemplate}"
                   ItemsSource="{x:Bind Messages, Mode=OneWay}"
                   SelectionChanged="MessageListView_SelectionChanged"
-                  SelectionMode="{x:Bind SelectionMode, Mode=OneWay}">
+                  SelectionMode="{x:Bind SelectionMode, Mode=OneWay}"
+                  DragItemsStarting="MessageListView_DragItemsStarting">
             <interactivity:Interaction.Behaviors>
                 <behaviors:ListViewItemClickBehavior ClickCommand="{x:Bind MessageClickCommand, Mode=OneWay}" />
             </interactivity:Interaction.Behaviors>
