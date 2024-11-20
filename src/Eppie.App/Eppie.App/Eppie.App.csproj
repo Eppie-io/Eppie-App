@@ -5,7 +5,6 @@
     <OutputType>Exe</OutputType>
     <UnoSingleProject>true</UnoSingleProject>
 
-    <CsWinRTAotOptimizerEnabled>false</CsWinRTAotOptimizerEnabled>
     <EmitCompilerGeneratedFiles>false</EmitCompilerGeneratedFiles>
     <CompilerGeneratedFilesOutputPath>generated</CompilerGeneratedFilesOutputPath>
 

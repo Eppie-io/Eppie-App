@@ -10,7 +10,6 @@
     <AssemblyName>Eppie.App.Resources</AssemblyName>
     <RootNamespace>Eppie.App.Resources</RootNamespace>
 
-    <CsWinRTAotOptimizerEnabled>false</CsWinRTAotOptimizerEnabled>
     <EmitCompilerGeneratedFiles>false</EmitCompilerGeneratedFiles>
     <CompilerGeneratedFilesOutputPath>generated</CompilerGeneratedFilesOutputPath>
 
