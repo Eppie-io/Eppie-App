@@ -4,7 +4,8 @@
     "Uno.Sdk": "5.5.43"
   },
   "sdk":{
-    "version": "8.0.404",
-    "allowPrerelease": false
+    "version": "8.0.400",
+    "allowPrerelease": false,
+    "rollForward": "latestFeature"
   }
 }

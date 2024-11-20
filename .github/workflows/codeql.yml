@@ -56,6 +56,13 @@ jobs:
           uno-platform: ${{ matrix.language == 'csharp' }}
           msbuild: ${{ matrix.language == 'csharp' }}
 
+      - name: Display .NET information
+        if: matrix.language == 'csharp'
+        shell: bash
+        run: |
+          dotnet --info
+          dotnet workload list
+
       # Initializes the CodeQL tools for scanning.
       - name: Initialize CodeQL
         uses: github/codeql-action/init@461ef6c76dfe95d5c364de2f431ddbd31a417628 # v3.26.9
