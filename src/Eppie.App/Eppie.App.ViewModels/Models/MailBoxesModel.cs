@@ -34,10 +34,18 @@ namespace Tuvi.App.ViewModels
             set { SetProperty(ref _itemClickCommand, value); }
         }
 
+        private ICommand _itemDropCommand;
+        public ICommand ItemDropCommand
+        {
+            get { return _itemDropCommand; }
+            set { SetProperty(ref _itemDropCommand, value); }
+        }
 
-        public MailBoxesModel(ICommand itemClickCommand)
+
+        public MailBoxesModel(ICommand itemClickCommand, ICommand itemDropCommand)
         {
             ItemClickCommand = itemClickCommand;
+            ItemDropCommand = itemDropCommand;
         }
 
 
@@ -107,9 +115,9 @@ namespace Tuvi.App.ViewModels
             return Items.FirstOrDefault(item => item.Email.HasSameAddress(email));
         }
 
-        public void MoveMessages(MailBoxItem targetMailBoxItem)
+        public void ItemDrop(MailBoxItem targetMailBoxItem)
         {
-            throw new NotImplementedException();
+            ItemDropCommand.Execute(targetMailBoxItem);
         }
     }
 }

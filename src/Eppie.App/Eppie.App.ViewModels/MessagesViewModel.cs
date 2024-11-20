@@ -515,7 +515,7 @@ namespace Tuvi.App.ViewModels
 
         private void StartDragMessages(IList<object> parameter)
         {
-
+            DragAndDropService.SetDraggedMessages(parameter.Select(x => x as MessageInfo).ToList());
         }
     }
 }

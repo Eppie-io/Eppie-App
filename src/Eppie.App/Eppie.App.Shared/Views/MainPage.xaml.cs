@@ -25,6 +25,8 @@ namespace Tuvi.App.Shared.Views
         public ICommand ShowAllMessagesCommand => new RelayCommand(ShowAllMessages);
 
         public ICommand MailBoxItemClickCommand => new RelayCommand<MailBoxItem>((mailBoxItem) => contentFrame.Navigate(typeof(FolderMessagesPage), mailBoxItem));
+        
+        public ICommand MailBoxItemDropCommand => new RelayCommand<MailBoxItem>(MailBoxItemDropMessages);
 
         public ICommand ContactItemClickCommand => new RelayCommand<ContactItem>((contactItem) => contentFrame.Navigate(typeof(ContactMessagesPage), contactItem));
 
@@ -40,7 +42,7 @@ namespace Tuvi.App.Shared.Views
         {
             this.InitializeComponent();
 
-            ViewModel.InitializeNavPanelTabModel(ContactItemClickCommand, ChangeContactPictureCommand, MailBoxItemClickCommand);
+            ViewModel.InitializeNavPanelTabModel(ContactItemClickCommand, ChangeContactPictureCommand, MailBoxItemClickCommand, MailBoxItemDropCommand);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -167,6 +169,11 @@ namespace Tuvi.App.Shared.Views
             {
                 infoBar.IsOpen = true;
             }
+        }
+
+        private void MailBoxItemDropMessages(MailBoxItem item)
+        {
+            ViewModel.MailBoxItemDropMessages(item);
         }
     }
 }

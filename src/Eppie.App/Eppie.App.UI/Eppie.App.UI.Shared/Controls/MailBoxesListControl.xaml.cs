@@ -99,7 +99,7 @@ namespace Tuvi.App.Shared.Controls
                 if (targetNode != null)
                 {
                     var targetMailBoxItem = targetNode.Content as MailBoxItem;
-                    MailBoxesModel.MoveMessages(targetMailBoxItem);
+                    MailBoxesModel.ItemDrop(targetMailBoxItem);
                 }
 
                 deferral.Complete();

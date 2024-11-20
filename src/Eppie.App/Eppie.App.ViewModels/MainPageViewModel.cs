@@ -678,10 +678,10 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        public void InitializeNavPanelTabModel(ICommand contactClickCommand, ICommand changeContactAvatarCommand, ICommand mailBoxItemClick)
+        public void InitializeNavPanelTabModel(ICommand contactClickCommand, ICommand changeContactAvatarCommand, ICommand mailBoxItemClick, ICommand mailBoxItemDrop)
         {
             ContactsModel contactsModel = CreateContactsModel(contactClickCommand, changeContactAvatarCommand);
-            MailBoxesModel mailBoxesModel = new MailBoxesModel(mailBoxItemClick);
+            MailBoxesModel mailBoxesModel = new MailBoxesModel(mailBoxItemClick, mailBoxItemDrop);
 
             NavPanelTabModel = new NavPanelTabModel(contactsModel, mailBoxesModel);
         }
@@ -717,6 +717,19 @@ namespace Tuvi.App.ViewModels
         {
             ContactsModel.SelectedContact = null;
             MailBoxesModel.SelectedItem = null;
+        }
+
+        public async void MailBoxItemDropMessages(MailBoxItem item)
+        {
+            try
+            {
+                var messages = DragAndDropService.GetDraggedMessages();
+                await Core.MoveMessagesAsync(messages.Select(x => x.MessageData).ToList(), item.Folder, CancellationToken.None).ConfigureAwait(true);
+            }
+            catch (Exception e)
+            {
+                OnError(e);
+            }
         }
     }
 }
