@@ -278,8 +278,7 @@
 
     {
         "keywords": [
-            "autobuild",
-            "all"
+            "autobuild"
         ],
         "os": "windows-latest",
         "prerequisites": {

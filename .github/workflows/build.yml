@@ -58,7 +58,7 @@ on: # yamllint disable-line rule:truthy
       - main
       - release/**
   schedule:
-  - cron: '0 0 * * 0'
+  - cron: '0 0 * * *'
 
 jobs:
 
