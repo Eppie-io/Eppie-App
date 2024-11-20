@@ -22,6 +22,12 @@
     -->
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(RuntimeIdentifier)'==''">
+    <!-- Default values for command line builds -->
+    <RuntimeIdentifier Condition="$(TargetFramework.Contains('ios'))">iossimulator-x64</RuntimeIdentifier>
+    <RuntimeIdentifier Condition="$(TargetFramework.Contains('maccatalyst'))">maccatalyst-x64</RuntimeIdentifier>
+  </PropertyGroup>
+
   <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">
     <!--
     If you encounter this error message:
