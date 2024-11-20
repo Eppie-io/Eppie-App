@@ -72,7 +72,7 @@ jobs:
         if: matrix.language == 'csharp'
         shell: pwsh
         run: |
-          msbuild -target:Rebuild -restore:True -verbosity:minimal -consoleLoggerParameters:Summary ./src/Eppie.App/Eppie.App.sln
+          msbuild -target:Rebuild -restore:True -verbosity:minimal -consoleLoggerParameters:Summary -maxCpuCount ./src/Eppie.App/Eppie.App.sln
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@461ef6c76dfe95d5c364de2f431ddbd31a417628 # v3.26.9
