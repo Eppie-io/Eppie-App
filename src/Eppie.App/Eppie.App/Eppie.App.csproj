@@ -5,6 +5,8 @@
     <OutputType>Exe</OutputType>
     <UnoSingleProject>true</UnoSingleProject>
 
+    <CsWinRTAotOptimizerEnabled>false</CsWinRTAotOptimizerEnabled>
+
     <!-- Display name -->
     <ApplicationTitle>Eppie.App</ApplicationTitle>
     <!-- App Identifier -->
