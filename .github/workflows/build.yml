@@ -22,7 +22,6 @@ name: "Build solution"
 run-name: >-
    ${{ github.event_name == 'schedule' && 'Build All' || '' }}
    ${{ github.event_name == 'workflow_dispatch' && format('Build: {0} ({1}) on {2} OS', github.event.inputs.framework, github.event.inputs.configuration, github.event.inputs.os ) || '' }}
-   ${{ github.event_name != 'workflow_dispatch' && github.event_name != 'schedule' && 'Build Solution' || '' }}
 
 on: # yamllint disable-line rule:truthy
   workflow_dispatch:
