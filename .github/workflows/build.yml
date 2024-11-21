@@ -74,24 +74,25 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Initializing default keywords
-        if: github.event_name != 'workflow_dispatch'
+      - name: Initializing config keywords
         shell: bash
         run: |
-          echo "BUILD_CONFIG_KEYWORDS=autobuild" >> $GITHUB_ENV
+          keywords="autobuild"
 
-      - name: Read input keywords
-        if: github.event_name == 'workflow_dispatch'
-        shell: bash
-        run: |
-          echo "BUILD_CONFIG_KEYWORDS=${{ github.event.inputs.framework }},${{ github.event.inputs.os }}" >> $GITHUB_ENV
+          if [[ ${{ github.event_name }} == 'schedule' ]]; then
+            keywords="all"
+          elif [[ ${{ github.event_name }} == 'workflow_dispatch' ]]; then
+            keywords="${{ github.event.inputs.framework }},${{ github.event.inputs.os }}"
+          fi
+
+          echo "EPPIE_BUILD_CONFIG_KEYWORDS=$keywords" >> $GITHUB_ENV
 
       - name: Select Build config
         id: build-config
         uses: finebits/github-actions/toolset/select-configuration@4a126d80a11c5fdc83ce884d3d23dffb30bc4495 # v2.0.0
         with:
           json-file: ./.github/configurations/build.json
-          keywords: ${{ env.BUILD_CONFIG_KEYWORDS }}
+          keywords: ${{ env.EPPIE_BUILD_CONFIG_KEYWORDS }}
 
       - name: Check configs
         shell: bash
@@ -116,13 +117,13 @@ jobs:
       - name: Initializing configuration
         shell: bash
         run: |
-          echo "BUILD_CONFIGURATION=${{ matrix.build.configuration }}" >> $GITHUB_ENV
+          configuration="${{ matrix.build.configuration }}"
 
-      - name: Read input configuration
-        if: github.event_name == 'workflow_dispatch'
-        shell: bash
-        run: |
-          echo "BUILD_CONFIGURATION=${{ github.event.inputs.configuration }}" >> $GITHUB_ENV
+          if [[ ${{ github.event_name }} == 'workflow_dispatch' ]]; then
+            configuration="${{ github.event.inputs.configuration }}"
+          fi
+
+          echo "EPPIE_BUILD_CONFIGURATION=$configuration" >> $GITHUB_ENV
 
       - name: Support longpaths
         if: ${{ runner.os == 'Windows'}}
@@ -163,7 +164,7 @@ jobs:
         shell: bash
         run: |
           project='${{ matrix.build.project }}'
-          configuration='${{ env.BUILD_CONFIGURATION }}'
+          configuration='${{ env.EPPIE_BUILD_CONFIGURATION }}'
           extra_options='${{ matrix.build.extra }}'
           framework='${{ matrix.build.framework }}'
           framework_option=$([ "$framework" != "" ] && echo "--framework=$framework" || echo "")
@@ -175,7 +176,7 @@ jobs:
         shell: pwsh
         run: |
           $project='${{ matrix.build.project }}'
-          $configuration='${{ env.BUILD_CONFIGURATION }}'
+          $configuration='${{ env.EPPIE_BUILD_CONFIGURATION }}'
           $extra_options=$('${{ matrix.build.extra }}' -split '\s+')
           $framework='${{ matrix.build.framework }}'
           $framework_option=$( if($framework) {"-property:TargetFramework=$framework"} else {""} )
