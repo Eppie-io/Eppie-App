@@ -419,11 +419,8 @@ namespace Tuvi.App.ViewModels
         {
             try
             {
-                // !TODO: we can't delete decentralized messages from the trash
-                // it will be done with TVM-535
                 var messages = parameter
                     .OfType<MessageInfo>()
-                    .Where(m => !(m.Folder.IsTrash && m.IsDecentralized))
                     .ToArray();
 
                 if (messages.Length == 0)
