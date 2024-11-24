@@ -731,5 +731,22 @@ namespace Tuvi.App.ViewModels
                 OnError(e);
             }
         }
+
+        public bool MailBoxItem_IsDropMessagesAllowed(MailBoxItem item)
+        {
+            bool res = false;
+            try
+            {
+                var messages = DragAndDropService.GetDraggedMessages();
+
+                res = messages.Any(x => x.Email == item.Email);
+            }
+            catch (Exception e)
+            {
+                OnError(e);
+            }
+
+            return res;
+        }
     }
 }

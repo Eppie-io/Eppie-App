@@ -25,8 +25,8 @@ namespace Tuvi.App.Shared.Views
         public ICommand ShowAllMessagesCommand => new RelayCommand(ShowAllMessages);
 
         public ICommand MailBoxItemClickCommand => new RelayCommand<MailBoxItem>((mailBoxItem) => contentFrame.Navigate(typeof(FolderMessagesPage), mailBoxItem));
-        
-        public ICommand MailBoxItemDropCommand => new RelayCommand<MailBoxItem>(MailBoxItemDropMessages);
+
+        public ICommand MailBoxItemDropCommand => new RelayCommand<MailBoxItem>(MailBoxItemDropMessages, IsDropMessagesAllowed);
 
         public ICommand ContactItemClickCommand => new RelayCommand<ContactItem>((contactItem) => contentFrame.Navigate(typeof(ContactMessagesPage), contactItem));
 
@@ -174,6 +174,11 @@ namespace Tuvi.App.Shared.Views
         private void MailBoxItemDropMessages(MailBoxItem item)
         {
             ViewModel.MailBoxItemDropMessages(item);
+        }
+
+        private bool IsDropMessagesAllowed(MailBoxItem item)
+        {
+            return ViewModel.MailBoxItem_IsDropMessagesAllowed(item);
         }
     }
 }

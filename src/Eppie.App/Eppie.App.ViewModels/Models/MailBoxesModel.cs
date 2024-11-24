@@ -119,5 +119,10 @@ namespace Tuvi.App.ViewModels
         {
             ItemDropCommand.Execute(targetMailBoxItem);
         }
+
+        public bool IsDropAllowed(MailBoxItem hoveredMailBoxItem)
+        {
+            return ItemDropCommand.CanExecute(hoveredMailBoxItem);
+        }
     }
 }

@@ -33,7 +33,7 @@ namespace Tuvi.App.Shared.Controls
 
         private void MailBoxTreeView_DragOver(object sender, DragEventArgs e)
         {
-            e.AcceptedOperation = DataPackageOperation.Move;
+            e.AcceptedOperation = DataPackageOperation.None;
 
             if (sender is TreeView treeView)
             {
@@ -41,9 +41,14 @@ namespace Tuvi.App.Shared.Controls
 
                 var hoveredNode = GetTreeViewNodeAtPoint(treeView, pointerPosition);
 
-                if (hoveredNode != null && hoveredNode.HasChildren)
+                var hoveredMailBoxItem = hoveredNode.Content as MailBoxItem;
+                if (hoveredMailBoxItem != null)
                 {
-                    hoveredNode.IsExpanded = true;
+                    if (MailBoxesModel.IsDropAllowed(hoveredMailBoxItem))
+                    {
+                        e.AcceptedOperation = DataPackageOperation.Move;
+                        hoveredNode.IsExpanded = hoveredNode.HasChildren;
+                    }
                 }
             }
         }
