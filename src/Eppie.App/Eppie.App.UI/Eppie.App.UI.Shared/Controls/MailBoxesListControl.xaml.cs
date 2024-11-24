@@ -31,7 +31,11 @@ namespace Tuvi.App.Shared.Controls
             this.InitializeComponent();
         }
 
+#if WINDOWS_UWP
         private void MailBoxTreeView_DragOver(object sender, DragEventArgs e)
+#else
+        private void MailBoxTreeView_DragOver(object sender, Microsoft.UI.Xaml.DragEventArgs e)
+#endif        
         {
             e.AcceptedOperation = DataPackageOperation.None;
 
@@ -94,7 +98,11 @@ namespace Tuvi.App.Shared.Controls
         }
 
 
+#if WINDOWS_UWP
         private void MailBoxTreeView_Drop(object sender, DragEventArgs e)
+#else
+        private void MailBoxTreeView_Drop(object sender, Microsoft.UI.Xaml.DragEventArgs e)
+#endif        
         {
             if (e.DataView.Contains(StandardDataFormats.Text))
             {
