@@ -50,10 +50,4 @@
         <Setter Property="FontSize" Value="10" />
     </Style>
 
-    <Style x:Key="DefaultListViewItemContainerStyle" TargetType="ListViewItem">
-        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="Margin" Value="0" />
-        <Setter Property="Padding" Value="0" />
-    </Style>
-
 </ResourceDictionary>

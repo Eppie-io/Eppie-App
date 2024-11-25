@@ -10,6 +10,9 @@
     <AssemblyName>Eppie.App.UI</AssemblyName>
     <RootNamespace>Eppie.App.UI</RootNamespace>
 
+    <EmitCompilerGeneratedFiles>false</EmitCompilerGeneratedFiles>
+    <CompilerGeneratedFilesOutputPath>generated</CompilerGeneratedFilesOutputPath>
+
     <!--
       UnoFeatures let's you quickly add and manage implicit package references based on the features you want to use.
       https://aka.platform.uno/singleproject-features
@@ -17,6 +20,12 @@
     <!--
     <UnoFeatures></UnoFeatures>
     -->
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(RuntimeIdentifier)'==''">
+    <!-- Default values for command line builds -->
+    <RuntimeIdentifier Condition="$(TargetFramework.Contains('ios'))">iossimulator-x64</RuntimeIdentifier>
+    <RuntimeIdentifier Condition="$(TargetFramework.Contains('maccatalyst'))">maccatalyst-x64</RuntimeIdentifier>
   </PropertyGroup>
 
   <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">
