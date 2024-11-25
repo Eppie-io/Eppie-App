@@ -1,7 +1,12 @@
 // this is missing
 //using Tuvi.App.Helpers;
+using System;
+using Newtonsoft.Json.Serialization;
+using Tuvi.App.Shared.Services;
 using Tuvi.App.ViewModels;
 using Tuvi.Core.Entities;
+using Windows.ApplicationModel.DataTransfer;
+
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -36,6 +41,34 @@ namespace Tuvi.App.Shared.Views
                 = ViewModel.IsEncrypted
                 = ViewModel.IsDecentralized
                 = StringHelper.IsDecentralizedEmail(ViewModel.From);
+        }
+
+        private async void NewMessagePage_Grid_Drop(object sender, DragEventArgs e)
+        {
+            try
+            {
+                if (e.DataView.Contains(StandardDataFormats.StorageItems))
+                {
+                    var deferral = e.GetDeferral();
+
+                    var items = await e.DataView.GetStorageItemsAsync();
+                    ViewModel.AttachFilesCommand.Execute(new StorageItemsService(items));
+
+                    deferral.Complete();
+                }
+            }
+            catch(Exception ex)
+            {
+                ViewModel.OnError(ex);
+            }
+        }
+
+        private void NewMessagePage_Grid_DragOver(object sender, DragEventArgs e)
+        {
+            if (e.DataView.Contains(StandardDataFormats.StorageItems))
+            {
+                e.AcceptedOperation = DataPackageOperation.Copy;
+            }
         }
 
 #if __ANDROID__ || __IOS__

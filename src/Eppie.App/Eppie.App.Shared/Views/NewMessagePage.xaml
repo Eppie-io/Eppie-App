@@ -234,7 +234,10 @@
         <!--  message body  -->
         <Grid Grid.Row="3"
               BorderBrush="#FFE0E0E0"
-              BorderThickness="1">
+              BorderThickness="1"
+              AllowDrop="True"
+              Drop="NewMessagePage_Grid_Drop"
+              DragOver="NewMessagePage_Grid_DragOver">
 
             <eppie_controls:EditMessageControl Text="{x:Bind ViewModel.TextBody, Mode=TwoWay}"
                                                Html="{x:Bind ViewModel.HtmlBody, Mode=TwoWay}"
@@ -257,7 +260,10 @@
                                         ItemTemplate="{StaticResource RemovableAttachmentItemTemplate}"
                                         Items="{x:Bind ViewModel.Attachments, Mode=OneWay}"
                                         ListAreaHeight="80"
-                                        Visibility="{x:Bind ViewModel.HasAttachments, Mode=OneWay}" />
+                                        Visibility="{x:Bind ViewModel.HasAttachments, Mode=OneWay}"
+                                        AllowDrop="True"
+                                        Drop="NewMessagePage_Grid_Drop"
+                                        DragOver="NewMessagePage_Grid_DragOver"/>
 
     </Grid>
 </local:NewMessagePageBase>
