@@ -56,7 +56,7 @@ namespace Tuvi.App.Shared.Views
                     deferral.Complete();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ViewModel.OnError(ex);
             }
