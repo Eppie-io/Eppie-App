@@ -1,7 +1,6 @@
 using Tuvi.App.ViewModels;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
-using System;
 using Microsoft.UI.Xaml.Controls;
 
 #if WINDOWS_UWP
