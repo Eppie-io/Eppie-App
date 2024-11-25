@@ -1,7 +1,11 @@
 // this is missing
 //using Tuvi.App.Helpers;
+using System;
+using Tuvi.App.Shared.Services;
 using Tuvi.App.ViewModels;
 using Tuvi.Core.Entities;
+using Windows.ApplicationModel.DataTransfer;
+
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -36,6 +40,42 @@ namespace Tuvi.App.Shared.Views
                 = ViewModel.IsEncrypted
                 = ViewModel.IsDecentralized
                 = StringHelper.IsDecentralizedEmail(ViewModel.From);
+        }
+
+#if WINDOWS_UWP
+        private async void NewMessagePage_Grid_Drop(object sender, DragEventArgs e)
+#else
+        private async void NewMessagePage_Grid_Drop(object sender, Microsoft.UI.Xaml.DragEventArgs e)
+#endif        
+        {
+            try
+            {
+                if (e.DataView.Contains(StandardDataFormats.StorageItems))
+                {
+                    var deferral = e.GetDeferral();
+
+                    var items = await e.DataView.GetStorageItemsAsync();
+                    ViewModel.AttachFilesCommand.Execute(new StorageItemsService(items));
+
+                    deferral.Complete();
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewModel.OnError(ex);
+            }
+        }
+
+#if WINDOWS_UWP
+        private void NewMessagePage_Grid_DragOver(object sender, DragEventArgs e)
+#else
+        private void NewMessagePage_Grid_DragOver(object sender, Microsoft.UI.Xaml.DragEventArgs e)
+#endif
+        {
+            if (e.DataView.Contains(StandardDataFormats.StorageItems))
+            {
+                e.AcceptedOperation = DataPackageOperation.Copy;
+            }
         }
 
 #if __ANDROID__ || __IOS__

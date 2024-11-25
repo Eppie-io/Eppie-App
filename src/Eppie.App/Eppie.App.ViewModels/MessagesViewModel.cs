@@ -65,6 +65,9 @@ namespace Tuvi.App.ViewModels
 
         public ICommand CancelMessagesDeleteCommand => new RelayCommand(CancelMessagesDelete);
 
+        public ICommand StartDragMessagesCommand => new RelayCommand<IList<object>>(StartDragMessages);
+
+
         private ManagedCollection<MessageInfo> _messageList;
         public ManagedCollection<MessageInfo> MessageList
         {
@@ -416,11 +419,8 @@ namespace Tuvi.App.ViewModels
         {
             try
             {
-                // !TODO: we can't delete decentralized messages from the trash
-                // it will be done with TVM-535
                 var messages = parameter
                     .OfType<MessageInfo>()
-                    .Where(m => !(m.Folder.IsTrash && m.IsDecentralized))
                     .ToArray();
 
                 if (messages.Length == 0)
@@ -508,6 +508,11 @@ namespace Tuvi.App.ViewModels
             {
                 // If token source was disposed, do nothing
             }
+        }
+
+        private void StartDragMessages(IList<object> parameter)
+        {
+            DragAndDropService.SetDraggedMessages(parameter.Select(x => x as MessageInfo).ToList());
         }
     }
 }

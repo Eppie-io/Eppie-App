@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using BackupServiceClientLibrary;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Eppie.App.ViewModels.Services;
 using Tuvi.App.ViewModels.Services;
 using Tuvi.Core.Entities;
 
@@ -121,6 +122,12 @@ namespace Tuvi.App.ViewModels
         public void SetPurchaseService(IPurchaseService purchaseService)
         {
             PurchaseService = purchaseService;
+        }
+
+        protected IDragAndDropService DragAndDropService { get; private set; }
+        public void SetDragAndDropService(IDragAndDropService dragAndDropService)
+        {
+            DragAndDropService = dragAndDropService;
         }
 
         protected async Task BackupIfNeededAsync()

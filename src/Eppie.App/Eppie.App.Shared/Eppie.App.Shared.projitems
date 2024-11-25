@@ -14,6 +14,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Authorization\WindowsAuthenticationBroker.UWP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\BitmapTools.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\NotificationManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\DragAndDropService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ErrorHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\LauncherService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\LocalizationService.cs" />
@@ -21,6 +22,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\MessageService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\NavigationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\NotificationService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)services\StorageItemsService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\BasePage.cs" />
   </ItemGroup>
   <ItemGroup>

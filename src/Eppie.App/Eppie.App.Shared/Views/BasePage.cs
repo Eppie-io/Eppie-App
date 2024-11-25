@@ -5,6 +5,8 @@ using Tuvi.App.Shared.Services;
 using Tuvi.App.ViewModels;
 using Tuvi.Core.Entities;
 using Tuvi.App.ViewModels.Services;
+using Eppie.App.Shared.Services;
+
 
 
 #if WINDOWS_UWP
@@ -63,6 +65,7 @@ namespace Tuvi.App.Shared.Views
             ViewModel.SetBrandService(new BrandLoader());
             ViewModel.SetLauncherService(new LauncherService());
             ViewModel.SetPurchaseService(new PurchaseService());
+            ViewModel.SetDragAndDropService(new DragAndDropService());
             AfterDataContextChanged();
         }
 

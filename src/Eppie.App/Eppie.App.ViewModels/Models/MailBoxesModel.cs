@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -33,10 +34,18 @@ namespace Tuvi.App.ViewModels
             set { SetProperty(ref _itemClickCommand, value); }
         }
 
+        private ICommand _itemDropCommand;
+        public ICommand ItemDropCommand
+        {
+            get { return _itemDropCommand; }
+            set { SetProperty(ref _itemDropCommand, value); }
+        }
 
-        public MailBoxesModel(ICommand itemClickCommand)
+
+        public MailBoxesModel(ICommand itemClickCommand, ICommand itemDropCommand)
         {
             ItemClickCommand = itemClickCommand;
+            ItemDropCommand = itemDropCommand;
         }
 
 
@@ -106,5 +115,14 @@ namespace Tuvi.App.ViewModels
             return Items.FirstOrDefault(item => item.Email.HasSameAddress(email));
         }
 
+        public void ItemDrop(MailBoxItem targetMailBoxItem)
+        {
+            ItemDropCommand.Execute(targetMailBoxItem);
+        }
+
+        public bool IsDropAllowed(MailBoxItem hoveredMailBoxItem)
+        {
+            return ItemDropCommand.CanExecute(hoveredMailBoxItem);
+        }
     }
 }

@@ -31,7 +31,7 @@ namespace Tuvi.App.Shared.Behaviors
             set { SetValue(CommandProperty, value); }
         }
 
-        public Task<IEnumerable<AttachedFileInfo>> LoadFilesAsync()
+        public virtual Task<IEnumerable<AttachedFileInfo>> LoadFilesAsync()
         {
             return SelectAndLoadFilesDataAsync();
         }
@@ -107,19 +107,19 @@ namespace Tuvi.App.Shared.Behaviors
 
         private static async Task<IEnumerable<AttachedFileInfo>> SelectAndLoadFilesDataAsync()
         {
+            var files = await SelectFiles().ConfigureAwait(true);
+
+            var attachedFiles = await LoadFilesData(files).ConfigureAwait(true);
+
+            return attachedFiles;
+        }
+
+        protected static async Task<IReadOnlyList<AttachedFileInfo>> LoadFilesData(IReadOnlyList<IStorageItem> files)
+        {
             var attachedFiles = new List<AttachedFileInfo>();
-
-            var picker = new FileOpenPicker
-            {
-                ViewMode = PickerViewMode.Thumbnail,
-                SuggestedStartLocation = PickerLocationId.DocumentsLibrary
-            };
-            picker.FileTypeFilter.Add("*");
-
-            var files = await picker.PickMultipleFilesAsync();
             if (files.Count > 0)
             {
-                foreach (var file in files)
+                foreach (StorageFile file in files)
                 {
                     var attachedFile = await ReadFileDataAsync(file).ConfigureAwait(true);
                     if (attachedFile != null)
@@ -132,7 +132,20 @@ namespace Tuvi.App.Shared.Behaviors
             return attachedFiles;
         }
 
-        private static async Task<AttachedFileInfo> ReadFileDataAsync(StorageFile file)
+        private static async Task<IReadOnlyList<StorageFile>> SelectFiles()
+        {
+            var picker = new FileOpenPicker
+            {
+                ViewMode = PickerViewMode.Thumbnail,
+                SuggestedStartLocation = PickerLocationId.DocumentsLibrary
+            };
+            picker.FileTypeFilter.Add("*");
+
+            var files = await picker.PickMultipleFilesAsync();
+            return files;
+        }
+
+        protected static async Task<AttachedFileInfo> ReadFileDataAsync(StorageFile file)
         {
             using (var fileStream = await file.OpenReadAsync())
             {
