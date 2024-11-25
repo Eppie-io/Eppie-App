@@ -42,7 +42,11 @@ namespace Tuvi.App.Shared.Views
                 = StringHelper.IsDecentralizedEmail(ViewModel.From);
         }
 
+#if WINDOWS_UWP
         private async void NewMessagePage_Grid_Drop(object sender, DragEventArgs e)
+#else
+        private async void NewMessagePage_Grid_Drop(object sender, Microsoft.UI.Xaml.DragEventArgs e)
+#endif        
         {
             try
             {
@@ -62,7 +66,11 @@ namespace Tuvi.App.Shared.Views
             }
         }
 
+#if WINDOWS_UWP
         private void NewMessagePage_Grid_DragOver(object sender, DragEventArgs e)
+#else
+        private void NewMessagePage_Grid_DragOver(object sender, Microsoft.UI.Xaml.DragEventArgs e)
+#endif
         {
             if (e.DataView.Contains(StandardDataFormats.StorageItems))
             {
