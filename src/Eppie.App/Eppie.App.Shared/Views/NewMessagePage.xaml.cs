@@ -1,7 +1,6 @@
 // this is missing
 //using Tuvi.App.Helpers;
 using System;
-using Newtonsoft.Json.Serialization;
 using Tuvi.App.Shared.Services;
 using Tuvi.App.ViewModels;
 using Tuvi.Core.Entities;
