@@ -22,7 +22,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\MessageService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\NavigationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\NotificationService.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)services\StorageItemsService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\StorageItemsService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\BasePage.cs" />
   </ItemGroup>
   <ItemGroup>
