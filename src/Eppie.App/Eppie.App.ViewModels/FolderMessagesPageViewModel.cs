@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Tuvi.App.ViewModels.Services;
 using Tuvi.Core;
 using Tuvi.Core.Entities;
 
@@ -9,6 +11,14 @@ namespace Tuvi.App.ViewModels
 {
     public class FolderMessagesPageViewModel : MessagesViewModel
     {
+        public class NavigationData
+        {
+            public MailBoxItem MailBoxItem { get; set; }
+            public IErrorHandler ErrorHandler { get; set; }
+        }
+
+        private IErrorHandler PageErrorHandler { get; set; }
+
         private EmailAddress _email;
         public EmailAddress Email
         {
@@ -52,13 +62,18 @@ namespace Tuvi.App.ViewModels
 
         public override void OnNavigatedTo(object data)
         {
-            if (data is MailBoxItem mailBoxItem)
+            if (data is NavigationData navigationData)
             {
-                Email = mailBoxItem.Email;
-                Folder = mailBoxItem.Folder;
+                Email = navigationData.MailBoxItem.Email;
+                Folder = navigationData.MailBoxItem.Folder;
+                PageErrorHandler = navigationData.ErrorHandler;
             }
 
             base.OnNavigatedTo(data);
+        }
+        public override void OnError(Exception e)
+        {
+            PageErrorHandler?.OnError(e, false);
         }
 
         protected override IEnumerable<MessageInfo> SelectAppropriateMessagesFrom(List<ReceivedMessageInfo> receivedMessages)
@@ -74,7 +89,14 @@ namespace Tuvi.App.ViewModels
 
         protected override async Task RefreshMessagesAsync()
         {
-            await Core.CheckForNewMessagesInFolderAsync(Folder, CancellationTokenSource.Token).ConfigureAwait(true);
+            try
+            {
+                await Core.CheckForNewMessagesInFolderAsync(Folder, CancellationTokenSource.Token).ConfigureAwait(true);
+            }
+            catch (Exception ex)
+            {
+                OnError(ex);
+            }
         }
     }
 }

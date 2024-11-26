@@ -35,18 +35,7 @@ namespace Tuvi.App.ViewModels
         {
             if (item is Account account)
             {
-                if (StringHelper.IsDecentralizedEmail(account.Email))
-                {
-                    NavigationService?.Navigate(nameof(DecentralizedAccountSettingsPageViewModel), account);
-                }
-                else if (Proton.Extensions.IsProton(account.Email))
-                {
-                    NavigationService?.Navigate(nameof(ProtonAccountSettingsPageViewModel), account);
-                }
-                else
-                {
-                    NavigationService?.Navigate(nameof(AccountSettingsPageViewModel), account);
-                }
+                NavigateToMailboxSettingsPage(account, isReloginNeeded: false);
             }
         }
     }

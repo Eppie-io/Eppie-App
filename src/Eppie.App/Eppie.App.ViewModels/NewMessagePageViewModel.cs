@@ -280,7 +280,7 @@ namespace Tuvi.App.ViewModels
                     }
                     catch (Exception e)
                     {
-                        OnError(e, silent: true);
+                        ErrorHandler?.OnError(e, silent: true);
                     }
                 }
                 else

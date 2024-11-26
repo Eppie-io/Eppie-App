@@ -61,44 +61,14 @@ namespace Tuvi.App.ViewModels
         virtual public void OnNavigatedTo(object data)
         {
         }
+
         virtual public void OnNavigatedFrom()
         {
         }
 
-        public void OnError(Exception e, bool silent)
+        public virtual void OnError(Exception e)
         {
-            ErrorHandler?.OnError(e, silent);
-        }
-
-        public void OnError(Exception e)
-        {
-            if (e is AuthenticationException exception)
-            {
-                // It looks like the authentication data is out of date, you need to ask the user to authenticate again.
-                AskUserRelogin(exception.Email);
-            }
-            else if (e is AuthorizationException exception2)
-            {
-                // It looks like the authentication data is out of date, you need to ask the user to authenticate again.
-                AskUserRelogin(exception2.Email);
-            }
-            else
-            {
-                ErrorHandler?.OnError(e, false);
-            }
-        }
-
-        private async void AskUserRelogin(EmailAddress email)
-        {
-            try
-            {
-                var account = await Core.GetAccountAsync(email).ConfigureAwait(true);
-                NavigationService?.Navigate(nameof(AccountSettingsPageViewModel), new AccountSettingsPageViewModel.NeedReloginData { Account = account });
-            }
-            catch (Exception e)
-            {
-                OnError(e);
-            }
+            ErrorHandler?.OnError(e, false);
         }
 
         protected string GetLocalizedString(string resource)
@@ -155,5 +125,27 @@ namespace Tuvi.App.ViewModels
             }
         }
 
+        protected void NavigateToMailboxSettingsPage(Account account, bool isReloginNeeded)
+        {
+            if (StringHelper.IsDecentralizedEmail(account.Email))
+            {
+                NavigationService?.Navigate(nameof(DecentralizedAccountSettingsPageViewModel), account);
+            }
+            else if (Proton.Extensions.IsProton(account.Email))
+            {
+                NavigationService?.Navigate(nameof(ProtonAccountSettingsPageViewModel), account);
+            }
+            else
+            {
+                if (isReloginNeeded)
+                {
+                    NavigationService?.Navigate(nameof(AccountSettingsPageViewModel), new AccountSettingsPageViewModel.NeedReloginData { Account = account });
+                }
+                else
+                {
+                    NavigationService?.Navigate(nameof(AccountSettingsPageViewModel), account);
+                }
+            }
+        }
     }
 }
