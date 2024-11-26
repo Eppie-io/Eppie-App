@@ -9,12 +9,20 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using Tuvi.App.ViewModels.Common;
+using Tuvi.App.ViewModels.Services;
 using Tuvi.Core.Entities;
 
 namespace Tuvi.App.ViewModels
 {
     public class MessagesViewModel : BaseViewModel, IIncrementalSource<MessageInfo>
     {
+        public class BaseNavigationData
+        {
+            public IErrorHandler ErrorHandler { get; set; }
+        }
+
+        private IErrorHandler PageErrorHandler { get; set; }
+
         /// <summary>
         /// Time in milliseconds
         /// </summary>
@@ -149,9 +157,16 @@ namespace Tuvi.App.ViewModels
 
         public override void OnNavigatedTo(object data)
         {
+            if (data is BaseNavigationData navigationData)
+            {
+                PageErrorHandler = navigationData.ErrorHandler;
+            }
+
             Debug.Assert(_cancellationTokenSource is null);
             _cancellationTokenSource = new CancellationTokenSource();
             SubscribeOnCoreEvents();
+
+            base.OnNavigatedTo(data);
         }
 
         public override void OnNavigatedFrom()
@@ -178,6 +193,11 @@ namespace Tuvi.App.ViewModels
             Core.MessageDeleted -= OnMessageDeleted;
             Core.MessagesIsReadChanged -= OnMessagesAttributeChanged;
             Core.MessagesIsFlaggedChanged -= OnMessagesAttributeChanged;
+        }
+
+        public override void OnError(Exception e)
+        {
+            PageErrorHandler?.OnError(e, false);
         }
 
         private async void OnMessagesReceived(object sender, MessagesReceivedEventArgs e)

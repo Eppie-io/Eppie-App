@@ -10,13 +10,10 @@ namespace Tuvi.App.ViewModels
 {
     public class ContactMessagesPageViewModel : MessagesViewModel
     {
-        public class NavigationData
+        public class NavigationData : BaseNavigationData
         {
             public ContactItem ContactItem { get; set; }
-            public IErrorHandler ErrorHandler { get; set; }
         }
-
-        private IErrorHandler PageErrorHandler { get; set; }
 
         private ContactItem _contactItem;
         public ContactItem ContactItem
@@ -33,15 +30,9 @@ namespace Tuvi.App.ViewModels
             if (data is NavigationData navigationData)
             {
                 ContactItem = navigationData.ContactItem;
-                PageErrorHandler = navigationData.ErrorHandler;
             }
 
             base.OnNavigatedTo(data);
-        }
-
-        public override void OnError(Exception e)
-        {
-            PageErrorHandler?.OnError(e, false);
         }
 
         protected override IEnumerable<MessageInfo> SelectAppropriateMessagesFrom(List<ReceivedMessageInfo> receivedMessages)

@@ -11,13 +11,10 @@ namespace Tuvi.App.ViewModels
 {
     public class FolderMessagesPageViewModel : MessagesViewModel
     {
-        public class NavigationData
+        public class NavigationData : BaseNavigationData
         {
             public MailBoxItem MailBoxItem { get; set; }
-            public IErrorHandler ErrorHandler { get; set; }
         }
-
-        private IErrorHandler PageErrorHandler { get; set; }
 
         private EmailAddress _email;
         public EmailAddress Email
@@ -66,14 +63,9 @@ namespace Tuvi.App.ViewModels
             {
                 Email = navigationData.MailBoxItem.Email;
                 Folder = navigationData.MailBoxItem.Folder;
-                PageErrorHandler = navigationData.ErrorHandler;
             }
 
             base.OnNavigatedTo(data);
-        }
-        public override void OnError(Exception e)
-        {
-            PageErrorHandler?.OnError(e, false);
         }
 
         protected override IEnumerable<MessageInfo> SelectAppropriateMessagesFrom(List<ReceivedMessageInfo> receivedMessages)
