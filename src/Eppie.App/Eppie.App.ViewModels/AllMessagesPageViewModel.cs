@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Tuvi.App.ViewModels.Services;
 using Tuvi.Core.Entities;
 
 namespace Tuvi.App.ViewModels
 {
     public class AllMessagesPageViewModel : MessagesViewModel
     {
+        public class NavigationData : BaseNavigationData
+        {
+        }
+
         protected override IEnumerable<MessageInfo> SelectAppropriateMessagesFrom(List<ReceivedMessageInfo> receivedMessages)
         {
             return receivedMessages.Where(m => m.Folder.IsInbox)

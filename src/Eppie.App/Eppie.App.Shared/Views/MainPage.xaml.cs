@@ -6,6 +6,8 @@ using Microsoft.UI.Xaml.Controls;
 using Tuvi.App.Shared.Extensions;
 using Tuvi.App.Shared.Helpers;
 using Tuvi.App.ViewModels;
+using Tuvi.App.ViewModels.Services;
+
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -20,15 +22,15 @@ namespace Tuvi.App.Shared.Views
     {
     }
 
-    public sealed partial class MainPage : MainPageBase
+    public sealed partial class MainPage : MainPageBase, IErrorHandler
     {
         public ICommand ShowAllMessagesCommand => new RelayCommand(ShowAllMessages);
 
-        public ICommand MailBoxItemClickCommand => new RelayCommand<MailBoxItem>((mailBoxItem) => contentFrame.Navigate(typeof(FolderMessagesPage), mailBoxItem));
+        public ICommand MailBoxItemClickCommand => new RelayCommand<MailBoxItem>((mailBoxItem) => contentFrame.Navigate(typeof(FolderMessagesPage), new FolderMessagesPageViewModel.NavigationData() { MailBoxItem = mailBoxItem, ErrorHandler = this }));
 
         public ICommand MailBoxItemDropCommand => new RelayCommand<MailBoxItem>(MailBoxItemDropMessages, IsDropMessagesAllowed);
 
-        public ICommand ContactItemClickCommand => new RelayCommand<ContactItem>((contactItem) => contentFrame.Navigate(typeof(ContactMessagesPage), contactItem));
+        public ICommand ContactItemClickCommand => new RelayCommand<ContactItem>((contactItem) => contentFrame.Navigate(typeof(ContactMessagesPage), new ContactMessagesPageViewModel.NavigationData() { ContactItem = contactItem, ErrorHandler = this }));
 
         public ICommand ChangeContactPictureCommand => new AsyncRelayCommand<ContactItem>(ChangeContactPictureAsync);
 
@@ -131,7 +133,7 @@ namespace Tuvi.App.Shared.Views
         private void ShowAllMessages()
         {
             ViewModel.OnShowAllMessages();
-            contentFrame.Navigate(typeof(AllMessagesPage));
+            contentFrame.Navigate(typeof(AllMessagesPage), new AllMessagesPageViewModel.NavigationData() { ErrorHandler = this });
         }
 
         private async Task ChangeContactPictureAsync(ContactItem contactItem)
@@ -179,6 +181,19 @@ namespace Tuvi.App.Shared.Views
         private bool IsDropMessagesAllowed(MailBoxItem item)
         {
             return ViewModel.MailBoxItem_IsDropMessagesAllowed(item);
+        }
+
+        public void SetMessageService(IMessageService messageService)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnError(Exception ex, bool silent = false)
+        {
+            if (!silent)
+            {
+                ViewModel.OnError(ex);
+            }
         }
     }
 }

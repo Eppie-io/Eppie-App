@@ -1,13 +1,20 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Tuvi.App.ViewModels.Services;
 using Tuvi.Core.Entities;
 
 namespace Tuvi.App.ViewModels
 {
     public class ContactMessagesPageViewModel : MessagesViewModel
     {
+        public class NavigationData : BaseNavigationData
+        {
+            public ContactItem ContactItem { get; set; }
+        }
+
         private ContactItem _contactItem;
         public ContactItem ContactItem
         {
@@ -20,9 +27,9 @@ namespace Tuvi.App.ViewModels
 
         public override void OnNavigatedTo(object data)
         {
-            if (data is ContactItem contactItem)
+            if (data is NavigationData navigationData)
             {
-                ContactItem = contactItem;
+                ContactItem = navigationData.ContactItem;
             }
 
             base.OnNavigatedTo(data);
@@ -47,6 +54,18 @@ namespace Tuvi.App.ViewModels
         protected override Task<IReadOnlyList<Message>> LoadMoreMessagesAsync(int count, Message lastMessage, CancellationToken cancellationToken)
         {
             return Core.GetContactEarlierMessagesAsync(ContactItem.Email, count, lastMessage, cancellationToken);
+        }
+
+        protected override async Task RefreshMessagesAsync()
+        {
+            try
+            {
+                await Core.CheckForNewInboxMessagesAsync(CancellationTokenSource.Token).ConfigureAwait(true);
+            }
+            catch (Exception ex)
+            {
+                OnError(ex);
+            }
         }
     }
 }

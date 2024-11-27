@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Tuvi.App.ViewModels.Services;
 using Tuvi.Core;
 using Tuvi.Core.Entities;
 
@@ -9,6 +11,11 @@ namespace Tuvi.App.ViewModels
 {
     public class FolderMessagesPageViewModel : MessagesViewModel
     {
+        public class NavigationData : BaseNavigationData
+        {
+            public MailBoxItem MailBoxItem { get; set; }
+        }
+
         private EmailAddress _email;
         public EmailAddress Email
         {
@@ -52,10 +59,10 @@ namespace Tuvi.App.ViewModels
 
         public override void OnNavigatedTo(object data)
         {
-            if (data is MailBoxItem mailBoxItem)
+            if (data is NavigationData navigationData)
             {
-                Email = mailBoxItem.Email;
-                Folder = mailBoxItem.Folder;
+                Email = navigationData.MailBoxItem.Email;
+                Folder = navigationData.MailBoxItem.Folder;
             }
 
             base.OnNavigatedTo(data);
@@ -74,7 +81,14 @@ namespace Tuvi.App.ViewModels
 
         protected override async Task RefreshMessagesAsync()
         {
-            await Core.CheckForNewMessagesInFolderAsync(Folder, CancellationTokenSource.Token).ConfigureAwait(true);
+            try
+            {
+                await Core.CheckForNewMessagesInFolderAsync(Folder, CancellationTokenSource.Token).ConfigureAwait(true);
+            }
+            catch (Exception ex)
+            {
+                OnError(ex);
+            }
         }
     }
 }

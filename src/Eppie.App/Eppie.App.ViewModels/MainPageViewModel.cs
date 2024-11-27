@@ -317,10 +317,11 @@ namespace Tuvi.App.ViewModels
     {
         public string Title { get; set; }
         public string Message { get; set; }
+        public EmailAddress Email { get; set; }
         public IRelayCommand<Problem> ActionCommand { get; set; }
         public string SolutionText { get; set; }
-        public static MainPageViewModel MainPageViewModel { get; set; }
-        public IRelayCommand<Problem> CloseCommand => MainPageViewModel.CloseProblemCommand;
+        public MainPageViewModel ViewModel { get; set; }
+        public IRelayCommand<Problem> CloseCommand => ViewModel.CloseProblemCommand;
 
     }
 
@@ -344,12 +345,13 @@ namespace Tuvi.App.ViewModels
 
         public ObservableCollection<Problem> Problems { get; } = new ObservableCollection<Problem>();
 
-        private async void NavigateToProton(EmailAddress emailAddress)
+        private async void NavigateToMailboxSettingsForRelogin(EmailAddress emailAddress)
         {
             try
             {
                 var account = await Core.GetAccountAsync(emailAddress).ConfigureAwait(true);
-                NavigationService?.Navigate(nameof(ProtonAccountSettingsPageViewModel), account);
+
+                NavigateToMailboxSettingsPage(account, isReloginNeeded: true);
             }
             catch (Exception ex)
             {
@@ -405,7 +407,6 @@ namespace Tuvi.App.ViewModels
 
         public override async void OnNavigatedTo(object data)
         {
-            Problem.MainPageViewModel = this;
             try
             {
                 base.OnNavigatedTo(data);
@@ -460,44 +461,56 @@ namespace Tuvi.App.ViewModels
             Core.ContactDeleted -= OnContactDeleted;
         }
 
-        private async void OnCoreException(object sender, ExceptionEventArgs e)
+        private void OnCoreException(object sender, ExceptionEventArgs e)
+        {
+            OnError(e.Exception);
+        }
+
+        public override async void OnError(Exception e)
         {
             await DispatcherService.RunAsync(() =>
             {
-                if (e.Exception is AuthorizationException ex)
+                if (e is AuthorizationException ex)
                 {
-                    Problems.Add(new Problem()
+                    if (ex.Email != null)
                     {
-                        Title = GetLocalizedString("AuthorizationProblem"),
-                        Message = ex.Message,
-                        SolutionText = GetLocalizedString("GoToSettings"),
-                        ActionCommand = new RelayCommand<Problem>((p) =>
-                        {
-                            NavigateToProton(ex.Email);
-                            CloseProblem(p);
-                        })
-                    });
-                    return;
+                        AddProblem(GetLocalizedString("AuthorizationProblem"), GetLocalizedString("GoToSettings"), ex.Email, ex.Message);
+
+                        return;
+                    }
                 }
-                else if (e.Exception is AuthenticationException ex2)
+                else if (e is AuthenticationException ex2)
                 {
-                    Problems.Add(new Problem()
+                    if (ex2.Email != null)
                     {
-                        Title = GetLocalizedString("AuthenticationProblem"),
-                        Message = ex2.Message,
-                        SolutionText = GetLocalizedString("GoToSettings"),
-                        ActionCommand = new RelayCommand<Problem>((p) =>
-                        {
-                            NavigateToProton(ex2.Email);
-                            CloseProblem(p);
-                        })
-                    });
-                    return;
+                        AddProblem(GetLocalizedString("AuthenticationProblem"), GetLocalizedString("GoToSettings"), ex2.Email, ex2.Message);
+
+                        return;
+                    }
                 }
 
-                //TODO: TVM-388 error messages disabled temporarily
-                //OnError(e.Exception);
+                base.OnError(e);
             });
+        }
+
+        private void AddProblem(string title, string solution, EmailAddress email, string message)
+        {
+            if (!Problems.Any(x => { return x.Title == title && x.SolutionText == solution && x.Email == email; }))
+            {
+                Problems.Add(new Problem()
+                {
+                    ViewModel = this,
+                    Title = title,
+                    SolutionText = solution,
+                    Email = email,
+                    Message = message,
+                    ActionCommand = new RelayCommand<Problem>((p) =>
+                    {
+                        NavigateToMailboxSettingsForRelogin(p.Email);
+                        CloseProblem(p);
+                    })
+                });
+            }
         }
 
         private void OnMessageDeleted(object sender, MessageDeletedEventArgs e)
