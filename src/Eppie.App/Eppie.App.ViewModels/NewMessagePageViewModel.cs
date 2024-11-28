@@ -107,7 +107,14 @@ namespace Tuvi.App.ViewModels
         public EmailAddress From
         {
             get { return _from; }
-            set { SetProperty(ref _from, value); }
+            set
+            {
+                if (_from != value)
+                {
+                    SetProperty(ref _from, value);
+                    _ = UpdateDraftMessageAsync();
+                }
+            }
         }
         public ObservableCollection<ContactItem> To { get; } = new ObservableCollection<ContactItem>();
         public ObservableCollection<ContactItem> Copy { get; } = new ObservableCollection<ContactItem>();
@@ -262,7 +269,6 @@ namespace Tuvi.App.ViewModels
                     {
                         From = FromList.FirstOrDefault();
                     }
-                    MessageInfo = await CreateDraftMessageAsync(From, CreateMessage()).ConfigureAwait(true);
                 }
 
                 base.OnNavigatedTo(data);
@@ -483,7 +489,7 @@ namespace Tuvi.App.ViewModels
 
         private async Task UpdateDraftMessageAsync()
         {
-            if (MessageInfo?.Folder == null)
+            if (MessageInfo?.Folder == null || MessageInfo?.Email != From)
             {
                 MessageInfo = await CreateDraftMessageAsync(From, CreateMessage()).ConfigureAwait(true);
             }
