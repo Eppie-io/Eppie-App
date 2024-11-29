@@ -191,10 +191,13 @@ namespace Tuvi.App.Shared.Services
         private async Task ShowDefaultErrorMessageAsync(Exception exception)
         {
             var title = StringProvider.GetString("SendErrorReportTitle");
-            var message = $"{exception.Message} \n {exception.StackTrace}";
+
+            var message = $"\n________________________________________________________________________________" +
+                          $"\n {exception.TargetSite.Name} \n {exception}";
+
             if (exception.InnerException != null)
             {
-                message += $"\n {exception.InnerException.Message} \n {exception.InnerException.StackTrace}";
+                message += $"\n {exception.InnerException.TargetSite.Name} \n {exception.InnerException}";
             }
 
             if (await ShowErrorMessageAsync(title, message, StringProvider.GetString("MsgBtnOk"), StringProvider.GetString("MessageButtonCancel")).ConfigureAwait(true))
