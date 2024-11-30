@@ -3,147 +3,12 @@ using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Tuvi.App.ViewModels.Validation;
 using Tuvi.Core.Entities;
 using Tuvi.Proton.Client.Exceptions;
-using static Tuvi.App.ViewModels.AccountSettingsPageViewModel;
 
 namespace Tuvi.App.ViewModels
 {
-    public class ProtonAccountSettingsModel : ObservableObject
-    {
-        /// <summary>
-        /// Default interval value (in minutes) for checking new messages
-        /// </summary>
-        private const int DefaultSynchronizationInterval = 10;
-
-        protected Account CurrentAccount { get; set; }
-        public ValidatableProperty<string> Email { get; } = new ValidatableProperty<string>();
-        public ValidatableProperty<string> SynchronizationInterval { get; } = new ValidatableProperty<string>();
-
-        private string _senderName;
-        public string SenderName
-        {
-            get => _senderName;
-            set => SetProperty(ref _senderName, value);
-        }
-
-        public ValidatableProperty<string> TwoFactorCode { get; } = new ValidatableProperty<string>();
-        public ValidatableProperty<string> Password { get; } = new ValidatableProperty<string>();
-        public ValidatableProperty<string> MailboxPassword { get; } = new ValidatableProperty<string>();
-
-
-        private bool _isBackupAccountSettingsEnabled = true;
-        public bool IsBackupAccountSettingsEnabled
-        {
-            get { return _isBackupAccountSettingsEnabled; }
-            set
-            {
-                SetProperty(ref _isBackupAccountSettingsEnabled, value);
-
-                if (!IsBackupAccountSettingsEnabled)
-                {
-                    IsBackupAccountMessagesEnabled = false;
-                }
-            }
-        }
-
-        private bool _isBackupAccountMessagesEnabled = true;
-        public bool IsBackupAccountMessagesEnabled
-        {
-            get { return _isBackupAccountMessagesEnabled; }
-            set { SetProperty(ref _isBackupAccountMessagesEnabled, value); }
-        }
-
-
-        public ProtonAccountSettingsModel()
-        {
-            Email.SetInitialValue(string.Empty);
-            SynchronizationInterval.SetInitialValue(DefaultSynchronizationInterval.ToString());
-        }
-        protected ProtonAccountSettingsModel(Account account)
-        {
-            if (account == null)
-            {
-                throw new ArgumentNullException(nameof(account));
-            }
-
-            CurrentAccount = account;
-
-            if (account.Email != null)
-            {
-                Email.SetInitialValue(account.Email.Address);
-                SenderName = account.Email.Name;
-            }
-
-            Password.SetInitialValue(string.Empty);
-            TwoFactorCode.SetInitialValue(string.Empty);
-            MailboxPassword.SetInitialValue(string.Empty);
-
-            IsBackupAccountSettingsEnabled = account.IsBackupAccountSettingsEnabled;
-            IsBackupAccountMessagesEnabled = account.IsBackupAccountMessagesEnabled;
-            SynchronizationInterval.SetInitialValue(account.SynchronizationInterval.ToString());
-            Email.PropertyChanged += (sender, args) =>
-            {
-                OnValidatablePropertyChanged<string>(nameof(Email), args.PropertyName);
-            };
-            Password.PropertyChanged += (sender, args) =>
-            {
-                OnValidatablePropertyChanged<string>(nameof(Password), args.PropertyName);
-            };
-            TwoFactorCode.PropertyChanged += (sender, args) =>
-            {
-                OnValidatablePropertyChanged<string>(nameof(TwoFactorCode), args.PropertyName);
-            };
-            MailboxPassword.PropertyChanged += (sender, args) =>
-            {
-                OnValidatablePropertyChanged<string>(nameof(MailboxPassword), args.PropertyName);
-            };
-            SynchronizationInterval.PropertyChanged += (sender, args) =>
-            {
-                OnValidatablePropertyChanged<string>(nameof(SynchronizationInterval), args.PropertyName);
-            };
-        }
-
-        /// <summary>
-        /// Handles ValidatableProperty changes
-        /// </summary>
-        /// <typeparam name="T">The type of ValidatableProperty</typeparam>
-        /// <param name="validatablePropertyName">The name of the ValidatableProperty</param>
-        /// <param name="propertyName">The name of the property that was changed inside the ValidatableProperty</param>
-        protected void OnValidatablePropertyChanged<T>(string validatablePropertyName, string propertyName)
-        {
-            if (propertyName == nameof(ValidatableProperty<T>.Value) ||
-                propertyName == nameof(ValidatableProperty<T>.NeedsValidation))
-            {
-                OnPropertyChanged(validatablePropertyName);
-            }
-        }
-
-        public virtual Account ToAccount()
-        {
-            CurrentAccount.Email = new EmailAddress(Email.Value, SenderName);
-
-            CurrentAccount.AuthData = new BasicAuthData() { Password = Password.Value };
-            CurrentAccount.IsBackupAccountSettingsEnabled = IsBackupAccountSettingsEnabled;
-            CurrentAccount.IsBackupAccountMessagesEnabled = IsBackupAccountMessagesEnabled;
-            CurrentAccount.SynchronizationInterval = int.TryParse(SynchronizationInterval.Value, out int interval)
-                ? interval
-                : DefaultSynchronizationInterval;
-            CurrentAccount.Type = (int)MailBoxType.Proton;
-
-            return CurrentAccount;
-
-        }
-
-        public static ProtonAccountSettingsModel Create(Account account)
-        {
-            return new ProtonAccountSettingsModel(account);
-        }
-    }
-
     public class ProtonAccountSettingsPageViewModel : BaseViewModel, IDisposable
     {
         public class NeedReloginData
@@ -443,6 +308,25 @@ namespace Tuvi.App.ViewModels
             }
         }
 
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private bool _isDisposed;
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_isDisposed) return;
+
+            if (disposing)
+            {
+                _cts?.Dispose();
+            }
+
+            _isDisposed = true;
+        }
+
         public static ValidationResult ClearValidationErrors(ProtonAccountSettingsModel accountModel, ValidationContext _)
         {
             if (accountModel != null)
@@ -451,6 +335,7 @@ namespace Tuvi.App.ViewModels
                 accountModel.SynchronizationInterval.Errors.Clear();
                 accountModel.Password.Errors.Clear();
                 accountModel.TwoFactorCode.Errors.Clear();
+                accountModel.MailboxPassword.Errors.Clear();
             }
 
             return ValidationResult.Success;
@@ -514,26 +399,6 @@ namespace Tuvi.App.ViewModels
             }
 
             return ValidationResult.Success;
-        }
-
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        private bool _isDisposed;
-        protected virtual void Dispose(bool disposing)
-        {
-            if (_isDisposed) return;
-
-            if (disposing)
-            {
-                _cts?.Dispose();
-            }
-
-            _isDisposed = true;
         }
     }
 }
