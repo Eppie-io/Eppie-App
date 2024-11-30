@@ -82,7 +82,7 @@ namespace Tuvi.App.ViewModels
             AccountSettingsModel = accountSettingsModel;
         }
 
-        protected async override Task ApplySettingsAndGoBackAsync()
+        protected override bool ValidateAll()
         {
             AccountSettingsModel.Email.NeedsValidation = true;
             AccountSettingsModel.Password.NeedsValidation = true;
@@ -93,102 +93,15 @@ namespace Tuvi.App.ViewModels
                || string.IsNullOrEmpty(AccountSettingsModel.Password.Value))
             {
                 ValidateProperty(AccountSettingsModel, nameof(AccountSettingsModel));
-                return;
+                return false;
             }
 
-            IsWaitingResponse = true;
-            try
-            {
-                var (userId, refreshToken, saltedKeyPass) = await Proton.ClientAuth.LoginFullAsync(AccountSettingsModel.Email.Value,
-                                                                                                   AccountSettingsModel.Password.Value,
-                                                                                                   async (ct) =>
-                                                                                                   {
-                                                                                                       await DispatcherService.RunAsync(() =>
-                                                                                                       {
-                                                                                                           if (string.IsNullOrEmpty(AccountSettingsModel.TwoFactorCode.Value))
-                                                                                                           {
-                                                                                                               AccountSettingsModel.TwoFactorCode.Errors.Clear();
-                                                                                                               AccountSettingsModel.TwoFactorCode.Errors.Add(GetLocalizedString("NeedTwofactorCode"));
-
-                                                                                                               throw new OperationCanceledException();
-                                                                                                           }
-                                                                                                       });
-                                                                                                       return AccountSettingsModel.TwoFactorCode.Value;
-                                                                                                   },
-                                                                                                   async (ct) =>
-                                                                                                   {
-                                                                                                       await DispatcherService.RunAsync(() =>
-                                                                                                       {
-                                                                                                           if (string.IsNullOrEmpty(AccountSettingsModel.MailboxPassword.Value))
-                                                                                                           {
-                                                                                                               AccountSettingsModel.MailboxPassword.Errors.Clear();
-                                                                                                               AccountSettingsModel.MailboxPassword.Errors.Add(GetLocalizedString("NeedMailboxPassword"));
-
-                                                                                                               throw new OperationCanceledException();
-                                                                                                           }
-                                                                                                       });
-                                                                                                       return AccountSettingsModel.MailboxPassword.Value;
-                                                                                                   },
-                                                                                                   default)
-                                                         .ConfigureAwait(true);
-                var accountData = AccountSettingsModel.ToAccount();
-                accountData.AuthData = new ProtonAuthData()
-                {
-                    UserId = userId,
-                    RefreshToken = refreshToken,
-                    SaltedPassword = saltedKeyPass
-                };
-                var result = await ApplyAccountSettingsAsync(accountData).ConfigureAwait(true);
-                if (result)
-                {
-                    NavigateFromCurrentPage();
-                }
-            }
-            catch (AuthorizationException)
-            {
-                AccountSettingsModel.Password.Errors.Clear();
-                AccountSettingsModel.Password.Errors.Add(GetLocalizedString("AuthenticationError"));
-            }
-            catch (AuthenticationException)
-            {
-                AccountSettingsModel.Password.Errors.Clear();
-                AccountSettingsModel.Password.Errors.Add(GetLocalizedString("AuthenticationError"));
-            }
-            catch (ProtonSessionRequestException)
-            {
-                AccountSettingsModel.TwoFactorCode.Errors.Clear();
-                AccountSettingsModel.TwoFactorCode.Errors.Add(GetLocalizedString("AuthenticationError"));
-            }
-            catch (OperationCanceledException)
-            {
-            }
-            catch (Exception e)
-            {
-                OnError(e);
-            }
-            finally
-            {
-                IsWaitingResponse = false;
-            }
+            return true;
         }
 
         protected override Account AccountSettingsModelToAccount()
         {
             return AccountSettingsModel.ToAccount();
-        }
-
-        private async Task<bool> ApplyAccountSettingsAsync(Account accountData)
-        {
-            _cts = new CancellationTokenSource();
-            try
-            {
-                await ProcessAccountDataAsync(accountData, _cts.Token).ConfigureAwait(true);
-                return true;
-            }
-            catch (OperationCanceledException)
-            {
-                return false;
-            }
         }
 
         public static ValidationResult ClearValidationErrors(ProtonAccountSettingsModel accountModel, ValidationContext _)
@@ -220,6 +133,84 @@ namespace Tuvi.App.ViewModels
             }
 
             return ValidationResult.Success;
+        }
+
+        protected override async Task<bool> CheckEmailAccountAsync(Account accountData, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                accountData = await LoginAsync().ConfigureAwait(true);
+                return true;
+            }
+            catch (AuthorizationException)
+            {
+                AccountSettingsModel.Password.Errors.Clear();
+                AccountSettingsModel.Password.Errors.Add(GetLocalizedString("AuthenticationError"));
+            }
+            catch (AuthenticationException)
+            {
+                AccountSettingsModel.Password.Errors.Clear();
+                AccountSettingsModel.Password.Errors.Add(GetLocalizedString("AuthenticationError"));
+            }
+            catch (ProtonSessionRequestException)
+            {
+                AccountSettingsModel.TwoFactorCode.Errors.Clear();
+                AccountSettingsModel.TwoFactorCode.Errors.Add(GetLocalizedString("AuthenticationError"));
+            }
+            catch (NeedAdditionalAuthInfo)
+            {
+                AccountSettingsModel.TwoFactorCode.Errors.Clear();
+                AccountSettingsModel.TwoFactorCode.Errors.Add(GetLocalizedString("AuthenticationError"));
+            }
+
+            throw new NeedAdditionalAuthInfo();
+        }
+
+        private async Task<Account> LoginAsync()
+        {
+            var (userId, refreshToken, saltedKeyPass) = await Proton.ClientAuth.LoginFullAsync
+                (
+                    AccountSettingsModel.Email.Value,
+                    AccountSettingsModel.Password.Value,
+                    async (ct) =>
+                    {
+                        await DispatcherService.RunAsync(() =>
+                        {
+                            if (string.IsNullOrEmpty(AccountSettingsModel.TwoFactorCode.Value))
+                            {
+                                AccountSettingsModel.TwoFactorCode.Errors.Clear();
+                                AccountSettingsModel.TwoFactorCode.Errors.Add(GetLocalizedString("NeedTwofactorCode"));
+
+                                throw new NeedAdditionalAuthInfo();
+                            }
+                        });
+                        return AccountSettingsModel.TwoFactorCode.Value;
+                    },
+                    async (ct) =>
+                    {
+                        await DispatcherService.RunAsync(() =>
+                        {
+                            if (string.IsNullOrEmpty(AccountSettingsModel.MailboxPassword.Value))
+                            {
+                                AccountSettingsModel.MailboxPassword.Errors.Clear();
+                                AccountSettingsModel.MailboxPassword.Errors.Add(GetLocalizedString("NeedMailboxPassword"));
+
+                                throw new NeedAdditionalAuthInfo();
+                            }
+                        });
+                        return AccountSettingsModel.MailboxPassword.Value;
+                    },
+                    default
+                ).ConfigureAwait(true);
+
+            var accountData = AccountSettingsModel.ToAccount();
+            accountData.AuthData = new ProtonAuthData()
+            {
+                UserId = userId,
+                RefreshToken = refreshToken,
+                SaltedPassword = saltedKeyPass
+            };
+            return accountData;
         }
     }
 }

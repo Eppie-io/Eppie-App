@@ -10,6 +10,10 @@ namespace Tuvi.App.ViewModels
 {
     public class BaseAccountSettingsPageViewModel : BaseViewModel, IDisposable
     {
+        protected class NeedAdditionalAuthInfo : Exception
+        {
+        }
+
         private bool _isWaitingResponse;
         public bool IsWaitingResponse
         {
@@ -65,11 +69,6 @@ namespace Tuvi.App.ViewModels
             ErrorsChanged += (sender, e) => ApplySettingsCommand.NotifyCanExecuteChanged();
         }
 
-        protected virtual Task ApplySettingsAndGoBackAsync()
-        {
-            return Task.CompletedTask;
-        }
-
         protected async Task ProcessAccountDataAsync(Account account, CancellationToken cancellationToken = default)
         {
             bool existAccount = await Core.ExistsAccountWithEmailAddressAsync(account.Email, cancellationToken).ConfigureAwait(true);
@@ -97,6 +96,61 @@ namespace Tuvi.App.ViewModels
             {
                 NavigationService?.GoBackOrNavigate(nameof(MainPageViewModel));
             }
+        }
+
+        protected virtual async Task ApplySettingsAndGoBackAsync()
+        {
+            if (!ValidateAll())
+            {
+                return;
+            }
+
+            IsWaitingResponse = true;
+            try
+            {
+                var accountData = AccountSettingsModelToAccount();
+                var result = await ApplyAccountSettingsAsync(accountData).ConfigureAwait(true);
+                if (result)
+                {
+                    NavigateFromCurrentPage();
+                }
+            }
+            catch (NeedAdditionalAuthInfo)
+            {
+            }
+            catch (Exception e)
+            {
+                OnError(e);
+            }
+            finally
+            {
+                IsWaitingResponse = false;
+            }
+        }
+
+        private async Task<bool> ApplyAccountSettingsAsync(Account accountData)
+        {
+            _cts = new CancellationTokenSource();
+            bool result = await CheckEmailAccountAsync(accountData, _cts.Token).ConfigureAwait(true);
+            if (result)
+            {
+                try
+                {
+                    await ProcessAccountDataAsync(accountData, _cts.Token).ConfigureAwait(true);
+                    return true;
+                }
+                catch (OperationCanceledException)
+                {
+                    return false;
+                }
+            }
+
+            return false;
+        }
+
+        protected virtual Task<bool> CheckEmailAccountAsync(Account accountData, CancellationToken token)
+        {
+            return Task.FromResult(true);
         }
 
         private void DoCancel()
@@ -201,6 +255,11 @@ namespace Tuvi.App.ViewModels
             }
 
             return ValidationResult.Success;
+        }
+
+        protected virtual bool ValidateAll()
+        {
+            return true;
         }
 
         public void Dispose()

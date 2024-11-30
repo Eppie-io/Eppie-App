@@ -95,12 +95,6 @@ namespace Tuvi.App.ViewModels
                 {
                     InitModel(new BasicAccountSettingsModel(Account.Default), true);
                 }
-
-                // TVM-349 ValidationModel reorganization
-                // Validate() - hides all errors and only checks for empty lines
-                // the same happens when a field is changed, Validate() is called there
-
-                // AccountSettingsModel.Validate();
             }
             catch (Exception e)
             {
@@ -118,7 +112,7 @@ namespace Tuvi.App.ViewModels
             accountSettingsModel.IncomingServerAddress.NeedsValidation = !isCreatingMode;
         }
 
-        protected async override Task ApplySettingsAndGoBackAsync()
+        protected override bool ValidateAll()
         {
             if ((!IsEmailReadonly && string.IsNullOrEmpty(AccountSettingsModel.Email.Value))
                 || string.IsNullOrEmpty(AccountSettingsModel.OutgoingServerAddress.Value)
@@ -135,52 +129,15 @@ namespace Tuvi.App.ViewModels
                     basicAccountSettingsModel.Password.NeedsValidation = true;
                 }
                 ValidateProperty(AccountSettingsModel, nameof(AccountSettingsModel));
-                return;
+                return false;
             }
 
-            IsWaitingResponse = true;
-            try
-            {
-                var accountData = AccountSettingsModel.ToAccount();
-                var result = await ApplyAccountSettingsAsync(accountData).ConfigureAwait(true);
-                if (result)
-                {
-                    NavigateFromCurrentPage();
-                }
-            }
-            catch (Exception e)
-            {
-                OnError(e);
-            }
-            finally
-            {
-                IsWaitingResponse = false;
-            }
+            return true;
         }
 
         protected override Account AccountSettingsModelToAccount()
         {
             return AccountSettingsModel.ToAccount();
-        }
-
-        private async Task<bool> ApplyAccountSettingsAsync(Account accountData)
-        {
-            _cts = new CancellationTokenSource();
-            bool result = await CheckEmailAccountAsync(accountData, _cts.Token).ConfigureAwait(true);
-            if (result)
-            {
-                try
-                {
-                    await ProcessAccountDataAsync(accountData, _cts.Token).ConfigureAwait(true);
-                    return true;
-                }
-                catch (OperationCanceledException)
-                {
-                    return false;
-                }
-            }
-
-            return false;
         }
 
         public static ValidationResult ClearValidationErrors(AccountSettingsModel accountModel, ValidationContext _)
@@ -408,16 +365,6 @@ namespace Tuvi.App.ViewModels
                 await Core.TestMailServerAsync(accountData.OutgoingServerAddress, accountData.OutgoingServerPort, accountData.OutgoingMailProtocol, credentialsProvider, cancellationToken).ConfigureAwait(true);
                 return true;
             }
-            catch (AuthenticationException)
-            {
-                // When IMAP is disabled in Yandex mail, for some reason, verification via SMTP also fails
-                // If web authentication was used, then the email and password are correct
-                if (IsBasicAccount)
-                {
-                    AccountSettingsModel.OutgoingServerAddress.Errors.Add(GetLocalizedString("AuthenticationError"));
-                    NotifyToCheckEmailAndPasswordFields();
-                }
-            }
             catch (ConnectionException)
             {
                 AccountSettingsModel.OutgoingServerAddress.Errors.Add(GetLocalizedString("ConnectionError"));
@@ -432,7 +379,7 @@ namespace Tuvi.App.ViewModels
             return false;
         }
 
-        private async Task<bool> CheckEmailAccountAsync(Account accountData, CancellationToken cancellationToken = default)
+        protected override async Task<bool> CheckEmailAccountAsync(Account accountData, CancellationToken cancellationToken = default)
         {
             bool[] result = await Task<bool[]>.WhenAll<bool>(
                 CheckIncomingMailServerAsync(accountData, cancellationToken),
