@@ -14,11 +14,15 @@
             <StackPanel Margin="0,0,20,0" Orientation="Vertical">
 
                 <TextBlock x:Uid="/Eppie.App.Resources/Resources/EmailAddress" Margin="0,0,0,4" />
-                <TextBox x:Name="EmailBox"
-                         HorizontalAlignment="Stretch"
-                         IsReadOnly="{x:Bind IsEmailReadOnly, Mode=OneWay}"
-                         IsSpellCheckEnabled="False"
-                         Text="{x:Bind AccountSettingsModel.Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <local:ErrorControl HorizontalAlignment="Stretch" Property="{x:Bind AccountSettingsModel.Email, Mode=OneWay}">
+                    <local:ErrorControl.InnerContent>
+                        <TextBox x:Name="EmailBox"
+                                 HorizontalAlignment="Stretch"
+                                 IsReadOnly="{x:Bind IsEmailReadOnly, Mode=OneWay}"
+                                 IsSpellCheckEnabled="False"
+                                 Text="{x:Bind AccountSettingsModel.Email.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    </local:ErrorControl.InnerContent>
+                </local:ErrorControl>                
 
                 <TextBlock x:Uid="/Eppie.App.Resources/Resources/Password" Margin="0,0,0,4" />
 
@@ -28,8 +32,17 @@
                     </local:ErrorControl.InnerContent>
                 </local:ErrorControl>
 
+                <TextBlock x:Uid="/Eppie.App.Resources/Resources/TwoFactorCode" Margin="0,0,0,4" />
+                <local:ErrorControl HorizontalAlignment="Stretch" Property="{x:Bind AccountSettingsModel.TwoFactorCode, Mode=OneWay}">
+                    <local:ErrorControl.InnerContent>
+                        <TextBox x:Name="TwoFactorCodeBox"
+                                 HorizontalAlignment="Stretch"
+                                 IsSpellCheckEnabled="False"
+                                 Text="{x:Bind AccountSettingsModel.TwoFactorCode.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    </local:ErrorControl.InnerContent>
+                </local:ErrorControl>
+                
                 <TextBlock x:Uid="/Eppie.App.Resources/Resources/MailboxPassword" Margin="0,0,0,4" />
-
                 <local:ErrorControl HorizontalAlignment="Stretch" Property="{x:Bind AccountSettingsModel.MailboxPassword, Mode=OneWay}">
                     <local:ErrorControl.InnerContent>
                         <PasswordBox x:Name="MailboxPasswordBox" Password="{x:Bind AccountSettingsModel.MailboxPassword.Value, Mode=TwoWay}" />
@@ -41,12 +54,27 @@
                                                  IsSpellCheckEnabled="False"
                                                  Text="{x:Bind AccountSettingsModel.SenderName, Mode=TwoWay}" />
 
-                <TextBlock x:Uid="/Eppie.App.Resources/Resources/TwoFactorCode" Margin="0,0,0,4" />
-                <TextBox x:Name="TwoFactorCodeBox"
-                         HorizontalAlignment="Stretch"
-                         IsSpellCheckEnabled="False"
-                         Text="{x:Bind AccountSettingsModel.TwoFactorCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <StackPanel Margin="0,16,0,4">
+                    <TextBlock x:Uid="/Eppie.App.Resources/Resources/CheckNewMessagesIntervalLabel" Margin="0,0,0,4" />
+                    <local:ErrorControl HorizontalAlignment="Stretch" Property="{x:Bind AccountSettingsModel.SynchronizationInterval, Mode=OneWay}">
+                        <local:ErrorControl.InnerContent>
+                            <TextBox IsSpellCheckEnabled="False" Text="{x:Bind AccountSettingsModel.SynchronizationInterval.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </local:ErrorControl.InnerContent>
+                    </local:ErrorControl>
+                </StackPanel>
 
+                <StackPanel Margin="0,16,0,4">
+                    <TextBlock x:Uid="/Eppie.App.Resources/Resources/BackupLabel"
+                               Margin="0,0,0,4"
+                               Style="{StaticResource NormalTextStyle}" />
+                    <CheckBox x:Name="BackupAccountSettingsCheckBox"
+                              x:Uid="/Eppie.App.Resources/Resources/BackupAccountSettingsCheckBox"
+                              IsChecked="{x:Bind AccountSettingsModel.IsBackupAccountSettingsEnabled, Mode=TwoWay}" />
+                    <CheckBox x:Uid="/Eppie.App.Resources/Resources/BackupAccountMessagesCheckBox"
+                              IsChecked="{x:Bind AccountSettingsModel.IsBackupAccountMessagesEnabled, Mode=TwoWay}"
+                              Visibility="{Binding ElementName=BackupAccountSettingsCheckBox, Path=IsChecked}" />
+                </StackPanel>
+                
             </StackPanel>
         </ScrollViewer>
     </Grid>

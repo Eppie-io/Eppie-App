@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -6,19 +7,21 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Tuvi.App.ViewModels.Validation;
 using Tuvi.Core.Entities;
+using Tuvi.Proton.Client.Exceptions;
+using static Tuvi.App.ViewModels.AccountSettingsPageViewModel;
 
 namespace Tuvi.App.ViewModels
 {
     public class ProtonAccountSettingsModel : ObservableObject
     {
-        protected Account CurrentAccount { get; set; }
+        /// <summary>
+        /// Default interval value (in minutes) for checking new messages
+        /// </summary>
+        private const int DefaultSynchronizationInterval = 10;
 
-        private string _email;
-        public string Email
-        {
-            get => _email;
-            set => SetProperty(ref _email, value);
-        }
+        protected Account CurrentAccount { get; set; }
+        public ValidatableProperty<string> Email { get; } = new ValidatableProperty<string>();
+        public ValidatableProperty<string> SynchronizationInterval { get; } = new ValidatableProperty<string>();
 
         private string _senderName;
         public string SenderName
@@ -27,19 +30,38 @@ namespace Tuvi.App.ViewModels
             set => SetProperty(ref _senderName, value);
         }
 
-        private string _twoFactorCode;
-        public string TwoFactorCode
+        public ValidatableProperty<string> TwoFactorCode { get; } = new ValidatableProperty<string>();
+        public ValidatableProperty<string> Password { get; } = new ValidatableProperty<string>();
+        public ValidatableProperty<string> MailboxPassword { get; } = new ValidatableProperty<string>();
+
+
+        private bool _isBackupAccountSettingsEnabled = true;
+        public bool IsBackupAccountSettingsEnabled
         {
-            get => _twoFactorCode;
-            set => SetProperty(ref _twoFactorCode, value);
+            get { return _isBackupAccountSettingsEnabled; }
+            set
+            {
+                SetProperty(ref _isBackupAccountSettingsEnabled, value);
+
+                if (!IsBackupAccountSettingsEnabled)
+                {
+                    IsBackupAccountMessagesEnabled = false;
+                }
+            }
         }
 
-        public ValidatableProperty<string> Password { get; } = new ValidatableProperty<string>();
+        private bool _isBackupAccountMessagesEnabled = true;
+        public bool IsBackupAccountMessagesEnabled
+        {
+            get { return _isBackupAccountMessagesEnabled; }
+            set { SetProperty(ref _isBackupAccountMessagesEnabled, value); }
+        }
 
-        public ValidatableProperty<string> MailboxPassword { get; } = new ValidatableProperty<string>();
 
         public ProtonAccountSettingsModel()
         {
+            Email.SetInitialValue(string.Empty);
+            SynchronizationInterval.SetInitialValue(DefaultSynchronizationInterval.ToString());
         }
         protected ProtonAccountSettingsModel(Account account)
         {
@@ -48,29 +70,50 @@ namespace Tuvi.App.ViewModels
                 throw new ArgumentNullException(nameof(account));
             }
 
+            CurrentAccount = account;
+
+            if (account.Email != null)
+            {
+                Email.SetInitialValue(account.Email.Address);
+                SenderName = account.Email.Name;
+            }
+
             Password.SetInitialValue(string.Empty);
+            TwoFactorCode.SetInitialValue(string.Empty);
             MailboxPassword.SetInitialValue(string.Empty);
 
+            IsBackupAccountSettingsEnabled = account.IsBackupAccountSettingsEnabled;
+            IsBackupAccountMessagesEnabled = account.IsBackupAccountMessagesEnabled;
+            SynchronizationInterval.SetInitialValue(account.SynchronizationInterval.ToString());
+            Email.PropertyChanged += (sender, args) =>
+            {
+                OnValidatablePropertyChanged<string>(nameof(Email), args.PropertyName);
+            };
             Password.PropertyChanged += (sender, args) =>
             {
                 OnValidatablePropertyChanged<string>(nameof(Password), args.PropertyName);
+            };
+            TwoFactorCode.PropertyChanged += (sender, args) =>
+            {
+                OnValidatablePropertyChanged<string>(nameof(TwoFactorCode), args.PropertyName);
             };
             MailboxPassword.PropertyChanged += (sender, args) =>
             {
                 OnValidatablePropertyChanged<string>(nameof(MailboxPassword), args.PropertyName);
             };
-
-            if (account.Email != null)
+            SynchronizationInterval.PropertyChanged += (sender, args) =>
             {
-                Email = account.Email.Address;
-                SenderName = account.Email.Name;
-            }
-
-            CurrentAccount = account;
+                OnValidatablePropertyChanged<string>(nameof(SynchronizationInterval), args.PropertyName);
+            };
         }
 
-        // TODO: avoid copy-paste
-        private void OnValidatablePropertyChanged<T>(string validatablePropertyName, string propertyName)
+        /// <summary>
+        /// Handles ValidatableProperty changes
+        /// </summary>
+        /// <typeparam name="T">The type of ValidatableProperty</typeparam>
+        /// <param name="validatablePropertyName">The name of the ValidatableProperty</param>
+        /// <param name="propertyName">The name of the property that was changed inside the ValidatableProperty</param>
+        protected void OnValidatablePropertyChanged<T>(string validatablePropertyName, string propertyName)
         {
             if (propertyName == nameof(ValidatableProperty<T>.Value) ||
                 propertyName == nameof(ValidatableProperty<T>.NeedsValidation))
@@ -81,10 +124,18 @@ namespace Tuvi.App.ViewModels
 
         public virtual Account ToAccount()
         {
-            CurrentAccount.Email = new EmailAddress(Email, SenderName);
+            CurrentAccount.Email = new EmailAddress(Email.Value, SenderName);
+
             CurrentAccount.AuthData = new BasicAuthData() { Password = Password.Value };
+            CurrentAccount.IsBackupAccountSettingsEnabled = IsBackupAccountSettingsEnabled;
+            CurrentAccount.IsBackupAccountMessagesEnabled = IsBackupAccountMessagesEnabled;
+            CurrentAccount.SynchronizationInterval = int.TryParse(SynchronizationInterval.Value, out int interval)
+                ? interval
+                : DefaultSynchronizationInterval;
             CurrentAccount.Type = (int)MailBoxType.Proton;
+
             return CurrentAccount;
+
         }
 
         public static ProtonAccountSettingsModel Create(Account account)
@@ -95,11 +146,39 @@ namespace Tuvi.App.ViewModels
 
     public class ProtonAccountSettingsPageViewModel : BaseViewModel, IDisposable
     {
+        public class NeedReloginData
+        {
+            public Account Account { get; set; }
+        }
+
         private ProtonAccountSettingsModel _accountSettingsModel;
+        [CustomValidation(typeof(ProtonAccountSettingsPageViewModel), nameof(ClearValidationErrors))]
+        [CustomValidation(typeof(ProtonAccountSettingsPageViewModel), nameof(ValidateEmailIsNotEmpty))]
+        [CustomValidation(typeof(ProtonAccountSettingsPageViewModel), nameof(ValidatePasswordIsNotEmpty))]
+        [CustomValidation(typeof(ProtonAccountSettingsPageViewModel), nameof(ValidateSynchronizationIntervalIsCorrect))]
         public ProtonAccountSettingsModel AccountSettingsModel
         {
-            get => _accountSettingsModel;
-            set => SetProperty(ref _accountSettingsModel, value, true);
+            get { return _accountSettingsModel; }
+            set
+            {
+                if (_accountSettingsModel != null)
+                {
+                    _accountSettingsModel.PropertyChanged -= OnAccountSettingsModelPropertyChanged;
+                }
+
+                SetProperty(ref _accountSettingsModel, value, true);
+                OnPropertyChanged(nameof(IsEmailReadonly));
+
+                if (_accountSettingsModel != null)
+                {
+                    _accountSettingsModel.PropertyChanged += OnAccountSettingsModelPropertyChanged;
+                }
+            }
+        }
+
+        private void OnAccountSettingsModelPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            ValidateProperty(AccountSettingsModel, nameof(AccountSettingsModel));
         }
 
         private bool _isWaitingResponse;
@@ -149,6 +228,15 @@ namespace Tuvi.App.ViewModels
                 {
                     InitModel(ProtonAccountSettingsModel.Create(accountData), false);
                 }
+                else if (data is NeedReloginData needReloginData)
+                {
+                    var account = needReloginData.Account;
+                    InitModel(ProtonAccountSettingsModel.Create(account), false);
+
+                    AccountSettingsModel.Password.NeedsValidation = true;
+                    AccountSettingsModel.Password.Errors.Clear();
+                    AccountSettingsModel.Password.Errors.Add(GetLocalizedString("AuthenticationError"));
+                }
                 else
                 {
                     InitModel(ProtonAccountSettingsModel.Create(Account.Default), true);
@@ -168,18 +256,50 @@ namespace Tuvi.App.ViewModels
 
         private async Task ApplySettingsAndGoBackAsync()
         {
+            AccountSettingsModel.Email.NeedsValidation = true;
+            AccountSettingsModel.Password.NeedsValidation = true;
+            AccountSettingsModel.TwoFactorCode.NeedsValidation = true;
+            AccountSettingsModel.MailboxPassword.NeedsValidation = true;
+
+            if ((!IsEmailReadonly && string.IsNullOrEmpty(AccountSettingsModel.Email.Value))
+               || string.IsNullOrEmpty(AccountSettingsModel.Password.Value))
+            {
+                ValidateProperty(AccountSettingsModel, nameof(AccountSettingsModel));
+                return;
+            }
+
             IsWaitingResponse = true;
             try
             {
-                var (userId, refreshToken, saltedKeyPass) = await Proton.ClientAuth.LoginFullAsync(AccountSettingsModel.Email,
+                var (userId, refreshToken, saltedKeyPass) = await Proton.ClientAuth.LoginFullAsync(AccountSettingsModel.Email.Value,
                                                                                                    AccountSettingsModel.Password.Value,
-                                                                                                   (ct) =>
+                                                                                                   async (ct) =>
                                                                                                    {
-                                                                                                       return Task.FromResult(AccountSettingsModel.TwoFactorCode);
+                                                                                                       await DispatcherService.RunAsync(() =>
+                                                                                                       {
+                                                                                                           if (string.IsNullOrEmpty(AccountSettingsModel.TwoFactorCode.Value))
+                                                                                                           {
+                                                                                                               AccountSettingsModel.TwoFactorCode.Errors.Clear();
+                                                                                                               AccountSettingsModel.TwoFactorCode.Errors.Add(GetLocalizedString("NeedTwofactorCode"));
+
+                                                                                                               throw new OperationCanceledException();
+                                                                                                           }
+                                                                                                       });
+                                                                                                       return AccountSettingsModel.TwoFactorCode.Value;
                                                                                                    },
-                                                                                                   (ct) =>
+                                                                                                   async (ct) =>
                                                                                                    {
-                                                                                                       return Task.FromResult(AccountSettingsModel.MailboxPassword.Value);
+                                                                                                       await DispatcherService.RunAsync(() =>
+                                                                                                       {
+                                                                                                           if (string.IsNullOrEmpty(AccountSettingsModel.MailboxPassword.Value))
+                                                                                                           {
+                                                                                                               AccountSettingsModel.MailboxPassword.Errors.Clear();
+                                                                                                               AccountSettingsModel.MailboxPassword.Errors.Add(GetLocalizedString("NeedMailboxPassword"));
+
+                                                                                                               throw new OperationCanceledException();
+                                                                                                           }
+                                                                                                       });
+                                                                                                       return AccountSettingsModel.MailboxPassword.Value;
                                                                                                    },
                                                                                                    default)
                                                          .ConfigureAwait(true);
@@ -198,14 +318,21 @@ namespace Tuvi.App.ViewModels
             }
             catch (AuthorizationException)
             {
-                // TODO
+                AccountSettingsModel.Password.Errors.Clear();
                 AccountSettingsModel.Password.Errors.Add(GetLocalizedString("AuthenticationError"));
-                AccountSettingsModel.MailboxPassword.Errors.Add(GetLocalizedString("AuthenticationError"));
             }
             catch (AuthenticationException)
             {
-                // TODO
+                AccountSettingsModel.Password.Errors.Clear();
                 AccountSettingsModel.Password.Errors.Add(GetLocalizedString("AuthenticationError"));
+            }
+            catch (ProtonSessionRequestException)
+            {
+                AccountSettingsModel.TwoFactorCode.Errors.Clear();
+                AccountSettingsModel.TwoFactorCode.Errors.Add(GetLocalizedString("AuthenticationError"));
+            }
+            catch (OperationCanceledException)
+            {
             }
             catch (Exception e)
             {
@@ -243,6 +370,7 @@ namespace Tuvi.App.ViewModels
             }
             else
             {
+                // TODO: TVM-319 
                 await Core.UpdateAccountAsync(account, cancellationToken).ConfigureAwait(true);
             }
 
@@ -314,6 +442,80 @@ namespace Tuvi.App.ViewModels
                 IsWaitingResponse = false;
             }
         }
+
+        public static ValidationResult ClearValidationErrors(ProtonAccountSettingsModel accountModel, ValidationContext _)
+        {
+            if (accountModel != null)
+            {
+                accountModel.Email.Errors.Clear();
+                accountModel.SynchronizationInterval.Errors.Clear();
+                accountModel.Password.Errors.Clear();
+                accountModel.TwoFactorCode.Errors.Clear();
+            }
+
+            return ValidationResult.Success;
+        }
+
+        public static ValidationResult ValidateEmailIsNotEmpty(ProtonAccountSettingsModel accountModel, ValidationContext context)
+        {
+            if (context?.ObjectInstance is ProtonAccountSettingsPageViewModel viewModel &&
+                !viewModel.IsEmailReadonly)
+            {
+                if (accountModel != null &&
+                    accountModel.Email.NeedsValidation &&
+                    string.IsNullOrEmpty(accountModel.Email.Value))
+                {
+                    var error = viewModel.GetLocalizedString("FieldIsEmptyNotification");
+                    accountModel.Email.Errors.Add(error);
+                    return new ValidationResult(error);
+                }
+            }
+
+            return ValidationResult.Success;
+        }
+
+        public static ValidationResult ValidatePasswordIsNotEmpty(ProtonAccountSettingsModel accountModel, ValidationContext context)
+        {
+            if (context?.ObjectInstance is ProtonAccountSettingsPageViewModel viewModel)
+            {
+                if (accountModel != null &&
+                    accountModel.Password.NeedsValidation &&
+                    string.IsNullOrEmpty(accountModel.Password.Value))
+                {
+                    var error = viewModel.GetLocalizedString("FieldIsEmptyNotification");
+                    accountModel.Password.Errors.Add(error);
+                    return new ValidationResult(error);
+                }
+            }
+
+            return ValidationResult.Success;
+        }
+
+        public static ValidationResult ValidateSynchronizationIntervalIsCorrect(ProtonAccountSettingsModel accountModel, ValidationContext context)
+        {
+            if (context?.ObjectInstance is ProtonAccountSettingsPageViewModel viewModel)
+            {
+                if (accountModel != null &&
+                    accountModel.SynchronizationInterval.NeedsValidation)
+                {
+                    if (!int.TryParse(accountModel.SynchronizationInterval.Value, out int interval))
+                    {
+                        var error = viewModel.GetLocalizedString("ValueIsNotNumberNotification");
+                        accountModel.SynchronizationInterval.Errors.Add(error);
+                        return new ValidationResult(error);
+                    }
+                    else if (interval < 0)
+                    {
+                        var error = viewModel.GetLocalizedString("ValueCantBeNegativeNotification");
+                        accountModel.SynchronizationInterval.Errors.Add(error);
+                        return new ValidationResult(error);
+                    }
+                }
+            }
+
+            return ValidationResult.Success;
+        }
+
 
         public void Dispose()
         {

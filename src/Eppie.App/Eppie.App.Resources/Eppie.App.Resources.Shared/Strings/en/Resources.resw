@@ -191,6 +191,14 @@
     <value>Authentification error</value>
     <comment>Notification text when authentification failed</comment>
   </data>
+  <data name="NeedTwofactorCode" xml:space="preserve">
+    <value>Two factor authentication code required</value>
+    <comment>Notification text when two factor authentication code required</comment>
+  </data>
+  <data name="NeedMailboxPassword" xml:space="preserve">
+    <value>Mailbox password required</value>
+    <comment>Notification text when mailbox password required</comment>
+  </data>
   <!-- ToDo: use using:Windows.UI.Xaml.Controls for UWP; use using:Microsoft.UI.Xaml.Controls for Uno
   <data name="BackButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Back</value>

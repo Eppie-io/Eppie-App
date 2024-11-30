@@ -29,8 +29,8 @@ namespace Tuvi.App.ViewModels
         private string _senderName;
         public string SenderName
         {
-            get { return _senderName; }
-            set { SetProperty(ref _senderName, value); }
+            get => _senderName;
+            set => SetProperty(ref _senderName, value);
         }
 
         private int _outgoingServerPort = 465; // default outgoing port (SMTP)
@@ -171,14 +171,13 @@ namespace Tuvi.App.ViewModels
             CurrentAccount.Type = (int)MailBoxType.Email;
 
             return CurrentAccount;
+
         }
 
         public static AccountSettingsModel Create(Account account)
         {
             switch (account?.AuthData)
             {
-                case ProtonAuthData authData:
-                    return new ProtonAuthAccountSettingsModel(account);
                 case OAuth2Data oauth2:
                     return new OAuth2AccountSettingsModel(account);
                 case BasicAuthData basic:
@@ -245,37 +244,6 @@ namespace Tuvi.App.ViewModels
             {
                 RefreshToken = RefreshToken,
                 AuthAssistantId = AuthAssistantId
-            };
-
-            return CurrentAccount;
-        }
-    }
-
-    public class ProtonAuthAccountSettingsModel : AccountSettingsModel
-    {
-        public string RefreshToken { get; set; }
-        public string UserId { get; set; }
-        public string SaltedPassword { get; set; }
-
-        public ProtonAuthAccountSettingsModel(Account account)
-            : base(account)
-        {
-            if (account.AuthData is ProtonAuthData authData)
-            {
-                RefreshToken = authData.RefreshToken;
-                UserId = authData.UserId;
-                SaltedPassword = authData.SaltedPassword;
-            }
-        }
-
-        public override Account ToAccount()
-        {
-            CurrentAccount = base.ToAccount();
-            CurrentAccount.AuthData = new ProtonAuthData()
-            {
-                RefreshToken = RefreshToken,
-                UserId = UserId,
-                SaltedPassword = SaltedPassword
             };
 
             return CurrentAccount;
