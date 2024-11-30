@@ -2,7 +2,6 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using Finebits.Authorization.OAuth2.Abstractions;
 using Finebits.Authorization.OAuth2.Types;
@@ -11,7 +10,7 @@ using Tuvi.OAuth2;
 
 namespace Tuvi.App.ViewModels
 {
-    public class AccountSettingsPageViewModel : BaseViewModel, IDisposable
+    public class AccountSettingsPageViewModel : BaseAccountSettingsPageViewModel
     {
         public class NeedReloginData
         {
@@ -27,10 +26,10 @@ namespace Tuvi.App.ViewModels
 
         private AccountSettingsModel _accountSettingsModel;
         [CustomValidation(typeof(AccountSettingsPageViewModel), nameof(ClearValidationErrors))]
-        [CustomValidation(typeof(AccountSettingsPageViewModel), nameof(ValidateEmailIsNotEmpty))]
-        [CustomValidation(typeof(AccountSettingsPageViewModel), nameof(ValidateSynchronizationIntervalIsCorrect))]
         [CustomValidation(typeof(AccountSettingsPageViewModel), nameof(ValidateOutgoingServerAddressIsNotEmpty))]
         [CustomValidation(typeof(AccountSettingsPageViewModel), nameof(ValidateIncomingServerAddressIsNotEmpty))]
+        [CustomValidation(typeof(BaseAccountSettingsPageViewModel), nameof(ValidateEmailIsNotEmpty))]
+        [CustomValidation(typeof(BaseAccountSettingsPageViewModel), nameof(ValidateSynchronizationIntervalIsCorrect))]
         public AccountSettingsModel AccountSettingsModel
         {
             get { return _accountSettingsModel; }
@@ -57,103 +56,9 @@ namespace Tuvi.App.ViewModels
             ValidateProperty(AccountSettingsModel, nameof(AccountSettingsModel));
         }
 
-        private bool _isWaitingResponse;
-        public bool IsWaitingResponse
+        public AccountSettingsPageViewModel() : base()
         {
-            get { return _isWaitingResponse; }
-            set
-            {
-                SetProperty(ref _isWaitingResponse, value);
-
-                OnPropertyChanged(nameof(IsApplyButtonEnabled));
-                ApplySettingsCommand.NotifyCanExecuteChanged();
-
-                OnPropertyChanged(nameof(IsRemoveButtonEnabled));
-                RemoveAccountCommand.NotifyCanExecuteChanged();
-            }
-        }
-
-        private bool _isCreatingAccountMode = true;
-        public bool IsCreatingAccountMode
-        {
-            get { return _isCreatingAccountMode; }
-            private set
-            {
-                SetProperty(ref _isCreatingAccountMode, value);
-                OnPropertyChanged(nameof(IsEmailReadonly));
-            }
-        }
-
-        public bool IsEmailReadonly
-        {
-            get { return !(_isCreatingAccountMode); }
-        }
-
-        public bool IsApplyButtonEnabled
-        {
-            get { return !IsWaitingResponse && !HasErrors; }
-        }
-
-        public bool IsRemoveButtonEnabled => !IsWaitingResponse;
-
-        public IRelayCommand ApplySettingsCommand { get; }
-
-        public IRelayCommand RemoveAccountCommand { get; }
-
-        public ICommand CancelSettingsCommand => new RelayCommand(DoCancel);
-
-        public ICommand HandleErrorCommand => new RelayCommand<object>(ex => OnError(ex as Exception));
-
-        public IRelayCommand CreateHybridAddress { get; }
-
-        public bool IsBasicAccount
-        {
-            get { return AccountSettingsModel is BasicAccountSettingsModel; }
-        }
-
-        public bool ShowHybridAddressButton
-        {
-            get
-            {
-                return !IsHybridAddress && !IsCreatingAccountMode;
-            }
-        }
-
-        public bool IsHybridAddress
-        {
-            get
-            {
-                if (AccountSettingsModel.Email.Value != null)
-                {
-                    return new EmailAddress(AccountSettingsModel.Email.Value).IsHybrid;
-                }
-
-                return false;
-            }
-        }
-
-        private Array _incomingProtocolTypes;
-        public Array IncomingProtocolTypes
-        {
-            get
-            {
-                if (_incomingProtocolTypes == null)
-                {
-                    _incomingProtocolTypes = Array.CreateInstance(typeof(MailProtocol), 2);
-                    _incomingProtocolTypes.SetValue(MailProtocol.IMAP, 0);
-                    _incomingProtocolTypes.SetValue(MailProtocol.POP3, 1);
-                }
-
-                return _incomingProtocolTypes;
-            }
-        }
-
-        public AccountSettingsPageViewModel()
-        {
-            ApplySettingsCommand = new AsyncRelayCommand(ApplySettingsAndGoBackAsync, () => IsApplyButtonEnabled);
-            RemoveAccountCommand = new AsyncRelayCommand(RemoveAccountAndGoBackAsync, () => IsRemoveButtonEnabled);
             CreateHybridAddress = new AsyncRelayCommand(CreateHybridAddressAsync, () => !IsHybridAddress);
-            ErrorsChanged += (sender, e) => ApplySettingsCommand.NotifyCanExecuteChanged();
         }
 
         public override async void OnNavigatedTo(object data)
@@ -213,8 +118,26 @@ namespace Tuvi.App.ViewModels
             accountSettingsModel.IncomingServerAddress.NeedsValidation = !isCreatingMode;
         }
 
-        private async Task ApplySettingsAndGoBackAsync()
+        protected async override Task ApplySettingsAndGoBackAsync()
         {
+            if ((!IsEmailReadonly && string.IsNullOrEmpty(AccountSettingsModel.Email.Value))
+                || string.IsNullOrEmpty(AccountSettingsModel.OutgoingServerAddress.Value)
+                || string.IsNullOrEmpty(AccountSettingsModel.IncomingServerAddress.Value))
+            {
+                // Validator will block Apply button and show notification
+                // if Email, Outgoing server address or Incoming server address 
+                // fields are empty even if values were not entered
+                AccountSettingsModel.Email.NeedsValidation = true;
+                AccountSettingsModel.OutgoingServerAddress.NeedsValidation = true;
+                AccountSettingsModel.IncomingServerAddress.NeedsValidation = true;
+                if (AccountSettingsModel is BasicAccountSettingsModel basicAccountSettingsModel)
+                {
+                    basicAccountSettingsModel.Password.NeedsValidation = true;
+                }
+                ValidateProperty(AccountSettingsModel, nameof(AccountSettingsModel));
+                return;
+            }
+
             IsWaitingResponse = true;
             try
             {
@@ -235,28 +158,13 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        CancellationTokenSource _cts;
+        protected override Account AccountSettingsModelToAccount()
+        {
+            return AccountSettingsModel.ToAccount();
+        }
 
         private async Task<bool> ApplyAccountSettingsAsync(Account accountData)
         {
-            if ((!IsEmailReadonly && string.IsNullOrEmpty(AccountSettingsModel.Email.Value))
-                || string.IsNullOrEmpty(AccountSettingsModel.OutgoingServerAddress.Value)
-                || string.IsNullOrEmpty(AccountSettingsModel.IncomingServerAddress.Value))
-            {
-                // Validator will block Apply button and show notification
-                // if Email, Outgoing server address or Incoming server address 
-                // fields are empty even if values were not entered
-                AccountSettingsModel.Email.NeedsValidation = true;
-                AccountSettingsModel.OutgoingServerAddress.NeedsValidation = true;
-                AccountSettingsModel.IncomingServerAddress.NeedsValidation = true;
-                if (AccountSettingsModel is BasicAccountSettingsModel basicAccountSettingsModel)
-                {
-                    basicAccountSettingsModel.Password.NeedsValidation = true;
-                }
-                ValidateProperty(AccountSettingsModel, nameof(AccountSettingsModel));
-                return false;
-            }
-
             _cts = new CancellationTokenSource();
             bool result = await CheckEmailAccountAsync(accountData, _cts.Token).ConfigureAwait(true);
             if (result)
@@ -275,108 +183,6 @@ namespace Tuvi.App.ViewModels
             return false;
         }
 
-        private async Task ProcessAccountDataAsync(Account account, CancellationToken cancellationToken = default)
-        {
-            bool existAccount = await Core.ExistsAccountWithEmailAddressAsync(account.Email, cancellationToken).ConfigureAwait(true);
-
-            if (!existAccount)
-            {
-                await Core.AddAccountAsync(account, cancellationToken).ConfigureAwait(true);
-            }
-            else
-            {
-                // TODO: TVM-319 
-                await Core.UpdateAccountAsync(account, cancellationToken).ConfigureAwait(true);
-            }
-
-            await BackupIfNeededAsync().ConfigureAwait(true);
-        }
-
-        private void NavigateFromCurrentPage()
-        {
-            if (IsCreatingAccountMode)
-            {
-                NavigationService?.GoBackToOrNavigate(nameof(MainPageViewModel));
-            }
-            else
-            {
-                NavigationService?.GoBackOrNavigate(nameof(MainPageViewModel));
-            }
-        }
-
-        private void DoCancel()
-        {
-            // TODO: TVM-347 Suspend mailbox until relogin
-            // if there was a relogin, and the user did not update the data,
-            // then we need to suspend work with this email until the data is updated
-
-            if (_isWaitingResponse)
-            {
-                CancelAsyncOperation();
-            }
-            else
-            {
-                GoBack();
-            }
-        }
-
-        private void GoBack()
-        {
-            NavigationService?.GoBack();
-        }
-
-        private void CancelAsyncOperation()
-        {
-            _cts?.Cancel();
-        }
-
-        private async Task RemoveAccountAndGoBackAsync()
-        {
-            try
-            {
-                IsWaitingResponse = true;
-
-                bool isConfirmed = await MessageService.ShowRemoveAccountDialogAsync().ConfigureAwait(true);
-
-                if (isConfirmed)
-                {
-                    var account = AccountSettingsModel.ToAccount();
-                    await Core.DeleteAccountAsync(account).ConfigureAwait(true);
-
-                    await BackupIfNeededAsync().ConfigureAwait(true);
-
-                    GoBack();
-                }
-            }
-            catch (Exception e)
-            {
-                OnError(e);
-            }
-            finally
-            {
-                IsWaitingResponse = false;
-            }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        private bool _isDisposed;
-        protected virtual void Dispose(bool disposing)
-        {
-            if (_isDisposed) return;
-
-            if (disposing)
-            {
-                _cts?.Dispose();
-            }
-
-            _isDisposed = true;
-        }
-
         public static ValidationResult ClearValidationErrors(AccountSettingsModel accountModel, ValidationContext _)
         {
             if (accountModel != null)
@@ -390,24 +196,6 @@ namespace Tuvi.App.ViewModels
                 }
                 accountModel.OutgoingServerAddress.Errors.Clear();
                 accountModel.IncomingServerAddress.Errors.Clear();
-            }
-
-            return ValidationResult.Success;
-        }
-
-        public static ValidationResult ValidateEmailIsNotEmpty(AccountSettingsModel accountModel, ValidationContext context)
-        {
-            if (context?.ObjectInstance is AccountSettingsPageViewModel viewModel &&
-                !viewModel.IsEmailReadonly)
-            {
-                if (accountModel != null &&
-                    accountModel.Email.NeedsValidation &&
-                    string.IsNullOrEmpty(accountModel.Email.Value))
-                {
-                    var error = viewModel.GetLocalizedString("FieldIsEmptyNotification");
-                    accountModel.Email.Errors.Add(error);
-                    return new ValidationResult(error);
-                }
             }
 
             return ValidationResult.Success;
@@ -430,31 +218,6 @@ namespace Tuvi.App.ViewModels
             return ValidationResult.Success;
         }
 
-        public static ValidationResult ValidateSynchronizationIntervalIsCorrect(AccountSettingsModel accountModel, ValidationContext context)
-        {
-            if (context?.ObjectInstance is AccountSettingsPageViewModel viewModel)
-            {
-                if (accountModel != null &&
-                    accountModel.SynchronizationInterval.NeedsValidation)
-                {
-                    if (!int.TryParse(accountModel.SynchronizationInterval.Value, out int interval))
-                    {
-                        var error = viewModel.GetLocalizedString("ValueIsNotNumberNotification");
-                        accountModel.SynchronizationInterval.Errors.Add(error);
-                        return new ValidationResult(error);
-                    }
-                    else if (interval < 0)
-                    {
-                        var error = viewModel.GetLocalizedString("ValueCantBeNegativeNotification");
-                        accountModel.SynchronizationInterval.Errors.Add(error);
-                        return new ValidationResult(error);
-                    }
-                }
-            }
-
-            return ValidationResult.Success;
-        }
-
         public static ValidationResult ValidateOutgoingServerAddressIsNotEmpty(AccountSettingsModel accountModel, ValidationContext context)
         {
             if (context?.ObjectInstance is AccountSettingsPageViewModel viewModel)
@@ -470,6 +233,50 @@ namespace Tuvi.App.ViewModels
             }
 
             return ValidationResult.Success;
+        }
+
+        public IRelayCommand CreateHybridAddress { get; }
+
+        public bool IsBasicAccount
+        {
+            get { return AccountSettingsModel is BasicAccountSettingsModel; }
+        }
+
+        public bool ShowHybridAddressButton
+        {
+            get
+            {
+                return !IsHybridAddress && !IsCreatingAccountMode;
+            }
+        }
+
+        public bool IsHybridAddress
+        {
+            get
+            {
+                if (AccountSettingsModel.Email.Value != null)
+                {
+                    return new EmailAddress(AccountSettingsModel.Email.Value).IsHybrid;
+                }
+
+                return false;
+            }
+        }
+
+        private Array _incomingProtocolTypes;
+        public Array IncomingProtocolTypes
+        {
+            get
+            {
+                if (_incomingProtocolTypes == null)
+                {
+                    _incomingProtocolTypes = Array.CreateInstance(typeof(MailProtocol), 2);
+                    _incomingProtocolTypes.SetValue(MailProtocol.IMAP, 0);
+                    _incomingProtocolTypes.SetValue(MailProtocol.POP3, 1);
+                }
+
+                return _incomingProtocolTypes;
+            }
         }
 
         private static OAuth2.MailService GetMailService(string mailServiceName)

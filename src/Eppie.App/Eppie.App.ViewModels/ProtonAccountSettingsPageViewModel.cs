@@ -2,14 +2,12 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Input;
-using CommunityToolkit.Mvvm.Input;
 using Tuvi.Core.Entities;
 using Tuvi.Proton.Client.Exceptions;
 
 namespace Tuvi.App.ViewModels
 {
-    public class ProtonAccountSettingsPageViewModel : BaseViewModel, IDisposable
+    public class ProtonAccountSettingsPageViewModel : BaseAccountSettingsPageViewModel
     {
         public class NeedReloginData
         {
@@ -18,9 +16,9 @@ namespace Tuvi.App.ViewModels
 
         private ProtonAccountSettingsModel _accountSettingsModel;
         [CustomValidation(typeof(ProtonAccountSettingsPageViewModel), nameof(ClearValidationErrors))]
-        [CustomValidation(typeof(ProtonAccountSettingsPageViewModel), nameof(ValidateEmailIsNotEmpty))]
         [CustomValidation(typeof(ProtonAccountSettingsPageViewModel), nameof(ValidatePasswordIsNotEmpty))]
-        [CustomValidation(typeof(ProtonAccountSettingsPageViewModel), nameof(ValidateSynchronizationIntervalIsCorrect))]
+        [CustomValidation(typeof(BaseAccountSettingsPageViewModel), nameof(ValidateEmailIsNotEmpty))]
+        [CustomValidation(typeof(BaseAccountSettingsPageViewModel), nameof(ValidateSynchronizationIntervalIsCorrect))]
         public ProtonAccountSettingsModel AccountSettingsModel
         {
             get { return _accountSettingsModel; }
@@ -46,43 +44,8 @@ namespace Tuvi.App.ViewModels
             ValidateProperty(AccountSettingsModel, nameof(AccountSettingsModel));
         }
 
-        private bool _isWaitingResponse;
-        public bool IsWaitingResponse
+        public ProtonAccountSettingsPageViewModel() : base()
         {
-            get { return _isWaitingResponse; }
-            set
-            {
-                SetProperty(ref _isWaitingResponse, value);
-                ApplySettingsCommand.NotifyCanExecuteChanged();
-                RemoveAccountCommand.NotifyCanExecuteChanged();
-            }
-        }
-
-        private bool _isCreatingAccountMode = true;
-        public bool IsCreatingAccountMode
-        {
-            get { return _isCreatingAccountMode; }
-            private set { SetProperty(ref _isCreatingAccountMode, value); }
-        }
-
-        public bool IsEmailReadonly
-        {
-            get { return !(_isCreatingAccountMode); }
-        }
-
-        public IRelayCommand ApplySettingsCommand { get; }
-
-        public IRelayCommand RemoveAccountCommand { get; }
-
-        public ICommand CancelSettingsCommand => new RelayCommand(DoCancel);
-
-        public ICommand HandleErrorCommand => new RelayCommand<object>(ex => OnError(ex as Exception));
-
-        public ProtonAccountSettingsPageViewModel()
-        {
-            ApplySettingsCommand = new AsyncRelayCommand(ApplySettingsAndGoBackAsync, () => !IsWaitingResponse);
-            RemoveAccountCommand = new AsyncRelayCommand(RemoveAccountAndGoBackAsync, () => !IsWaitingResponse);
-            ErrorsChanged += (sender, e) => ApplySettingsCommand.NotifyCanExecuteChanged();
         }
 
         public override void OnNavigatedTo(object data)
@@ -119,7 +82,7 @@ namespace Tuvi.App.ViewModels
             AccountSettingsModel = accountSettingsModel;
         }
 
-        private async Task ApplySettingsAndGoBackAsync()
+        protected async override Task ApplySettingsAndGoBackAsync()
         {
             AccountSettingsModel.Email.NeedsValidation = true;
             AccountSettingsModel.Password.NeedsValidation = true;
@@ -209,7 +172,10 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        CancellationTokenSource _cts;
+        protected override Account AccountSettingsModelToAccount()
+        {
+            return AccountSettingsModel.ToAccount();
+        }
 
         private async Task<bool> ApplyAccountSettingsAsync(Account accountData)
         {
@@ -223,108 +189,6 @@ namespace Tuvi.App.ViewModels
             {
                 return false;
             }
-        }
-
-        private async Task ProcessAccountDataAsync(Account account, CancellationToken cancellationToken = default)
-        {
-            bool existAccount = await Core.ExistsAccountWithEmailAddressAsync(account.Email, cancellationToken).ConfigureAwait(true);
-
-            if (!existAccount)
-            {
-                await Core.AddAccountAsync(account, cancellationToken).ConfigureAwait(true);
-            }
-            else
-            {
-                // TODO: TVM-319 
-                await Core.UpdateAccountAsync(account, cancellationToken).ConfigureAwait(true);
-            }
-
-            await BackupIfNeededAsync().ConfigureAwait(true);
-        }
-
-        private void NavigateFromCurrentPage()
-        {
-            if (IsCreatingAccountMode)
-            {
-                NavigationService?.GoBackToOrNavigate(nameof(MainPageViewModel));
-            }
-            else
-            {
-                NavigationService?.GoBackOrNavigate(nameof(MainPageViewModel));
-            }
-        }
-
-        private void DoCancel()
-        {
-            // TODO: TVM-347 Suspend mailbox until relogin
-            // if there was a relogin, and the user did not update the data,
-            // then we need to suspend work with this email until the data is updated
-
-            if (_isWaitingResponse)
-            {
-                CancelAsyncOperation();
-            }
-            else
-            {
-                GoBack();
-            }
-        }
-
-        private void GoBack()
-        {
-            NavigationService?.GoBack();
-        }
-
-        private void CancelAsyncOperation()
-        {
-            _cts?.Cancel();
-        }
-
-        private async Task RemoveAccountAndGoBackAsync()
-        {
-            try
-            {
-                IsWaitingResponse = true;
-
-                bool isConfirmed = await MessageService.ShowRemoveAccountDialogAsync().ConfigureAwait(true);
-
-                if (isConfirmed)
-                {
-                    var account = AccountSettingsModel.ToAccount();
-                    await Core.DeleteAccountAsync(account).ConfigureAwait(true);
-
-                    await BackupIfNeededAsync().ConfigureAwait(true);
-
-                    GoBack();
-                }
-            }
-            catch (Exception e)
-            {
-                OnError(e);
-            }
-            finally
-            {
-                IsWaitingResponse = false;
-            }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        private bool _isDisposed;
-        protected virtual void Dispose(bool disposing)
-        {
-            if (_isDisposed) return;
-
-            if (disposing)
-            {
-                _cts?.Dispose();
-            }
-
-            _isDisposed = true;
         }
 
         public static ValidationResult ClearValidationErrors(ProtonAccountSettingsModel accountModel, ValidationContext _)
@@ -341,24 +205,6 @@ namespace Tuvi.App.ViewModels
             return ValidationResult.Success;
         }
 
-        public static ValidationResult ValidateEmailIsNotEmpty(ProtonAccountSettingsModel accountModel, ValidationContext context)
-        {
-            if (context?.ObjectInstance is ProtonAccountSettingsPageViewModel viewModel &&
-                !viewModel.IsEmailReadonly)
-            {
-                if (accountModel != null &&
-                    accountModel.Email.NeedsValidation &&
-                    string.IsNullOrEmpty(accountModel.Email.Value))
-                {
-                    var error = viewModel.GetLocalizedString("FieldIsEmptyNotification");
-                    accountModel.Email.Errors.Add(error);
-                    return new ValidationResult(error);
-                }
-            }
-
-            return ValidationResult.Success;
-        }
-
         public static ValidationResult ValidatePasswordIsNotEmpty(ProtonAccountSettingsModel accountModel, ValidationContext context)
         {
             if (context?.ObjectInstance is ProtonAccountSettingsPageViewModel viewModel)
@@ -370,31 +216,6 @@ namespace Tuvi.App.ViewModels
                     var error = viewModel.GetLocalizedString("FieldIsEmptyNotification");
                     accountModel.Password.Errors.Add(error);
                     return new ValidationResult(error);
-                }
-            }
-
-            return ValidationResult.Success;
-        }
-
-        public static ValidationResult ValidateSynchronizationIntervalIsCorrect(ProtonAccountSettingsModel accountModel, ValidationContext context)
-        {
-            if (context?.ObjectInstance is ProtonAccountSettingsPageViewModel viewModel)
-            {
-                if (accountModel != null &&
-                    accountModel.SynchronizationInterval.NeedsValidation)
-                {
-                    if (!int.TryParse(accountModel.SynchronizationInterval.Value, out int interval))
-                    {
-                        var error = viewModel.GetLocalizedString("ValueIsNotNumberNotification");
-                        accountModel.SynchronizationInterval.Errors.Add(error);
-                        return new ValidationResult(error);
-                    }
-                    else if (interval < 0)
-                    {
-                        var error = viewModel.GetLocalizedString("ValueCantBeNegativeNotification");
-                        accountModel.SynchronizationInterval.Errors.Add(error);
-                        return new ValidationResult(error);
-                    }
                 }
             }
 
