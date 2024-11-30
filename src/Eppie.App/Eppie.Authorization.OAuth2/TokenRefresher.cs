@@ -37,16 +37,23 @@ namespace Tuvi.OAuth2
                 throw new ArgumentException(EmptyOrWhiteSpaceExceptionString, nameof(refreshToken));
             }
 
-            MailService mailService = GetMailService(mailServiceName);
-            IRefreshable refresher = _authorizationProvider.CreateRefreshTokenClient(mailService);
-            AuthorizationToken freshToken = await refresher.RefreshTokenAsync(CreateToken(refreshToken), cancellationToken).ConfigureAwait(false);
-
-            return new AuthToken()
+            try
             {
-                AccessToken = freshToken.AccessToken,
-                RefreshToken = freshToken.RefreshToken,
-                ExpiresIn = freshToken.ExpiresIn,
-            };
+                MailService mailService = GetMailService(mailServiceName);
+                IRefreshable refresher = _authorizationProvider.CreateRefreshTokenClient(mailService);
+                AuthorizationToken freshToken = await refresher.RefreshTokenAsync(CreateToken(refreshToken), cancellationToken).ConfigureAwait(false);
+
+                return new AuthToken()
+                {
+                    AccessToken = freshToken.AccessToken,
+                    RefreshToken = freshToken.RefreshToken,
+                    ExpiresIn = freshToken.ExpiresIn,
+                };
+            }
+            catch (Finebits.Authorization.OAuth2.Exceptions.AuthorizationInvalidResponseException e)
+            {
+                throw new AuthorizationException(e.Message, e);
+            }
         }
 
         private static MailService GetMailService(string mailServiceName)
