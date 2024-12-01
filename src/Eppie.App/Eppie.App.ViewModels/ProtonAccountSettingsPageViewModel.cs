@@ -82,7 +82,7 @@ namespace Tuvi.App.ViewModels
             AccountSettingsModel = accountSettingsModel;
         }
 
-        protected override bool ValidateAll()
+        protected override bool IsValid()
         {
             AccountSettingsModel.Email.NeedsValidation = true;
             AccountSettingsModel.Password.NeedsValidation = true;

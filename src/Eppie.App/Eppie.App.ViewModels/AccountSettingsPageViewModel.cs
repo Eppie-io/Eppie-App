@@ -112,7 +112,7 @@ namespace Tuvi.App.ViewModels
             accountSettingsModel.IncomingServerAddress.NeedsValidation = !isCreatingMode;
         }
 
-        protected override bool ValidateAll()
+        protected override bool IsValid()
         {
             if ((!IsEmailReadonly && string.IsNullOrEmpty(AccountSettingsModel.Email.Value))
                 || string.IsNullOrEmpty(AccountSettingsModel.OutgoingServerAddress.Value)

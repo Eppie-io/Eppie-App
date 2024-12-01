@@ -100,7 +100,7 @@ namespace Tuvi.App.ViewModels
 
         protected virtual async Task ApplySettingsAndGoBackAsync()
         {
-            if (!ValidateAll())
+            if (!IsValid())
             {
                 return;
             }
@@ -257,7 +257,7 @@ namespace Tuvi.App.ViewModels
             return ValidationResult.Success;
         }
 
-        protected virtual bool ValidateAll()
+        protected virtual bool IsValid()
         {
             return true;
         }
