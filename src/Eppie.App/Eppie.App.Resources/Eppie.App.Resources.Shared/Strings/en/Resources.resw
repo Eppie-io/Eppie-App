@@ -191,6 +191,14 @@
     <value>Authentification error</value>
     <comment>Notification text when authentification failed</comment>
   </data>
+  <data name="NeedTwofactorCode" xml:space="preserve">
+    <value>Two factor authentication code required</value>
+    <comment>Notification text when two factor authentication code required</comment>
+  </data>
+  <data name="NeedMailboxPassword" xml:space="preserve">
+    <value>Second password required</value>
+    <comment>Notification text when second password required</comment>
+  </data>
   <!-- ToDo: use using:Windows.UI.Xaml.Controls for UWP; use using:Microsoft.UI.Xaml.Controls for Uno
   <data name="BackButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Back</value>
@@ -377,8 +385,8 @@ You need to enable IMAP for this account first and try again.</value>
     <comment>Input field caption for password</comment>
   </data>
   <data name="MailboxPassword.Text" xml:space="preserve">
-    <value>Enter mailbox password</value>
-    <comment>Input field caption for mailbox password</comment>
+    <value>Enter second password</value>
+    <comment>Input field caption for second password</comment>
   </data>
   <data name="PasswordIsTheSameNotification" xml:space="preserve">
     <value>Is the same as current</value>

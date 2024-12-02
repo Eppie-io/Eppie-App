@@ -55,7 +55,6 @@
         <controls:AccountSettingsControl x:Name="AccountSettings"
                                          Grid.Row="1"
                                          AccountSettingsModel="{x:Bind ViewModel.AccountSettingsModel, Mode=OneWay}"
-                                         InCompactMode="{x:Bind ViewModel.InCompactMode, Mode=OneWay}"
                                          IncomingProtocolTypes="{x:Bind ViewModel.IncomingProtocolTypes, Mode=OneWay}"
                                          IsEmailReadOnly="{x:Bind ViewModel.IsEmailReadonly, Mode=OneWay}"
                                          IsLocked="{x:Bind ViewModel.IsWaitingResponse, Mode=OneWay}" />
@@ -74,14 +73,7 @@
             <Button x:Uid="/Eppie.App.Resources/Resources/Apply"
                     Margin="0,4,4,4"
                     HorizontalAlignment="Stretch"
-                    Command="{x:Bind ViewModel.ApplySettingsCommand, Mode=OneWay}"
-                    Visibility="{x:Bind ViewModel.IsSignInButtonVisible, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
-
-            <Button x:Uid="/Eppie.App.Resources/Resources/SignInButton"
-                    Margin="0,4,4,4"
-                    HorizontalAlignment="Stretch"
-                    Command="{x:Bind ViewModel.SignInCommand, Mode=OneWay}"
-                    Visibility="{x:Bind ViewModel.IsSignInButtonVisible, Mode=OneWay}" />
+                    Command="{x:Bind ViewModel.ApplySettingsCommand, Mode=OneWay}" />
 
             <Button x:Uid="/Eppie.App.Resources/Resources/Cancel"
                     Grid.Column="1"

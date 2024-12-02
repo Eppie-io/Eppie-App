@@ -37,14 +37,6 @@ namespace Tuvi.App.Shared.Controls
         public static readonly DependencyProperty BasicAccountSettingsModelProperty =
             DependencyProperty.Register(nameof(BasicAccountSettingsModel), typeof(BasicAccountSettingsModel), typeof(AccountSettingsControl), new PropertyMetadata(null));
 
-        public bool InCompactMode
-        {
-            get { return (bool)GetValue(InCompactModeProperty); }
-            set { SetValue(InCompactModeProperty, value); }
-        }
-        public static readonly DependencyProperty InCompactModeProperty =
-            DependencyProperty.Register(nameof(InCompactMode), typeof(bool), typeof(AccountSettingsControl), new PropertyMetadata(false));
-
         public bool IsEmailReadOnly
         {
             get { return (bool)GetValue(IsEmailReadOnlyProperty); }

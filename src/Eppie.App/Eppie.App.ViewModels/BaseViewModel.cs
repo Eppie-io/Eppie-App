@@ -133,7 +133,14 @@ namespace Tuvi.App.ViewModels
             }
             else if (Proton.Extensions.IsProton(account.Email))
             {
-                NavigationService?.Navigate(nameof(ProtonAccountSettingsPageViewModel), account);
+                if (isReloginNeeded)
+                {
+                    NavigationService?.Navigate(nameof(ProtonAccountSettingsPageViewModel), new ProtonAccountSettingsPageViewModel.NeedReloginData { Account = account });
+                }
+                else
+                {
+                    NavigationService?.Navigate(nameof(ProtonAccountSettingsPageViewModel), account);
+                }
             }
             else
             {

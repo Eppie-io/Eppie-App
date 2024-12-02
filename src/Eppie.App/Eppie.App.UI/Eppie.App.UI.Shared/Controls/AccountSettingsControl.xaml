@@ -23,11 +23,6 @@
                     </local:ErrorControl.InnerContent>
                 </local:ErrorControl>
 
-                <TextBlock x:Uid="/Eppie.App.Resources/Resources/SenderName" Margin="0,16,0,4" />
-                <controls:PromptTextInputControl HorizontalAlignment="Stretch"
-                                                 IsSpellCheckEnabled="False"
-                                                 Text="{x:Bind AccountSettingsModel.SenderName, Mode=TwoWay}" />
-
                 <StackPanel Margin="0,16,0,4" Visibility="{x:Bind BasicAccountSettingsModel, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}">
 
                     <TextBlock x:Uid="/Eppie.App.Resources/Resources/Password" Margin="0,0,0,4" />
@@ -40,7 +35,12 @@
 
                 </StackPanel>
 
-                <StackPanel Margin="0,16,0,4" Visibility="{x:Bind InCompactMode, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                <TextBlock x:Uid="/Eppie.App.Resources/Resources/SenderName" Margin="0,16,0,4" />
+                <controls:PromptTextInputControl HorizontalAlignment="Stretch"
+                                 IsSpellCheckEnabled="False"
+                                 Text="{x:Bind AccountSettingsModel.SenderName, Mode=TwoWay}" />
+                
+                <StackPanel Margin="0,16,0,4">
 
                     <TextBlock x:Uid="/Eppie.App.Resources/Resources/OutgoingServer"
                                Margin="0,0,0,4"
