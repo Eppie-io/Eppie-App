@@ -573,7 +573,7 @@ You need to enable IMAP for this account first and try again.</value>
     <comment>Restore account button text on WelcomePage</comment>
   </data>
   <data name="WelcomePageRestoreAccountButtonSubtext.Text" xml:space="preserve">
-    <value>Connect yor existing account via seed-phrase</value>
+    <value>Connect your existing account via seed-phrase</value>
     <comment>Restore account button subtext on WelcomePage</comment>
   </data>
   <data name="LocalLogoutButton.Content" xml:space="preserve">
