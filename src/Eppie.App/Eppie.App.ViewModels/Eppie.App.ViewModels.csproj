@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" />
     <PackageReference Include="EmailValidation" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
   </ItemGroup>
 
   <ItemGroup>

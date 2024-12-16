@@ -9,6 +9,7 @@ namespace Tuvi.App.Shared.Authorization
         public static IReadOnlyCollection<string> GmailScope = new[]
         {
             "https://mail.google.com/",
+            "openid",
             "profile",
             "email"
         };
@@ -16,9 +17,11 @@ namespace Tuvi.App.Shared.Authorization
         public static IReadOnlyCollection<string> OutlookScope = new[]
         {
             "offline_access",
-            "https://outlook.office.com/user.read",
+            "openid",
+            "profile",
+            "email",
             "https://outlook.office.com/IMAP.AccessAsUser.All",
-            "https://outlook.office.com/SMTP.Send",
+            "https://outlook.office.com/SMTP.Send"
         };
 
         private static IAuthenticationBroker GetAuthenticationBroker()

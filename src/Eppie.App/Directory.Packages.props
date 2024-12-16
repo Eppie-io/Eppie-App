@@ -12,15 +12,16 @@
     <PackageVersion Include="CommunityToolkit.Mvvm" Version="8.2.2" />
     <PackageVersion Include="CommunityToolkit.Uwp.Controls.TokenizingTextBox" Version="8.1.240916" />
     <PackageVersion Include="EmailValidation" Version="1.2.0" />
-    <PackageVersion Include="Finebits.Authorization.OAuth2" Version="0.3.1-alpha" />
-    <PackageVersion Include="Finebits.Authorization.OAuth2.AuthenticationBroker.Desktop" Version="0.3.1-alpha" />
-    <PackageVersion Include="Finebits.Authorization.OAuth2.Google" Version="0.3.1-alpha" />
-    <PackageVersion Include="Finebits.Authorization.OAuth2.Outlook" Version="0.3.1-alpha" />
+    <PackageVersion Include="Finebits.Authorization.OAuth2" Version="0.4.0-preview.1" />
+    <PackageVersion Include="Finebits.Authorization.OAuth2.AuthenticationBroker.Desktop" Version="0.4.0-preview.1" />
+    <PackageVersion Include="Finebits.Authorization.OAuth2.Google" Version="0.4.0-preview.1" />
+    <PackageVersion Include="Finebits.Authorization.OAuth2.Outlook" Version="0.4.0-preview.1" />
     <PackageVersion Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.2.14" />
     <PackageVersion Include="Microsoft.Services.Store.Engagement" Version="10.2307.3001" />
     <PackageVersion Include="Microsoft.UI.Xaml" Version="2.8.6" />
     <PackageVersion Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.9" />
     <PackageVersion Include="Microsoft.Xaml.Behaviors.Uwp.Managed" Version="2.0.1" />
+    <PackageVersion Include="System.IdentityModel.Tokens.Jwt" Version="8.3.0" />
     <PackageVersion Include="System.Private.Uri" Version="4.3.2" />
     <PackageVersion Include="Uno.Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.4.2" />
     <PackageVersion Include="Uno.Toolkit.UI" Version="6.1.8" />

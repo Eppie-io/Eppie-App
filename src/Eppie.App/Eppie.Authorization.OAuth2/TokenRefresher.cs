@@ -41,7 +41,7 @@ namespace Tuvi.OAuth2
             {
                 MailService mailService = GetMailService(mailServiceName);
                 IRefreshable refresher = _authorizationProvider.CreateRefreshTokenClient(mailService);
-                AuthorizationToken freshToken = await refresher.RefreshTokenAsync(CreateToken(refreshToken), cancellationToken).ConfigureAwait(false);
+                AuthCredential freshToken = await refresher.RefreshAsync(CreateToken(refreshToken), cancellationToken).ConfigureAwait(false);
 
                 return new AuthToken()
                 {
@@ -63,13 +63,14 @@ namespace Tuvi.OAuth2
                 : throw new AuthenticationException(EmailServiceNotSupportedExceptionString(mailServiceName));
         }
 
-        private static AuthorizationToken CreateToken(string refreshToken)
+        private static AuthCredential CreateToken(string refreshToken)
         {
-            return new AuthorizationToken(accessToken: string.Empty,
-                                          refreshToken: refreshToken,
-                                          tokenType: Token.BearerType,
-                                          expiresIn: TimeSpan.Zero,
-                                          scope: string.Empty);
+            return new AuthCredential(tokenType: Credential.BearerType,
+                                      accessToken: string.Empty,
+                                      refreshToken: refreshToken,
+                                      idToken: string.Empty,
+                                      expiresIn: TimeSpan.Zero,
+                                      scope: string.Empty);
         }
     }
 }

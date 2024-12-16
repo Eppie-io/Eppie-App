@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using Finebits.Authorization.OAuth2.Abstractions;
 using Finebits.Authorization.OAuth2.Types;
+using Tuvi.App.ViewModels.Extensions;
 using Tuvi.Core.Entities;
 using Tuvi.OAuth2;
 
@@ -15,6 +16,13 @@ namespace Tuvi.App.ViewModels
         public class NeedReloginData
         {
             public Account Account { get; set; }
+        }
+
+        private struct UserProfile
+        {
+            public string Name { get; set; }
+            public string Email { get; set; }
+            public bool IsFilled => !string.IsNullOrEmpty(Email);
         }
 
         public AuthorizationProvider AuthProvider { get; private set; }
@@ -251,16 +259,16 @@ namespace Tuvi.App.ViewModels
             try
             {
                 var authClient = AuthProvider.CreateAuthorizationClient(mailService);
-                Token token = string.IsNullOrEmpty(userId) ? await authClient.LoginAsync().ConfigureAwait(true)
-                                                           : await authClient.LoginAsync(userId).ConfigureAwait(true);
+                AuthCredential credential = string.IsNullOrEmpty(userId) ? await authClient.LoginAsync().ConfigureAwait(true)
+                                                                         : await authClient.LoginAsync(userId).ConfigureAwait(true);
 
-                if (authClient is IProfileReader profileReader)
+                UserProfile profile = await ReadUserProfileAsync(authClient, credential).ConfigureAwait(true);
+
+                if (profile.IsFilled)
                 {
-                    IUserProfile profile = await profileReader.ReadProfileAsync(token).ConfigureAwait(true);
-
                     if (IsUserCorrect(profile, userId))
                     {
-                        OnAuthorizationCompleted(profile, mailService, token);
+                        OnAuthorizationCompleted(profile, mailService, credential);
                     }
                     else
                     {
@@ -300,6 +308,30 @@ namespace Tuvi.App.ViewModels
             }
         }
 
+        private static async Task<UserProfile> ReadUserProfileAsync(IAuthorizationClient client, AuthCredential credential)
+        {
+            string email;
+            string name;
+
+            if (client is IProfileReader profileReader)
+            {
+                IUserProfile profile = await profileReader.ReadProfileAsync(credential).ConfigureAwait(false);
+                name = profile.DisplayName;
+                email = profile.Email;
+            }
+            else
+            {
+                name = credential.ReadName();
+                email = credential.ReadEmailAddress();
+            }
+
+            return new UserProfile
+            {
+                Name = name,
+                Email = email
+            };
+        }
+
         private void OnAccessDenied()
         {
             var errorNotification = GetLocalizedString("AccountAccessDeniedNotification");
@@ -311,28 +343,23 @@ namespace Tuvi.App.ViewModels
             AccountSettingsModel.Email.Errors.Add(errorNotification);
         }
 
-        private static bool IsUserCorrect(IUserProfile profile, string userId)
+        private static bool IsUserCorrect(UserProfile profile, string userId)
         {
-            return string.IsNullOrEmpty(userId) || string.Equals(profile?.Email, userId, StringComparison.OrdinalIgnoreCase);
+            return string.IsNullOrEmpty(userId) || string.Equals(profile.Email, userId, StringComparison.OrdinalIgnoreCase);
         }
 
-        public void OnAuthorizationCompleted(IUserProfile userProfile, OAuth2.MailService mailService, Token token)
+        private void OnAuthorizationCompleted(UserProfile userProfile, OAuth2.MailService mailService, Credential credential)
         {
-            if (userProfile is null)
-            {
-                throw new ArgumentNullException(nameof(userProfile));
-            }
-
             AccountSettingsModel.Email.Value = userProfile.Email;
 
             if (string.IsNullOrEmpty(AccountSettingsModel.SenderName))
             {
-                AccountSettingsModel.SenderName = userProfile.DisplayName;
+                AccountSettingsModel.SenderName = userProfile.Name;
             }
 
             if (AccountSettingsModel is OAuth2AccountSettingsModel model)
             {
-                model.RefreshToken = token.RefreshToken;
+                model.RefreshToken = credential.RefreshToken;
                 model.AuthAssistantId = mailService.ToString();
             }
         }
