@@ -193,11 +193,11 @@ namespace Tuvi.App.Shared.Services
             var title = StringProvider.GetString("SendErrorReportTitle");
 
             var message = $"\n________________________________________________________________________________" +
-                          $"\n {exception.TargetSite.Name} \n {exception}";
+                          $"\n {exception.TargetSite?.Name} \n {exception}";
 
             if (exception.InnerException != null)
             {
-                message += $"\n {exception.InnerException.TargetSite.Name} \n {exception.InnerException}";
+                message += $"\n {exception.InnerException.TargetSite?.Name} \n {exception.InnerException}";
             }
 
             if (await ShowErrorMessageAsync(title, message, StringProvider.GetString("MsgBtnOk"), StringProvider.GetString("MessageButtonCancel")).ConfigureAwait(true))
