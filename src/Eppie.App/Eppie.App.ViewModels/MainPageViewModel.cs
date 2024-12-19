@@ -444,6 +444,7 @@ namespace Tuvi.App.ViewModels
             Core.MessageDeleted += OnMessageDeleted;
             Core.MessagesIsReadChanged += OnMessagesIsReadChanged;
             Core.AccountAdded += OnAccountAdded;
+            Core.AccountUpdated += OnAccountUpdated;
             Core.ContactAdded += OnContactAdded;
             Core.ContactChanged += OnContactChanged;
             Core.ContactDeleted += OnContactDeleted;
@@ -456,6 +457,7 @@ namespace Tuvi.App.ViewModels
             Core.MessageDeleted -= OnMessageDeleted;
             Core.MessagesIsReadChanged -= OnMessagesIsReadChanged;
             Core.AccountAdded -= OnAccountAdded;
+            Core.AccountUpdated -= OnAccountUpdated;
             Core.ContactAdded -= OnContactAdded;
             Core.ContactChanged -= OnContactChanged;
             Core.ContactDeleted -= OnContactDeleted;
@@ -545,7 +547,17 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        private async void OnAccountAdded(object sender, AccountEventArgs e)
+        private void OnAccountAdded(object sender, AccountEventArgs e)
+        {
+            UpdateAccountsList();
+        }
+
+        private void OnAccountUpdated(object sender, AccountEventArgs e)
+        {
+            UpdateAccountsList();
+        }
+
+        private async void UpdateAccountsList()
         {
             try
             {
