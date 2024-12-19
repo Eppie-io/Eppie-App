@@ -59,12 +59,7 @@ namespace Tuvi.App.ViewModels
 
         private void RefreshFolderStructure()
         {
-            var itemsToRemove = Items.Where(item => AccountList.FirstOrDefault(account => account.Email.HasSameAddress(item.Email)) == null)
-                                     .ToArray();
-            foreach (var item in itemsToRemove)
-            {
-                Items.Remove(item);
-            }
+            Items.Clear();
 
             foreach (var accountData in AccountList)
             {
@@ -75,13 +70,6 @@ namespace Tuvi.App.ViewModels
                 }
                 else
                 {
-                    itemsToRemove = rootItem.Children.Where(item => accountData.FoldersStructure.FirstOrDefault(folder => folder.HasSameName(item.Folder)) == null)
-                                                     .ToArray();
-                    foreach (var item in itemsToRemove)
-                    {
-                        rootItem.Children.Remove(item);
-                    }
-
                     foreach (var folder in accountData.FoldersStructure)
                     {
                         var folderItem = rootItem.Children.FirstOrDefault(item => item.Folder.HasSameName(folder));
