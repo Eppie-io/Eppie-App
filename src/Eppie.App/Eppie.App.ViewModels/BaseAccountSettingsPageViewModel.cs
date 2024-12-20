@@ -79,7 +79,6 @@ namespace Tuvi.App.ViewModels
             }
             else
             {
-                // TODO: TVM-319 
                 await Core.UpdateAccountAsync(account, cancellationToken).ConfigureAwait(true);
             }
 
