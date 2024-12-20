@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -124,6 +124,10 @@
   <data name="AboutAppNavigationItem.Content" xml:space="preserve">
     <value>关于</value>
     <comment>Navigation item to open 'About' page</comment>
+  </data>
+  <data name="SupportDevelopmentNavigationItem.Content" xml:space="preserve">
+    <value>支持开发</value>
+    <comment>Navigation item to open 'Support Development' page</comment>
   </data>
   <data name="IdentityManagerNavigationItem.Content" xml:space="preserve">
     <value>身份管理器</value>
@@ -785,193 +789,193 @@
     <comment>The header for Tab with list of mailboxes (user connected e-mail accounts)</comment>
   </data>
   <data name="ContactMessagesPageHeader.Text" xml:space="preserve">
-    <value>Correspondence with</value>
+    <value>发送人/收件人：</value>
     <comment>The header of the page with list of messages from or sent to selected contact</comment>
   </data>
   <data name="MessageHeadLines" xml:space="preserve">
     <value>
 
 ________________________________________________________________________________
-From: {0}
-Sent: {1}
-To: {2}
-Subject: {3}
+发件人：{0}
+发送时间：{1}
+收件人：{2}
+标题：{3}
 
 {4}</value>
     <comment>Title for forwarded message. {0} - from email. {1} - sent time. {2} - to email. {3} - email subject. {4} - original email text.</comment>
   </data>
   <data name="ChangeContactAvatarMenuItem.Text" xml:space="preserve">
-    <value>Change avatar</value>
+    <value>修改头像</value>
     <comment>Text of the context menu item that changes contact's avatar</comment>
   </data>
   <data name="RemoveContactMenuItem.Text" xml:space="preserve">
-    <value>Remove</value>
+    <value>移除</value>
     <comment>The text of context menu item that removes contact from address book</comment>
   </data>
   <data name="SeedPhraseNotInitializedMessage" xml:space="preserve">
-    <value>Please initialize Seed phrase.</value>
+    <value>请初始化种子短语。</value>
     <comment>Message text shown when user not initialized seed phrase</comment>
   </data>
   <data name="SeedPhraseNotInitializedTitle" xml:space="preserve">
-    <value>Seed phrase is not initialized.</value>
+    <value>种子短语未初始化。</value>
     <comment>Message title shown when user not initialized seed phrase</comment>
   </data>
   <data name="SaveAttachmentButton.Label" xml:space="preserve">
-    <value>Save</value>
+    <value>保存</value>
     <comment>Text for save attached file button</comment>
   </data>
   <!-- ToDo: use using:Windows.UI.Xaml.Controls for UWP; use using:Microsoft.UI.Xaml.Controls for Uno
   <data name="SaveAttachmentButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Save</value>
+    <value>保存</value>
     <comment>The tooltip for save attached file button</comment>
   </data>
   -->
   <data name="OpenAttachmentButton.Label" xml:space="preserve">
-    <value>Open</value>
+    <value>打开</value>
     <comment>Text for save attached file button</comment>
   </data>
   <!-- ToDo: use using:Windows.UI.Xaml.Controls for UWP; use using:Microsoft.UI.Xaml.Controls for Uno
   <data name="OpenAttachmentButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Open</value>
+    <value>打开</value>
     <comment>The tooltip for save attached file button</comment>
   </data>
   -->
   <data name="DeleteAttachmentButton.Label" xml:space="preserve">
-    <value>Delete</value>
+    <value>删除</value>
     <comment>Text for Delete attached file button</comment>
   </data>
   <!-- ToDo: use using:Windows.UI.Xaml.Controls for UWP; use using:Microsoft.UI.Xaml.Controls for Uno
   <data name="DeleteAttachmentButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Delete</value>
+    <value>删除</value>
     <comment>The tooltip for Delete attached file button</comment>
   </data>
   -->
   <data name="UpdateButton.Label" xml:space="preserve">
-    <value>Update</value>
+    <value>更新</value>
     <comment>Text for Update emails list button</comment>
   </data>
   <!-- ToDo: use using:Windows.UI.Xaml.Controls for UWP; use using:Microsoft.UI.Xaml.Controls for Uno
   <data name="UpdateButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Update</value>
+    <value>更新</value>
     <comment>The tooltip for Update emails list button</comment>
   </data>
   -->
   <data name="SelectionModeButton.Label" xml:space="preserve">
-    <value>Selection mode</value>
+    <value>选择模式</value>
     <comment>Text for Selection mode button</comment>
   </data>
   <!-- ToDo: use using:Windows.UI.Xaml.Controls for UWP; use using:Microsoft.UI.Xaml.Controls for Uno
   <data name="SelectionModeButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Selection mode</value>
+    <value>选择模式</value>
     <comment>The tooltip for Selection mode button</comment>
   </data>
   -->
   <data name="EmailDoesntMatchNotification" xml:space="preserve">
-    <value>The entered email address {0} doesn't match the settings</value>
+    <value>输入的邮件地址 {0} 与设置不匹配</value>
     <comment>Notification message is shown when emails do not match</comment>
   </data>
   <data name="AccountAccessDeniedNotification" xml:space="preserve">
-    <value>Cannot access email account</value>
+    <value>无法访问邮箱帐户</value>
     <comment>Notification message is shown when access to account is denied</comment>
   </data>
   <data name="SignInButton.Content" xml:space="preserve">
-    <value>Sign in</value>
+    <value>登录</value>
     <comment>'Sign in' button content</comment>
   </data>
   <data name="OrderByNameContactComparerLabel" xml:space="preserve">
-    <value>Order by name</value>
+    <value>按名称排序</value>
     <comment>Label of contact comparer displayed in sorting variants for contacts that sorts contacts by name ascending</comment>
   </data>
   <data name="OrderByTimeContactComparerLabel" xml:space="preserve">
-    <value>Order by time</value>
+    <value>按时间排序</value>
     <comment>Label of contact comparer displayed in sorting variants for contacts that sorts contacts by last message time</comment>
   </data>
   <data name="ContactFilter.PlaceholderText" xml:space="preserve">
-    <value>Search</value>
+    <value>搜索</value>
     <comment>Text displayed in Search Contacts control when no search text is entered</comment>
   </data>
   <data name="ClearFlagButton.Label" xml:space="preserve">
-    <value>Clear flag</value>
+    <value>清除标记</value>
     <comment>Text on Clear flag button</comment>
   </data>
   <!-- ToDo: use using:Windows.UI.Xaml.Controls for UWP; use using:Microsoft.UI.Xaml.Controls for Uno
   <data name="ClearFlagButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Clear flag</value>
+    <value>清除标记</value>
     <comment>The tooltip for Clear flag button</comment>
   </data>
   -->
   <data name="SetFlagButton.Label" xml:space="preserve">
-    <value>Set flag</value>
+    <value>设置标记</value>
     <comment>Text on Set flag button</comment>
   </data>
   <!-- ToDo: use using:Windows.UI.Xaml.Controls for UWP; use using:Microsoft.UI.Xaml.Controls for Uno
   <data name="SetFlagButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Set flag</value>
+    <value>设置标记</value>
     <comment>The tooltip for Set flag button</comment>
   </data>
   -->
   <data name="AllMessagesFilterLabel" xml:space="preserve">
-    <value>All messages</value>
+    <value>所有消息</value>
     <comment>The label for option (in dropdown list with filters) which means that no filter is applied for messages (all messages must be shown)</comment>
   </data>
   <data name="FlaggedMessagesFilterLabel" xml:space="preserve">
-    <value>Flagged</value>
+    <value>已标记</value>
     <comment>The label for option (in dropdown list with filters) which means that only flagged messages are shown</comment>
   </data>
   <data name="MessagesWithAttachmentFilterLabel" xml:space="preserve">
-    <value>With attachments</value>
+    <value>含有附件</value>
     <comment>The label for option (in dropdown list with filters) which means that only messages with attachments are shown</comment>
   </data>
   <data name="UnreadMessagesFilterLabel" xml:space="preserve">
-    <value>Unread</value>
+    <value>未读</value>
     <comment>The label for option (in dropdown list with filters) which means that only unread messages are shown</comment>
   </data>
   <data name="SendErrorReportTitle" xml:space="preserve">
-    <value>Would you like to send an error report?</value>
+    <value>您想要发送错误报告吗？</value>
     <comment>Title in the error message dialog</comment>
   </data>
   <data name="ErrorReportEmailTitle" xml:space="preserve">
-    <value>An error report</value>
+    <value>错误报告</value>
     <comment>Title in the email message with error report</comment>
   </data>
   <data name="MessageDecentralized.Content" xml:space="preserve">
-    <value>Send decentralized</value>
+    <value>发送去中心化消息</value>
     <comment>Send message using decentralized simulation</comment>
   </data>
   <data name="BackupAccountSettingsCheckBox.Content" xml:space="preserve">
-    <value>Enable data backup for this account</value>
+    <value>为此帐户启用数据备份</value>
     <comment>The label for option Enable backup for Account settings</comment>
   </data>
   <data name="BackupAccountMessagesCheckBox.Content" xml:space="preserve">
-    <value>Enable backup of downloaded emails for this account</value>
+    <value>为此帐户启用已下载邮件备份</value>
     <comment>The label for option Enable backup for downloaded emails</comment>
   </data>
   <data name="CancelMessagesDeleteButton.Content" xml:space="preserve">
-    <value>Undo</value>
+    <value>撤销</value>
     <comment>Text of the button which cancels deleting messages</comment>
   </data>
   <data name="MessageWasDeleted" xml:space="preserve">
-    <value>Message was deleted</value>
+    <value>消息已删除</value>
     <comment>The title of InfoBar shown after message was deleted</comment>
   </data>
   <data name="NumberOfMessagesWereDeleted" xml:space="preserve">
-    <value>{0} messages were deleted</value>
+    <value>{0} 消息已删除</value>
     <comment>The title of InfoBar shown after number={0} messages were deleted</comment>
   </data>
   <data name="ValueCantBeNegativeNotification" xml:space="preserve">
-    <value>Value can't be negative</value>
+    <value>数值不能为负</value>
     <comment>Notification message shown when user enters negative integer number</comment>
   </data>
   <data name="ValueIsNotNumberNotification" xml:space="preserve">
-    <value>Value is not a number</value>
+    <value>数值不是数字</value>
     <comment>Notification message shown when user enters text that can't be converted to integer number</comment>
   </data>
   <data name="BackupLabel.Text" xml:space="preserve">
-    <value>Backup</value>
+    <value>备份</value>
     <comment>The label of section with backup options on settings page</comment>
   </data>
   <data name="CheckNewMessagesIntervalLabel.Text" xml:space="preserve">
-    <value>Check new messages interval (in minutes)</value>
+    <value>检查新消息间隔（分钟）</value>
     <comment>The label of input field to enter check messages interval value in minutes</comment>
   </data>
   <data name="P2PLabel.Text" xml:space="preserve">
@@ -979,47 +983,47 @@ Subject: {3}
     <comment>The label shown for decentarilzed messages</comment>
   </data>
   <data name="OrderByUnreadContactComparerLabel" xml:space="preserve">
-    <value>Order by unread</value>
+    <value>按未读排序</value>
     <comment>Label of contact comparer displayed in sorting variants for contacts that displays contacts with unread messages first then contacts without unread messages. Each of these two groups with contacts are sorted by last message time.</comment>
   </data>
   <data name="NewEmailsReceivedMessage" xml:space="preserve">
-    <value>New emails received.</value>
+    <value>收到新邮件。</value>
     <comment>Text for a toast notification when new emails are received</comment>
   </data>
   <data name="WelcomePageLicenseButton.Content" xml:space="preserve">
-    <value>End user license agreement</value>
+    <value>最终用户许可协议</value>
     <comment>Text for a license agreement button</comment>
   </data>
   <data name="SeedGenerateWelcomeToWeb3.Text" xml:space="preserve">
-    <value>Welcome to Web3!</value>
+    <value>欢迎使用 Web3 ！</value>
     <comment>A label with Welcoming to Web3</comment>
   </data>
   <data name="WelcomePageLicenseExplanationLabel.Text" xml:space="preserve">
-    <value>By using the application, you agree to the terms:</value>
+    <value>使用本应用，代表您同意以下条款：</value>
     <comment>License explanation text</comment>
   </data>
   <data name="SeedRestoreEnterSeedphraseLabel.Text" xml:space="preserve">
-    <value>Enter your recovery phrase (12 words):</value>
+    <value>输入您的恢复词（12个词）：</value>
     <comment>Label welcoming enter revovery phrase</comment>
   </data>
   <data name="ForgotPassword.Content" xml:space="preserve">
-    <value>Forgot password?</value>
+    <value>忘记密码？</value>
     <comment>Password reset button</comment>
   </data>
   <data name="SupportedServices.Text" xml:space="preserve">
-    <value>Supported services</value>
+    <value>支持的服务</value>
     <comment>Supported services page title </comment>
   </data>
   <data name="ConnectServiceButton.Content" xml:space="preserve">
-    <value>Connect service</value>
+    <value>连接服务</value>
     <comment>Connect service button text</comment>
   </data>
   <data name="SystemDefaultLanguage" xml:space="preserve">
-    <value>(System default)</value>
+    <value>（系统默认）</value>
     <comment>This captions appears as an item in the select language combobox. Selecting this item will change the language of the application to the system default language</comment>
   </data>
   <data name="RestartApplication" xml:space="preserve">
-    <value>You have to restart {0} for the changes to take effect.</value>
+    <value>您需要重启 {0} 才能使更改生效。</value>
     <comment>This message appears after user select language. We need to restart {app name} for apply new language.</comment>
   </data>
 </root>
