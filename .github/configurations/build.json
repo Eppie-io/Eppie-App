@@ -15,7 +15,7 @@
             "tool": "dotnet",
             "project": "./src/Eppie.App/Eppie.App/Eppie.App.csproj",
             "configuration": "release",
-            "framework": "net8.0-desktop",
+            "framework": "net9.0-desktop",
             "extra": "--verbosity=minimal --nologo"
         }
     },
@@ -35,7 +35,7 @@
             "tool": "dotnet",
             "project": "./src/Eppie.App/Eppie.App/Eppie.App.csproj",
             "configuration": "release",
-            "framework": "net8.0-desktop",
+            "framework": "net9.0-desktop",
             "extra": "--verbosity=minimal --nologo"
         }
     },
@@ -55,7 +55,7 @@
             "tool": "dotnet",
             "project": "./src/Eppie.App/Eppie.App/Eppie.App.csproj",
             "configuration": "release",
-            "framework": "net8.0-desktop",
+            "framework": "net9.0-desktop",
             "extra": "--verbosity=minimal --nologo"
         }
     },
@@ -77,7 +77,7 @@
             "tool": "dotnet",
             "project": "./src/Eppie.App/Eppie.App/Eppie.App.csproj",
             "configuration": "release",
-            "framework": "net8.0-browserwasm",
+            "framework": "net9.0-browserwasm",
             "extra": "--verbosity=minimal --nologo"
         }
     },
@@ -97,7 +97,7 @@
             "tool": "dotnet",
             "project": "./src/Eppie.App/Eppie.App/Eppie.App.csproj",
             "configuration": "release",
-            "framework": "net8.0-browserwasm",
+            "framework": "net9.0-browserwasm",
             "extra": "--verbosity=minimal --nologo"
         }
     },
@@ -117,7 +117,7 @@
             "tool": "dotnet",
             "project": "./src/Eppie.App/Eppie.App/Eppie.App.csproj",
             "configuration": "release",
-            "framework": "net8.0-browserwasm",
+            "framework": "net9.0-browserwasm",
             "extra": "--verbosity=minimal --nologo"
         }
     },
@@ -144,7 +144,7 @@
             "tool": "msbuild",
             "project": "./src/Eppie.App/Eppie.App/Eppie.App.csproj",
             "configuration": "release",
-            "framework": "net8.0-windows10.0.19041",
+            "framework": "net9.0-windows10.0.19041",
             "extra": "-verbosity:minimal -consoleLoggerParameters:Summary -maxCpuCount"
         }
     },
@@ -165,7 +165,7 @@
             "tool": "dotnet",
             "project": "./src/Eppie.App/Eppie.App/Eppie.App.csproj",
             "configuration": "release",
-            "framework": "net8.0-ios",
+            "framework": "net9.0-ios",
             "extra": "--verbosity=minimal --nologo"
         }
     },
@@ -186,7 +186,7 @@
             "tool": "dotnet",
             "project": "./src/Eppie.App/Eppie.App/Eppie.App.csproj",
             "configuration": "release",
-            "framework": "net8.0-maccatalyst",
+            "framework": "net9.0-maccatalyst",
             "extra": "--verbosity=minimal --nologo"
         }
     },
@@ -207,7 +207,7 @@
             "tool": "dotnet",
             "project": "./src/Eppie.App/Eppie.App/Eppie.App.csproj",
             "configuration": "release",
-            "framework": "net8.0-android",
+            "framework": "net9.0-android",
             "extra": "--verbosity=minimal --nologo"
         }
     },
@@ -227,7 +227,7 @@
             "tool": "dotnet",
             "project": "./src/Eppie.App/Eppie.App/Eppie.App.csproj",
             "configuration": "release",
-            "framework": "net8.0-android",
+            "framework": "net9.0-android",
             "extra": "--verbosity=minimal --nologo"
         }
     },
@@ -247,7 +247,7 @@
             "tool": "dotnet",
             "project": "./src/Eppie.App/Eppie.App/Eppie.App.csproj",
             "configuration": "release",
-            "framework": "net8.0-android",
+            "framework": "net9.0-android",
             "extra": "--verbosity=minimal --nologo"
         }
     },
