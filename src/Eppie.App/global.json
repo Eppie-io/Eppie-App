@@ -4,8 +4,9 @@
     "Uno.Sdk": "5.5.56"
   },
   "sdk":{
-    "version": "9.0.0",
     "allowPrerelease": false,
-    "rollForward": "latestFeature"
+    // fix: https://github.com/unoplatform/uno/issues/19232
+    "version": "9.0.101",
+    "rollForward": "disable"
   }
 }
