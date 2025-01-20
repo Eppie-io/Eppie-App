@@ -58,7 +58,7 @@ runs:
 
     - name: Switch Xcode version 
       if: runner.os == 'macOS'
-      shell: 
+      shell: bash
       run: |
         sudo xcode-select -switch ${{ inputs.xcode-app }}
 
