@@ -62,10 +62,6 @@ jobs:
         with:
           uno-platform: ${{ matrix.uno }}
 
-      - name: Restore project
-        shell: bash
-        run:  dotnet restore ${{ matrix.project }}
-
       - name: Verify format
         shell: bash
         run:  dotnet format "${{ matrix.project }}" --verify-no-changes --severity=error --verbosity diagnostic
