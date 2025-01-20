@@ -33,6 +33,10 @@ inputs:
     type: string
     default: './src/Eppie.App/global.json'
 
+  xcode-app:
+    type: string
+    default: '/Applications/Xcode_16.2.app' # https://github.com/actions/runner-images/blob/main/images/macos/macos-14-Readme.md#xcode
+
 runs:
   using: "composite"
 
@@ -51,6 +55,12 @@ runs:
       uses: actions/setup-dotnet@6bd8b7f7774af54e05809fcc5431931b3eb1ddee # v4.0.1
       with:
         global-json-file: global.json
+
+    - name: Switch Xcode version 
+      if: runner.os == 'macOS'
+      shell: 
+      run: |
+        sudo xcode-select -switch ${{ inputs.xcode-app }}
 
     - name: Setup the Uno Platform
       if: inputs.uno-platform == 'true'
