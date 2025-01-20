@@ -33,9 +33,9 @@ inputs:
     type: string
     default: './src/Eppie.App/global.json'
 
-  workload-config:
+  xcode-app:
     type: string
-    default: './.github/configurations/workload.json'
+    default: '/Applications/Xcode_16.1.app' # https://github.com/actions/runner-images/blob/main/images/macos/macos-14-Readme.md#xcode
 
 runs:
   using: "composite"
@@ -56,23 +56,12 @@ runs:
       with:
         global-json-file: global.json
 
-    - name: Select Workload config
-      if: inputs.uno-platform == 'true'
-      id: workload-config
-      uses: finebits/github-actions/toolset/select-configuration@4a126d80a11c5fdc83ce884d3d23dffb30bc4495 # v2.0.0
-      with:
-        json-file: ${{ inputs.workload-config }}
-        keywords: ${{ runner.os }}
-
-    - name: Install Workload
-      if: inputs.uno-platform == 'true'
+    - name: Switch Xcode version 
+      if: runner.os == 'macOS'
       shell: bash
       run: |
-        ids="${{ fromJson(steps.workload-config.outputs.config-json)[0].workload-ids }}"
-        dotnet workload install $ids --source "https://api.nuget.org/v3/index.json"
+        sudo xcode-select -switch ${{ inputs.xcode-app }}
 
     - name: Setup the Uno Platform
       if: inputs.uno-platform == 'true'
       uses: finebits/github-actions/devhub/uno-platform/setup@4a126d80a11c5fdc83ce884d3d23dffb30bc4495 # v2.0.0
-      with:
-        uno-check-manifest: https://raw.githubusercontent.com/unoplatform/uno.check/95904fd037afa7714b695716dddfc5f4c2acf138/manifests/uno.ui.manifest.json  # "DOTNET_SDK_VERSION": "8.0.401"
