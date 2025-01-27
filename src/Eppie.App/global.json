@@ -1,12 +1,11 @@
 {
   // To update the version of Uno please update the version of the Uno.Sdk here. See https://aka.platform.uno/upgrade-uno-packages for more information.
   "msbuild-sdks": {
-    "Uno.Sdk": "5.5.56"
+    "Uno.Sdk": "5.5.62"
   },
   "sdk":{
-    "allowPrerelease": false,
-    // fix: https://github.com/unoplatform/uno/issues/19232
-    "version": "9.0.101",
-    "rollForward": "disable"
+    "version": "9.0.0",
+    "rollForward": "latestFeature",
+    "allowPrerelease": false
   }
 }
