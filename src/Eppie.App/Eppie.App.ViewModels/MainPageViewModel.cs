@@ -773,5 +773,11 @@ namespace Tuvi.App.ViewModels
 
             return res;
         }
+
+        public async Task<bool> IsAccountListEmptyAsync()
+        {
+            var accounts = await Core.GetCompositeAccountsAsync().ConfigureAwait(true);
+            return !accounts.Any();
+        }
     }
 }

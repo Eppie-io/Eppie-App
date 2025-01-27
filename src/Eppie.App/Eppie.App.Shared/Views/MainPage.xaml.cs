@@ -54,6 +54,8 @@ namespace Tuvi.App.Shared.Views
             if (e.NavigationMode != NavigationMode.Back)
             {
                 ShowAllMessagesCommand.Execute(this);
+
+                OpenIdentityManagerPaneIfNeeded();
             }
         }
 
@@ -61,8 +63,6 @@ namespace Tuvi.App.Shared.Views
         {
             if (args.IsSettingsInvoked)
             {
-                // When returning to the main page, clicking on the Settings menu did not work because it was already selected
-                NavigationMenu.SelectedItem = null;
                 ToggleSettingsPane();
             }
             else if (args.InvokedItemContainer is DependencyObject dependencyObject)
@@ -114,17 +114,38 @@ namespace Tuvi.App.Shared.Views
             }
             else
             {
-                splitView.IsPaneOpen = true;
-                paneFrame.Navigate(typeof(IdentityManagerPage));
-                _isIdentityManagerOpen = true;
-                _isSettingsOpen = false;
-                _isAboutOpen = false;
+                OpenIdentityManagerPane();
+            }
+        }
+
+        private void OpenIdentityManagerPane()
+        {
+            splitView.IsPaneOpen = true;
+            paneFrame.Navigate(typeof(IdentityManagerPage));
+            _isIdentityManagerOpen = true;
+            _isSettingsOpen = false;
+            _isAboutOpen = false;
+        }
+
+        private async void OpenIdentityManagerPaneIfNeeded()
+        {
+            try
+            {
+                if (await ViewModel.IsAccountListEmptyAsync())
+                {
+                    OpenIdentityManagerPane();
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewModel.OnError(ex);
             }
         }
 
         private void ClosePane()
         {
             splitView.IsPaneOpen = false;
+            NavigationMenu.SelectedItem = null;
             _isAboutOpen = false;
             _isSettingsOpen = false;
             _isIdentityManagerOpen = false;
