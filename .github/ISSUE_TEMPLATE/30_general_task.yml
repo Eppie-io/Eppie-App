@@ -1,6 +1,7 @@
 name: '✍️ New Task'
 description: 'Describe a task that needs to be done'
 title: '[Task] <title>'
+type: Task
 labels: ['kind/task']
 body:
   - type: markdown
@@ -20,16 +21,17 @@ body:
       required: true
 
   - type: textarea
-    id: subtasks
+    id: steps
     attributes:
-      label: Subtasks
-      description: Please list the actions and subtasks here.
+      label: Steps
+      description: Please list the steps and actions that need to be done.
       placeholder: |
-        - [ ] new action
-        - [ ] #1 @user
-        - [ ] #2
+        - [ ] step #1
+        - [ ] step #2 @user
+        - [ ] step 3
+    value: Steps are not defined.
     validations:
-      required: false
+      required: true
 
   - type: textarea
     id: additional-context
