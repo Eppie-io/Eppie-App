@@ -29,7 +29,7 @@ body:
         - [ ] step #1
         - [ ] step #2 @user
         - [ ] step 3
-    value: Steps are not defined.
+      value: Steps are not defined.
     validations:
       required: true
 
