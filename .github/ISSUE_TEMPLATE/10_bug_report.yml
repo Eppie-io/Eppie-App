@@ -1,6 +1,7 @@
 name: '🐞 Bug Report'
 title: '[BUG] <title>'
 description: File a bug report
+type: Bug
 labels: ['kind/bug']
 body:
   - type: markdown
