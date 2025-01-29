@@ -1,6 +1,7 @@
 #if WINDOWS_UWP
 
 using System;
+using Finebits.Authorization.OAuth2.Abstractions;
 using Finebits.Authorization.OAuth2.Google;
 using Finebits.Authorization.OAuth2.Outlook;
 using Tuvi.OAuth2;
@@ -27,6 +28,11 @@ namespace Tuvi.App.Shared.Authorization
                     ScopeList = OutlookScope
                 }
             };
+        }
+
+        private static IAuthenticationBroker GetAuthenticationBroker()
+        {
+            return new AuthenticationBroker();
         }
     }
 }

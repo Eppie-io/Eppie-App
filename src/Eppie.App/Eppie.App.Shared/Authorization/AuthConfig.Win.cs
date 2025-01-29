@@ -1,8 +1,10 @@
-#if HAS_UNO
+#if WINDOWS10_0_19041_0_OR_GREATER
 
 using Finebits.Authorization.OAuth2.Abstractions;
+using Finebits.Authorization.OAuth2.AuthenticationBroker;
 using Finebits.Authorization.OAuth2.Google;
 using Finebits.Authorization.OAuth2.Outlook;
+
 using Tuvi.OAuth2;
 
 namespace Tuvi.App.Shared.Authorization
@@ -17,13 +19,13 @@ namespace Tuvi.App.Shared.Authorization
                 GoogleConfigurationCreator = () => new GoogleConfiguration
                 {
                     ClientId = "<ClientId>",
-                    RedirectUri = new Uri("<RedirectUri>"),
+                    RedirectUri = DesktopAuthenticationBroker.GetLoopbackUri(),
                     ScopeList = GmailScope
                 },
                 OutlookConfigurationCreator = () => new OutlookConfiguration
                 {
                     ClientId = "<ClientId>",
-                    RedirectUri = new Uri("<RedirectUri>"),
+                    RedirectUri = DesktopAuthenticationBroker.GetLoopbackUri(),
                     ScopeList = OutlookScope
                 }
             };
@@ -31,7 +33,12 @@ namespace Tuvi.App.Shared.Authorization
 
         private static IAuthenticationBroker GetAuthenticationBroker()
         {
-            throw new NotImplementedException();
+            if (!DesktopAuthenticationBroker.IsSupported)
+            {
+                throw new InvalidOperationException("DesktopAuthenticationBroker is not supported");
+            }
+
+            return new DesktopAuthenticationBroker(new WebBrowserLauncher());
         }
     }
 }

@@ -9,7 +9,7 @@ using Windows.Security.Authentication.Web;
 
 namespace Tuvi.App.Shared.Authorization
 {
-    internal class WindowsAuthenticationBroker : IAuthenticationBroker
+    internal class AuthenticationBroker : IAuthenticationBroker
     {
         public async Task<AuthenticationResult> AuthenticateAsync(Uri requestUri, Uri callbackUri, CancellationToken cancellationToken = default)
         {
