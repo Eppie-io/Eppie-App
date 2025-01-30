@@ -69,7 +69,7 @@ namespace Eppie.App.Shared
                 MainWindow = builder.Window;
 
 #if DEBUG
-                MainWindow.EnableHotReload();
+                MainWindow.UseStudio();
 #endif
                 MainWindow.SetWindowIcon();
 
