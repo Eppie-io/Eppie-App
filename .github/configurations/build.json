@@ -144,7 +144,7 @@
             "tool": "msbuild",
             "project": "./src/Eppie.App/Eppie.App/Eppie.App.csproj",
             "configuration": "release",
-            "framework": "net9.0-windows10.0.19041",
+            "framework": "net9.0-windows10.0.22621",
             "extra": "-verbosity:minimal -consoleLoggerParameters:Summary -maxCpuCount"
         }
     },

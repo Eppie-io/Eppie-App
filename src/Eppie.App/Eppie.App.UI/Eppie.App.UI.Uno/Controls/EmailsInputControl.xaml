@@ -1,6 +1,7 @@
 ﻿<UserControl x:Class="Tuvi.App.Shared.Controls.EmailsInputControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="using:CommunityToolkit.WinUI.Controls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewmodels="using:Tuvi.App.ViewModels"
@@ -67,11 +68,12 @@
 
     <Grid>
 
-        <!--  TokenizingTextBox is not available in Uno (is only available in UWP)  -->
-        <!--  TODO: Replace with TokenizingTextBox or similar control in future  -->
-        <!--  WinUI try use CommunityToolkit.WinUI.Controls.TokenizingTextBox  -->
-        <!--  TVM-373  -->
-        <TextBox IsSpellCheckEnabled="False" Text="{x:Bind SelectedContactsText, Mode=TwoWay}" />
+        <controls:TokenizingTextBox ItemsSource="{x:Bind SelectedContacts, Mode=OneWay}"
+                                    SuggestedItemTemplate="{StaticResource SuggestContactItemTemplate}"
+                                    TextChanged="SuggestBox_TextChanged"
+                                    TokenDelimiter=";"
+                                    TokenItemAdding="SuggestBox_TokenItemAdding"
+                                    TokenItemTemplate="{StaticResource TokenContactItemTemplate}" />
 
     </Grid>
 </UserControl>

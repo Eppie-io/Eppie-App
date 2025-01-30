@@ -68,12 +68,12 @@
 
     <Grid>
 
-        <!--  Microsoft.Toolkit.Uwp.UI.Controls is deprecated try use CommunityToolkit.Uwp.Controls.TokenizingTextBox.  -->
         <controls:TokenizingTextBox ItemsSource="{x:Bind SelectedContacts, Mode=OneWay}"
                                     SuggestedItemTemplate="{StaticResource SuggestContactItemTemplate}"
                                     TextChanged="SuggestBox_TextChanged"
                                     TokenDelimiter=";"
                                     TokenItemAdding="SuggestBox_TokenItemAdding"
                                     TokenItemTemplate="{StaticResource TokenContactItemTemplate}" />
+
     </Grid>
 </UserControl>
