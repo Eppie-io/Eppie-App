@@ -35,7 +35,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\EmailProvidersListControl.xaml.cs">
       <DependentUpon>EmailProvidersListControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\EmailsInputControl.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\EmailsInputControl.xaml.cs">
+      <DependentUpon>EmailsInputControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ErrorControl.xaml.cs">
       <DependentUpon>ErrorControl.xaml</DependentUpon>
     </Compile>
@@ -94,6 +96,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Controls\EmailProvidersListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Controls\EmailsInputControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

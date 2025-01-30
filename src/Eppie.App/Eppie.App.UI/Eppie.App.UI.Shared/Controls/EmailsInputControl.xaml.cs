@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using CommunityToolkit.WinUI.Controls;
 using EmailValidation;
 using Tuvi.Core.Entities;
 using Tuvi.App.ViewModels;
@@ -18,15 +19,6 @@ namespace Tuvi.App.Shared.Controls
 {
     public sealed partial class EmailsInputControl : UserControl
     {
-        public static readonly DependencyProperty TextProperty =
-            DependencyProperty.Register(nameof(Text), typeof(string), typeof(EmailsInputControl), null);
-
-        public string Text
-        {
-            get { return (string)GetValue(TextProperty); }
-            set { SetValue(TextProperty, value); }
-        }
-
         public ObservableCollection<ContactItem> SelectedContacts
         {
             get { return (ObservableCollection<ContactItem>)GetValue(SelectedContactsProperty); }
@@ -43,40 +35,6 @@ namespace Tuvi.App.Shared.Controls
         public static readonly DependencyProperty UntokenizedContactProperty =
             DependencyProperty.Register(nameof(UntokenizedContact), typeof(ContactItem), typeof(EmailsInputControl), new PropertyMetadata(null));
 
-
-        // TODO: TVM-373
-#if !NETFX_CORE
-        public string SelectedContactsText
-        {
-            get { return (string)GetValue(SelectedContactsTextProperty); }
-            set { SetValue(SelectedContactsTextProperty, value); }
-        }
-        public static readonly DependencyProperty SelectedContactsTextProperty =
-            DependencyProperty.Register(nameof(SelectedContactsText), typeof(string), typeof(EmailsInputControl), new PropertyMetadata(string.Empty, OnSelectedContactsTextPropertyChanged));
-
-        private static void OnSelectedContactsTextPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is EmailsInputControl control)
-            {
-                string[] emails = (e.NewValue as string).Split(new char[] { ',', ';' });
-
-                control.SelectedContacts.Clear();
-                foreach (var email in emails.Select(em => em.Trim()))
-                {
-                    var contact = control.Contacts.Where(c => c.Email.Address.Equals(email, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
-                    if (contact == null && EmailValidator.Validate(email, allowTopLevelDomains: true))
-                    {
-                        contact = new ContactItem() { Email = new EmailAddress(email) };
-                    }
-
-                    if (contact != null)
-                    {
-                        control.SelectedContacts.Add(contact);
-                    }
-                }
-            }
-        }
-#endif
 
         public ObservableCollection<ContactItem> Contacts
         {
@@ -111,8 +69,8 @@ namespace Tuvi.App.Shared.Controls
             return namesStartWith.Concat(emailsStartWith).Concat(namesContain).Concat(emailsContain).Distinct();
         }
 
-#if NETFX_CORE
-        private void SuggestBox_TokenItemAdding(object sender, CommunityToolkit.WinUI.Controls.TokenItemAddingEventArgs e)
+
+        private void SuggestBox_TokenItemAdding(object sender, TokenItemAddingEventArgs e)
         {
             var contact = GetContactItemFromText(e.TokenText);
 
@@ -123,7 +81,7 @@ namespace Tuvi.App.Shared.Controls
                 e.Cancel = true;
             }
         }
-#endif
+
 
         private ContactItem GetContactItemFromText(string text)
         {
