@@ -73,6 +73,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\AttachedCommands.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\HyperlinkExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\TextDocumentExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\WebViewExtension.Uno.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\WebViewExtension.UWP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\WebViewExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Tools\ElementHierarchyTools.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Tools\IncrementalLoadingCollection.cs" />

@@ -2,40 +2,52 @@ using System;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 #else
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
 #endif
 
 namespace Tuvi.App.Shared.Extensions
 {
-    public static class WebViewExtension
+    public static partial class WebViewExtension
     {
-        public static string GetStringSourceWithDisabledJavaScript(DependencyObject obj)
+        public static bool GetIsScriptEnabled(DependencyObject obj)
         {
-            return (string)obj?.GetValue(StringSourceWithDisabledJavaScriptProperty);
+            return (bool)obj?.GetValue(IsScriptEnabledProperty);
         }
 
-        public static void SetStringSourceWithDisabledJavaScript(DependencyObject obj, string value)
+        public static void SetIsScriptEnabled(DependencyObject obj, bool value)
         {
-            obj?.SetValue(StringSourceWithDisabledJavaScriptProperty, value);
+            obj?.SetValue(IsScriptEnabledProperty, value);
         }
 
-        public static readonly DependencyProperty StringSourceWithDisabledJavaScriptProperty =
-            DependencyProperty.RegisterAttached("StringSourceWithDisabledJavaScript", typeof(string), typeof(WebViewExtension), new PropertyMetadata("", OnStringSourceWithDisabledJavaScriptPropertyChanged));
-        private static void OnStringSourceWithDisabledJavaScriptPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        public static readonly DependencyProperty IsScriptEnabledProperty =
+            DependencyProperty.RegisterAttached("IsScriptEnabled", typeof(bool), typeof(WebViewExtension), new PropertyMetadata(true, OnIsScriptEnabledPropertyChanged));
+
+        private static void OnIsScriptEnabledPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
-#if WINDOWS_UWP
-            if (d is WebView webView)
+            if (args.NewValue is bool value)
             {
-                webView.Settings.IsJavaScriptEnabled = false;
-
-                webView.NavigateToString(e.NewValue as string ?? "");
+                EnableScripts(dependencyObject, value);
             }
-#else
-            throw new NotImplementedException();
-#endif
+        }
+
+        public static string GetStringSource(DependencyObject obj)
+        {
+            return (string)obj?.GetValue(StringSourceProperty);
+        }
+
+        public static void SetStringSource(DependencyObject obj, string value)
+        {
+            obj?.SetValue(StringSourceProperty, value);
+        }
+
+        public static readonly DependencyProperty StringSourceProperty =
+            DependencyProperty.RegisterAttached("StringSource", typeof(string), typeof(WebViewExtension), new PropertyMetadata("", OnStringSourcePropertyChanged));
+
+        private static void OnStringSourcePropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        {
+            string value = args.NewValue as string ?? string.Empty;
+            NavigateToString(dependencyObject, value);
         }
     }
 }

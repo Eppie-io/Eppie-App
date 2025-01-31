@@ -10,7 +10,9 @@
              mc:Ignorable="d">
 
     <Grid>
-        <WebView extensions:WebViewExtension.StringSourceWithDisabledJavaScript="{x:Bind HtmlBody, Mode=OneWay}" Visibility="{x:Bind HasHtmlBody, Mode=OneWay}" />
+        <WebView extensions:WebViewExtension.IsScriptEnabled="False"
+                 extensions:WebViewExtension.StringSource="{x:Bind HtmlBody, Mode=OneWay}"
+                 Visibility="{x:Bind HasHtmlBody, Mode=OneWay}" />
 
         <ScrollViewer Padding="4" Visibility="{x:Bind HasHtmlBody, Converter={StaticResource InverseBoolToVisibilityConverter}, Mode=OneWay}">
 
