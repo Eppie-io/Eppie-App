@@ -1,14 +1,15 @@
+using System;
+using Tuvi.App.Shared.Controls;
+
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 #else
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
 #endif
 
 namespace Eppie.App.UI.Controls
 {
-    public sealed partial class MessageControl : UserControl
+    public sealed partial class MessageControl : BaseUserControl
     {
         public bool HasHtmlBody
         {
@@ -35,11 +36,36 @@ namespace Eppie.App.UI.Controls
         }
 
         public static readonly DependencyProperty HtmlBodyProperty =
-            DependencyProperty.Register(nameof(HtmlBody), typeof(string), typeof(MessageControl), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(HtmlBody), typeof(string), typeof(MessageControl), new PropertyMetadata(null, OnHtmlBodyChanged));
+
+        private static void OnHtmlBodyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        {
+            if (dependencyObject is MessageControl control && control.IsLoaded)
+            {
+                control.OnUpdate();
+            }
+        }
 
         public MessageControl()
         {
             this.InitializeComponent();
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            OnUpdate();
+        }
+
+        private async void OnUpdate()
+        {
+            try
+            {
+                await UpdateHtmlView();
+            }
+            catch (Exception ex)
+            {
+                OnError(ex);
+            }
         }
     }
 }
