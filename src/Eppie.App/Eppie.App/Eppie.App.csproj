@@ -56,6 +56,15 @@
     <RuntimeIdentifier Condition="$(TargetFramework.Contains('maccatalyst'))">maccatalyst-x64</RuntimeIdentifier>
   </PropertyGroup>
 
+
+  <!-- Workaround for https://github.com/unoplatform/uno/issues/18552#issuecomment-2438052084 -->
+  <PropertyGroup Condition="$(TargetFramework.Contains('windows'))">
+    <!-- Explicitly set the PlatformTarget in order for packages like WebView2 to select the appropriate binaries -->
+    <PlatformTarget Condition=" '$(PlatformTarget)' == '' AND '$(Platform)' == 'AnyCPU' AND '$(NETCoreSdkRuntimeIdentifier)' == 'win-x86'">x86</PlatformTarget>
+    <PlatformTarget Condition=" '$(PlatformTarget)' == '' AND '$(Platform)' == 'AnyCPU' AND '$(NETCoreSdkRuntimeIdentifier)' == 'win-x64'">x64</PlatformTarget>
+    <PlatformTarget Condition=" '$(PlatformTarget)' == '' AND '$(Platform)' == 'AnyCPU' AND '$(NETCoreSdkRuntimeIdentifier)' == 'win-arm64'">arm64</PlatformTarget>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\ComponentBuilder\ComponentBuilder.csproj" />
     <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core.Backup\Tuvi.Core.Backup.csproj" />
