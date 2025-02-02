@@ -416,7 +416,7 @@ namespace Tuvi.App.ViewModels
 
                 SubscribeOnCoreEvents();
 
-                await UpdateContactsUnreadCountAsync().ConfigureAwait(true);
+                UpdateUnreadCounts();
 
                 // Test node URI
                 const string downloadUrl = "https://testnet.eppie.io/api/DownloadBackupFunction?code=1&name=";
@@ -428,6 +428,28 @@ namespace Tuvi.App.ViewModels
             catch (Exception ex)
             {
                 OnError(ex);
+            }
+        }
+
+        private async void UpdateUnreadCounts()
+        {
+            try
+            {
+                await UpdateContactsUnreadCountAsync().ConfigureAwait(true);
+                await UpdateMailboxItemsUnreadCountAsync().ConfigureAwait(true);
+            }
+            catch (Exception ex)
+            {
+                OnError(ex);
+            }
+        }
+
+        private async Task UpdateMailboxItemsUnreadCountAsync()
+        {
+            var accounts = await Core.GetCompositeAccountsAsync().ConfigureAwait(true);
+            foreach (var account in accounts)
+            {
+                await UpdateMailboxItemUnreadCountAsync(account.Email).ConfigureAwait(true);
             }
         }
 
@@ -534,7 +556,7 @@ namespace Tuvi.App.ViewModels
         {
             try
             {
-                await UpdateMailboxItemsUnreadCountAsync(email).ConfigureAwait(true);
+                await UpdateMailboxItemUnreadCountAsync(email).ConfigureAwait(true);
                 await UpdateContactsUnreadCountAsync().ConfigureAwait(true);
             }
             catch (ObjectDisposedException)
@@ -566,6 +588,7 @@ namespace Tuvi.App.ViewModels
                     try
                     {
                         await UpdateAccountListAsync().ConfigureAwait(true);
+                        await UpdateMailboxItemsUnreadCountAsync().ConfigureAwait(true);
                     }
                     catch (Exception ex)
                     {
@@ -624,7 +647,7 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        private async Task UpdateMailboxItemsUnreadCountAsync(EmailAddress email)
+        private async Task UpdateMailboxItemUnreadCountAsync(EmailAddress email)
         {
             var rootItem = MailBoxesModel.GetRootItemByEmail(email);
             if (rootItem is null)
@@ -656,10 +679,6 @@ namespace Tuvi.App.ViewModels
         {
             var accounts = await Core.GetCompositeAccountsAsync().ConfigureAwait(true);
             MailBoxesModel.SetAccounts(accounts);
-            foreach (var account in accounts)
-            {
-                await UpdateMailboxItemsUnreadCountAsync(account.Email).ConfigureAwait(true);
-            }
         }
 
         private async Task UpdateContactsAsync()
