@@ -1,5 +1,6 @@
 #if !WINDOWS_UWP
 
+using Tuvi.App.Shared.Models;
 using Tuvi.App.Shared.Services;
 using Tuvi.App.Shared.Views;
 using Tuvi.App.ViewModels;
@@ -67,6 +68,11 @@ namespace Eppie.App.Shared
                         })
                     );
                 MainWindow = builder.Window;
+
+#if WINDOWS
+                var brand = new BrandLoader();
+                MainWindow.Title = brand.GetName();
+#endif
 
 #if DEBUG
                 MainWindow.UseStudio();
