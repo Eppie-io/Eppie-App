@@ -15,8 +15,6 @@ namespace Eppie.App.UI.Controls
 {
     public partial class RichTextEditor : RichEditBox
     {
-        private bool _skipUpdating;
-
         public string Html
         {
             get { return (string)GetValue(HtmlProperty); }
@@ -42,6 +40,8 @@ namespace Eppie.App.UI.Controls
         }
 
 #if WINDOWS_UWP || WINDOWS10_0_19041_0_OR_GREATER
+
+        private bool _skipUpdating;
 
         public RichTextEditor()
         {
