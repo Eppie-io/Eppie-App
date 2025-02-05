@@ -1,10 +1,19 @@
+using System;
 using Tuvi.App.Shared.Extensions;
+
+#if WINDOWS_UWP
+using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+#else
+using Microsoft.UI.Text;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+#endif
 
 namespace Eppie.App.UI.Controls
 {
-    public class RichTextEditor : RichEditBox
+    public partial class RichTextEditor : RichEditBox
     {
         private bool _skipUpdating;
 
@@ -14,7 +23,7 @@ namespace Eppie.App.UI.Controls
             set { SetValue(HtmlProperty, value); }
         }
         public static readonly DependencyProperty HtmlProperty =
-            DependencyProperty.Register(nameof(Html), typeof(string), typeof(RichTextEditor), new PropertyMetadata(""));
+            DependencyProperty.Register(nameof(Html), typeof(string), typeof(RichTextEditor), new PropertyMetadata(string.Empty));
 
         public string Text
         {
@@ -22,16 +31,17 @@ namespace Eppie.App.UI.Controls
             set { SetValue(TextProperty, value); }
         }
         public static readonly DependencyProperty TextProperty =
-            DependencyProperty.Register(nameof(Text), typeof(string), typeof(RichTextEditor), new PropertyMetadata("", OnTextChanged));
+            DependencyProperty.Register(nameof(Text), typeof(string), typeof(RichTextEditor), new PropertyMetadata(string.Empty, OnTextChanged));
 
         private static void OnTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is RichTextEditor editor)
             {
-                editor.UpdateDocumentAsText((string)e.NewValue);
+                editor.UpdateDocumentAsText(editor.Text);
             }
         }
 
+#if WINDOWS_UWP || WINDOWS10_0_19041_0_OR_GREATER
 
         public RichTextEditor()
         {
@@ -48,9 +58,14 @@ namespace Eppie.App.UI.Controls
             _skipUpdating = true;
             try
             {
-                Document.GetText(Windows.UI.Text.TextGetOptions.UseCrlf, out string text);
+                Document.GetText(TextGetOptions.UseCrlf, out string text);
 
-                if (!string.IsNullOrWhiteSpace(text))
+                if (string.IsNullOrWhiteSpace(text))
+                {
+                    Text = string.Empty;
+                    Html = string.Empty;
+                }
+                else
                 {
                     Text = text;
                     Html = Document.ToHtml();
@@ -66,8 +81,14 @@ namespace Eppie.App.UI.Controls
         {
             if (!_skipUpdating && !string.IsNullOrEmpty(text))
             {
-                Document?.SetText(Windows.UI.Text.TextSetOptions.None, text);
+                Document?.SetText(TextSetOptions.None, text);
             }
         }
+#else
+        private void UpdateDocumentAsText(string text)
+        {
+            throw new System.NotImplementedException();
+        }
+#endif
     }
 }

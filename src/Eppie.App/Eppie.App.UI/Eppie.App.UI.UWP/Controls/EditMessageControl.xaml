@@ -9,8 +9,6 @@
              mc:Ignorable="d">
 
     <Grid>
-        <local:RichTextEditor Html="{x:Bind Html, Mode=TwoWay}"
-                              Text="{x:Bind Text, Mode=TwoWay}" />
-
+        <local:RichTextEditor Html="{x:Bind Html, Mode=TwoWay}" Text="{x:Bind Text, Mode=TwoWay}" />
     </Grid>
 </UserControl>

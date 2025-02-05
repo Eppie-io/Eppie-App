@@ -63,6 +63,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ProtonAccountSettingsControl.xaml.cs">
       <DependentUpon>ProtonAccountSettingsControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\RichTextEditor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BitmapSourceConverters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BoolToValueConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ConverterChain.cs" />
@@ -72,6 +73,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\VisibilityConverters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\AttachedCommands.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\HyperlinkExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\TextDocumentExtension.Uno.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\TextDocumentExtension.UWP.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\TextDocumentExtension.Win.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\TextDocumentExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Tools\ElementHierarchyTools.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Tools\IncrementalLoadingCollection.cs" />

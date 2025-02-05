@@ -10,7 +10,7 @@ namespace Eppie.App.UI.Controls
         {
             await HtmlView.EnsureCoreWebView2Async();
 
-            HtmlView.CoreWebView2.Settings.IsScriptEnabled = false;
+            HtmlView.CoreWebView2.Settings.IsScriptEnabled = false; // ToDo: Uno0001
             HtmlView.NavigateToString(HtmlBody);
         }
     }
