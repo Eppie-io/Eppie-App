@@ -1,11 +1,22 @@
 using System;
 using System.Text;
+
+#if WINDOWS_UWP
 using Windows.UI.Text;
+#else
+using Microsoft.UI.Text;
+#endif
 
 namespace Tuvi.App.Shared.Extensions
 {
-    public static class TextDocumentExtension
+    public static partial class TextDocumentExtension
     {
+        private readonly struct SpecialChar
+        {
+            public static readonly char NewLine = '\r';
+            public static readonly char Space = ' ';
+        }
+
         private struct ListProcessor
         {
             private StringBuilder _sb;
@@ -38,7 +49,7 @@ namespace Tuvi.App.Shared.Extensions
                         _itemOpened = true;
                     }
 
-                    if (character == Convert.ToChar(13))
+                    if (character == SpecialChar.NewLine)
                     {
                         _sb.Append("</li>");
                         _itemOpened = false;
@@ -93,22 +104,14 @@ namespace Tuvi.App.Shared.Extensions
                 }
             }
         }
-        public static string ToHtml(this ITextDocument document)
+
+#if WINDOWS_UWP || WINDOWS10_0_19041_0_OR_GREATER
+
+        private static string GetHtml(ITextRange range, int length)
         {
-            if (document == null)
-            {
-                throw new ArgumentNullException(nameof(document));
-            }
-
-            document.GetText(TextGetOptions.None, out string text); // ToDo: warning Uno0001
-
-            // it seems that we have a bug in rich edit and we always get extra '\r, cut it off
-            int endPosition = text.Length == 0 ? text.Length : text.Length - 1;
-            ITextRange txtRange = document.GetRange(0, endPosition); // ToDo: warning Uno0001
-
             var strHTML = new StringBuilder("<html><head></head><body>");
 
-            float shtSize = 11; // Default font size
+            float fontSize = 11; // Default font size
 
             var boldProcessor = new FormatProcessor(strHTML, "b");
             var italicProcessor = new FormatProcessor(strHTML, "i");
@@ -116,46 +119,53 @@ namespace Tuvi.App.Shared.Extensions
             var bulletList = new ListProcessor(strHTML, "<ul>", "</ul>");
             var numberedList = new ListProcessor(strHTML, "<ol type=\"i\">", "</ol>");
 
-            for (int i = 0; i < endPosition; i++)
+            for (int i = 0; i < length; i++)
             {
-                txtRange.SetRange(i, i + 1); // ToDo: warning Uno0001
+                range.SetRange(i, i + 1);
 
                 if (i == 0)
                 {
-                    shtSize = OpenNewFontSpan();
+                    fontSize = OpenNewFontSpan();
                 }
 
-                if (txtRange.CharacterFormat.Size != shtSize) // ToDo: warning Uno0001
+                if (range.CharacterFormat.Size != fontSize)
                 {
                     strHTML.Append("</span>");
-                    shtSize = OpenNewFontSpan();
+                    fontSize = OpenNewFontSpan();
                 }
 
                 // bullet
-                bool appendToOutput = bulletList.Process(txtRange.ParagraphFormat.ListType == MarkerType.Bullet, txtRange.Character); // ToDo: warning Uno0001
+                bool appendToOutput = bulletList.Process(range.ParagraphFormat.ListType == MarkerType.Bullet, range.Character);
 
                 // numbering
-                appendToOutput = numberedList.Process(txtRange.ParagraphFormat.ListType == MarkerType.LowercaseRoman, txtRange.Character); // ToDo: warning Uno0001
+                appendToOutput = numberedList.Process(range.ParagraphFormat.ListType == MarkerType.LowercaseRoman, range.Character);
 
                 // new line should be placed here, right after list processing, to assure that we correctly processed list items
-                if (appendToOutput && txtRange.Character == Convert.ToChar(13)) // ToDo: warning Uno0001
+                if (appendToOutput && range.Character == SpecialChar.NewLine)
                 {
                     strHTML.Append("<br/>");
                     appendToOutput = false;
                 }
 
+                // to insert multiple spaces into a document
+                if (appendToOutput && range.Character == SpecialChar.Space)
+                {
+                    strHTML.Append("&nbsp;");
+                    appendToOutput = false;
+                }
+
                 // bold
-                boldProcessor.Process(txtRange.CharacterFormat.Bold == FormatEffect.On); // ToDo: warning Uno0001
+                boldProcessor.Process(range.CharacterFormat.Bold == FormatEffect.On);
 
                 // italic
-                italicProcessor.Process(txtRange.CharacterFormat.Italic == FormatEffect.On); // ToDo: warning Uno0001
+                italicProcessor.Process(range.CharacterFormat.Italic == FormatEffect.On);
 
                 // underline
-                underlineProcessor.Process(txtRange.CharacterFormat.Underline == UnderlineType.Single); // ToDo: warning Uno0001
+                underlineProcessor.Process(range.CharacterFormat.Underline == UnderlineType.Single);
 
                 if (appendToOutput)
                 {
-                    strHTML.Append(txtRange.Character); // ToDo: warning Uno0001
+                    strHTML.Append(range.Character);
                 }
             }
 
@@ -165,16 +175,18 @@ namespace Tuvi.App.Shared.Extensions
 
             float OpenNewFontSpan()
             {
-                float fontSize = txtRange.CharacterFormat.Size; // ToDo: warning Uno0001
-                string strFntName = txtRange.CharacterFormat.Name; // ToDo: warning Uno0001
+                float size = range.CharacterFormat.Size;
+                string name = range.CharacterFormat.Name;
                 strHTML.Append("<span style=\"font-family:")
-                       .Append(strFntName)
+                       .Append(name)
                        .Append("; font-size: ")
-                       .Append(fontSize)
+                       .Append(size)
                        .Append("pt;")
                        .Append("\">");
-                return fontSize;
+                return size;
             }
         }
+#endif
+
     }
 }
