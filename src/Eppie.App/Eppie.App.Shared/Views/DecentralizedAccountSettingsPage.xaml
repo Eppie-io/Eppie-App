@@ -31,7 +31,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Button x:Uid="/Eppie.App.Resources/Resources/RemoveAccountButton"
+        <Button x:Uid="RemoveAccountButton"
                 Margin="4"
                 HorizontalAlignment="Right"
                 Command="{x:Bind ViewModel.RemoveAccountCommand}"
@@ -53,20 +53,20 @@
                 <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
 
-            <Button x:Uid="/Eppie.App.Resources/Resources/Apply"
+            <Button x:Uid="Apply"
                     Margin="0,4,4,4"
                     HorizontalAlignment="Stretch"
                     Command="{x:Bind ViewModel.ApplySettingsCommand, Mode=OneWay}"
                     Style="{StaticResource AccentButtonStyle}"
                     Visibility="Collapsed" />
 
-            <Button x:Uid="/Eppie.App.Resources/Resources/JoinWaitingList"
+            <Button x:Uid="JoinWaitingList"
                     Margin="0,4,4,4"
                     HorizontalAlignment="Stretch"
                     Command="{x:Bind ViewModel.JoinWaitingListCommand, Mode=OneWay}"
                     Style="{StaticResource AccentButtonStyle}" />
 
-            <Button x:Uid="/Eppie.App.Resources/Resources/Cancel"
+            <Button x:Uid="Cancel"
                     Grid.Column="1"
                     Margin="4,4,0,4"
                     HorizontalAlignment="Stretch"

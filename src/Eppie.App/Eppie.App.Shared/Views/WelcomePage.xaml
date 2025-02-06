@@ -26,7 +26,7 @@
                        Style="{StaticResource PageTitleTextStyle}"
                        Text="{x:Bind AppName}" />
 
-            <TextBlock x:Uid="/Eppie.App.Resources/Resources/WelcomePageHeader"
+            <TextBlock x:Uid="WelcomePageHeader"
                        Margin="0,18"
                        Style="{StaticResource PageSubtitleTextStyle}" />
         </StackPanel>
@@ -43,10 +43,10 @@
                     Style="{StaticResource AccentButtonStyle}">
                 <Button.Content>
                     <StackPanel Margin="8">
-                        <TextBlock x:Uid="/Eppie.App.Resources/Resources/WelcomePageCreateAccountButton"
+                        <TextBlock x:Uid="WelcomePageCreateAccountButton"
                                    FontWeight="Semibold"
                                    Style="{StaticResource NormalTextStyle}" />
-                        <TextBlock x:Uid="/Eppie.App.Resources/Resources/WelcomePageCreateAccountButtonSubtext" Style="{StaticResource CaptionTextStyle}" />
+                        <TextBlock x:Uid="WelcomePageCreateAccountButtonSubtext" Style="{StaticResource CaptionTextStyle}" />
                     </StackPanel>
                 </Button.Content>
             </Button>
@@ -56,17 +56,17 @@
                     Command="{x:Bind ViewModel.RestoreAccountCommand}">
                 <Button.Content>
                     <StackPanel Margin="8">
-                        <TextBlock x:Uid="/Eppie.App.Resources/Resources/WelcomePageRestoreAccountButton"
+                        <TextBlock x:Uid="WelcomePageRestoreAccountButton"
                                    FontWeight="Semibold"
                                    Style="{StaticResource NormalTextStyle}" />
-                        <TextBlock x:Uid="/Eppie.App.Resources/Resources/WelcomePageRestoreAccountButtonSubtext" Style="{StaticResource CaptionTextStyle}" />
+                        <TextBlock x:Uid="WelcomePageRestoreAccountButtonSubtext" Style="{StaticResource CaptionTextStyle}" />
                     </StackPanel>
                 </Button.Content>
             </Button>
-            <TextBlock x:Uid="/Eppie.App.Resources/Resources/WelcomePageLicenseExplanationLabel"
+            <TextBlock x:Uid="WelcomePageLicenseExplanationLabel"
                        Margin="0,8"
                        Style="{StaticResource NormalTextStyle}" />
-            <HyperlinkButton x:Uid="/Eppie.App.Resources/Resources/WelcomePageLicenseButton" extensions:HyperlinkExtension.Link="{x:Bind LicenseLink}" />
+            <HyperlinkButton x:Uid="WelcomePageLicenseButton" extensions:HyperlinkExtension.Link="{x:Bind LicenseLink}" />
         </StackPanel>
 
     </Grid>

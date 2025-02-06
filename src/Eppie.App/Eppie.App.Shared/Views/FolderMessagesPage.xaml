@@ -17,7 +17,7 @@
     <local:FolderMessagesPageBase.Resources>
 
         <XamlUICommand x:Name="DeleteItemCommand"
-                       x:Uid="/Eppie.App.Resources/Resources/DeleteButton"
+                       x:Uid="DeleteButton"
                        Command="{Binding DeleteMessageCommand}">
             <XamlUICommand.IconSource>
                 <SymbolIconSource Symbol="Delete" />
@@ -28,7 +28,7 @@
         </XamlUICommand>
 
         <XamlUICommand x:Name="MarkAsReadItemCommand"
-                       x:Uid="/Eppie.App.Resources/Resources/MarkAsReadButton"
+                       x:Uid="MarkAsReadButton"
                        Command="{Binding MarkMessageAsReadCommand}">
             <XamlUICommand.IconSource>
                 <SymbolIconSource Symbol="Read" />
@@ -39,7 +39,7 @@
         </XamlUICommand>
 
         <XamlUICommand x:Name="MarkAsUnreadItemCommand"
-                       x:Uid="/Eppie.App.Resources/Resources/MarkAsUnreadButton"
+                       x:Uid="MarkAsUnreadButton"
                        Command="{Binding MarkMessageAsUnreadCommand}">
             <XamlUICommand.IconSource>
                 <SymbolIconSource Symbol="Mail" />
@@ -50,7 +50,7 @@
         </XamlUICommand>
 
         <XamlUICommand x:Name="FlagItemCommand"
-                       x:Uid="/Eppie.App.Resources/Resources/SetFlagButton"
+                       x:Uid="SetFlagButton"
                        Command="{Binding FlagMessageCommand}">
             <XamlUICommand.IconSource>
                 <SymbolIconSource Symbol="Flag" />
@@ -61,7 +61,7 @@
         </XamlUICommand>
 
         <XamlUICommand x:Name="UnflagItemCommand"
-                       x:Uid="/Eppie.App.Resources/Resources/ClearFlagButton"
+                       x:Uid="ClearFlagButton"
                        Command="{Binding UnflagMessageCommand}">
             <XamlUICommand.IconSource>
                 <SymbolIconSource Symbol="Flag" />
@@ -129,13 +129,13 @@
 
                             <!--  using Binding instead of Binding shows updated fields of item in message list after returning back to cached page  -->
 
-                            <TextBlock x:Uid="/Eppie.App.Resources/Resources/MessageFrom" FontWeight="{Binding IsMarkedAsRead, Converter={StaticResource InverseBoolToFontWeightConverter}}" />
+                            <TextBlock x:Uid="MessageFrom" FontWeight="{Binding IsMarkedAsRead, Converter={StaticResource InverseBoolToFontWeightConverter}}" />
 
                             <TextBlock Margin="4,0,4,0"
                                        FontWeight="{Binding IsMarkedAsRead, Converter={StaticResource InverseBoolToFontWeightConverter}}"
                                        Text="{Binding MessageSender}" />
 
-                            <TextBlock x:Uid="/Eppie.App.Resources/Resources/MessageTo" FontWeight="{Binding IsMarkedAsRead, Converter={StaticResource InverseBoolToFontWeightConverter}}" />
+                            <TextBlock x:Uid="MessageTo" FontWeight="{Binding IsMarkedAsRead, Converter={StaticResource InverseBoolToFontWeightConverter}}" />
 
                             <TextBlock Margin="4,0,4,0"
                                        FontWeight="{Binding IsMarkedAsRead, Converter={StaticResource InverseBoolToFontWeightConverter}}"
@@ -164,22 +164,22 @@
 
                             <AppBarButton Command="{StaticResource DeleteItemCommand}" CommandParameter="{Binding}" />
 
-                            <AppBarButton x:Uid="/Eppie.App.Resources/Resources/MarkAsReadButton"
+                            <AppBarButton x:Uid="MarkAsReadButton"
                                           Command="{StaticResource MarkAsReadItemCommand}"
                                           CommandParameter="{Binding}"
                                           Visibility="{Binding IsMarkedAsRead, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
 
-                            <AppBarButton x:Uid="/Eppie.App.Resources/Resources/MarkAsUnreadButton"
+                            <AppBarButton x:Uid="MarkAsUnreadButton"
                                           Command="{StaticResource MarkAsUnreadItemCommand}"
                                           CommandParameter="{Binding}"
                                           Visibility="{Binding IsMarkedAsRead}" />
 
-                            <AppBarButton x:Uid="/Eppie.App.Resources/Resources/SetFlagButton"
+                            <AppBarButton x:Uid="SetFlagButton"
                                           Command="{StaticResource FlagItemCommand}"
                                           CommandParameter="{Binding}"
                                           Visibility="{Binding IsFlagged, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
 
-                            <AppBarButton x:Uid="/Eppie.App.Resources/Resources/ClearFlagButton"
+                            <AppBarButton x:Uid="ClearFlagButton"
                                           Command="{StaticResource UnflagItemCommand}"
                                           CommandParameter="{Binding}"
                                           Visibility="{Binding IsFlagged}" />
@@ -195,7 +195,7 @@
                                     Symbol="Flag"
                                     Visibility="{Binding IsFlagged}" />
 
-                        <TextBlock x:Uid="/Eppie.App.Resources/Resources/P2PLabel"
+                        <TextBlock x:Uid="P2PLabel"
                                    Grid.Column="4"
                                    HorizontalAlignment="Right"
                                    Foreground="Blue"
@@ -251,41 +251,41 @@
             <controls:MessageListControl.CommandBarHolder>
                 <CommandBar OverflowButtonVisibility="Collapsed">
 
-                    <AppBarButton x:Uid="/Eppie.App.Resources/Resources/MarkAsReadButton"
+                    <AppBarButton x:Uid="MarkAsReadButton"
                                   Command="{x:Bind ViewModel.MarkSelectedMessagesAsReadCommand, Mode=OneWay}"
                                   CommandParameter="{x:Bind MessageListControl.SelectedItems, Mode=OneWay}"
                                   Icon="Read"
                                   Visibility="{x:Bind ViewModel.IsSelectMessagesMode, Mode=OneWay}" />
 
-                    <AppBarButton x:Uid="/Eppie.App.Resources/Resources/MarkAsUnReadButton"
+                    <AppBarButton x:Uid="MarkAsUnReadButton"
                                   Command="{x:Bind ViewModel.MarkSelectedMessagesAsUnreadCommand, Mode=OneWay}"
                                   CommandParameter="{x:Bind MessageListControl.SelectedItems, Mode=OneWay}"
                                   Icon="Mail"
                                   Visibility="{x:Bind ViewModel.IsSelectMessagesMode, Mode=OneWay}" />
 
-                    <AppBarButton x:Uid="/Eppie.App.Resources/Resources/SetFlagButton"
+                    <AppBarButton x:Uid="SetFlagButton"
                                   Command="{x:Bind ViewModel.FlagSelectedMessagesCommand, Mode=OneWay}"
                                   CommandParameter="{x:Bind MessageListControl.SelectedItems, Mode=OneWay}"
                                   Icon="Flag"
                                   Visibility="{x:Bind ViewModel.IsSelectMessagesMode, Mode=OneWay}" />
 
-                    <AppBarButton x:Uid="/Eppie.App.Resources/Resources/ClearFlagButton"
+                    <AppBarButton x:Uid="ClearFlagButton"
                                   Command="{x:Bind ViewModel.UnflagSelectedMessagesCommand, Mode=OneWay}"
                                   CommandParameter="{x:Bind MessageListControl.SelectedItems, Mode=OneWay}"
                                   Icon="Flag"
                                   Visibility="{x:Bind ViewModel.IsSelectMessagesMode, Mode=OneWay}" />
 
-                    <AppBarButton x:Uid="/Eppie.App.Resources/Resources/DeleteButton"
+                    <AppBarButton x:Uid="DeleteButton"
                                   Command="{x:Bind ViewModel.DeleteSelectedMessagesCommand, Mode=OneWay}"
                                   CommandParameter="{x:Bind MessageListControl.SelectedItems, Mode=OneWay}"
                                   Icon="Delete"
                                   Visibility="{x:Bind ViewModel.IsSelectMessagesMode, Mode=OneWay}" />
 
-                    <AppBarToggleButton x:Uid="/Eppie.App.Resources/Resources/SelectionModeButton"
+                    <AppBarToggleButton x:Uid="SelectionModeButton"
                                         Icon="Bullets"
                                         IsChecked="{x:Bind ViewModel.IsSelectMessagesMode, Mode=TwoWay}" />
 
-                    <AppBarButton x:Uid="/Eppie.App.Resources/Resources/UpdateButton"
+                    <AppBarButton x:Uid="UpdateButton"
                                   Command="{x:Bind ViewModel.RefreshMessagesCommand, Mode=OneWay}"
                                   Icon="Refresh" />
 

@@ -28,14 +28,14 @@
 
             <SymbolIcon Margin="12,0,12,0" Symbol="ContactInfo" />
 
-            <TextBlock x:Uid="/Eppie.App.Resources/Resources/IdentityManagerTitle"
+            <TextBlock x:Uid="IdentityManagerTitle"
                        Margin="0,0,4,0"
                        VerticalAlignment="Center"
                        Style="{StaticResource PageSubtitleTextStyle}" />
 
         </StackPanel>
 
-        <Button x:Uid="/Eppie.App.Resources/Resources/ConnectServiceButton"
+        <Button x:Uid="ConnectServiceButton"
                 Grid.Row="1"
                 Margin="8,8"
                 HorizontalAlignment="Stretch"
@@ -52,7 +52,7 @@
 
             <StackPanel Margin="16,0,8,12">
 
-                <TextBlock x:Uid="/Eppie.App.Resources/Resources/ConnectedServicesSettings"
+                <TextBlock x:Uid="ConnectedServicesSettings"
                            Margin="0,20,0,0"
                            Style="{StaticResource NormalTextStyle}" />
 

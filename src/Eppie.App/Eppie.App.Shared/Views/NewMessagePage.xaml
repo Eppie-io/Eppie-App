@@ -43,7 +43,7 @@
                             IsEnabled="{x:Bind IsEmpty, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
                             OverflowButtonVisibility="Collapsed">
 
-                    <AppBarButton x:Uid="/Eppie.App.Resources/Resources/SaveAttachmentButton"
+                    <AppBarButton x:Uid="SaveAttachmentButton"
                                   Icon="Save"
                                   Tag="{x:Bind}">
                         <interactivity:Interaction.Behaviors>
@@ -51,7 +51,7 @@
                         </interactivity:Interaction.Behaviors>
                     </AppBarButton>
 
-                    <AppBarButton x:Uid="/Eppie.App.Resources/Resources/OpenAttachmentButton"
+                    <AppBarButton x:Uid="OpenAttachmentButton"
                                   Icon="OpenFile"
                                   Tag="{x:Bind}">
                         <interactivity:Interaction.Behaviors>
@@ -59,7 +59,7 @@
                         </interactivity:Interaction.Behaviors>
                     </AppBarButton>
 
-                    <AppBarButton x:Uid="/Eppie.App.Resources/Resources/DeleteAttachmentButton"
+                    <AppBarButton x:Uid="DeleteAttachmentButton"
                                   Command="{x:Bind RemoveCommand, Mode=OneWay}"
                                   CommandParameter="{x:Bind}"
                                   Icon="Delete" />
@@ -89,24 +89,24 @@
             </Grid.ColumnDefinitions>
 
             <Button x:Name="BackButton"
-                    x:Uid="/Eppie.App.Resources/Resources/BackButton"
+                    x:Uid="BackButton"
                     Command="{x:Bind ViewModel.GoBackCommand}">
                 <FontIcon Glyph="&#xE112;" />
             </Button>
 
             <CommandBar Grid.Column="2" DefaultLabelPosition="Right">
-                <AppBarButton x:Uid="/Eppie.App.Resources/Resources/AttachButton">
+                <AppBarButton x:Uid="AttachButton">
                     <SymbolIcon Symbol="Attach" />
                     <interactivity:Interaction.Behaviors>
                         <behaviors:FileBehavior Command="{x:Bind ViewModel.AttachFilesCommand, Mode=OneWay}" />
                     </interactivity:Interaction.Behaviors>
                 </AppBarButton>
 
-                <AppBarButton x:Uid="/Eppie.App.Resources/Resources/DeleteButton" Command="{x:Bind ViewModel.DeleteMessageAndGoBackCommand}">
+                <AppBarButton x:Uid="DeleteButton" Command="{x:Bind ViewModel.DeleteMessageAndGoBackCommand}">
                     <SymbolIcon Symbol="Delete" />
                 </AppBarButton>
 
-                <AppBarButton x:Uid="/Eppie.App.Resources/Resources/SendButton" Command="{x:Bind ViewModel.SendMessageAndGoBackCommand}">
+                <AppBarButton x:Uid="SendButton" Command="{x:Bind ViewModel.SendMessageAndGoBackCommand}">
                     <SymbolIcon Symbol="Send" />
                 </AppBarButton>
             </CommandBar>
@@ -132,7 +132,7 @@
             </Grid.ColumnDefinitions>
 
             <!--  Sender  -->
-            <TextBlock x:Uid="/Eppie.App.Resources/Resources/MessageFrom"
+            <TextBlock x:Uid="MessageFrom"
                        Margin="0,4,4,0"
                        VerticalAlignment="Center"
                        FontWeight="Bold" />
@@ -152,7 +152,7 @@
             </ComboBox>
 
             <!--  Receiver  -->
-            <TextBlock x:Uid="/Eppie.App.Resources/Resources/MessageTo"
+            <TextBlock x:Uid="MessageTo"
                        Grid.Row="1"
                        Margin="0,4,4,0"
                        VerticalAlignment="Center"
@@ -167,7 +167,7 @@
                                          UntokenizedContact="{x:Bind ViewModel.UntokenizedContactTo, Mode=TwoWay}" />
 
             <!--  Copy  -->
-            <TextBlock x:Uid="/Eppie.App.Resources/Resources/CopyTo"
+            <TextBlock x:Uid="CopyTo"
                        Grid.Row="2"
                        Margin="0,4,4,0"
                        VerticalAlignment="Center"
@@ -181,7 +181,7 @@
                                          SelectedContacts="{x:Bind ViewModel.Copy, Mode=OneWay}" />
 
             <!--  Hidden copy  -->
-            <TextBlock x:Uid="/Eppie.App.Resources/Resources/HiddenCopyTo"
+            <TextBlock x:Uid="HiddenCopyTo"
                        Grid.Row="3"
                        Margin="0,4,4,0"
                        VerticalAlignment="Center"
@@ -195,7 +195,7 @@
                                          SelectedContacts="{x:Bind ViewModel.HiddenCopy, Mode=OneWay}" />
 
             <!--  Subject  -->
-            <TextBlock x:Uid="/Eppie.App.Resources/Resources/MessageSubject"
+            <TextBlock x:Uid="MessageSubject"
                        Grid.Row="4"
                        Margin="0,4,4,0"
                        VerticalAlignment="Center"
@@ -207,14 +207,14 @@
                                              Text="{x:Bind ViewModel.Subject, Mode=TwoWay}" />
 
             <!--  Encryption and signature  -->
-            <CheckBox x:Uid="/Eppie.App.Resources/Resources/MessageEncrypted"
+            <CheckBox x:Uid="MessageEncrypted"
                       Grid.Row="5"
                       Margin="0,4,4,0"
                       VerticalAlignment="Center"
                       IsChecked="{x:Bind ViewModel.IsEncrypted, Mode=TwoWay}"
                       IsEnabled="{x:Bind ViewModel.IsDecentralized, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}" />
 
-            <CheckBox x:Uid="/Eppie.App.Resources/Resources/MessageSigned"
+            <CheckBox x:Uid="MessageSigned"
                       Grid.Row="5"
                       Grid.Column="1"
                       Margin="4,4,0,0"
@@ -222,7 +222,7 @@
                       IsChecked="{x:Bind ViewModel.IsSigned, Mode=TwoWay}"
                       IsEnabled="{x:Bind ViewModel.IsDecentralized, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}" />
 
-            <CheckBox x:Uid="/Eppie.App.Resources/Resources/MessageDecentralized"
+            <CheckBox x:Uid="MessageDecentralized"
                       Grid.Row="6"
                       Margin="0,4,4,0"
                       VerticalAlignment="Center"
@@ -253,7 +253,7 @@
         </Grid>
 
 
-        <controls:AttachmentListControl x:Uid="/Eppie.App.Resources/Resources/AttachedFiles"
+        <controls:AttachmentListControl x:Uid="AttachedFiles"
                                         Grid.Row="4"
                                         Margin="0,16,0,0"
                                         IsTitleVisible="True"

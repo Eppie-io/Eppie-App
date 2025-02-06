@@ -38,13 +38,13 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <Button x:Uid="/Eppie.App.Resources/Resources/HybridAddressButton"
+            <Button x:Uid="HybridAddressButton"
                     Grid.Column="1"
                     Margin="4"
                     Command="{x:Bind ViewModel.CreateHybridAddress}"
                     Visibility="{x:Bind ViewModel.ShowHybridAddressButton, Mode=OneWay}" />
 
-            <Button x:Uid="/Eppie.App.Resources/Resources/RemoveAccountButton"
+            <Button x:Uid="RemoveAccountButton"
                     Grid.Column="2"
                     Margin="4"
                     Command="{x:Bind ViewModel.RemoveAccountCommand}"
@@ -70,12 +70,12 @@
                 <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
 
-            <Button x:Uid="/Eppie.App.Resources/Resources/Apply"
+            <Button x:Uid="Apply"
                     Margin="0,4,4,4"
                     HorizontalAlignment="Stretch"
                     Command="{x:Bind ViewModel.ApplySettingsCommand, Mode=OneWay}" />
 
-            <Button x:Uid="/Eppie.App.Resources/Resources/Cancel"
+            <Button x:Uid="Cancel"
                     Grid.Column="1"
                     Margin="4,4,0,4"
                     HorizontalAlignment="Stretch"

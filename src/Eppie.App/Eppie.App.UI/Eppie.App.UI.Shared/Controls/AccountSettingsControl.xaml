@@ -13,7 +13,7 @@
         <ScrollViewer IsEnabled="{x:Bind IsLocked, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}">
             <StackPanel Margin="0,0,20,0" Orientation="Vertical">
 
-                <TextBlock x:Uid="/Eppie.App.Resources/Resources/EmailAddress" Margin="0,0,0,4" />
+                <TextBlock x:Uid="/Eppie.App.UI/Controls/EmailAddress" Margin="0,0,0,4" />
                 <local:ErrorControl HorizontalAlignment="Stretch" Property="{x:Bind AccountSettingsModel.Email, Mode=OneWay}">
                     <local:ErrorControl.InnerContent>
                         <TextBox x:Name="EmailBox"
@@ -25,7 +25,7 @@
 
                 <StackPanel Margin="0,16,0,4" Visibility="{x:Bind BasicAccountSettingsModel, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}">
 
-                    <TextBlock x:Uid="/Eppie.App.Resources/Resources/Password" Margin="0,0,0,4" />
+                    <TextBlock x:Uid="/Eppie.App.UI/Controls/Password" Margin="0,0,0,4" />
 
                     <local:ErrorControl HorizontalAlignment="Stretch" Property="{x:Bind BasicAccountSettingsModel.Password, Mode=OneWay}">
                         <local:ErrorControl.InnerContent>
@@ -35,14 +35,14 @@
 
                 </StackPanel>
 
-                <TextBlock x:Uid="/Eppie.App.Resources/Resources/SenderName" Margin="0,16,0,4" />
+                <TextBlock x:Uid="/Eppie.App.UI/Controls/SenderName" Margin="0,16,0,4" />
                 <controls:PromptTextInputControl HorizontalAlignment="Stretch"
-                                 IsSpellCheckEnabled="False"
-                                 Text="{x:Bind AccountSettingsModel.SenderName, Mode=TwoWay}" />
-                
+                                                 IsSpellCheckEnabled="False"
+                                                 Text="{x:Bind AccountSettingsModel.SenderName, Mode=TwoWay}" />
+
                 <StackPanel Margin="0,16,0,4">
 
-                    <TextBlock x:Uid="/Eppie.App.Resources/Resources/OutgoingServer"
+                    <TextBlock x:Uid="/Eppie.App.UI/Controls/OutgoingServer"
                                Margin="0,0,0,4"
                                Style="{StaticResource NormalTextStyle}" />
                     <Grid>
@@ -55,7 +55,7 @@
                             <ColumnDefinition Width="1*" />
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock x:Uid="/Eppie.App.Resources/Resources/Address" Margin="0,4,4,4" />
+                        <TextBlock x:Uid="/Eppie.App.UI/Controls/Address" Margin="0,4,4,4" />
                         <local:ErrorControl Grid.Row="1"
                                             Margin="0,0,4,0"
                                             HorizontalAlignment="Stretch"
@@ -68,7 +68,7 @@
                         </local:ErrorControl>
 
 
-                        <TextBlock x:Uid="/Eppie.App.Resources/Resources/Port"
+                        <TextBlock x:Uid="/Eppie.App.UI/Controls/Port"
                                    Grid.Column="1"
                                    Margin="4,4,0,4" />
                         <controls:PromptTextInputControl Grid.Row="1"
@@ -81,7 +81,7 @@
 
                     </Grid>
 
-                    <TextBlock x:Uid="/Eppie.App.Resources/Resources/IncomingServer"
+                    <TextBlock x:Uid="/Eppie.App.UI/Controls/IncomingServer"
                                Margin="0,16,0,4"
                                Style="{StaticResource NormalTextStyle}" />
                     <Grid>
@@ -95,14 +95,14 @@
                             <ColumnDefinition Width="1*" />
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock x:Uid="/Eppie.App.Resources/Resources/Protocol" Margin="0,4,4,4" />
+                        <TextBlock x:Uid="/Eppie.App.UI/Controls/Protocol" Margin="0,4,4,4" />
                         <ComboBox Grid.Row="1"
                                   Margin="0,0,4,0"
                                   HorizontalAlignment="Stretch"
                                   ItemsSource="{x:Bind IncomingProtocolTypes, Mode=OneWay}"
                                   SelectedItem="{x:Bind AccountSettingsModel.IncomingMailProtocol, Mode=TwoWay}" />
 
-                        <TextBlock x:Uid="/Eppie.App.Resources/Resources/Address"
+                        <TextBlock x:Uid="/Eppie.App.UI/Controls/Address"
                                    Grid.Column="1"
                                    Margin="4,4,4,4" />
                         <local:ErrorControl Grid.Row="1"
@@ -117,7 +117,7 @@
                             </local:ErrorControl.InnerContent>
                         </local:ErrorControl>
 
-                        <TextBlock x:Uid="/Eppie.App.Resources/Resources/Port"
+                        <TextBlock x:Uid="/Eppie.App.UI/Controls/Port"
                                    Grid.Column="2"
                                    Margin="4,4,0,4" />
                         <controls:PromptTextInputControl Grid.Row="1"
@@ -133,7 +133,7 @@
                 </StackPanel>
 
                 <StackPanel Margin="0,16,0,4">
-                    <TextBlock x:Uid="/Eppie.App.Resources/Resources/CheckNewMessagesIntervalLabel" Margin="0,0,0,4" />
+                    <TextBlock x:Uid="/Eppie.App.UI/Controls/CheckNewMessagesIntervalLabel" Margin="0,0,0,4" />
                     <local:ErrorControl HorizontalAlignment="Stretch" Property="{x:Bind AccountSettingsModel.SynchronizationInterval, Mode=OneWay}">
                         <local:ErrorControl.InnerContent>
                             <TextBox IsSpellCheckEnabled="False" Text="{x:Bind AccountSettingsModel.SynchronizationInterval.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -142,13 +142,13 @@
                 </StackPanel>
 
                 <StackPanel Margin="0,16,0,4">
-                    <TextBlock x:Uid="/Eppie.App.Resources/Resources/BackupLabel"
+                    <TextBlock x:Uid="/Eppie.App.UI/Controls/BackupLabel"
                                Margin="0,0,0,4"
                                Style="{StaticResource NormalTextStyle}" />
                     <CheckBox x:Name="BackupAccountSettingsCheckBox"
-                              x:Uid="/Eppie.App.Resources/Resources/BackupAccountSettingsCheckBox"
+                              x:Uid="/Eppie.App.UI/Controls/BackupAccountSettingsCheckBox"
                               IsChecked="{x:Bind AccountSettingsModel.IsBackupAccountSettingsEnabled, Mode=TwoWay}" />
-                    <CheckBox x:Uid="/Eppie.App.Resources/Resources/BackupAccountMessagesCheckBox"
+                    <CheckBox x:Uid="/Eppie.App.UI/Controls/BackupAccountMessagesCheckBox"
                               IsChecked="{x:Bind AccountSettingsModel.IsBackupAccountMessagesEnabled, Mode=TwoWay}"
                               Visibility="{Binding ElementName=BackupAccountSettingsCheckBox, Path=IsChecked}" />
                 </StackPanel>
