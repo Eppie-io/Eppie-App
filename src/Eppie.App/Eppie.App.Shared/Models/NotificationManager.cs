@@ -55,7 +55,7 @@ namespace Tuvi.App.Shared.Models
         {
             try
             {
-                int unreadCount = await Core.GetUnreadCountForAllAccountsAsync().ConfigureAwait(false);
+                int unreadCount = await Core.GetUnreadCountForAllAccountsInboxAsync().ConfigureAwait(false);
                 NotificationService.SetBadgeNumber(unreadCount);
             }
             catch (Exception e)
