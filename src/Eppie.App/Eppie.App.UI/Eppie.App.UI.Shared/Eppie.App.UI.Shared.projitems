@@ -152,4 +152,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\en\Controls.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\pl\Controls.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\ru\Controls.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\zh-CN\Controls.resw" />
+  </ItemGroup>
 </Project>
