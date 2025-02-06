@@ -1,13 +1,10 @@
 using Windows.ApplicationModel.Resources;
 
-namespace Eppie.App.Resources
+namespace Eppie.App.UI.Resources
 {
     public class StringProvider
     {
-        public static readonly string DefaultResourcesLibraryName = "/Eppie.App.Resources";
-        private static readonly string DefaultResources = $"{DefaultResourcesLibraryName}/Resources";
-
-        private ResourceLoader _resourceLoader;
+        private readonly ResourceLoader _resourceLoader;
 
         public static StringProvider GetInstance()
         {
@@ -26,12 +23,12 @@ namespace Eppie.App.Resources
 
         private StringProvider()
         {
-            _resourceLoader = ResourceLoader.GetForViewIndependentUse(DefaultResources);
+            _resourceLoader = ResourceLoader.GetForViewIndependentUse();
         }
 
         private StringProvider(string name)
         {
-            _resourceLoader = ResourceLoader.GetForViewIndependentUse($"{DefaultResourcesLibraryName}{name}");
+            _resourceLoader = ResourceLoader.GetForViewIndependentUse(name);
         }
     }
 }

@@ -73,13 +73,14 @@
     <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core.Mail\Tuvi.Core.Mail.csproj" />
     <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core\Tuvi.Core.csproj" />
     <ProjectReference Include="..\..\..\gitmodules\TuviCore\gitmodules\TuviPgpLib\TuviPgpLib\TuviPgpLib.csproj" />
-    <ProjectReference Include="..\Eppie.App.Resources\Eppie.App.Resources.Uno\Eppie.App.Resources.Uno.csproj" />
     <ProjectReference Include="..\Eppie.App.UI\Eppie.App.UI.Uno\Eppie.App.UI.Uno.csproj" />
     <ProjectReference Include="..\Eppie.App.ViewModels\Eppie.App.ViewModels.csproj" />
     <ProjectReference Include="..\Eppie.Authorization.OAuth2\Eppie.Authorization.OAuth2.csproj" />
   </ItemGroup>
 
   <Import Project="..\Eppie.App.Shared\Eppie.App.Shared.projitems" Label="Shared" />
+  <Import Project="..\Eppie.App.Resources.Shared\Eppie.App.Resources.Shared.projitems" Label="Shared" />
+
   <!-- This hides references to shared .xaml files from the "Eppie.App.Shared" project. -->
   <ItemGroup>
     <None Include="..\Eppie.App.Shared\Views\*.xaml" Visible="false" />

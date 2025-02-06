@@ -40,13 +40,13 @@
                        Text="{x:Bind AppName}" />
 
 
-            <Button x:Uid="/Eppie.App.Resources/Resources/BackButton"
+            <Button x:Uid="BackButton"
                     VerticalAlignment="Center"
                     Command="{x:Bind ViewModel.BackCommand}">
                 <SymbolIcon Symbol="Back" />
             </Button>
 
-            <TextBlock x:Uid="/Eppie.App.Resources/Resources/SeedGenerateWelcomeToWeb3"
+            <TextBlock x:Uid="SeedGenerateWelcomeToWeb3"
                        Margin="0,18"
                        Style="{StaticResource PageSubtitleTextStyle}" />
 
@@ -61,7 +61,7 @@
                 <muxc:Expander HorizontalContentAlignment="Left">
                     <muxc:Expander.Header>
 
-                        <TextBlock x:Uid="/Eppie.App.Resources/Resources/SeedGenerateHeader" Style="{StaticResource NormalTextStyle}" />
+                        <TextBlock x:Uid="SeedGenerateHeader" Style="{StaticResource NormalTextStyle}" />
 
                     </muxc:Expander.Header>
                     <muxc:Expander.Content>
@@ -75,7 +75,7 @@
                                          IsTextPredictionEnabled="False"
                                          Text="{x:Bind ViewModel.SeedPhrase.CleanText, Mode=OneWay}" />
 
-                                <Button x:Uid="/Eppie.App.Resources/Resources/SeedGenerateCopyButton">
+                                <Button x:Uid="SeedGenerateCopyButton">
                                     <interactivity:Interaction.Behaviors>
                                         <behaviors:CopyToClipboardBehavior CopyCommand="{x:Bind ViewModel.CopySeedCommand, Mode=OneWay}" />
                                     </interactivity:Interaction.Behaviors>
@@ -87,7 +87,7 @@
 
                             </StackPanel>
 
-                            <Button x:Uid="/Eppie.App.Resources/Resources/SeedGenerateOtherButton" Command="{x:Bind ViewModel.GenerateSeedCommand}" />
+                            <Button x:Uid="SeedGenerateOtherButton" Command="{x:Bind ViewModel.GenerateSeedCommand}" />
 
                         </StackPanel>
 
@@ -98,7 +98,7 @@
             <!--  TODO: Replace with Expander or similar control in future  -->
             <not_win:Grid>
                 <StackPanel>
-                    <TextBlock x:Uid="/Eppie.App.Resources/Resources/SeedGenerateHeader"
+                    <TextBlock x:Uid="SeedGenerateHeader"
                                Margin="0,18"
                                Style="{StaticResource NormalTextStyle}" />
 
@@ -110,7 +110,7 @@
                                  IsTextPredictionEnabled="False"
                                  Text="{x:Bind ViewModel.SeedPhrase.CleanText, Mode=OneWay}" />
 
-                        <Button x:Uid="/Eppie.App.Resources/Resources/SeedGenerateCopyButton">
+                        <Button x:Uid="SeedGenerateCopyButton">
                             <interactivity:Interaction.Behaviors>
                                 <behaviors:CopyToClipboardBehavior CopyCommand="{x:Bind ViewModel.CopySeedCommand, Mode=OneWay}" />
                             </interactivity:Interaction.Behaviors>
@@ -122,7 +122,7 @@
 
                     </StackPanel>
 
-                    <Button x:Uid="/Eppie.App.Resources/Resources/SeedGenerateOtherButton" Command="{x:Bind ViewModel.GenerateSeedCommand}" />
+                    <Button x:Uid="SeedGenerateOtherButton" Command="{x:Bind ViewModel.GenerateSeedCommand}" />
 
                 </StackPanel>
             </not_win:Grid>
@@ -135,7 +135,7 @@
                       IsActive="{x:Bind ViewModel.IsBusyShown, Mode=OneWay}" />
 
 
-        <Button x:Uid="/Eppie.App.Resources/Resources/SeedGenerateAcceptButton"
+        <Button x:Uid="SeedGenerateAcceptButton"
                 Grid.Row="2"
                 Command="{x:Bind ViewModel.AcceptSeedCommand}"
                 Style="{StaticResource AccentButtonStyle}" />

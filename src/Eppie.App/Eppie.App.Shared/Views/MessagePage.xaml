@@ -39,7 +39,7 @@
                             IsEnabled="{x:Bind IsEmpty, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
                             OverflowButtonVisibility="Collapsed">
 
-                    <AppBarButton x:Uid="/Eppie.App.Resources/Resources/SaveAttachmentButton"
+                    <AppBarButton x:Uid="SaveAttachmentButton"
                                   Icon="Save"
                                   Tag="{x:Bind}">
                         <interactivity:Interaction.Behaviors>
@@ -47,7 +47,7 @@
                         </interactivity:Interaction.Behaviors>
                     </AppBarButton>
 
-                    <AppBarButton x:Uid="/Eppie.App.Resources/Resources/OpenAttachmentButton"
+                    <AppBarButton x:Uid="OpenAttachmentButton"
                                   Icon="OpenFile"
                                   Tag="{x:Bind}">
                         <interactivity:Interaction.Behaviors>
@@ -85,45 +85,45 @@
             </Grid.ColumnDefinitions>
 
             <Button x:Name="BackButton"
-                    x:Uid="/Eppie.App.Resources/Resources/BackButton"
+                    x:Uid="BackButton"
                     Command="{x:Bind ViewModel.GoBackCommand}">
                 <SymbolIcon Symbol="Back" />
             </Button>
 
             <CommandBar Grid.Column="2" DefaultLabelPosition="Right">
 
-                <AppBarButton x:Uid="/Eppie.App.Resources/Resources/ReplyAllButton"
+                <AppBarButton x:Uid="ReplyAllButton"
                               Command="{x:Bind ViewModel.ReplyCommandAll}"
                               Icon="MailReplyAll" />
 
-                <AppBarButton x:Uid="/Eppie.App.Resources/Resources/ReplyButton"
+                <AppBarButton x:Uid="ReplyButton"
                               Command="{x:Bind ViewModel.ReplyCommand}"
                               Icon="MailReply" />
 
-                <AppBarButton x:Uid="/Eppie.App.Resources/Resources/ForwardButton"
+                <AppBarButton x:Uid="ForwardButton"
                               Command="{x:Bind ViewModel.ForwardCommand}"
                               Icon="MailForward" />
 
-                <AppBarButton x:Uid="/Eppie.App.Resources/Resources/DeleteButton"
+                <AppBarButton x:Uid="DeleteButton"
                               Command="{x:Bind ViewModel.DeleteMessageAndGoBackCommand}"
                               Icon="Delete" />
 
-                <AppBarButton x:Uid="/Eppie.App.Resources/Resources/MarkAsReadButton"
+                <AppBarButton x:Uid="MarkAsReadButton"
                               Command="{x:Bind ViewModel.MarkMessageAsReadCommand}"
                               Icon="Read"
                               Visibility="{x:Bind ViewModel.MessageInfo.IsMarkedAsRead, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
 
-                <AppBarButton x:Uid="/Eppie.App.Resources/Resources/MarkAsUnreadButton"
+                <AppBarButton x:Uid="MarkAsUnreadButton"
                               Command="{x:Bind ViewModel.MarkMessageAsUnReadCommand}"
                               Icon="Mail"
                               Visibility="{x:Bind ViewModel.MessageInfo.IsMarkedAsRead, Mode=OneWay}" />
 
-                <AppBarButton x:Uid="/Eppie.App.Resources/Resources/SetFlagButton"
+                <AppBarButton x:Uid="SetFlagButton"
                               Command="{x:Bind ViewModel.FlagMessageCommand}"
                               Icon="Flag"
                               Visibility="{x:Bind ViewModel.MessageInfo.IsFlagged, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
 
-                <AppBarButton x:Uid="/Eppie.App.Resources/Resources/ClearFlagButton"
+                <AppBarButton x:Uid="ClearFlagButton"
                               Command="{x:Bind ViewModel.UnflagMessageCommand}"
                               Icon="Flag"
                               Visibility="{x:Bind ViewModel.MessageInfo.IsFlagged, Mode=OneWay}" />
@@ -139,7 +139,7 @@
                 <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
 
-            <TextBlock x:Uid="/Eppie.App.Resources/Resources/MessageFrom"
+            <TextBlock x:Uid="MessageFrom"
                        Margin="0,4,4,0"
                        FontWeight="Bold" />
 
@@ -162,7 +162,7 @@
                 <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
 
-            <TextBlock x:Uid="/Eppie.App.Resources/Resources/MessageTo"
+            <TextBlock x:Uid="MessageTo"
                        Margin="0,4,4,0"
                        FontWeight="Bold" />
 
@@ -181,7 +181,7 @@
                 <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
 
-            <TextBlock x:Uid="/Eppie.App.Resources/Resources/CopyTo"
+            <TextBlock x:Uid="CopyTo"
                        Margin="0,4,4,0"
                        FontWeight="Bold" />
 
@@ -201,7 +201,7 @@
                       FontSize="14"
                       Glyph="&#xE131;"
                       Visibility="{x:Bind ViewModel.MessageInfo.IsEncrypted, Mode=OneWay}" />
-            <TextBlock x:Uid="/Eppie.App.Resources/Resources/P2PLabel"
+            <TextBlock x:Uid="P2PLabel"
                        Margin="4,4,0,0"
                        Foreground="Blue"
                        Visibility="{x:Bind ViewModel.MessageInfo.IsDecentralized, Mode=OneWay}" />
@@ -214,7 +214,7 @@
                 <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
 
-            <TextBlock x:Uid="/Eppie.App.Resources/Resources/MessageSubject"
+            <TextBlock x:Uid="MessageSubject"
                        Margin="0,4,4,0"
                        FontWeight="Bold" />
 
@@ -241,7 +241,7 @@
                           IsActive="True" />
         </Grid>
 
-        <controls:AttachmentListControl x:Uid="/Eppie.App.Resources/Resources/AttachedFiles"
+        <controls:AttachmentListControl x:Uid="AttachedFiles"
                                         Grid.Row="8"
                                         Margin="0,16,0,0"
                                         IsTitleVisible="True"

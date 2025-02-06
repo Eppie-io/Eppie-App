@@ -28,10 +28,10 @@
                 </Grid.ColumnDefinitions>
                 <Grid.ContextFlyout>
                     <MenuFlyout>
-                        <MenuFlyoutItem x:Uid="/Eppie.App.Resources/Resources/ChangeContactAvatarMenuItem"
+                        <MenuFlyoutItem x:Uid="/Eppie.App.UI/Controls/ChangeContactAvatarMenuItem"
                                         Click="ChangeContactAvatarMenuItemClick"
                                         Tag="{x:Bind}" />
-                        <MenuFlyoutItem x:Uid="/Eppie.App.Resources/Resources/RemoveContactMenuItem"
+                        <MenuFlyoutItem x:Uid="/Eppie.App.UI/Controls/RemoveContactMenuItem"
                                         Click="RemoveContactMenuItemClick"
                                         Tag="{x:Bind}" />
                     </MenuFlyout>

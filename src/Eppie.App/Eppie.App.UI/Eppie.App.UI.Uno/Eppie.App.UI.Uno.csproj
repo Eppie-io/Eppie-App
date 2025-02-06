@@ -50,7 +50,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core.Entities\Tuvi.Core.Entities.csproj" />
-    <ProjectReference Include="..\..\Eppie.App.Resources\Eppie.App.Resources.Uno\Eppie.App.Resources.Uno.csproj" />
     <ProjectReference Include="..\..\Eppie.App.ViewModels\Eppie.App.ViewModels.csproj" />
   </ItemGroup>
 

@@ -37,7 +37,7 @@
                       FontSize="{StaticResource IconFontSize}"
                       Glyph="&#xE946;" />
 
-            <TextBlock x:Uid="/Eppie.App.Resources/Resources/AboutApp"
+            <TextBlock x:Uid="AboutApp"
                        Margin="0,0,4,0"
                        VerticalAlignment="Center"
                        Style="{StaticResource PageSubtitleTextStyle}" />
@@ -55,7 +55,7 @@
 
                 <TextBlock Style="{StaticResource NormalTextStyle}" Text="{x:Bind ViewModel.ApplicationName, Mode=OneWay}" />
 
-                <TextBlock x:Uid="/Eppie.App.Resources/Resources/Version"
+                <TextBlock x:Uid="Version"
                            Margin="0,32,0,0"
                            Style="{StaticResource NormalTextStyle}" />
                 <TextBlock Margin="0,4,0,0"
@@ -63,7 +63,7 @@
                            Style="{StaticResource NormalTextStyle}"
                            Text="{x:Bind ViewModel.Version, Mode=OneWay}" />
 
-                <TextBlock x:Uid="/Eppie.App.Resources/Resources/Publisher"
+                <TextBlock x:Uid="Publisher"
                            Margin="0,32,0,0"
                            Style="{StaticResource NormalTextStyle}" />
                 <TextBlock Margin="0,4,0,0"
@@ -71,7 +71,7 @@
                            Style="{StaticResource NormalTextStyle}"
                            Text="Finebits" />
 
-                <TextBlock x:Uid="/Eppie.App.Resources/Resources/Developer"
+                <TextBlock x:Uid="Developer"
                            Margin="0,32,0,0"
                            Style="{StaticResource NormalTextStyle}" />
                 <TextBlock Margin="0,4,0,0"
@@ -79,7 +79,7 @@
                            Style="{StaticResource NormalTextStyle}"
                            Text="Tuvisoft" />
 
-                <TextBlock x:Uid="/Eppie.App.Resources/Resources/Thanks"
+                <TextBlock x:Uid="Thanks"
                            Margin="0,32,0,0"
                            Style="{StaticResource NormalTextStyle}"
                            TextWrapping="Wrap" />
@@ -88,7 +88,7 @@
                     <HyperlinkButton extensions:HyperlinkExtension.Link="{StaticResource MailKitLink}" Content="{StaticResource MailKitName}" />
                 </StackPanel>
 
-                <TextBlock x:Uid="/Eppie.App.Resources/Resources/SupportLabel"
+                <TextBlock x:Uid="SupportLabel"
                            Margin="0,32,0,0"
                            Style="{StaticResource NormalTextStyle}"
                            TextWrapping="Wrap" />
@@ -100,7 +100,7 @@
 
         </ScrollViewer>
 
-        <TextBlock x:Uid="/Eppie.App.Resources/Resources/Copyright"
+        <TextBlock x:Uid="Copyright"
                    Grid.Row="2"
                    Grid.ColumnSpan="2"
                    Margin="16"

@@ -77,6 +77,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\TextDocumentExtension.UWP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\TextDocumentExtension.Win.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\TextDocumentExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Resources\StringProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Tools\ElementHierarchyTools.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Tools\IncrementalLoadingCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Tools\UITools.cs" />
@@ -150,5 +151,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\en\Controls.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\pl\Controls.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\ru\Controls.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\zh-CN\Controls.resw" />
   </ItemGroup>
 </Project>

@@ -1,5 +1,5 @@
 using System;
-using Eppie.App.Resources;
+using Eppie.App.UI.Resources;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Text;
 

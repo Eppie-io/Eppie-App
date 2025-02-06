@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Eppie.App.Resources;
+using Eppie.App.UI.Resources;
 using Tuvi.Core.Backup;
 using Tuvi.Core.Entities;
 using Tuvi.Core.Entities.Exceptions;

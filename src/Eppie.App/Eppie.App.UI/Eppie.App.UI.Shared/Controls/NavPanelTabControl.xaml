@@ -12,7 +12,7 @@
 
     <UserControl.Resources>
         <DataTemplate x:Key="ContactsTabViewItemTemplate" x:DataType="viewmodels:ContactsModel">
-            <winuicontrols:TabViewItem x:Uid="/Eppie.App.Resources/Resources/ContactsTab" IsClosable="False">
+            <winuicontrols:TabViewItem x:Uid="/Eppie.App.UI/Controls/ContactsTab" IsClosable="False">
                 <winuicontrols:TabViewItem.IconSource>
                     <winuicontrols:SymbolIconSource Symbol="Contact" />
                 </winuicontrols:TabViewItem.IconSource>
@@ -25,7 +25,7 @@
                     <ComboBox HorizontalAlignment="Stretch"
                               ItemsSource="{x:Bind Contacts.SortingVariants}"
                               SelectedItem="{Binding Contacts.ItemsComparer, Mode=TwoWay}" />
-                    <AutoSuggestBox x:Uid="/Eppie.App.Resources/Resources/ContactFilter"
+                    <AutoSuggestBox x:Uid="/Eppie.App.UI/Controls/ContactFilter"
                                     Grid.Row="1"
                                     QueryIcon="Find"
                                     Text="{x:Bind Contacts.SearchFilter.SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -35,7 +35,7 @@
         </DataTemplate>
 
         <DataTemplate x:Key="MailBoxesTabViewItemTemplate" x:DataType="viewmodels:MailBoxesModel">
-            <winuicontrols:TabViewItem x:Uid="/Eppie.App.Resources/Resources/MailboxesTab" IsClosable="False">
+            <winuicontrols:TabViewItem x:Uid="/Eppie.App.UI/Controls/MailboxesTab" IsClosable="False">
                 <winuicontrols:TabViewItem.IconSource>
                     <winuicontrols:SymbolIconSource Symbol="Account" />
                 </winuicontrols:TabViewItem.IconSource>

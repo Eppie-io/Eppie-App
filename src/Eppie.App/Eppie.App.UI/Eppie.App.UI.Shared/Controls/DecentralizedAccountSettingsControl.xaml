@@ -13,14 +13,14 @@
         <ScrollViewer IsEnabled="{x:Bind IsLocked, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}">
             <StackPanel Margin="0,0,20,0" Orientation="Vertical">
 
-                <TextBlock x:Uid="/Eppie.App.Resources/Resources/EmailAddress" Margin="0,0,0,4" />
+                <TextBlock x:Uid="/Eppie.App.UI/Controls/EmailAddress" Margin="0,0,0,4" />
                 <TextBox x:Name="EmailBox"
                          HorizontalAlignment="Stretch"
                          IsReadOnly="True"
                          IsSpellCheckEnabled="False"
                          Text="{x:Bind AccountSettingsModel.Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-                <TextBlock x:Uid="/Eppie.App.Resources/Resources/SenderName" Margin="0,16,0,4" />
+                <TextBlock x:Uid="/Eppie.App.UI/Controls/SenderName" Margin="0,16,0,4" />
                 <controls:PromptTextInputControl HorizontalAlignment="Stretch"
                                                  IsSpellCheckEnabled="False"
                                                  Text="{x:Bind AccountSettingsModel.SenderName, Mode=TwoWay}" />

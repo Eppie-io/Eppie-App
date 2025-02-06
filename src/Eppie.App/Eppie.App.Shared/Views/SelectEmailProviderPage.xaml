@@ -28,7 +28,7 @@
 
             <SymbolIcon Margin="12,0,12,0" Symbol="Account" />
 
-            <TextBlock x:Uid="/Eppie.App.Resources/Resources/SupportedServices"
+            <TextBlock x:Uid="SupportedServices"
                        Margin="0,0,4,0"
                        VerticalAlignment="Center"
                        Style="{StaticResource PageSubtitleTextStyle}" />
@@ -38,7 +38,7 @@
                                             Items="{x:Bind ViewModel.EmailProviders, Mode=OneWay}"
                                             SelectedItem="{x:Bind ViewModel.SelectedProvider, Mode=TwoWay}" />
 
-        <Button x:Uid="/Eppie.App.Resources/Resources/ConnectServiceButton"
+        <Button x:Uid="ConnectServiceButton"
                 Grid.Row="2"
                 Margin="8,8"
                 HorizontalAlignment="Stretch"
