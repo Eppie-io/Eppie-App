@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Eppie.App.Resources;
+using Eppie.App.UI.Resources;
 using Windows.ApplicationModel.Resources;
 using Windows.Globalization;
 

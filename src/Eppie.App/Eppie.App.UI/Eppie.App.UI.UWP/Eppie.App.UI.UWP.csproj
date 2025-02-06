@@ -120,10 +120,6 @@
       <Project>{1e363987-165e-4ea6-a0e1-fad82b7c0633}</Project>
       <Name>Tuvi.Core.Entities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Eppie.App.Resources\Eppie.App.Resources.UWP\Eppie.App.Resources.UWP.csproj">
-      <Project>{38f6f073-bd7a-4f8b-93ec-5efedcad2390}</Project>
-      <Name>Eppie.App.Resources.UWP</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Eppie.App.ViewModels\Eppie.App.ViewModels.csproj">
       <Project>{2da63e2a-a0ac-4c55-b912-04d8970bced3}</Project>
       <Name>Eppie.App.ViewModels</Name>

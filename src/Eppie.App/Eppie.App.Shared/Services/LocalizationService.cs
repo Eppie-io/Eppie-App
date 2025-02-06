@@ -4,7 +4,7 @@ namespace Tuvi.App.Shared.Services
     {
         public string GetString(string resource)
         {
-            return Eppie.App.Resources.StringProvider.GetInstance().GetString(resource);
+            return Eppie.App.UI.Resources.StringProvider.GetInstance().GetString(resource);
         }
     }
 }
