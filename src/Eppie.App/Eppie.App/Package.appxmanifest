@@ -3,11 +3,12 @@
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
-  IgnorableNamespaces="uap rescap">
+  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+  IgnorableNamespaces="uap rescap mp">
 
   <Identity Name="Tuvisoft.Eppie" Version="1.0.0.0"/>
   <Properties>
-    <DisplayName>Eppie</DisplayName>
+    <DisplayName>Eppie (WinAppSDK)</DisplayName>
     <PublisherDisplayName>Finebits</PublisherDisplayName>
   </Properties>
 
@@ -17,48 +18,16 @@
   </Dependencies>
 
   <Resources>
-    <Resource Language="en" />
-    <Resource Language="af" />
-    <Resource Language="ar" />
-    <Resource Language="be" />
-    <Resource Language="ca" />
-    <Resource Language="cs" />
-    <Resource Language="da" />
-    <Resource Language="de" />
-    <Resource Language="el" />
-    <Resource Language="es" />
-    <Resource Language="et" />
-    <Resource Language="fi" />
-    <Resource Language="fr" />
-    <Resource Language="he" />
-    <Resource Language="hu" />
-    <Resource Language="it" />
-    <Resource Language="ja" />
-    <Resource Language="ko" />
-    <Resource Language="lv" />
-    <Resource Language="nl" />
-    <Resource Language="no" />
-    <Resource Language="pl" />
-    <Resource Language="pt" />
-    <Resource Language="pt-BR" />
-    <Resource Language="ro" />
-    <Resource Language="ru" />
-    <Resource Language="sr-Cyrl" />
-    <Resource Language="sv" />
-    <Resource Language="tr" />
-    <Resource Language="uk" />
-    <Resource Language="vi" />
-    <Resource Language="zh-CN" />
-    <Resource Language="zh-TW" />
+    <Resource Language="x-generate"/>
   </Resources>
 
   <Applications>
     <Application Id="App"
       Executable="$targetnametoken$.exe"
       EntryPoint="$targetentrypoint$">
-      <uap:VisualElements Description="Eppie App" DisplayName="Eppie">
+      <uap:VisualElements Description="Eppie App" DisplayName="Eppie (WinAppSDK)">
         <uap:DefaultTile/>
-      </uap:VisualElements >
+      </uap:VisualElements>
     </Application>
   </Applications>
 
