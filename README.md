@@ -100,6 +100,8 @@ git clone --recursive https://github.com/Eppie-io/Eppie-App.git eppie-app
    - **UWP**: Run with debugging using `Debug ➤ Start Debugging (F5)` or without debugging using `Debug ➤ Start Without Debugging (Ctrl + F5)`.
    - **Windows App SDK**: Run with debugging using `Debug ➤ Start Debugging (F5)` or without debugging using `Debug ➤ Start Without Debugging (Ctrl + F5)`.
 
+For instructions on creating an app package, refer to [this guide](https://platform.uno/docs/articles/uno-publishing-windows-packaged-signed.html).
+
 
 ### Linux
 
