@@ -15,6 +15,8 @@ namespace Tuvi.App.Shared.Extensions
         {
             public static readonly char NewLine = '\r';
             public static readonly char Space = ' ';
+            public static readonly char LessThan = '<';
+            public static readonly char GreaterThan = '>';
         }
 
         private struct ListProcessor
@@ -165,7 +167,19 @@ namespace Tuvi.App.Shared.Extensions
 
                 if (appendToOutput)
                 {
-                    strHTML.Append(range.Character);
+                    // Escape angle brackets
+                    if (range.Character == SpecialChar.LessThan)
+                    {
+                        strHTML.Append("&lt;");
+                    }
+                    else if (range.Character == SpecialChar.GreaterThan)
+                    {
+                        strHTML.Append("&gt;");
+                    }
+                    else
+                    {
+                        strHTML.Append(range.Character);
+                    }
                 }
             }
 
