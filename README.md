@@ -93,7 +93,7 @@ git clone --recursive https://github.com/Eppie-io/Eppie-App.git eppie-app
    - **UWP**: Select `Eppie.App.UWP`.
    - **Windows App SDK**: Select `Eppie.App`.
 3. Select the **x64** platform.
-   - For **Windows App SDK**, also set the target framework to `net9.0-windows10.0.19041`.
+   - For **Windows App SDK**, also set the target framework to `net9.0-windows10.0.22621`.
 4. Build the solution:
    - **Visual Studio Menu**: `Build ➤ Build Solution`
 5. Launch the project:
