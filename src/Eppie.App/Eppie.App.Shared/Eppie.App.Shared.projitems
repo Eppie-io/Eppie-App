@@ -9,7 +9,6 @@
     <Import_RootNamespace>Eppie.App.Shared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)Authorization\AuthConfig.Win.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Authorization\AuthConfig.Uno.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Authorization\AuthConfig.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Authorization\AuthenticationBroker.UWP.cs" />

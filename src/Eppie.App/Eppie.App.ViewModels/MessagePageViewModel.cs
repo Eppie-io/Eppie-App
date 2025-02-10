@@ -169,6 +169,10 @@ namespace Tuvi.App.ViewModels
 
                 await SetupMessageAsync().ConfigureAwait(true);
             }
+            catch (Exception ex)
+            {
+                OnError(ex);
+            }
             finally
             {
                 LoadingContent = false;

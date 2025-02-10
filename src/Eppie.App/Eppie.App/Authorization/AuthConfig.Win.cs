@@ -19,6 +19,7 @@ namespace Tuvi.App.Shared.Authorization
                 GoogleConfigurationCreator = () => new GoogleConfiguration
                 {
                     ClientId = "<ClientId>",
+                    ClientSecret = "<ClientSecret>",
                     RedirectUri = DesktopAuthenticationBroker.GetLoopbackUri(),
                     ScopeList = GmailScope
                 },
