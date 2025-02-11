@@ -107,6 +107,10 @@ namespace Tuvi.App.ViewModels
             {
                 RefreshMessagesCommand.NotifyCanExecuteChanged();
             }
+            else if (e.PropertyName == nameof(ManagedCollection<MessageInfo>.ItemsFilter))
+            {
+                SaveSelectedItemsFilter(MessageList.ItemsFilter.GetType().Name);
+            }
         }
 
         private bool _isSelectMessagesMode;
@@ -533,6 +537,23 @@ namespace Tuvi.App.ViewModels
         private void StartDragMessages(IList<object> parameter)
         {
             DragAndDropService.SetDraggedMessages(parameter.Select(x => x as MessageInfo).ToList());
+        }
+
+        public MessageFilter GetSavedSelectedFilter(MessageFilter[] filterVariants)
+        {
+            string selectedFilterName = GetSavedSelectedFilter();
+            var selectedFilter = filterVariants.FirstOrDefault(filter => filter.GetType().Name == selectedFilterName);
+            return selectedFilter ?? filterVariants.OfType<AllMessagesFilter>().FirstOrDefault();
+        }
+
+        virtual protected string GetSavedSelectedFilter()
+        {
+            throw new NotImplementedException();
+        }
+
+        virtual public void SaveSelectedItemsFilter(string filter)
+        {
+            throw new NotImplementedException();
         }
     }
 }

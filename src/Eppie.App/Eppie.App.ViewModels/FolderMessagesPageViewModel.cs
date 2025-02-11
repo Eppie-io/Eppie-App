@@ -90,5 +90,15 @@ namespace Tuvi.App.ViewModels
                 OnError(ex);
             }
         }
+
+        override protected string GetSavedSelectedFilter()
+        {
+            return LocalSettingsService.SelectedMailFilterForFolderMessagesPage;
+        }
+
+        override public void SaveSelectedItemsFilter(string filter)
+        {
+            LocalSettingsService.SelectedMailFilterForFolderMessagesPage = filter;
+        }
     }
 }

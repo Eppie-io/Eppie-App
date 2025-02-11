@@ -33,13 +33,16 @@ namespace Tuvi.App.Shared.Views
             {
                 return;
             }
+
             var filterVariants = ViewModel.GetFilterVariants();
+            var selectedFilter = ViewModel.GetSavedSelectedFilter(filterVariants);
+
             ViewModel.MessageList = new IncrementalLoadingCollection<AllMessagesPageViewModel, MessageInfo>(
                 ViewModel,
                 ViewModel.CancellationTokenSource,
                 itemsComparer: new DescOrderByDateMessageComparer(),
                 filterVariants: filterVariants,
-                itemsFilter: filterVariants.OfType<AllMessagesFilter>().FirstOrDefault(),
+                itemsFilter: selectedFilter,
                 searchFilter: new SearchMessageFilter(),
                 onError: ViewModel.OnError);
         }
