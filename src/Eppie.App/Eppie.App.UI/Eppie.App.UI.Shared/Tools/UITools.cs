@@ -16,7 +16,7 @@ namespace Tuvi.App.Shared.Common
     {
         private static readonly SemaphoreSlim _mutex = new SemaphoreSlim(1);
 
-        public static async Task ShowInfoMessageAsync(string title, string message, string closeButtonText)
+        public static async Task ShowInfoMessageAsync(string title, string message, string closeButtonText, XamlRoot root)
         {
             await _mutex.WaitAsync().ConfigureAwait(true);
 
@@ -34,7 +34,8 @@ namespace Tuvi.App.Shared.Common
                         }
                     },
                     Title = title,
-                    CloseButtonText = closeButtonText
+                    CloseButtonText = closeButtonText,
+                    XamlRoot = root
                 };
 
                 await messageDialog.ShowAsync();
@@ -45,7 +46,7 @@ namespace Tuvi.App.Shared.Common
             }
         }
 
-        public static async Task<bool> ShowDialogAsync(string title, string message, string acceptButtonText, string rejectButtonText)
+        public static async Task<bool> ShowDialogAsync(string title, string message, string acceptButtonText, string rejectButtonText, XamlRoot root)
         {
             await _mutex.WaitAsync().ConfigureAwait(true);
 
@@ -56,7 +57,8 @@ namespace Tuvi.App.Shared.Common
                     Content = message,
                     Title = title,
                     PrimaryButtonText = acceptButtonText,
-                    CloseButtonText = rejectButtonText
+                    CloseButtonText = rejectButtonText,
+                    XamlRoot = root
                 };
 
                 var result = await messageDialog.ShowAsync();
@@ -69,7 +71,7 @@ namespace Tuvi.App.Shared.Common
             }
         }
 
-        public static async Task<bool> ShowErrorMessageAsync(string title, string message, string acceptButtonText, string rejectButtonText)
+        public static async Task<bool> ShowErrorMessageAsync(string title, string message, string acceptButtonText, string rejectButtonText, XamlRoot root)
         {
             await _mutex.WaitAsync().ConfigureAwait(true);
 
@@ -88,7 +90,8 @@ namespace Tuvi.App.Shared.Common
                     },
                     Title = title,
                     PrimaryButtonText = acceptButtonText,
-                    CloseButtonText = rejectButtonText
+                    CloseButtonText = rejectButtonText,
+                    XamlRoot = root
                 };
 
                 var result = await messageDialog.ShowAsync();

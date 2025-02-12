@@ -13,6 +13,8 @@ namespace Eppie.App.Shared
         protected Window MainWindow { get; private set; }
         protected IHost Host { get; private set; }
 
+        public XamlRoot XamlRoot => MainWindow.Content?.XamlRoot;
+
         protected override async void OnLaunched(LaunchActivatedEventArgs args)
         {
             try

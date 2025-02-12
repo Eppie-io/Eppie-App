@@ -11,7 +11,6 @@ using Tuvi.App.ViewModels;
 using Tuvi.App.ViewModels.Common;
 using Tuvi.App.ViewModels.Services;
 using TuviPgpLib.Entities;
-using Windows.ApplicationModel.Resources;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -25,19 +24,26 @@ namespace Tuvi.App.Shared.Services
     {
         private StringProvider StringProvider { get; } = StringProvider.GetInstance();
 
-        private static Task ShowInfoMessageAsync(string title, string message, string closeButtonText)
+        private readonly Func<XamlRoot> _xamlRootProvider;
+
+        public MessageService(Func<XamlRoot> xamlRootProvider)
         {
-            return Common.UITools.ShowInfoMessageAsync(title, message, closeButtonText);
+            _xamlRootProvider = xamlRootProvider;
         }
 
-        private static Task<bool> ShowErrorMessageAsync(string title, string message, string acceptButtonText, string rejectButtonText)
+        private Task ShowInfoMessageAsync(string title, string message, string closeButtonText)
         {
-            return Common.UITools.ShowErrorMessageAsync(title, message, acceptButtonText, rejectButtonText);
+            return Common.UITools.ShowInfoMessageAsync(title, message, closeButtonText, _xamlRootProvider());
         }
 
-        private static Task<bool> ShowDialogAsync(string title, string message, string acceptButtonText, string rejectButtonText)
+        private Task<bool> ShowErrorMessageAsync(string title, string message, string acceptButtonText, string rejectButtonText)
         {
-            return Common.UITools.ShowDialogAsync(title, message, acceptButtonText, rejectButtonText);
+            return Common.UITools.ShowErrorMessageAsync(title, message, acceptButtonText, rejectButtonText, _xamlRootProvider());
+        }
+
+        private Task<bool> ShowDialogAsync(string title, string message, string acceptButtonText, string rejectButtonText)
+        {
+            return Common.UITools.ShowDialogAsync(title, message, acceptButtonText, rejectButtonText, _xamlRootProvider());
         }
 
         public Task ShowErrorMessageAsync(Exception exception)

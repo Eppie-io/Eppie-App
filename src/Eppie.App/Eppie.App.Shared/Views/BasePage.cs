@@ -59,7 +59,7 @@ namespace Tuvi.App.Shared.Views
             ViewModel.SetNavigationService(app.NavigationService);
             ViewModel.SetLocalSettingsService(app.LocalSettingsService);
             ViewModel.SetLocalizationService(new LocalizationService());
-            ViewModel.SetMessageService(new MessageService());
+            ViewModel.SetMessageService(new MessageService(() => app.XamlRoot));
             ViewModel.SetErrorHandler(new ErrorHandler());
             ViewModel.SetDispatcherService(new DispatcherService());
             ViewModel.SetBrandService(new BrandLoader());
