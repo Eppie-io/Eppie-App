@@ -161,5 +161,9 @@ namespace Tuvi.App.Shared.Controls
                 StartDragMessagesCommand?.Execute(e.Items);
             }
         }
+        public void SelectAllMessages()
+        {
+            MessageListView.SelectAll();
+        }
     }
 }

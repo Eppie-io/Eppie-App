@@ -1034,4 +1034,8 @@ Subject: {3}
     <value>You have to restart {0} for the changes to take effect.</value>
     <comment>This message appears after user select language. We need to restart {app name} for apply new language.</comment>
   </data>
+  <data name="SelectAllButton.Label" xml:space="preserve">
+    <value>Select All</value>
+    <comment>Text on Select All button.</comment>
+  </data>
 </root>
