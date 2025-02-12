@@ -1,5 +1,7 @@
 using System;
 using Tuvi.App.Shared.Controls;
+using System.Threading.Tasks;
+
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -66,6 +68,14 @@ namespace Eppie.App.UI.Controls
             {
                 OnError(ex);
             }
+        }
+
+        private async Task UpdateHtmlView()
+        {
+            await HtmlView.EnsureCoreWebView2Async();
+
+            HtmlView.CoreWebView2.Settings.IsScriptEnabled = false; // ToDo: Uno0001
+            HtmlView.NavigateToString(HtmlBody);
         }
     }
 }
