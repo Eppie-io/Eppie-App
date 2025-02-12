@@ -110,7 +110,7 @@ namespace Eppie.App.Shared
             NavigationService = new NavigationService(frame, "Tuvi.App.Shared.Views.");
 
             _errorHandler = new ErrorHandler();
-            _errorHandler.SetMessageService(new MessageService());
+            _errorHandler.SetMessageService(new MessageService(() => XamlRoot));
 
             return frame;
         }
