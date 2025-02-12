@@ -1,9 +1,9 @@
-using System.Linq;
 using Tuvi.App.IncrementalLoading;
 using Tuvi.App.ViewModels;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml.Navigation;
+using Windows.UI.Xaml;
 #else
 using Microsoft.UI.Xaml.Navigation;
 #endif
@@ -43,6 +43,11 @@ namespace Tuvi.App.Shared.Views
                 itemsFilter: selectedFilter,
                 searchFilter: new SearchMessageFilter(),
                 onError: ViewModel.OnError);
+        }
+
+        public void OnSelectAllButton(object sender, RoutedEventArgs e)
+        {
+            MessageListControl.SelectAllMessages();
         }
     }
 }

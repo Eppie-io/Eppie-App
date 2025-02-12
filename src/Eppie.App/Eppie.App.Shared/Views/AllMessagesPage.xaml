@@ -254,7 +254,7 @@
 
             <controls:MessageListControl.CommandBarHolder>
                 <CommandBar OverflowButtonVisibility="Collapsed">
-
+                    
                     <AppBarButton x:Uid="MarkAsReadButton"
                                   Command="{x:Bind ViewModel.MarkSelectedMessagesAsReadCommand, Mode=OneWay}"
                                   CommandParameter="{x:Bind MessageListControl.SelectedItems, Mode=OneWay}"
@@ -283,6 +283,13 @@
                                   Command="{x:Bind ViewModel.DeleteSelectedMessagesCommand, Mode=OneWay}"
                                   CommandParameter="{x:Bind MessageListControl.SelectedItems, Mode=OneWay}"
                                   Icon="Delete"
+                                  Visibility="{x:Bind ViewModel.IsSelectMessagesMode, Mode=OneWay}" />
+
+                    <AppBarSeparator Visibility="{x:Bind ViewModel.IsSelectMessagesMode, Mode=OneWay}" />
+                    
+                    <AppBarButton x:Uid="SelectAllButton"
+                                  Click="OnSelectAllButton"
+                                  Icon="SelectAll"
                                   Visibility="{x:Bind ViewModel.IsSelectMessagesMode, Mode=OneWay}" />
 
                     <AppBarToggleButton x:Uid="SelectionModeButton"

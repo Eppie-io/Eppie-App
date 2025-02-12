@@ -298,6 +298,13 @@
                                   Icon="Delete"
                                   Visibility="{x:Bind ViewModel.IsSelectMessagesMode, Mode=OneWay}" />
 
+                    <AppBarSeparator Visibility="{x:Bind ViewModel.IsSelectMessagesMode, Mode=OneWay}" />
+
+                    <AppBarButton x:Uid="SelectAllButton"
+                                  Click="OnSelectAllButton"
+                                  Icon="SelectAll"
+                                  Visibility="{x:Bind ViewModel.IsSelectMessagesMode, Mode=OneWay}" />
+                    
                     <AppBarToggleButton x:Uid="SelectionModeButton"
                                         Icon="Bullets"
                                         IsChecked="{x:Bind ViewModel.IsSelectMessagesMode, Mode=TwoWay}" />
