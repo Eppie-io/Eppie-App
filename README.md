@@ -27,6 +27,18 @@ Eppie is early in development. The p2p part is not publicly available at the mom
 - Local account created with [BIP39 standard](https://bitcoinwiki.org/wiki/mnemonic-phrase) Seed-Phrase.
 - Encrypted local backup.
 
+## Screenshots
+
+<details>
+  <summary>Main Screen</summary>
+  <img src="https://github.com/user-attachments/assets/30301949-4b25-4ad8-be72-e954d9211aeb" alt="Main Screen"/>
+</details>
+
+<details>
+  <summary>Settings Page</summary>
+  <img src="https://github.com/user-attachments/assets/fb183b2f-766b-4910-9119-c7b8ab66781a" alt="Settings Page"/>
+</details>
+
 ## Install from Microsoft Store, App Store or Google Play
 
 There's a preview version currently available at Microsoft Store.
