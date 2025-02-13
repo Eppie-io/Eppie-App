@@ -27,6 +27,18 @@ Eppie is early in development. The p2p part is not publicly available at the mom
 - Local account created with [BIP39 standard](https://bitcoinwiki.org/wiki/mnemonic-phrase) Seed-Phrase.
 - Encrypted local backup.
 
+## Screenshots
+
+<details>
+  <summary>Main Screen</summary>
+  <img src="https://github.com/user-attachments/assets/30301949-4b25-4ad8-be72-e954d9211aeb" alt="Main Screen"/>
+</details>
+
+<details>
+  <summary>Settings Page</summary>
+  <img src="https://github.com/user-attachments/assets/fb183b2f-766b-4910-9119-c7b8ab66781a" alt="Settings Page"/>
+</details>
+
 ## Install from Microsoft Store, App Store or Google Play
 
 There's a preview version currently available at Microsoft Store.
@@ -44,7 +56,8 @@ You may download the latest release for your system:
 
 ### Windows Installer
 
-- [Eppie.App-x86-x64-ARM64.msixbundle](https://github.com/Eppie-io/Eppie-App/releases/latest/download/Eppie.App-x86-x64-ARM64.msixbundle)
+- [Eppie.App-x86-x64-ARM64.msixbundle](https://github.com/Eppie-io/Eppie-App/releases/latest/download/Eppie.App-x86-x64-ARM64.msixbundle) (UWP)
+- [Eppie.App.WinAppSDK-x86-x64-ARM64.msixbundle](https://github.com/Eppie-io/Eppie-App/releases/latest/download/Eppie.App.WinAppSDK-x86-x64-ARM64.msixbundle) (Windows App SDK)
 
 ### Linux Binaries
 
@@ -60,7 +73,7 @@ WIP
 
 ## Build from Source Code
 
-### Universal Windows Project
+### Windows
 
 #### Prerequisites
 
@@ -74,6 +87,7 @@ WIP
     - Universal Windows Platform tools
     - Windows 11 SDK (10.0.22621.0)
     - Windows 10 SDK (10.0.19041.0)
+    - Windows App SDK
 
 > [!NOTE]
 > You can add the **Android SDK Platform 31** api in the **Platforms** tab in the **Android SDK Manager**  
@@ -87,11 +101,20 @@ git clone --recursive https://github.com/Eppie-io/Eppie-App.git eppie-app
 
 #### To Build and Launch
 
-1. Open the **src/Eppie.App/Eppie.App.sln** file in the Visual Studio
-2. Set the **Eppie.App.UWP** project as your starting project
-3. Select **x64** platform
-4. Start building the solution (**Visual Studio Menu**: **Build** &#10148; **Build Solution**)
-5. Launch the **Eppie.App.UWP** project (**Visual Studio Menu**: **Debug** &#10148; **Start Debugging**)
+1. Open the `src/Eppie.App/Eppie.App.sln` file in Visual Studio.
+2. Set the appropriate project as your startup project:
+   - **UWP**: Select `Eppie.App.UWP`.
+   - **Windows App SDK**: Select `Eppie.App`.
+3. Select the **x64** platform.
+   - For **Windows App SDK**, also set the target framework to `net9.0-windows10.0.22621`.
+4. Build the solution:
+   - **Visual Studio Menu**: `Build ➤ Build Solution`
+5. Launch the project:
+   - **UWP**: Run with debugging using `Debug ➤ Start Debugging (F5)` or without debugging using `Debug ➤ Start Without Debugging (Ctrl + F5)`.
+   - **Windows App SDK**: Run with debugging using `Debug ➤ Start Debugging (F5)` or without debugging using `Debug ➤ Start Without Debugging (Ctrl + F5)`.
+
+For instructions on creating an app package, refer to [this guide](https://platform.uno/docs/articles/uno-publishing-windows-packaged-signed.html).
+
 
 ### Linux
 
