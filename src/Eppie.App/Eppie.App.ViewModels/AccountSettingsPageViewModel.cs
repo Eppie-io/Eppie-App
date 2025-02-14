@@ -211,7 +211,9 @@ namespace Tuvi.App.ViewModels
         {
             get
             {
-                return !IsHybridAddress && !IsCreatingAccountMode;
+                //TODO: Disabled for now
+                //return !IsHybridAddress && !IsCreatingAccountMode;
+                return false;
             }
         }
 

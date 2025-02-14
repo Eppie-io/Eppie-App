@@ -11,6 +11,8 @@ using Tuvi.App.ViewModels;
 using Tuvi.App.ViewModels.Common;
 using Tuvi.App.ViewModels.Services;
 using TuviPgpLib.Entities;
+using Windows.ApplicationModel;
+
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -199,6 +201,7 @@ namespace Tuvi.App.Shared.Services
             var title = StringProvider.GetString("SendErrorReportTitle");
 
             var message = $"\n________________________________________________________________________________" +
+                          $"\n App version: {Package.Current.Id.Version.Major}.{Package.Current.Id.Version.Minor}.{Package.Current.Id.Version.Build}.{Package.Current.Id.Version.Revision}" +
                           $"\n {exception.TargetSite?.Name} \n {exception}";
 
             if (exception.InnerException != null)
