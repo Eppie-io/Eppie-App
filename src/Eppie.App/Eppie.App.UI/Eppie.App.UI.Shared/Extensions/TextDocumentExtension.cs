@@ -14,6 +14,7 @@ namespace Tuvi.App.Shared.Extensions
         private readonly struct SpecialChar
         {
             public static readonly char NewLine = '\r';
+            public static readonly char VerticalTab = '\v';
             public static readonly char Space = ' ';
             public static readonly char LessThan = '<';
             public static readonly char GreaterThan = '>';
@@ -143,7 +144,7 @@ namespace Tuvi.App.Shared.Extensions
                 appendToOutput = numberedList.Process(range.ParagraphFormat.ListType == MarkerType.LowercaseRoman, range.Character);
 
                 // new line should be placed here, right after list processing, to assure that we correctly processed list items
-                if (appendToOutput && range.Character == SpecialChar.NewLine)
+                if (appendToOutput && (range.Character == SpecialChar.NewLine || range.Character == SpecialChar.VerticalTab))
                 {
                     strHTML.Append("<br/>");
                     appendToOutput = false;
@@ -178,7 +179,19 @@ namespace Tuvi.App.Shared.Extensions
                     }
                     else
                     {
-                        strHTML.Append(range.Character);
+                        // Check for surrogate pairs
+                        if (char.IsHighSurrogate(range.Character) && i + 1 < length)
+                        {
+                            range.SetRange(i, i + 2);
+                            range.GetText(TextGetOptions.None, out string surrogateStr);
+
+                            strHTML.Append(surrogateStr);
+                            i = i + surrogateStr.Length - 1; // Skip the low surrogate character
+                        }
+                        else
+                        {
+                            strHTML.Append(range.Character);
+                        }
                     }
                 }
             }
