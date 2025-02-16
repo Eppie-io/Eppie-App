@@ -68,6 +68,16 @@ namespace Tuvi.App.ViewModels.Common
             var replyTo = messageInfo.MessageData.ReplyTo.FirstOrDefault();
             return replyTo != null ? replyTo.Address : messageInfo.MessageData.From.FirstOrDefault()?.Address;
         }
+
+        protected static string CreateReSubject(MessageInfo messageInfo)
+        {
+            const string replyPrefix = "Re: ";
+            if (messageInfo?.MessageSubject != null && messageInfo.MessageSubject.StartsWith(replyPrefix, StringComparison.OrdinalIgnoreCase))
+            {
+                return messageInfo.MessageSubject;
+            }
+            return $"{replyPrefix}{messageInfo?.MessageSubject}";
+        }
     }
 
     public class AsyncLoadMessageData : NewMessageData
@@ -139,7 +149,7 @@ namespace Tuvi.App.ViewModels.Common
 
         private static string CreateSubject(MessageInfo messageInfo)
         {
-            return $"Re: {messageInfo?.MessageSubject}";
+            return CreateReSubject(messageInfo);
         }
     }
 
@@ -183,7 +193,7 @@ namespace Tuvi.App.ViewModels.Common
 
         private static string CreateSubject(MessageInfo messageInfo)
         {
-            return $"Re: {messageInfo?.MessageSubject}";
+            return CreateReSubject(messageInfo);
         }
     }
 
