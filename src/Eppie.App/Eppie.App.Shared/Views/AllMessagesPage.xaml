@@ -18,7 +18,7 @@
     <local:AllMessagesPageBase.Resources>
 
         <XamlUICommand x:Name="DeleteItemCommand"
-                       x:Uid="DeleteButton"
+                       x:Uid="/App.Resources/DeleteButton"
                        Command="{Binding DeleteMessageCommand}">
             <XamlUICommand.IconSource>
                 <SymbolIconSource Symbol="Delete" />
@@ -29,7 +29,7 @@
         </XamlUICommand>
 
         <XamlUICommand x:Name="MarkAsReadItemCommand"
-                       x:Uid="MarkAsReadButton"
+                       x:Uid="/App.Resources/MarkAsReadButton"
                        Command="{Binding MarkMessageAsReadCommand}">
             <XamlUICommand.IconSource>
                 <SymbolIconSource Symbol="Read" />
@@ -40,7 +40,7 @@
         </XamlUICommand>
 
         <XamlUICommand x:Name="MarkAsUnreadItemCommand"
-                       x:Uid="MarkAsUnreadButton"
+                       x:Uid="/App.Resources/MarkAsUnreadButton"
                        Command="{Binding MarkMessageAsUnreadCommand}">
             <XamlUICommand.IconSource>
                 <SymbolIconSource Symbol="Mail" />
@@ -51,7 +51,7 @@
         </XamlUICommand>
 
         <XamlUICommand x:Name="FlagItemCommand"
-                       x:Uid="SetFlagButton"
+                       x:Uid="/App.Resources/SetFlagButton"
                        Command="{Binding FlagMessageCommand}">
             <XamlUICommand.IconSource>
                 <SymbolIconSource Symbol="Flag" />
@@ -62,7 +62,7 @@
         </XamlUICommand>
 
         <XamlUICommand x:Name="UnflagItemCommand"
-                       x:Uid="ClearFlagButton"
+                       x:Uid="/App.Resources/ClearFlagButton"
                        Command="{Binding UnflagMessageCommand}">
             <XamlUICommand.IconSource>
                 <SymbolIconSource Symbol="Flag" />
@@ -166,22 +166,22 @@
 
                             <AppBarButton Command="{StaticResource DeleteItemCommand}" CommandParameter="{Binding}" />
 
-                            <AppBarButton x:Uid="MarkAsReadButton"
+                            <AppBarButton x:Uid="/App.Resources/MarkAsReadButton"
                                           Command="{StaticResource MarkAsReadItemCommand}"
                                           CommandParameter="{Binding}"
                                           Visibility="{Binding IsMarkedAsRead, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
 
-                            <AppBarButton x:Uid="MarkAsUnreadButton"
+                            <AppBarButton x:Uid="/App.Resources/MarkAsUnreadButton"
                                           Command="{StaticResource MarkAsUnreadItemCommand}"
                                           CommandParameter="{Binding}"
                                           Visibility="{Binding IsMarkedAsRead}" />
 
-                            <AppBarButton x:Uid="SetFlagButton"
+                            <AppBarButton x:Uid="/App.Resources/SetFlagButton"
                                           Command="{StaticResource FlagItemCommand}"
                                           CommandParameter="{Binding}"
                                           Visibility="{Binding IsFlagged, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
 
-                            <AppBarButton x:Uid="ClearFlagButton"
+                            <AppBarButton x:Uid="/App.Resources/ClearFlagButton"
                                           Command="{StaticResource UnflagItemCommand}"
                                           CommandParameter="{Binding}"
                                           Visibility="{Binding IsFlagged}" />
@@ -254,49 +254,49 @@
 
             <controls:MessageListControl.CommandBarHolder>
                 <CommandBar OverflowButtonVisibility="Collapsed">
-                    
-                    <AppBarButton x:Uid="MarkAsReadButton"
+
+                    <AppBarButton x:Uid="/App.Resources/MarkAsReadButton"
                                   Command="{x:Bind ViewModel.MarkSelectedMessagesAsReadCommand, Mode=OneWay}"
                                   CommandParameter="{x:Bind MessageListControl.SelectedItems, Mode=OneWay}"
                                   Icon="Read"
                                   Visibility="{x:Bind ViewModel.IsSelectMessagesMode, Mode=OneWay}" />
 
-                    <AppBarButton x:Uid="MarkAsUnReadButton"
+                    <AppBarButton x:Uid="/App.Resources/MarkAsUnreadButton"
                                   Command="{x:Bind ViewModel.MarkSelectedMessagesAsUnreadCommand, Mode=OneWay}"
                                   CommandParameter="{x:Bind MessageListControl.SelectedItems, Mode=OneWay}"
                                   Icon="Mail"
                                   Visibility="{x:Bind ViewModel.IsSelectMessagesMode, Mode=OneWay}" />
 
-                    <AppBarButton x:Uid="SetFlagButton"
+                    <AppBarButton x:Uid="/App.Resources/SetFlagButton"
                                   Command="{x:Bind ViewModel.FlagSelectedMessagesCommand, Mode=OneWay}"
                                   CommandParameter="{x:Bind MessageListControl.SelectedItems, Mode=OneWay}"
                                   Icon="Flag"
                                   Visibility="{x:Bind ViewModel.IsSelectMessagesMode, Mode=OneWay}" />
 
-                    <AppBarButton x:Uid="ClearFlagButton"
+                    <AppBarButton x:Uid="/App.Resources/ClearFlagButton"
                                   Command="{x:Bind ViewModel.UnflagSelectedMessagesCommand, Mode=OneWay}"
                                   CommandParameter="{x:Bind MessageListControl.SelectedItems, Mode=OneWay}"
                                   Icon="Flag"
                                   Visibility="{x:Bind ViewModel.IsSelectMessagesMode, Mode=OneWay}" />
 
-                    <AppBarButton x:Uid="DeleteButton"
+                    <AppBarButton x:Uid="/App.Resources/DeleteButton"
                                   Command="{x:Bind ViewModel.DeleteSelectedMessagesCommand, Mode=OneWay}"
                                   CommandParameter="{x:Bind MessageListControl.SelectedItems, Mode=OneWay}"
                                   Icon="Delete"
                                   Visibility="{x:Bind ViewModel.IsSelectMessagesMode, Mode=OneWay}" />
 
                     <AppBarSeparator Visibility="{x:Bind ViewModel.IsSelectMessagesMode, Mode=OneWay}" />
-                    
-                    <AppBarButton x:Uid="SelectAllButton"
+
+                    <AppBarButton x:Uid="/App.Resources/SelectAllButton"
                                   Click="OnSelectAllButton"
                                   Icon="SelectAll"
                                   Visibility="{x:Bind ViewModel.IsSelectMessagesMode, Mode=OneWay}" />
 
-                    <AppBarToggleButton x:Uid="SelectionModeButton"
+                    <AppBarToggleButton x:Uid="/App.Resources/SelectionModeButton"
                                         Icon="Bullets"
                                         IsChecked="{x:Bind ViewModel.IsSelectMessagesMode, Mode=TwoWay}" />
 
-                    <AppBarButton x:Uid="UpdateButton"
+                    <AppBarButton x:Uid="/App.Resources/UpdateButton"
                                   Command="{x:Bind ViewModel.RefreshMessagesCommand, Mode=OneWay}"
                                   Icon="Refresh" />
                 </CommandBar>

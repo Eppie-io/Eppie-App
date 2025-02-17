@@ -39,7 +39,7 @@
                             IsEnabled="{x:Bind IsEmpty, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
                             OverflowButtonVisibility="Collapsed">
 
-                    <AppBarButton x:Uid="SaveAttachmentButton"
+                    <AppBarButton x:Uid="/App.Resources/SaveAttachmentButton"
                                   Icon="Save"
                                   Tag="{x:Bind}">
                         <interactivity:Interaction.Behaviors>
@@ -47,7 +47,7 @@
                         </interactivity:Interaction.Behaviors>
                     </AppBarButton>
 
-                    <AppBarButton x:Uid="OpenAttachmentButton"
+                    <AppBarButton x:Uid="/App.Resources/OpenAttachmentButton"
                                   Icon="OpenFile"
                                   Tag="{x:Bind}">
                         <interactivity:Interaction.Behaviors>
@@ -85,45 +85,45 @@
             </Grid.ColumnDefinitions>
 
             <Button x:Name="BackButton"
-                    x:Uid="BackButton"
+                    x:Uid="/App.Resources/BackButton"
                     Command="{x:Bind ViewModel.GoBackCommand}">
                 <SymbolIcon Symbol="Back" />
             </Button>
 
             <CommandBar Grid.Column="2" DefaultLabelPosition="Right">
 
-                <AppBarButton x:Uid="ReplyAllButton"
+                <AppBarButton x:Uid="/App.Resources/ReplyAllButton"
                               Command="{x:Bind ViewModel.ReplyCommandAll}"
                               Icon="MailReplyAll" />
 
-                <AppBarButton x:Uid="ReplyButton"
+                <AppBarButton x:Uid="/App.Resources/ReplyButton"
                               Command="{x:Bind ViewModel.ReplyCommand}"
                               Icon="MailReply" />
 
-                <AppBarButton x:Uid="ForwardButton"
+                <AppBarButton x:Uid="/App.Resources/ForwardButton"
                               Command="{x:Bind ViewModel.ForwardCommand}"
                               Icon="MailForward" />
 
-                <AppBarButton x:Uid="DeleteButton"
+                <AppBarButton x:Uid="/App.Resources/DeleteButton"
                               Command="{x:Bind ViewModel.DeleteMessageAndGoBackCommand}"
                               Icon="Delete" />
 
-                <AppBarButton x:Uid="MarkAsReadButton"
+                <AppBarButton x:Uid="/App.Resources/MarkAsReadButton"
                               Command="{x:Bind ViewModel.MarkMessageAsReadCommand}"
                               Icon="Read"
                               Visibility="{x:Bind ViewModel.MessageInfo.IsMarkedAsRead, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
 
-                <AppBarButton x:Uid="MarkAsUnreadButton"
+                <AppBarButton x:Uid="/App.Resources/MarkAsUnreadButton"
                               Command="{x:Bind ViewModel.MarkMessageAsUnReadCommand}"
                               Icon="Mail"
                               Visibility="{x:Bind ViewModel.MessageInfo.IsMarkedAsRead, Mode=OneWay}" />
 
-                <AppBarButton x:Uid="SetFlagButton"
+                <AppBarButton x:Uid="/App.Resources/SetFlagButton"
                               Command="{x:Bind ViewModel.FlagMessageCommand}"
                               Icon="Flag"
                               Visibility="{x:Bind ViewModel.MessageInfo.IsFlagged, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
 
-                <AppBarButton x:Uid="ClearFlagButton"
+                <AppBarButton x:Uid="/App.Resources/ClearFlagButton"
                               Command="{x:Bind ViewModel.UnflagMessageCommand}"
                               Icon="Flag"
                               Visibility="{x:Bind ViewModel.MessageInfo.IsFlagged, Mode=OneWay}" />

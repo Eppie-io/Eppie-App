@@ -173,16 +173,6 @@
     <value>Менеджер удостоверений</value>
     <comment>The title for Identity Manager page</comment>
   </data>
-  <data name="AttachButton.Label" xml:space="preserve">
-    <value>Прикрепить файлы</value>
-    <comment>Text for attach button</comment>
-  </data>
-  <!-- ToDo: use using:Windows.UI.Xaml.Controls for UWP; use using:Microsoft.UI.Xaml.Controls for Uno
-  <data name="AttachButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Прикрепить файлы</value>
-    <comment>The tooltip for attach button</comment>
-  </data>
-  -->
   <data name="AttachedFiles.Title" xml:space="preserve">
     <value>Прикреплённые файлы:</value>
     <comment>Title for list of attached files</comment>
@@ -191,12 +181,6 @@
     <value>Ошибка аутентификации</value>
     <comment>Notification text when authentification failed</comment>
   </data>
-  <!-- ToDo: use using:Windows.UI.Xaml.Controls for UWP; use using:Microsoft.UI.Xaml.Controls for Uno
-  <data name="BackButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Назад</value>
-    <comment>The tooltip for back button</comment>
-  </data>
-  -->
   <data name="Cancel.Content" xml:space="preserve">
     <value>Отменить</value>
     <comment>Cancel button content</comment>
@@ -236,36 +220,6 @@
   <data name="CurrentPassword.Text" xml:space="preserve">
     <value>Текущий пароль</value>
     <comment>Input field caption for current password</comment>
-  </data>
-  <!-- ToDo: use using:Windows.UI.Xaml.Controls for UWP; use using:Microsoft.UI.Xaml.Controls for Uno
-  <data name="DeleteButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Удалить</value>
-    <comment>The tooltip for delete button</comment>
-  </data>
-  -->
-  <data name="DeleteButton.Label" xml:space="preserve">
-    <value>Удалить</value>
-    <comment>Text on Delete button</comment>
-  </data>
-  <!-- ToDo: use using:Windows.UI.Xaml.Controls for UWP; use using:Microsoft.UI.Xaml.Controls for Uno
-  <data name="MarkAsReadButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Пометить как прочитанное</value>
-    <comment>The tooltip for Mark as read button</comment>
-  </data>
-  -->
-  <data name="MarkAsReadButton.Label" xml:space="preserve">
-    <value>Пометить как прочитанное</value>
-    <comment>Text on Mark as read button</comment>
-  </data>
-  <!-- ToDo: use using:Windows.UI.Xaml.Controls for UWP; use using:Microsoft.UI.Xaml.Controls for Uno
-  <data name="MarkAsUnreadButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Пометить как непрочитанное</value>
-    <comment>The tooltip for Mark as unread button</comment>
-  </data>
-  -->
-  <data name="MarkAsUnreadButton.Label" xml:space="preserve">
-    <value>Пометить как непрочитанное</value>
-    <comment>Text on Mark as unread button</comment>
   </data>
   <data name="Developer.Text" xml:space="preserve">
     <value>Разработчик:</value>
@@ -420,36 +374,6 @@
     <value>Внимание</value>
     <comment>The title of the dialog shown when user wants to remove e-mail account from the list</comment>
   </data>
-  <!-- ToDo: use using:Windows.UI.Xaml.Controls for UWP; use using:Microsoft.UI.Xaml.Controls for Uno
-  <data name="ReplyButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Ответить</value>
-    <comment>The tooltip for reply button</comment>
-  </data>
-  -->
-  <data name="ReplyButton.Label" xml:space="preserve">
-    <value>Ответить</value>
-    <comment>Text on Reply button</comment>
-  </data>
-  <!-- ToDo: use using:Windows.UI.Xaml.Controls for UWP; use using:Microsoft.UI.Xaml.Controls for Uno
-  <data name="ReplyAllButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Ответить всем</value>
-    <comment>The tooltip for Reply All button</comment>
-  </data>
-  -->
-  <data name="ReplyAllButton.Label" xml:space="preserve">
-    <value>Ответить всем</value>
-    <comment>Text on Reply All button</comment>
-  </data>
-  <!-- ToDo: use using:Windows.UI.Xaml.Controls for UWP; use using:Microsoft.UI.Xaml.Controls for Uno
-  <data name="ForwardButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Переслать</value>
-    <comment>The tooltip for Forward email button</comment>
-  </data>
-  -->
-  <data name="ForwardButton.Label" xml:space="preserve">
-    <value>Переслать</value>
-    <comment>Text on Forward email button</comment>
-  </data>
   <data name="SeedGenerateAcceptButton.Content" xml:space="preserve">
     <value>Подтверждаю, что эта сидфраза надёжно сохранена мной</value>
     <comment>Accept seed phrase button content</comment>
@@ -502,16 +426,6 @@
     <value>Слово отсутствует в мнемоническом словаре</value>
     <comment>Validation error for seed phrase word</comment>
   </data>
-  <data name="SendButton.Label" xml:space="preserve">
-    <value>Отправить</value>
-    <comment>Text for send button</comment>
-  </data>
-  <!-- ToDo: use using:Windows.UI.Xaml.Controls for UWP; use using:Microsoft.UI.Xaml.Controls for Uno
-  <data name="SendButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Отправить</value>
-    <comment>The tooltip for send button</comment>
-  </data>
-  -->
   <data name="SenderName.Text" xml:space="preserve">
     <value>Имя для отправки писем</value>
     <comment>Input field caption for sender name</comment>
@@ -596,18 +510,6 @@
     <value>Подписать</value>
     <comment>Signature enable checkbox text on NewMessage view</comment>
   </data>
-  <!-- ToDo: use using:Windows.UI.Xaml.Controls for UWP; use using:Microsoft.UI.Xaml.Controls for Uno
-  <data name="SeedGenerateCopyButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Копировать сид фразу (Ctrl+C)</value>
-    <comment>Tooltip for Copy seed phrase button</comment>
-  </data>
-  -->
-  <!-- ToDo: use using:Windows.UI.Xaml.Controls for UWP; use using:Microsoft.UI.Xaml.Controls for Uno
-  <data name="SeedRestorePasteButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Вставить сид фразу (Ctrl+V)</value>
-    <comment>Restore seed page paste phrase button</comment>
-  </data>
-  -->
   <data name="PgpKeysButton.Content" xml:space="preserve">
     <value>PGP ключи</value>
     <comment>Go to PGP keys management page button content</comment>
@@ -808,56 +710,6 @@ ________________________________________________________________________________
     <value>Сид фраза не инициализирована.</value>
     <comment>Message title shown when user not initialized seed phrase</comment>
   </data>
-  <data name="SaveAttachmentButton.Label" xml:space="preserve">
-    <value>Сохранить</value>
-    <comment>Text for save attached file button</comment>
-  </data>
-  <!-- ToDo: use using:Windows.UI.Xaml.Controls for UWP; use using:Microsoft.UI.Xaml.Controls for Uno
-  <data name="SaveAttachmentButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Сохранить</value>
-    <comment>The tooltip for save attached file button</comment>
-  </data>
-  -->
-  <data name="OpenAttachmentButton.Label" xml:space="preserve">
-    <value>Открыть</value>
-    <comment>Text for save attached file button</comment>
-  </data>
-  <!-- ToDo: use using:Windows.UI.Xaml.Controls for UWP; use using:Microsoft.UI.Xaml.Controls for Uno
-  <data name="OpenAttachmentButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Открыть</value>
-    <comment>The tooltip for save attached file button</comment>
-  </data>
-  -->
-  <data name="DeleteAttachmentButton.Label" xml:space="preserve">
-    <value>Удалить</value>
-    <comment>Text for Delete attached file button</comment>
-  </data>
-  <!-- ToDo: use using:Windows.UI.Xaml.Controls for UWP; use using:Microsoft.UI.Xaml.Controls for Uno
-  <data name="DeleteAttachmentButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Удалить</value>
-    <comment>The tooltip for Delete attached file button</comment>
-  </data>
-  -->
-  <data name="UpdateButton.Label" xml:space="preserve">
-    <value>Обновить</value>
-    <comment>Text for Update emails list button</comment>
-  </data>
-  <!-- ToDo: use using:Windows.UI.Xaml.Controls for UWP; use using:Microsoft.UI.Xaml.Controls for Uno
-  <data name="UpdateButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Обновить</value>
-    <comment>The tooltip for Update emails list button</comment>
-  </data>
-  -->
-  <data name="SelectionModeButton.Label" xml:space="preserve">
-    <value>Режим выделения</value>
-    <comment>Text for Selection mode button</comment>
-  </data>
-  <!-- ToDo: use using:Windows.UI.Xaml.Controls for UWP; use using:Microsoft.UI.Xaml.Controls for Uno
-  <data name="SelectionModeButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Режим выделения</value>
-    <comment>The tooltip for Selection mode button</comment>
-  </data>
-  -->
   <data name="EmailDoesntMatchNotification" xml:space="preserve">
     <value>Введённый адрес {0} не совпадает с настройками</value>
     <comment>Notification message is shown when emails do not match</comment>
@@ -882,26 +734,6 @@ ________________________________________________________________________________
     <value>Поиск</value>
     <comment>Text displayed in Search Contacts control when no search text is entered</comment>
   </data>
-  <data name="ClearFlagButton.Label" xml:space="preserve">
-    <value>Снять пометку</value>
-    <comment>Text on Clear flag button</comment>
-  </data>
-  <!-- ToDo: use using:Windows.UI.Xaml.Controls for UWP; use using:Microsoft.UI.Xaml.Controls for Uno
-  <data name="ClearFlagButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Снять пометку</value>
-    <comment>The tooltip for Clear flag button</comment>
-  </data>
-  -->
-  <data name="SetFlagButton.Label" xml:space="preserve">
-    <value>Пометить</value>
-    <comment>Text on Set flag button</comment>
-  </data>
-  <!-- ToDo: use using:Windows.UI.Xaml.Controls for UWP; use using:Microsoft.UI.Xaml.Controls for Uno>
-  <data name="SetFlagButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Пометить</value>
-    <comment>The tooltip for Set flag button</comment>
-  </data>
-  -->
   <data name="AllMessagesFilterLabel" xml:space="preserve">
     <value>Все письма</value>
     <comment>The label for option (in dropdown list with filters) which means that no filter is applied for messages (all messages must be shown)</comment>
