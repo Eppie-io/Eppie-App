@@ -11,11 +11,14 @@
              mc:Ignorable="d not_win">
 
     <Grid>
+
+        <!--  ToDo: Try use `RichEditBox` with uno when 'Implement RichEditBox' (https://github.com/unoplatform/uno/issues/3848) issue is solved  -->
+
         <win:Grid>
             <local:RichTextEditor Html="{x:Bind Html, Mode=TwoWay}" Text="{x:Bind Text, Mode=TwoWay}" />
         </win:Grid>
         <not_win:Grid>
-            <TextBox Text="{x:Bind Text, Mode=TwoWay}" />
+            <TextBox AcceptsReturn="True" Text="{x:Bind Text, Mode=TwoWay}" />
         </not_win:Grid>
     </Grid>
 </UserControl>

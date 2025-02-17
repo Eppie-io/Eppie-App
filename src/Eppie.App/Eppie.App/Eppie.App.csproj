@@ -1,4 +1,4 @@
-<Project Sdk="Uno.Sdk">
+﻿<Project Sdk="Uno.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net9.0-android;net9.0-ios;net9.0-maccatalyst;net9.0-windows10.0.22621;net9.0-browserwasm;net9.0-desktop</TargetFrameworks>
 
@@ -56,7 +56,6 @@
     <RuntimeIdentifier Condition="$(TargetFramework.Contains('maccatalyst'))">maccatalyst-x64</RuntimeIdentifier>
   </PropertyGroup>
 
-
   <!-- Workaround for https://github.com/unoplatform/uno/issues/18552#issuecomment-2438052084 -->
   <PropertyGroup Condition="$(TargetFramework.Contains('windows'))">
     <!-- Explicitly set the PlatformTarget in order for packages like WebView2 to select the appropriate binaries -->
@@ -99,4 +98,8 @@
     <PackageReference Include="CommunityToolkit.WinUI.Controls.TokenizingTextBox" />
   </ItemGroup>
 
+  <!-- Enable WSL support in VS 17.13 and later, when a desktop target is present -->
+  <ItemGroup Condition="$([MSBuild]::VersionGreaterThanOrEquals($(MSBuildVersion), 17.13.0)) AND '$(TargetFrameworks)' != '' AND $(TargetFrameworks.Contains('desktop')) ">
+    <ProjectCapability Include="DotNetWslLaunch" />
+  </ItemGroup>
 </Project>

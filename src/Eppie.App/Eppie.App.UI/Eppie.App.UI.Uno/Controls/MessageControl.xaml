@@ -4,16 +4,23 @@
                         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                         xmlns:local="using:Eppie.App.UI.Controls"
                         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                        xmlns:not_skia="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                         xmlns:shared="using:Tuvi.App.Shared.Controls"
+                        xmlns:skia="http://uno.ui/skia"
                         d:DesignHeight="300"
                         d:DesignWidth="400"
                         Loaded="OnLoaded"
-                        mc:Ignorable="d">
+                        mc:Ignorable="d skia">
 
     <Grid>
-        <WebView2 x:Name="HtmlView" Visibility="{x:Bind HasHtmlBody, Mode=OneWay}" />
+        <!--  ToDo: Try use `<WebView2>` when '[Skia] Add support for WebView' (https://github.com/unoplatform/uno/issues/4233) issue is solved  -->
+        <!--  ToDo: We can use `<not_skia:WebView2>` and `#if HAS_UNO_SKIA` when '__SKIA__ constant is not defined in a library when targeting net9.0-desktop' (https://github.com/unoplatform/uno/issues/18996) issue is solved  -->
 
-        <ScrollViewer Padding="4" Visibility="{x:Bind HasHtmlBody, Converter={StaticResource InverseBoolToVisibilityConverter}, Mode=OneWay}">
+        <WebView2 x:Name="HtmlView"
+                  not_skia:Visibility="{x:Bind HasHtmlBody, Mode=OneWay}"
+                  skia:Visibility="Collapsed" />
+
+        <ScrollViewer Padding="4" not_skia:Visibility="{x:Bind HasHtmlBody, Converter={StaticResource InverseBoolToVisibilityConverter}, Mode=OneWay}">
 
             <TextBlock IsTextSelectionEnabled="True"
                        Style="{StaticResource MessageTextStyle}"
