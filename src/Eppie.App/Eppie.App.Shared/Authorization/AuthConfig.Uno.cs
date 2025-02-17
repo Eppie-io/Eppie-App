@@ -1,6 +1,7 @@
 #if HAS_UNO
 
 using Finebits.Authorization.OAuth2.Abstractions;
+using Finebits.Authorization.OAuth2.AuthenticationBroker;
 using Finebits.Authorization.OAuth2.Google;
 using Finebits.Authorization.OAuth2.Outlook;
 using Tuvi.OAuth2;
@@ -31,7 +32,12 @@ namespace Tuvi.App.Shared.Authorization
 
         private static IAuthenticationBroker GetAuthenticationBroker()
         {
-            throw new NotImplementedException();
+            if (!DesktopAuthenticationBroker.IsSupported)
+            {
+                throw new InvalidOperationException("DesktopAuthenticationBroker is not supported");
+            }
+
+            return new DesktopAuthenticationBroker(new WebBrowserLauncher());
         }
     }
 }
