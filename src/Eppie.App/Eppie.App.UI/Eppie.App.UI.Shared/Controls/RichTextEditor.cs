@@ -15,10 +15,26 @@ namespace Eppie.App.UI.Controls
 {
     public partial class RichTextEditor : RichEditBox
     {
+        private string _html;
+        private bool _htmlNeedsUpdate;
+
         public string Html
         {
-            get { return (string)GetValue(HtmlProperty); }
-            set { SetValue(HtmlProperty, value); }
+            get
+            {
+                if (_htmlNeedsUpdate)
+                {
+                    _html = Document.ToHtml();
+                    _htmlNeedsUpdate = false;
+                }
+                return _html;
+            }
+            set
+            {
+                SetValue(HtmlProperty, value);
+                _html = value;
+                _htmlNeedsUpdate = false;
+            }
         }
         public static readonly DependencyProperty HtmlProperty =
             DependencyProperty.Register(nameof(Html), typeof(string), typeof(RichTextEditor), new PropertyMetadata(string.Empty));
@@ -68,7 +84,7 @@ namespace Eppie.App.UI.Controls
                 else
                 {
                     Text = text;
-                    Html = Document.ToHtml();
+                    _htmlNeedsUpdate = true;
                 }
             }
             finally
@@ -82,6 +98,7 @@ namespace Eppie.App.UI.Controls
             if (!_skipUpdating && !string.IsNullOrEmpty(text))
             {
                 Document?.SetText(TextSetOptions.None, text);
+                _htmlNeedsUpdate = true;
             }
         }
 #else
