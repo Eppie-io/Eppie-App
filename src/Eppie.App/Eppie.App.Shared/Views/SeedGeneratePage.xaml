@@ -40,7 +40,7 @@
                        Text="{x:Bind AppName}" />
 
 
-            <Button x:Uid="BackButton"
+            <Button x:Uid="/App.Resources/BackButton"
                     VerticalAlignment="Center"
                     Command="{x:Bind ViewModel.BackCommand}">
                 <SymbolIcon Symbol="Back" />
@@ -75,7 +75,7 @@
                                          IsTextPredictionEnabled="False"
                                          Text="{x:Bind ViewModel.SeedPhrase.CleanText, Mode=OneWay}" />
 
-                                <Button x:Uid="SeedGenerateCopyButton">
+                                <Button x:Uid="/App.Resources/SeedGenerateCopyButton">
                                     <interactivity:Interaction.Behaviors>
                                         <behaviors:CopyToClipboardBehavior CopyCommand="{x:Bind ViewModel.CopySeedCommand, Mode=OneWay}" />
                                     </interactivity:Interaction.Behaviors>
@@ -110,7 +110,7 @@
                                  IsTextPredictionEnabled="False"
                                  Text="{x:Bind ViewModel.SeedPhrase.CleanText, Mode=OneWay}" />
 
-                        <Button x:Uid="SeedGenerateCopyButton">
+                        <Button x:Uid="/App.Resources/SeedGenerateCopyButton">
                             <interactivity:Interaction.Behaviors>
                                 <behaviors:CopyToClipboardBehavior CopyCommand="{x:Bind ViewModel.CopySeedCommand, Mode=OneWay}" />
                             </interactivity:Interaction.Behaviors>

@@ -246,6 +246,12 @@
       <Name>Visual C++ 2015-2019 Runtime for Universal Windows Platform Apps</Name>
     </SDKReference>
   </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="Resources\Strings\en\App.Resources.resw" />
+    <PRIResource Include="Resources\Strings\pl\App.Resources.resw" />
+    <PRIResource Include="Resources\Strings\ru\App.Resources.resw" />
+    <PRIResource Include="Resources\Strings\zh-CN\App.Resources.resw" />
+  </ItemGroup>
   <Import Project="..\Eppie.App.Shared\Eppie.App.Shared.projitems" Label="Shared" />
   <Import Project="..\Eppie.App.Resources.Shared\Eppie.App.Resources.Shared.projitems" Label="Shared" />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

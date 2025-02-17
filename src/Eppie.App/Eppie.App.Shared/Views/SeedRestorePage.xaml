@@ -38,7 +38,7 @@
                        Style="{StaticResource PageTitleTextStyle}"
                        Text="{x:Bind AppName}" />
 
-            <Button x:Uid="BackButton"
+            <Button x:Uid="/App.Resources/BackButton"
                     VerticalAlignment="Center"
                     Command="{x:Bind ViewModel.BackCommand}">
                 <SymbolIcon Symbol="Back" />
@@ -75,7 +75,7 @@
                      TextChanging="OnChangingSeed" />
 
 
-            <Button x:Uid="SeedRestorePasteButton">
+            <Button x:Uid="/App.Resources/SeedRestorePasteButton">
                 <interactivity:Interaction.Behaviors>
                     <behaviors:PasteFromClipboardBehavior PasteCommand="{x:Bind ViewModel.PasteSeedCommand, Mode=OneWay}" />
                 </interactivity:Interaction.Behaviors>

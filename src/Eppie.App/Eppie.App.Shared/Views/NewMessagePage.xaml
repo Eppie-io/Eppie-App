@@ -43,7 +43,7 @@
                             IsEnabled="{x:Bind IsEmpty, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
                             OverflowButtonVisibility="Collapsed">
 
-                    <AppBarButton x:Uid="SaveAttachmentButton"
+                    <AppBarButton x:Uid="/App.Resources/SaveAttachmentButton"
                                   Icon="Save"
                                   Tag="{x:Bind}">
                         <interactivity:Interaction.Behaviors>
@@ -51,7 +51,7 @@
                         </interactivity:Interaction.Behaviors>
                     </AppBarButton>
 
-                    <AppBarButton x:Uid="OpenAttachmentButton"
+                    <AppBarButton x:Uid="/App.Resources/OpenAttachmentButton"
                                   Icon="OpenFile"
                                   Tag="{x:Bind}">
                         <interactivity:Interaction.Behaviors>
@@ -59,7 +59,7 @@
                         </interactivity:Interaction.Behaviors>
                     </AppBarButton>
 
-                    <AppBarButton x:Uid="DeleteAttachmentButton"
+                    <AppBarButton x:Uid="/App.Resources/DeleteAttachmentButton"
                                   Command="{x:Bind RemoveCommand, Mode=OneWay}"
                                   CommandParameter="{x:Bind}"
                                   Icon="Delete" />
@@ -89,24 +89,24 @@
             </Grid.ColumnDefinitions>
 
             <Button x:Name="BackButton"
-                    x:Uid="BackButton"
+                    x:Uid="/App.Resources/BackButton"
                     Command="{x:Bind ViewModel.GoBackCommand}">
                 <FontIcon Glyph="&#xE112;" />
             </Button>
 
             <CommandBar Grid.Column="2" DefaultLabelPosition="Right">
-                <AppBarButton x:Uid="AttachButton">
+                <AppBarButton x:Uid="/App.Resources/AttachButton">
                     <SymbolIcon Symbol="Attach" />
                     <interactivity:Interaction.Behaviors>
                         <behaviors:FileBehavior Command="{x:Bind ViewModel.AttachFilesCommand, Mode=OneWay}" />
                     </interactivity:Interaction.Behaviors>
                 </AppBarButton>
 
-                <AppBarButton x:Uid="DeleteButton" Command="{x:Bind ViewModel.DeleteMessageAndGoBackCommand}">
+                <AppBarButton x:Uid="/App.Resources/DeleteButton" Command="{x:Bind ViewModel.DeleteMessageAndGoBackCommand}">
                     <SymbolIcon Symbol="Delete" />
                 </AppBarButton>
 
-                <AppBarButton x:Uid="SendButton" Command="{x:Bind ViewModel.SendMessageAndGoBackCommand}">
+                <AppBarButton x:Uid="/App.Resources/SendButton" Command="{x:Bind ViewModel.SendMessageAndGoBackCommand}">
                     <SymbolIcon Symbol="Send" />
                 </AppBarButton>
             </CommandBar>
