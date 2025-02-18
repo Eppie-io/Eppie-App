@@ -84,5 +84,10 @@ namespace Tuvi.App.ViewModels
         {
             return new EmailAddress(Email.Address, FullName);
         }
+
+        public override string ToString()
+        {
+            return Email?.Address;
+        }
     }
 }
