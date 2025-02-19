@@ -1,0 +1,63 @@
+###############################################################################
+#
+#   Copyright 2025 Eppie(https://eppie.io)
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+#
+###############################################################################
+
+---
+
+name: "Publish MacOS"
+
+on: # yamllint disable-line rule:truthy
+  workflow_dispatch:
+
+env:
+  project: ./src/Eppie.App/Eppie.App/Eppie.App.csproj
+  output-path: ./publish
+
+jobs:
+  publish:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+          submodules: recursive
+
+      - id: version-number
+        uses: finebits/github-actions/toolset/find-out-version@4a126d80a11c5fdc83ce884d3d23dffb30bc4495 # v2.0.0
+
+      - name: Install Prerequisites
+        uses: ./.github/actions/install-prerequisites
+        with:
+          uno-platform: true
+
+      - name: Publish maccatalyst [${{ env.version-short }}]
+        run: |
+          mkdir -p "${{ env.output-path }}"
+          dotnet publish --configuration=Release --framework=net9.0-maccatalyst --verbosity=minimal --nologo --property:CreatePackage=true --output="${{ env.output-path }}" --property:Version="${{ env.version-full }}" "${{ env.project }}"
+        env:
+          version-full: "${{ steps.version-number.outputs.preset-suffix-githash }}"
+          version-short: "${{ steps.version-number.outputs.preset-suffix }}"
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0
+        with:
+          name: Eppie.App.MacOS [${{ env.version-full }}]
+          path: ${{ env.output-path }}
+        env:
+          version-full: "${{ steps.version-number.outputs.preset-suffix-githash }}"
