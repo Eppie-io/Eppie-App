@@ -46,6 +46,24 @@ jobs:
         with:
           uno-platform: true
 
+      - uses: finebits/github-actions/toolset/file/replace-text@4a126d80a11c5fdc83ce884d3d23dffb30bc4495 # v2.0.0
+        with:
+          file: ./src/Eppie.App/Eppie.App.Shared/Authorization/AuthConfig.Uno.cs
+          find-what: "<Gmail-ClientId>"
+          replace-with: "${{ secrets.GMAIL_CLIENT_ID }}"
+
+      - uses: finebits/github-actions/toolset/file/replace-text@4a126d80a11c5fdc83ce884d3d23dffb30bc4495 # v2.0.0
+        with:
+          file: ./src/Eppie.App/Eppie.App.Shared/Authorization/AuthConfig.Uno.cs
+          find-what: "<Gmail-ClientSecret>"
+          replace-with: "${{ secrets.GMAIL_CLIENT_SECRET }}"
+
+      - uses: finebits/github-actions/toolset/file/replace-text@4a126d80a11c5fdc83ce884d3d23dffb30bc4495 # v2.0.0
+        with:
+          file: ./src/Eppie.App/Eppie.App.Shared/Authorization/AuthConfig.Uno.cs
+          find-what: "<Outlook-ClientId>"
+          replace-with: "${{ secrets.OUTLOOK_CLIENT_ID }}"
+
       - name: Publish maccatalyst [${{ env.version-short }}]
         run: |
           mkdir -p "${{ env.output-path }}"
