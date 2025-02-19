@@ -17,14 +17,15 @@ namespace Tuvi.App.Shared.Authorization
                 AuthenticationBrokerCreator = GetAuthenticationBroker,
                 GoogleConfigurationCreator = () => new GoogleConfiguration
                 {
-                    ClientId = "<ClientId>",
-                    RedirectUri = new Uri("<RedirectUri>"),
+                    ClientId = "<Gmail-ClientId>",
+                    ClientSecret = "<Gmail-ClientSecret>",
+                    RedirectUri = DesktopAuthenticationBroker.GetLoopbackUri(),
                     ScopeList = GmailScope
                 },
                 OutlookConfigurationCreator = () => new OutlookConfiguration
                 {
-                    ClientId = "<ClientId>",
-                    RedirectUri = new Uri("<RedirectUri>"),
+                    ClientId = "<Outlook-ClientId>",
+                    RedirectUri = DesktopAuthenticationBroker.GetLoopbackUri(),
                     ScopeList = OutlookScope
                 }
             };
