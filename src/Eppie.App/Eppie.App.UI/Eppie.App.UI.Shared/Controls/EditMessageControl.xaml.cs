@@ -17,7 +17,7 @@ namespace Eppie.App.UI.Controls
         }
 
         public static readonly DependencyProperty TextProperty =
-            DependencyProperty.Register(nameof(Text), typeof(string), typeof(MessageControl), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(Text), typeof(string), typeof(EditMessageControl), new PropertyMetadata(null));
 
         public string Html
         {
@@ -26,7 +26,7 @@ namespace Eppie.App.UI.Controls
         }
 
         public static readonly DependencyProperty HtmlProperty =
-            DependencyProperty.Register(nameof(Html), typeof(string), typeof(MessageControl), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(Html), typeof(string), typeof(EditMessageControl), new PropertyMetadata(null));
 
         public EditMessageControl()
         {
