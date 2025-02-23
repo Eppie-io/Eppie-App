@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
-
+using Eppie.App.Shared.Services;
 using Tuvi.App.Shared.Models;
 using Tuvi.App.Shared.Services;
 using Tuvi.App.ViewModels.Services;
@@ -33,6 +33,7 @@ namespace Eppie.App.Shared
         public ILocalSettingsService LocalSettingsService { get; private set; }
         public AuthorizationProvider AuthProvider { get; private set; }
         private NotificationManager _notificationManager { get; set; }
+        public AIService AIService { get; private set; }
 
         private ErrorHandler _errorHandler;
 
@@ -77,6 +78,20 @@ namespace Eppie.App.Shared
 
             LocalSettingsService = new LocalSettingsService();
             ApplicationLanguages.PrimaryLanguageOverride = LocalSettingsService.Language;
+            CreateAIService();
+        }
+
+        private async void CreateAIService()
+        {
+            try
+            {
+                AIService = new AIService();
+                await AIService.LoadModelIfEnabled();
+            }
+            catch (Exception ex)
+            {
+                OnError(ex);
+            }
         }
 
         private void CreateAuth()

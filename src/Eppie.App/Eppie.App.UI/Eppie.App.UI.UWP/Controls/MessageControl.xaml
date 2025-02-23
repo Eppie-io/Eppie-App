@@ -12,14 +12,30 @@
                         mc:Ignorable="d">
 
     <Grid>
-        <controls:WebView2 x:Name="HtmlView" Visibility="{x:Bind HasHtmlBody, Mode=OneWay}" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition x:Name="SecondColumn" Width="0" />
+        </Grid.ColumnDefinitions>
 
-        <ScrollViewer Padding="4" Visibility="{x:Bind HasHtmlBody, Converter={StaticResource InverseBoolToVisibilityConverter}, Mode=OneWay}">
+        <Grid Grid.Column="0">
+            <controls:WebView2 x:Name="HtmlView"
+                               Visibility="{x:Bind HasHtmlBody, Mode=OneWay}" />
 
+            <ScrollViewer Padding="4"
+                          Visibility="{x:Bind HasHtmlBody, Converter={StaticResource InverseBoolToVisibilityConverter}, Mode=OneWay}">
+                <TextBlock IsTextSelectionEnabled="True"
+                           Style="{StaticResource MessageTextStyle}"
+                           Text="{x:Bind TextBody, Mode=OneWay}" />
+            </ScrollViewer>
+        </Grid>
+
+        <ScrollViewer Grid.Column="1"
+                      Padding="4"
+                      Visibility="{x:Bind HasTranslatedBody, Mode=OneWay}">
             <TextBlock IsTextSelectionEnabled="True"
                        Style="{StaticResource MessageTextStyle}"
-                       Text="{x:Bind TextBody, Mode=OneWay}" />
-
+                       Text="{x:Bind TranslatedBody, Mode=OneWay}" />
         </ScrollViewer>
+        
     </Grid>
 </shared:BaseUserControl>

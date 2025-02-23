@@ -123,6 +123,13 @@ namespace Tuvi.App.ViewModels
             get { return _message.HtmlBody ?? ""; }
         }
 
+        private string _translatedBody;
+        public string TranslatedBody
+        {
+            get => _translatedBody;
+            set => SetProperty(ref _translatedBody, value);
+        }
+
         public bool IsEmptyBody
         {
             get { return string.IsNullOrEmpty(_message.TextBody) && string.IsNullOrEmpty(_message.HtmlBody); }
