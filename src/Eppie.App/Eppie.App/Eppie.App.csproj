@@ -1,4 +1,4 @@
-﻿<Project Sdk="Uno.Sdk">
+<Project Sdk="Uno.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net9.0-android;net9.0-ios;net9.0-maccatalyst;net9.0-windows10.0.22621;net9.0-browserwasm;net9.0-desktop</TargetFrameworks>
 
@@ -72,6 +72,7 @@
     <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core.Mail\Tuvi.Core.Mail.csproj" />
     <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core\Tuvi.Core.csproj" />
     <ProjectReference Include="..\..\..\gitmodules\TuviCore\gitmodules\TuviPgpLib\TuviPgpLib\TuviPgpLib.csproj" />
+    <ProjectReference Include="..\Eppie.AI\Eppie.AI.csproj" />
     <ProjectReference Include="..\Eppie.App.UI\Eppie.App.UI.Uno\Eppie.App.UI.Uno.csproj" />
     <ProjectReference Include="..\Eppie.App.ViewModels\Eppie.App.ViewModels.csproj" />
     <ProjectReference Include="..\Eppie.Authorization.OAuth2\Eppie.Authorization.OAuth2.csproj" />
@@ -96,6 +97,8 @@
     <!-- The default version of the 'System.Private.Uri' package is 4.3.0, which has a vulnerability -->
     <PackageReference Include="System.Private.Uri" />
     <PackageReference Include="CommunityToolkit.WinUI.Controls.TokenizingTextBox" />
+    <PackageReference Include="Microsoft.Extensions.AI.Abstractions" />
+    <PackageReference Include="Microsoft.ML.OnnxRuntimeGenAI.DirectML" />
   </ItemGroup>
 
   <!-- Enable WSL support in VS 17.13 and later, when a desktop target is present -->

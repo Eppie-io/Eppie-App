@@ -7,6 +7,7 @@ using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using Tuvi.App.ViewModels.Common;
 using Tuvi.Core.Entities;
+using Tuvi.Core.Utils;
 
 namespace Tuvi.App.ViewModels
 {
@@ -63,6 +64,7 @@ namespace Tuvi.App.ViewModels
         public ICommand MarkMessageAsUnReadCommand => new AsyncRelayCommand(MarkMessageAsUnReadAsync);
         public ICommand FlagMessageCommand => new AsyncRelayCommand(FlagMessageAsync);
         public ICommand UnflagMessageCommand => new AsyncRelayCommand(UnflagMessageAsync);
+        public ICommand TranslateMessageCommand => new AsyncRelayCommand(TranslateMessageAsync);
 
         public override async void OnNavigatedTo(object data)
         {
@@ -97,6 +99,34 @@ namespace Tuvi.App.ViewModels
             if (!MessageInfo.IsMarkedAsRead)
             {
                 await MarkMessageAsReadAsync().ConfigureAwait(true);
+            }
+        }
+
+        private async Task TranslateMessageAsync()
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(MessageInfo.TranslatedBody))
+                {
+                    var text = MessageInfo.HasTextBody ? MessageInfo.MessageTextBody : Core.GetTextUtils().GetTextFromHtml(MessageInfo.MessageHtmlBody);
+                    var language = LocalSettingsService.Language;
+
+                    MessageInfo.TranslatedBody = await AIService.TranslateTextAsync
+                                                 (
+                                                     text,
+                                                     language,
+                                                     CancellationToken.None,
+                                                     (textPart) =>
+                                                     {
+                                                         DispatcherService.RunAsync(() =>
+                                                         { MessageInfo.TranslatedBody += textPart; });
+                                                     }
+                                                 ).ConfigureAwait(true);
+                }
+            }
+            catch (Exception e)
+            {
+                OnError(e);
             }
         }
 

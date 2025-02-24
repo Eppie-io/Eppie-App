@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -256,5 +256,13 @@
   <data name="SelectAllButton.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Select All</value>
     <comment>The tooltip for Select All button</comment>
+  </data>
+  <data name="TranslateMessageButton.Label" xml:space="preserve">
+    <value>Translate</value>
+    <comment>Text on Translate button.</comment>
+  </data>
+  <data name="TranslateMessageButton.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Translate</value>
+    <comment>The tooltip for Translate button</comment>
   </data>
 </root>

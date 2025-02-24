@@ -866,4 +866,12 @@ Subject: {3}
     <value>You have to restart {0} for the changes to take effect.</value>
     <comment>This message appears after user select language. We need to restart {app name} for apply new language.</comment>
   </data>
+  <data name="EnableLocalAIButton.Content" xml:space="preserve">
+    <value>Enable Local AI</value>
+    <comment>Enable Local AI button text in settings</comment>
+  </data>
+  <data name="DisableLocalAIButton.Content" xml:space="preserve">
+    <value>Disable Local AI</value>
+    <comment>Disable Local AI button text in settings</comment>
+  </data>
 </root>

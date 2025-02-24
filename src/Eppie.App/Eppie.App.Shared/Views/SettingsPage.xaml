@@ -118,6 +118,23 @@
                     Margin="8,8"
                     HorizontalAlignment="Stretch"
                     Command="{x:Bind ViewModel.WipeApplicationDataCommand}" />
+
+            <Button x:Uid="EnableLocalAIButton"
+                    Margin="8,8"
+                    HorizontalAlignment="Stretch"
+                    Command="{x:Bind ViewModel.EnableAICommand}"
+                    Visibility="{x:Bind ViewModel.IsEnableAIButtonVisible, Mode=OneWay}" />
+
+            <Button x:Uid="DisableLocalAIButton"
+                    Margin="8,8"
+                    HorizontalAlignment="Stretch"
+                    Command="{x:Bind ViewModel.DisableAICommand}"
+                    Visibility="{x:Bind ViewModel.IsDisableAIButtonVisible, Mode=OneWay}" />
+
+            <ProgressRing Margin="8,8"
+                          IsActive="True"
+                          Visibility="{x:Bind ViewModel.IsAIProgressRingVisible, Mode=OneWay}" />
+
         </StackPanel>
 
     </Grid>

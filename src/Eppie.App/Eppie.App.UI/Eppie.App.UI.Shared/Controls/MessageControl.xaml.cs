@@ -40,6 +40,33 @@ namespace Eppie.App.UI.Controls
         public static readonly DependencyProperty HtmlBodyProperty =
             DependencyProperty.Register(nameof(HtmlBody), typeof(string), typeof(MessageControl), new PropertyMetadata(null, OnHtmlBodyChanged));
 
+        public string TranslatedBody
+        {
+            get { return (string)GetValue(TranslatedBodyProperty); }
+            set
+            {
+                SetValue(TranslatedBodyProperty, value);
+                SetValue(HasTranslatedBodyProperty, !string.IsNullOrEmpty(TranslatedBody));
+                if (HasTranslatedBody)
+                {
+                    ShowTranslatedText();
+                }
+            }
+        }
+
+        public static readonly DependencyProperty TranslatedBodyProperty =
+            DependencyProperty.Register(nameof(TranslatedBody), typeof(string), typeof(MessageControl), new PropertyMetadata(null));
+
+        public bool HasTranslatedBody
+        {
+            get { return (bool)GetValue(HasTranslatedBodyProperty); }
+            set { SetValue(HasTranslatedBodyProperty, value); }
+        }
+
+        public static readonly DependencyProperty HasTranslatedBodyProperty =
+            DependencyProperty.Register(nameof(HasTranslatedBody), typeof(string), typeof(MessageControl), new PropertyMetadata(null));
+
+
         private static void OnHtmlBodyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
             if (dependencyObject is MessageControl control && control.IsLoaded)
@@ -76,6 +103,11 @@ namespace Eppie.App.UI.Controls
 
             HtmlView.CoreWebView2.Settings.IsScriptEnabled = false; // ToDo: Uno0001
             HtmlView.NavigateToString(HtmlBody);
+        }
+
+        private void ShowTranslatedText()
+        {
+            SecondColumn.Width = new GridLength(1, GridUnitType.Star);
         }
     }
 }
