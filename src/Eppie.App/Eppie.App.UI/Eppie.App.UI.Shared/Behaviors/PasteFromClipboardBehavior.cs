@@ -8,6 +8,7 @@ using Microsoft.UI.Xaml;
 
 namespace Tuvi.App.Shared.Behaviors
 {
+    // ToDo: remove it [Eppie-io/Eppie-App#561]
     public class PasteFromClipboardBehavior : ClipboardBehaviorBase
     {
         public static readonly DependencyProperty PasteCommandProperty =
