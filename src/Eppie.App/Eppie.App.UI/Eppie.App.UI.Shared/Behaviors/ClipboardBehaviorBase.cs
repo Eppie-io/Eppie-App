@@ -10,7 +10,7 @@ using Windows.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls;
 #endif
 
-namespace Tuvi.App.Shared.Behaviors
+namespace Eppie.App.UI.Behaviors
 {
     public class ClipboardBehaviorBase : Behavior<Button>, IClipboardProvider
     {
