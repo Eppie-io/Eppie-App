@@ -12,7 +12,7 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace Eppie.App.UI.Behaviors
 {
-    // ToDo: it is not used and can be deleted
+    // ToDo: remove it [Eppie-io/Eppie-App#561]
     public class ItemClickCommandBehavior : Behavior<ListViewBase>
     {
         private bool _isItemClickEnabledCachedValue;

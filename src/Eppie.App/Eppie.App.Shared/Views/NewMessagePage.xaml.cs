@@ -1,7 +1,7 @@
 // this is missing
 //using Tuvi.App.Helpers;
 using System;
-using Tuvi.App.Shared.Services;
+using Eppie.App.Shared.Services;
 using Tuvi.App.ViewModels;
 using Tuvi.Core.Entities;
 using Windows.ApplicationModel.DataTransfer;
@@ -46,7 +46,7 @@ namespace Tuvi.App.Shared.Views
         private async void NewMessagePage_Grid_Drop(object sender, DragEventArgs e)
 #else
         private async void NewMessagePage_Grid_Drop(object sender, Microsoft.UI.Xaml.DragEventArgs e)
-#endif        
+#endif
         {
             try
             {
