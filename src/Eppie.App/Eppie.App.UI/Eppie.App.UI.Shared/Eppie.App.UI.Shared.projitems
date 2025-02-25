@@ -79,6 +79,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\TextDocumentExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Resources\StringProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Tools\ElementHierarchyTools.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Tools\ItemPickerBuilder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Tools\IncrementalLoadingCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Tools\UITools.cs" />
   </ItemGroup>
