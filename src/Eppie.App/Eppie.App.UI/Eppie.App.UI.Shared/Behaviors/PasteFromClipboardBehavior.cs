@@ -6,7 +6,7 @@ using Windows.UI.Xaml;
 using Microsoft.UI.Xaml;
 #endif
 
-namespace Tuvi.App.Shared.Behaviors
+namespace Eppie.App.UI.Behaviors
 {
     public class PasteFromClipboardBehavior : ClipboardBehaviorBase
     {

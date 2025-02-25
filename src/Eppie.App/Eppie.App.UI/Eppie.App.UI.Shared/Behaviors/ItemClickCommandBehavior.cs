@@ -10,7 +10,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 #endif
 
-namespace Tuvi.App.Shared.Behaviors
+namespace Eppie.App.UI.Behaviors
 {
     // ToDo: it is not used and can be deleted
     public class ItemClickCommandBehavior : Behavior<ListViewBase>
