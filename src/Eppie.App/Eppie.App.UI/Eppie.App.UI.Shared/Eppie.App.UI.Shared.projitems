@@ -10,6 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\ClipboardBehaviorBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\CommandArgumentBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\CopyToClipboardBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\DialogBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\FileBehavior.cs" />
