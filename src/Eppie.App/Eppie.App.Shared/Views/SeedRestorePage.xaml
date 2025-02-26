@@ -75,10 +75,9 @@
                      TextChanging="OnChangingSeed" />
 
 
-            <Button x:Uid="/App.Resources/SeedRestorePasteButton">
-                <interactivity:Interaction.Behaviors>
-                    <behaviors:PasteFromClipboardBehavior PasteCommand="{x:Bind ViewModel.PasteSeedCommand, Mode=OneWay}" />
-                </interactivity:Interaction.Behaviors>
+            <Button x:Uid="/App.Resources/SeedRestorePasteButton"
+                    Command="{x:Bind ViewModel.PasteSeedCommand}"
+                    CommandParameter="{StaticResource ClipboardProvider}">
                 <SymbolIcon Symbol="Paste" />
             </Button>
 

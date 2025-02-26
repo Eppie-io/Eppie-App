@@ -53,9 +53,9 @@ namespace Tuvi.App.ViewModels
 
         public IRelayCommand DeleteMessageAndGoBackCommand { get; }
 
-        public ICommand SaveAttachmentCommand => new AsyncRelayCommand<Tuple<IFileOperationProvider, Attachment>>(SaveAttachmentFileAsync);
+        public ICommand SaveAttachmentCommand => new AsyncRelayCommand<Tuple<Attachment, IFileOperationProvider>>(SaveAttachmentFileAsync);
 
-        public ICommand OpenAttachmentCommand => new AsyncRelayCommand<Tuple<IFileOperationProvider, Attachment>>(OpenAttachmentFileAsync);
+        public ICommand OpenAttachmentCommand => new AsyncRelayCommand<Tuple<Attachment, IFileOperationProvider>>(OpenAttachmentFileAsync);
 
         public BaseMessageViewModel()
         {
@@ -96,12 +96,12 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        private Task SaveAttachmentFileAsync(Tuple<IFileOperationProvider, Attachment> pair)
+        private Task SaveAttachmentFileAsync(Tuple<Attachment, IFileOperationProvider> pair)
         {
             try
             {
-                var fileOperationsProvider = pair.Item1;
-                var attachment = pair.Item2;
+                Attachment attachment = pair.Item1;
+                IFileOperationProvider fileOperationsProvider = pair.Item2;
 
                 if (fileOperationsProvider is null)
                 {
@@ -123,12 +123,12 @@ namespace Tuvi.App.ViewModels
             return Task.CompletedTask;
         }
 
-        private Task OpenAttachmentFileAsync(Tuple<IFileOperationProvider, Attachment> pair)
+        private Task OpenAttachmentFileAsync(Tuple<Attachment, IFileOperationProvider> pair)
         {
             try
             {
-                var fileOperationsProvider = pair.Item1;
-                var attachment = pair.Item2;
+                Attachment attachment = pair.Item1;
+                IFileOperationProvider fileOperationsProvider = pair.Item2;
 
                 if (fileOperationsProvider is null)
                 {

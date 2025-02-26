@@ -75,10 +75,9 @@
                                          IsTextPredictionEnabled="False"
                                          Text="{x:Bind ViewModel.SeedPhrase.CleanText, Mode=OneWay}" />
 
-                                <Button x:Uid="/App.Resources/SeedGenerateCopyButton">
-                                    <interactivity:Interaction.Behaviors>
-                                        <behaviors:CopyToClipboardBehavior CopyCommand="{x:Bind ViewModel.CopySeedCommand, Mode=OneWay}" />
-                                    </interactivity:Interaction.Behaviors>
+                                <Button x:Uid="/App.Resources/SeedGenerateCopyButton"
+                                        Command="{x:Bind ViewModel.CopySeedCommand}"
+                                        CommandParameter="{StaticResource ClipboardProvider}">
                                     <Button.KeyboardAccelerators>
                                         <KeyboardAccelerator Key="C" Modifiers="Control" />
                                     </Button.KeyboardAccelerators>
@@ -110,10 +109,9 @@
                                  IsTextPredictionEnabled="False"
                                  Text="{x:Bind ViewModel.SeedPhrase.CleanText, Mode=OneWay}" />
 
-                        <Button x:Uid="/App.Resources/SeedGenerateCopyButton">
-                            <interactivity:Interaction.Behaviors>
-                                <behaviors:CopyToClipboardBehavior CopyCommand="{x:Bind ViewModel.CopySeedCommand, Mode=OneWay}" />
-                            </interactivity:Interaction.Behaviors>
+                        <Button x:Uid="/App.Resources/SeedGenerateCopyButton"
+                                Command="{x:Bind ViewModel.CopySeedCommand}"
+                                CommandParameter="{StaticResource ClipboardProvider}">
                             <Button.KeyboardAccelerators>
                                 <KeyboardAccelerator Key="C" Modifiers="Control" />
                             </Button.KeyboardAccelerators>
