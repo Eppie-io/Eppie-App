@@ -128,6 +128,11 @@
                               Icon="Flag"
                               Visibility="{x:Bind ViewModel.MessageInfo.IsFlagged, Mode=OneWay}" />
 
+                <AppBarButton x:Uid="/App.Resources/TranslateMessageButton"
+                              Command="{x:Bind ViewModel.TranslateMessageCommand}">
+                              <FontIcon Glyph="&#xF2B7;" />
+                </AppBarButton>
+                
             </CommandBar>
 
         </Grid>
@@ -231,7 +236,8 @@
 
             <eppie_controls:MessageControl HasHtmlBody="{x:Bind ViewModel.MessageInfo.HasHtmlBody, Mode=OneWay}"
                                            HtmlBody="{x:Bind ViewModel.MessageInfo.MessageHtmlBody, Mode=OneWay}"
-                                           TextBody="{x:Bind ViewModel.MessageInfo.MessageTextBody, Mode=OneWay}"/>
+                                           TextBody="{x:Bind ViewModel.MessageInfo.MessageTextBody, Mode=OneWay}"
+                                           TranslatedBody="{x:Bind ViewModel.MessageInfo.TranslatedBody, Mode=OneWay}"/>
         </Grid>
 
         <!--  Wrapped to Grid because Android doesn't have Visibility=Collapsed for ProgressRing  -->

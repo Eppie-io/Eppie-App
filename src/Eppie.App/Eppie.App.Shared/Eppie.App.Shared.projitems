@@ -14,6 +14,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Authorization\AuthenticationBroker.UWP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\BitmapTools.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\NotificationManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\AIService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ClipboardProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\DragAndDropService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ErrorHandler.cs" />

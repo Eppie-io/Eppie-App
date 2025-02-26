@@ -39,6 +39,12 @@ namespace Tuvi.App.ViewModels
             LocalSettingsService = localSettingsService;
         }
 
+        protected IAIService AIService { get; private set; }
+        public void SetAIService(IAIService aiService)
+        {
+            AIService = aiService;
+        }
+
         protected ILocalizationService LocalizationService { get; private set; }
         public void SetLocalizationService(ILocalizationService localizationService)
         {
