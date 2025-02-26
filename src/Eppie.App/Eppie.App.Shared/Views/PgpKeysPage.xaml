@@ -40,11 +40,9 @@
 
             <Button x:Uid="PgpKeyImportButton"
                     Grid.Column="2"
-                    VerticalAlignment="Center">
-                <interactivity:Interaction.Behaviors>
-                    <behaviors:FileBehavior Command="{x:Bind ViewModel.LoadFilesCommand, Mode=OneWay}" />
-                </interactivity:Interaction.Behaviors>
-            </Button>
+                    VerticalAlignment="Center"
+                    Command="{x:Bind ViewModel.LoadFilesCommand}"
+                    CommandParameter="{StaticResource FileOperationProvider}" />
 
         </Grid>
 

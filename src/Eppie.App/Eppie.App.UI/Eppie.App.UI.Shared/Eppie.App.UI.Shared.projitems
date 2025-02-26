@@ -69,6 +69,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BoolToValueConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ConverterChain.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\StringConverters.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\JoinConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\TimeConverters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ValueToBoolConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\VisibilityConverters.cs" />

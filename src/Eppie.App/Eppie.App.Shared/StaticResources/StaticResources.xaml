@@ -1,0 +1,10 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:converters="using:Tuvi.App.Converters"
+                    xmlns:services="using:Eppie.App.Shared.Services">
+
+    <services:FileOperationProvider x:Key="FileOperationProvider" />
+    <services:ClipboardProvider x:Key="ClipboardProvider" />
+    <converters:AttachmentConverter x:Key="AttachmentConverter" Parameter="{StaticResource FileOperationProvider}" />
+
+</ResourceDictionary>

@@ -59,10 +59,9 @@
 
             <Button Margin="8"
                     HorizontalAlignment="Stretch"
-                    HorizontalContentAlignment="Left">
-                <interactivity:Interaction.Behaviors>
-                    <behaviors:FileBehavior Command="{x:Bind ViewModel.ExportBackupCommand, Mode=OneWay}" />
-                </interactivity:Interaction.Behaviors>
+                    HorizontalContentAlignment="Left"
+                    Command="{x:Bind ViewModel.ExportBackupCommand}"
+                    CommandParameter="{StaticResource FileOperationProvider}">
                 <Button.Content>
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">
@@ -80,10 +79,9 @@
 
             <Button Margin="8"
                     HorizontalAlignment="Stretch"
-                    HorizontalContentAlignment="Left">
-                <interactivity:Interaction.Behaviors>
-                    <behaviors:FileBehavior Command="{x:Bind ViewModel.ImportBackupCommand, Mode=OneWay}" />
-                </interactivity:Interaction.Behaviors>
+                    HorizontalContentAlignment="Left"
+                    Command="{x:Bind ViewModel.ImportBackupCommand}"
+                    CommandParameter="{StaticResource FileOperationProvider}">
                 <Button.Content>
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">

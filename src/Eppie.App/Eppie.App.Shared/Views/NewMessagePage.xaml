@@ -44,20 +44,14 @@
                             OverflowButtonVisibility="Collapsed">
 
                     <AppBarButton x:Uid="/App.Resources/SaveAttachmentButton"
-                                  Icon="Save"
-                                  Tag="{x:Bind}">
-                        <interactivity:Interaction.Behaviors>
-                            <behaviors:AttachmentFileBehavior Command="{x:Bind DownloadCommand, Mode=OneWay}" />
-                        </interactivity:Interaction.Behaviors>
-                    </AppBarButton>
+                                  Command="{x:Bind DownloadCommand}"
+                                  CommandParameter="{x:Bind Converter={StaticResource AttachmentConverter}}"
+                                  Icon="Save" />
 
                     <AppBarButton x:Uid="/App.Resources/OpenAttachmentButton"
-                                  Icon="OpenFile"
-                                  Tag="{x:Bind}">
-                        <interactivity:Interaction.Behaviors>
-                            <behaviors:AttachmentFileBehavior Command="{x:Bind OpenCommand, Mode=OneWay}" />
-                        </interactivity:Interaction.Behaviors>
-                    </AppBarButton>
+                                  Command="{x:Bind OpenCommand}"
+                                  CommandParameter="{x:Bind Converter={StaticResource AttachmentConverter}}"
+                                  Icon="OpenFile" />
 
                     <AppBarButton x:Uid="/App.Resources/DeleteAttachmentButton"
                                   Command="{x:Bind RemoveCommand, Mode=OneWay}"
@@ -95,20 +89,18 @@
             </Button>
 
             <CommandBar Grid.Column="2" DefaultLabelPosition="Right">
-                <AppBarButton x:Uid="/App.Resources/AttachButton">
-                    <SymbolIcon Symbol="Attach" />
-                    <interactivity:Interaction.Behaviors>
-                        <behaviors:FileBehavior Command="{x:Bind ViewModel.AttachFilesCommand, Mode=OneWay}" />
-                    </interactivity:Interaction.Behaviors>
-                </AppBarButton>
+                <AppBarButton x:Uid="/App.Resources/AttachButton"
+                              Command="{x:Bind ViewModel.AttachFilesCommand}"
+                              CommandParameter="{StaticResource FileOperationProvider}"
+                              Icon="Attach" />
 
-                <AppBarButton x:Uid="/App.Resources/DeleteButton" Command="{x:Bind ViewModel.DeleteMessageAndGoBackCommand}">
-                    <SymbolIcon Symbol="Delete" />
-                </AppBarButton>
+                <AppBarButton x:Uid="/App.Resources/DeleteButton"
+                              Command="{x:Bind ViewModel.DeleteMessageAndGoBackCommand}"
+                              Icon="Delete" />
 
-                <AppBarButton x:Uid="/App.Resources/SendButton" Command="{x:Bind ViewModel.SendMessageAndGoBackCommand}">
-                    <SymbolIcon Symbol="Send" />
-                </AppBarButton>
+                <AppBarButton x:Uid="/App.Resources/SendButton"
+                              Command="{x:Bind ViewModel.SendMessageAndGoBackCommand}"
+                              Icon="Send" />
             </CommandBar>
 
         </Grid>

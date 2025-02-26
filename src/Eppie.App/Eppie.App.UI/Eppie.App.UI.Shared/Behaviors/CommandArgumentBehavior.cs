@@ -11,6 +11,7 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace Eppie.App.UI.Behaviors
 {
+    // ToDo: remove it [Eppie-io/Eppie-App#561]
     public class CommandArgumentBehavior : Behavior<Button>
     {
         public static readonly DependencyProperty CommandProperty =
