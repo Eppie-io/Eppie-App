@@ -204,7 +204,8 @@
                       Margin="0,4,4,0"
                       VerticalAlignment="Center"
                       IsChecked="{x:Bind ViewModel.IsEncrypted, Mode=TwoWay}"
-                      IsEnabled="{x:Bind ViewModel.IsDecentralized, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}" />
+                      IsEnabled="{x:Bind ViewModel.IsDecentralized, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
+                      Visibility="{x:Bind ViewModel.IsProton, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
 
             <CheckBox x:Uid="MessageSigned"
                       Grid.Row="5"
@@ -212,7 +213,8 @@
                       Margin="4,4,0,0"
                       VerticalAlignment="Center"
                       IsChecked="{x:Bind ViewModel.IsSigned, Mode=TwoWay}"
-                      IsEnabled="{x:Bind ViewModel.IsDecentralized, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}" />
+                      IsEnabled="{x:Bind ViewModel.IsDecentralized, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
+                      Visibility="{x:Bind ViewModel.IsProton, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
 
             <CheckBox x:Uid="MessageDecentralized"
                       Grid.Row="6"
@@ -220,7 +222,8 @@
                       VerticalAlignment="Center"
                       Checked="DecentralizedChecked"
                       IsChecked="{x:Bind ViewModel.IsDecentralized, Mode=TwoWay}"
-                      IsEnabled="{x:Bind ViewModel.From.IsHybrid, Mode=OneWay}" />
+                      IsEnabled="{x:Bind ViewModel.From.IsHybrid, Mode=OneWay}"
+                      Visibility="Collapsed" />
         </Grid>
 
         <!--  message body  -->
