@@ -3,35 +3,21 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
-using System.Windows.Input;
-using Microsoft.Xaml.Interactivity;
 using Tuvi.App.ViewModels.Services;
-using Windows.Storage.Pickers;
 using Windows.Storage;
+using Windows.Storage.Pickers;
 using Windows.System;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-#else
+#else 
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
 #endif
 
-namespace Eppie.App.UI.Behaviors
+namespace Eppie.App.Shared.Services
 {
-    // ToDo: remove it [Eppie-io/Eppie-App#561]
-    public class FileBehavior : Behavior<Button>, IFileOperationProvider
+    public class FileOperationProvider : IFileOperationProvider
     {
-        public static readonly DependencyProperty CommandProperty =
-            DependencyProperty.Register(nameof(Command), typeof(ICommand), typeof(FileBehavior), new PropertyMetadata(null));
-
-        public ICommand Command
-        {
-            get { return (ICommand)GetValue(CommandProperty); }
-            set { SetValue(CommandProperty, value); }
-        }
-
         public virtual Task<IEnumerable<AttachedFileInfo>> LoadFilesAsync()
         {
             return SelectAndLoadFilesDataAsync();
@@ -45,21 +31,6 @@ namespace Eppie.App.UI.Behaviors
         public async Task SaveToTempFileAndOpenAsync(byte[] data, string fileName)
         {
             await SaveDataToTempFileAndOpenAsync(fileName, data).ConfigureAwait(true);
-        }
-
-        protected override void OnAttached()
-        {
-            AssociatedObject.Click += OnClick;
-        }
-
-        protected override void OnDetaching()
-        {
-            AssociatedObject.Click -= OnClick;
-        }
-
-        protected virtual void OnClick(object sender, RoutedEventArgs e)
-        {
-            Command?.Execute(this);
         }
 
         private static async Task SaveDataToFileAsync(string fileName, byte[] data)

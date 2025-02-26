@@ -15,8 +15,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\BitmapTools.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\NotificationManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\AIService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\ClipboardProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\DragAndDropService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ErrorHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\FileOperationProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\LauncherService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\LocalizationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\LocalSettingsService.cs" />

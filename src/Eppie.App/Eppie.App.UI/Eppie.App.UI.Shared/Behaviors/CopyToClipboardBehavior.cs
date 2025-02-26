@@ -6,8 +6,9 @@ using Windows.UI.Xaml;
 using Microsoft.UI.Xaml;
 #endif
 
-namespace Tuvi.App.Shared.Behaviors
+namespace Eppie.App.UI.Behaviors
 {
+    // ToDo: remove it [Eppie-io/Eppie-App#561]
     public class CopyToClipboardBehavior : ClipboardBehaviorBase
     {
         public static readonly DependencyProperty CopyCommandProperty =
