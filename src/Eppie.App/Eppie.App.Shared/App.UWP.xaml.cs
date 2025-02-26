@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+using Microsoft.Services.Store.Engagement;
 using Tuvi.App.Shared.Models;
 using Tuvi.App.Shared.Services;
 using Tuvi.App.Shared.Views;
@@ -27,7 +28,6 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using Microsoft.Services.Store.Engagement;
 
 namespace Eppie.App.Shared
 {
@@ -36,9 +36,6 @@ namespace Eppie.App.Shared
     /// </summary>
     public partial class App : Application
     {
-
-        public XamlRoot XamlRoot => Window.Current?.Content?.XamlRoot;
-
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.
@@ -49,6 +46,8 @@ namespace Eppie.App.Shared
             try
             {
                 Frame rootFrame = Window.Current.Content as Frame;
+
+                MainWindow = Window.Current;
 
                 // Do not repeat app initialization when the Window already has content,
                 // just ensure that the window is active

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+using Eppie.App.UI.Tools;
 using Tuvi.App.ViewModels.Services;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -35,24 +36,26 @@ namespace Eppie.App.Shared.Services
 
         private static async Task SaveDataToFileAsync(string fileName, byte[] data)
         {
-            var picker = new FileSavePicker
-            {
-                SuggestedStartLocation = PickerLocationId.DocumentsLibrary
-            };
+            FileSavePicker fileSavePicker = FileSavePickerBuilder.CreateBuilder(App.MainWindow)
+                                                                 .Configure((picker) =>
+                                                                 {
+                                                                     picker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
 
-            var extension = Path.GetExtension(fileName);
-            if (string.IsNullOrEmpty(extension))
-            {
-                picker.FileTypeChoices.Add("", new List<string>() { "." });
-            }
-            else
-            {
-                picker.FileTypeChoices.Add(extension, new List<string>() { extension });
-            }
+                                                                     var extension = Path.GetExtension(fileName);
+                                                                     if (string.IsNullOrEmpty(extension))
+                                                                     {
+                                                                         picker.FileTypeChoices.Add("", new List<string>() { "." });
+                                                                     }
+                                                                     else
+                                                                     {
+                                                                         picker.FileTypeChoices.Add(extension, new List<string>() { extension });
+                                                                     }
 
-            picker.SuggestedFileName = fileName;
+                                                                     picker.SuggestedFileName = fileName;
+                                                                 })
+                                                                 .Build();
 
-            var file = await picker.PickSaveFileAsync();
+            var file = await fileSavePicker.PickSaveFileAsync();
             if (file != null)
             {
                 using (var fileStream = await file.OpenAsync(FileAccessMode.ReadWrite))
@@ -106,15 +109,16 @@ namespace Eppie.App.Shared.Services
 
         private static async Task<IReadOnlyList<StorageFile>> SelectFiles()
         {
-            var picker = new FileOpenPicker
-            {
-                ViewMode = PickerViewMode.Thumbnail,
-                SuggestedStartLocation = PickerLocationId.DocumentsLibrary
-            };
-            picker.FileTypeFilter.Add("*");
+            FileOpenPicker fileOpenPicker = FileOpenPickerBuilder.CreateBuilder(App.MainWindow)
+                                             .Configure((picker) =>
+                                             {
+                                                 picker.ViewMode = PickerViewMode.Thumbnail;
+                                                 picker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
+                                                 picker.FileTypeFilter.Add("*");
+                                             })
+                                             .Build();
 
-            var files = await picker.PickMultipleFilesAsync();
-            return files;
+            return await fileOpenPicker.PickMultipleFilesAsync();
         }
 
         protected static async Task<AttachedFileInfo> ReadFileDataAsync(StorageFile file)
