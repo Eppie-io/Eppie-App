@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Eppie.AI;
+using Eppie.App.UI.Tools;
 using Eppie.App.ViewModels.Services;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -58,11 +59,13 @@ namespace Eppie.App.Shared.Services
 
         public async Task ImportModelAsync()
         {
-            var folderPicker = new FolderPicker
-            {
-                SuggestedStartLocation = PickerLocationId.Desktop
-            };
-            folderPicker.FileTypeFilter.Add("*");
+            FolderPicker folderPicker = FolderPickerBuilder.CreateBuilder(App.MainWindow)
+                                                           .Configure((picker) =>
+                                                           {
+                                                               picker.SuggestedStartLocation = PickerLocationId.Desktop;
+                                                               picker.FileTypeFilter.Add("*");
+                                                           })
+                                                           .Build();
 
             StorageFolder selectedFolder = await folderPicker.PickSingleFolderAsync();
 
