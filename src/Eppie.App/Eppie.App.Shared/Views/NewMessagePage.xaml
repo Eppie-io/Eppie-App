@@ -4,9 +4,9 @@
                           xmlns:android="http://uno.ui/android"
                           xmlns:behaviors="using:Eppie.App.UI.Behaviors"
                           xmlns:controls="using:Tuvi.App.Shared.Controls"
-                          xmlns:eppie_controls="using:Eppie.App.UI.Controls"
                           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                           xmlns:entities="using:Tuvi.Core.Entities"
+                          xmlns:eppie_controls="using:Eppie.App.UI.Controls"
                           xmlns:extensions="using:Tuvi.App.Shared.Extensions"
                           xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
                           xmlns:ios="http://uno.ui/ios"
@@ -228,15 +228,15 @@
 
         <!--  message body  -->
         <Grid Grid.Row="3"
+              AllowDrop="True"
               BorderBrush="#FFE0E0E0"
               BorderThickness="1"
-              AllowDrop="True"
-              Drop="NewMessagePage_Grid_Drop"
-              DragOver="NewMessagePage_Grid_DragOver">
+              DragOver="NewMessagePage_Grid_DragOver"
+              Drop="NewMessagePage_Grid_Drop">
 
-            <eppie_controls:EditMessageControl Text="{x:Bind ViewModel.TextBody, Mode=TwoWay}"
-                                               Html="{x:Bind ViewModel.HtmlBody, Mode=TwoWay}"
-                                               IsEnabled="{x:Bind ViewModel.LoadingContent, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}" />
+            <eppie_controls:EditMessageControl Html="{x:Bind ViewModel.HtmlBody, Mode=TwoWay}"
+                                               IsEnabled="{x:Bind ViewModel.LoadingContent, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
+                                               Text="{x:Bind ViewModel.TextBody, Mode=TwoWay}" />
 
         </Grid>
 
@@ -251,14 +251,14 @@
         <controls:AttachmentListControl x:Uid="AttachedFiles"
                                         Grid.Row="4"
                                         Margin="0,16,0,0"
+                                        AllowDrop="True"
+                                        DragOver="NewMessagePage_Grid_DragOver"
+                                        Drop="NewMessagePage_Grid_Drop"
                                         IsTitleVisible="True"
                                         ItemTemplate="{StaticResource RemovableAttachmentItemTemplate}"
                                         Items="{x:Bind ViewModel.Attachments, Mode=OneWay}"
                                         ListAreaHeight="80"
-                                        Visibility="{x:Bind ViewModel.HasAttachments, Mode=OneWay}"
-                                        AllowDrop="True"
-                                        Drop="NewMessagePage_Grid_Drop"
-                                        DragOver="NewMessagePage_Grid_DragOver"/>
+                                        Visibility="{x:Bind ViewModel.HasAttachments, Mode=OneWay}" />
 
     </Grid>
 </local:NewMessagePageBase>

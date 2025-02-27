@@ -3,8 +3,8 @@
                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                        xmlns:behaviors="using:Eppie.App.UI.Behaviors"
                        xmlns:controls="using:Tuvi.App.Shared.Controls"
-                       xmlns:eppie_controls="using:Eppie.App.UI.Controls"
                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                       xmlns:eppie_controls="using:Eppie.App.UI.Controls"
                        xmlns:extensions="using:Tuvi.App.Shared.Extensions"
                        xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
                        xmlns:local="using:Tuvi.App.Shared.Views"
@@ -121,11 +121,10 @@
                               Icon="Flag"
                               Visibility="{x:Bind ViewModel.MessageInfo.IsFlagged, Mode=OneWay}" />
 
-                <AppBarButton x:Uid="/App.Resources/TranslateMessageButton"
-                              Command="{x:Bind ViewModel.TranslateMessageCommand}">
-                              <FontIcon Glyph="&#xF2B7;" />
+                <AppBarButton x:Uid="/App.Resources/TranslateMessageButton" Command="{x:Bind ViewModel.TranslateMessageCommand}">
+                    <FontIcon Glyph="&#xF2B7;" />
                 </AppBarButton>
-                
+
             </CommandBar>
 
         </Grid>
@@ -143,7 +142,9 @@
 
             <StackPanel Grid.Column="1" Orientation="Horizontal">
 
-                <TextBlock Margin="4,4,0,0" Text="{x:Bind ViewModel.MessageInfo.MessageSender, Mode=OneWay}" IsTextSelectionEnabled="True"/>
+                <TextBlock Margin="4,4,0,0"
+                           IsTextSelectionEnabled="True"
+                           Text="{x:Bind ViewModel.MessageInfo.MessageSender, Mode=OneWay}" />
 
                 <FontIcon Margin="4,4,0,0"
                           FontSize="14"
@@ -166,8 +167,8 @@
 
             <TextBlock Grid.Column="1"
                        Margin="4,4,0,0"
-                       Text="{x:Bind ViewModel.MessageInfo.MessageReceiver, Mode=OneWay}"
-                       IsTextSelectionEnabled="True" />
+                       IsTextSelectionEnabled="True"
+                       Text="{x:Bind ViewModel.MessageInfo.MessageReceiver, Mode=OneWay}" />
 
         </Grid>
 
@@ -185,8 +186,8 @@
 
             <TextBlock Grid.Column="1"
                        Margin="4,4,0,0"
-                       Text="{x:Bind ViewModel.MessageInfo.MessageCopy, Mode=OneWay}"
-                       IsTextSelectionEnabled="True" />
+                       IsTextSelectionEnabled="True"
+                       Text="{x:Bind ViewModel.MessageInfo.MessageCopy, Mode=OneWay}" />
 
         </Grid>
 
@@ -218,8 +219,8 @@
 
             <TextBlock Grid.Column="1"
                        Margin="4,4,0,0"
-                       Text="{x:Bind ViewModel.MessageInfo.MessageSubject, Mode=OneWay}"
-                       IsTextSelectionEnabled="True" />
+                       IsTextSelectionEnabled="True"
+                       Text="{x:Bind ViewModel.MessageInfo.MessageSubject, Mode=OneWay}" />
 
         </Grid>
 
@@ -230,7 +231,7 @@
             <eppie_controls:MessageControl HasHtmlBody="{x:Bind ViewModel.MessageInfo.HasHtmlBody, Mode=OneWay}"
                                            HtmlBody="{x:Bind ViewModel.MessageInfo.MessageHtmlBody, Mode=OneWay}"
                                            TextBody="{x:Bind ViewModel.MessageInfo.MessageTextBody, Mode=OneWay}"
-                                           TranslatedBody="{x:Bind ViewModel.MessageInfo.TranslatedBody, Mode=OneWay}"/>
+                                           TranslatedBody="{x:Bind ViewModel.MessageInfo.TranslatedBody, Mode=OneWay}" />
         </Grid>
 
         <!--  Wrapped to Grid because Android doesn't have Visibility=Collapsed for ProgressRing  -->
