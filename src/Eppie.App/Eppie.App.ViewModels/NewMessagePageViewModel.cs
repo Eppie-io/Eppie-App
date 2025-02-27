@@ -173,6 +173,13 @@ namespace Tuvi.App.ViewModels
             set { SetProperty(ref _isDecentralized, value); }
         }
 
+        private bool _isProton;
+        public bool IsProton
+        {
+            get { return _isProton; }
+            set { SetProperty(ref _isProton, value); }
+        }
+
         public bool HasAttachments => Attachments.Any();
 
         public ObservableCollection<EmailAddress> FromList { get; } = new ObservableCollection<EmailAddress>();
@@ -503,6 +510,27 @@ namespace Tuvi.App.ViewModels
 
                 message = await Core.UpdateDraftMessageAsync(MessageInfo.MessageID, message).ConfigureAwait(true);
                 MessageInfo.MessageData = message;
+            }
+        }
+
+        public void OnFromChanged()
+        {
+            // If the sender is a ProtonMail account, then the message encrypted and signed directly by Proton
+            IsProton = Proton.Extensions.IsProton(From);
+            if (IsProton)
+            {
+                IsSigned
+                    = IsEncrypted
+                    = IsDecentralized
+                    = false;
+            }
+            else
+            {
+                // If the sender is a decentralized account, then the message is decentralized, encrypted, and signed by default
+                IsSigned
+                    = IsEncrypted
+                    = IsDecentralized
+                    = StringHelper.IsDecentralizedEmail(From);
             }
         }
     }

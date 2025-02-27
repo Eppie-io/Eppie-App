@@ -40,21 +40,14 @@
                             OverflowButtonVisibility="Collapsed">
 
                     <AppBarButton x:Uid="/App.Resources/SaveAttachmentButton"
-                                  Icon="Save"
-                                  Tag="{x:Bind}">
-                        <interactivity:Interaction.Behaviors>
-                            <behaviors:AttachmentFileBehavior Command="{x:Bind DownloadCommand, Mode=OneWay}" />
-                        </interactivity:Interaction.Behaviors>
-                    </AppBarButton>
+                                  Command="{x:Bind DownloadCommand}"
+                                  CommandParameter="{x:Bind Converter={StaticResource AttachmentConverter}}"
+                                  Icon="Save" />
 
                     <AppBarButton x:Uid="/App.Resources/OpenAttachmentButton"
-                                  Icon="OpenFile"
-                                  Tag="{x:Bind}">
-                        <interactivity:Interaction.Behaviors>
-                            <behaviors:AttachmentFileBehavior Command="{x:Bind OpenCommand, Mode=OneWay}" />
-                        </interactivity:Interaction.Behaviors>
-                    </AppBarButton>
-
+                                  Command="{x:Bind OpenCommand}"
+                                  CommandParameter="{x:Bind Converter={StaticResource AttachmentConverter}}"
+                                  Icon="OpenFile" />
                 </CommandBar>
 
             </Grid>

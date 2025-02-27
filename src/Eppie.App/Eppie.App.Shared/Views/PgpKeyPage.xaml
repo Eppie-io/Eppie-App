@@ -140,17 +140,15 @@
                     Orientation="Vertical"
                     Spacing="4">
 
-            <Button x:Uid="PgpKeyCopyButton" VerticalAlignment="Center">
-                <interactivity:Interaction.Behaviors>
-                    <behaviors:CopyToClipboardBehavior CopyCommand="{x:Bind ViewModel.CopyPgpKeyCommand, Mode=OneWay}" />
-                </interactivity:Interaction.Behaviors>
-            </Button>
+            <Button x:Uid="PgpKeyCopyButton"
+                    VerticalAlignment="Center"
+                    Command="{x:Bind ViewModel.CopyPgpKeyCommand}"
+                    CommandParameter="{StaticResource ClipboardProvider}" />
 
-            <Button x:Uid="PgpKeyExportButton" VerticalAlignment="Center">
-                <interactivity:Interaction.Behaviors>
-                    <behaviors:FileBehavior Command="{x:Bind ViewModel.ExportPgpKeyCommand, Mode=OneWay}" />
-                </interactivity:Interaction.Behaviors>
-            </Button>
+            <Button x:Uid="PgpKeyExportButton"
+                    VerticalAlignment="Center"
+                    Command="{x:Bind ViewModel.ExportPgpKeyCommand}"
+                    CommandParameter="{StaticResource FileOperationProvider}" />
 
             <Button x:Uid="PgpKeySendButton"
                     VerticalAlignment="Center"

@@ -2,12 +2,14 @@ using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
+using Eppie.App.UI.Tools;
 using Microsoft.UI.Xaml.Controls;
 using Tuvi.App.Shared.Extensions;
 using Tuvi.App.Shared.Helpers;
 using Tuvi.App.ViewModels;
 using Tuvi.App.ViewModels.Services;
-
+using Windows.Storage;
+using Windows.Storage.Pickers;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -161,15 +163,19 @@ namespace Tuvi.App.Shared.Views
         {
             try
             {
-                var picker = new Windows.Storage.Pickers.FileOpenPicker();
-                picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail;
-                picker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.PicturesLibrary;
-                picker.FileTypeFilter.Add(".jpg");
-                picker.FileTypeFilter.Add(".jpeg");
-                picker.FileTypeFilter.Add(".png");
-                picker.FileTypeFilter.Add(".bmp");
+                FileOpenPicker fileOpenPicker = FileOpenPickerBuilder.CreateBuilder(Eppie.App.Shared.App.MainWindow)
+                                                                     .Configure((picker) =>
+                                                                     {
+                                                                         picker.ViewMode = PickerViewMode.Thumbnail;
+                                                                         picker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
+                                                                         picker.FileTypeFilter.Add(".jpg");
+                                                                         picker.FileTypeFilter.Add(".jpeg");
+                                                                         picker.FileTypeFilter.Add(".png");
+                                                                         picker.FileTypeFilter.Add(".bmp");
+                                                                     })
+                                                                     .Build();
 
-                Windows.Storage.StorageFile file = await picker.PickSingleFileAsync();
+                StorageFile file = await fileOpenPicker.PickSingleFileAsync();
                 if (file != null)
                 {
                     var bitmapBytes = await BitmapTools.GetThumbnailPixelDataAsync(file, (uint)ContactItem.DefaultAvatarSize, (uint)ContactItem.DefaultAvatarSize).ConfigureAwait(true);

@@ -36,10 +36,7 @@ namespace Tuvi.App.Shared.Views
 
         private void onFromChanged(object sender, RoutedEventArgs e)
         {
-            ViewModel.IsSigned
-                = ViewModel.IsEncrypted
-                = ViewModel.IsDecentralized
-                = StringHelper.IsDecentralizedEmail(ViewModel.From);
+            ViewModel.OnFromChanged();
         }
 
 #if WINDOWS_UWP

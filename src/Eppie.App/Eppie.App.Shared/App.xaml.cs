@@ -35,6 +35,9 @@ namespace Eppie.App.Shared
         private NotificationManager _notificationManager { get; set; }
         public AIService AIService { get; private set; }
 
+        public static Window MainWindow { get; private set; }
+        public XamlRoot XamlRoot => MainWindow?.Content?.XamlRoot;
+
         private ErrorHandler _errorHandler;
 
 
