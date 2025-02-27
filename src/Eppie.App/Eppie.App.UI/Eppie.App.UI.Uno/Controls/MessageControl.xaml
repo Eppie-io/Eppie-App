@@ -17,7 +17,7 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition x:Name="SecondColumn" Width="0" />
         </Grid.ColumnDefinitions>
-        
+
         <!--  ToDo: Try use `<WebView2>` when '[Skia] Add support for WebView' (https://github.com/unoplatform/uno/issues/4233) issue is solved  -->
         <!--  ToDo: We can use `<not_skia:WebView2>` and `#if HAS_UNO_SKIA` when '__SKIA__ constant is not defined in a library when targeting net9.0-desktop' (https://github.com/unoplatform/uno/issues/18996) issue is solved  -->
 
@@ -26,8 +26,7 @@
                       not_skia:Visibility="{x:Bind HasHtmlBody, Mode=OneWay}"
                       skia:Visibility="Collapsed" />
 
-            <ScrollViewer Padding="4"
-                          not_skia:Visibility="{x:Bind HasHtmlBody, Converter={StaticResource InverseBoolToVisibilityConverter}, Mode=OneWay}">
+            <ScrollViewer Padding="4" not_skia:Visibility="{x:Bind HasHtmlBody, Converter={StaticResource InverseBoolToVisibilityConverter}, Mode=OneWay}">
 
                 <TextBlock IsTextSelectionEnabled="True"
                            Style="{StaticResource MessageTextStyle}"
@@ -35,7 +34,7 @@
 
             </ScrollViewer>
         </Grid>
-        
+
         <ScrollViewer Grid.Column="1"
                       Padding="4"
                       Visibility="{x:Bind HasTranslatedBody, Mode=OneWay}">
@@ -43,6 +42,6 @@
                        Style="{StaticResource MessageTextStyle}"
                        Text="{x:Bind TranslatedBody, Mode=OneWay}" />
         </ScrollViewer>
-        
+
     </Grid>
 </shared:BaseUserControl>

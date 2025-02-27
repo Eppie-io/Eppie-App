@@ -42,14 +42,14 @@
     </UserControl.Resources>
 
     <Grid>
-        <winui:TreeView ItemContainerStyle="{StaticResource MailBoxItemContainerStyle}"
-                        AllowDrop="True"
+        <winui:TreeView AllowDrop="True"
+                        DragOver="MailBoxTreeView_DragOver"
+                        Drop="MailBoxTreeView_Drop"
+                        ItemContainerStyle="{StaticResource MailBoxItemContainerStyle}"
                         ItemTemplate="{StaticResource MailBoxItemTemplate}"
                         ItemsSource="{x:Bind MailBoxesModel.Items, Mode=OneWay}"
                         SelectedItem="{x:Bind MailBoxesModel.SelectedItem, Mode=TwoWay}"
-                        SelectionMode="Single"
-                        DragOver="MailBoxTreeView_DragOver"
-                        Drop="MailBoxTreeView_Drop">
+                        SelectionMode="Single">
             <interactivity:Interaction.Behaviors>
                 <behaviors:TreeViewItemInvokeBehavior InvokeCommand="{x:Bind MailBoxesModel.ItemClickCommand, Mode=OneWay}" />
             </interactivity:Interaction.Behaviors>
