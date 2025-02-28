@@ -121,7 +121,8 @@
                               Icon="Flag"
                               Visibility="{x:Bind ViewModel.MessageInfo.IsFlagged, Mode=OneWay}" />
 
-                <AppBarButton x:Uid="/App.Resources/TranslateMessageButton" Command="{x:Bind ViewModel.TranslateMessageCommand}">
+                <AppBarButton x:Uid="/App.Resources/TranslateMessageButton" Command="{x:Bind ViewModel.TranslateMessageCommand}"
+Visibility="{x:Bind ViewModel.IsTranslatorEnabled, Mode=OneWay}">
                     <FontIcon Glyph="&#xF2B7;" />
                 </AppBarButton>
 

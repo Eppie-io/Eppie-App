@@ -866,12 +866,40 @@ Subject: {3}
     <value>You have to restart {0} for the changes to take effect.</value>
     <comment>This message appears after user select language. We need to restart {app name} for apply new language.</comment>
   </data>
-  <data name="EnableLocalAIButton.Content" xml:space="preserve">
-    <value>Enable Local AI</value>
-    <comment>Enable Local AI button text in settings</comment>
+  <data name="ImportLocalAIModelButton.Content" xml:space="preserve">
+    <value>Import Model</value>
+    <comment>Import Local AI Model button text in Local AI Agent settings</comment>
   </data>
-  <data name="DisableLocalAIButton.Content" xml:space="preserve">
-    <value>Disable Local AI</value>
-    <comment>Disable Local AI button text in settings</comment>
+  <data name="RemoveLocalAIAgentButton.Content" xml:space="preserve">
+    <value>Remove Local AI Agent</value>
+    <comment>Remove Local AI Agent button text in Local AI Agent settings</comment>
+  </data>
+  <data name="RemoveAIAgentDialogAcceptText" xml:space="preserve">
+    <value>Remove</value>
+    <comment>Accept button text for dialog shown when user wants to remove AI Agent from the list</comment>
+  </data>
+  <data name="RemoveAIAgentDialogMessage" xml:space="preserve">
+    <value>This action will remove AI Agent from the list</value>
+    <comment>Dialog message shown when user wants to remove AI Agent from the list</comment>
+  </data>
+  <data name="RemoveAIAgentDialogRejectText" xml:space="preserve">
+    <value>Cancel</value>
+    <comment>Cancel button text for dialog shown when user wants to remove AI Agent from the list</comment>
+  </data>
+  <data name="RemoveAIAgentDialogTitle" xml:space="preserve">
+    <value>Attention</value>
+    <comment>The title of the dialog shown when user wants to remove AI Agent from the list</comment>
+  </data>
+  <data name="AgentSpecialty.Text" xml:space="preserve">
+    <value>Agent specialty</value>
+    <comment>The title for AI Agent specialty combobox</comment>
+  </data>
+  <data name="SystemPromptInputTextBox.Header" xml:space="preserve">
+    <value>System prompt</value>
+    <comment>The title for AI Agent system prompt edit box</comment>
+  </data>
+  <data name="SystemPromptInputTextBox.PlaceholderText" xml:space="preserve">
+    <value>Enter a system prompt for the AI Agent...</value>
+    <comment>The placeholder text for AI Agent system prompt edit box</comment>
   </data>
 </root>

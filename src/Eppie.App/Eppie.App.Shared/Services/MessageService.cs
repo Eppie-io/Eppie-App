@@ -451,6 +451,7 @@ namespace Tuvi.App.Shared.Services
                 StringProvider.GetString("WipeAllDataDialogAcceptText"),
                 StringProvider.GetString("WipeAllDataDialogRejectText"));
         }
+
         public Task<bool> ShowRemoveAccountDialogAsync()
         {
             return ShowDialogAsync(
@@ -458,6 +459,15 @@ namespace Tuvi.App.Shared.Services
                 StringProvider.GetString("RemoveAccountDialogMessage"),
                 StringProvider.GetString("RemoveAccountDialogAcceptText"),
                 StringProvider.GetString("RemoveAccountDialogRejectText"));
+        }
+
+        public Task<bool> ShowRemoveAIAgentDialogAsync()
+        {
+            return ShowDialogAsync(
+                StringProvider.GetString("RemoveAIAgentDialogTitle"),
+                StringProvider.GetString("RemoveAIAgentDialogMessage"),
+                StringProvider.GetString("RemoveAIAgentDialogAcceptText"),
+                StringProvider.GetString("RemoveAIAgentDialogRejectText"));
         }
 
         public Task ShowNeedToCreateSeedPhraseMessageAsync()

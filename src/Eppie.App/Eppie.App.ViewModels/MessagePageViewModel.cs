@@ -55,6 +55,13 @@ namespace Tuvi.App.ViewModels
             set { SetProperty(ref _loadingContent, value); }
         }
 
+        private bool _isTranslatorEnabled;
+        public bool IsTranslatorEnabled
+        {
+            get { return _isTranslatorEnabled; }
+            set { SetProperty(ref _isTranslatorEnabled, value); }
+        }
+
         private Task<MessageInfo> _messageLoadTask;
 
         public ICommand ReplyCommand => new RelayCommand(Reply);
@@ -70,6 +77,8 @@ namespace Tuvi.App.ViewModels
         {
             try
             {
+                UpdateTranslateButton();
+
                 if (data is MessageInfo messageInfo)
                 {
                     MessageInfo = messageInfo;
@@ -90,6 +99,18 @@ namespace Tuvi.App.ViewModels
             }
 
             base.OnNavigatedTo(data);
+        }
+
+        private async void UpdateTranslateButton()
+        {
+            try
+            {
+                IsTranslatorEnabled = await AIService.IsEnabledAsync().ConfigureAwait(true);
+            }
+            catch (Exception e)
+            {
+                OnError(e);
+            }
         }
 
         private async Task SetupMessageAsync()

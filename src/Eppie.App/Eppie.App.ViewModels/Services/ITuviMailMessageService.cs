@@ -15,6 +15,7 @@ namespace Tuvi.App.ViewModels.Services
 
         Task<bool> ShowWipeAllDataDialogAsync();
         Task<bool> ShowRemoveAccountDialogAsync();
+        Task<bool> ShowRemoveAIAgentDialogAsync();
 
         Task ShowNeedToCreateSeedPhraseMessageAsync();
     }
