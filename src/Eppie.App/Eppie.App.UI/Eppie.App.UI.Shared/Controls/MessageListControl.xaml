@@ -48,17 +48,17 @@
         <ListView x:Name="MessageListView"
                   Grid.Row="2"
                   Padding="0,0,20,0"
-                  DataFetchSize="2"
-                  CanDragItems="True"
                   AllowDrop="False"
+                  CanDragItems="True"
+                  DataFetchSize="2"
+                  DragItemsStarting="MessageListView_DragItemsStarting"
                   IncrementalLoadingThreshold="1"
                   IncrementalLoadingTrigger="Edge"
                   IsItemClickEnabled="True"
                   ItemTemplate="{x:Bind ItemTemplate}"
                   ItemsSource="{x:Bind Messages, Mode=OneWay}"
                   SelectionChanged="MessageListView_SelectionChanged"
-                  SelectionMode="{x:Bind SelectionMode, Mode=OneWay}"
-                  DragItemsStarting="MessageListView_DragItemsStarting">
+                  SelectionMode="{x:Bind SelectionMode, Mode=OneWay}">
             <interactivity:Interaction.Behaviors>
                 <behaviors:ListViewItemClickBehavior ClickCommand="{x:Bind MessageClickCommand, Mode=OneWay}" />
             </interactivity:Interaction.Behaviors>

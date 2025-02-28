@@ -240,8 +240,8 @@
                                      Messages="{Binding MessageList, Mode=OneWay}"
                                      MessagesDeletedText="{Binding MessagesDeletedText, Mode=OneWay}"
                                      SelectedItemsChangedCommand="{Binding SelectedItemsChangedCommand}"
-                                     StartDragMessagesCommand="{Binding StartDragMessagesCommand}"
-                                     SelectionMode="{Binding IsSelectMessagesMode, Mode=OneWay, Converter={StaticResource BoolToSelectionModeConverter}}">
+                                     SelectionMode="{Binding IsSelectMessagesMode, Mode=OneWay, Converter={StaticResource BoolToSelectionModeConverter}}"
+                                     StartDragMessagesCommand="{Binding StartDragMessagesCommand}">
 
             <controls:MessageListControl.HeaderHolder>
                 <Grid>
