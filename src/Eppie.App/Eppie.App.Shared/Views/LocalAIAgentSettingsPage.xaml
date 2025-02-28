@@ -1,0 +1,89 @@
+﻿<local:LocalAIAgentSettingsPageBase x:Class="Tuvi.App.Shared.Views.LocalAIAgentSettingsPage"
+                                            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                                            xmlns:behaviors="using:Eppie.App.UI.Behaviors"
+                                            xmlns:controls="using:Tuvi.App.Shared.Controls"
+                                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                                            xmlns:extensions="using:Tuvi.App.Shared.Extensions"
+                                            xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+                                            xmlns:local="using:Tuvi.App.Shared.Views"
+                                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                                            xmlns:viewmodels="using:Tuvi.App.ViewModels"
+                                            xmlns:win="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                                            Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                                            mc:Ignorable="d">
+
+    <local:LocalAIAgentSettingsPageBase.DataContext>
+        <viewmodels:LocalAIAgentSettingsPageViewModel />
+    </local:LocalAIAgentSettingsPageBase.DataContext>
+
+    <interactivity:Interaction.Behaviors>
+        <behaviors:DialogBehavior ApplyCommand="{x:Bind ViewModel.ApplySettingsCommand}"
+                                  CancelCommand="{x:Bind ViewModel.CancelSettingsCommand}"
+                                  HandleErrorCommand="{x:Bind ViewModel.HandleErrorCommand}" />
+    </interactivity:Interaction.Behaviors>
+
+    <Grid Padding="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Button x:Uid="RemoveLocalAIAgentButton"
+                HorizontalAlignment="Right"
+                Command="{x:Bind ViewModel.RemoveAgentCommand}"
+                Visibility="{x:Bind ViewModel.IsCreatingAgentMode, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+
+        <Button x:Uid="ImportLocalAIModelButton"
+                Command="{x:Bind ViewModel.ImportLocalAIModelCommand}" />
+
+
+        <ProgressRing Margin="8,8"
+                      IsActive="True"
+                      Visibility="{x:Bind ViewModel.IsAIProgressRingVisible, Mode=OneWay}" />
+
+        <Grid Grid.Row="1" ColumnSpacing="36" RowSpacing="8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="286" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Vertical" Spacing="12">
+                <TextBlock x:Uid="AgentSpecialty" VerticalAlignment="Center"/>
+                <ComboBox VerticalAlignment="Center"
+                          ItemsSource="{x:Bind ViewModel.AgentSettingsModel.Specialties}"
+                          SelectedItem="{x:Bind ViewModel.AgentSettingsModel.AgentSpecialty, Mode=TwoWay}" />
+                <TextBox x:Uid="SystemPromptInputTextBox" Grid.Row="0" MinHeight="96"
+                         MaxHeight="300" AcceptsReturn="True"
+                         Text="{x:Bind ViewModel.AgentSettingsModel.SystemPrompt, Mode=TwoWay}"
+                         TextWrapping="Wrap" />
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="2" Margin="0,16,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+
+            <Button x:Uid="Apply"
+                    Margin="0,4,4,4"
+                    HorizontalAlignment="Stretch"
+                    Command="{x:Bind ViewModel.ApplySettingsCommand, Mode=OneWay}"
+                    Style="{StaticResource AccentButtonStyle}" />
+
+            <Button x:Uid="Cancel"
+                    Grid.Column="1"
+                    Margin="4,4,0,4"
+                    HorizontalAlignment="Stretch"
+                    Command="{x:Bind ViewModel.CancelSettingsCommand}" />
+
+        </Grid>
+
+    </Grid>
+</local:LocalAIAgentSettingsPageBase>

@@ -890,4 +890,16 @@ Subject: {3}
     <value>Attention</value>
     <comment>The title of the dialog shown when user wants to remove AI Agent from the list</comment>
   </data>
+  <data name="AgentSpecialty.Text" xml:space="preserve">
+    <value>Agent specialty</value>
+    <comment>The title for AI Agent specialty combobox</comment>
+  </data>
+  <data name="SystemPromptInputTextBox.Header" xml:space="preserve">
+    <value>System prompt</value>
+    <comment>The title for AI Agent system prompt edit box</comment>
+  </data>
+  <data name="SystemPromptInputTextBox.PlaceholderText" xml:space="preserve">
+    <value>Enter a system prompt for the AI Agent...</value>
+    <comment>The placeholder text for AI Agent system prompt edit box</comment>
+  </data>
 </root>
