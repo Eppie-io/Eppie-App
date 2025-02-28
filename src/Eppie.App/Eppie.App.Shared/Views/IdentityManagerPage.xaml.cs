@@ -10,7 +10,7 @@ namespace Tuvi.App.Shared.Views
 
     public sealed partial class IdentityManagerPage : IdentityManagerPageBase
     {
-        public ICommand ConnectServiceCommand => new RelayCommand(() => Frame?.Navigate(typeof(SelectEmailProviderPage)));
+        public ICommand ConnectServiceCommand => new RelayCommand(() => Frame?.Navigate(typeof(SelectServicePage)));
 
         public IdentityManagerPage()
         {

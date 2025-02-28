@@ -26,8 +26,8 @@
       <DependentUpon>DecentralizedAccountSettingsControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\EditMessageControl.xaml.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\EmailProvidersListControl.xaml.cs">
-      <DependentUpon>EmailProvidersListControl.xaml</DependentUpon>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\ServicesListControl.xaml.cs">
+      <DependentUpon>ServicesListControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\EmailsInputControl.xaml.cs">
       <DependentUpon>EmailsInputControl.xaml</DependentUpon>
@@ -95,7 +95,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Controls\EmailProvidersListControl.xaml">
+    <Page Include="$(MSBuildThisFileDirectory)Controls\ServicesListControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

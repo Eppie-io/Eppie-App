@@ -24,27 +24,6 @@ namespace Tuvi.App.ViewModels
             set { SetProperty(ref _restartMessage, value); }
         }
 
-        private bool _isEnableAIButtonVisible;
-        public bool IsEnableAIButtonVisible
-        {
-            get { return _isEnableAIButtonVisible; }
-            set { SetProperty(ref _isEnableAIButtonVisible, value); }
-        }
-
-        private bool _isDisableAIButtonVisible;
-        public bool IsDisableAIButtonVisible
-        {
-            get { return _isDisableAIButtonVisible; }
-            set { SetProperty(ref _isDisableAIButtonVisible, value); }
-        }
-
-        private bool _isAIProgressRingVisible;
-        public bool IsAIProgressRingVisible
-        {
-            get { return _isAIProgressRingVisible; }
-            set { SetProperty(ref _isAIProgressRingVisible, value); }
-        }
-
         public ICommand PgpKeysCommand => new RelayCommand(() => NavigationService?.Navigate(nameof(PgpKeysPageViewModel)));
 
         public ICommand ChangeMasterPasswordCommand => new RelayCommand(() => NavigationService?.Navigate(nameof(PasswordPageViewModel), PasswordActions.ChangePassword));
@@ -56,23 +35,6 @@ namespace Tuvi.App.ViewModels
         public ICommand ImportBackupCommand => new AsyncRelayCommand<IFileOperationProvider>(ImportBackupFromFileAsync);
 
         public ICommand WipeApplicationDataCommand => new AsyncRelayCommand(WipeApplicationDataAsync);
-
-        public ICommand EnableAICommand => new AsyncRelayCommand(EnableAIAsync);
-
-        public ICommand DisableAICommand => new AsyncRelayCommand(DisableAIAsync);
-
-        override public async void OnNavigatedTo(object data)
-        {
-            try
-            {
-                base.OnNavigatedTo(data);
-                await ToggleAIButtons();
-            }
-            catch (Exception e)
-            {
-                OnError(e);
-            }
-        }
 
         private async Task WipeApplicationDataAsync()
         {
@@ -150,69 +112,6 @@ namespace Tuvi.App.ViewModels
 
                 var brandName = BrandService.GetName();
                 RestartMessage = string.Format(message, brandName);
-            }
-        }
-
-        public async Task DisableAIAsync()
-        {
-            ShowProgressRing();
-            try
-            {
-                await AIService.DeleteModelAsync();
-            }
-            catch (Exception ex)
-            {
-                OnError(ex);
-            }
-            finally
-            {
-                HideProgressRing();
-                await ToggleAIButtons();
-            }
-        }
-
-        public async Task EnableAIAsync()
-        {
-            ShowProgressRing();
-            try
-            {
-                await AIService.ImportModelAsync();
-            }
-            catch (Exception ex)
-            {
-                OnError(ex);
-            }
-            finally
-            {
-                HideProgressRing();
-                await ToggleAIButtons();
-            }
-        }
-
-        private void ShowProgressRing()
-        {
-            IsAIProgressRingVisible = true;
-
-            IsEnableAIButtonVisible = false;
-            IsDisableAIButtonVisible = false;
-        }
-
-        private void HideProgressRing()
-        {
-            IsAIProgressRingVisible = false;
-        }
-
-        private async Task ToggleAIButtons()
-        {
-            if (await AIService.IsEnabledAsync())
-            {
-                IsEnableAIButtonVisible = false;
-                IsDisableAIButtonVisible = true;
-            }
-            else
-            {
-                IsEnableAIButtonVisible = true;
-                IsDisableAIButtonVisible = false;
             }
         }
     }
