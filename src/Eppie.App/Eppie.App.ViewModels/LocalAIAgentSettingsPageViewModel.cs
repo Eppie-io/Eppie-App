@@ -62,31 +62,11 @@ namespace Tuvi.App.ViewModels
         WhitelistManager    // Manages a whitelist of contacts allowed to send emails
     }
 
-    public enum LanguageModelSkill
-    {
-        General,
-        TextToTable,
-        Summarize,
-        Rewrite
-    }
-
-    public enum SeverityLevel
-    {
-        None,
-        Low,
-        Medium,
-        High
-    }
-
     public class LocalAIAgentSettings : ObservableObject
     {
         public readonly int defaultTopK = 50;
         public readonly float defaultTopP = 0.9f;
         public readonly float defaultTemperature = 1;
-        public readonly int defaultMaxLength = 1024;
-        public readonly bool defaultDoSample = true;
-        public readonly LanguageModelSkill defaultSkill = LanguageModelSkill.General;
-        public readonly SeverityLevel defaultSeverityLevel = SeverityLevel.None;
 
         private string _name;
         public string Name
@@ -211,18 +191,6 @@ namespace Tuvi.App.ViewModels
             }
             set => SetProperty(ref _systemPrompt, value);
         }
-
-        public LanguageModelSkill LanguageModelSkill { get; set; } = LanguageModelSkill.General;
-
-        public List<LanguageModelSkill> LanguageModelSkills { get; } = new List<LanguageModelSkill> { LanguageModelSkill.General, LanguageModelSkill.TextToTable, LanguageModelSkill.Summarize, LanguageModelSkill.Rewrite };
-
-        public SeverityLevel InputModerationLevel { get; set; } = SeverityLevel.None;
-
-        public SeverityLevel OutputModerationLevel { get; set; } = SeverityLevel.None;
-
-        public List<SeverityLevel> SeverityLevels { get; } = new List<SeverityLevel> { SeverityLevel.None, SeverityLevel.Low, SeverityLevel.Medium, SeverityLevel.High };
-
-        public bool IsPhiSilica { get; set; } = true;
 
         private bool _isAllowedToSendingEmails;
         public bool IsAllowedToSendingEmails
