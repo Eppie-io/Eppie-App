@@ -26,11 +26,11 @@ namespace Eppie.App.Shared.Services
             _Core.MessagesReceived += OnMessagesReceived;
         }
 
-        public Task<string> TranslateTextAsync(string text, string language, CancellationToken cancellationToken, Action<string> onTextUpdate = null)
+        public Task<string> ProcessTextAsync(LocalAIAgent agent, string text, CancellationToken cancellationToken, Action<string> onTextUpdate = null)
         {
             if (_Service != null)
             {
-                return _Service.TranslateTextAsync(text, language, cancellationToken, onTextUpdate);
+                return _Service.ProcessTextAsync(agent.SystemPrompt, text, cancellationToken, onTextUpdate);
             }
 
             return Task.FromResult(string.Empty);
@@ -128,7 +128,7 @@ namespace Eppie.App.Shared.Services
 
         private async Task ProcessMessage(LocalAIAgent agent, ReceivedMessageInfo message)
         {
-            if (agent?.Email == message.Email && message.Folder.IsInbox)
+            if (agent?.Email == message.Email && message.Folder.IsInbox && !message.Message.From.Any(x => x == agent?.Email))
             {
                 var text = message.Message.TextBody;
 
@@ -137,7 +137,7 @@ namespace Eppie.App.Shared.Services
                     text = (await _Core.GetMessageBodyAsync(message.Message).ConfigureAwait(false)).TextBody;
                 }
 
-                var translatedText = await _Service?.TranslateTextAsync(text, "Russian", CancellationToken.None);
+                var translatedText = await _Service?.ProcessTextAsync(agent.SystemPrompt, text, CancellationToken.None);
 
                 if (agent.IsAllowedToSendingEmail)
                 {

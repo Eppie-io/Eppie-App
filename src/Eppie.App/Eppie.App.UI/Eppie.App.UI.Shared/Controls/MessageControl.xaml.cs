@@ -40,31 +40,31 @@ namespace Eppie.App.UI.Controls
         public static readonly DependencyProperty HtmlBodyProperty =
             DependencyProperty.Register(nameof(HtmlBody), typeof(string), typeof(MessageControl), new PropertyMetadata(null, OnHtmlBodyChanged));
 
-        public string TranslatedBody
+        public string AIAgentProcessedBody
         {
-            get { return (string)GetValue(TranslatedBodyProperty); }
+            get { return (string)GetValue(AIAgentProcessedBodyProperty); }
             set
             {
-                SetValue(TranslatedBodyProperty, value);
-                SetValue(HasTranslatedBodyProperty, !string.IsNullOrEmpty(TranslatedBody));
-                if (HasTranslatedBody)
+                SetValue(AIAgentProcessedBodyProperty, value);
+                SetValue(HasAIAgentProcessedBodyProperty, !string.IsNullOrEmpty(AIAgentProcessedBody));
+                if (HasAIAgentProcessedBody)
                 {
                     ShowTranslatedText();
                 }
             }
         }
 
-        public static readonly DependencyProperty TranslatedBodyProperty =
-            DependencyProperty.Register(nameof(TranslatedBody), typeof(string), typeof(MessageControl), new PropertyMetadata(null));
+        public static readonly DependencyProperty AIAgentProcessedBodyProperty =
+            DependencyProperty.Register(nameof(AIAgentProcessedBody), typeof(string), typeof(MessageControl), new PropertyMetadata(null));
 
-        public bool HasTranslatedBody
+        public bool HasAIAgentProcessedBody
         {
-            get { return (bool)GetValue(HasTranslatedBodyProperty); }
-            set { SetValue(HasTranslatedBodyProperty, value); }
+            get { return (bool)GetValue(HasAIAgentProcessedBodyProperty); }
+            set { SetValue(HasAIAgentProcessedBodyProperty, value); }
         }
 
-        public static readonly DependencyProperty HasTranslatedBodyProperty =
-            DependencyProperty.Register(nameof(HasTranslatedBody), typeof(string), typeof(MessageControl), new PropertyMetadata(null));
+        public static readonly DependencyProperty HasAIAgentProcessedBodyProperty =
+            DependencyProperty.Register(nameof(HasAIAgentProcessedBody), typeof(string), typeof(MessageControl), new PropertyMetadata(null));
 
 
         private static void OnHtmlBodyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)

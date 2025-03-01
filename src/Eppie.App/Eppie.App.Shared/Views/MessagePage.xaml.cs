@@ -1,3 +1,5 @@
+using System;
+using System.Diagnostics;
 using Tuvi.App.ViewModels;
 
 #if WINDOWS_UWP
@@ -19,6 +21,24 @@ namespace Tuvi.App.Shared.Views
         public MessagePage()
         {
             this.InitializeComponent();
+            InitAIAgentButton();
+        }
+
+        void InitAIAgentButton()
+        {
+            var menuFlyout = new MenuFlyout();
+
+            ViewModel.CreateAIAgentsMenu((string text, Action command) =>
+            {
+                var item = new MenuFlyoutItem { Text = text };
+                item.Click += (s, e) => command.Invoke();
+                menuFlyout.Items.Add(item);
+            });
+
+            if (menuFlyout.Items.Count > 0)
+            {
+                AIAgentButton.Flyout = menuFlyout;
+            }
         }
     }
 }

@@ -9,6 +9,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Eppie.App.ViewModels.Services;
 using Tuvi.App.ViewModels.Extensions;
+using Tuvi.App.ViewModels.Services;
 using Tuvi.Core.Entities;
 
 namespace Tuvi.App.ViewModels
@@ -138,7 +139,7 @@ namespace Tuvi.App.ViewModels
             { LocalAIAgentSpecialty.EmailComposer, "Generate a professional and context-appropriate email draft." },
 
             // Language & Communication
-            { LocalAIAgentSpecialty.Translator, "Translate the given email while preserving tone and intent." },
+            { LocalAIAgentSpecialty.Translator, "You translate only the user-provided text. Your response must contain nothing except the translated text itself. Do not add explanations, notes, interpretations, or any other content. Just translate." },
             { LocalAIAgentSpecialty.SentimentAnalyzer, "Analyze the emotional tone of this email and classify it as positive, neutral, or negative." },
             { LocalAIAgentSpecialty.PersonalitySimulator, "Rewrite the email in the style of the specified person." },
 
@@ -218,12 +219,18 @@ namespace Tuvi.App.ViewModels
             };
         }
 
-        internal LocalAIAgent ToAIAgent(EmailAddress linkedAccount)
+        internal LocalAIAgent ToAIAgent(EmailAddress linkedAccount, string language)
         {
+            var systemPrompt = SystemPrompt;
+            if (AgentSpecialty == LocalAIAgentSpecialty.Translator)
+            {
+                systemPrompt += string.Format(" You only translate into {0} language.", language);
+            }
+
             return new LocalAIAgent()
             {
                 Name = Name,
-                SystemPrompt = SystemPrompt,
+                SystemPrompt = systemPrompt,
                 Email = linkedAccount,
                 IsAllowedToSendingEmail = IsAllowedToSendingEmails && linkedAccount != null
             };
@@ -396,7 +403,7 @@ namespace Tuvi.App.ViewModels
             IsWaitingResponse = true;
             try
             {
-                var agentData = AgentSettingsModel.ToAIAgent(LinkedAccount);
+                var agentData = AgentSettingsModel.ToAIAgent(LinkedAccount, LocalSettingsService.Language);
                 var result = await ApplyAgentSettingsAsync(agentData).ConfigureAwait(true);
                 if (result)
                 {

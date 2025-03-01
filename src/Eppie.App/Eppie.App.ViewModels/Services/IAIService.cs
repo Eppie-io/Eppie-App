@@ -7,19 +7,19 @@ using Tuvi.Core.Entities;
 namespace Eppie.App.ViewModels.Services
 {
     /// <summary>
-    /// Interface for AI service, providing methods for text translation, checking status, and managing the model.
+    /// Interface for AI service, providing methods for text processing, checking status, and managing the model.
     /// </summary>
     public interface IAIService
     {
         /// <summary>
-        /// Asynchronously translates text to the specified language.
+        /// Asynchronously processes text with the specified local AI agent and language.
         /// </summary>
-        /// <param name="text">The text to be translated.</param>
-        /// <param name="language">The target language for translation.</param>
+        /// <param name="agent">The local AI agent to be used for processing.</param>
+        /// <param name="text">The text to be processed.</param>
         /// <param name="cancellationToken">The cancellation token to cancel the operation.</param>
         /// <param name="onTextUpdate">An optional action to be called with partial results as they are received.</param>
-        /// <returns>A task representing the asynchronous operation, returning the translated text.</returns>
-        Task<string> TranslateTextAsync(string text, string language, CancellationToken cancellationToken, Action<string> onTextUpdate = null);
+        /// <returns>A task representing the asynchronous operation, returning the processed text.</returns>
+        Task<string> ProcessTextAsync(LocalAIAgent agent, string text, CancellationToken cancellationToken, Action<string> onTextUpdate = null);
 
         /// <summary>
         /// Asynchronously checks if the local AI is enabled.

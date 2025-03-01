@@ -257,13 +257,13 @@
     <value>Select All</value>
     <comment>The tooltip for Select All button</comment>
   </data>
-  <data name="TranslateMessageButton.Label" xml:space="preserve">
-    <value>Translate</value>
-    <comment>Text on Translate button.</comment>
+  <data name="AIAgentProcessMessageButton.Label" xml:space="preserve">
+    <value>AI Agent</value>
+    <comment>Text on AI Agent process button.</comment>
   </data>
-  <data name="TranslateMessageButton.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Translate</value>
-    <comment>The tooltip for Translate button</comment>
+  <data name="AIAgentProcessMessageButton.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>AI Agent</value>
+    <comment>The tooltip for AI Agent process button</comment>
   </data>
   <data name="AIOptionTopPSlider.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>The top P parameter tells the model to only consider tokens up until a cumulative probability of P. Lower this value for more predictable, focused generation and increase it for more random response.</value>
