@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Tuvi.Core.Entities;
 
 namespace Eppie.App.ViewModels.Services
 {
@@ -33,5 +35,23 @@ namespace Eppie.App.ViewModels.Services
         /// Asynchronously imports the local AI model.
         /// </summary>
         Task ImportModelAsync();
+
+        /// <summary>
+        /// Adds a local AI agent to the service.
+        /// </summary>
+        /// <param name="agent">The local AI agent to be added.</param>
+        void AddAgent(LocalAIAgent agent);
+
+        /// <summary>
+        /// Remove a local AI agent from the service.
+        /// </summary>
+        /// <param name="agentName">The local AI agent to be removed.</param>
+        void RemoveAgent(string agentName);
+
+        /// <summary>
+        /// Gets a read-only collection of local AI agents.
+        /// </summary>
+        /// <returns>A read-only collection of local AI agents.</returns>
+        IReadOnlyList<LocalAIAgent> GetAgents();
     }
 }

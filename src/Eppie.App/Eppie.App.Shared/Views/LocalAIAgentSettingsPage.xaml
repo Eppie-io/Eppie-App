@@ -54,14 +54,101 @@
                 <ColumnDefinition Width="286" />
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Vertical" Spacing="12">
+                <TextBox x:Uid="AIAgentNameTextBox"
+                         Grid.Row="0"
+                         AcceptsReturn="True"
+                         Text="{x:Bind ViewModel.AgentSettingsModel.Name, Mode=TwoWay}" />
                 <TextBlock x:Uid="AgentSpecialty" VerticalAlignment="Center"/>
                 <ComboBox VerticalAlignment="Center"
                           ItemsSource="{x:Bind ViewModel.AgentSettingsModel.Specialties}"
                           SelectedItem="{x:Bind ViewModel.AgentSettingsModel.AgentSpecialty, Mode=TwoWay}" />
+                <TextBlock x:Uid="AIAgentLinkedAccount" VerticalAlignment="Center"/>
+                <ComboBox VerticalAlignment="Center"
+                          ItemsSource="{x:Bind ViewModel.AccountsList}"
+                          SelectedItem="{x:Bind ViewModel.LinkedAccount, Mode=TwoWay}" />
+                <CheckBox x:Uid="AllowSendEmailsCheckBox"
+                          IsChecked="{x:Bind ViewModel.AgentSettingsModel.IsAllowedToSendingEmails, Mode=TwoWay}"/>
                 <TextBox x:Uid="SystemPromptInputTextBox" Grid.Row="0" MinHeight="96"
                          MaxHeight="300" AcceptsReturn="True"
                          Text="{x:Bind ViewModel.AgentSettingsModel.SystemPrompt, Mode=TwoWay}"
                          TextWrapping="Wrap" />
+                <ToggleSwitch x:Name="DoSampleToggle" Header="Sampling"
+                              IsOn="{x:Bind ViewModel.AgentSettingsModel.defaultDoSample, Mode=OneTime}"
+                              Visibility="{x:Bind ViewModel.AgentSettingsModel.IsPhiSilica}"
+                              ToolTipService.ToolTip="If Sampling is disabled, a greedy approach will be used and the model will select the most likely token every time. If enabled,tokens will be selected based on the token probability distribution. The Top K, Top P, and Temperature parameters only apply if sampling is enabled." />
+                <StackPanel x:Name="PhiSilicaParams" Spacing="12" Visibility="{x:Bind ViewModel.AgentSettingsModel.IsPhiSilica}">
+                    <TextBlock VerticalAlignment="Center" Text="Skill">
+                    <ToolTipService.ToolTip>
+                        <ToolTip>
+                            <StackPanel>
+                                <TextBlock Text="The skill used for the response." />
+                                <TextBlock Margin="10,0" Text="General - Don't use any skill for the response" />
+                                <TextBlock Margin="10,0" Text="TextToTable - Generates a csv table with the data" />
+                                <TextBlock Margin="10,0" Text="Summarize - Summarizes the text" />
+                                <TextBlock Margin="10,0" Text="Rewrite - Rewrites the input text" />
+                            </StackPanel>
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                    </TextBlock>
+                    <ComboBox Width="120" x:Name ="SkillCombo" VerticalAlignment="Center" 
+                              ItemsSource="{x:Bind ViewModel.AgentSettingsModel.LanguageModelSkills}"
+                              SelectedItem="{x:Bind ViewModel.AgentSettingsModel.LanguageModelSkill, Mode=OneTime}" />                    
+                    <TextBlock VerticalAlignment="Center" Text="Prompt Content Moderation">
+                    <ToolTipService.ToolTip>
+                    <ToolTip>
+                        <StackPanel>
+                            <TextBlock Text="Content moderation for the input prompt" />
+                            <TextBlock Margin="10,0" Text="Level of content moderation for the input prompt" />
+                            <TextBlock Margin="10,0" Text="'None' level will set a minimum content moderation." />
+                            <TextBlock Margin="10,0" Text="'None' won't remove content moderation" />
+                        </StackPanel>
+                    </ToolTip>
+                    </ToolTipService.ToolTip>
+                    </TextBlock>
+                    <ComboBox Width="110" x:Name="InputModerationCombo" VerticalAlignment="Center"
+                              ItemsSource="{x:Bind ViewModel.AgentSettingsModel.SeverityLevels}"
+                              SelectedItem="{x:Bind ViewModel.AgentSettingsModel.InputModerationLevel, Mode=OneTime}" />
+                    <TextBlock VerticalAlignment="Center" Text="Response Content Moderation">
+                    <ToolTipService.ToolTip>
+                        <ToolTip>
+                            <StackPanel>
+                                <TextBlock Text="Content moderation for the response" TextWrapping="Wrap" />
+                                <TextBlock Margin="10,0" Text="Level of content moderation for the response" />
+                                <TextBlock Margin="10,0" Text="'None' level will set a minimum content moderation." />
+                                <TextBlock Margin="10,0" Text="'None' won't remove content moderation" />
+                            </StackPanel>
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                    </TextBlock>
+                    <ComboBox Width="110" x:Name="OutputModerationCombo"
+                              VerticalAlignment="Center"
+                              ItemsSource="{x:Bind ViewModel.AgentSettingsModel.SeverityLevels}"
+                              SelectedItem="{x:Bind ViewModel.AgentSettingsModel.OutputModerationLevel, Mode=OneTime}" />
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Grid.RowSpan="3" Grid.Column="1" Spacing="12">
+                <Slider x:Name="MinLengthSlider" Header="Min Length" Maximum="2048"
+                        Minimum="0" StepFrequency="1"
+                        Visibility="{x:Bind ViewModel.AgentSettingsModel.IsPhiSilica}"
+                        ToolTipService.ToolTip="The min length parameter sets the minimum number of tokens for the model to respond with."
+                        Value="0" />
+                <Slider x:Name="MaxLengthSlider" Header="Max Length" Maximum="2048"
+                        Minimum="1" StepFrequency="1"
+                        Visibility="{x:Bind ViewModel.AgentSettingsModel.IsPhiSilica}"
+                        ToolTipService.ToolTip="The max length parameter sets the maximum number of tokens for the model to respond with."
+                        Value="{x:Bind ViewModel.AgentSettingsModel.defaultMaxLength, Mode=OneTime}" />
+                <Slider x:Name="TopPSlider" Header="Top P" Maximum="1" Minimum="0"
+                        StepFrequency="0.01"
+                        ToolTipService.ToolTip="The top P parameter tells the model to only consider tokens up until a cumulative probability of P. Lower this value for more predictable, focused generation and increase it for more random response."
+                        Value="{x:Bind ViewModel.AgentSettingsModel.defaultTopP, Mode=OneTime}" />
+                <Slider x:Name="TopKSlider" Header="Top K" Maximum="200" Minimum="0"
+                        StepFrequency="1"
+                        ToolTipService.ToolTip="The top K parameter tells the model to only consider the K most probable tokens at each generation step. Lower this value for more predictable, focused generation and increase it for more random response."
+                        Value="{x:Bind ViewModel.AgentSettingsModel.defaultTopK, Mode=OneTime}" />
+                <Slider x:Name="TemperatureSlider" Header="Temperature" Maximum="5"
+                        Minimum="0.01" StepFrequency="0.01"
+                        ToolTipService.ToolTip="The temperature parameter is a scaling factor for the probability distribution of tokens during generation. Values lower than 1 will produce more deterministic response while values higher than 1 will increase ramdomness."
+                        Value="{x:Bind ViewModel.AgentSettingsModel.defaultTemperature, Mode=OneTime}" />
             </StackPanel>
         </Grid>
 

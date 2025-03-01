@@ -88,7 +88,7 @@ namespace Eppie.App.Shared
         {
             try
             {
-                AIService = new AIService();
+                AIService = new AIService(Core);
                 await AIService.LoadModelIfEnabled();
             }
             catch (Exception ex)

@@ -1,18 +1,18 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Eppie.App.ViewModels.Services;
+using Tuvi.App.ViewModels.Extensions;
+using Tuvi.Core.Entities;
 
 namespace Tuvi.App.ViewModels
 {
-    public class LocalAIAgent
-    {
-
-    }
-
     public enum LocalAIAgentSpecialty
     {
         // Content Creation & Editing
@@ -87,6 +87,13 @@ namespace Tuvi.App.ViewModels
         public readonly bool defaultDoSample = true;
         public readonly LanguageModelSkill defaultSkill = LanguageModelSkill.General;
         public readonly SeverityLevel defaultSeverityLevel = SeverityLevel.None;
+
+        private string _name;
+        public string Name
+        {
+            get => _name;
+            set => SetProperty(ref _name, value);
+        }
 
         private LocalAIAgentSpecialty _agentSpecialty;
         public LocalAIAgentSpecialty AgentSpecialty
@@ -217,6 +224,13 @@ namespace Tuvi.App.ViewModels
 
         public bool IsPhiSilica { get; set; } = true;
 
+        private bool _isAllowedToSendingEmails;
+        public bool IsAllowedToSendingEmails
+        {
+            get => _isAllowedToSendingEmails;
+            set => SetProperty(ref _isAllowedToSendingEmails, value);
+        }
+
         public LocalAIAgentSettings()
         {
         }
@@ -226,9 +240,25 @@ namespace Tuvi.App.ViewModels
             return new LocalAIAgentSettings();
         }
 
-        internal LocalAIAgent ToAgent()
+        public static LocalAIAgentSettings Create(LocalAIAgent agent)
         {
-            throw new NotImplementedException();
+            return new LocalAIAgentSettings()
+            {
+                Name = agent.Name,
+                SystemPrompt = agent.SystemPrompt,
+                IsAllowedToSendingEmails = agent.IsAllowedToSendingEmail
+            };
+        }
+
+        internal LocalAIAgent ToAIAgent(EmailAddress linkedAccount)
+        {
+            return new LocalAIAgent()
+            {
+                Name = Name,
+                SystemPrompt = SystemPrompt,
+                Email = linkedAccount,
+                IsAllowedToSendingEmail = IsAllowedToSendingEmails && linkedAccount != null
+            };
         }
     }
 
@@ -267,6 +297,14 @@ namespace Tuvi.App.ViewModels
             set { SetProperty(ref _isAIProgressRingVisible, value); }
         }
 
+        public ObservableCollection<EmailAddress> AccountsList { get; } = new ObservableCollection<EmailAddress>();
+
+        private EmailAddress _linkedAccount;
+        public EmailAddress LinkedAccount
+        {
+            get { return _linkedAccount; }
+            set { SetProperty(ref _linkedAccount, value); }
+        }
 
         public IRelayCommand ApplySettingsCommand { get; }
 
@@ -350,18 +388,28 @@ namespace Tuvi.App.ViewModels
             //}
         }
 
-        public override void OnNavigatedTo(object data)
+        private async Task UpdateEmailAccountsListAsync()
+        {
+            var accounts = await Core.GetCompositeAccountsAsync().ConfigureAwait(true);
+            AccountsList.SetItems(accounts.SelectMany(account => account.Addresses));
+            OnPropertyChanged(nameof(LinkedAccount));
+        }
+
+        public override async void OnNavigatedTo(object data)
         {
             try
             {
                 if (data is LocalAIAgent agentData)
                 {
-                    InitModel(LocalAIAgentSettings.Create(), false);
+                    InitModel(LocalAIAgentSettings.Create(agentData), false);
+                    LinkedAccount = agentData.Email;
                 }
                 else
                 {
-                    InitModel(LocalAIAgentSettings.Create(), false);
+                    InitModel(LocalAIAgentSettings.Create(), true);
                 }
+
+                await UpdateEmailAccountsListAsync().ConfigureAwait(true);
             }
             catch (Exception e)
             {
@@ -380,7 +428,7 @@ namespace Tuvi.App.ViewModels
             IsWaitingResponse = true;
             try
             {
-                var agentData = AgentSettingsModel.ToAgent();
+                var agentData = AgentSettingsModel.ToAIAgent(LinkedAccount);
                 var result = await ApplyAgentSettingsAsync(agentData).ConfigureAwait(true);
                 if (result)
                 {
@@ -415,16 +463,7 @@ namespace Tuvi.App.ViewModels
 
         private async Task ProcessAgentDataAsync(LocalAIAgent agent, CancellationToken cancellationToken = default)
         {
-            //bool existAccount = await Core.ExistsAccountWithEmailAddressAsync(account.Email, cancellationToken).ConfigureAwait(true);
-
-            //if (!existAccount)
-            //{
-            //    await Core.AddAccountAsync(account, cancellationToken).ConfigureAwait(true);
-            //}
-            //else
-            //{
-            //    await Core.UpdateAccountAsync(account, cancellationToken).ConfigureAwait(true);
-            //}
+            AIService.AddAgent(agent);
 
             await BackupIfNeededAsync().ConfigureAwait(true);
         }
@@ -473,7 +512,8 @@ namespace Tuvi.App.ViewModels
 
                 if (isConfirmed)
                 {
-                    await DeleteLocalAIModelAsync().ConfigureAwait(true);
+                    //await DeleteLocalAIModelAsync().ConfigureAwait(true);
+                    AIService.RemoveAgent(AgentSettingsModel.Name);
 
                     await BackupIfNeededAsync().ConfigureAwait(true);
 
