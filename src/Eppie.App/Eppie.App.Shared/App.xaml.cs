@@ -141,6 +141,8 @@ namespace Eppie.App.Shared
                 DisposeCore();
                 CreateCore();
                 await RemoveTempFilesAsync().ConfigureAwait(true);
+
+                CreateAIService();
             }
             catch (Exception ex)
             {
