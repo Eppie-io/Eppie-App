@@ -51,8 +51,9 @@ namespace Tuvi.App.ViewModels
 
         public ICommand HandleErrorCommand => new RelayCommand<object>(ex => OnError(ex as Exception));
 
-        public SelectServicePageViewModel()
+        override public void OnNavigatedTo(object data)
         {
+            base.OnNavigatedTo(data);
             FillServicesList();
         }
 
@@ -102,17 +103,12 @@ namespace Tuvi.App.ViewModels
 
         private void FillServicesList()
         {
-            //TODO: TVM-544 Move strings to resources
-
             Services.Add(new ServiceInfo(ServiceKey.Google, "Gmail", "gmail.com"));
             Services.Add(new ServiceInfo(ServiceKey.Outlook, "Outlook", "outlook.com hotmail.com"));
-            Services.Add(new ServiceInfo(ServiceKey.Proton, "ProtonMail", "proton.me protonmail.com proton.local"));
-
-            Services.Add(new ServiceInfo(ServiceKey.Other, "Other email account", "IMAP, SMTP"));
-
-            Services.Add(new ServiceInfo(ServiceKey.Decentralized, "Decentralized account (coming soon)", "please join the waiting list"));
-
-            Services.Add(new ServiceInfo(ServiceKey.LoacalAIAgent, "Loacal AI Agent", "translator, writer, corrector and other..."));
+            Services.Add(new ServiceInfo(ServiceKey.Proton, "Proton Mail", "proton.me protonmail.com proton.local"));
+            Services.Add(new ServiceInfo(ServiceKey.Other, GetLocalizedString("OtherEmailAccountServiceTitle"), GetLocalizedString("OtherEmailAccountServiceDescription")));
+            Services.Add(new ServiceInfo(ServiceKey.Decentralized, GetLocalizedString("DecentralizedAccountServiceTitle"), GetLocalizedString("DecentralizedAccountServiceDescription")));
+            Services.Add(new ServiceInfo(ServiceKey.LoacalAIAgent, GetLocalizedString("LoacalAIAgentServiceTitle"), GetLocalizedString("LoacalAIAgentServiceDescription")));
 
             SelectedService = Services.First();
         }

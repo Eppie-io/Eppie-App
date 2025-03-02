@@ -121,9 +121,10 @@
                               Icon="Flag"
                               Visibility="{x:Bind ViewModel.MessageInfo.IsFlagged, Mode=OneWay}" />
 
-                <AppBarButton x:Uid="/App.Resources/TranslateMessageButton" Command="{x:Bind ViewModel.TranslateMessageCommand}"
-Visibility="{x:Bind ViewModel.IsTranslatorEnabled, Mode=OneWay}">
-                    <FontIcon Glyph="&#xF2B7;" />
+                <AppBarButton x:Name="AIAgentButton"
+                              x:Uid="/App.Resources/AIAgentProcessMessageButton"                              
+                              Visibility="{x:Bind ViewModel.IsAIAgentsEnabled, Mode=OneWay}">
+                    <FontIcon Glyph="&#xE99A;" />
                 </AppBarButton>
 
             </CommandBar>
@@ -232,7 +233,7 @@ Visibility="{x:Bind ViewModel.IsTranslatorEnabled, Mode=OneWay}">
             <eppie_controls:MessageControl HasHtmlBody="{x:Bind ViewModel.MessageInfo.HasHtmlBody, Mode=OneWay}"
                                            HtmlBody="{x:Bind ViewModel.MessageInfo.MessageHtmlBody, Mode=OneWay}"
                                            TextBody="{x:Bind ViewModel.MessageInfo.MessageTextBody, Mode=OneWay}"
-                                           TranslatedBody="{x:Bind ViewModel.MessageInfo.TranslatedBody, Mode=OneWay}" />
+                                           AIAgentProcessedBody="{x:Bind ViewModel.MessageInfo.AIAgentProcessedBody, Mode=OneWay}" />
         </Grid>
 
         <!--  Wrapped to Grid because Android doesn't have Visibility=Collapsed for ProgressRing  -->

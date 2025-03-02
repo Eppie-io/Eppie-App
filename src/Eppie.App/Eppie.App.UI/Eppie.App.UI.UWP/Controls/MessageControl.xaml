@@ -29,10 +29,10 @@
 
         <ScrollViewer Grid.Column="1"
                       Padding="4"
-                      Visibility="{x:Bind HasTranslatedBody, Mode=OneWay}">
+                      Visibility="{x:Bind HasAIAgentProcessedBody, Mode=OneWay}">
             <TextBlock IsTextSelectionEnabled="True"
                        Style="{StaticResource MessageTextStyle}"
-                       Text="{x:Bind TranslatedBody, Mode=OneWay}" />
+                       Text="{x:Bind AIAgentProcessedBody, Mode=OneWay}" />
         </ScrollViewer>
 
     </Grid>

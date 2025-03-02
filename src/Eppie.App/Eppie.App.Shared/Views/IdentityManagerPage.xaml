@@ -66,16 +66,30 @@
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="Padding" Value="8" />
-                        </Style>
-                    </ListView.ItemContainerStyle>
                     <interactivity:Interaction.Behaviors>
                         <behaviors:ListViewItemClickBehavior ClickCommand="{x:Bind ViewModel.EditAccountCommand, Mode=OneWay}" />
                     </interactivity:Interaction.Behaviors>
                 </ListView>
 
+                <TextBlock x:Uid="ConnectedAIAgentsSettings"
+                           Margin="0,20,0,0"
+                           Style="{StaticResource NormalTextStyle}" />
+
+                <ListView IsItemClickEnabled="True"
+                          ItemsSource="{x:Bind ViewModel.AIAgents, Mode=OneWay}"
+                          SelectionMode="None">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="entities:LocalAIAgent">
+                            <Grid>
+                                <TextBlock Text="{x:Bind Name, Mode=OneWay}" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>                    
+                    <interactivity:Interaction.Behaviors>
+                        <behaviors:ListViewItemClickBehavior ClickCommand="{x:Bind ViewModel.EditAIAgentCommand, Mode=OneWay}" />
+                    </interactivity:Interaction.Behaviors>
+                </ListView>
+                
             </StackPanel>
 
         </ScrollViewer>
