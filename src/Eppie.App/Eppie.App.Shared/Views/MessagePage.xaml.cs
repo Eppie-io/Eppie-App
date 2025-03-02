@@ -24,20 +24,27 @@ namespace Tuvi.App.Shared.Views
             InitAIAgentButton();
         }
 
-        void InitAIAgentButton()
+        async void InitAIAgentButton()
         {
-            var menuFlyout = new MenuFlyout();
-
-            ViewModel.CreateAIAgentsMenu((string text, Action command) =>
+            try
             {
-                var item = new MenuFlyoutItem { Text = text };
-                item.Click += (s, e) => command.Invoke();
-                menuFlyout.Items.Add(item);
-            });
+                var menuFlyout = new MenuFlyout();
 
-            if (menuFlyout.Items.Count > 0)
+                await ViewModel.CreateAIAgentsMenuAsync(async (string text, Action command) =>
+                {
+                    var item = new MenuFlyoutItem { Text = text };
+                    item.Click += (s, e) => command.Invoke();
+                    menuFlyout.Items.Add(item);
+                });
+
+                if (menuFlyout.Items.Count > 0)
+                {
+                    AIAgentButton.Flyout = menuFlyout;
+                }
+            }
+            catch (Exception ex)
             {
-                AIAgentButton.Flyout = menuFlyout;
+                ViewModel.OnError(ex);
             }
         }
     }

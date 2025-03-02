@@ -946,4 +946,12 @@ Subject: {3}
     <value>IMAP, SMTP</value>
     <comment>Supported protocols for other email accounts (IMAP, SMTP).</comment>
   </data>
+  <data name="PreprocessWithAIAgent.Text" xml:space="preserve">
+    <value>Pre-processing with the AI agent</value>
+    <comment>Title for combobox with AI agents for preprocessing.</comment>
+  </data>
+  <data name="PostprocessWithAIAgent.Text" xml:space="preserve">
+    <value>Post-processing with the AI agent</value>
+    <comment>Title for combobox with AI agents for postprocessing.</comment>
+  </data>
 </root>

@@ -240,6 +240,22 @@ namespace Tuvi.App.ViewModels
             set { SetProperty(ref _linkedAccount, value); }
         }
 
+        public ObservableCollection<LocalAIAgent> AIAgentsList { get; } = new ObservableCollection<LocalAIAgent>();
+
+        private LocalAIAgent _preprocessorAIAgent;
+        public LocalAIAgent PreprocessorAIAgent
+        {
+            get { return _preprocessorAIAgent; }
+            set { SetProperty(ref _preprocessorAIAgent, value); }
+        }
+
+        private LocalAIAgent _postprocessorAIAgent;
+        public LocalAIAgent PostprocessorAIAgent
+        {
+            get { return _postprocessorAIAgent; }
+            set { SetProperty(ref _postprocessorAIAgent, value); }
+        }
+
         public IRelayCommand ApplySettingsCommand { get; }
 
         public IRelayCommand RemoveAgentCommand { get; }
@@ -329,6 +345,15 @@ namespace Tuvi.App.ViewModels
             OnPropertyChanged(nameof(LinkedAccount));
         }
 
+        private async Task UpdateAIAgentsListAsync()
+        {
+            var agents = await AIService.GetAgentsAsync().ConfigureAwait(true);
+            AIAgentsList.SetItems(agents.Where(agent => agent.Id != AgentSettingsModel.CurrentAgent.Id));
+
+            OnPropertyChanged(nameof(PreprocessorAIAgent));
+            OnPropertyChanged(nameof(PostprocessorAIAgent));
+        }
+
         public override async void OnNavigatedTo(object data)
         {
             try
@@ -344,6 +369,7 @@ namespace Tuvi.App.ViewModels
                 }
 
                 await UpdateEmailAccountsListAsync().ConfigureAwait(true);
+                await UpdateAIAgentsListAsync().ConfigureAwait(true);
             }
             catch (Exception e)
             {

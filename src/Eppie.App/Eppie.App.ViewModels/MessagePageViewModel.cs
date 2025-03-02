@@ -242,19 +242,12 @@ namespace Tuvi.App.ViewModels
             AddAttachments(attachments);
         }
 
-        public async void CreateAIAgentsMenu(Action<string, Action> action)
+        public async Task CreateAIAgentsMenuAsync(Func<string, Action, Task> action)
         {
-            try
+            var agents = await AIService.GetAgentsAsync();
+            foreach (var agent in agents)
             {
-                var agents = await AIService.GetAgentsAsync();
-                foreach (var agent in agents)
-                {
-                    action(agent.Name, () => ProcessMessage(agent));
-                }
-            }
-            catch (Exception e)
-            {
-                OnError(e);
+                await action(agent.Name, () => ProcessMessage(agent));
             }
         }
 

@@ -72,6 +72,14 @@
                           SelectedItem="{x:Bind ViewModel.LinkedAccount, Mode=TwoWay}" />
                 <CheckBox x:Uid="AllowSendEmailsCheckBox"
                           IsChecked="{x:Bind ViewModel.AgentSettingsModel.IsAllowedToSendingEmails, Mode=TwoWay}"/>
+                <TextBlock x:Uid="PreprocessWithAIAgent" VerticalAlignment="Center"/>
+                <ComboBox VerticalAlignment="Center"
+                          ItemsSource="{x:Bind ViewModel.AIAgentsList}"
+                          SelectedItem="{x:Bind ViewModel.PreprocessorAIAgent, Mode=TwoWay}" />
+                <TextBlock x:Uid="PostprocessWithAIAgent" VerticalAlignment="Center"/>
+                <ComboBox VerticalAlignment="Center"
+                          ItemsSource="{x:Bind ViewModel.AIAgentsList}"
+                          SelectedItem="{x:Bind ViewModel.PostprocessorAIAgent, Mode=TwoWay}" />
             </StackPanel>
             <StackPanel Grid.RowSpan="3" Grid.Column="1" Spacing="12">
                 <Slider x:Uid="/App.Resources/AIOptionTopPSlider"
