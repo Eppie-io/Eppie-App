@@ -104,7 +104,7 @@ namespace Tuvi.App.ViewModels
         {
             try
             {
-                var agents = AIService.GetAgents();
+                var agents = await AIService.GetAgentsAsync();
                 IsAIAgentsEnabled = await AIService.IsEnabledAsync().ConfigureAwait(true) && agents.Count > 0;
             }
             catch (Exception e)
@@ -242,12 +242,19 @@ namespace Tuvi.App.ViewModels
             AddAttachments(attachments);
         }
 
-        public void CreateAIAgentsMenu(Action<string, Action> action)
+        public async void CreateAIAgentsMenu(Action<string, Action> action)
         {
-            var agents = AIService.GetAgents();
-            foreach (var agent in agents)
+            try
             {
-                action(agent.Name, () => ProcessMessage(agent));
+                var agents = await AIService.GetAgentsAsync();
+                foreach (var agent in agents)
+                {
+                    action(agent.Name, () => ProcessMessage(agent));
+                }
+            }
+            catch (Exception e)
+            {
+                OnError(e);
             }
         }
 

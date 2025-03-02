@@ -14,55 +14,6 @@ using Tuvi.Core.Entities;
 
 namespace Tuvi.App.ViewModels
 {
-    public enum LocalAIAgentSpecialty
-    {
-        // Content Creation & Editing
-        Writer,             // Creates original content
-        Rewriter,           // Rewrites and reformulates text
-        Proofreader,        // Checks grammar and spelling
-        Summarizer,         // Summarizes emails and documents
-        EmailComposer,      // Generates email drafts
-
-        // Language & Communication
-        Translator,         // Translates emails between languages
-        SentimentAnalyzer,  // Analyzes emotional tone of emails
-        PersonalitySimulator, // Simulates writing style of a person
-
-        // Information Processing & Research
-        Researcher,         // Finds relevant information
-        Analyst,            // Analyzes trends and extracts insights
-        DataExtractor,      // Extracts key data from emails and attachments
-        NewsAggregator,     // Gathers and summarizes news
-
-        // Organization & Workflow
-        Scheduler,          // Plans meetings and sets reminders
-        Prioritizer,        // Identifies and ranks important emails
-        Classifier,         // Sorts emails into categories
-        Archivist,          // Saves and retrieves important documents
-
-        // Decision Making & Compliance
-        Jurist,             // Provides legal assistance
-        ComplianceChecker,  // Ensures regulatory compliance
-        Auditor,            // Verifies data consistency and detects anomalies
-        CyberSecurity,      // Detects phishing attempts and ensures data security
-
-        // Communication & Negotiation
-        Mediator,           // Facilitates conflict resolution
-        Negotiator,         // Assists in negotiations and argumentation
-
-        // Customer & Business Support
-        CustomerSupport,    // Handles automated responses and inquiries
-        FinanceAdvisor,     // Analyzes financial transactions and expenses
-        MarketingAdvisor,   // Provides marketing strategies and A/B testing insights
-
-        // Code & Technical Review
-        CodeReviewer,       // Analyzes and suggests improvements to code snippets
-
-        // Email Filtering & Security
-        SpamFilter,         // Detects and filters out spam emails
-        WhitelistManager    // Manages a whitelist of contacts allowed to send emails
-    }
-
     public class LocalAIAgentSettings : ObservableObject
     {
         public readonly int defaultTopK = 50;
@@ -200,8 +151,21 @@ namespace Tuvi.App.ViewModels
             set => SetProperty(ref _isAllowedToSendingEmails, value);
         }
 
+        public LocalAIAgent CurrentAgent { get; }
+
         public LocalAIAgentSettings()
         {
+            CurrentAgent = new LocalAIAgent();
+        }
+
+        public LocalAIAgentSettings(LocalAIAgent agent)
+        {
+            CurrentAgent = agent;
+
+            Name = CurrentAgent.Name;
+            AgentSpecialty = CurrentAgent.AgentSpecialty;
+            SystemPrompt = CurrentAgent.SystemPrompt;
+            IsAllowedToSendingEmails = CurrentAgent.IsAllowedToSendingEmail;
         }
 
         public static LocalAIAgentSettings Create()
@@ -211,12 +175,7 @@ namespace Tuvi.App.ViewModels
 
         public static LocalAIAgentSettings Create(LocalAIAgent agent)
         {
-            return new LocalAIAgentSettings()
-            {
-                Name = agent.Name,
-                SystemPrompt = agent.SystemPrompt,
-                IsAllowedToSendingEmails = agent.IsAllowedToSendingEmail
-            };
+            return new LocalAIAgentSettings(agent);
         }
 
         internal LocalAIAgent ToAIAgent(EmailAddress linkedAccount, string language)
@@ -227,13 +186,13 @@ namespace Tuvi.App.ViewModels
                 systemPrompt += string.Format(" You only translate into {0} language.", language);
             }
 
-            return new LocalAIAgent()
-            {
-                Name = Name,
-                SystemPrompt = systemPrompt,
-                Email = linkedAccount,
-                IsAllowedToSendingEmail = IsAllowedToSendingEmails && linkedAccount != null
-            };
+            CurrentAgent.Name = Name;
+            CurrentAgent.AgentSpecialty = AgentSpecialty;
+            CurrentAgent.SystemPrompt = systemPrompt;
+            CurrentAgent.Email = linkedAccount;
+            CurrentAgent.IsAllowedToSendingEmail = IsAllowedToSendingEmails && linkedAccount != null;
+
+            return CurrentAgent;
         }
     }
 
@@ -438,7 +397,14 @@ namespace Tuvi.App.ViewModels
 
         private async Task ProcessAgentDataAsync(LocalAIAgent agent, CancellationToken cancellationToken = default)
         {
-            AIService.AddAgent(agent);
+            if (IsCreatingAgentMode)
+            {
+                await AIService.AddAgentAsync(agent).ConfigureAwait(true);
+            }
+            else
+            {
+                await AIService.UpdateAgentAsync(agent).ConfigureAwait(true);
+            }
 
             await BackupIfNeededAsync().ConfigureAwait(true);
         }
@@ -488,7 +454,7 @@ namespace Tuvi.App.ViewModels
                 if (isConfirmed)
                 {
                     //await DeleteLocalAIModelAsync().ConfigureAwait(true);
-                    AIService.RemoveAgent(AgentSettingsModel.Name);
+                    await AIService.RemoveAgentAsync(AgentSettingsModel.CurrentAgent).ConfigureAwait(true);
 
                     await BackupIfNeededAsync().ConfigureAwait(true);
 

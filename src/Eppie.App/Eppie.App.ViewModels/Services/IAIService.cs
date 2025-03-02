@@ -12,6 +12,19 @@ namespace Eppie.App.ViewModels.Services
     public interface IAIService
     {
         /// <summary>
+        /// Event triggered when a local AI agent is added.
+        /// </summary>
+        event EventHandler<LocalAIAgentEventArgs> AgentAdded;
+        /// <summary>
+        /// Event triggered when a local AI agent is deleted.
+        /// </summary>
+        event EventHandler<LocalAIAgentEventArgs> AgentDeleted;
+        /// <summary>
+        /// Event triggered when a local AI agent is updated.
+        /// </summary>
+        event EventHandler<LocalAIAgentEventArgs> AgentUpdated;
+
+        /// <summary>
         /// Asynchronously processes text with the specified local AI agent and language.
         /// </summary>
         /// <param name="agent">The local AI agent to be used for processing.</param>
@@ -40,18 +53,24 @@ namespace Eppie.App.ViewModels.Services
         /// Adds a local AI agent to the service.
         /// </summary>
         /// <param name="agent">The local AI agent to be added.</param>
-        void AddAgent(LocalAIAgent agent);
+        Task AddAgentAsync(LocalAIAgent agent);
 
         /// <summary>
-        /// Remove a local AI agent from the service.
+        /// Removes a local AI agent from the service.
         /// </summary>
-        /// <param name="agentName">The local AI agent to be removed.</param>
-        void RemoveAgent(string agentName);
+        /// <param name="agent">The local AI agent to be removed.</param>
+        Task RemoveAgentAsync(LocalAIAgent agent);
 
         /// <summary>
         /// Gets a read-only collection of local AI agents.
         /// </summary>
         /// <returns>A read-only collection of local AI agents.</returns>
-        IReadOnlyList<LocalAIAgent> GetAgents();
+        Task<IReadOnlyList<LocalAIAgent>> GetAgentsAsync();
+
+        /// <summary>
+        /// Updates a local AI agent in the service.
+        /// </summary>
+        /// <param name="agent">The local AI agent to be updated.</param>
+        Task UpdateAgentAsync(LocalAIAgent agent);
     }
 }

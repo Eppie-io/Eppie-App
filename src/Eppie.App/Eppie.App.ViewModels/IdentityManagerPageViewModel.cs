@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
+using Eppie.App.ViewModels.Services;
 using Tuvi.Core.Entities;
 
 namespace Tuvi.App.ViewModels
@@ -21,10 +23,14 @@ namespace Tuvi.App.ViewModels
             try
             {
                 await UpdateAccountsAsync();
-                UpdateAIAgents();
+                await UpdateAIAgentsAsync();
 
                 Core.AccountAdded += Core_AccountAdded;
                 Core.AccountDeleted += Core_AccountDeleted;
+
+                AIService.AgentAdded += AIService_AgentAdded;
+                AIService.AgentDeleted += AIService_AgentDeleted;
+                AIService.AgentUpdated += AIService_AgentUpdated;
             }
             catch (Exception ex)
             {
@@ -34,6 +40,10 @@ namespace Tuvi.App.ViewModels
 
         public override void OnNavigatedFrom()
         {
+            AIService.AgentAdded -= AIService_AgentAdded;
+            AIService.AgentDeleted -= AIService_AgentDeleted;
+            AIService.AgentDeleted -= AIService_AgentUpdated;
+
             Core.AccountAdded -= Core_AccountAdded;
             Core.AccountDeleted -= Core_AccountDeleted;
         }
@@ -79,6 +89,55 @@ namespace Tuvi.App.ViewModels
             });
         }
 
+        private void AIService_AgentAdded(object sender, LocalAIAgentEventArgs e)
+        {
+            DispatcherService.RunAsync(() =>
+            {
+                try
+                {
+                    AIAgents.Add(e.AIAgent);
+                }
+                catch (Exception ex)
+                {
+                    OnError(ex);
+                }
+            });
+        }
+
+        private void AIService_AgentDeleted(object sender, LocalAIAgentEventArgs e)
+        {
+            DispatcherService.RunAsync(() =>
+            {
+                try
+                {
+                    AIAgents.Remove(e.AIAgent);
+                }
+                catch (Exception ex)
+                {
+                    OnError(ex);
+                }
+            });
+        }
+
+        private void AIService_AgentUpdated(object sender, LocalAIAgentEventArgs e)
+        {
+            DispatcherService.RunAsync(() =>
+            {
+                try
+                {
+                    var index = AIAgents.IndexOf(AIAgents.FirstOrDefault(agent => agent.Id == e.AIAgent.Id));
+                    if (index != -1)
+                    {
+                        AIAgents[index] = e.AIAgent;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    OnError(ex);
+                }
+            });
+        }
+
         private void EditAccountInfo(object item)
         {
             if (item is Account account)
@@ -87,9 +146,9 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        private void UpdateAIAgents()
+        private async Task UpdateAIAgentsAsync()
         {
-            var agents = AIService.GetAgents();
+            var agents = await AIService.GetAgentsAsync().ConfigureAwait(true);
 
             AIAgents.Clear();
             foreach (LocalAIAgent agent in agents)

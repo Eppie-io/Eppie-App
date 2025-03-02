@@ -66,11 +66,6 @@
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="Padding" Value="8" />
-                        </Style>
-                    </ListView.ItemContainerStyle>
                     <interactivity:Interaction.Behaviors>
                         <behaviors:ListViewItemClickBehavior ClickCommand="{x:Bind ViewModel.EditAccountCommand, Mode=OneWay}" />
                     </interactivity:Interaction.Behaviors>
@@ -89,17 +84,11 @@
                                 <TextBlock Text="{x:Bind Name, Mode=OneWay}" />
                             </Grid>
                         </DataTemplate>
-                    </ListView.ItemTemplate>
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="Padding" Value="8" />
-                        </Style>
-                    </ListView.ItemContainerStyle>
+                    </ListView.ItemTemplate>                    
                     <interactivity:Interaction.Behaviors>
                         <behaviors:ListViewItemClickBehavior ClickCommand="{x:Bind ViewModel.EditAIAgentCommand, Mode=OneWay}" />
                     </interactivity:Interaction.Behaviors>
                 </ListView>
-
                 
             </StackPanel>
 

@@ -7,6 +7,7 @@ using Eppie.AI;
 using Eppie.App.UI.Tools;
 using Eppie.App.ViewModels.Services;
 using Tuvi.Core;
+using Tuvi.Core.DataStorage;
 using Tuvi.Core.Entities;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -15,22 +16,28 @@ namespace Eppie.App.Shared.Services
 {
     public class AIService : IAIService
     {
-        private const string _LocalAIModelFolderName = "local.ai.model";
-        private Service _Service;
-        private List<LocalAIAgent> _Agents = new List<LocalAIAgent>();
-        private ITuviMail _Core;
+        private const string LocalAIModelFolderName = "local.ai.model";
+        private Service Service;
+        private ITuviMail Core;
+        private readonly IAIAgentsStorage Storage;
+
+        public event EventHandler<LocalAIAgentEventArgs> AgentAdded;
+        public event EventHandler<LocalAIAgentEventArgs> AgentDeleted;
+        public event EventHandler<LocalAIAgentEventArgs> AgentUpdated;
 
         public AIService(ITuviMail core)
         {
-            _Core = core;
-            _Core.MessagesReceived += OnMessagesReceived;
+            Core = core;
+            Core.MessagesReceived += OnMessagesReceived;
+
+            Storage = Core.GetAIAgentsStorage();
         }
 
         public Task<string> ProcessTextAsync(LocalAIAgent agent, string text, CancellationToken cancellationToken, Action<string> onTextUpdate = null)
         {
-            if (_Service != null)
+            if (Service != null)
             {
-                return _Service.ProcessTextAsync(agent.SystemPrompt, text, cancellationToken, onTextUpdate);
+                return Service.ProcessTextAsync(agent.SystemPrompt, text, cancellationToken, onTextUpdate);
             }
 
             return Task.FromResult(string.Empty);
@@ -39,34 +46,45 @@ namespace Eppie.App.Shared.Services
         public async Task<bool> IsEnabledAsync()
         {
             var localFolder = ApplicationData.Current.LocalFolder;
-            var modelFolder = await localFolder.TryGetItemAsync(_LocalAIModelFolderName);
+            var modelFolder = await localFolder.TryGetItemAsync(LocalAIModelFolderName);
 
             return modelFolder != null;
         }
 
         public async Task LoadModelIfEnabled()
         {
-            if (_Service == null && await IsEnabledAsync())
+            if (Service == null && await IsEnabledAsync())
             {
-                _Service = new Service();
+                Service = new Service();
 
                 var localFolder = ApplicationData.Current.LocalFolder;
-                var modelFolder = await localFolder.GetFolderAsync(_LocalAIModelFolderName);
+                var modelFolder = await localFolder.GetFolderAsync(LocalAIModelFolderName);
                 var modelPath = modelFolder.Path;
 
-                await _Service.LoadModelAsync(modelPath);
+                await Service.LoadModelAsync(modelPath);
             }
         }
 
         public async Task DeleteModelAsync()
         {
-            _Agents.Clear();
-            _Service?.UnloadModel();
-            _Service = null;
+            await DeleteAllAgents();
+
+            Service?.UnloadModel();
+            Service = null;
 
             var localFolder = ApplicationData.Current.LocalFolder;
-            var modelFolder = await localFolder.GetFolderAsync(_LocalAIModelFolderName);
+            var modelFolder = await localFolder.GetFolderAsync(LocalAIModelFolderName);
             await modelFolder.DeleteAsync(StorageDeleteOption.PermanentDelete);
+        }
+
+        private async Task DeleteAllAgents()
+        {
+            var agents = await Storage.GetAIAgentsAsync();
+            foreach (var agent in agents)
+            {
+                await Storage.DeleteAIAgentAsync(agent.Id);
+                AgentDeleted?.Invoke(this, new LocalAIAgentEventArgs(agent));
+            }
         }
 
         public async Task ImportModelAsync()
@@ -84,7 +102,7 @@ namespace Eppie.App.Shared.Services
             if (selectedFolder != null)
             {
                 StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-                StorageFolder modelFolder = await localFolder.CreateFolderAsync(_LocalAIModelFolderName, CreationCollisionOption.ReplaceExisting);
+                StorageFolder modelFolder = await localFolder.CreateFolderAsync(LocalAIModelFolderName, CreationCollisionOption.ReplaceExisting);
 
                 await CopyFolderContentsAsync(selectedFolder, modelFolder);
 
@@ -92,19 +110,21 @@ namespace Eppie.App.Shared.Services
             }
         }
 
-        public void AddAgent(LocalAIAgent agent)
+        public async Task AddAgentAsync(LocalAIAgent agent)
         {
-            _Agents.Add(agent);
+            await Storage.AddAIAgentAsync(agent);
+            AgentAdded?.Invoke(this, new LocalAIAgentEventArgs(agent));
         }
 
-        public void RemoveAgent(string agentName)
+        public async Task RemoveAgentAsync(LocalAIAgent agent)
         {
-            _Agents.Remove(_Agents.First(x => x.Name == agentName));
+            await Storage.DeleteAIAgentAsync(agent.Id);
+            AgentDeleted?.Invoke(this, new LocalAIAgentEventArgs(agent));
         }
 
-        public IReadOnlyList<LocalAIAgent> GetAgents()
+        public Task<IReadOnlyList<LocalAIAgent>> GetAgentsAsync()
         {
-            return _Agents;
+            return Storage.GetAIAgentsAsync();
         }
 
         private async void OnMessagesReceived(object sender, MessagesReceivedEventArgs e)
@@ -112,9 +132,10 @@ namespace Eppie.App.Shared.Services
             try
             {
                 var messages = e.ReceivedMessages;
+                var agents = await Storage.GetAIAgentsAsync();
                 foreach (var message in messages)
                 {
-                    foreach (var agent in _Agents)
+                    foreach (var agent in agents)
                     {
                         await ProcessMessage(agent, message).ConfigureAwait(false);
                     }
@@ -134,10 +155,10 @@ namespace Eppie.App.Shared.Services
 
                 if (text == null)
                 {
-                    text = (await _Core.GetMessageBodyAsync(message.Message).ConfigureAwait(false)).TextBody;
+                    text = (await Core.GetMessageBodyAsync(message.Message).ConfigureAwait(false)).TextBody;
                 }
 
-                var translatedText = await _Service?.ProcessTextAsync(agent.SystemPrompt, text, CancellationToken.None);
+                var translatedText = await Service?.ProcessTextAsync(agent.SystemPrompt, text, CancellationToken.None);
 
                 if (agent.IsAllowedToSendingEmail)
                 {
@@ -155,9 +176,9 @@ namespace Eppie.App.Shared.Services
             reply.To.AddRange(message.Message.From);
             reply.Subject = message.Message.Subject;
 
-            await _Core.SendMessageAsync(reply, false, false, CancellationToken.None).ConfigureAwait(false);
+            await Core.SendMessageAsync(reply, false, false, CancellationToken.None).ConfigureAwait(false);
 
-            await _Core.MarkMessagesAsReadAsync(new List<Message>() { message.Message }, CancellationToken.None).ConfigureAwait(false);
+            await Core.MarkMessagesAsReadAsync(new List<Message>() { message.Message }, CancellationToken.None).ConfigureAwait(false);
         }
 
         private void OnError(Exception ex)
@@ -182,6 +203,12 @@ namespace Eppie.App.Shared.Services
 
                 throw new Exception("No AI model files found in the selected folder.");
             }
+        }
+
+        public async Task UpdateAgentAsync(LocalAIAgent agent)
+        {
+            await Storage.UpdateAIAgentAsync(agent);
+            AgentUpdated?.Invoke(this, new LocalAIAgentEventArgs(agent));
         }
     }
 }

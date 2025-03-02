@@ -203,6 +203,10 @@
       <Project>{d7e6f7a8-6d95-462d-9f41-8e55f6ba0fbb}</Project>
       <Name>Tuvi.Core.Backup</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core.DataStorage\Tuvi.Core.DataStorage.csproj">
+      <Project>{93168FD9-6C19-4FBB-BC7E-657E67DCE9FD}</Project>
+      <Name>Tuvi.Core.DataStorage</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core.Entities\Tuvi.Core.Entities.csproj">
       <Project>{1e363987-165e-4ea6-a0e1-fad82b7c0633}</Project>
       <Name>Tuvi.Core.Entities</Name>
