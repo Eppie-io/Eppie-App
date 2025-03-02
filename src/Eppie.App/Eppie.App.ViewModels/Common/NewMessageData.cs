@@ -56,7 +56,7 @@ namespace Tuvi.App.ViewModels.Common
 
                 if (bodyTemplate != null)
                 {
-                    body = string.Format(CultureInfo.CurrentCulture, bodyTemplate, messageInfo.MessageSender, messageInfo.DateFullString, messageInfo.Email.Address, messageInfo.MessageSubject, body);
+                    body = string.Format(CultureInfo.CurrentCulture, bodyTemplate, messageInfo.MessageSender, messageInfo.DateFullString, messageInfo.MessageReceiver, messageInfo.MessageSubject, body);
                 }
             }
 
