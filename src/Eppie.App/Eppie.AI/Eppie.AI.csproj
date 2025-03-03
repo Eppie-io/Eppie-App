@@ -7,7 +7,7 @@
     <AnalysisLevel>6.0-all</AnalysisLevel>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(OS)' == 'OSX'">
+  <PropertyGroup Condition="'$(RuntimeIdentifier)' == 'osx-x64' Or '$(RuntimeIdentifier)' == 'osx-arm64'">
     <TargetFrameworks>$(TargetFrameworks);net9.0-ios;net9.0-maccatalyst</TargetFrameworks>
   </PropertyGroup>
   
