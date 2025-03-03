@@ -7,14 +7,13 @@
     <AnalysisLevel>6.0-all</AnalysisLevel>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(RuntimeIdentifier)' == 'osx-x64' Or '$(RuntimeIdentifier)' == 'osx-arm64'">
+  <PropertyGroup Condition="'$(HostOS)' == 'OSX'">
     <TargetFrameworks>$(TargetFrameworks);net9.0-ios;net9.0-maccatalyst</TargetFrameworks>
   </PropertyGroup>
 
   <Target Name="PrintBuildInfo" BeforeTargets="Build">
-    <Exec Command="echo OS: $(OS), RID: $(RuntimeIdentifier), TFs: $(TargetFrameworks)" />
+    <Exec Command="echo HostOS: $(HostOS), RID: $(RuntimeIdentifier), TFs: $(TargetFrameworks)" />
   </Target>
-
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <WarningLevel>9999</WarningLevel>
