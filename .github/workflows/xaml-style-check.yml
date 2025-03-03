@@ -1,0 +1,163 @@
+###############################################################################
+#
+#   Copyright 2025 Eppie(https://eppie.io)
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+#
+###############################################################################
+
+---
+
+name: "Xaml Style Check"
+
+on: # yamllint disable-line rule:truthy
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - release/**
+  pull_request:
+    branches:
+      - main
+      - release/**
+
+jobs:
+
+  style-check:
+    name: Style Check
+    runs-on: ubuntu-latest
+
+    env:
+      global-json-file: src/Eppie.App/global.json
+      xaml-styler-config: src/Eppie.App/Settings.XamlStyler
+      root: src/Eppie.App/
+      ignore: "*/bin/*;*/obj/*"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+          submodules: recursive
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@6bd8b7f7774af54e05809fcc5431931b3eb1ddee # v4.0.1
+        with:
+            global-json-file: ${{ env.global-json-file }}
+
+      - name: Install XamlStyler tool
+        shell: bash
+        run: dotnet tool install --global XamlStyler.Console
+
+      - name: Verify style
+        shell: bash
+        run: |
+          correct=true
+          ignore='${{ env.ignore }}'
+          root='${{ env.root }}'
+          config='${{ env.xaml-styler-config }}'
+
+          echo "::debug::parse ignore"
+
+          mapfile -t -d ';' ignore_map < <(echo -n $ignore)
+          ignore_options=$(printf " ! -path %s " "${ignore_map[@]}")
+
+          echo "::debug::run find xamls"
+
+          mapfile -t xamls < <(find $root -name *.xaml $ignore_options )
+
+          echo "::debug::for xamls len=${#xamls[@]}"
+
+          failed=0
+          idx=0
+          for xaml in "${xamls[@]}"; do
+
+            echo "::debug::run xstyler passive - $xaml ($((++idx)))"
+
+            out=$(xstyler --config $config --passive --file $xaml) && err=0 || err=$?
+
+            if [ $err = 0 ]; then
+              echo "Checking: $xaml - PASS"
+            else
+              correct=false
+              ((++failed))
+
+              echo "Checking: $xaml - FAIL"
+
+              echo "::debug::run xstyler write-to-stdout"
+
+              xaml_out=$(xstyler --config $config --write-to-stdout --loglevel None --file $xaml) && err=0 || err=$?
+              xaml_src=$(cat $xaml)
+
+              xaml_out="${xaml_out// /·}"
+              xaml_out="${xaml_out//$'\t'/→}"
+
+              xaml_src="${xaml_src// /·}"
+              xaml_src="${xaml_src//$'\t'/→}"
+
+              echo "::debug::run diff old-group-format"
+
+              diff_lines=$(diff --unchanged-line-format="" \
+                                --old-line-format="" \
+                                --new-line-format="" \
+                                --unchanged-group-format="" \
+                                --old-group-format="%df:%dl;" \
+                                --new-group-format=""  \
+                                -- <(echo "${xaml_src}") <(echo "${xaml_out}")) && err=0 || err=$_
+
+              echo "::debug::groups: $diff_lines"
+              mapfile -t -d ';' lines < <(echo -n $diff_lines)
+
+              for line in "${lines[@]}"; do
+                echo "::debug::print error file=$xaml,line=${line%:*},endLine=${line#*:}"
+                echo "::error file=$xaml,line=${line%:*},endLine=${line#*:},title=Invalid xaml style::Error xaml style"
+              done
+
+              echo "::debug::run diff color"
+
+              diff_color_out=$(diff --color=always -- <(echo "${xaml_src}") <(echo "${xaml_out}")) && err=0 || err=$_
+
+              echo "::debug::print group"
+
+              echo "::group::File differences"
+              echo "$diff_color_out"
+              echo "::endgroup::"
+
+              echo "::debug::run diff"
+
+              diff_out=$(diff --color=never -- <(echo "${xaml_src}") <(echo "${xaml_out}")) && err=0 || err=$_
+
+              echo "::debug::print summary"
+
+              echo "<details><summary><strong>$xaml</strong></summary>" >> $GITHUB_STEP_SUMMARY
+              echo '' >> $GITHUB_STEP_SUMMARY
+              echo '```diff' >> $GITHUB_STEP_SUMMARY
+              echo "$diff_out" >> $GITHUB_STEP_SUMMARY
+              echo '```' >> $GITHUB_STEP_SUMMARY
+              echo "</details>" >> $GITHUB_STEP_SUMMARY
+            fi
+
+            echo "::debug::next xaml"
+          done
+
+          echo "::debug::if correct"
+
+          if [ "$correct" = false ]; then
+
+            echo "::debug::print summary footer"
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "#### Total files: ${#xamls[@]}, Failed: ${failed}." >> $GITHUB_STEP_SUMMARY
+
+            echo "::debug::exit"
+            exit 1
+          fi
