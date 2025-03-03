@@ -324,7 +324,8 @@ namespace Tuvi.App.ViewModels
             IsAIProgressRingVisible = false;
         }
 
-        private async Task ToggleAIButtons()
+        // TODO: Implement this method
+        private Task ToggleAIButtons()
         {
             //if (await AIService.IsEnabledAsync())
             //{
@@ -336,6 +337,7 @@ namespace Tuvi.App.ViewModels
             //    IsEnableAIButtonVisible = true;
             //    IsDisableAIButtonVisible = false;
             //}
+            return Task.CompletedTask;
         }
 
         private async Task UpdateEmailAccountsListAsync()
