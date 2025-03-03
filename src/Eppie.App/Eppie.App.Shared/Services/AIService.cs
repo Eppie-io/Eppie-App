@@ -181,6 +181,7 @@ namespace Eppie.App.Shared.Services
             await Core.MarkMessagesAsReadAsync(new List<Message>() { message.Message }, CancellationToken.None).ConfigureAwait(false);
         }
 
+        // TODO: Implement error handling
         private void OnError(Exception ex)
         {
         }
