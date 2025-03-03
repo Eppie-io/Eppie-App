@@ -7,7 +7,14 @@
     <AnalysisLevel>6.0-all</AnalysisLevel>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(HostOS)' == 'OSX'">
+  <Target Name="DetectOS" BeforeTargets="Build">
+    <Exec Command="uname > os.txt" />
+    <ReadLinesFromFile File="os.txt">
+      <Output TaskParameter="Lines" PropertyName="HostOS" />
+    </ReadLinesFromFile>
+  </Target>
+
+  <PropertyGroup Condition="'$(HostOS)' == 'Darwin'">
     <TargetFrameworks>$(TargetFrameworks);net9.0-ios;net9.0-maccatalyst</TargetFrameworks>
   </PropertyGroup>
 
