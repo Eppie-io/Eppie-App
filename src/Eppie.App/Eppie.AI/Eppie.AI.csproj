@@ -1,26 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net9.0</TargetFrameworks>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>13.0</LangVersion>
     <EnableNETAnalyzers>True</EnableNETAnalyzers>
     <AnalysisLevel>6.0-all</AnalysisLevel>
   </PropertyGroup>
-
-  <Target Name="DetectOS" BeforeTargets="Build">
-    <Exec Command="uname > os.txt" />
-    <ReadLinesFromFile File="os.txt">
-      <Output TaskParameter="Lines" PropertyName="HostOS" />
-    </ReadLinesFromFile>
-  </Target>
-
-  <PropertyGroup Condition="'$(HostOS)' == 'Darwin'">
-    <TargetFrameworks>$(TargetFrameworks);net9.0-ios;net9.0-maccatalyst</TargetFrameworks>
-  </PropertyGroup>
-
-  <Target Name="PrintBuildInfo" BeforeTargets="Build">
-    <Exec Command="echo HostOS: $(HostOS), RID: $(RuntimeIdentifier), TFs: $(TargetFrameworks)" />
-  </Target>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <WarningLevel>9999</WarningLevel>
@@ -31,12 +16,12 @@
   </PropertyGroup>
  
   <!-- Define AI_ENABLED constant -->
-  <PropertyGroup Condition="!$(TargetFramework.Contains('mac')) AND !$(TargetFramework.Contains('ios'))">
+  <PropertyGroup Condition="'$(OS)' != 'Unix'">
     <DefineConstants>$(DefineConstants);AI_ENABLED</DefineConstants>
   </PropertyGroup>
 
   <!--TODO: Temporarily excluded due to build issues on macOS -->
-  <ItemGroup Condition="!$(TargetFramework.Contains('mac')) AND !$(TargetFramework.Contains('ios'))">
+  <ItemGroup Condition="'$(OS)' != 'Unix'">
     <PackageReference Include="Microsoft.Extensions.AI.Abstractions" />
     <PackageReference Include="Microsoft.ML.OnnxRuntimeGenAI.DirectML" />
   </ItemGroup>
