@@ -18,7 +18,7 @@ namespace Eppie.AI
         public async Task LoadModelAsync(string modelPath)
         {
             UnloadModel();
-
+#if AI_ENABLED
             // Phi3
             _model = await GenAIModel.CreateAsync(modelPath, new LlmPromptTemplate
             {
@@ -27,7 +27,7 @@ namespace Eppie.AI
                 Assistant = "<|assistant|>\n{{CONTENT}}<|end|>\n",
                 Stop = new[] { "<|system|>", "<|user|>", "<|assistant|>", "<|end|>" }
             }).ConfigureAwait(false);
-
+#endif
             // Mistral
             //_model = await GenAIModel.CreateAsync(modelPath, new LlmPromptTemplate
             //{
@@ -47,8 +47,10 @@ namespace Eppie.AI
 
         public void UnloadModel()
         {
+#if AI_ENABLED
             _model?.Dispose();
             _model = null;
+#endif
         }
 
 #if AI_ENABLED
