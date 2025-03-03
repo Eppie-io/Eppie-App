@@ -153,7 +153,7 @@ namespace Eppie.App.Shared.Services
             {
                 var text = message.Message.TextBody;
 
-                if (text == null)
+                if (text is null)
                 {
                     text = (await Core.GetMessageBodyAsync(message.Message).ConfigureAwait(false)).TextBody;
                 }
