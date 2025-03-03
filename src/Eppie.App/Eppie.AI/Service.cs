@@ -48,22 +48,18 @@ namespace Eppie.AI
             _model = null;
         }
 
-        public async Task<string> TranslateTextAsync(string text, string language, CancellationToken cts, Action<string> onTextUpdate = null)
+        public async Task<string> ProcessTextAsync(string systemPrompt, string text, CancellationToken cts, Action<string> onTextUpdate = null)
         {
             var result = string.Empty;
 
             await Task.Run(
                 async () =>
                 {
-                    string targetLanguage = language.ToString();
-                    string systemPrompt = "You translate user provided text. Do not reply with any extraneous content besides the translated text itself.";
-                    string userPrompt = $@"Translate '{text}' to {targetLanguage}.";
-
                     await foreach (var messagePart in _model.CompleteStreamingAsync(
                         new List<ChatMessage>
                         {
                                         new ChatMessage(ChatRole.System, systemPrompt),
-                                        new ChatMessage(ChatRole.User, userPrompt)
+                                        new ChatMessage(ChatRole.User, text)
                         },
                         null,
                         cts).ConfigureAwait(false))

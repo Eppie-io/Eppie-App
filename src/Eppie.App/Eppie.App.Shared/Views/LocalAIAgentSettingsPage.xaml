@@ -54,6 +54,10 @@
                 <ColumnDefinition Width="286" />
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Vertical" Spacing="12">
+                <TextBox x:Uid="AIAgentNameTextBox"
+                         Grid.Row="0"
+                         AcceptsReturn="True"
+                         Text="{x:Bind ViewModel.AgentSettingsModel.Name, Mode=TwoWay}" />
                 <TextBlock x:Uid="AgentSpecialty" VerticalAlignment="Center"/>
                 <ComboBox VerticalAlignment="Center"
                           ItemsSource="{x:Bind ViewModel.AgentSettingsModel.Specialties}"
@@ -62,6 +66,40 @@
                          MaxHeight="300" AcceptsReturn="True"
                          Text="{x:Bind ViewModel.AgentSettingsModel.SystemPrompt, Mode=TwoWay}"
                          TextWrapping="Wrap" />
+                <TextBlock x:Uid="AIAgentLinkedAccount" VerticalAlignment="Center"/>
+                <ComboBox VerticalAlignment="Center"
+                          ItemsSource="{x:Bind ViewModel.AccountsList}"
+                          SelectedItem="{x:Bind ViewModel.LinkedAccount, Mode=TwoWay}" />
+                <CheckBox x:Uid="AllowSendEmailsCheckBox"
+                          IsChecked="{x:Bind ViewModel.AgentSettingsModel.IsAllowedToSendingEmails, Mode=TwoWay}"/>
+                <TextBlock x:Uid="PreprocessWithAIAgent" VerticalAlignment="Center"/>
+                <ComboBox VerticalAlignment="Center"
+                          ItemsSource="{x:Bind ViewModel.AIAgentsList}"
+                          SelectedItem="{x:Bind ViewModel.PreprocessorAIAgent, Mode=TwoWay}" />
+                <TextBlock x:Uid="PostprocessWithAIAgent" VerticalAlignment="Center"/>
+                <ComboBox VerticalAlignment="Center"
+                          ItemsSource="{x:Bind ViewModel.AIAgentsList}"
+                          SelectedItem="{x:Bind ViewModel.PostprocessorAIAgent, Mode=TwoWay}" />
+            </StackPanel>
+            <StackPanel Grid.RowSpan="3" Grid.Column="1" Spacing="12">
+                <Slider x:Uid="/App.Resources/AIOptionTopPSlider"
+                        Header="Top P"
+                        Maximum="1"
+                        Minimum="0"
+                        StepFrequency="0.01"                        
+                        Value="{x:Bind ViewModel.AgentSettingsModel.defaultTopP, Mode=OneTime}" />
+                <Slider x:Uid="/App.Resources/AIOptionTopKSlider"                    
+                        Header="Top K"
+                        Maximum="200"
+                        Minimum="0"
+                        StepFrequency="1"                        
+                        Value="{x:Bind ViewModel.AgentSettingsModel.defaultTopK, Mode=OneTime}" />
+                <Slider x:Uid="/App.Resources/AIOptionTemperatureSlider"
+                        Header="Temperature"
+                        Maximum="5"
+                        Minimum="0.01"
+                        StepFrequency="0.01"                        
+                        Value="{x:Bind ViewModel.AgentSettingsModel.defaultTemperature, Mode=OneTime}" />
             </StackPanel>
         </Grid>
 

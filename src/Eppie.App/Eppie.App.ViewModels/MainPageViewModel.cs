@@ -123,11 +123,11 @@ namespace Tuvi.App.ViewModels
             get { return _message.HtmlBody ?? ""; }
         }
 
-        private string _translatedBody;
-        public string TranslatedBody
+        private string _AIAgentProcessedBody;
+        public string AIAgentProcessedBody
         {
-            get => _translatedBody;
-            set => SetProperty(ref _translatedBody, value);
+            get => _AIAgentProcessedBody;
+            set => SetProperty(ref _AIAgentProcessedBody, value);
         }
 
         public bool IsEmptyBody

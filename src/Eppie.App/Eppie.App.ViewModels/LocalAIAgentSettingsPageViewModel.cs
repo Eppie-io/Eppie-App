@@ -1,92 +1,31 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Eppie.App.ViewModels.Services;
+using Tuvi.App.ViewModels.Extensions;
+using Tuvi.App.ViewModels.Services;
+using Tuvi.Core.Entities;
 
 namespace Tuvi.App.ViewModels
 {
-    public class LocalAIAgent
-    {
-
-    }
-
-    public enum LocalAIAgentSpecialty
-    {
-        // Content Creation & Editing
-        Writer,             // Creates original content
-        Rewriter,           // Rewrites and reformulates text
-        Proofreader,        // Checks grammar and spelling
-        Summarizer,         // Summarizes emails and documents
-        EmailComposer,      // Generates email drafts
-
-        // Language & Communication
-        Translator,         // Translates emails between languages
-        SentimentAnalyzer,  // Analyzes emotional tone of emails
-        PersonalitySimulator, // Simulates writing style of a person
-
-        // Information Processing & Research
-        Researcher,         // Finds relevant information
-        Analyst,            // Analyzes trends and extracts insights
-        DataExtractor,      // Extracts key data from emails and attachments
-        NewsAggregator,     // Gathers and summarizes news
-
-        // Organization & Workflow
-        Scheduler,          // Plans meetings and sets reminders
-        Prioritizer,        // Identifies and ranks important emails
-        Classifier,         // Sorts emails into categories
-        Archivist,          // Saves and retrieves important documents
-
-        // Decision Making & Compliance
-        Jurist,             // Provides legal assistance
-        ComplianceChecker,  // Ensures regulatory compliance
-        Auditor,            // Verifies data consistency and detects anomalies
-        CyberSecurity,      // Detects phishing attempts and ensures data security
-
-        // Communication & Negotiation
-        Mediator,           // Facilitates conflict resolution
-        Negotiator,         // Assists in negotiations and argumentation
-
-        // Customer & Business Support
-        CustomerSupport,    // Handles automated responses and inquiries
-        FinanceAdvisor,     // Analyzes financial transactions and expenses
-        MarketingAdvisor,   // Provides marketing strategies and A/B testing insights
-
-        // Code & Technical Review
-        CodeReviewer,       // Analyzes and suggests improvements to code snippets
-
-        // Email Filtering & Security
-        SpamFilter,         // Detects and filters out spam emails
-        WhitelistManager    // Manages a whitelist of contacts allowed to send emails
-    }
-
-    public enum LanguageModelSkill
-    {
-        General,
-        TextToTable,
-        Summarize,
-        Rewrite
-    }
-
-    public enum SeverityLevel
-    {
-        None,
-        Low,
-        Medium,
-        High
-    }
-
     public class LocalAIAgentSettings : ObservableObject
     {
         public readonly int defaultTopK = 50;
         public readonly float defaultTopP = 0.9f;
         public readonly float defaultTemperature = 1;
-        public readonly int defaultMaxLength = 1024;
-        public readonly bool defaultDoSample = true;
-        public readonly LanguageModelSkill defaultSkill = LanguageModelSkill.General;
-        public readonly SeverityLevel defaultSeverityLevel = SeverityLevel.None;
+
+        private string _name;
+        public string Name
+        {
+            get => _name;
+            set => SetProperty(ref _name, value);
+        }
 
         private LocalAIAgentSpecialty _agentSpecialty;
         public LocalAIAgentSpecialty AgentSpecialty
@@ -151,7 +90,7 @@ namespace Tuvi.App.ViewModels
             { LocalAIAgentSpecialty.EmailComposer, "Generate a professional and context-appropriate email draft." },
 
             // Language & Communication
-            { LocalAIAgentSpecialty.Translator, "Translate the given email while preserving tone and intent." },
+            { LocalAIAgentSpecialty.Translator, "You translate only the user-provided text. Your response must contain nothing except the translated text itself. Do not add explanations, notes, interpretations, or any other content. Just translate." },
             { LocalAIAgentSpecialty.SentimentAnalyzer, "Analyze the emotional tone of this email and classify it as positive, neutral, or negative." },
             { LocalAIAgentSpecialty.PersonalitySimulator, "Rewrite the email in the style of the specified person." },
 
@@ -205,20 +144,28 @@ namespace Tuvi.App.ViewModels
             set => SetProperty(ref _systemPrompt, value);
         }
 
-        public LanguageModelSkill LanguageModelSkill { get; set; } = LanguageModelSkill.General;
+        private bool _isAllowedToSendingEmails;
+        public bool IsAllowedToSendingEmails
+        {
+            get => _isAllowedToSendingEmails;
+            set => SetProperty(ref _isAllowedToSendingEmails, value);
+        }
 
-        public List<LanguageModelSkill> LanguageModelSkills { get; } = new List<LanguageModelSkill> { LanguageModelSkill.General, LanguageModelSkill.TextToTable, LanguageModelSkill.Summarize, LanguageModelSkill.Rewrite };
-
-        public SeverityLevel InputModerationLevel { get; set; } = SeverityLevel.None;
-
-        public SeverityLevel OutputModerationLevel { get; set; } = SeverityLevel.None;
-
-        public List<SeverityLevel> SeverityLevels { get; } = new List<SeverityLevel> { SeverityLevel.None, SeverityLevel.Low, SeverityLevel.Medium, SeverityLevel.High };
-
-        public bool IsPhiSilica { get; set; } = true;
+        public LocalAIAgent CurrentAgent { get; }
 
         public LocalAIAgentSettings()
         {
+            CurrentAgent = new LocalAIAgent();
+        }
+
+        public LocalAIAgentSettings(LocalAIAgent agent)
+        {
+            CurrentAgent = agent;
+
+            Name = CurrentAgent.Name;
+            AgentSpecialty = CurrentAgent.AgentSpecialty;
+            SystemPrompt = CurrentAgent.SystemPrompt;
+            IsAllowedToSendingEmails = CurrentAgent.IsAllowedToSendingEmail;
         }
 
         public static LocalAIAgentSettings Create()
@@ -226,9 +173,26 @@ namespace Tuvi.App.ViewModels
             return new LocalAIAgentSettings();
         }
 
-        internal LocalAIAgent ToAgent()
+        public static LocalAIAgentSettings Create(LocalAIAgent agent)
         {
-            throw new NotImplementedException();
+            return new LocalAIAgentSettings(agent);
+        }
+
+        internal LocalAIAgent ToAIAgent(EmailAddress linkedAccount, string language)
+        {
+            var systemPrompt = SystemPrompt;
+            if (AgentSpecialty == LocalAIAgentSpecialty.Translator)
+            {
+                systemPrompt += string.Format(" You only translate into {0} language.", language);
+            }
+
+            CurrentAgent.Name = Name;
+            CurrentAgent.AgentSpecialty = AgentSpecialty;
+            CurrentAgent.SystemPrompt = systemPrompt;
+            CurrentAgent.Email = linkedAccount;
+            CurrentAgent.IsAllowedToSendingEmail = IsAllowedToSendingEmails && linkedAccount != null;
+
+            return CurrentAgent;
         }
     }
 
@@ -267,6 +231,30 @@ namespace Tuvi.App.ViewModels
             set { SetProperty(ref _isAIProgressRingVisible, value); }
         }
 
+        public ObservableCollection<EmailAddress> AccountsList { get; } = new ObservableCollection<EmailAddress>();
+
+        private EmailAddress _linkedAccount;
+        public EmailAddress LinkedAccount
+        {
+            get { return _linkedAccount; }
+            set { SetProperty(ref _linkedAccount, value); }
+        }
+
+        public ObservableCollection<LocalAIAgent> AIAgentsList { get; } = new ObservableCollection<LocalAIAgent>();
+
+        private LocalAIAgent _preprocessorAIAgent;
+        public LocalAIAgent PreprocessorAIAgent
+        {
+            get { return _preprocessorAIAgent; }
+            set { SetProperty(ref _preprocessorAIAgent, value); }
+        }
+
+        private LocalAIAgent _postprocessorAIAgent;
+        public LocalAIAgent PostprocessorAIAgent
+        {
+            get { return _postprocessorAIAgent; }
+            set { SetProperty(ref _postprocessorAIAgent, value); }
+        }
 
         public IRelayCommand ApplySettingsCommand { get; }
 
@@ -336,7 +324,8 @@ namespace Tuvi.App.ViewModels
             IsAIProgressRingVisible = false;
         }
 
-        private async Task ToggleAIButtons()
+        // TODO: Implement this method
+        private Task ToggleAIButtons()
         {
             //if (await AIService.IsEnabledAsync())
             //{
@@ -348,20 +337,41 @@ namespace Tuvi.App.ViewModels
             //    IsEnableAIButtonVisible = true;
             //    IsDisableAIButtonVisible = false;
             //}
+            return Task.CompletedTask;
         }
 
-        public override void OnNavigatedTo(object data)
+        private async Task UpdateEmailAccountsListAsync()
+        {
+            var accounts = await Core.GetCompositeAccountsAsync().ConfigureAwait(true);
+            AccountsList.SetItems(accounts.SelectMany(account => account.Addresses));
+            OnPropertyChanged(nameof(LinkedAccount));
+        }
+
+        private async Task UpdateAIAgentsListAsync()
+        {
+            var agents = await AIService.GetAgentsAsync().ConfigureAwait(true);
+            AIAgentsList.SetItems(agents.Where(agent => agent.Id != AgentSettingsModel.CurrentAgent.Id));
+
+            OnPropertyChanged(nameof(PreprocessorAIAgent));
+            OnPropertyChanged(nameof(PostprocessorAIAgent));
+        }
+
+        public override async void OnNavigatedTo(object data)
         {
             try
             {
                 if (data is LocalAIAgent agentData)
                 {
-                    InitModel(LocalAIAgentSettings.Create(), false);
+                    InitModel(LocalAIAgentSettings.Create(agentData), false);
+                    LinkedAccount = agentData.Email;
                 }
                 else
                 {
-                    InitModel(LocalAIAgentSettings.Create(), false);
+                    InitModel(LocalAIAgentSettings.Create(), true);
                 }
+
+                await UpdateEmailAccountsListAsync().ConfigureAwait(true);
+                await UpdateAIAgentsListAsync().ConfigureAwait(true);
             }
             catch (Exception e)
             {
@@ -380,7 +390,7 @@ namespace Tuvi.App.ViewModels
             IsWaitingResponse = true;
             try
             {
-                var agentData = AgentSettingsModel.ToAgent();
+                var agentData = AgentSettingsModel.ToAIAgent(LinkedAccount, LocalSettingsService.Language);
                 var result = await ApplyAgentSettingsAsync(agentData).ConfigureAwait(true);
                 if (result)
                 {
@@ -415,16 +425,14 @@ namespace Tuvi.App.ViewModels
 
         private async Task ProcessAgentDataAsync(LocalAIAgent agent, CancellationToken cancellationToken = default)
         {
-            //bool existAccount = await Core.ExistsAccountWithEmailAddressAsync(account.Email, cancellationToken).ConfigureAwait(true);
-
-            //if (!existAccount)
-            //{
-            //    await Core.AddAccountAsync(account, cancellationToken).ConfigureAwait(true);
-            //}
-            //else
-            //{
-            //    await Core.UpdateAccountAsync(account, cancellationToken).ConfigureAwait(true);
-            //}
+            if (IsCreatingAgentMode)
+            {
+                await AIService.AddAgentAsync(agent).ConfigureAwait(true);
+            }
+            else
+            {
+                await AIService.UpdateAgentAsync(agent).ConfigureAwait(true);
+            }
 
             await BackupIfNeededAsync().ConfigureAwait(true);
         }
@@ -473,7 +481,10 @@ namespace Tuvi.App.ViewModels
 
                 if (isConfirmed)
                 {
-                    await DeleteLocalAIModelAsync().ConfigureAwait(true);
+                    // TODO: Move this line
+                    //await DeleteLocalAIModelAsync().ConfigureAwait(true);
+
+                    await AIService.RemoveAgentAsync(AgentSettingsModel.CurrentAgent).ConfigureAwait(true);
 
                     await BackupIfNeededAsync().ConfigureAwait(true);
 

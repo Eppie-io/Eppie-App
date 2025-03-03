@@ -88,7 +88,7 @@ namespace Eppie.App.Shared
         {
             try
             {
-                AIService = new AIService();
+                AIService = new AIService(Core);
                 await AIService.LoadModelIfEnabled();
             }
             catch (Exception ex)
@@ -141,6 +141,8 @@ namespace Eppie.App.Shared
                 DisposeCore();
                 CreateCore();
                 await RemoveTempFilesAsync().ConfigureAwait(true);
+
+                CreateAIService();
             }
             catch (Exception ex)
             {

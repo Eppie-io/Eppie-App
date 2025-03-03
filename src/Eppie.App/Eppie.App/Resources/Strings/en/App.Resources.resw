@@ -257,12 +257,24 @@
     <value>Select All</value>
     <comment>The tooltip for Select All button</comment>
   </data>
-  <data name="TranslateMessageButton.Label" xml:space="preserve">
-    <value>Translate</value>
-    <comment>Text on Translate button.</comment>
+  <data name="AIAgentProcessMessageButton.Label" xml:space="preserve">
+    <value>AI Agent</value>
+    <comment>Text on AI Agent process button.</comment>
   </data>
-  <data name="TranslateMessageButton.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Translate</value>
-    <comment>The tooltip for Translate button</comment>
+  <data name="AIAgentProcessMessageButton.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>AI Agent</value>
+    <comment>The tooltip for AI Agent process button</comment>
+  </data>
+  <data name="AIOptionTopPSlider.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>The top P parameter tells the model to only consider tokens up until a cumulative probability of P. Lower this value for more predictable, focused generation and increase it for more random response.</value>
+    <comment>The tooltip for TopP AI option slider.</comment>
+  </data>
+  <data name="AIOptionTopKSlider.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>The top K parameter tells the model to only consider the K most probable tokens at each generation step. Lower this value for more predictable, focused generation and increase it for more random response.</value>
+    <comment>The tooltip for TopK AI option slider.</comment>
+  </data>
+  <data name="AIOptionTemperatureSlider.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>The temperature parameter is a scaling factor for the probability distribution of tokens during generation. Values lower than 1 will produce more deterministic response while values higher than 1 will increase ramdomness.</value>
+    <comment>The tooltip for Temperature AI option slider.</comment>
   </data>
 </root>

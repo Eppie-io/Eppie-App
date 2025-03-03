@@ -98,7 +98,8 @@
     <PackageReference Include="System.Private.Uri" />
     <PackageReference Include="CommunityToolkit.WinUI.Controls.TokenizingTextBox" />
     <PackageReference Include="Microsoft.Extensions.AI.Abstractions" />
-    <PackageReference Include="Microsoft.ML.OnnxRuntimeGenAI.DirectML" />
+    <!--TODO: Temporarily excluded due to build issues on macOS -->
+    <!--<PackageReference Include="Microsoft.ML.OnnxRuntimeGenAI.DirectML" />-->
   </ItemGroup>
 
   <!-- Enable WSL support in VS 17.13 and later, when a desktop target is present -->
