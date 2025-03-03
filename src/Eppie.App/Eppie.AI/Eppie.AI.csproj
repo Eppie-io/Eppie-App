@@ -7,8 +7,8 @@
     <AnalysisLevel>6.0-all</AnalysisLevel>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(OS)' != 'Linux'">
-    <TargetFrameworks>$(TargetFrameworks);net9.0-ios;net9.0-maccatalyst;</TargetFrameworks>
+  <PropertyGroup Condition="'$(OS)' == 'OSX'">
+    <TargetFrameworks>$(TargetFrameworks);net9.0-ios;net9.0-maccatalyst</TargetFrameworks>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
