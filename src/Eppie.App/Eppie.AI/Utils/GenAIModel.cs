@@ -1,3 +1,4 @@
+#if AI_ENABLED
 using Microsoft.Extensions.AI;
 using Microsoft.ML.OnnxRuntimeGenAI;
 using System;
@@ -5,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -25,9 +27,9 @@ namespace Eppie.AI
 
         private Model _model;
         private Tokenizer _tokenizer;
+        private static OgaHandle _ogaHandle;
         private LlmPromptTemplate _template;
         private static readonly SemaphoreSlim _createSemaphore = new(1, 1);
-        private static OgaHandle _ogaHandle;
 
         public static ChatOptions GetDefaultChatOptions()
         {
@@ -88,7 +90,6 @@ namespace Eppie.AI
         }
 
         public bool IsReady => _model != null && _tokenizer != null;
-
         public ChatClientMetadata Metadata { get; }
 
         public void Dispose()
@@ -193,7 +194,6 @@ namespace Eppie.AI
             }
 
             using var generatorParams = new GeneratorParams(_model);
-
             using var sequences = _tokenizer.Encode(prompt);
 
             void TransferMetadataValue(string propertyName, object defaultValue)
@@ -221,6 +221,7 @@ namespace Eppie.AI
             {
                 TransferMetadataValue("min_length", DefaultMinLength);
                 TransferMetadataValue("do_sample", DefaultDoSample);
+
                 generatorParams.SetSearchOption("temperature", (double)(options?.Temperature ?? DefaultTemperature));
                 generatorParams.SetSearchOption("top_p", (double)(options?.TopP ?? DefaultTopP));
                 generatorParams.SetSearchOption("top_k", options?.TopK ?? DefaultTopK);
@@ -232,8 +233,10 @@ namespace Eppie.AI
 
             using var tokenizerStream = _tokenizer.CreateStream();
             using var generator = new Generator(_model, generatorParams);
+
             StringBuilder stringBuilder = new();
             bool stopTokensAvailable = _template != null && _template.Stop != null && _template.Stop.Length > 0;
+
             while (!generator.IsDone())
             {
                 string part;
@@ -298,8 +301,8 @@ namespace Eppie.AI
                 serviceKey is not null ? null :
                 _model is not null && serviceType?.IsInstanceOfType(_model) is true ? _model :
                 _tokenizer is not null && serviceType?.IsInstanceOfType(_tokenizer) is true ? _tokenizer :
-                serviceType?.IsInstanceOfType(this) is true ? this :
-                null;
+                serviceType?.IsInstanceOfType(this) is true ? this : null;
         }
     }
 }
+#endif

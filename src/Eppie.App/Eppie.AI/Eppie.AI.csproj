@@ -14,10 +14,16 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <WarningLevel>9999</WarningLevel>
   </PropertyGroup>
+ 
+  <!-- Define AI_ENABLED constant -->
+  <PropertyGroup Condition="'$(OS)' != 'Unix'">
+    <DefineConstants>$(DefineConstants);AI_ENABLED</DefineConstants>
+  </PropertyGroup>
 
-  <ItemGroup>
+  <!--TODO: Temporarily excluded due to build issues on macOS -->
+  <ItemGroup Condition="'$(OS)' != 'Unix'">
     <PackageReference Include="Microsoft.Extensions.AI.Abstractions" />
     <PackageReference Include="Microsoft.ML.OnnxRuntimeGenAI.DirectML" />
   </ItemGroup>
-
+  
 </Project>
