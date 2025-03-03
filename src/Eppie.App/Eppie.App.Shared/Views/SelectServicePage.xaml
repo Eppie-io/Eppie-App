@@ -1,14 +1,14 @@
 ﻿<local:SelectServicePageBase x:Class="Tuvi.App.Shared.Views.SelectServicePage"
-                                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                                   xmlns:behaviors="using:Eppie.App.UI.Behaviors"
-                                   xmlns:controls="using:Tuvi.App.Shared.Controls"
-                                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                                   xmlns:extensions="using:Tuvi.App.Shared.Extensions"
-                                   xmlns:local="using:Tuvi.App.Shared.Views"
-                                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                                   xmlns:viewmodels="using:Tuvi.App.ViewModels"
-                                   mc:Ignorable="d">
+                             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                             xmlns:behaviors="using:Eppie.App.UI.Behaviors"
+                             xmlns:controls="using:Tuvi.App.Shared.Controls"
+                             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                             xmlns:extensions="using:Tuvi.App.Shared.Extensions"
+                             xmlns:local="using:Tuvi.App.Shared.Views"
+                             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                             xmlns:viewmodels="using:Tuvi.App.ViewModels"
+                             mc:Ignorable="d">
 
     <local:SelectServicePageBase.DataContext>
         <viewmodels:SelectServicePageViewModel />
