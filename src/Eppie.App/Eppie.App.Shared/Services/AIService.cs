@@ -53,7 +53,7 @@ namespace Eppie.App.Shared.Services
 
         public async Task LoadModelIfEnabled()
         {
-            if (Service == null && await IsEnabledAsync())
+            if (Service is null && await IsEnabledAsync())
             {
                 Service = new Service();
 
