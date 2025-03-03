@@ -96,12 +96,12 @@
   <ItemGroup>
     <!-- The default version of the 'System.Private.Uri' package is 4.3.0, which has a vulnerability -->
     <PackageReference Include="System.Private.Uri" />
-    <PackageReference Include="CommunityToolkit.WinUI.Controls.TokenizingTextBox" />
-    <PackageReference Include="Microsoft.Extensions.AI.Abstractions" />
+    <PackageReference Include="CommunityToolkit.WinUI.Controls.TokenizingTextBox" />    
   </ItemGroup>
 
   <!--TODO: Temporarily excluded due to build issues on macOS -->
   <ItemGroup Condition="!$(TargetFramework.Contains('mac'))">
+    <PackageReference Include="Microsoft.Extensions.AI.Abstractions" />
     <PackageReference Include="Microsoft.ML.OnnxRuntimeGenAI.DirectML" />
   </ItemGroup>
   

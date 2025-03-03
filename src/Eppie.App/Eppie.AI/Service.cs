@@ -1,4 +1,6 @@
+#if AI_ENABLED
 using Microsoft.Extensions.AI;
+#endif
 using System;
 using System.Collections.Generic;
 using System.Resources;
@@ -10,8 +12,9 @@ namespace Eppie.AI
 {
     public class Service
     {
+#if AI_ENABLED
         private IChatClient _model;
-
+#endif
         public async Task LoadModelAsync(string modelPath)
         {
             UnloadModel();
@@ -48,6 +51,7 @@ namespace Eppie.AI
             _model = null;
         }
 
+#if AI_ENABLED
         public async Task<string> ProcessTextAsync(string systemPrompt, string text, CancellationToken cts, Action<string> onTextUpdate = null)
         {
             var result = string.Empty;
@@ -71,7 +75,12 @@ namespace Eppie.AI
 
             return RemoveThinkBlockIfExists(result);
         }
-
+#else
+        public Task<string> ProcessTextAsync(string systemPrompt, string text, CancellationToken cts, Action<string> onTextUpdate = null)
+        {
+            return Task.FromResult(string.Empty);
+        }
+#endif
         private static string RemoveThinkBlockIfExists(string text)
         {
             // Deletion of <think> block if it exists
