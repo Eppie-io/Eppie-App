@@ -84,12 +84,12 @@
                                 <TextBlock Text="{x:Bind Name, Mode=OneWay}" />
                             </Grid>
                         </DataTemplate>
-                    </ListView.ItemTemplate>                    
+                    </ListView.ItemTemplate>
                     <interactivity:Interaction.Behaviors>
                         <behaviors:ListViewItemClickBehavior ClickCommand="{x:Bind ViewModel.EditAIAgentCommand, Mode=OneWay}" />
                     </interactivity:Interaction.Behaviors>
                 </ListView>
-                
+
             </StackPanel>
 
         </ScrollViewer>
