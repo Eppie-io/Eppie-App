@@ -100,7 +100,7 @@
   </ItemGroup>
 
   <!--TODO: Temporarily excluded due to build issues on macOS -->
-  <ItemGroup Condition="!$(TargetFramework.Contains('mac'))">
+  <ItemGroup Condition="!$(TargetFramework.Contains('mac') AND !$(TargetFramework.Contains('ios'))">
     <PackageReference Include="Microsoft.Extensions.AI.Abstractions" />
     <PackageReference Include="Microsoft.ML.OnnxRuntimeGenAI.DirectML" />
   </ItemGroup>
