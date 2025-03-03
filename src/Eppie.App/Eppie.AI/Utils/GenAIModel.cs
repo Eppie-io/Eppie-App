@@ -1,10 +1,13 @@
 using Microsoft.Extensions.AI;
+#if UWP
 using Microsoft.ML.OnnxRuntimeGenAI;
+#endif
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,11 +26,13 @@ namespace Eppie.AI
         public const int DefaultMaxLength = 1024;
         private const bool DefaultDoSample = false;
 
+#if UWP
         private Model _model;
         private Tokenizer _tokenizer;
+        private static OgaHandle _ogaHandle;
+#endif
         private LlmPromptTemplate _template;
         private static readonly SemaphoreSlim _createSemaphore = new(1, 1);
-        private static OgaHandle _ogaHandle;
 
         public static ChatOptions GetDefaultChatOptions()
         {
@@ -84,18 +89,25 @@ namespace Eppie.AI
 
         public static void InitializeGenAI()
         {
+#if UWP
             _ogaHandle = new OgaHandle();
+#endif
         }
 
+#if UWP
         public bool IsReady => _model != null && _tokenizer != null;
-
+#else
+        public bool IsReady;
+#endif
         public ChatClientMetadata Metadata { get; }
 
         public void Dispose()
         {
+#if UWP
             _model?.Dispose();
             _tokenizer?.Dispose();
             _ogaHandle?.Dispose();
+#endif
         }
 
         private string GetPrompt(IEnumerable<ChatMessage> history)
@@ -191,18 +203,17 @@ namespace Eppie.AI
             {
                 throw new InvalidOperationException("Model is not ready");
             }
-
+#if UWP
             using var generatorParams = new GeneratorParams(_model);
-
             using var sequences = _tokenizer.Encode(prompt);
-
+#endif
             void TransferMetadataValue(string propertyName, object defaultValue)
             {
                 object val = null;
                 options?.AdditionalProperties?.TryGetValue(propertyName, out val);
 
                 val ??= defaultValue;
-
+#if UWP
                 if (val is int intVal)
                 {
                     generatorParams.SetSearchOption(propertyName, intVal);
@@ -215,26 +226,34 @@ namespace Eppie.AI
                 {
                     generatorParams.SetSearchOption(propertyName, boolVal);
                 }
+#endif
             }
 
             if (options != null)
             {
                 TransferMetadataValue("min_length", DefaultMinLength);
                 TransferMetadataValue("do_sample", DefaultDoSample);
+#if UWP
                 generatorParams.SetSearchOption("temperature", (double)(options?.Temperature ?? DefaultTemperature));
                 generatorParams.SetSearchOption("top_p", (double)(options?.TopP ?? DefaultTopP));
                 generatorParams.SetSearchOption("top_k", options?.TopK ?? DefaultTopK);
+#endif
             }
-
+#if UWP
             generatorParams.SetSearchOption("max_length", (options?.MaxOutputTokens ?? DefaultMaxLength) + sequences[0].Length);
             generatorParams.SetInputSequences(sequences);
             generatorParams.TryGraphCaptureWithMaxBatchSize(1);
 
             using var tokenizerStream = _tokenizer.CreateStream();
             using var generator = new Generator(_model, generatorParams);
+#endif
             StringBuilder stringBuilder = new();
             bool stopTokensAvailable = _template != null && _template.Stop != null && _template.Stop.Length > 0;
+#if UWP
             while (!generator.IsDone())
+#else
+            while (false)
+#endif
             {
                 string part;
                 try
@@ -245,7 +264,7 @@ namespace Eppie.AI
                     }
 
                     await Task.Delay(0, ct).ConfigureAwait(false);
-
+#if UWP
                     generator.ComputeLogits();
                     generator.GenerateNextToken();
                     var sequence = generator.GetSequence(0);
@@ -266,17 +285,21 @@ namespace Eppie.AI
                             break;
                         }
                     }
+#endif
                 }
                 catch (Exception)
                 {
                     break;
                 }
-
+#if UWP
                 yield return new StreamingChatCompletionUpdate
                 {
                     Role = ChatRole.Assistant,
                     Text = part,
                 };
+#else
+                yield return new StreamingChatCompletionUpdate();
+#endif
             }
         }
 
@@ -285,9 +308,11 @@ namespace Eppie.AI
             return Task.Run(
                 () =>
                 {
+#if UWP
                     _model = new Model(modelDir);
                     cancellationToken.ThrowIfCancellationRequested();
                     _tokenizer = new Tokenizer(_model);
+#endif
                 },
                 cancellationToken);
         }
@@ -295,10 +320,12 @@ namespace Eppie.AI
         public object GetService(Type serviceType, object serviceKey = null)
         {
             return
+#if UWP
                 serviceKey is not null ? null :
                 _model is not null && serviceType?.IsInstanceOfType(_model) is true ? _model :
                 _tokenizer is not null && serviceType?.IsInstanceOfType(_tokenizer) is true ? _tokenizer :
                 serviceType?.IsInstanceOfType(this) is true ? this :
+#endif
                 null;
         }
     }

@@ -17,7 +17,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.AI.Abstractions" />
-    <PackageReference Include="Microsoft.ML.OnnxRuntimeGenAI.DirectML" />
+    <!--TODO: Temporarily excluded due to build issues on macOS -->
+    <!--<PackageReference Include="Microsoft.ML.OnnxRuntimeGenAI.DirectML" />-->
   </ItemGroup>
 
 </Project>
