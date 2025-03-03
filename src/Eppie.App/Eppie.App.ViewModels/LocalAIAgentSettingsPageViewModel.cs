@@ -480,7 +480,7 @@ namespace Tuvi.App.ViewModels
                 bool isConfirmed = await MessageService.ShowRemoveAIAgentDialogAsync().ConfigureAwait(true);
 
                 if (isConfirmed)
-
+                {
                     // TODO: Move this line
                     //await DeleteLocalAIModelAsync().ConfigureAwait(true);
 
