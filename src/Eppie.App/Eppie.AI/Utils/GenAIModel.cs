@@ -1,5 +1,5 @@
 using Microsoft.Extensions.AI;
-#if UWP
+#if AI_ENABLED
 using Microsoft.ML.OnnxRuntimeGenAI;
 #endif
 using System;
@@ -26,7 +26,7 @@ namespace Eppie.AI
         public const int DefaultMaxLength = 1024;
         private const bool DefaultDoSample = false;
 
-#if UWP
+#if AI_ENABLED
         private Model _model;
         private Tokenizer _tokenizer;
         private static OgaHandle _ogaHandle;
@@ -89,12 +89,12 @@ namespace Eppie.AI
 
         public static void InitializeGenAI()
         {
-#if UWP
+#if AI_ENABLED
             _ogaHandle = new OgaHandle();
 #endif
         }
 
-#if UWP
+#if AI_ENABLED
         public bool IsReady => _model != null && _tokenizer != null;
 #else
         public bool IsReady;
@@ -103,7 +103,7 @@ namespace Eppie.AI
 
         public void Dispose()
         {
-#if UWP
+#if AI_ENABLED
             _model?.Dispose();
             _tokenizer?.Dispose();
             _ogaHandle?.Dispose();
@@ -203,7 +203,7 @@ namespace Eppie.AI
             {
                 throw new InvalidOperationException("Model is not ready");
             }
-#if UWP
+#if AI_ENABLED
             using var generatorParams = new GeneratorParams(_model);
             using var sequences = _tokenizer.Encode(prompt);
 #endif
@@ -213,7 +213,7 @@ namespace Eppie.AI
                 options?.AdditionalProperties?.TryGetValue(propertyName, out val);
 
                 val ??= defaultValue;
-#if UWP
+#if AI_ENABLED
                 if (val is int intVal)
                 {
                     generatorParams.SetSearchOption(propertyName, intVal);
@@ -233,13 +233,13 @@ namespace Eppie.AI
             {
                 TransferMetadataValue("min_length", DefaultMinLength);
                 TransferMetadataValue("do_sample", DefaultDoSample);
-#if UWP
+#if AI_ENABLED
                 generatorParams.SetSearchOption("temperature", (double)(options?.Temperature ?? DefaultTemperature));
                 generatorParams.SetSearchOption("top_p", (double)(options?.TopP ?? DefaultTopP));
                 generatorParams.SetSearchOption("top_k", options?.TopK ?? DefaultTopK);
 #endif
             }
-#if UWP
+#if AI_ENABLED
             generatorParams.SetSearchOption("max_length", (options?.MaxOutputTokens ?? DefaultMaxLength) + sequences[0].Length);
             generatorParams.SetInputSequences(sequences);
             generatorParams.TryGraphCaptureWithMaxBatchSize(1);
@@ -249,7 +249,7 @@ namespace Eppie.AI
 #endif
             StringBuilder stringBuilder = new();
             bool stopTokensAvailable = _template != null && _template.Stop != null && _template.Stop.Length > 0;
-#if UWP
+#if AI_ENABLED
             while (!generator.IsDone())
 #else
             while (false)
@@ -264,7 +264,7 @@ namespace Eppie.AI
                     }
 
                     await Task.Delay(0, ct).ConfigureAwait(false);
-#if UWP
+#if AI_ENABLED
                     generator.ComputeLogits();
                     generator.GenerateNextToken();
                     var sequence = generator.GetSequence(0);
@@ -291,7 +291,7 @@ namespace Eppie.AI
                 {
                     break;
                 }
-#if UWP
+#if AI_ENABLED
                 yield return new StreamingChatCompletionUpdate
                 {
                     Role = ChatRole.Assistant,
@@ -308,7 +308,7 @@ namespace Eppie.AI
             return Task.Run(
                 () =>
                 {
-#if UWP
+#if AI_ENABLED
                     _model = new Model(modelDir);
                     cancellationToken.ThrowIfCancellationRequested();
                     _tokenizer = new Tokenizer(_model);
@@ -320,7 +320,7 @@ namespace Eppie.AI
         public object GetService(Type serviceType, object serviceKey = null)
         {
             return
-#if UWP
+#if AI_ENABLED
                 serviceKey is not null ? null :
                 _model is not null && serviceType?.IsInstanceOfType(_model) is true ? _model :
                 _tokenizer is not null && serviceType?.IsInstanceOfType(_tokenizer) is true ? _tokenizer :
