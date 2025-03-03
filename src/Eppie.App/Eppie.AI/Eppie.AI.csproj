@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net9.0-android;net9.0-ios;net9.0-maccatalyst;net9.0-windows10.0.22621;</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net9.0-ios;net9.0-maccatalyst;</TargetFrameworks>
     <LangVersion>13.0</LangVersion>
     <EnableNETAnalyzers>True</EnableNETAnalyzers>
     <AnalysisLevel>6.0-all</AnalysisLevel>
