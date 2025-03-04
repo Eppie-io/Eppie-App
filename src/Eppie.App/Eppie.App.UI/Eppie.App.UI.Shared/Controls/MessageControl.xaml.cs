@@ -64,7 +64,7 @@ namespace Eppie.App.UI.Controls
         }
 
         public static readonly DependencyProperty HasAIAgentProcessedBodyProperty =
-            DependencyProperty.Register(nameof(HasAIAgentProcessedBody), typeof(string), typeof(MessageControl), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(HasAIAgentProcessedBody), typeof(bool), typeof(MessageControl), new PropertyMetadata(null));
 
 
         private static void OnHtmlBodyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)

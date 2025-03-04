@@ -23,6 +23,10 @@ namespace Eppie.App.ViewModels.Services
         /// Event triggered when a local AI agent is updated.
         /// </summary>
         event EventHandler<LocalAIAgentEventArgs> AgentUpdated;
+        /// <summary>
+        /// Event triggered when an exception occurs in the AI service.
+        /// </summary>
+        event EventHandler<ExceptionEventArgs> ExceptionOccurred;
 
         /// <summary>
         /// Asynchronously processes text with the specified local AI agent and language.
@@ -38,6 +42,12 @@ namespace Eppie.App.ViewModels.Services
         /// Asynchronously checks if the local AI is enabled.
         /// </summary>        
         Task<bool> IsEnabledAsync();
+
+        /// <summary>
+        /// Asynchronously checks if the local AI model is imported.
+        /// </summary>
+        /// <returns>A task representing the asynchronous operation, returning true if the model is imported, otherwise false.</returns>
+        Task<bool> IsLocalAIModelImportedAsync();
 
         /// <summary>
         /// Asynchronously deletes the local AI model.

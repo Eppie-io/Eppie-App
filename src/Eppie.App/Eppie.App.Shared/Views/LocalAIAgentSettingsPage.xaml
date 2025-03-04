@@ -35,10 +35,13 @@
                 Command="{x:Bind ViewModel.RemoveAgentCommand}"
                 Visibility="{x:Bind ViewModel.IsCreatingAgentMode, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
 
-        <Button x:Uid="ImportLocalAIModelButton" Command="{x:Bind ViewModel.ImportLocalAIModelCommand}" />
-
-
-        <ProgressRing Margin="8,8"
+        <Button x:Uid="ImportLocalAIModelButton"
+                Command="{x:Bind ViewModel.ImportLocalAIModelCommand}"
+                Visibility="{x:Bind ViewModel.IsImportAIModelButtonVisible, Mode=OneWay}" />
+        <Button x:Uid="DeleteLocalAIModelButton"
+                Command="{x:Bind ViewModel.DeleteLocalAIModelCommand}"
+                Visibility="{x:Bind ViewModel.IsDeleteAIModelButtonVisible, Mode=OneWay}" />
+        <ProgressRing HorizontalAlignment="Left"
                       IsActive="True"
                       Visibility="{x:Bind ViewModel.IsAIProgressRingVisible, Mode=OneWay}" />
 

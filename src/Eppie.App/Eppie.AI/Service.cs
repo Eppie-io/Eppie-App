@@ -58,8 +58,8 @@ namespace Eppie.AI
                     await foreach (var messagePart in _model.CompleteStreamingAsync(
                         new List<ChatMessage>
                         {
-                                        new ChatMessage(ChatRole.System, systemPrompt),
-                                        new ChatMessage(ChatRole.User, text)
+                            new ChatMessage(ChatRole.System, systemPrompt),
+                            new ChatMessage(ChatRole.User, text)
                         },
                         null,
                         cts).ConfigureAwait(false))
