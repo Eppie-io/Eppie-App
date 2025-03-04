@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+#if AI_ENABLED
 using Eppie.AI;
+#endif
 using Eppie.App.UI.Tools;
 using Eppie.App.ViewModels.Services;
 using Tuvi.Core;
@@ -17,7 +19,9 @@ namespace Eppie.App.Shared.Services
     public class AIService : IAIService
     {
         private const string LocalAIModelFolderName = "local.ai.model";
+#if AI_ENABLED
         private Service Service;
+#endif
         private ITuviMail Core;
         private readonly IAIAgentsStorage Storage;
 
@@ -35,11 +39,12 @@ namespace Eppie.App.Shared.Services
 
         public Task<string> ProcessTextAsync(LocalAIAgent agent, string text, CancellationToken cancellationToken, Action<string> onTextUpdate = null)
         {
+#if AI_ENABLED
             if (Service != null)
             {
                 return Service.ProcessTextAsync(agent.SystemPrompt, text, cancellationToken, onTextUpdate);
             }
-
+#endif
             return Task.FromResult(string.Empty);
         }
 
@@ -51,6 +56,7 @@ namespace Eppie.App.Shared.Services
             return modelFolder != null;
         }
 
+#if AI_ENABLED
         public async Task LoadModelIfEnabled()
         {
             if (Service is null && await IsEnabledAsync())
@@ -64,14 +70,20 @@ namespace Eppie.App.Shared.Services
                 await Service.LoadModelAsync(modelPath);
             }
         }
+#else
+        public Task LoadModelIfEnabled()
+        {
+            return Task.CompletedTask;
+        }
+#endif
 
         public async Task DeleteModelAsync()
         {
             await DeleteAllAgents();
-
+#if AI_ENABLED
             Service?.UnloadModel();
             Service = null;
-
+#endif
             var localFolder = ApplicationData.Current.LocalFolder;
             var modelFolder = await localFolder.GetFolderAsync(LocalAIModelFolderName);
             await modelFolder.DeleteAsync(StorageDeleteOption.PermanentDelete);
@@ -157,13 +169,14 @@ namespace Eppie.App.Shared.Services
                 {
                     text = (await Core.GetMessageBodyAsync(message.Message).ConfigureAwait(false)).TextBody;
                 }
-
+#if AI_ENABLED
                 var translatedText = await Service?.ProcessTextAsync(agent.SystemPrompt, text, CancellationToken.None);
 
                 if (agent.IsAllowedToSendingEmail)
                 {
                     await ReplyToMessage(message, translatedText).ConfigureAwait(false);
                 }
+#endif
             }
         }
 

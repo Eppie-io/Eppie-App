@@ -118,6 +118,9 @@
   <PropertyGroup>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
+  <PropertyGroup>
+    <DefineConstants>$(DefineConstants);AI_ENABLED</DefineConstants>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="Authorization\AuthConfig.UWP.cs" />
     <Compile Include="Models\BrandLoader.cs" />
