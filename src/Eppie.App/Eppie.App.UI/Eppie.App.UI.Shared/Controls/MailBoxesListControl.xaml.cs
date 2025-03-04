@@ -15,7 +15,7 @@ namespace Tuvi.App.Shared.Controls
     public sealed partial class MailBoxesListControl : Windows.UI.Xaml.Controls.UserControl
 #else
     public sealed partial class MailBoxesListControl : UserControl
-#endif    
+#endif
     {
         public MailBoxesModel MailBoxesModel
         {
@@ -34,7 +34,7 @@ namespace Tuvi.App.Shared.Controls
         private void MailBoxTreeView_DragOver(object sender, DragEventArgs e)
 #else
         private void MailBoxTreeView_DragOver(object sender, Microsoft.UI.Xaml.DragEventArgs e)
-#endif        
+#endif
         {
             e.AcceptedOperation = DataPackageOperation.None;
 
@@ -101,7 +101,7 @@ namespace Tuvi.App.Shared.Controls
         private void MailBoxTreeView_Drop(object sender, DragEventArgs e)
 #else
         private void MailBoxTreeView_Drop(object sender, Microsoft.UI.Xaml.DragEventArgs e)
-#endif        
+#endif
         {
             if (e.DataView.Contains(StandardDataFormats.Text))
             {
