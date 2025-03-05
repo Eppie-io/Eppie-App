@@ -1,6 +1,6 @@
 <Project Sdk="Uno.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net9.0-android;net9.0-ios;net9.0-maccatalyst;net9.0-windows10.0.22621;net9.0-browserwasm;net9.0-desktop</TargetFrameworks>
+    <TargetFrameworks>net9.0-desktop;net9.0-android;net9.0-ios;net9.0-maccatalyst;net9.0-windows10.0.22621;net9.0-browserwasm</TargetFrameworks>
 
     <OutputType>Exe</OutputType>
     <UnoSingleProject>true</UnoSingleProject>
@@ -99,10 +99,10 @@
   </ItemGroup>
 
   <!--TODO: Temporarily excluded due to build issues on macOS -->
-  <PropertyGroup Condition="!$(TargetFrameworks.Contains('mac')) AND !$(TargetFrameworks.Contains('ios'))">
+  <PropertyGroup Condition="!$(TargetFramework.Contains('mac')) AND !$(TargetFramework.Contains('ios'))">
     <DefineConstants>$(DefineConstants);AI_ENABLED</DefineConstants>
   </PropertyGroup>  
-  <ItemGroup Condition="!$(TargetFrameworks.Contains('mac')) AND !$(TargetFrameworks.Contains('ios'))">
+  <ItemGroup Condition="!$(TargetFramework.Contains('mac')) AND !$(TargetFramework.Contains('ios'))">
     <ProjectReference Include="..\Eppie.AI\Eppie.AI.csproj" />
     <PackageReference Include="Microsoft.Extensions.AI.Abstractions" />
     <PackageReference Include="Microsoft.ML.OnnxRuntimeGenAI.DirectML" />

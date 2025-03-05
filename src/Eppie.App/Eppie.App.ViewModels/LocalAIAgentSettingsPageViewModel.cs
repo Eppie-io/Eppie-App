@@ -224,6 +224,20 @@ namespace Tuvi.App.ViewModels
             private set { SetProperty(ref _isCreatingAgentMode, value); }
         }
 
+        private bool _isImportAIModelButtonVisible;
+        public bool IsImportAIModelButtonVisible
+        {
+            get => _isImportAIModelButtonVisible;
+            private set => SetProperty(ref _isImportAIModelButtonVisible, value);
+        }
+
+        private bool _isDeleteAIModelButtonVisible;
+        public bool IsDeleteAIModelButtonVisible
+        {
+            get => _isDeleteAIModelButtonVisible;
+            private set => SetProperty(ref _isDeleteAIModelButtonVisible, value);
+        }
+
         private bool _isAIProgressRingVisible;
         public bool IsAIProgressRingVisible
         {
@@ -262,6 +276,8 @@ namespace Tuvi.App.ViewModels
 
         public IRelayCommand ImportLocalAIModelCommand { get; }
 
+        public IRelayCommand DeleteLocalAIModelCommand { get; }
+
         public ICommand CancelSettingsCommand => new RelayCommand(DoCancel);
 
         public ICommand HandleErrorCommand => new RelayCommand<object>(ex => OnError(ex as Exception));
@@ -271,8 +287,33 @@ namespace Tuvi.App.ViewModels
             ApplySettingsCommand = new AsyncRelayCommand(ApplySettingsAndGoBackAsync, () => !IsWaitingResponse);
             RemoveAgentCommand = new AsyncRelayCommand(RemoveAgentAndGoBackAsync, () => !IsWaitingResponse);
             ImportLocalAIModelCommand = new AsyncRelayCommand(ImportLocalAIModelAsync, () => !IsWaitingResponse);
+            DeleteLocalAIModelCommand = new AsyncRelayCommand(DeleteLocalAIModelAsync, () => !IsWaitingResponse);
 
             ErrorsChanged += (sender, e) => ApplySettingsCommand.NotifyCanExecuteChanged();
+        }
+
+        public override async void OnNavigatedTo(object data)
+        {
+            try
+            {
+                if (data is LocalAIAgent agentData)
+                {
+                    InitModel(LocalAIAgentSettings.Create(agentData), false);
+                    LinkedAccount = agentData.Email;
+                }
+                else
+                {
+                    InitModel(LocalAIAgentSettings.Create(), true);
+                }
+
+                await ToggleAIButtons();
+                await UpdateEmailAccountsListAsync().ConfigureAwait(true);
+                await UpdateAIAgentsListAsync().ConfigureAwait(true);
+            }
+            catch (Exception e)
+            {
+                OnError(e);
+            }
         }
 
         public async Task DeleteLocalAIModelAsync()
@@ -315,8 +356,8 @@ namespace Tuvi.App.ViewModels
         {
             IsAIProgressRingVisible = true;
 
-            //IsEnableAIButtonVisible = false;
-            //IsDisableAIButtonVisible = false;
+            IsImportAIModelButtonVisible = false;
+            IsDeleteAIModelButtonVisible = false;
         }
 
         private void HideProgressRing()
@@ -324,20 +365,18 @@ namespace Tuvi.App.ViewModels
             IsAIProgressRingVisible = false;
         }
 
-        // TODO: Implement this method
-        private Task ToggleAIButtons()
+        private async Task ToggleAIButtons()
         {
-            //if (await AIService.IsEnabledAsync())
-            //{
-            //    IsEnableAIButtonVisible = false;
-            //    IsDisableAIButtonVisible = true;
-            //}
-            //else
-            //{
-            //    IsEnableAIButtonVisible = true;
-            //    IsDisableAIButtonVisible = false;
-            //}
-            return Task.CompletedTask;
+            if (await AIService.IsLocalAIModelImportedAsync())
+            {
+                IsImportAIModelButtonVisible = false;
+                IsDeleteAIModelButtonVisible = true;
+            }
+            else
+            {
+                IsImportAIModelButtonVisible = true;
+                IsDeleteAIModelButtonVisible = false;
+            }
         }
 
         private async Task UpdateEmailAccountsListAsync()
@@ -354,29 +393,6 @@ namespace Tuvi.App.ViewModels
 
             OnPropertyChanged(nameof(PreprocessorAIAgent));
             OnPropertyChanged(nameof(PostprocessorAIAgent));
-        }
-
-        public override async void OnNavigatedTo(object data)
-        {
-            try
-            {
-                if (data is LocalAIAgent agentData)
-                {
-                    InitModel(LocalAIAgentSettings.Create(agentData), false);
-                    LinkedAccount = agentData.Email;
-                }
-                else
-                {
-                    InitModel(LocalAIAgentSettings.Create(), true);
-                }
-
-                await UpdateEmailAccountsListAsync().ConfigureAwait(true);
-                await UpdateAIAgentsListAsync().ConfigureAwait(true);
-            }
-            catch (Exception e)
-            {
-                OnError(e);
-            }
         }
 
         private void InitModel(LocalAIAgentSettings accountSettingsModel, bool isCreatingMode)
@@ -481,9 +497,6 @@ namespace Tuvi.App.ViewModels
 
                 if (isConfirmed)
                 {
-                    // TODO: Move this line
-                    //await DeleteLocalAIModelAsync().ConfigureAwait(true);
-
                     await AIService.RemoveAgentAsync(AgentSettingsModel.CurrentAgent).ConfigureAwait(true);
 
                     await BackupIfNeededAsync().ConfigureAwait(true);

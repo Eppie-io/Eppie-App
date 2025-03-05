@@ -867,9 +867,13 @@ Subject: {3}
     <comment>This message appears after user select language. We need to restart {app name} for apply new language.</comment>
   </data>
   <data name="ImportLocalAIModelButton.Content" xml:space="preserve">
-    <value>Import local model</value>
+    <value>Import local AI model</value>
     <comment>Import local AI model button text in local AI agent settings</comment>
   </data>
+  <data name="DeleteLocalAIModelButton.Content" xml:space="preserve">
+    <value>Delete local AI model</value>
+    <comment>Delete local AI model button text in local AI agent settings</comment>
+  </data>  
   <data name="RemoveLocalAIAgentButton.Content" xml:space="preserve">
     <value>Remove local AI agent</value>
     <comment>Remove local AI agent button text in local AI agent settings</comment>
@@ -953,5 +957,9 @@ Subject: {3}
   <data name="PostprocessWithAIAgent.Text" xml:space="preserve">
     <value>Post-processing with the AI agent</value>
     <comment>Title for combobox with AI agents for postprocessing.</comment>
+  </data>
+  <data name="ThinkingMessage" xml:space="preserve">
+    <value>Thinking...</value>
+    <comment>Message from local AI agent during text processing</comment>
   </data>
 </root>

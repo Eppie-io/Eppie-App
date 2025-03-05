@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,10 +25,12 @@ namespace Eppie.App.Shared.Services
 #endif
         private ITuviMail Core;
         private readonly IAIAgentsStorage Storage;
+        private Task LoadingModelTask;
 
         public event EventHandler<LocalAIAgentEventArgs> AgentAdded;
         public event EventHandler<LocalAIAgentEventArgs> AgentDeleted;
         public event EventHandler<LocalAIAgentEventArgs> AgentUpdated;
+        public event EventHandler<ExceptionEventArgs> ExceptionOccurred;
 
         public AIService(ITuviMail core)
         {
@@ -35,6 +38,7 @@ namespace Eppie.App.Shared.Services
             Core.MessagesReceived += OnMessagesReceived;
 
             Storage = Core.GetAIAgentsStorage();
+            LoadingModelTask = LoadModelAsync();
         }
 
         public Task<string> ProcessTextAsync(LocalAIAgent agent, string text, CancellationToken cancellationToken, Action<string> onTextUpdate = null)
@@ -48,7 +52,20 @@ namespace Eppie.App.Shared.Services
             return Task.FromResult(string.Empty);
         }
 
+#if AI_ENABLED
         public async Task<bool> IsEnabledAsync()
+        {
+            var agents = await Storage.GetAIAgentsAsync();
+            return agents.Count > 0 && await IsLocalAIModelImportedAsync() && LoadingModelTask.IsCompleted;
+        }
+#else
+        public Task<bool> IsEnabledAsync()
+        {
+            return Task.FromResult(false);
+        }
+#endif
+
+        public async Task<bool> IsLocalAIModelImportedAsync()
         {
             var localFolder = ApplicationData.Current.LocalFolder;
             var modelFolder = await localFolder.TryGetItemAsync(LocalAIModelFolderName);
@@ -57,21 +74,28 @@ namespace Eppie.App.Shared.Services
         }
 
 #if AI_ENABLED
-        public async Task LoadModelIfEnabled()
+        private async Task LoadModelAsync()
         {
-            if (Service is null && await IsEnabledAsync())
+            try
             {
-                Service = new Service();
+                if (Service is null && await IsLocalAIModelImportedAsync())
+                {
+                    Service = new Service();
 
-                var localFolder = ApplicationData.Current.LocalFolder;
-                var modelFolder = await localFolder.GetFolderAsync(LocalAIModelFolderName);
-                var modelPath = modelFolder.Path;
+                    var localFolder = ApplicationData.Current.LocalFolder;
+                    var modelFolder = await localFolder.GetFolderAsync(LocalAIModelFolderName);
+                    var modelPath = modelFolder.Path;
 
-                await Service.LoadModelAsync(modelPath);
+                    await Service.LoadModelAsync(modelPath);
+                }
+            }
+            catch (Exception ex)
+            {
+                OnError(ex);
             }
         }
 #else
-        public Task LoadModelIfEnabled()
+        private Task LoadModelAsync()
         {
             return Task.CompletedTask;
         }
@@ -79,28 +103,25 @@ namespace Eppie.App.Shared.Services
 
         public async Task DeleteModelAsync()
         {
-            await DeleteAllAgents();
 #if AI_ENABLED
             Service?.UnloadModel();
             Service = null;
 #endif
             var localFolder = ApplicationData.Current.LocalFolder;
-            var modelFolder = await localFolder.GetFolderAsync(LocalAIModelFolderName);
-            await modelFolder.DeleteAsync(StorageDeleteOption.PermanentDelete);
-        }
-
-        private async Task DeleteAllAgents()
-        {
-            var agents = await Storage.GetAIAgentsAsync();
-            foreach (var agent in agents)
+            try
             {
-                await Storage.DeleteAIAgentAsync(agent.Id);
-                AgentDeleted?.Invoke(this, new LocalAIAgentEventArgs(agent));
+                var modelFolder = await localFolder.GetFolderAsync(LocalAIModelFolderName);
+                await modelFolder.DeleteAsync(StorageDeleteOption.PermanentDelete);
+            }
+            catch (FileNotFoundException)
+            {
             }
         }
 
         public async Task ImportModelAsync()
         {
+            await DeleteModelAsync();
+
             FolderPicker folderPicker = FolderPickerBuilder.CreateBuilder(App.MainWindow)
                                                            .Configure((picker) =>
                                                            {
@@ -118,7 +139,7 @@ namespace Eppie.App.Shared.Services
 
                 await CopyFolderContentsAsync(selectedFolder, modelFolder);
 
-                await LoadModelIfEnabled();
+                await LoadModelAsync();
             }
         }
 
@@ -194,9 +215,9 @@ namespace Eppie.App.Shared.Services
             await Core.MarkMessagesAsReadAsync(new List<Message>() { message.Message }, CancellationToken.None).ConfigureAwait(false);
         }
 
-        // TODO: Implement error handling
         private void OnError(Exception ex)
         {
+            ExceptionOccurred?.Invoke(this, new ExceptionEventArgs(ex));
         }
 
         private async Task CopyFolderContentsAsync(StorageFolder sourceFolder, StorageFolder destinationFolder)

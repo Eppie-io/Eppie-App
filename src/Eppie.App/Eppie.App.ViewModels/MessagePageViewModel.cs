@@ -131,6 +131,9 @@ namespace Tuvi.App.ViewModels
                 {
                     var text = MessageInfo.HasTextBody ? MessageInfo.MessageTextBody : Core.GetTextUtils().GetTextFromHtml(MessageInfo.MessageHtmlBody);
 
+                    MessageInfo.AIAgentProcessedBody = GetLocalizedString("ThinkingMessage");
+                    var thinking = true;
+
                     MessageInfo.AIAgentProcessedBody = await AIService.ProcessTextAsync
                     (
                         agent,
@@ -139,7 +142,15 @@ namespace Tuvi.App.ViewModels
                         (textPart) =>
                         {
                             DispatcherService.RunAsync(() =>
-                            { MessageInfo.AIAgentProcessedBody += textPart; });
+                            {
+                                if (thinking)
+                                {
+                                    MessageInfo.AIAgentProcessedBody = string.Empty;
+                                    thinking = false;
+                                }
+
+                                MessageInfo.AIAgentProcessedBody += textPart;
+                            });
                         }
                     ).ConfigureAwait(true);
                 }

@@ -9,11 +9,15 @@ using Tuvi.Core;
 using Tuvi.OAuth2;
 using Windows.Globalization;
 using Windows.Storage;
+using Eppie.App.ViewModels.Services;
+using Tuvi.Core.Entities;
+
+
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-#else 
+#else
 using Microsoft.UI.Xaml;
 #endif
 
@@ -33,7 +37,7 @@ namespace Eppie.App.Shared
         public ILocalSettingsService LocalSettingsService { get; private set; }
         public AuthorizationProvider AuthProvider { get; private set; }
         private NotificationManager _notificationManager { get; set; }
-        public AIService AIService { get; private set; }
+        public IAIService AIService { get; private set; }
 
         public static Window MainWindow { get; private set; }
         public XamlRoot XamlRoot => MainWindow?.Content?.XamlRoot;
@@ -81,20 +85,24 @@ namespace Eppie.App.Shared
 
             LocalSettingsService = new LocalSettingsService();
             ApplicationLanguages.PrimaryLanguageOverride = LocalSettingsService.Language;
+
             CreateAIService();
         }
 
-        private async void CreateAIService()
+        private void CreateAIService()
         {
-            try
+            if (AIService != null)
             {
-                AIService = new AIService(Core);
-                await AIService.LoadModelIfEnabled();
+                AIService.ExceptionOccurred -= AIService_ExceptionOccurred;
             }
-            catch (Exception ex)
-            {
-                OnError(ex);
-            }
+
+            AIService = new AIService(Core);
+            AIService.ExceptionOccurred += AIService_ExceptionOccurred;
+        }
+
+        private void AIService_ExceptionOccurred(object sender, ExceptionEventArgs e)
+        {
+            OnError(e.Exception);
         }
 
         private void CreateAuth()
