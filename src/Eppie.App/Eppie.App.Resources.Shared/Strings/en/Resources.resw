@@ -894,7 +894,7 @@ Subject: {3}
     <value>Attention</value>
     <comment>The title of the dialog shown when user wants to remove AI agent from the list</comment>
   </data>
-  <data name="AgentSpecialty.Text" xml:space="preserve">
+  <data name="AgentSpecialtyCombobox.Header" xml:space="preserve">
     <value>AI agent specialty</value>
     <comment>The title for AI agent specialty combobox</comment>
   </data>
@@ -906,7 +906,7 @@ Subject: {3}
     <value>Enter a system prompt for the AI agent...</value>
     <comment>The placeholder text for AI agent system prompt edit box</comment>
   </data>
-  <data name="AIAgentLinkedAccount.Text" xml:space="preserve">
+  <data name="AIAgentLinkedAccount.Header" xml:space="preserve">
     <value>Linked account</value>
     <comment>The title for AI agent linked email account combobox</comment>
   </data>
@@ -950,16 +950,20 @@ Subject: {3}
     <value>IMAP, SMTP</value>
     <comment>Supported protocols for other email accounts (IMAP, SMTP).</comment>
   </data>
-  <data name="PreprocessWithAIAgent.Text" xml:space="preserve">
+  <data name="PreprocessWithAIAgent.Header" xml:space="preserve">
     <value>Pre-processing with the AI agent</value>
     <comment>Title for combobox with AI agents for preprocessing.</comment>
   </data>
-  <data name="PostprocessWithAIAgent.Text" xml:space="preserve">
+  <data name="PostprocessWithAIAgent.Header" xml:space="preserve">
     <value>Post-processing with the AI agent</value>
     <comment>Title for combobox with AI agents for postprocessing.</comment>
   </data>
   <data name="ThinkingMessage" xml:space="preserve">
     <value>Thinking...</value>
     <comment>Message from local AI agent during text processing</comment>
+  </data>
+  <data name="TargetLanguageCombobox.Header" xml:space="preserve">
+    <value>Target language</value>
+    <comment>The title for AI agent target language combobox</comment>
   </data>
 </root>
