@@ -61,11 +61,19 @@
                 <TextBox x:Uid="AIAgentNameTextBox"
                          Grid.Row="0"
                          AcceptsReturn="True"
-                         Text="{x:Bind ViewModel.AgentSettingsModel.Name, Mode=TwoWay}" />
-                <TextBlock x:Uid="AgentSpecialty" VerticalAlignment="Center" />
-                <ComboBox VerticalAlignment="Center"
-                          ItemsSource="{x:Bind ViewModel.AgentSettingsModel.Specialties}"
-                          SelectedItem="{x:Bind ViewModel.AgentSettingsModel.AgentSpecialty, Mode=TwoWay}" />
+                         Text="{x:Bind ViewModel.AgentSettingsModel.Name, Mode=TwoWay}" />                
+                <StackPanel Orientation="Horizontal">
+                    <ComboBox x:Uid="AgentSpecialtyCombobox"
+                              VerticalAlignment="Center"
+                              ItemsSource="{x:Bind ViewModel.AgentSettingsModel.Specialties}"
+                              SelectedItem="{x:Bind ViewModel.AgentSettingsModel.AgentSpecialty, Mode=TwoWay}" />
+                    <ComboBox x:Uid="TargetLanguageCombobox"
+                              Margin="12,0,0,0"
+                              VerticalAlignment="Center"
+                              ItemsSource="{x:Bind ViewModel.AgentSettingsModel.Languages}"
+                              SelectedItem="{x:Bind ViewModel.AgentSettingsModel.Language, Mode=TwoWay}"
+                              Visibility="{x:Bind ViewModel.AgentSettingsModel.IsLanguageVisible, Mode=OneWay}"/>
+                </StackPanel>
                 <TextBox x:Uid="SystemPromptInputTextBox"
                          Grid.Row="0"
                          MinHeight="96"
@@ -73,17 +81,18 @@
                          AcceptsReturn="True"
                          Text="{x:Bind ViewModel.AgentSettingsModel.SystemPrompt, Mode=TwoWay}"
                          TextWrapping="Wrap" />
-                <TextBlock x:Uid="AIAgentLinkedAccount" VerticalAlignment="Center" />
-                <ComboBox VerticalAlignment="Center"
+                <ComboBox x:Uid="AIAgentLinkedAccount"
+                          VerticalAlignment="Center"
                           ItemsSource="{x:Bind ViewModel.AccountsList}"
                           SelectedItem="{x:Bind ViewModel.LinkedAccount, Mode=TwoWay}" />
-                <CheckBox x:Uid="AllowSendEmailsCheckBox" IsChecked="{x:Bind ViewModel.AgentSettingsModel.IsAllowedToSendingEmails, Mode=TwoWay}" />
-                <TextBlock x:Uid="PreprocessWithAIAgent" VerticalAlignment="Center" />
-                <ComboBox VerticalAlignment="Center"
+                <CheckBox x:Uid="AllowSendEmailsCheckBox"
+                          IsChecked="{x:Bind ViewModel.AgentSettingsModel.IsAllowedToSendingEmails, Mode=TwoWay}" />
+                <ComboBox x:Uid="PreprocessWithAIAgent"
+                          VerticalAlignment="Center"
                           ItemsSource="{x:Bind ViewModel.AIAgentsList}"
                           SelectedItem="{x:Bind ViewModel.PreprocessorAIAgent, Mode=TwoWay}" />
-                <TextBlock x:Uid="PostprocessWithAIAgent" VerticalAlignment="Center" />
-                <ComboBox VerticalAlignment="Center"
+                <ComboBox x:Uid="PostprocessWithAIAgent"
+                          VerticalAlignment="Center"
                           ItemsSource="{x:Bind ViewModel.AIAgentsList}"
                           SelectedItem="{x:Bind ViewModel.PostprocessorAIAgent, Mode=TwoWay}" />
             </StackPanel>

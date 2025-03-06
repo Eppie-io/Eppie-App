@@ -16,6 +16,8 @@ namespace Tuvi.App.ViewModels
 {
     public class LocalAIAgentSettings : ObservableObject
     {
+        private const string DefaultLanguage = "English";
+
         public readonly int defaultTopK = 50;
         public readonly float defaultTopP = 0.9f;
         public readonly float defaultTemperature = 1;
@@ -36,6 +38,7 @@ namespace Tuvi.App.ViewModels
                 if (SetProperty(ref _agentSpecialty, value))
                 {
                     UpdateSystemPrompt();
+                    OnPropertyChanged(nameof(IsLanguageVisible));
                 }
             }
         }
@@ -44,6 +47,11 @@ namespace Tuvi.App.ViewModels
         {
             if (Prompts.TryGetValue(AgentSpecialty, out var prompt))
             {
+                if (AgentSpecialty == LocalAIAgentSpecialty.Translator)
+                {
+                    prompt += string.Format(" You only translate into {0} language.", Language);
+                }
+
                 SystemPrompt = prompt;
             }
         }
@@ -151,6 +159,58 @@ namespace Tuvi.App.ViewModels
             set => SetProperty(ref _isAllowedToSendingEmails, value);
         }
 
+        public bool IsLanguageVisible
+        {
+            get { return AgentSpecialty == LocalAIAgentSpecialty.Translator; }
+        }
+
+        private string _language = DefaultLanguage;
+        public string Language
+        {
+            get { return _language; }
+            set
+            {
+                if (SetProperty(ref _language, value))
+                {
+                    UpdateSystemPrompt();
+                }
+            }
+        }
+
+        public readonly List<string> Languages = new List<string>
+        {
+            "Afrikaans",
+            "Arabic",
+            "Belarusian",
+            "Chinese",
+            "Czech",
+            "Danish",
+            "Dutch",
+            "English",
+            "Filipino",
+            "Finnish",
+            "French",
+            "German",
+            "Greek",
+            "Hindi",
+            "Indonesian",
+            "Italian",
+            "Japanese",
+            "Korean",
+            "Mandarin",
+            "Polish",
+            "Portuguese",
+            "Romanian",
+            "Russian",
+            "Serbian",
+            "Slovak",
+            "Spanish",
+            "Thai",
+            "Turkish",
+            "Ukrainian",
+            "Vietnamese"
+        };
+
         public LocalAIAgent CurrentAgent { get; }
 
         public LocalAIAgentSettings()
@@ -166,6 +226,11 @@ namespace Tuvi.App.ViewModels
             AgentSpecialty = CurrentAgent.AgentSpecialty;
             SystemPrompt = CurrentAgent.SystemPrompt;
             IsAllowedToSendingEmails = CurrentAgent.IsAllowedToSendingEmail;
+
+            if (AgentSpecialty == LocalAIAgentSpecialty.Translator)
+            {
+                Language = GetLanguage(SystemPrompt);
+            }
         }
 
         public static LocalAIAgentSettings Create()
@@ -178,21 +243,37 @@ namespace Tuvi.App.ViewModels
             return new LocalAIAgentSettings(agent);
         }
 
-        internal LocalAIAgent ToAIAgent(EmailAddress linkedAccount, string language)
+        internal LocalAIAgent ToAIAgent(EmailAddress linkedAccount)
         {
-            var systemPrompt = SystemPrompt;
-            if (AgentSpecialty == LocalAIAgentSpecialty.Translator)
-            {
-                systemPrompt += string.Format(" You only translate into {0} language.", language);
-            }
-
             CurrentAgent.Name = Name;
             CurrentAgent.AgentSpecialty = AgentSpecialty;
-            CurrentAgent.SystemPrompt = systemPrompt;
+            CurrentAgent.SystemPrompt = SystemPrompt;
             CurrentAgent.Email = linkedAccount;
             CurrentAgent.IsAllowedToSendingEmail = IsAllowedToSendingEmails && linkedAccount != null;
 
             return CurrentAgent;
+        }
+
+        private string GetLanguage(string systemPrompt)
+        {
+            if (string.IsNullOrEmpty(systemPrompt))
+            {
+                return DefaultLanguage;
+            }
+
+            var words = systemPrompt.Split(' ');
+            var languageIndex = Array.FindIndex(words, word => word.IndexOf("language", StringComparison.OrdinalIgnoreCase) >= 0);
+
+            if (languageIndex > 0)
+            {
+                var potentialLanguage = words[languageIndex - 1];
+                if (Languages.Contains(potentialLanguage, StringComparer.OrdinalIgnoreCase))
+                {
+                    return potentialLanguage;
+                }
+            }
+
+            return DefaultLanguage;
         }
     }
 
@@ -299,7 +380,6 @@ namespace Tuvi.App.ViewModels
                 if (data is LocalAIAgent agentData)
                 {
                     InitModel(LocalAIAgentSettings.Create(agentData), false);
-                    LinkedAccount = agentData.Email;
                 }
                 else
                 {
@@ -383,16 +463,31 @@ namespace Tuvi.App.ViewModels
         {
             var accounts = await Core.GetCompositeAccountsAsync().ConfigureAwait(true);
             AccountsList.SetItems(accounts.SelectMany(account => account.Addresses));
-            OnPropertyChanged(nameof(LinkedAccount));
+
+            LinkedAccount = AgentSettingsModel.CurrentAgent.Email;
         }
 
         private async Task UpdateAIAgentsListAsync()
         {
             var agents = await AIService.GetAgentsAsync().ConfigureAwait(true);
-            AIAgentsList.SetItems(agents.Where(agent => agent.Id != AgentSettingsModel.CurrentAgent.Id));
+            var currentAgentId = AgentSettingsModel.CurrentAgent.Id;
 
-            OnPropertyChanged(nameof(PreprocessorAIAgent));
-            OnPropertyChanged(nameof(PostprocessorAIAgent));
+            if (IsCreatingAgentMode)
+            {
+                AIAgentsList.SetItems(agents);
+            }
+            else
+            {
+                var filteredAgents = agents.Where(agent =>
+                    agent.Id != currentAgentId &&
+                    agent.PreprocessorAgentId != currentAgentId &&
+                    agent.PostprocessorAgentId != currentAgentId);
+
+                AIAgentsList.SetItems(filteredAgents);
+            }
+
+            PreprocessorAIAgent = AIAgentsList.FirstOrDefault(agent => agent.Id == AgentSettingsModel.CurrentAgent.PreprocessorAgentId);
+            PostprocessorAIAgent = AIAgentsList.FirstOrDefault(agent => agent.Id == AgentSettingsModel.CurrentAgent.PostprocessorAgentId);
         }
 
         private void InitModel(LocalAIAgentSettings accountSettingsModel, bool isCreatingMode)
@@ -406,7 +501,10 @@ namespace Tuvi.App.ViewModels
             IsWaitingResponse = true;
             try
             {
-                var agentData = AgentSettingsModel.ToAIAgent(LinkedAccount, LocalSettingsService.Language);
+                var agentData = AgentSettingsModel.ToAIAgent(LinkedAccount);
+                agentData.PreprocessorAgent = PreprocessorAIAgent;
+                agentData.PostprocessorAgent = PostprocessorAIAgent;
+
                 var result = await ApplyAgentSettingsAsync(agentData).ConfigureAwait(true);
                 if (result)
                 {

@@ -40,17 +40,34 @@ namespace Eppie.App.Shared.Services
             Storage = Core.GetAIAgentsStorage();
             LoadingModelTask = LoadModelAsync();
         }
-
-        public Task<string> ProcessTextAsync(LocalAIAgent agent, string text, CancellationToken cancellationToken, Action<string> onTextUpdate = null)
-        {
 #if AI_ENABLED
+        public async Task<string> ProcessTextAsync(LocalAIAgent agent, string text, CancellationToken cancellationToken, Action<string> onTextUpdate = null)
+        {
+            var result = string.Empty;
+
             if (Service != null)
             {
-                return Service.ProcessTextAsync(agent.SystemPrompt, text, cancellationToken, onTextUpdate);
+                if (agent.PreprocessorAgent != null)
+                {
+                    text = await Service.ProcessTextAsync(agent.PreprocessorAgent.SystemPrompt, text, cancellationToken, onTextUpdate);
+                }
+
+                result = await Service.ProcessTextAsync(agent.SystemPrompt, text, cancellationToken, onTextUpdate);
+
+                if (agent.PostprocessorAgent != null)
+                {
+                    result = await Service.ProcessTextAsync(agent.PostprocessorAgent.SystemPrompt, result, cancellationToken, onTextUpdate);
+                }
             }
-#endif
+
+            return result;
+        }
+#else
+        public Task<string> ProcessTextAsync(LocalAIAgent agent, string text, CancellationToken cancellationToken, Action<string> onTextUpdate = null)
+        {
             return Task.FromResult(string.Empty);
         }
+#endif
 
 #if AI_ENABLED
         public async Task<bool> IsEnabledAsync()
@@ -191,11 +208,11 @@ namespace Eppie.App.Shared.Services
                     text = (await Core.GetMessageBodyAsync(message.Message).ConfigureAwait(false)).TextBody;
                 }
 #if AI_ENABLED
-                var translatedText = await Service?.ProcessTextAsync(agent.SystemPrompt, text, CancellationToken.None);
+                var result = await ProcessTextAsync(agent, text, CancellationToken.None);
 
                 if (agent.IsAllowedToSendingEmail)
                 {
-                    await ReplyToMessage(message, translatedText).ConfigureAwait(false);
+                    await ReplyToMessage(message, result).ConfigureAwait(false);
                 }
 #endif
             }
