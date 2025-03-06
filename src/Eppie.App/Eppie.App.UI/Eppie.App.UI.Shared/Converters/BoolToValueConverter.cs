@@ -1,6 +1,5 @@
 using System;
 using Eppie.App.UI.Resources;
-using Windows.ApplicationModel.Resources;
 using Windows.UI.Text;
 
 #if WINDOWS_UWP

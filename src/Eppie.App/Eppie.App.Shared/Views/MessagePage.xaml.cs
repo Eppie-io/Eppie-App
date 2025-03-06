@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using Tuvi.App.ViewModels;
 
 #if WINDOWS_UWP

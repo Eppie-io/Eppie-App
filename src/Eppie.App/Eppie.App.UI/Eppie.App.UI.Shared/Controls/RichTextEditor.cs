@@ -1,4 +1,3 @@
-using System;
 using Tuvi.App.Shared.Extensions;
 
 #if WINDOWS_UWP

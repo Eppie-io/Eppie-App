@@ -7,7 +7,6 @@ using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using Tuvi.App.ViewModels.Common;
 using Tuvi.Core.Entities;
-using Tuvi.Core.Utils;
 
 namespace Tuvi.App.ViewModels
 {

@@ -1,13 +1,7 @@
-using Microsoft.Extensions.AI;
-using Microsoft.ML.OnnxRuntimeGenAI;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+using Microsoft.Extensions.AI;
+using Microsoft.ML.OnnxRuntimeGenAI;
 
 namespace Eppie.AI
 {

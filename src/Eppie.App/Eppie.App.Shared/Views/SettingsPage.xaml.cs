@@ -1,5 +1,4 @@
 using Tuvi.App.ViewModels;
-using Windows.ApplicationModel.Resources;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
