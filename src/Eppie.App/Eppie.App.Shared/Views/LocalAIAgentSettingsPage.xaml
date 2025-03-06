@@ -72,7 +72,7 @@
                               VerticalAlignment="Center"
                               ItemsSource="{x:Bind ViewModel.AgentSettingsModel.Languages}"
                               SelectedItem="{x:Bind ViewModel.AgentSettingsModel.Language, Mode=TwoWay}"
-                              Visibility="{x:Bind ViewModel.AgentSettingsModel.IsLanguageVisible, Mode=OneWay} "/>
+                              Visibility="{x:Bind ViewModel.AgentSettingsModel.IsLanguageVisible, Mode=OneWay}" />
                 </StackPanel>
                 <TextBox x:Uid="SystemPromptInputTextBox"
                          Grid.Row="0"
