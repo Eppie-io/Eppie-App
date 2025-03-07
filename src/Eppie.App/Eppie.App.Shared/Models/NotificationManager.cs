@@ -2,7 +2,6 @@ using System;
 using Tuvi.App.Shared.Services;
 using Tuvi.Core;
 using Tuvi.Core.Entities;
-using Windows.ApplicationModel.Resources;
 
 namespace Tuvi.App.Shared.Models
 {

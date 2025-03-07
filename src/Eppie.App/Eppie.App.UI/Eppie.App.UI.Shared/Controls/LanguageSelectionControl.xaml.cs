@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Eppie.App.UI.Resources;
-using Windows.ApplicationModel.Resources;
 using Windows.Globalization;
 
 #if WINDOWS_UWP

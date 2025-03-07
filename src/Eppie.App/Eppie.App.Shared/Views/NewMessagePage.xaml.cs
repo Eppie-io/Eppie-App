@@ -3,7 +3,6 @@
 using System;
 using Eppie.App.Shared.Services;
 using Tuvi.App.ViewModels;
-using Tuvi.Core.Entities;
 using Windows.ApplicationModel.DataTransfer;
 
 
