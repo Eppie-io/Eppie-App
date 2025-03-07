@@ -19,13 +19,15 @@ namespace Eppie.App.Shared.Services
 {
     public class AIService : IAIService
     {
-        private const string LocalAIModelFolderName = "local.ai.model";
 #if AI_ENABLED
         private Service Service;
 #endif
+
+        private const string LocalAIModelFolderName = "local.ai.model";
         private ITuviMail Core;
         private readonly IAIAgentsStorage Storage;
         private Task LoadingModelTask;
+        private readonly SemaphoreSlim Semaphore;
 
         public event EventHandler<LocalAIAgentEventArgs> AgentAdded;
         public event EventHandler<LocalAIAgentEventArgs> AgentDeleted;
@@ -34,6 +36,9 @@ namespace Eppie.App.Shared.Services
 
         public AIService(ITuviMail core)
         {
+            int maxParallelAgents = Environment.ProcessorCount - 1;
+            Semaphore = new SemaphoreSlim(maxParallelAgents);
+
             Core = core;
             Core.MessagesReceived += OnMessagesReceived;
 
@@ -66,6 +71,18 @@ namespace Eppie.App.Shared.Services
         public Task<string> ProcessTextAsync(LocalAIAgent agent, string text, CancellationToken cancellationToken, Action<string> onTextUpdate = null)
         {
             return Task.FromResult(string.Empty);
+        }
+#endif
+
+#if AI_ENABLED
+        public bool IsAvailable()
+        {
+            return Environment.ProcessorCount > 1;
+        }
+#else
+        public bool IsAvailable()
+        {
+            return false;
         }
 #endif
 
@@ -183,17 +200,30 @@ namespace Eppie.App.Shared.Services
             {
                 var messages = e.ReceivedMessages;
                 var agents = await Storage.GetAIAgentsAsync();
-                foreach (var message in messages)
-                {
-                    foreach (var agent in agents)
-                    {
-                        await ProcessMessage(agent, message).ConfigureAwait(false);
-                    }
-                }
+                var tasks = messages.SelectMany(message => agents.Select(agent => ProcessMessageWithSemaphoreAsync(agent, message))).ToList();
+
+                await Task.WhenAll(tasks);
             }
             catch (Exception ex)
             {
                 OnError(ex);
+            }
+        }
+
+        private async Task ProcessMessageWithSemaphoreAsync(LocalAIAgent agent, ReceivedMessageInfo message)
+        {
+            await Semaphore.WaitAsync();
+            try
+            {
+                await ProcessMessage(agent, message);
+            }
+            catch (Exception ex)
+            {
+                OnError(ex);
+            }
+            finally
+            {
+                Semaphore.Release();
             }
         }
 
@@ -207,14 +237,15 @@ namespace Eppie.App.Shared.Services
                 {
                     text = (await Core.GetMessageBodyAsync(message.Message).ConfigureAwait(false)).TextBody;
                 }
-#if AI_ENABLED
+
                 var result = await ProcessTextAsync(agent, text, CancellationToken.None);
+
+                await Core.UpdateMessageProcessingResultAsync(message.Message, result).ConfigureAwait(false);
 
                 if (agent.IsAllowedToSendingEmail)
                 {
                     await ReplyToMessage(message, result).ConfigureAwait(false);
                 }
-#endif
             }
         }
 

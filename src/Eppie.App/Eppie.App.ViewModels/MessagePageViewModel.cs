@@ -81,14 +81,7 @@ namespace Tuvi.App.ViewModels
                 {
                     MessageInfo = messageInfo;
 
-                    if (MessageInfo.IsEmptyBody)
-                    {
-                        _messageLoadTask = GetMessageBodyAsync();
-                    }
-                    else
-                    {
-                        await SetupMessageAsync().ConfigureAwait(true);
-                    }
+                    _messageLoadTask = GetMessageBodyAsync();
                 }
             }
             catch (MessageIsNotExistException)
@@ -152,6 +145,8 @@ namespace Tuvi.App.ViewModels
                             });
                         }
                     ).ConfigureAwait(true);
+
+                    await Core.UpdateMessageProcessingResultAsync(MessageInfo.MessageData, MessageInfo.AIAgentProcessedBody).ConfigureAwait(true);
                 }
             }
             catch (Exception e)

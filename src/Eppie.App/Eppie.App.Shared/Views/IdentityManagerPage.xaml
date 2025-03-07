@@ -52,11 +52,8 @@
 
             <StackPanel Margin="16,0,8,12">
 
-                <TextBlock x:Uid="ConnectedServicesSettings"
-                           Margin="0,20,0,0"
-                           Style="{StaticResource NormalTextStyle}" />
-
-                <ListView IsItemClickEnabled="True"
+                <ListView x:Uid="ConnectedServicesSettings"
+                          IsItemClickEnabled="True"
                           ItemsSource="{x:Bind ViewModel.EmailAccounts, Mode=OneWay}"
                           SelectionMode="None">
                     <ListView.ItemTemplate>
@@ -71,13 +68,11 @@
                     </interactivity:Interaction.Behaviors>
                 </ListView>
 
-                <TextBlock x:Uid="ConnectedAIAgentsSettings"
-                           Margin="0,20,0,0"
-                           Style="{StaticResource NormalTextStyle}" />
-
-                <ListView IsItemClickEnabled="True"
+                <ListView x:Uid="ConnectedAIAgentsSettings"
+                          IsItemClickEnabled="True"
                           ItemsSource="{x:Bind ViewModel.AIAgents, Mode=OneWay}"
-                          SelectionMode="None">
+                          SelectionMode="None"
+                          Visibility="{x:Bind ViewModel.IsLocalAIAwailable}">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="entities:LocalAIAgent">
                             <Grid>
