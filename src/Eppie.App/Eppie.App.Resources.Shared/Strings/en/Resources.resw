@@ -237,7 +237,7 @@
     <value>Developer:</value>
     <comment>A label for the application developer</comment>
   </data>
-  <data name="ConnectedServicesSettings.Text" xml:space="preserve">
+  <data name="ConnectedServicesSettings.Header" xml:space="preserve">
     <value>Your services</value>
     <comment>Title for a connected email accounts</comment>
   </data>
@@ -914,7 +914,7 @@ Subject: {3}
     <value>Allow sending emails</value>
     <comment>Text for the checkbox that allows an AI agent to send emails</comment>
   </data>
-  <data name="ConnectedAIAgentsSettings.Text" xml:space="preserve">
+  <data name="ConnectedAIAgentsSettings.Header" xml:space="preserve">
     <value>Your AI agents</value>
     <comment>Title for a conected AI agents</comment>
   </data>
@@ -927,7 +927,7 @@ Subject: {3}
     <comment>The placeholder text for AI agent name edit box</comment>
   </data>
   <data name="LoacalAIAgentServiceTitle" xml:space="preserve">
-    <value>Loacal AI agent</value>
+    <value>Loacal AI agent (Beta)</value>
     <comment>A type of service listed when adding a new service, referring to local AI agents (e.g., translator, writer, corrector, etc.).</comment>
   </data>
   <data name="LoacalAIAgentServiceDescription" xml:space="preserve">

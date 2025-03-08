@@ -39,6 +39,11 @@ namespace Eppie.App.ViewModels.Services
         Task<string> ProcessTextAsync(LocalAIAgent agent, string text, CancellationToken cancellationToken, Action<string> onTextUpdate = null);
 
         /// <summary>
+        /// Returns whether the local AI is available.
+        /// </summary>
+        bool IsAvailable();
+
+        /// <summary>
         /// Asynchronously checks if the local AI is enabled.
         /// </summary>        
         Task<bool> IsEnabledAsync();

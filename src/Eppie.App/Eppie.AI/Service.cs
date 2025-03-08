@@ -4,6 +4,12 @@ namespace Eppie.AI
 {
     public class Service
     {
+        private readonly int defaultTopK = 50;
+        private readonly float defaultTopP = 0.9f;
+        private readonly float defaultTemperature = 0.5f;
+        private readonly int defaultMaxLength = 1024;
+
+        private ChatOptions? _modelOptions;
         private IChatClient _model;
 
         public async Task LoadModelAsync(string modelPath)
@@ -34,6 +40,8 @@ namespace Eppie.AI
             //    Assistant = "<｜Assistant｜>{{CONTENT}}<｜end▁of▁sentence｜>",
             //    Stop = new[] { "<｜User｜>", "<｜Assistant｜>", "<｜end▁of▁sentence｜>", "<｜begin▁of▁sentence｜>" }
             //}).ConfigureAwait(false);
+
+            _modelOptions = GetDefaultChatOptions(_model);
         }
 
         public void UnloadModel()
@@ -44,7 +52,13 @@ namespace Eppie.AI
 
         public async Task<string> ProcessTextAsync(string systemPrompt, string text, CancellationToken cts, Action<string> onTextUpdate = null)
         {
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                return string.Empty;
+            }
+
             var result = string.Empty;
+            text = text.Trim();
 
             await Task.Run(
                 async () =>
@@ -55,7 +69,7 @@ namespace Eppie.AI
                             new ChatMessage(ChatRole.System, systemPrompt),
                             new ChatMessage(ChatRole.User, text)
                         },
-                        null,
+                        _modelOptions,
                         cts).ConfigureAwait(false))
                     {
                         result += messagePart.Text;
@@ -82,6 +96,18 @@ namespace Eppie.AI
             }
 
             return text;
+        }
+
+        public ChatOptions GetDefaultChatOptions(IChatClient? chatClient)
+        {
+            var chatOptions = chatClient?.GetService<ChatOptions>();
+            return chatOptions ?? new ChatOptions
+            {
+                MaxOutputTokens = defaultMaxLength,
+                Temperature = defaultTemperature,
+                TopP = defaultTopP,
+                TopK = defaultTopK,
+            };
         }
     }
 }

@@ -54,13 +54,6 @@ namespace Tuvi.App.ViewModels
             set { SetProperty(ref _loadingContent, value); }
         }
 
-        private bool _isAIAgentsEnabled;
-        public bool IsAIAgentsEnabled
-        {
-            get { return _isAIAgentsEnabled; }
-            set { SetProperty(ref _isAIAgentsEnabled, value); }
-        }
-
         private Task<MessageInfo> _messageLoadTask;
 
         public ICommand ReplyCommand => new RelayCommand(Reply);
@@ -71,24 +64,15 @@ namespace Tuvi.App.ViewModels
         public ICommand FlagMessageCommand => new AsyncRelayCommand(FlagMessageAsync);
         public ICommand UnflagMessageCommand => new AsyncRelayCommand(UnflagMessageAsync);
 
-        public override async void OnNavigatedTo(object data)
+        public override void OnNavigatedTo(object data)
         {
             try
             {
-                UpdateAIAgentProcessButton();
-
                 if (data is MessageInfo messageInfo)
                 {
                     MessageInfo = messageInfo;
 
-                    if (MessageInfo.IsEmptyBody)
-                    {
-                        _messageLoadTask = GetMessageBodyAsync();
-                    }
-                    else
-                    {
-                        await SetupMessageAsync().ConfigureAwait(true);
-                    }
+                    _messageLoadTask = GetMessageBodyAsync();
                 }
             }
             catch (MessageIsNotExistException)
@@ -99,19 +83,6 @@ namespace Tuvi.App.ViewModels
             base.OnNavigatedTo(data);
         }
 
-        private async void UpdateAIAgentProcessButton()
-        {
-            try
-            {
-                var agents = await AIService.GetAgentsAsync();
-                IsAIAgentsEnabled = await AIService.IsEnabledAsync().ConfigureAwait(true) && agents.Count > 0;
-            }
-            catch (Exception e)
-            {
-                OnError(e);
-            }
-        }
-
         private async Task SetupMessageAsync()
         {
             SetAttachments();
@@ -119,44 +90,6 @@ namespace Tuvi.App.ViewModels
             if (!MessageInfo.IsMarkedAsRead)
             {
                 await MarkMessageAsReadAsync().ConfigureAwait(true);
-            }
-        }
-
-        private async Task AIAgentProcessMessageAsync(LocalAIAgent agent)
-        {
-            try
-            {
-                if (string.IsNullOrEmpty(MessageInfo.AIAgentProcessedBody))
-                {
-                    var text = MessageInfo.HasTextBody ? MessageInfo.MessageTextBody : Core.GetTextUtils().GetTextFromHtml(MessageInfo.MessageHtmlBody);
-
-                    MessageInfo.AIAgentProcessedBody = GetLocalizedString("ThinkingMessage");
-                    var thinking = true;
-
-                    MessageInfo.AIAgentProcessedBody = await AIService.ProcessTextAsync
-                    (
-                        agent,
-                        text,
-                        CancellationToken.None,
-                        (textPart) =>
-                        {
-                            DispatcherService.RunAsync(() =>
-                            {
-                                if (thinking)
-                                {
-                                    MessageInfo.AIAgentProcessedBody = string.Empty;
-                                    thinking = false;
-                                }
-
-                                MessageInfo.AIAgentProcessedBody += textPart;
-                            });
-                        }
-                    ).ConfigureAwait(true);
-                }
-            }
-            catch (Exception e)
-            {
-                OnError(e);
             }
         }
 
@@ -250,27 +183,6 @@ namespace Tuvi.App.ViewModels
                     .ToList<Attachment>();
 
             AddAttachments(attachments);
-        }
-
-        public async Task CreateAIAgentsMenuAsync(Func<string, Action, Task> action)
-        {
-            var agents = await AIService.GetAgentsAsync();
-            foreach (var agent in agents)
-            {
-                await action(agent.Name, () => ProcessMessage(agent));
-            }
-        }
-
-        private async void ProcessMessage(LocalAIAgent agent)
-        {
-            try
-            {
-                await AIAgentProcessMessageAsync(agent).ConfigureAwait(true);
-            }
-            catch (Exception e)
-            {
-                OnError(e);
-            }
         }
     }
 }

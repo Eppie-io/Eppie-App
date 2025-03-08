@@ -229,7 +229,7 @@
     <value>开发者：</value>
     <comment>A label for the application developer</comment>
   </data>
-  <data name="ConnectedServicesSettings.Text" xml:space="preserve">
+  <data name="ConnectedServicesSettings.Header" xml:space="preserve">
     <value>您的服务</value>
     <comment>Settings for a single email account</comment>
   </data>

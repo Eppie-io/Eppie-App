@@ -25,6 +25,8 @@ namespace Tuvi.App.ViewModels
             }
         }
 
+        public bool IsLocalAIAvailable => AIService.IsAvailable();
+
         public ObservableCollection<Attachment> Attachments { get; } = new ObservableCollection<Attachment>();
 
         private bool _canDelete = true;
@@ -184,6 +186,27 @@ namespace Tuvi.App.ViewModels
             catch (Exception e)
             {
                 CanGoBack = true;
+                OnError(e);
+            }
+        }
+
+        public override async Task CreateAIAgentsMenuAsync(Action<string, Action> action)
+        {
+            var agents = await AIService.GetAgentsAsync();
+            foreach (var agent in agents)
+            {
+                action(agent.Name, () => ProcessMessage(agent));
+            }
+        }
+
+        protected virtual async void ProcessMessage(LocalAIAgent agent)
+        {
+            try
+            {
+                await AIAgentProcessMessageAsync(agent, MessageInfo).ConfigureAwait(true);
+            }
+            catch (Exception e)
+            {
                 OnError(e);
             }
         }
