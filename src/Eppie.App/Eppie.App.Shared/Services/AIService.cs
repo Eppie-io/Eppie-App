@@ -50,7 +50,7 @@ namespace Eppie.App.Shared.Services
         {
             var result = string.Empty;
 
-            if (Service != null)
+            if (Service != null && !string.IsNullOrEmpty(text))
             {
                 if (agent.PreprocessorAgent != null)
                 {

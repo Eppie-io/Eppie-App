@@ -71,7 +71,7 @@ namespace Tuvi.App.ViewModels
         public ICommand FlagMessageCommand => new AsyncRelayCommand(FlagMessageAsync);
         public ICommand UnflagMessageCommand => new AsyncRelayCommand(UnflagMessageAsync);
 
-        public override async void OnNavigatedTo(object data)
+        public override void OnNavigatedTo(object data)
         {
             try
             {
@@ -112,46 +112,6 @@ namespace Tuvi.App.ViewModels
             if (!MessageInfo.IsMarkedAsRead)
             {
                 await MarkMessageAsReadAsync().ConfigureAwait(true);
-            }
-        }
-
-        private async Task AIAgentProcessMessageAsync(LocalAIAgent agent)
-        {
-            try
-            {
-                if (string.IsNullOrEmpty(MessageInfo.AIAgentProcessedBody))
-                {
-                    var text = MessageInfo.HasTextBody ? MessageInfo.MessageTextBody : Core.GetTextUtils().GetTextFromHtml(MessageInfo.MessageHtmlBody);
-
-                    MessageInfo.AIAgentProcessedBody = GetLocalizedString("ThinkingMessage");
-                    var thinking = true;
-
-                    MessageInfo.AIAgentProcessedBody = await AIService.ProcessTextAsync
-                    (
-                        agent,
-                        text,
-                        CancellationToken.None,
-                        (textPart) =>
-                        {
-                            DispatcherService.RunAsync(() =>
-                            {
-                                if (thinking)
-                                {
-                                    MessageInfo.AIAgentProcessedBody = string.Empty;
-                                    thinking = false;
-                                }
-
-                                MessageInfo.AIAgentProcessedBody += textPart;
-                            });
-                        }
-                    ).ConfigureAwait(true);
-
-                    await Core.UpdateMessageProcessingResultAsync(MessageInfo.MessageData, MessageInfo.AIAgentProcessedBody).ConfigureAwait(true);
-                }
-            }
-            catch (Exception e)
-            {
-                OnError(e);
             }
         }
 
@@ -247,12 +207,12 @@ namespace Tuvi.App.ViewModels
             AddAttachments(attachments);
         }
 
-        public async Task CreateAIAgentsMenuAsync(Func<string, Action, Task> action)
+        public async Task CreateAIAgentsMenuAsync(Action<string, Action> action)
         {
             var agents = await AIService.GetAgentsAsync();
             foreach (var agent in agents)
             {
-                await action(agent.Name, () => ProcessMessage(agent));
+                action(agent.Name, () => ProcessMessage(agent));
             }
         }
 
@@ -260,7 +220,7 @@ namespace Tuvi.App.ViewModels
         {
             try
             {
-                await AIAgentProcessMessageAsync(agent).ConfigureAwait(true);
+                await AIAgentProcessMessageAsync(agent, MessageInfo).ConfigureAwait(true);
             }
             catch (Exception e)
             {

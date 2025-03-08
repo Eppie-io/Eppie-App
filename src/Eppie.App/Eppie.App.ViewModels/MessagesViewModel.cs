@@ -555,5 +555,37 @@ namespace Tuvi.App.ViewModels
         {
             throw new NotImplementedException();
         }
+
+        public override async Task CreateAIAgentsMenuAsync(Action<string, Action<IList<object>>> action)
+        {
+            var agents = await AIService.GetAgentsAsync();
+            foreach (var agent in agents)
+            {
+                action(agent.Name, (items) => ProcessMessages(agent, items));
+            }
+        }
+
+        private async Task AIAgentProcessMessagesAsync(LocalAIAgent agent, IReadOnlyList<MessageInfo> messages)
+        {
+            foreach (var message in messages)
+            {
+                message.MessageData = await Core.GetMessageBodyAsync(message.MessageData).ConfigureAwait(true);
+
+                await AIAgentProcessMessageAsync(agent, message).ConfigureAwait(true);
+            }
+        }
+
+        private async void ProcessMessages(LocalAIAgent agent, IList<object> items)
+        {
+            try
+            {
+                var messages = items.Select(x => x as MessageInfo).ToList();
+                await AIAgentProcessMessagesAsync(agent, messages).ConfigureAwait(true);
+            }
+            catch (Exception e)
+            {
+                OnError(e);
+            }
+        }
     }
 }

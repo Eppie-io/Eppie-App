@@ -4,6 +4,7 @@ using Tuvi.App.ViewModels;
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 #else
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -20,6 +21,11 @@ namespace Tuvi.App.Shared.Views
         public MessagePage()
         {
             this.InitializeComponent();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
             InitAIAgentButton();
         }
 
@@ -29,7 +35,7 @@ namespace Tuvi.App.Shared.Views
             {
                 var menuFlyout = new MenuFlyout();
 
-                await ViewModel.CreateAIAgentsMenuAsync(async (string text, Action command) =>
+                await ViewModel.CreateAIAgentsMenuAsync((string text, Action command) =>
                 {
                     var item = new MenuFlyoutItem { Text = text };
                     item.Click += (s, e) => command.Invoke();

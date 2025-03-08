@@ -24,8 +24,10 @@ namespace Tuvi.App.Shared.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+            InitAIAgentButton(AIAgentButton, MessageListControl);
             InitializeMessageListAsIncrementalLoadingCollection();
         }
+
         private void InitializeMessageListAsIncrementalLoadingCollection()
         {
             if (ViewModel is null ||
