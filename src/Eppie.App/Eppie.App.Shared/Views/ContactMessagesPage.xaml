@@ -303,7 +303,7 @@
                                   Visibility="{x:Bind ViewModel.IsSelectMessagesMode, Mode=OneWay}">
                         <FontIcon Glyph="&#xE99A;" />
                     </AppBarButton>
-                    
+
                     <AppBarSeparator Visibility="{x:Bind ViewModel.IsSelectMessagesMode, Mode=OneWay}" />
 
                     <AppBarButton x:Uid="/App.Resources/SelectAllButton"
