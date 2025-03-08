@@ -72,7 +72,7 @@
                           IsItemClickEnabled="True"
                           ItemsSource="{x:Bind ViewModel.AIAgents, Mode=OneWay}"
                           SelectionMode="None"
-                          Visibility="{x:Bind ViewModel.IsLocalAIAwailable}">
+                          Visibility="{x:Bind ViewModel.IsLocalAIAvailable}">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="entities:LocalAIAgent">
                             <Grid>

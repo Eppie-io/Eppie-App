@@ -173,5 +173,29 @@ namespace Tuvi.App.Shared.Views
                 ViewModel.OnError(ex);
             }
         }
+
+        protected async void InitAIAgentButton(AppBarButton agentButton)
+        {
+            try
+            {
+                var menuFlyout = new MenuFlyout();
+
+                await ViewModel.CreateAIAgentsMenuAsync((string text, Action command) =>
+                {
+                    var item = new MenuFlyoutItem { Text = text };
+                    item.Click += (s, e) => command.Invoke();
+                    menuFlyout.Items.Add(item);
+                });
+
+                if (menuFlyout.Items.Count > 0)
+                {
+                    agentButton.Flyout = menuFlyout;
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewModel.OnError(ex);
+            }
+        }
     }
 }

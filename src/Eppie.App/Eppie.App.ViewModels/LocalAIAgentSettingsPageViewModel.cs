@@ -93,7 +93,7 @@ namespace Tuvi.App.ViewModels
             { LocalAIAgentSpecialty.Rewriter, "Rephrase the given text while keeping its original meaning." },
             { LocalAIAgentSpecialty.Proofreader, "Check the given email for grammar, spelling, and punctuation errors." },
             { LocalAIAgentSpecialty.Summarizer, "Summarize the key points of the given email in a concise manner. Always begin your response with the sentence, 'Here is a summary of the email:'." },
-            { LocalAIAgentSpecialty.EmailComposer, "Generate a professional and context-appropriate email draft." },
+            { LocalAIAgentSpecialty.EmailComposer, "Compose a well-structured and engaging email based on the provided context. If a received email is provided, generate an appropriate and thoughtful response that aligns with the tone and intent of the original message." },
 
             // Language & Communication
             { LocalAIAgentSpecialty.Translator, "You are processing incoming emails and translating their content. Your response must contain only the translated text—no explanations, comments, notes, or interpretations. The translation must be as accurate as possible, with no additions, omissions, or modifications. Preserve the exact structure of the original text, including formatting, paragraphs, lists, and punctuation. Maintain a neutral tone without rephrasing." },

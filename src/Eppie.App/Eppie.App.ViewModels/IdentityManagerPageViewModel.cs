@@ -14,7 +14,7 @@ namespace Tuvi.App.ViewModels
         public ObservableCollection<Account> EmailAccounts { get; } = new ObservableCollection<Account>();
         public ObservableCollection<LocalAIAgent> AIAgents { get; } = new ObservableCollection<LocalAIAgent>();
 
-        public bool IsLocalAIAwailable => AIService.IsAvailable();
+        public bool IsLocalAIAvailable => AIService.IsAvailable();
 
         public ICommand EditAccountCommand => new RelayCommand<object>(EditAccountInfo);
         public ICommand EditAIAgentCommand => new RelayCommand<object>(EditAIAgentInfo);

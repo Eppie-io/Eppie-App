@@ -197,5 +197,10 @@ namespace Tuvi.App.ViewModels
         {
             return Task.CompletedTask;
         }
+
+        public virtual Task CreateAIAgentsMenuAsync(Action<string, Action> action)
+        {
+            return Task.CompletedTask;
+        }
     }
 }

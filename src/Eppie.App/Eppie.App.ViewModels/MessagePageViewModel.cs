@@ -54,13 +54,6 @@ namespace Tuvi.App.ViewModels
             set { SetProperty(ref _loadingContent, value); }
         }
 
-        private bool _isAIAgentsEnabled;
-        public bool IsAIAgentsEnabled
-        {
-            get { return _isAIAgentsEnabled; }
-            set { SetProperty(ref _isAIAgentsEnabled, value); }
-        }
-
         private Task<MessageInfo> _messageLoadTask;
 
         public ICommand ReplyCommand => new RelayCommand(Reply);
@@ -75,8 +68,6 @@ namespace Tuvi.App.ViewModels
         {
             try
             {
-                UpdateAIAgentProcessButton();
-
                 if (data is MessageInfo messageInfo)
                 {
                     MessageInfo = messageInfo;
@@ -90,19 +81,6 @@ namespace Tuvi.App.ViewModels
             }
 
             base.OnNavigatedTo(data);
-        }
-
-        private async void UpdateAIAgentProcessButton()
-        {
-            try
-            {
-                var agents = await AIService.GetAgentsAsync();
-                IsAIAgentsEnabled = await AIService.IsEnabledAsync().ConfigureAwait(true) && agents.Count > 0;
-            }
-            catch (Exception e)
-            {
-                OnError(e);
-            }
         }
 
         private async Task SetupMessageAsync()
@@ -205,27 +183,6 @@ namespace Tuvi.App.ViewModels
                     .ToList<Attachment>();
 
             AddAttachments(attachments);
-        }
-
-        public async Task CreateAIAgentsMenuAsync(Action<string, Action> action)
-        {
-            var agents = await AIService.GetAgentsAsync();
-            foreach (var agent in agents)
-            {
-                action(agent.Name, () => ProcessMessage(agent));
-            }
-        }
-
-        private async void ProcessMessage(LocalAIAgent agent)
-        {
-            try
-            {
-                await AIAgentProcessMessageAsync(agent, MessageInfo).ConfigureAwait(true);
-            }
-            catch (Exception e)
-            {
-                OnError(e);
-            }
         }
     }
 }
