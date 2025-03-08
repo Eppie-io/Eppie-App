@@ -16,9 +16,26 @@ namespace Tuvi.App.ViewModels
     {
         private const string DefaultLanguage = "English";
 
-        public readonly int defaultTopK = 50;
-        public readonly float defaultTopP = 0.9f;
-        public readonly float defaultTemperature = 1;
+        private int _topK = 50;
+        public int TopK
+        {
+            get => _topK;
+            set => SetProperty(ref _topK, value);
+        }
+
+        private float _topP = 0.9f;
+        public float TopP
+        {
+            get => _topP;
+            set => SetProperty(ref _topP, value);
+        }
+
+        private float _temperature = 1;
+        public float Temperature
+        {
+            get => _temperature;
+            set => SetProperty(ref _temperature, value);
+        }
 
         private string _name;
         public string Name
@@ -224,6 +241,9 @@ namespace Tuvi.App.ViewModels
             AgentSpecialty = CurrentAgent.AgentSpecialty;
             SystemPrompt = CurrentAgent.SystemPrompt;
             IsAllowedToSendingEmails = CurrentAgent.IsAllowedToSendingEmail;
+            TopK = CurrentAgent.TopK;
+            TopP = CurrentAgent.TopP;
+            Temperature = CurrentAgent.Temperature;
 
             if (AgentSpecialty == LocalAIAgentSpecialty.Translator)
             {
@@ -248,6 +268,9 @@ namespace Tuvi.App.ViewModels
             CurrentAgent.SystemPrompt = SystemPrompt;
             CurrentAgent.Email = linkedAccount;
             CurrentAgent.IsAllowedToSendingEmail = IsAllowedToSendingEmails && linkedAccount != null;
+            CurrentAgent.TopK = TopK;
+            CurrentAgent.TopP = TopP;
+            CurrentAgent.Temperature = Temperature;
 
             return CurrentAgent;
         }
@@ -478,14 +501,14 @@ namespace Tuvi.App.ViewModels
             {
                 var filteredAgents = agents.Where(agent =>
                     agent.Id != currentAgentId &&
-                    agent.PreprocessorAgentId != currentAgentId &&
-                    agent.PostprocessorAgentId != currentAgentId);
+                    agent.PreProcessorAgentId != currentAgentId &&
+                    agent.PostProcessorAgentId != currentAgentId);
 
                 AIAgentsList.SetItems(filteredAgents);
             }
 
-            PreprocessorAIAgent = AIAgentsList.FirstOrDefault(agent => agent.Id == AgentSettingsModel.CurrentAgent.PreprocessorAgentId);
-            PostprocessorAIAgent = AIAgentsList.FirstOrDefault(agent => agent.Id == AgentSettingsModel.CurrentAgent.PostprocessorAgentId);
+            PreprocessorAIAgent = AIAgentsList.FirstOrDefault(agent => agent.Id == AgentSettingsModel.CurrentAgent.PreProcessorAgentId);
+            PostprocessorAIAgent = AIAgentsList.FirstOrDefault(agent => agent.Id == AgentSettingsModel.CurrentAgent.PostProcessorAgentId);
         }
 
         private void InitModel(LocalAIAgentSettings accountSettingsModel, bool isCreatingMode)
@@ -500,8 +523,8 @@ namespace Tuvi.App.ViewModels
             try
             {
                 var agentData = AgentSettingsModel.ToAIAgent(LinkedAccount);
-                agentData.PreprocessorAgent = PreprocessorAIAgent;
-                agentData.PostprocessorAgent = PostprocessorAIAgent;
+                agentData.PreProcessorAgent = PreprocessorAIAgent;
+                agentData.PostProcessorAgent = PostprocessorAIAgent;
 
                 var result = await ApplyAgentSettingsAsync(agentData).ConfigureAwait(true);
                 if (result)

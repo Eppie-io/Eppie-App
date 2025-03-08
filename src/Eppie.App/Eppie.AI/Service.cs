@@ -6,7 +6,7 @@ namespace Eppie.AI
     {
         private readonly int defaultTopK = 50;
         private readonly float defaultTopP = 0.9f;
-        private readonly float defaultTemperature = 0.5f;
+        private readonly float defaultTemperature = 1;
         private readonly int defaultMaxLength = 1024;
 
         private ChatOptions? _modelOptions;
@@ -50,7 +50,7 @@ namespace Eppie.AI
             _model = null;
         }
 
-        public async Task<string> ProcessTextAsync(string systemPrompt, string text, CancellationToken cts, Action<string> onTextUpdate = null)
+        public async Task<string> ProcessTextAsync(string systemPrompt, string text, ChatOptions options, CancellationToken cts, Action<string> onTextUpdate = null)
         {
             if (string.IsNullOrWhiteSpace(text))
             {
@@ -59,6 +59,15 @@ namespace Eppie.AI
 
             var result = string.Empty;
             text = text.Trim();
+
+            var modelOptions = _modelOptions;
+
+            if (options != null)
+            {
+                modelOptions.TopP = options.TopP;
+                modelOptions.TopK = options.TopK;
+                modelOptions.Temperature = options.Temperature;
+            }
 
             await Task.Run(
                 async () =>
@@ -69,7 +78,7 @@ namespace Eppie.AI
                             new ChatMessage(ChatRole.System, systemPrompt),
                             new ChatMessage(ChatRole.User, text)
                         },
-                        _modelOptions,
+                        options,
                         cts).ConfigureAwait(false))
                     {
                         result += messagePart.Text;

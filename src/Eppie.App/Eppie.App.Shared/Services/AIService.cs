@@ -9,6 +9,7 @@ using Eppie.AI;
 #endif
 using Eppie.App.UI.Tools;
 using Eppie.App.ViewModels.Services;
+using Microsoft.Extensions.AI;
 using Tuvi.Core;
 using Tuvi.Core.DataStorage;
 using Tuvi.Core.Entities;
@@ -52,16 +53,37 @@ namespace Eppie.App.Shared.Services
 
             if (Service != null && !string.IsNullOrEmpty(text))
             {
-                if (agent.PreprocessorAgent != null)
+                if (agent.PreProcessorAgent != null)
                 {
-                    text = await Service.ProcessTextAsync(agent.PreprocessorAgent.SystemPrompt, text, cancellationToken, onTextUpdate);
+                    var preProcessorAgentOptions = new ChatOptions
+                    {
+                        TopP = agent.PreProcessorAgent.TopP,
+                        TopK = agent.PreProcessorAgent.TopK,
+                        Temperature = agent.PreProcessorAgent.Temperature
+                    };
+
+                    text = await Service.ProcessTextAsync(agent.PreProcessorAgent.SystemPrompt, text, preProcessorAgentOptions, cancellationToken, onTextUpdate);
                 }
 
-                result = await Service.ProcessTextAsync(agent.SystemPrompt, text, cancellationToken, onTextUpdate);
-
-                if (agent.PostprocessorAgent != null)
+                var options = new ChatOptions
                 {
-                    result = await Service.ProcessTextAsync(agent.PostprocessorAgent.SystemPrompt, result, cancellationToken, onTextUpdate);
+                    TopP = agent.TopP,
+                    TopK = agent.TopK,
+                    Temperature = agent.Temperature
+                };
+
+                result = await Service.ProcessTextAsync(agent.SystemPrompt, text, options, cancellationToken, onTextUpdate);
+
+                if (agent.PostProcessorAgent != null)
+                {
+                    var postProcessorAgentOptions = new ChatOptions
+                    {
+                        TopP = agent.PostProcessorAgent.TopP,
+                        TopK = agent.PostProcessorAgent.TopK,
+                        Temperature = agent.PostProcessorAgent.Temperature
+                    };
+
+                    result = await Service.ProcessTextAsync(agent.PostProcessorAgent.SystemPrompt, result, postProcessorAgentOptions, cancellationToken, onTextUpdate);
                 }
             }
 

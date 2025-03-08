@@ -103,19 +103,19 @@
                         Maximum="1"
                         Minimum="0"
                         StepFrequency="0.01"
-                        Value="{x:Bind ViewModel.AgentSettingsModel.defaultTopP, Mode=OneTime}" />
+                        Value="{x:Bind ViewModel.AgentSettingsModel.TopP, Mode=TwoWay}" />
                 <Slider x:Uid="/App.Resources/AIOptionTopKSlider"
                         Header="Top K"
                         Maximum="200"
                         Minimum="0"
                         StepFrequency="1"
-                        Value="{x:Bind ViewModel.AgentSettingsModel.defaultTopK, Mode=OneTime}" />
+                        Value="{x:Bind ViewModel.AgentSettingsModel.TopK, Mode=TwoWay}" />
                 <Slider x:Uid="/App.Resources/AIOptionTemperatureSlider"
                         Header="Temperature"
                         Maximum="5"
                         Minimum="0.01"
                         StepFrequency="0.01"
-                        Value="{x:Bind ViewModel.AgentSettingsModel.defaultTemperature, Mode=OneTime}" />
+                        Value="{x:Bind ViewModel.AgentSettingsModel.Temperature, Mode=TwoWay}" />
             </StackPanel>
         </Grid>
 
