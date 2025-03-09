@@ -540,17 +540,12 @@ namespace Tuvi.App.ViewModels
             {
                 if (!string.IsNullOrEmpty(TextBody))
                 {
-                    var thinkingMessage = GetLocalizedString("ThinkingMessage");
-                    var savedTextBody = TextBody;
-                    TextBody = thinkingMessage + TextBody;
+                    MessageInfo.AIAgentProcessedBody = GetLocalizedString("ThinkingMessage");
 
+                    MessageInfo.MessageData.TextBody = TextBody;
                     await UpdateDraftMessageAsync().ConfigureAwait(true);
-                    MessageInfo.MessageData.TextBody = savedTextBody;
 
                     await AIAgentProcessMessageAsync(agent, MessageInfo).ConfigureAwait(true);
-
-                    TextBody = MessageInfo.AIAgentProcessedBody + savedTextBody;
-                    await UpdateDraftMessageAsync().ConfigureAwait(true);
                 }
             }
             catch (Exception e)

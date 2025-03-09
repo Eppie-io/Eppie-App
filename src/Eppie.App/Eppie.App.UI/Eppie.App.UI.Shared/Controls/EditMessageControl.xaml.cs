@@ -1,3 +1,4 @@
+using Tuvi.App.Shared.Controls;
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -8,7 +9,7 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace Eppie.App.UI.Controls
 {
-    public sealed partial class EditMessageControl : UserControl
+    public sealed partial class EditMessageControl : AIAgentUserControl
     {
         public string Text
         {
@@ -31,6 +32,11 @@ namespace Eppie.App.UI.Controls
         public EditMessageControl()
         {
             this.InitializeComponent();
+        }
+
+        override protected void ShowAIAgentProcessedText()
+        {
+            SecondColumn.Width = new GridLength(1, GridUnitType.Star);
         }
     }
 }

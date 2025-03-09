@@ -85,22 +85,13 @@
 
             <CommandBar Grid.Column="2" DefaultLabelPosition="Right">
 
-                <AppBarButton x:Uid="/App.Resources/ReplyAllButton"
-                              Command="{x:Bind ViewModel.ReplyCommandAll}"
-                              Icon="MailReplyAll" />
-
-                <AppBarButton x:Uid="/App.Resources/ReplyButton"
-                              Command="{x:Bind ViewModel.ReplyCommand}"
-                              Icon="MailReply" />
-
-                <AppBarButton x:Uid="/App.Resources/ForwardButton"
-                              Command="{x:Bind ViewModel.ForwardCommand}"
-                              Icon="MailForward" />
-
-                <AppBarButton x:Uid="/App.Resources/DeleteButton"
-                              Command="{x:Bind ViewModel.DeleteMessageAndGoBackCommand}"
-                              Icon="Delete" />
-
+                <AppBarButton x:Name="AIAgentButton"
+                              x:Uid="/App.Resources/AIAgentProcessMessageButton"
+                              IsEnabled="{x:Bind ViewModel.IsLocalAIEnabled, Mode=OneWay}"
+                              Visibility="{x:Bind ViewModel.IsLocalAIAvailable, Mode=OneWay}">
+                    <FontIcon Glyph="&#xE99A;" />
+                </AppBarButton>
+                
                 <AppBarButton x:Uid="/App.Resources/MarkAsReadButton"
                               Command="{x:Bind ViewModel.MarkMessageAsReadCommand}"
                               Icon="Read"
@@ -120,13 +111,22 @@
                               Command="{x:Bind ViewModel.UnflagMessageCommand}"
                               Icon="Flag"
                               Visibility="{x:Bind ViewModel.MessageInfo.IsFlagged, Mode=OneWay}" />
+                
+                <AppBarButton x:Uid="/App.Resources/DeleteButton"
+                              Command="{x:Bind ViewModel.DeleteMessageAndGoBackCommand}"
+                              Icon="Delete" />
 
-                <AppBarButton x:Name="AIAgentButton"
-                              x:Uid="/App.Resources/AIAgentProcessMessageButton"
-                              IsEnabled="{x:Bind ViewModel.IsLocalAIEnabled, Mode=OneWay}"
-                              Visibility="{x:Bind ViewModel.IsLocalAIAvailable, Mode=OneWay}">
-                    <FontIcon Glyph="&#xE99A;" />
-                </AppBarButton>
+                <AppBarButton x:Uid="/App.Resources/ForwardButton"
+                              Command="{x:Bind ViewModel.ForwardCommand}"
+                              Icon="MailForward" />
+
+                <AppBarButton x:Uid="/App.Resources/ReplyButton"
+                              Command="{x:Bind ViewModel.ReplyCommand}"
+                              Icon="MailReply" />
+
+                <AppBarButton x:Uid="/App.Resources/ReplyAllButton"
+                              Command="{x:Bind ViewModel.ReplyCommandAll}"
+                              Icon="MailReplyAll" />
 
             </CommandBar>
 

@@ -15,7 +15,7 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace Tuvi.App.Shared.Controls
 {
-    public sealed partial class MessageListControl : BaseUserControl
+    public sealed partial class MessageListControl : AIAgentUserControl
     {
         public ManagedCollection<MessageInfo> Messages
         {

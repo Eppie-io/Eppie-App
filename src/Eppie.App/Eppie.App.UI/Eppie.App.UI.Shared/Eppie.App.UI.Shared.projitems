@@ -18,6 +18,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\AttachmentListControl.xaml.cs">
       <DependentUpon>AttachmentListControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\AIAgentUserControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\BaseUserControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ContactsListControl.xaml.cs">
       <DependentUpon>ContactsListControl.xaml</DependentUpon>

@@ -1,17 +1,22 @@
-﻿<UserControl x:Class="Eppie.App.UI.Controls.EditMessageControl"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="using:Eppie.App.UI.Controls"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:not_win="http://uno.ui/not_win"
-             xmlns:win="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             d:DesignHeight="300"
-             d:DesignWidth="400"
-             mc:Ignorable="d not_win">
+﻿<shared:AIAgentUserControl x:Class="Eppie.App.UI.Controls.EditMessageControl"
+                           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                           xmlns:local="using:Eppie.App.UI.Controls"
+                           xmlns:shared="using:Tuvi.App.Shared.Controls"
+                           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                           xmlns:not_win="http://uno.ui/not_win"
+                           xmlns:win="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                           d:DesignHeight="300"
+                           d:DesignWidth="400"
+                           mc:Ignorable="d not_win">
 
     <Grid>
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition x:Name="SecondColumn" Width="0" />
+        </Grid.ColumnDefinitions>
+        
         <!--  ToDo: Try use `RichEditBox` with uno when 'Implement RichEditBox' (https://github.com/unoplatform/uno/issues/3848) issue is solved  -->
 
         <win:Grid>
@@ -20,5 +25,14 @@
         <not_win:Grid>
             <TextBox AcceptsReturn="True" Text="{x:Bind Text, Mode=TwoWay}" />
         </not_win:Grid>
+
+        <ScrollViewer Grid.Column="1"
+              Padding="4"
+              Visibility="{x:Bind HasAIAgentProcessedBody, Mode=OneWay}">
+            <TextBlock IsTextSelectionEnabled="True"
+               Style="{StaticResource MessageTextStyle}"
+               Text="{x:Bind AIAgentProcessedBody, Mode=OneWay}" />
+        </ScrollViewer>
+        
     </Grid>
-</UserControl>
+</shared:AIAgentUserControl>
