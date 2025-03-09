@@ -6,10 +6,10 @@ using System.Threading;
 using System.Threading.Tasks;
 #if AI_ENABLED
 using Eppie.AI;
+using Microsoft.Extensions.AI;
 #endif
 using Eppie.App.UI.Tools;
 using Eppie.App.ViewModels.Services;
-using Microsoft.Extensions.AI;
 using Tuvi.Core;
 using Tuvi.Core.DataStorage;
 using Tuvi.Core.Entities;
