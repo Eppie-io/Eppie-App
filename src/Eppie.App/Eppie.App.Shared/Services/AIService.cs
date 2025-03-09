@@ -47,6 +47,7 @@ namespace Eppie.App.Shared.Services
             LoadingModelTask = LoadModelAsync();
         }
 #if AI_ENABLED
+
         public async Task<string> ProcessTextAsync(LocalAIAgent agent, string text, CancellationToken cancellationToken, Action<string> onTextUpdate = null)
         {
             var result = string.Empty;
@@ -55,39 +56,57 @@ namespace Eppie.App.Shared.Services
             {
                 if (agent.PreProcessorAgent != null)
                 {
-                    var preProcessorAgentOptions = new ChatOptions
-                    {
-                        TopP = agent.PreProcessorAgent.TopP,
-                        TopK = agent.PreProcessorAgent.TopK,
-                        Temperature = agent.PreProcessorAgent.Temperature
-                    };
-
-                    text = await Service.ProcessTextAsync(agent.PreProcessorAgent.SystemPrompt, text, preProcessorAgentOptions, cancellationToken, onTextUpdate);
+                    text = await Service.ProcessTextAsync
+                        (
+                            agent.PreProcessorAgent.SystemPrompt,
+                            text,
+                            GetAgentOptions(agent.PreProcessorAgent),
+                            cancellationToken,
+                            onTextUpdate
+                        );
                 }
 
-                var options = new ChatOptions
-                {
-                    TopP = agent.TopP,
-                    TopK = agent.TopK,
-                    Temperature = agent.Temperature
-                };
-
-                result = await Service.ProcessTextAsync(agent.SystemPrompt, text, options, cancellationToken, onTextUpdate);
+                result = await Service.ProcessTextAsync
+                    (
+                        agent.SystemPrompt,
+                        text,
+                        GetAgentOptions(agent),
+                        cancellationToken,
+                        onTextUpdate
+                    );
 
                 if (agent.PostProcessorAgent != null)
                 {
-                    var postProcessorAgentOptions = new ChatOptions
-                    {
-                        TopP = agent.PostProcessorAgent.TopP,
-                        TopK = agent.PostProcessorAgent.TopK,
-                        Temperature = agent.PostProcessorAgent.Temperature
-                    };
-
-                    result = await Service.ProcessTextAsync(agent.PostProcessorAgent.SystemPrompt, result, postProcessorAgentOptions, cancellationToken, onTextUpdate);
+                    result = await Service.ProcessTextAsync
+                        (
+                            agent.PostProcessorAgent.SystemPrompt,
+                            result,
+                            GetAgentOptions(agent.PostProcessorAgent),
+                            cancellationToken,
+                            onTextUpdate
+                        );
                 }
             }
 
             return result;
+        }
+
+        private static ChatOptions GetAgentOptions(LocalAIAgent agent)
+        {
+            const string minLenght = "min_length";
+            const string doSample = "do_sample";
+
+            return new ChatOptions
+            {
+                TopP = agent.TopP,
+                TopK = agent.TopK,
+                Temperature = agent.Temperature,
+                AdditionalProperties = new AdditionalPropertiesDictionary
+                {
+                    { minLenght, 0 },
+                    { doSample, agent.DoSample },
+                }
+            };
         }
 #else
         public Task<string> ProcessTextAsync(LocalAIAgent agent, string text, CancellationToken cancellationToken, Action<string> onTextUpdate = null)

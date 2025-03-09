@@ -37,11 +37,26 @@ namespace Tuvi.App.ViewModels
             set => SetProperty(ref _temperature, value);
         }
 
+        private bool _doSample;
+        public bool DoSample
+        {
+            get => _doSample;
+            set => SetProperty(ref _doSample, value);
+        }
+
         private string _name;
         public string Name
         {
-            get => _name;
-            set => SetProperty(ref _name, value);
+            get
+            {
+                if (string.IsNullOrEmpty(_name))
+                {
+                    return AgentSpecialty.ToString();
+                }
+
+                return _name;
+            }
+            set { SetProperty(ref _name, value); }
         }
 
         private LocalAIAgentSpecialty _agentSpecialty;
@@ -53,6 +68,7 @@ namespace Tuvi.App.ViewModels
                 if (SetProperty(ref _agentSpecialty, value))
                 {
                     UpdateSystemPrompt();
+                    OnPropertyChanged(nameof(Name));
                     OnPropertyChanged(nameof(IsLanguageVisible));
                 }
             }
@@ -241,6 +257,8 @@ namespace Tuvi.App.ViewModels
             AgentSpecialty = CurrentAgent.AgentSpecialty;
             SystemPrompt = CurrentAgent.SystemPrompt;
             IsAllowedToSendingEmails = CurrentAgent.IsAllowedToSendingEmail;
+
+            DoSample = CurrentAgent.DoSample;
             TopK = CurrentAgent.TopK;
             TopP = CurrentAgent.TopP;
             Temperature = CurrentAgent.Temperature;
@@ -268,6 +286,8 @@ namespace Tuvi.App.ViewModels
             CurrentAgent.SystemPrompt = SystemPrompt;
             CurrentAgent.Email = linkedAccount;
             CurrentAgent.IsAllowedToSendingEmail = IsAllowedToSendingEmails && linkedAccount != null;
+
+            CurrentAgent.DoSample = DoSample;
             CurrentAgent.TopK = TopK;
             CurrentAgent.TopP = TopP;
             CurrentAgent.Temperature = Temperature;

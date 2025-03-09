@@ -160,6 +160,8 @@ namespace Tuvi.App.Shared.Views
                 {
                     var item = new MenuFlyoutItem { Text = text };
                     item.Click += (s, e) => command.Invoke(messageListControl.SelectedItems);
+                    item.IsEnabled = messageListControl.SelectedItems.Count > 0;
+                    messageListControl.SelectionChanged += (s, e) => item.IsEnabled = messageListControl.SelectedItems.Count > 0;
                     menuFlyout.Items.Add(item);
                 });
 

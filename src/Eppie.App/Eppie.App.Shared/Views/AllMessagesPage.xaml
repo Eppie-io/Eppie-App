@@ -287,7 +287,8 @@
 
                     <AppBarButton x:Name="AIAgentButton"
                                   x:Uid="/App.Resources/AIAgentProcessMessageButton"
-                                  Visibility="{x:Bind ViewModel.IsSelectMessagesMode, Mode=OneWay}">
+                                  IsEnabled="{x:Bind ViewModel.IsLocalAIEnabled, Mode=OneWay}"
+                                  Visibility="{x:Bind ViewModel.IsLocalAIAvailable, Mode=OneWay}">
                         <FontIcon Glyph="&#xE99A;" />
                     </AppBarButton>
 

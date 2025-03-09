@@ -91,6 +91,7 @@
             <CommandBar Grid.Column="2" DefaultLabelPosition="Right">
                 <AppBarButton x:Name="AIAgentButton"
                               x:Uid="/App.Resources/AIAgentProcessMessageButton"
+                              IsEnabled="{x:Bind ViewModel.IsLocalAIEnabled, Mode=OneWay}"
                               Visibility="{x:Bind ViewModel.IsLocalAIAvailable, Mode=OneWay}">
                     <FontIcon Glyph="&#xE99A;" />
                 </AppBarButton>

@@ -27,6 +27,13 @@ namespace Tuvi.App.ViewModels
 
         public bool IsLocalAIAvailable => AIService.IsAvailable();
 
+        private bool _isLocalAIEnabled;
+        public bool IsLocalAIEnabled
+        {
+            get => _isLocalAIEnabled;
+            private set => SetProperty(ref _isLocalAIEnabled, value);
+        }
+
         public ObservableCollection<Attachment> Attachments { get; } = new ObservableCollection<Attachment>();
 
         private bool _canDelete = true;
@@ -63,6 +70,25 @@ namespace Tuvi.App.ViewModels
         {
             GoBackCommand = new AsyncRelayCommand(() => GoBackAsync(true), () => CanGoBack);
             DeleteMessageAndGoBackCommand = new AsyncRelayCommand(DeleteMessageAndGoBackAsync, () => CanDelete);
+        }
+
+        public override async void OnNavigatedTo(object data)
+        {
+            try
+            {
+                await InitializeAIButtonAsync().ConfigureAwait(true);
+
+                base.OnNavigatedTo(data);
+            }
+            catch (Exception e)
+            {
+                OnError(e);
+            }
+        }
+
+        private async Task InitializeAIButtonAsync()
+        {
+            IsLocalAIEnabled = await AIService.IsEnabledAsync();
         }
 
         protected async Task DeleteMessageAndGoBackAsync()

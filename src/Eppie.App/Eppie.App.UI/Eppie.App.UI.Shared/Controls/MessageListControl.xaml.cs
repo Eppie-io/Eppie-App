@@ -43,6 +43,8 @@ namespace Tuvi.App.Shared.Controls
 
         public IList<object> SelectedItems { get; }
 
+        public event SelectionChangedEventHandler SelectionChanged;
+
         public ICommand SelectedItemsChangedCommand
         {
             get { return (ICommand)GetValue(SelectedItemsChangedCommandProperty); }
@@ -143,6 +145,7 @@ namespace Tuvi.App.Shared.Controls
                     }
                 }
 
+                SelectionChanged?.Invoke(sender, e);
                 SelectedItemsChangedCommand?.Execute(null);
             }
             catch (Exception ex)

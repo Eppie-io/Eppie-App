@@ -121,8 +121,19 @@ namespace Tuvi.App.ViewModels
             {
                 SetProperty(ref _isSelectMessagesMode, value);
                 OpenMessageCommand.NotifyCanExecuteChanged();
+                OnPropertyChanged(nameof(IsLocalAIAvailable));
+                UpdateAIButton();
             }
         }
+
+        private bool _isLocalAIEnabled;
+        public bool IsLocalAIEnabled
+        {
+            get => _isLocalAIEnabled;
+            private set => SetProperty(ref _isLocalAIEnabled, value);
+        }
+
+        public bool IsLocalAIAvailable => IsSelectMessagesMode && AIService.IsAvailable();
 
         public MessageFilter[] FilterVariants { get; }
 
@@ -170,6 +181,8 @@ namespace Tuvi.App.ViewModels
             _cancellationTokenSource = new CancellationTokenSource();
             SubscribeOnCoreEvents();
 
+            UpdateAIButton();
+
             base.OnNavigatedTo(data);
         }
 
@@ -181,6 +194,18 @@ namespace Tuvi.App.ViewModels
             _cancellationTokenSource = null;
             MessageList = null;
             Reset();
+        }
+
+        private async void UpdateAIButton()
+        {
+            try
+            {
+                IsLocalAIEnabled = await AIService.IsEnabledAsync();
+            }
+            catch (Exception e)
+            {
+                OnError(e);
+            }
         }
 
         protected virtual void SubscribeOnCoreEvents()

@@ -32,6 +32,32 @@ namespace Eppie.AI
             //    Stop = new[] { "[INST]", "[/INST]" }
             //}).ConfigureAwait(false);
 
+            // Llama3
+            //_model = await GenAIModel.CreateAsync(modelPath, new LlmPromptTemplate
+            //{
+            //    System = "<|start_header_id|>system<|end_header_id|>\n{{CONTENT}}<|eot_id|>",
+            //    User = "<|start_header_id|>user<|end_header_id|>\n{{CONTENT}}<|eot_id|>",
+            //    Assistant = "<|start_header_id|>assistant<|end_header_id|>\n{{CONTENT}}<|eot_id|>",
+            //    Stop = new[] { "<|start_header_id|>", "<|end_header_id|>", "<|eot_id|>" }
+            //}).ConfigureAwait(false);
+
+            // Qwen
+            //_model = await GenAIModel.CreateAsync(modelPath, new LlmPromptTemplate
+            //{
+            //    System = "<|im_start|>system\n{{CONTENT}}<|im_end|>\n",
+            //    User = "<|im_start|>user\n{{CONTENT}}<|im_end|>\n",
+            //    Assistant = "<|im_start|>assistant\n{{CONTENT}}<|im_end|>",
+            //    Stop = new[] { "<|im_start|>", "<|im_end|>" }
+            //}).ConfigureAwait(false);
+
+            // Gemma
+            //_model = await GenAIModel.CreateAsync(modelPath, new LlmPromptTemplate
+            //{
+            //    System = "<start_of_turn>user\n{{CONTENT}}<end_of_turn>\n",
+            //    User = "<start_of_turn>model\n{{CONTENT}}<end_of_turn>\n",
+            //    Stop = new[] { "<start_of_turn>", "<end_of_turn>" }
+            //}).ConfigureAwait(false);
+
             // DeepSeekR1
             //_model = await GenAIModel.CreateAsync(modelPath, new LlmPromptTemplate
             //{
@@ -67,6 +93,7 @@ namespace Eppie.AI
                 modelOptions.TopP = options.TopP;
                 modelOptions.TopK = options.TopK;
                 modelOptions.Temperature = options.Temperature;
+                modelOptions.AdditionalProperties = options.AdditionalProperties;
             }
 
             await Task.Run(
@@ -104,7 +131,7 @@ namespace Eppie.AI
                 }
             }
 
-            return text;
+            return text.Trim();
         }
 
         public ChatOptions GetDefaultChatOptions(IChatClient? chatClient)
