@@ -121,8 +121,19 @@ namespace Tuvi.App.ViewModels
             {
                 SetProperty(ref _isSelectMessagesMode, value);
                 OpenMessageCommand.NotifyCanExecuteChanged();
+                OnPropertyChanged(nameof(IsLocalAIAvailable));
+                UpdateAIButton();
             }
         }
+
+        private bool _isLocalAIEnabled;
+        public bool IsLocalAIEnabled
+        {
+            get => _isLocalAIEnabled;
+            private set => SetProperty(ref _isLocalAIEnabled, value);
+        }
+
+        public bool IsLocalAIAvailable => IsSelectMessagesMode && AIService.IsAvailable();
 
         public MessageFilter[] FilterVariants { get; }
 
@@ -170,6 +181,8 @@ namespace Tuvi.App.ViewModels
             _cancellationTokenSource = new CancellationTokenSource();
             SubscribeOnCoreEvents();
 
+            UpdateAIButton();
+
             base.OnNavigatedTo(data);
         }
 
@@ -181,6 +194,18 @@ namespace Tuvi.App.ViewModels
             _cancellationTokenSource = null;
             MessageList = null;
             Reset();
+        }
+
+        private async void UpdateAIButton()
+        {
+            try
+            {
+                IsLocalAIEnabled = await AIService.IsEnabledAsync();
+            }
+            catch (Exception e)
+            {
+                OnError(e);
+            }
         }
 
         protected virtual void SubscribeOnCoreEvents()
@@ -554,6 +579,38 @@ namespace Tuvi.App.ViewModels
         virtual public void SaveSelectedItemsFilter(string filter)
         {
             throw new NotImplementedException();
+        }
+
+        public override async Task CreateAIAgentsMenuAsync(Action<string, Action<IList<object>>> action)
+        {
+            var agents = await AIService.GetAgentsAsync();
+            foreach (var agent in agents)
+            {
+                action(agent.Name, (items) => ProcessMessages(agent, items));
+            }
+        }
+
+        private async Task AIAgentProcessMessagesAsync(LocalAIAgent agent, IReadOnlyList<MessageInfo> messages)
+        {
+            foreach (var message in messages)
+            {
+                message.MessageData = await Core.GetMessageBodyAsync(message.MessageData).ConfigureAwait(true);
+
+                await AIAgentProcessMessageAsync(agent, message).ConfigureAwait(true);
+            }
+        }
+
+        private async void ProcessMessages(LocalAIAgent agent, IList<object> items)
+        {
+            try
+            {
+                var messages = items.Select(x => x as MessageInfo).ToList();
+                await AIAgentProcessMessagesAsync(agent, messages).ConfigureAwait(true);
+            }
+            catch (Exception e)
+            {
+                OnError(e);
+            }
         }
     }
 }

@@ -5,8 +5,8 @@ using Tuvi.App.Shared.Services;
 using Tuvi.App.ViewModels;
 using Tuvi.Core.Entities;
 using Eppie.App.Shared.Services;
-
-
+using System;
+using System.Collections.Generic;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -148,6 +148,56 @@ namespace Tuvi.App.Shared.Views
         protected void ListViewSwipeContainer_PointerExited(object sender, PointerRoutedEventArgs e)
         {
             VisualStateManager.GoToState(sender as Control, "HoverButtonsHidden", true);
+        }
+
+        protected async void InitAIAgentButton(AppBarButton agentButton, Controls.MessageListControl messageListControl)
+        {
+            try
+            {
+                var menuFlyout = new MenuFlyout();
+
+                await ViewModel.CreateAIAgentsMenuAsync((string text, Action<IList<object>> command) =>
+                {
+                    var item = new MenuFlyoutItem { Text = text };
+                    item.Click += (s, e) => command.Invoke(messageListControl.SelectedItems);
+                    item.IsEnabled = messageListControl.SelectedItems.Count > 0;
+                    messageListControl.SelectionChanged += (s, e) => item.IsEnabled = messageListControl.SelectedItems.Count > 0;
+                    menuFlyout.Items.Add(item);
+                });
+
+                if (menuFlyout.Items.Count > 0)
+                {
+                    agentButton.Flyout = menuFlyout;
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewModel.OnError(ex);
+            }
+        }
+
+        protected async void InitAIAgentButton(AppBarButton agentButton)
+        {
+            try
+            {
+                var menuFlyout = new MenuFlyout();
+
+                await ViewModel.CreateAIAgentsMenuAsync((string text, Action command) =>
+                {
+                    var item = new MenuFlyoutItem { Text = text };
+                    item.Click += (s, e) => command.Invoke();
+                    menuFlyout.Items.Add(item);
+                });
+
+                if (menuFlyout.Items.Count > 0)
+                {
+                    agentButton.Flyout = menuFlyout;
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewModel.OnError(ex);
+            }
         }
     }
 }

@@ -533,5 +533,25 @@ namespace Tuvi.App.ViewModels
                     = StringHelper.IsDecentralizedEmail(From);
             }
         }
+
+        protected override async void ProcessMessage(LocalAIAgent agent)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(TextBody))
+                {
+                    MessageInfo.AIAgentProcessedBody = GetLocalizedString("ThinkingMessage");
+
+                    MessageInfo.MessageData.TextBody = TextBody;
+                    await UpdateDraftMessageAsync().ConfigureAwait(true);
+
+                    await AIAgentProcessMessageAsync(agent, MessageInfo).ConfigureAwait(true);
+                }
+            }
+            catch (Exception e)
+            {
+                OnError(e);
+            }
+        }
     }
 }

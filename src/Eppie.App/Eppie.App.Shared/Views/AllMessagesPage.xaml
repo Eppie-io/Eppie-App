@@ -156,7 +156,6 @@
                                    Opacity="0.6"
                                    Text="{Binding PreviewText, Mode=OneWay}" />
 
-
                         <CommandBar x:Name="CommandBar"
                                     Grid.RowSpan="3"
                                     Grid.Column="1"
@@ -254,6 +253,13 @@
 
             <controls:MessageListControl.CommandBarHolder>
                 <CommandBar OverflowButtonVisibility="Collapsed">
+
+                    <AppBarButton x:Name="AIAgentButton"
+                                  x:Uid="/App.Resources/AIAgentProcessMessageButton"
+                                  IsEnabled="{x:Bind ViewModel.IsLocalAIEnabled, Mode=OneWay}"
+                                  Visibility="{x:Bind ViewModel.IsLocalAIAvailable, Mode=OneWay}">
+                        <FontIcon Glyph="&#xE99A;" />
+                    </AppBarButton>
 
                     <AppBarButton x:Uid="/App.Resources/MarkAsReadButton"
                                   Command="{x:Bind ViewModel.MarkSelectedMessagesAsReadCommand, Mode=OneWay}"

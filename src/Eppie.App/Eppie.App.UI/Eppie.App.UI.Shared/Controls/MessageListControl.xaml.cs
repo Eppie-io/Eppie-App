@@ -15,7 +15,7 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace Tuvi.App.Shared.Controls
 {
-    public sealed partial class MessageListControl : BaseUserControl
+    public sealed partial class MessageListControl : AIAgentUserControl
     {
         public ManagedCollection<MessageInfo> Messages
         {
@@ -42,6 +42,8 @@ namespace Tuvi.App.Shared.Controls
             DependencyProperty.Register(nameof(SelectionMode), typeof(ListViewSelectionMode), typeof(MessageListControl), new PropertyMetadata(ListViewSelectionMode.None));
 
         public IList<object> SelectedItems { get; }
+
+        public event SelectionChangedEventHandler SelectionChanged;
 
         public ICommand SelectedItemsChangedCommand
         {
@@ -143,6 +145,7 @@ namespace Tuvi.App.Shared.Controls
                     }
                 }
 
+                SelectionChanged?.Invoke(sender, e);
                 SelectedItemsChangedCommand?.Execute(null);
             }
             catch (Exception ex)

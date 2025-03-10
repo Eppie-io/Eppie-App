@@ -100,22 +100,28 @@
                         Spacing="12">
                 <Slider x:Uid="/App.Resources/AIOptionTopPSlider"
                         Header="Top P"
+                        IsEnabled="{x:Bind ViewModel.AgentSettingsModel.DoSample, Mode=OneWay}"
                         Maximum="1"
                         Minimum="0"
                         StepFrequency="0.01"
-                        Value="{x:Bind ViewModel.AgentSettingsModel.defaultTopP, Mode=OneTime}" />
+                        Value="{x:Bind ViewModel.AgentSettingsModel.TopP, Mode=TwoWay}" />
                 <Slider x:Uid="/App.Resources/AIOptionTopKSlider"
                         Header="Top K"
+                        IsEnabled="{x:Bind ViewModel.AgentSettingsModel.DoSample, Mode=OneWay}"
                         Maximum="200"
                         Minimum="0"
                         StepFrequency="1"
-                        Value="{x:Bind ViewModel.AgentSettingsModel.defaultTopK, Mode=OneTime}" />
+                        Value="{x:Bind ViewModel.AgentSettingsModel.TopK, Mode=TwoWay}" />
                 <Slider x:Uid="/App.Resources/AIOptionTemperatureSlider"
                         Header="Temperature"
+                        IsEnabled="{x:Bind ViewModel.AgentSettingsModel.DoSample, Mode=OneWay}"
                         Maximum="5"
                         Minimum="0.01"
                         StepFrequency="0.01"
-                        Value="{x:Bind ViewModel.AgentSettingsModel.defaultTemperature, Mode=OneTime}" />
+                        Value="{x:Bind ViewModel.AgentSettingsModel.Temperature, Mode=TwoWay}" />
+                <ToggleSwitch x:Uid="/App.Resources/DoSampleToggle"
+                              Header="Sampling"
+                              IsOn="{x:Bind ViewModel.AgentSettingsModel.DoSample, Mode=TwoWay}" />
             </StackPanel>
         </Grid>
 

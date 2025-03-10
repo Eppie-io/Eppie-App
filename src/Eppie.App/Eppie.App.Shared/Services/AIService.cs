@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 #if AI_ENABLED
 using Eppie.AI;
+using Microsoft.Extensions.AI;
 #endif
 using Eppie.App.UI.Tools;
 using Eppie.App.ViewModels.Services;
@@ -19,13 +20,15 @@ namespace Eppie.App.Shared.Services
 {
     public class AIService : IAIService
     {
-        private const string LocalAIModelFolderName = "local.ai.model";
 #if AI_ENABLED
         private Service Service;
 #endif
+
+        private const string LocalAIModelFolderName = "local.ai.model";
         private ITuviMail Core;
         private readonly IAIAgentsStorage Storage;
         private Task LoadingModelTask;
+        private readonly SemaphoreSlim Semaphore;
 
         public event EventHandler<LocalAIAgentEventArgs> AgentAdded;
         public event EventHandler<LocalAIAgentEventArgs> AgentDeleted;
@@ -34,6 +37,9 @@ namespace Eppie.App.Shared.Services
 
         public AIService(ITuviMail core)
         {
+            int maxParallelAgents = Environment.ProcessorCount - 1;
+            Semaphore = new SemaphoreSlim(maxParallelAgents);
+
             Core = core;
             Core.MessagesReceived += OnMessagesReceived;
 
@@ -41,31 +47,83 @@ namespace Eppie.App.Shared.Services
             LoadingModelTask = LoadModelAsync();
         }
 #if AI_ENABLED
+
         public async Task<string> ProcessTextAsync(LocalAIAgent agent, string text, CancellationToken cancellationToken, Action<string> onTextUpdate = null)
         {
             var result = string.Empty;
 
-            if (Service != null)
+            if (Service != null && !string.IsNullOrEmpty(text))
             {
-                if (agent.PreprocessorAgent != null)
+                if (agent.PreProcessorAgent != null)
                 {
-                    text = await Service.ProcessTextAsync(agent.PreprocessorAgent.SystemPrompt, text, cancellationToken, onTextUpdate);
+                    text = await Service.ProcessTextAsync
+                        (
+                            agent.PreProcessorAgent.SystemPrompt,
+                            text,
+                            GetAgentOptions(agent.PreProcessorAgent),
+                            cancellationToken,
+                            onTextUpdate
+                        );
                 }
 
-                result = await Service.ProcessTextAsync(agent.SystemPrompt, text, cancellationToken, onTextUpdate);
+                result = await Service.ProcessTextAsync
+                    (
+                        agent.SystemPrompt,
+                        text,
+                        GetAgentOptions(agent),
+                        cancellationToken,
+                        onTextUpdate
+                    );
 
-                if (agent.PostprocessorAgent != null)
+                if (agent.PostProcessorAgent != null)
                 {
-                    result = await Service.ProcessTextAsync(agent.PostprocessorAgent.SystemPrompt, result, cancellationToken, onTextUpdate);
+                    result = await Service.ProcessTextAsync
+                        (
+                            agent.PostProcessorAgent.SystemPrompt,
+                            result,
+                            GetAgentOptions(agent.PostProcessorAgent),
+                            cancellationToken,
+                            onTextUpdate
+                        );
                 }
             }
 
             return result;
         }
+
+        private static ChatOptions GetAgentOptions(LocalAIAgent agent)
+        {
+            const string minLenght = "min_length";
+            const string doSample = "do_sample";
+
+            return new ChatOptions
+            {
+                TopP = agent.TopP,
+                TopK = agent.TopK,
+                Temperature = agent.Temperature,
+                AdditionalProperties = new AdditionalPropertiesDictionary
+                {
+                    { minLenght, 0 },
+                    { doSample, agent.DoSample },
+                }
+            };
+        }
 #else
         public Task<string> ProcessTextAsync(LocalAIAgent agent, string text, CancellationToken cancellationToken, Action<string> onTextUpdate = null)
         {
             return Task.FromResult(string.Empty);
+        }
+#endif
+
+#if AI_ENABLED
+        public bool IsAvailable()
+        {
+            return Environment.ProcessorCount > 1;
+        }
+#else
+        public bool IsAvailable()
+        {
+            return false;
         }
 #endif
 
@@ -183,17 +241,30 @@ namespace Eppie.App.Shared.Services
             {
                 var messages = e.ReceivedMessages;
                 var agents = await Storage.GetAIAgentsAsync();
-                foreach (var message in messages)
-                {
-                    foreach (var agent in agents)
-                    {
-                        await ProcessMessage(agent, message).ConfigureAwait(false);
-                    }
-                }
+                var tasks = messages.SelectMany(message => agents.Select(agent => ProcessMessageWithSemaphoreAsync(agent, message))).ToList();
+
+                await Task.WhenAll(tasks);
             }
             catch (Exception ex)
             {
                 OnError(ex);
+            }
+        }
+
+        private async Task ProcessMessageWithSemaphoreAsync(LocalAIAgent agent, ReceivedMessageInfo message)
+        {
+            await Semaphore.WaitAsync();
+            try
+            {
+                await ProcessMessage(agent, message);
+            }
+            catch (Exception ex)
+            {
+                OnError(ex);
+            }
+            finally
+            {
+                Semaphore.Release();
             }
         }
 
@@ -207,14 +278,15 @@ namespace Eppie.App.Shared.Services
                 {
                     text = (await Core.GetMessageBodyAsync(message.Message).ConfigureAwait(false)).TextBody;
                 }
-#if AI_ENABLED
+
                 var result = await ProcessTextAsync(agent, text, CancellationToken.None);
+
+                await Core.UpdateMessageProcessingResultAsync(message.Message, result).ConfigureAwait(false);
 
                 if (agent.IsAllowedToSendingEmail)
                 {
                     await ReplyToMessage(message, result).ConfigureAwait(false);
                 }
-#endif
             }
         }
 

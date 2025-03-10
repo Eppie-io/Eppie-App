@@ -108,7 +108,11 @@ namespace Tuvi.App.ViewModels
             Services.Add(new ServiceInfo(ServiceKey.Proton, "Proton Mail", "proton.me protonmail.com proton.local"));
             Services.Add(new ServiceInfo(ServiceKey.Other, GetLocalizedString("OtherEmailAccountServiceTitle"), GetLocalizedString("OtherEmailAccountServiceDescription")));
             Services.Add(new ServiceInfo(ServiceKey.Decentralized, GetLocalizedString("DecentralizedAccountServiceTitle"), GetLocalizedString("DecentralizedAccountServiceDescription")));
-            Services.Add(new ServiceInfo(ServiceKey.LoacalAIAgent, GetLocalizedString("LoacalAIAgentServiceTitle"), GetLocalizedString("LoacalAIAgentServiceDescription")));
+
+            if (AIService.IsAvailable())
+            {
+                Services.Add(new ServiceInfo(ServiceKey.LoacalAIAgent, GetLocalizedString("LoacalAIAgentServiceTitle"), GetLocalizedString("LoacalAIAgentServiceDescription")));
+            }
 
             SelectedService = Services.First();
         }

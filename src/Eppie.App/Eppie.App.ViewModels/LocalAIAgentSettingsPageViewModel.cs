@@ -16,15 +16,47 @@ namespace Tuvi.App.ViewModels
     {
         private const string DefaultLanguage = "English";
 
-        public readonly int defaultTopK = 50;
-        public readonly float defaultTopP = 0.9f;
-        public readonly float defaultTemperature = 1;
+        private int _topK = 50;
+        public int TopK
+        {
+            get => _topK;
+            set => SetProperty(ref _topK, value);
+        }
+
+        private float _topP = 0.9f;
+        public float TopP
+        {
+            get => _topP;
+            set => SetProperty(ref _topP, value);
+        }
+
+        private float _temperature = 1;
+        public float Temperature
+        {
+            get => _temperature;
+            set => SetProperty(ref _temperature, value);
+        }
+
+        private bool _doSample;
+        public bool DoSample
+        {
+            get => _doSample;
+            set => SetProperty(ref _doSample, value);
+        }
 
         private string _name;
         public string Name
         {
-            get => _name;
-            set => SetProperty(ref _name, value);
+            get
+            {
+                if (string.IsNullOrEmpty(_name))
+                {
+                    return AgentSpecialty.ToString();
+                }
+
+                return _name;
+            }
+            set { SetProperty(ref _name, value); }
         }
 
         private LocalAIAgentSpecialty _agentSpecialty;
@@ -36,6 +68,7 @@ namespace Tuvi.App.ViewModels
                 if (SetProperty(ref _agentSpecialty, value))
                 {
                     UpdateSystemPrompt();
+                    OnPropertyChanged(nameof(Name));
                     OnPropertyChanged(nameof(IsLanguageVisible));
                 }
             }
@@ -92,11 +125,11 @@ namespace Tuvi.App.ViewModels
             { LocalAIAgentSpecialty.Writer, "Write a well-structured and engaging email on the given topic." },
             { LocalAIAgentSpecialty.Rewriter, "Rephrase the given text while keeping its original meaning." },
             { LocalAIAgentSpecialty.Proofreader, "Check the given email for grammar, spelling, and punctuation errors." },
-            { LocalAIAgentSpecialty.Summarizer, "Summarize the key points of the given email in a concise manner." },
-            { LocalAIAgentSpecialty.EmailComposer, "Generate a professional and context-appropriate email draft." },
+            { LocalAIAgentSpecialty.Summarizer, "Summarize the key points of the given email in a concise manner. Always begin your response with the sentence, 'Here is a summary of the email:'." },
+            { LocalAIAgentSpecialty.EmailComposer, "Compose a well-structured and engaging email based on the provided context. If a received email is provided, generate an appropriate and thoughtful response that aligns with the tone and intent of the original message." },
 
             // Language & Communication
-            { LocalAIAgentSpecialty.Translator, "You translate only the user-provided text. Your response must contain nothing except the translated text itself. Do not add explanations, notes, interpretations, or any other content. Just translate." },
+            { LocalAIAgentSpecialty.Translator, "You are processing incoming emails and translating their content. Your response must contain only the translated text—no explanations, comments, notes, or interpretations. The translation must be as accurate as possible, with no additions, omissions, or modifications. Preserve the exact structure of the original text, including formatting, paragraphs, lists, and punctuation. Maintain a neutral tone without rephrasing." },
             { LocalAIAgentSpecialty.SentimentAnalyzer, "Analyze the emotional tone of this email and classify it as positive, neutral, or negative." },
             { LocalAIAgentSpecialty.PersonalitySimulator, "Rewrite the email in the style of the specified person." },
 
@@ -225,6 +258,11 @@ namespace Tuvi.App.ViewModels
             SystemPrompt = CurrentAgent.SystemPrompt;
             IsAllowedToSendingEmails = CurrentAgent.IsAllowedToSendingEmail;
 
+            DoSample = CurrentAgent.DoSample;
+            TopK = CurrentAgent.TopK;
+            TopP = CurrentAgent.TopP;
+            Temperature = CurrentAgent.Temperature;
+
             if (AgentSpecialty == LocalAIAgentSpecialty.Translator)
             {
                 Language = GetLanguage(SystemPrompt);
@@ -248,6 +286,11 @@ namespace Tuvi.App.ViewModels
             CurrentAgent.SystemPrompt = SystemPrompt;
             CurrentAgent.Email = linkedAccount;
             CurrentAgent.IsAllowedToSendingEmail = IsAllowedToSendingEmails && linkedAccount != null;
+
+            CurrentAgent.DoSample = DoSample;
+            CurrentAgent.TopK = TopK;
+            CurrentAgent.TopP = TopP;
+            CurrentAgent.Temperature = Temperature;
 
             return CurrentAgent;
         }
@@ -478,14 +521,14 @@ namespace Tuvi.App.ViewModels
             {
                 var filteredAgents = agents.Where(agent =>
                     agent.Id != currentAgentId &&
-                    agent.PreprocessorAgentId != currentAgentId &&
-                    agent.PostprocessorAgentId != currentAgentId);
+                    agent.PreProcessorAgentId != currentAgentId &&
+                    agent.PostProcessorAgentId != currentAgentId);
 
                 AIAgentsList.SetItems(filteredAgents);
             }
 
-            PreprocessorAIAgent = AIAgentsList.FirstOrDefault(agent => agent.Id == AgentSettingsModel.CurrentAgent.PreprocessorAgentId);
-            PostprocessorAIAgent = AIAgentsList.FirstOrDefault(agent => agent.Id == AgentSettingsModel.CurrentAgent.PostprocessorAgentId);
+            PreprocessorAIAgent = AIAgentsList.FirstOrDefault(agent => agent.Id == AgentSettingsModel.CurrentAgent.PreProcessorAgentId);
+            PostprocessorAIAgent = AIAgentsList.FirstOrDefault(agent => agent.Id == AgentSettingsModel.CurrentAgent.PostProcessorAgentId);
         }
 
         private void InitModel(LocalAIAgentSettings accountSettingsModel, bool isCreatingMode)
@@ -500,8 +543,8 @@ namespace Tuvi.App.ViewModels
             try
             {
                 var agentData = AgentSettingsModel.ToAIAgent(LinkedAccount);
-                agentData.PreprocessorAgent = PreprocessorAIAgent;
-                agentData.PostprocessorAgent = PostprocessorAIAgent;
+                agentData.PreProcessorAgent = PreprocessorAIAgent;
+                agentData.PostProcessorAgent = PostprocessorAIAgent;
 
                 var result = await ApplyAgentSettingsAsync(agentData).ConfigureAwait(true);
                 if (result)

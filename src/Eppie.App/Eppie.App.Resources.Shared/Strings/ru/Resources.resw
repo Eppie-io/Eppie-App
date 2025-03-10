@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -225,7 +225,7 @@
     <value>Разработчик:</value>
     <comment>A label for the application developer</comment>
   </data>
-  <data name="ConnectedServicesSettings.Text" xml:space="preserve">
+  <data name="ConnectedServicesSettings.Header" xml:space="preserve">
     <value>Ваши сервисы</value>
     <comment>Settings for a single email account</comment>
   </data>

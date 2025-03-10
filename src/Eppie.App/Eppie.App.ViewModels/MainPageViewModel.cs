@@ -123,11 +123,14 @@ namespace Tuvi.App.ViewModels
             get { return _message.HtmlBody ?? ""; }
         }
 
-        private string _AIAgentProcessedBody;
         public string AIAgentProcessedBody
         {
-            get => _AIAgentProcessedBody;
-            set => SetProperty(ref _AIAgentProcessedBody, value);
+            get { return MessageData.TextBodyProcessed; }
+            set
+            {
+                MessageData.TextBodyProcessed = value;
+                OnPropertyChanged();
+            }
         }
 
         public bool IsEmptyBody
@@ -305,6 +308,7 @@ namespace Tuvi.App.ViewModels
             OnPropertyChanged(nameof(DateFullString));
             OnPropertyChanged(nameof(IsSigned));
             OnPropertyChanged(nameof(IsEncrypted));
+            OnPropertyChanged(nameof(AIAgentProcessedBody));
         }
 
         private void SetFlaged(bool value)

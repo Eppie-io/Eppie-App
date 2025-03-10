@@ -89,6 +89,13 @@
             </Button>
 
             <CommandBar Grid.Column="2" DefaultLabelPosition="Right">
+                <AppBarButton x:Name="AIAgentButton"
+                              x:Uid="/App.Resources/AIAgentProcessMessageButton"
+                              IsEnabled="{x:Bind ViewModel.IsLocalAIEnabled, Mode=OneWay}"
+                              Visibility="{x:Bind ViewModel.IsLocalAIAvailable, Mode=OneWay}">
+                    <FontIcon Glyph="&#xE99A;" />
+                </AppBarButton>
+
                 <AppBarButton x:Uid="/App.Resources/AttachButton"
                               Command="{x:Bind ViewModel.AttachFilesCommand}"
                               CommandParameter="{StaticResource FileOperationProvider}"
@@ -234,7 +241,8 @@
               DragOver="NewMessagePage_Grid_DragOver"
               Drop="NewMessagePage_Grid_Drop">
 
-            <eppie_controls:EditMessageControl Html="{x:Bind ViewModel.HtmlBody, Mode=TwoWay}"
+            <eppie_controls:EditMessageControl AIAgentProcessedBody="{x:Bind ViewModel.MessageInfo.AIAgentProcessedBody, Mode=OneWay}"
+                                               Html="{x:Bind ViewModel.HtmlBody, Mode=TwoWay}"
                                                IsEnabled="{x:Bind ViewModel.LoadingContent, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
                                                Text="{x:Bind ViewModel.TextBody, Mode=TwoWay}" />
 

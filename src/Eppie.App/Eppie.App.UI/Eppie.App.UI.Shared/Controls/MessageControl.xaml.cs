@@ -11,7 +11,7 @@ using Microsoft.UI.Xaml;
 
 namespace Eppie.App.UI.Controls
 {
-    public sealed partial class MessageControl : BaseUserControl
+    public sealed partial class MessageControl : AIAgentUserControl
     {
         public bool HasHtmlBody
         {
@@ -39,33 +39,6 @@ namespace Eppie.App.UI.Controls
 
         public static readonly DependencyProperty HtmlBodyProperty =
             DependencyProperty.Register(nameof(HtmlBody), typeof(string), typeof(MessageControl), new PropertyMetadata(null, OnHtmlBodyChanged));
-
-        public string AIAgentProcessedBody
-        {
-            get { return (string)GetValue(AIAgentProcessedBodyProperty); }
-            set
-            {
-                SetValue(AIAgentProcessedBodyProperty, value);
-                SetValue(HasAIAgentProcessedBodyProperty, !string.IsNullOrEmpty(AIAgentProcessedBody));
-                if (HasAIAgentProcessedBody)
-                {
-                    ShowTranslatedText();
-                }
-            }
-        }
-
-        public static readonly DependencyProperty AIAgentProcessedBodyProperty =
-            DependencyProperty.Register(nameof(AIAgentProcessedBody), typeof(string), typeof(MessageControl), new PropertyMetadata(null));
-
-        public bool HasAIAgentProcessedBody
-        {
-            get { return (bool)GetValue(HasAIAgentProcessedBodyProperty); }
-            set { SetValue(HasAIAgentProcessedBodyProperty, value); }
-        }
-
-        public static readonly DependencyProperty HasAIAgentProcessedBodyProperty =
-            DependencyProperty.Register(nameof(HasAIAgentProcessedBody), typeof(bool), typeof(MessageControl), new PropertyMetadata(null));
-
 
         private static void OnHtmlBodyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
@@ -105,7 +78,7 @@ namespace Eppie.App.UI.Controls
             HtmlView.NavigateToString(HtmlBody);
         }
 
-        private void ShowTranslatedText()
+        override protected void ShowAIAgentProcessedText()
         {
             SecondColumn.Width = new GridLength(1, GridUnitType.Star);
         }

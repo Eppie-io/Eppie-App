@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using BackupServiceClientLibrary;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -159,6 +161,46 @@ namespace Tuvi.App.ViewModels
                     NavigationService?.Navigate(nameof(AccountSettingsPageViewModel), account);
                 }
             }
+        }
+
+        protected async Task AIAgentProcessMessageAsync(LocalAIAgent agent, MessageInfo message)
+        {
+            var text = message.HasTextBody ? message.MessageTextBody : Core.GetTextUtils().GetTextFromHtml(message.MessageHtmlBody);
+
+            message.AIAgentProcessedBody = GetLocalizedString("ThinkingMessage");
+            var thinking = true;
+
+            message.AIAgentProcessedBody = await AIService.ProcessTextAsync
+            (
+                agent,
+                text,
+                CancellationToken.None,
+                (textPart) =>
+                {
+                    DispatcherService.RunAsync(() =>
+                    {
+                        if (thinking)
+                        {
+                            message.AIAgentProcessedBody = string.Empty;
+                            thinking = false;
+                        }
+
+                        message.AIAgentProcessedBody += textPart;
+                    });
+                }
+            ).ConfigureAwait(true);
+
+            await Core.UpdateMessageProcessingResultAsync(message.MessageData, message.AIAgentProcessedBody).ConfigureAwait(true);
+        }
+
+        public virtual Task CreateAIAgentsMenuAsync(Action<string, Action<IList<object>>> action)
+        {
+            return Task.CompletedTask;
+        }
+
+        public virtual Task CreateAIAgentsMenuAsync(Action<string, Action> action)
+        {
+            return Task.CompletedTask;
         }
     }
 }
