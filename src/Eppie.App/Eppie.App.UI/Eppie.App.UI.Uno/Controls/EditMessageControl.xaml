@@ -33,6 +33,6 @@
                        Style="{StaticResource MessageTextStyle}"
                        Text="{x:Bind AIAgentProcessedBody, Mode=OneWay}" />
         </ScrollViewer>
-        
+
     </Grid>
 </shared:AIAgentUserControl>
