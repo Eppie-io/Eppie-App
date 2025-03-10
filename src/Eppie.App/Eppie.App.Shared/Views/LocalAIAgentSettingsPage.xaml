@@ -103,7 +103,7 @@
                         IsEnabled="{x:Bind ViewModel.AgentSettingsModel.DoSample, Mode=OneWay}"
                         Maximum="1"
                         Minimum="0"
-                        StepFrequency="0.01"                        
+                        StepFrequency="0.01"
                         Value="{x:Bind ViewModel.AgentSettingsModel.TopP, Mode=TwoWay}" />
                 <Slider x:Uid="/App.Resources/AIOptionTopKSlider"
                         Header="Top K"
