@@ -156,7 +156,6 @@
                                    Opacity="0.6"
                                    Text="{Binding PreviewText, Mode=OneWay}" />
 
-
                         <CommandBar x:Name="CommandBar"
                                     Grid.RowSpan="3"
                                     Grid.Column="1"
@@ -261,7 +260,7 @@
                                   Visibility="{x:Bind ViewModel.IsLocalAIAvailable, Mode=OneWay}">
                         <FontIcon Glyph="&#xE99A;" />
                     </AppBarButton>
-                    
+
                     <AppBarButton x:Uid="/App.Resources/MarkAsReadButton"
                                   Command="{x:Bind ViewModel.MarkSelectedMessagesAsReadCommand, Mode=OneWay}"
                                   CommandParameter="{x:Bind MessageListControl.SelectedItems, Mode=OneWay}"
