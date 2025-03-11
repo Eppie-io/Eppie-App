@@ -54,37 +54,46 @@ namespace Eppie.App.Shared.Services
 
             if (Service != null && !string.IsNullOrEmpty(text))
             {
-                if (agent.PreProcessorAgent != null)
-                {
-                    text = await Service.ProcessTextAsync
-                        (
-                            agent.PreProcessorAgent.SystemPrompt,
-                            text,
-                            GetAgentOptions(agent.PreProcessorAgent),
-                            cancellationToken,
-                            onTextUpdate
-                        );
-                }
+                await Semaphore.WaitAsync();
 
-                result = await Service.ProcessTextAsync
-                    (
-                        agent.SystemPrompt,
-                        text,
-                        GetAgentOptions(agent),
-                        cancellationToken,
-                        onTextUpdate
-                    );
-
-                if (agent.PostProcessorAgent != null)
+                try
                 {
+                    if (agent.PreProcessorAgent != null)
+                    {
+                        text = await Service.ProcessTextAsync
+                            (
+                                agent.PreProcessorAgent.SystemPrompt,
+                                text,
+                                GetAgentOptions(agent.PreProcessorAgent),
+                                cancellationToken,
+                                onTextUpdate
+                            );
+                    }
+
                     result = await Service.ProcessTextAsync
                         (
-                            agent.PostProcessorAgent.SystemPrompt,
-                            result,
-                            GetAgentOptions(agent.PostProcessorAgent),
+                            agent.SystemPrompt,
+                            text,
+                            GetAgentOptions(agent),
                             cancellationToken,
                             onTextUpdate
                         );
+
+                    if (agent.PostProcessorAgent != null)
+                    {
+                        result = await Service.ProcessTextAsync
+                            (
+                                agent.PostProcessorAgent.SystemPrompt,
+                                result,
+                                GetAgentOptions(agent.PostProcessorAgent),
+                                cancellationToken,
+                                onTextUpdate
+                            );
+                    }
+                }
+                finally
+                {
+                    Semaphore.Release();
                 }
             }
 
@@ -155,13 +164,14 @@ namespace Eppie.App.Shared.Services
             {
                 if (Service is null && await IsLocalAIModelImportedAsync())
                 {
-                    Service = new Service();
+                    var service = new Service();
 
                     var localFolder = ApplicationData.Current.LocalFolder;
                     var modelFolder = await localFolder.GetFolderAsync(LocalAIModelFolderName);
                     var modelPath = modelFolder.Path;
 
-                    await Service.LoadModelAsync(modelPath);
+                    await service.LoadModelAsync(modelPath);
+                    Service = service;
                 }
             }
             catch (Exception ex)
@@ -241,30 +251,13 @@ namespace Eppie.App.Shared.Services
             {
                 var messages = e.ReceivedMessages;
                 var agents = await Storage.GetAIAgentsAsync();
-                var tasks = messages.SelectMany(message => agents.Select(agent => ProcessMessageWithSemaphoreAsync(agent, message))).ToList();
+                var tasks = messages.SelectMany(message => agents.Select(agent => ProcessMessage(agent, message))).ToList();
 
                 await Task.WhenAll(tasks);
             }
             catch (Exception ex)
             {
                 OnError(ex);
-            }
-        }
-
-        private async Task ProcessMessageWithSemaphoreAsync(LocalAIAgent agent, ReceivedMessageInfo message)
-        {
-            await Semaphore.WaitAsync();
-            try
-            {
-                await ProcessMessage(agent, message);
-            }
-            catch (Exception ex)
-            {
-                OnError(ex);
-            }
-            finally
-            {
-                Semaphore.Release();
             }
         }
 
@@ -281,7 +274,14 @@ namespace Eppie.App.Shared.Services
 
                 var result = await ProcessTextAsync(agent, text, CancellationToken.None);
 
-                await Core.UpdateMessageProcessingResultAsync(message.Message, result).ConfigureAwait(false);
+                try
+                {
+                    await Core.UpdateMessageProcessingResultAsync(message.Message, result).ConfigureAwait(false);
+                }
+                catch (MessageIsNotExistException)
+                {
+                    // Message is deleted
+                }
 
                 if (agent.IsAllowedToSendingEmail)
                 {
