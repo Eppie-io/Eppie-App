@@ -190,7 +190,14 @@ namespace Tuvi.App.ViewModels
                 }
             ).ConfigureAwait(true);
 
-            await Core.UpdateMessageProcessingResultAsync(message.MessageData, message.AIAgentProcessedBody).ConfigureAwait(true);
+            try
+            {
+                await Core.UpdateMessageProcessingResultAsync(message.MessageData, message.AIAgentProcessedBody).ConfigureAwait(true);
+            }
+            catch (MessageIsNotExistException)
+            {
+                // Message is deleted
+            }
         }
 
         public virtual Task CreateAIAgentsMenuAsync(Action<string, Action<IList<object>>> action)

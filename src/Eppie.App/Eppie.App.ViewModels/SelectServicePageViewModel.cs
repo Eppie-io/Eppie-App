@@ -105,7 +105,7 @@ namespace Tuvi.App.ViewModels
         {
             Services.Add(new ServiceInfo(ServiceKey.Google, "Gmail", "gmail.com"));
             Services.Add(new ServiceInfo(ServiceKey.Outlook, "Outlook", "outlook.com hotmail.com"));
-            Services.Add(new ServiceInfo(ServiceKey.Proton, "Proton Mail", "proton.me protonmail.com proton.local"));
+            Services.Add(new ServiceInfo(ServiceKey.Proton, "Proton Mail (Beta)", "proton.me protonmail.com proton.local"));
             Services.Add(new ServiceInfo(ServiceKey.Other, GetLocalizedString("OtherEmailAccountServiceTitle"), GetLocalizedString("OtherEmailAccountServiceDescription")));
             Services.Add(new ServiceInfo(ServiceKey.Decentralized, GetLocalizedString("DecentralizedAccountServiceTitle"), GetLocalizedString("DecentralizedAccountServiceDescription")));
 
