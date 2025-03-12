@@ -98,16 +98,6 @@
     <PackageReference Include="CommunityToolkit.WinUI.Controls.TokenizingTextBox" />
   </ItemGroup>
 
-  <!--TODO: Temporarily excluded due to build issues on macOS -->
-  <PropertyGroup Condition="!$(TargetFramework.Contains('mac')) AND !$(TargetFramework.Contains('ios'))">
-    <DefineConstants>$(DefineConstants);AI_ENABLED</DefineConstants>
-  </PropertyGroup>  
-  <ItemGroup Condition="!$(TargetFramework.Contains('mac')) AND !$(TargetFramework.Contains('ios'))">
-    <ProjectReference Include="..\Eppie.AI\Eppie.AI.csproj" />
-    <PackageReference Include="Microsoft.Extensions.AI.Abstractions" />
-    <PackageReference Include="Microsoft.ML.OnnxRuntimeGenAI.DirectML" />
-  </ItemGroup>
-  
   <!-- Enable WSL support in VS 17.13 and later, when a desktop target is present -->
   <ItemGroup Condition="$([MSBuild]::VersionGreaterThanOrEquals($(MSBuildVersion), 17.13.0)) AND '$(TargetFrameworks)' != '' AND $(TargetFrameworks.Contains('desktop')) ">
     <ProjectCapability Include="DotNetWslLaunch" />
