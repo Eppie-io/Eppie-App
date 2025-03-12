@@ -353,7 +353,7 @@ namespace Tuvi.App.ViewModels
 
         private async Task<MessageInfo> GetMessageBodyAsync(MessageInfo messageInfo)
         {
-            messageInfo.MessageData = await Core.GetMessageBodyAsync(messageInfo.MessageData).ConfigureAwait(true);
+            messageInfo.MessageData = await Core.GetMessageBodyHighPriorityAsync(messageInfo.MessageData).ConfigureAwait(true);
 
             return messageInfo;
         }
@@ -594,7 +594,7 @@ namespace Tuvi.App.ViewModels
         {
             foreach (var message in messages)
             {
-                message.MessageData = await Core.GetMessageBodyAsync(message.MessageData).ConfigureAwait(true);
+                message.MessageData = await Core.GetMessageBodyHighPriorityAsync(message.MessageData).ConfigureAwait(true);
 
                 await AIAgentProcessMessageAsync(agent, message).ConfigureAwait(true);
             }
