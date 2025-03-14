@@ -383,18 +383,18 @@ namespace Tuvi.App.ViewModels
 
         public ObservableCollection<LocalAIAgent> AIAgentsList { get; } = new ObservableCollection<LocalAIAgent>();
 
-        private LocalAIAgent _preprocessorAIAgent;
-        public LocalAIAgent PreprocessorAIAgent
+        private LocalAIAgent _preProcessorAIAgent;
+        public LocalAIAgent PreProcessorAIAgent
         {
-            get { return _preprocessorAIAgent; }
-            set { SetProperty(ref _preprocessorAIAgent, value); }
+            get { return _preProcessorAIAgent; }
+            set { SetProperty(ref _preProcessorAIAgent, value); }
         }
 
-        private LocalAIAgent _postprocessorAIAgent;
-        public LocalAIAgent PostprocessorAIAgent
+        private LocalAIAgent _postProcessorAIAgent;
+        public LocalAIAgent PostProcessorAIAgent
         {
-            get { return _postprocessorAIAgent; }
-            set { SetProperty(ref _postprocessorAIAgent, value); }
+            get { return _postProcessorAIAgent; }
+            set { SetProperty(ref _postProcessorAIAgent, value); }
         }
 
         public IRelayCommand ApplySettingsCommand { get; }
@@ -510,11 +510,11 @@ namespace Tuvi.App.ViewModels
             var accounts = await Core.GetCompositeAccountsAsync().ConfigureAwait(true);
             AccountsList.SetItems(accounts.SelectMany(account => account.Addresses));
 
-            var noneEmail = new EmailAddress("", GetLocalizedString("NoneText"));
+            var noneEmail = new EmailAddress(string.Empty, GetLocalizedString("NoneText"));
             AccountsList.Insert(0, noneEmail);
 
             LinkedAccount = AccountsList.FirstOrDefault(account => account == AgentSettingsModel.CurrentAgent.Email);
-            if (LinkedAccount == null)
+            if (LinkedAccount is null)
             {
                 LinkedAccount = noneEmail;
             }
@@ -542,16 +542,16 @@ namespace Tuvi.App.ViewModels
             var noneAgent = new LocalAIAgent() { Name = GetLocalizedString("NoneText") };
             AIAgentsList.Insert(0, noneAgent);
 
-            PreprocessorAIAgent = AIAgentsList.FirstOrDefault(agent => agent.Id == AgentSettingsModel.CurrentAgent.PreProcessorAgentId);
-            if (PreprocessorAIAgent == null)
+            PreProcessorAIAgent = AIAgentsList.FirstOrDefault(agent => agent.Id == AgentSettingsModel.CurrentAgent.PreProcessorAgentId);
+            if (PreProcessorAIAgent is null)
             {
-                PreprocessorAIAgent = noneAgent;
+                PreProcessorAIAgent = noneAgent;
             }
 
-            PostprocessorAIAgent = AIAgentsList.FirstOrDefault(agent => agent.Id == AgentSettingsModel.CurrentAgent.PostProcessorAgentId);
-            if (PostprocessorAIAgent == null)
+            PostProcessorAIAgent = AIAgentsList.FirstOrDefault(agent => agent.Id == AgentSettingsModel.CurrentAgent.PostProcessorAgentId);
+            if (PostProcessorAIAgent is null)
             {
-                PostprocessorAIAgent = noneAgent;
+                PostProcessorAIAgent = noneAgent;
             }
         }
 
@@ -568,8 +568,8 @@ namespace Tuvi.App.ViewModels
             {
                 var agentData = AgentSettingsModel.ToAIAgent(LinkedAccount);
 
-                agentData.PreProcessorAgent = string.IsNullOrEmpty(PreprocessorAIAgent?.SystemPrompt) ? null : PreprocessorAIAgent;
-                agentData.PostProcessorAgent = string.IsNullOrEmpty(PostprocessorAIAgent?.SystemPrompt) ? null : PostprocessorAIAgent;
+                agentData.PreProcessorAgent = string.IsNullOrEmpty(PreProcessorAIAgent?.SystemPrompt) ? null : PreProcessorAIAgent;
+                agentData.PostProcessorAgent = string.IsNullOrEmpty(PostProcessorAIAgent?.SystemPrompt) ? null : PostProcessorAIAgent;
 
                 var result = await ApplyAgentSettingsAsync(agentData).ConfigureAwait(true);
                 if (result)
