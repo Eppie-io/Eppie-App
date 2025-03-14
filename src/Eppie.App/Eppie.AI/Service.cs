@@ -1,3 +1,4 @@
+using System.IO;
 using Microsoft.Extensions.AI;
 
 namespace Eppie.AI
@@ -16,56 +17,74 @@ namespace Eppie.AI
         {
             UnloadModel();
 
-            // Phi3
-            _model = await GenAIModel.CreateAsync(modelPath, new LlmPromptTemplate
+            var name = GetModelName(modelPath);
+
+            switch (name)
             {
-                System = "<|system|>\n{{CONTENT}}<|end|>\n",
-                User = "<|user|>\n{{CONTENT}}<|end|>\n",
-                Assistant = "<|assistant|>\n{{CONTENT}}<|end|>\n",
-                Stop = new[] { "<|system|>", "<|user|>", "<|assistant|>", "<|end|>" }
-            }).ConfigureAwait(false);
-
-            // Mistral
-            //_model = await GenAIModel.CreateAsync(modelPath, new LlmPromptTemplate
-            //{
-            //    User = "[INST]{{CONTENT}}[/INST] ",
-            //    Stop = new[] { "[INST]", "[/INST]" }
-            //}).ConfigureAwait(false);
-
-            // Llama3
-            //_model = await GenAIModel.CreateAsync(modelPath, new LlmPromptTemplate
-            //{
-            //    System = "<|start_header_id|>system<|end_header_id|>\n{{CONTENT}}<|eot_id|>",
-            //    User = "<|start_header_id|>user<|end_header_id|>\n{{CONTENT}}<|eot_id|>",
-            //    Assistant = "<|start_header_id|>assistant<|end_header_id|>\n{{CONTENT}}<|eot_id|>",
-            //    Stop = new[] { "<|start_header_id|>", "<|end_header_id|>", "<|eot_id|>" }
-            //}).ConfigureAwait(false);
-
-            // Qwen
-            //_model = await GenAIModel.CreateAsync(modelPath, new LlmPromptTemplate
-            //{
-            //    System = "<|im_start|>system\n{{CONTENT}}<|im_end|>\n",
-            //    User = "<|im_start|>user\n{{CONTENT}}<|im_end|>\n",
-            //    Assistant = "<|im_start|>assistant\n{{CONTENT}}<|im_end|>",
-            //    Stop = new[] { "<|im_start|>", "<|im_end|>" }
-            //}).ConfigureAwait(false);
-
-            // Gemma
-            //_model = await GenAIModel.CreateAsync(modelPath, new LlmPromptTemplate
-            //{
-            //    System = "<start_of_turn>user\n{{CONTENT}}<end_of_turn>\n",
-            //    User = "<start_of_turn>model\n{{CONTENT}}<end_of_turn>\n",
-            //    Stop = new[] { "<start_of_turn>", "<end_of_turn>" }
-            //}).ConfigureAwait(false);
-
-            // DeepSeekR1
-            //_model = await GenAIModel.CreateAsync(modelPath, new LlmPromptTemplate
-            //{
-            //    System = "<｜begin▁of▁sentence｜>{{CONTENT}}",
-            //    User = "<｜User｜>{{CONTENT}}",
-            //    Assistant = "<｜Assistant｜>{{CONTENT}}<｜end▁of▁sentence｜>",
-            //    Stop = new[] { "<｜User｜>", "<｜Assistant｜>", "<｜end▁of▁sentence｜>", "<｜begin▁of▁sentence｜>" }
-            //}).ConfigureAwait(false);
+                case string p when p.Contains(phi):
+                    {
+                        _model = await GenAIModel.CreateAsync(modelPath, new LlmPromptTemplate
+                        {
+                            System = "<|system|>\n{{CONTENT}}<|end|>\n",
+                            User = "<|user|>\n{{CONTENT}}<|end|>\n",
+                            Assistant = "<|assistant|>\n{{CONTENT}}<|end|>\n",
+                            Stop = new[] { "<|system|>", "<|user|>", "<|assistant|>", "<|end|>" }
+                        }).ConfigureAwait(false);
+                    }
+                    break;
+                case string d when d.Contains(deepseek):
+                    {
+                        _model = await GenAIModel.CreateAsync(modelPath, new LlmPromptTemplate
+                        {
+                            System = "<｜begin▁of▁sentence｜>{{CONTENT}}",
+                            User = "<｜User｜>{{CONTENT}}",
+                            Assistant = "<｜Assistant｜>{{CONTENT}}<｜end▁of▁sentence｜>",
+                            Stop = new[] { "<｜User｜>", "<｜Assistant｜>", "<｜end▁of▁sentence｜>", "<｜begin▁of▁sentence｜>" }
+                        }).ConfigureAwait(false);
+                    }
+                    break;
+                case string l when l.Contains(llama):
+                    {
+                        _model = await GenAIModel.CreateAsync(modelPath, new LlmPromptTemplate
+                        {
+                            System = "<|start_header_id|>system<|end_header_id|>\n{{CONTENT}}<|eot_id|>",
+                            User = "<|start_header_id|>user<|end_header_id|>\n{{CONTENT}}<|eot_id|>",
+                            Assistant = "<|start_header_id|>assistant<|end_header_id|>\n{{CONTENT}}<|eot_id|>",
+                            Stop = new[] { "<|start_header_id|>", "<|end_header_id|>", "<|eot_id|>" }
+                        }).ConfigureAwait(false);
+                    }
+                    break;
+                case string m when m.Contains(mistral):
+                    {
+                        _model = await GenAIModel.CreateAsync(modelPath, new LlmPromptTemplate
+                        {
+                            User = "[INST]{{CONTENT}}[/INST] ",
+                            Stop = new[] { "[INST]", "[/INST]" }
+                        }).ConfigureAwait(false);
+                    }
+                    break;
+                case string q when q.Contains(qwen):
+                    {
+                        _model = await GenAIModel.CreateAsync(modelPath, new LlmPromptTemplate
+                        {
+                            System = "<|im_start|>system\n{{CONTENT}}<|im_end|>\n",
+                            User = "<|im_start|>user\n{{CONTENT}}<|im_end|>\n",
+                            Assistant = "<|im_start|>assistant\n{{CONTENT}}<|im_end|>",
+                            Stop = new[] { "<|im_start|>", "<|im_end|>" }
+                        }).ConfigureAwait(false);
+                    }
+                    break;
+                case string g when g.Contains(gemma):
+                    {
+                        _model = await GenAIModel.CreateAsync(modelPath, new LlmPromptTemplate
+                        {
+                            System = "<start_of_turn>user\n{{CONTENT}}<end_of_turn>\n",
+                            User = "<start_of_turn>model\n{{CONTENT}}<end_of_turn>\n",
+                            Stop = new[] { "<start_of_turn>", "<end_of_turn>" }
+                        }).ConfigureAwait(false);
+                    }
+                    break;
+            }
 
             _modelOptions = GetDefaultChatOptions(_model);
         }
@@ -105,7 +124,7 @@ namespace Eppie.AI
                             new ChatMessage(ChatRole.System, systemPrompt),
                             new ChatMessage(ChatRole.User, text)
                         },
-                        options,
+                        modelOptions,
                         cts).ConfigureAwait(false))
                     {
                         result += messagePart.Text;
@@ -144,6 +163,34 @@ namespace Eppie.AI
                 TopP = defaultTopP,
                 TopK = defaultTopK,
             };
+        }
+
+        const string phi = "phi";
+        const string deepseek = "deepseek";
+        const string llama = "llama";
+        const string mistral = "mistral";
+        const string qwen = "qwen";
+        const string gemma = "gemma";
+
+        static public string GetModelName(string path)
+        {
+            switch (path.ToLowerInvariant())
+            {
+                case string p when p.Contains(phi):
+                    return phi;
+                case string d when d.Contains(deepseek):
+                    return deepseek;
+                case string l when l.Contains(llama) || l.Contains("nemotron"):
+                    return llama;
+                case string m when m.Contains(mistral):
+                    return mistral;
+                case string q when q.Contains(qwen):
+                    return qwen;
+                case string g when g.Contains(gemma):
+                    return gemma;
+                default:
+                    return null;
+            }
         }
     }
 }
