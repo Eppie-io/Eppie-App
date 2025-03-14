@@ -80,7 +80,7 @@ namespace Tuvi.App.ViewModels
             {
                 if (AgentSpecialty == LocalAIAgentSpecialty.Translator)
                 {
-                    prompt += string.Format(" You only translate into {0} language.", Language);
+                    prompt = string.Format(prompt, Language);
                 }
 
                 SystemPrompt = prompt;
@@ -129,7 +129,7 @@ namespace Tuvi.App.ViewModels
             { LocalAIAgentSpecialty.EmailComposer, "Compose a well-structured and engaging email based on the provided context. If a received email is provided, generate an appropriate and thoughtful response that aligns with the tone and intent of the original message." },
 
             // Language & Communication
-            { LocalAIAgentSpecialty.Translator, "You are processing incoming emails and translating their content. Your response must contain only the translated text—no explanations, comments, notes, or interpretations. The translation must be as accurate as possible, with no additions, omissions, or modifications. Preserve the exact structure of the original text, including formatting, paragraphs, lists, and punctuation. Maintain a neutral tone without rephrasing." },
+            { LocalAIAgentSpecialty.Translator, "You are processing incoming emails and translating their content into {0} language. Your response must contain only the translated text—no explanations, comments, notes, or interpretations. The translation must be as accurate as possible, with no additions, omissions, or modifications. Preserve the exact structure of the original text, including formatting, paragraphs, lists, and punctuation. Maintain a neutral tone without rephrasing." },
             { LocalAIAgentSpecialty.SentimentAnalyzer, "Analyze the emotional tone of this email and classify it as positive, neutral, or negative." },
             { LocalAIAgentSpecialty.PersonalitySimulator, "Rewrite the email in the style of the specified person." },
 
