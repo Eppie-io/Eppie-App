@@ -164,7 +164,8 @@ namespace Eppie.App.Shared.Services
                     var service = new Service();
 
                     var localFolder = ApplicationData.Current.LocalFolder;
-                    var modelFolder = await localFolder.GetFolderAsync(LocalAIModelFolderName);
+                    var modelRootFolder = await localFolder.GetFolderAsync(LocalAIModelFolderName);
+                    var modelFolder = (await modelRootFolder.GetFoldersAsync()).FirstOrDefault();
                     var modelPath = modelFolder.Path;
 
                     await service.LoadModelAsync(modelPath);
@@ -200,6 +201,7 @@ namespace Eppie.App.Shared.Services
             }
         }
 
+#if AI_ENABLED
         public async Task ImportModelAsync()
         {
             await DeleteModelAsync();
@@ -216,14 +218,21 @@ namespace Eppie.App.Shared.Services
 
             if (selectedFolder != null)
             {
-                StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-                StorageFolder modelFolder = await localFolder.CreateFolderAsync(LocalAIModelFolderName, CreationCollisionOption.ReplaceExisting);
+                var localFolder = ApplicationData.Current.LocalFolder;
+                var modelRootFolder = await localFolder.CreateFolderAsync(LocalAIModelFolderName, CreationCollisionOption.ReplaceExisting);
+                var modelFolder = await modelRootFolder.CreateFolderAsync(Service.GetModelName(selectedFolder.Path), CreationCollisionOption.ReplaceExisting);
 
                 await CopyFolderContentsAsync(selectedFolder, modelFolder);
 
                 await LoadModelAsync();
             }
         }
+#else
+        public Task ImportModelAsync()
+        {
+            return Task.CompletedTask;
+        }
+#endif
 
         public async Task AddAgentAsync(LocalAIAgent agent)
         {
