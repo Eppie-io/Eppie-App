@@ -28,7 +28,7 @@ namespace Eppie.App.Shared.Services
         private ITuviMail Core;
         private readonly IAIAgentsStorage Storage;
         private Task LoadingModelTask;
-        private readonly SemaphoreSlim Semaphore;
+        private readonly SemaphoreSlim Semaphore = new SemaphoreSlim(1);
 
         public event EventHandler<LocalAIAgentEventArgs> AgentAdded;
         public event EventHandler<LocalAIAgentEventArgs> AgentDeleted;
@@ -37,9 +37,6 @@ namespace Eppie.App.Shared.Services
 
         public AIService(ITuviMail core)
         {
-            int maxParallelAgents = Environment.ProcessorCount - 1;
-            Semaphore = new SemaphoreSlim(maxParallelAgents);
-
             Core = core;
             Core.MessagesReceived += OnMessagesReceived;
 

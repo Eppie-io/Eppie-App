@@ -281,6 +281,11 @@ namespace Tuvi.App.ViewModels
 
         internal LocalAIAgent ToAIAgent(EmailAddress linkedAccount)
         {
+            if (string.IsNullOrEmpty(linkedAccount?.Address))
+            {
+                linkedAccount = null;
+            }
+
             CurrentAgent.Name = Name;
             CurrentAgent.AgentSpecialty = AgentSpecialty;
             CurrentAgent.SystemPrompt = SystemPrompt;
@@ -378,18 +383,18 @@ namespace Tuvi.App.ViewModels
 
         public ObservableCollection<LocalAIAgent> AIAgentsList { get; } = new ObservableCollection<LocalAIAgent>();
 
-        private LocalAIAgent _preprocessorAIAgent;
-        public LocalAIAgent PreprocessorAIAgent
+        private LocalAIAgent _preProcessorAIAgent;
+        public LocalAIAgent PreProcessorAIAgent
         {
-            get { return _preprocessorAIAgent; }
-            set { SetProperty(ref _preprocessorAIAgent, value); }
+            get { return _preProcessorAIAgent; }
+            set { SetProperty(ref _preProcessorAIAgent, value); }
         }
 
-        private LocalAIAgent _postprocessorAIAgent;
-        public LocalAIAgent PostprocessorAIAgent
+        private LocalAIAgent _postProcessorAIAgent;
+        public LocalAIAgent PostProcessorAIAgent
         {
-            get { return _postprocessorAIAgent; }
-            set { SetProperty(ref _postprocessorAIAgent, value); }
+            get { return _postProcessorAIAgent; }
+            set { SetProperty(ref _postProcessorAIAgent, value); }
         }
 
         public IRelayCommand ApplySettingsCommand { get; }
@@ -505,7 +510,14 @@ namespace Tuvi.App.ViewModels
             var accounts = await Core.GetCompositeAccountsAsync().ConfigureAwait(true);
             AccountsList.SetItems(accounts.SelectMany(account => account.Addresses));
 
-            LinkedAccount = AgentSettingsModel.CurrentAgent.Email;
+            var noneEmail = new EmailAddress(string.Empty, GetLocalizedString("NoneText"));
+            AccountsList.Insert(0, noneEmail);
+
+            LinkedAccount = AccountsList.FirstOrDefault(account => account == AgentSettingsModel.CurrentAgent.Email);
+            if (LinkedAccount is null)
+            {
+                LinkedAccount = noneEmail;
+            }
         }
 
         private async Task UpdateAIAgentsListAsync()
@@ -527,8 +539,20 @@ namespace Tuvi.App.ViewModels
                 AIAgentsList.SetItems(filteredAgents);
             }
 
-            PreprocessorAIAgent = AIAgentsList.FirstOrDefault(agent => agent.Id == AgentSettingsModel.CurrentAgent.PreProcessorAgentId);
-            PostprocessorAIAgent = AIAgentsList.FirstOrDefault(agent => agent.Id == AgentSettingsModel.CurrentAgent.PostProcessorAgentId);
+            var noneAgent = new LocalAIAgent() { Name = GetLocalizedString("NoneText") };
+            AIAgentsList.Insert(0, noneAgent);
+
+            PreProcessorAIAgent = AIAgentsList.FirstOrDefault(agent => agent.Id == AgentSettingsModel.CurrentAgent.PreProcessorAgentId);
+            if (PreProcessorAIAgent is null)
+            {
+                PreProcessorAIAgent = noneAgent;
+            }
+
+            PostProcessorAIAgent = AIAgentsList.FirstOrDefault(agent => agent.Id == AgentSettingsModel.CurrentAgent.PostProcessorAgentId);
+            if (PostProcessorAIAgent is null)
+            {
+                PostProcessorAIAgent = noneAgent;
+            }
         }
 
         private void InitModel(LocalAIAgentSettings accountSettingsModel, bool isCreatingMode)
@@ -543,8 +567,9 @@ namespace Tuvi.App.ViewModels
             try
             {
                 var agentData = AgentSettingsModel.ToAIAgent(LinkedAccount);
-                agentData.PreProcessorAgent = PreprocessorAIAgent;
-                agentData.PostProcessorAgent = PostprocessorAIAgent;
+
+                agentData.PreProcessorAgent = string.IsNullOrEmpty(PreProcessorAIAgent?.SystemPrompt) ? null : PreProcessorAIAgent;
+                agentData.PostProcessorAgent = string.IsNullOrEmpty(PostProcessorAIAgent?.SystemPrompt) ? null : PostProcessorAIAgent;
 
                 var result = await ApplyAgentSettingsAsync(agentData).ConfigureAwait(true);
                 if (result)

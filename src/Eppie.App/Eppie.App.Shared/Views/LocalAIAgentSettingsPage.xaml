@@ -89,11 +89,11 @@
                 <ComboBox x:Uid="PreprocessWithAIAgent"
                           VerticalAlignment="Center"
                           ItemsSource="{x:Bind ViewModel.AIAgentsList}"
-                          SelectedItem="{x:Bind ViewModel.PreprocessorAIAgent, Mode=TwoWay}" />
+                          SelectedItem="{x:Bind ViewModel.PreProcessorAIAgent, Mode=TwoWay}" />
                 <ComboBox x:Uid="PostprocessWithAIAgent"
                           VerticalAlignment="Center"
                           ItemsSource="{x:Bind ViewModel.AIAgentsList}"
-                          SelectedItem="{x:Bind ViewModel.PostprocessorAIAgent, Mode=TwoWay}" />
+                          SelectedItem="{x:Bind ViewModel.PostProcessorAIAgent, Mode=TwoWay}" />
             </StackPanel>
             <StackPanel Grid.RowSpan="3"
                         Grid.Column="1"

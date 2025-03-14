@@ -158,7 +158,7 @@ namespace Tuvi.App.ViewModels
 
             try
             {
-                MessageInfo.MessageData = await Core.GetMessageBodyAsync(MessageInfo.MessageData).ConfigureAwait(true);
+                MessageInfo.MessageData = await Core.GetMessageBodyHighPriorityAsync(MessageInfo.MessageData).ConfigureAwait(true);
 
                 await SetupMessageAsync().ConfigureAwait(true);
             }

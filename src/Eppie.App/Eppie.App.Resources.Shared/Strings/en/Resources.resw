@@ -966,4 +966,8 @@ Subject: {3}
     <value>Target language</value>
     <comment>The title for AI agent target language combobox</comment>
   </data>
+  <data name="NoneText" xml:space="preserve">
+    <value>None</value>
+    <comment>Indicates the absence of a selection in a combobox.</comment>
+  </data>
 </root>
