@@ -1,0 +1,204 @@
+################################################################################
+#                                                                              #
+#   Copyright 2025 Eppie(https://eppie.io)                                     #
+#                                                                              #
+#   Licensed under the Apache License, Version 2.0 (the "License");            #
+#   you may not use this file except in compliance with the License.           #
+#   You may obtain a copy of the License at                                    #
+#                                                                              #
+#       http://www.apache.org/licenses/LICENSE-2.0                             #
+#                                                                              #
+#   Unless required by applicable law or agreed to in writing, software        #
+#   distributed under the License is distributed on an "AS IS" BASIS,          #
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.   #
+#   See the License for the specific language governing permissions and        #
+#   limitations under the License.                                             #
+#                                                                              #
+################################################################################
+
+---
+
+name: Publish Desktop Binaries
+
+on: # yamllint disable-line rule:truthy
+  workflow_dispatch:
+    inputs:
+      os:
+        type: choice
+        default: all
+        options:
+          - windows
+          - linux
+          - macos
+          - all
+  workflow_call:
+    inputs:
+      os:
+        type: string
+        required: true
+
+jobs:
+
+  prepare:
+    name: Prepare
+    runs-on: ubuntu-latest
+
+    outputs:
+      matrix: ${{ steps.publish-config.outputs.matrix }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+
+      - name: Read the binaries publication configuration
+        id: publish-config
+        uses: finebits/github-actions/toolset/select-configuration@4a126d80a11c5fdc83ce884d3d23dffb30bc4495 # v2.0.0
+        with:
+          json-file: ./.github/configurations/publish-desktop-binaries.json
+          keywords: ${{ inputs.os }}
+
+      - name: Check configs
+        shell: bash
+        run: |
+          length=$( echo '${{ steps.publish-config.outputs.config-json }}' | jq '. | length' )
+
+          if(( $length == 0 )); then
+            echo "::error::No suitable publish configuration found"
+            exit 1
+          fi
+
+  publish:
+    name: Publish ${{ matrix.publish.framework }} ${{ matrix.publish.runtime }}
+    needs: prepare
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.prepare.outputs.matrix) }}
+
+    runs-on: ${{ matrix.os }}
+
+    env:
+      publish-path: './.publish/${{ matrix.publish.configuration }}/${{ matrix.publish.framework }}/${{ matrix.publish.runtime }}'
+      artifacts-path: './.artifacts/${{ matrix.publish.configuration }}/${{ matrix.publish.framework }}/${{ matrix.publish.runtime }}'
+
+    steps:
+      - name: Support longpaths
+        if: ${{ runner.os == 'Windows'}}
+        run: git config --system core.longpaths true
+
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+          submodules: recursive
+
+      - name: Install Prerequisites
+        uses: ./.github/actions/install-prerequisites
+        with: 
+          uno-platform: true
+
+      - name: Provide version
+        id: provide-version
+        uses: finebits/github-actions/toolset/find-out-version@4a126d80a11c5fdc83ce884d3d23dffb30bc4495 # v2.0.0
+
+      - name: Assign version
+        id: assign-version
+        shell: bash
+        run: |
+          major="${{ steps.provide-version.outputs.major }}"
+          minor="${{ steps.provide-version.outputs.minor }}"
+          patch="${{ steps.provide-version.outputs.patch }}"
+          suffix="${{ steps.provide-version.outputs.suffix }}"
+          githash="${{ steps.provide-version.outputs.githash }}"
+          run_number="${{ steps.provide-version.outputs.build }}"
+          run_attempt="${{ steps.provide-version.outputs.attempt }}"
+
+          # Semantic versioning: major.minor.patch-suffix+githash.run_number.run_attempt
+          echo "semantic-version=$major.$minor.$patch-$suffix+$githash.$run_number.$run_attempt" >> $GITHUB_OUTPUT
+
+          # https://learn.microsoft.com/en-us/windows/apps/publish/publish-your-app/msix/app-package-requirements#package-version-numbering
+          # Version numbering: major.minor.build.0
+          # build=(suffix_code + revision) 
+          # suffix_code: unknown [0] < preview [10000] < alpha [20000] < beta [30000] < rc [40000] < no-suffix [50000] < [65535]
+
+          suffix_code=0
+          case "${suffix%%.*}" in
+            "")       suffix_code=50000 ;; # release
+            rc)       suffix_code=40000 ;;
+            beta)     suffix_code=30000 ;;
+            alpha)    suffix_code=20000 ;;
+            preview)  suffix_code=10000 ;;
+            *)        suffix_code=0     ;; # unknown
+          esac
+
+          revision=${suffix##*.}
+
+          regex_number='^[1-9][0-9]*$'
+          revision=$([[ $revision =~ $regex_number ]] && echo $revision || echo $patch )
+
+          build=$(($suffix_code+$revision))
+
+          echo "numeric-version=$major.$minor.$build.0" >> $GITHUB_OUTPUT
+
+      - uses: finebits/github-actions/toolset/file/replace-text@4a126d80a11c5fdc83ce884d3d23dffb30bc4495 # v2.0.0
+        with:
+          file: ./src/Eppie.App/Eppie.App.Shared/Authorization/AuthConfig.Uno.cs
+          find-what: '\"<Gmail-ClientId>\"'
+          replace-with: "${{ secrets.GMAIL_CLIENT_ID }}"
+
+      - uses: finebits/github-actions/toolset/file/replace-text@4a126d80a11c5fdc83ce884d3d23dffb30bc4495 # v2.0.0
+        with:
+          file: ./src/Eppie.App/Eppie.App.Shared/Authorization/AuthConfig.Uno.cs
+          find-what: '\"<Gmail-ClientSecret>\"'
+          replace-with: "${{ secrets.GMAIL_CLIENT_SECRET }}"
+
+      - uses: finebits/github-actions/toolset/file/replace-text@4a126d80a11c5fdc83ce884d3d23dffb30bc4495 # v2.0.0
+        with:
+          file: ./src/Eppie.App/Eppie.App.Shared/Authorization/AuthConfig.Uno.cs
+          find-what: '\"<Outlook-ClientId>\"'
+          replace-with: "${{ secrets.OUTLOOK_CLIENT_ID }}"
+
+      - name: Publish
+        if: matrix.publish.tool == 'dotnet'
+        shell: bash
+        run: |
+          semantic_version='${{ steps.assign-version.outputs.semantic-version }}'
+          numeric_version='${{ steps.assign-version.outputs.numeric-version }}'
+
+          project='${{ matrix.publish.project }}'
+          configuration='${{ matrix.publish.configuration }}'
+          framework='${{ matrix.publish.framework }}'
+          publish_path='${{ env.publish-path }}'
+          extra_options='${{ matrix.publish.extra }}'
+
+          dotnet publish $project --output=$publish_path --configuration=$configuration --framework=$framework --property:Version="$semantic_version" --property:AssemblyVersion="$numeric_version" $extra_options
+
+          rm -rf $publish_path/*.pdb
+
+      - name: Prepare Artifacts
+        shell: bash
+        run: |
+          artifact_path="${{ env.artifacts-path }}"
+          publish_path="${{ env.publish-path }}"
+          tool='${{ matrix.artifact.tool }}'
+
+          artifact_name="eppie.desktop-${{ matrix.publish.runtime }}"
+
+          mkdir -p "$artifact_path"
+
+          if [[ "$tool" == "tar" ]]; then
+            tar -czf "${artifact_path}/${artifact_name}.tar.gz" -C "$publish_path" . && echo "Archiving of the artifact '$artifact_name' has been completed successfully." || echo "::warning::Failed to archive artifact '$artifact_name'"
+          elif [[ "$tool" == "7z"  ]]; then
+            7z a -tzip "${artifact_path}/${artifact_name}.zip" "$publish_path/*" && echo "Archiving of the artifact '$artifact_name' has been completed successfully." || echo "::warning::Failed to archive artifact '$artifact_name'"
+          elif [[ "$tool" == "cp" ]]; then
+            cp "$artifact_path" "$publish_path" && echo "Copying of the artifact has been completed successfully." || echo "::warning::Failed to copy artifact"
+          else
+            echo "::warning::Unknown artifact tool: '$tool'"
+          fi
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 # v4.6.1
+        with:
+          name: Eppie.Desktop-${{ matrix.publish.runtime }} [${{ steps.assign-version.outputs.semantic-version }}]
+          path: ${{ env.artifacts-path }}

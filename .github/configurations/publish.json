@@ -1,0 +1,10 @@
+{
+    "binaries":{
+        "os":["windows","linux","macos","all"],
+        "framework":["desktop","all"]
+    },
+    "snap":{
+        "os":["linux","all"],
+        "framework":["desktop","all"]
+    }
+}

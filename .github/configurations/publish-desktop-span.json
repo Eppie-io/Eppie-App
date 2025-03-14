@@ -1,0 +1,16 @@
+[
+    {
+        "keywords": [
+            "linux",
+            "all"
+        ],
+        "os": "ubuntu-latest",
+        "publish": {
+            "tool": "dotnet",
+            "project": "./src/Eppie.App/Eppie.App/Eppie.App.csproj",
+            "configuration": "release",
+            "framework": "net9.0-desktop",
+            "extra": " --property:SelfContained=true --property:PublishSingleFile=true --property:PackageFormat=snap"
+        }
+    }
+]
