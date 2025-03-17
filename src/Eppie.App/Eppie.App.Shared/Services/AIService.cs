@@ -64,7 +64,7 @@ namespace Eppie.App.Shared.Services
                                 GetAgentOptions(agent.PreProcessorAgent),
                                 cancellationToken,
                                 onTextUpdate
-                            );
+                            ).ConfigureAwait(false);
                     }
 
                     result = await Service.ProcessTextAsync
@@ -74,7 +74,7 @@ namespace Eppie.App.Shared.Services
                             GetAgentOptions(agent),
                             cancellationToken,
                             onTextUpdate
-                        );
+                        ).ConfigureAwait(false);
 
                     if (agent.PostProcessorAgent != null)
                     {
@@ -85,7 +85,7 @@ namespace Eppie.App.Shared.Services
                                 GetAgentOptions(agent.PostProcessorAgent),
                                 cancellationToken,
                                 onTextUpdate
-                            );
+                            ).ConfigureAwait(false);
                     }
                 }
                 finally
@@ -136,8 +136,8 @@ namespace Eppie.App.Shared.Services
 #if AI_ENABLED
         public async Task<bool> IsEnabledAsync()
         {
-            var agents = await Storage.GetAIAgentsAsync();
-            return agents.Count > 0 && await IsLocalAIModelImportedAsync() && LoadingModelTask.IsCompleted;
+            var agents = await Storage.GetAIAgentsAsync().ConfigureAwait(false);
+            return agents.Count > 0 && await IsLocalAIModelImportedAsync().ConfigureAwait(false) && LoadingModelTask.IsCompleted;
         }
 #else
         public Task<bool> IsEnabledAsync()
@@ -159,15 +159,16 @@ namespace Eppie.App.Shared.Services
         {
             try
             {
-                if (Service is null && await IsLocalAIModelImportedAsync())
+                if (Service is null && await IsLocalAIModelImportedAsync().ConfigureAwait(false))
                 {
                     var service = new Service();
 
                     var localFolder = ApplicationData.Current.LocalFolder;
-                    var modelFolder = await localFolder.GetFolderAsync(LocalAIModelFolderName);
+                    var modelRootFolder = await localFolder.GetFolderAsync(LocalAIModelFolderName);
+                    var modelFolder = (await modelRootFolder.GetFoldersAsync()).FirstOrDefault();
                     var modelPath = modelFolder.Path;
 
-                    await service.LoadModelAsync(modelPath);
+                    await service.LoadModelAsync(modelPath).ConfigureAwait(false);
                     Service = service;
                 }
             }
@@ -200,6 +201,7 @@ namespace Eppie.App.Shared.Services
             }
         }
 
+#if AI_ENABLED
         public async Task ImportModelAsync()
         {
             await DeleteModelAsync();
@@ -216,24 +218,31 @@ namespace Eppie.App.Shared.Services
 
             if (selectedFolder != null)
             {
-                StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-                StorageFolder modelFolder = await localFolder.CreateFolderAsync(LocalAIModelFolderName, CreationCollisionOption.ReplaceExisting);
+                var localFolder = ApplicationData.Current.LocalFolder;
+                var modelRootFolder = await localFolder.CreateFolderAsync(LocalAIModelFolderName, CreationCollisionOption.ReplaceExisting);
+                var modelFolder = await modelRootFolder.CreateFolderAsync(Service.GetModelName(selectedFolder.Path), CreationCollisionOption.ReplaceExisting);
 
-                await CopyFolderContentsAsync(selectedFolder, modelFolder);
+                await CopyFolderContentsAsync(selectedFolder, modelFolder).ConfigureAwait(false);
 
-                await LoadModelAsync();
+                await LoadModelAsync().ConfigureAwait(false);
             }
         }
+#else
+        public Task ImportModelAsync()
+        {
+            return Task.CompletedTask;
+        }
+#endif
 
         public async Task AddAgentAsync(LocalAIAgent agent)
         {
-            await Storage.AddAIAgentAsync(agent);
+            await Storage.AddAIAgentAsync(agent).ConfigureAwait(false);
             AgentAdded?.Invoke(this, new LocalAIAgentEventArgs(agent));
         }
 
         public async Task RemoveAgentAsync(LocalAIAgent agent)
         {
-            await Storage.DeleteAIAgentAsync(agent.Id);
+            await Storage.DeleteAIAgentAsync(agent.Id).ConfigureAwait(false);
             AgentDeleted?.Invoke(this, new LocalAIAgentEventArgs(agent));
         }
 
@@ -247,7 +256,7 @@ namespace Eppie.App.Shared.Services
             try
             {
                 var messages = e.ReceivedMessages;
-                var agents = await Storage.GetAIAgentsAsync();
+                var agents = await Storage.GetAIAgentsAsync().ConfigureAwait(false);
                 var tasks = messages.SelectMany(message => agents.Select(agent => ProcessMessage(agent, message))).ToList();
 
                 await Task.WhenAll(tasks);
@@ -269,7 +278,7 @@ namespace Eppie.App.Shared.Services
                     text = (await Core.GetMessageBodyAsync(message.Message).ConfigureAwait(false)).TextBody;
                 }
 
-                var result = await ProcessTextAsync(agent, text, CancellationToken.None);
+                var result = await ProcessTextAsync(agent, text, CancellationToken.None).ConfigureAwait(false);
 
                 try
                 {
@@ -328,7 +337,7 @@ namespace Eppie.App.Shared.Services
 
         public async Task UpdateAgentAsync(LocalAIAgent agent)
         {
-            await Storage.UpdateAIAgentAsync(agent);
+            await Storage.UpdateAIAgentAsync(agent).ConfigureAwait(false);
             AgentUpdated?.Invoke(this, new LocalAIAgentEventArgs(agent));
         }
     }
