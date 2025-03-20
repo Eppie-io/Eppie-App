@@ -41,8 +41,11 @@ namespace Tuvi.App.Shared.Models
         {
             UpdateUnreadEmailsBadge();
 
-            var loader = Eppie.App.UI.Resources.StringProvider.GetInstance();
-            NotificationService.ShowToastNotification(loader.GetString("NewEmailsReceivedMessage"));
+            if (e.Folder.IsInbox)
+            {
+                var loader = Eppie.App.UI.Resources.StringProvider.GetInstance();
+                NotificationService.ShowToastNotification(loader.GetString("NewEmailsReceivedMessage"));
+            }
         }
 
         private void OnMessageDeleted(object sender, MessageDeletedEventArgs e)
