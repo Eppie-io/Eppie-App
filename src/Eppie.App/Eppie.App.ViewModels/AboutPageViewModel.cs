@@ -2,11 +2,10 @@ namespace Tuvi.App.ViewModels
 {
     public class AboutPageViewModel : BaseViewModel
     {
-        private string _version = "";
-        public string Version
+        private string _appVersion = null;
+        public string AppVersion
         {
-            get { return _version; }
-            set { SetProperty(ref _version, value); }
+            get { return _appVersion ?? (_appVersion = BrandService.GetAppVersion()); }
         }
 
         public string ApplicationName
