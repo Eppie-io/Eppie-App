@@ -1,6 +1,10 @@
 using System;
 using Tuvi.App.Shared.Controls;
 using System.Threading.Tasks;
+using Microsoft.Web.WebView2.Core;
+using Windows.System;
+
+
 
 
 #if WINDOWS_UWP
@@ -53,9 +57,67 @@ namespace Eppie.App.UI.Controls
             this.InitializeComponent();
         }
 
-        private void OnLoaded(object sender, RoutedEventArgs e)
+        private async void OnLoaded(object sender, RoutedEventArgs e)
         {
-            OnUpdate();
+            try
+            {
+                await HtmlView.EnsureCoreWebView2Async();
+                HtmlView.CoreWebView2.NewWindowRequested += CoreWebView2_NewWindowRequested;
+                HtmlView.CoreWebView2.NavigationStarting += CoreWebView2_NavigationStarting;
+
+                OnUpdate();
+            }
+            catch (Exception ex)
+            {
+                OnError(ex);
+            }
+        }
+
+        private void OnUnloaded(object sender, RoutedEventArgs e)
+        {
+            if (HtmlView.CoreWebView2 != null)
+            {
+                HtmlView.CoreWebView2.NewWindowRequested -= CoreWebView2_NewWindowRequested;
+                HtmlView.CoreWebView2.NavigationStarting -= CoreWebView2_NavigationStarting;
+            }
+        }
+
+        private void CoreWebView2_NewWindowRequested(CoreWebView2 sender, CoreWebView2NewWindowRequestedEventArgs args)
+        {
+            args.Handled = true;
+
+            if (args.IsUserInitiated)
+            {
+                LaunchDefaultBrowser(args.Uri);
+            }
+        }
+
+        private void CoreWebView2_NavigationStarting(CoreWebView2 sender, CoreWebView2NavigationStartingEventArgs args)
+        {
+            if (!args.Uri.StartsWith("data:"))
+            {
+                args.Cancel = true;
+            }
+
+            if (args.IsUserInitiated)
+            {
+                LaunchDefaultBrowser(args.Uri);
+            }
+        }
+
+        private async void LaunchDefaultBrowser(string url)
+        {
+            try
+            {
+                if (url != null)
+                {
+                    await Launcher.LaunchUriAsync(new Uri(url));
+                }
+            }
+            catch (Exception ex)
+            {
+                OnError(ex);
+            }
         }
 
         private async void OnUpdate()
