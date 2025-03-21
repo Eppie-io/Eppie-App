@@ -1,0 +1,129 @@
+################################################################################
+#                                                                              #
+#   Copyright 2025 Eppie(https://eppie.io)                                     #
+#                                                                              #
+#   Licensed under the Apache License, Version 2.0 (the "License");            #
+#   you may not use this file except in compliance with the License.           #
+#   You may obtain a copy of the License at                                    #
+#                                                                              #
+#       http://www.apache.org/licenses/LICENSE-2.0                             #
+#                                                                              #
+#   Unless required by applicable law or agreed to in writing, software        #
+#   distributed under the License is distributed on an "AS IS" BASIS,          #
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.   #
+#   See the License for the specific language governing permissions and        #
+#   limitations under the License.                                             #
+#                                                                              #
+################################################################################
+
+---
+
+name: Publish
+
+on: # yamllint disable-line rule:truthy
+  workflow_dispatch:
+    inputs:
+      framework:
+        type: choice
+        default: all
+        options:
+          - desktop
+          - all
+      os:
+        type: choice
+        default: all
+        options:
+          - windows
+          - linux
+          - macos
+          - all
+
+  release:
+    types: [published]
+
+jobs:
+  prepare:
+    name: Prepare
+    runs-on: ubuntu-latest
+
+    outputs:
+      publish-os: ${{ steps.init-params.outputs.os }}
+      publish-framework: ${{ steps.init-params.outputs.framework }}
+      publish-binaries: ${{ steps.packages.outputs.binaries }}
+      publish-snap: ${{ steps.packages.outputs.snap }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+
+      - name: Initialize parameters
+        id: init-params
+        shell: bash
+        run: |
+          os="all"
+          framework="all"
+
+          if [[ ${{ github.event_name }} == 'workflow_dispatch' ]]; then
+            os="${{ github.event.inputs.os }}"
+            framework="${{ github.event.inputs.framework }}"
+          fi
+
+          echo "os=$os" >> $GITHUB_OUTPUT
+          echo "framework=$framework" >> $GITHUB_OUTPUT
+
+      - name: Read configuration
+        id: publish-config
+        uses: finebits/github-actions/toolset/file/read@4a126d80a11c5fdc83ce884d3d23dffb30bc4495 # v2.0.0
+        with:
+          file: ./.github/configurations/publish.json
+
+      - name: Define packages
+        id: packages
+        shell: bash
+        run: |
+          # Publish Desktop Binaries
+          os_suitable="${{ contains(fromJSON(steps.publish-config.outputs.content).binaries.os, steps.init-params.outputs.os) }}"
+          framework_suitable="${{ contains(fromJSON(steps.publish-config.outputs.content).binaries.framework, steps.init-params.outputs.framework) }}"
+          publish_binaries=($os_suitable AND $framework_suitable)
+          echo "binaries=$publish_binaries" >> $GITHUB_OUTPUT
+
+          # Publish Desktop linux snap package
+          os_suitable="${{ contains(fromJSON(steps.publish-config.outputs.content).snap.os, steps.init-params.outputs.os) }}"
+          framework_suitable="${{ contains(fromJSON(steps.publish-config.outputs.content).snap.framework, steps.init-params.outputs.framework) }}"
+          publish_snap=($os_suitable AND $framework_suitable)
+          echo "snap=$publish_snap" >> $GITHUB_OUTPUT
+
+  publish-binaries:
+    name: Publish Binaries
+    needs: prepare
+    if: ${{ needs.prepare.outputs.publish-binaries == 'true' }}
+    uses: ./.github/workflows/publish-desktop-binaries.yml
+    with:
+      os: ${{ needs.prepare.outputs.publish-os }}
+    secrets: inherit
+
+  upload-assets:
+    name: Upload Assets
+    if: github.event_name == 'release'
+    needs: [ publish-binaries ]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    env:
+      assets-path: './.assets'
+
+    steps:
+      - name: Download All Artifacts
+        uses: actions/download-artifact@cc203385981b70ca67e1cc392babf9cc229d5806 # v4.1.9
+        with:
+          path: "${{ env.assets-path }}"
+
+      - name: Upload All Assets
+        uses: finebits/github-actions/toolset/github/upload-release-asset@4a126d80a11c5fdc83ce884d3d23dffb30bc4495 # v2.0.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.event.release.tag_name }}
+          path: "${{ env.assets-path }}/*/*"
