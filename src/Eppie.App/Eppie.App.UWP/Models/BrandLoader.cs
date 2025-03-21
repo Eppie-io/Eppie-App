@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using Tuvi.App.ViewModels.Services;
 using Uno.Extensions.Specialized;
 using Windows.ApplicationModel;
@@ -44,7 +45,7 @@ namespace Tuvi.App.Shared.Models
 
     internal class BrandLoader : IBrandService
     {
-        private BrandInfo _loader;
+        private readonly BrandInfo _loader;
         internal BrandLoader()
         {
             if (Loader_Eppie.NameIds.Contains(Package.Current.Id.Name))
@@ -88,6 +89,36 @@ namespace Tuvi.App.Shared.Models
         public string GetHomepage()
         {
             return GetString("Homepage");
+        }
+
+        public string GetPublisherDisplayName()
+        {
+            return Package.Current.PublisherDisplayName;
+        }
+
+        public string GetVersion()
+        {
+            return Assembly.GetExecutingAssembly().GetName().Version?.ToString();
+        }
+
+        public string GetPackageVersion()
+        {
+            return $"{Package.Current.Id.Version.Major}.{Package.Current.Id.Version.Minor}.{Package.Current.Id.Version.Build}.{Package.Current.Id.Version.Revision}";
+        }
+
+        public string GetFileVersion()
+        {
+            return Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version;
+        }
+
+        public string GetInformationalVersion()
+        {
+            return Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion;
+        }
+
+        public string GetAppVersion()
+        {
+            return GetInformationalVersion() ?? GetVersion() ?? GetPackageVersion();
         }
     }
 }

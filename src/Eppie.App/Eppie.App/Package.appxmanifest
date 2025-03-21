@@ -8,7 +8,7 @@
 
   <Identity Name="Tuvisoft.Eppie" Version="1.0.0.0"/>
   <Properties>
-    <DisplayName>Eppie (WinAppSDK)</DisplayName>
+    <DisplayName>Eppie</DisplayName>
     <PublisherDisplayName>Finebits</PublisherDisplayName>
   </Properties>
 
@@ -25,7 +25,7 @@
     <Application Id="App"
       Executable="$targetnametoken$.exe"
       EntryPoint="$targetentrypoint$">
-      <uap:VisualElements Description="Eppie App" DisplayName="Eppie (WinAppSDK)">
+      <uap:VisualElements DisplayName="Eppie" Description="Eppie App">
         <uap:DefaultTile/>
       </uap:VisualElements>
     </Application>

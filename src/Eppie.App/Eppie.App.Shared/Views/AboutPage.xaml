@@ -61,7 +61,7 @@
                 <TextBlock Margin="0,4,0,0"
                            FontSize="{StaticResource FieldValueFontSize}"
                            Style="{StaticResource NormalTextStyle}"
-                           Text="{x:Bind ViewModel.Version, Mode=OneWay}" />
+                           Text="{x:Bind ViewModel.AppVersion, Mode=OneTime}" />
 
                 <TextBlock x:Uid="Publisher"
                            Margin="0,32,0,0"
@@ -69,7 +69,7 @@
                 <TextBlock Margin="0,4,0,0"
                            FontSize="{StaticResource FieldValueFontSize}"
                            Style="{StaticResource NormalTextStyle}"
-                           Text="Finebits" />
+                           Text="{x:Bind ViewModel.PublisherDisplayName, Mode=OneTime}" />
 
                 <TextBlock x:Uid="Developer"
                            Margin="0,32,0,0"

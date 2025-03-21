@@ -68,10 +68,8 @@ namespace Eppie.App.Shared
                     );
                 MainWindow = builder.Window;
 
-#if WINDOWS
                 var brand = new BrandLoader();
                 MainWindow.Title = brand.GetName();
-#endif
 
 #if DEBUG
                 MainWindow.UseStudio();
