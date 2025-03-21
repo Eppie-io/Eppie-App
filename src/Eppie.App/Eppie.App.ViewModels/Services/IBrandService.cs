@@ -5,6 +5,7 @@ namespace Tuvi.App.ViewModels.Services
         string GetName();
         string GetSupport();
         string GetHomepage();
+        string GetPublisherDisplayName();
         string GetAppVersion();
         string GetVersion();
         string GetPackageVersion();

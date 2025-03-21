@@ -8,6 +8,11 @@ namespace Tuvi.App.ViewModels
             get { return _appVersion ?? (_appVersion = BrandService.GetAppVersion()); }
         }
 
+        public string PublisherDisplayName
+        {
+            get { return BrandService.GetPublisherDisplayName(); }
+        }
+
         public string ApplicationName
         {
             get { return BrandService.GetName(); }

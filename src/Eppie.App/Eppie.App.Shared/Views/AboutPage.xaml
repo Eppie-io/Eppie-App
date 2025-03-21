@@ -69,7 +69,7 @@
                 <TextBlock Margin="0,4,0,0"
                            FontSize="{StaticResource FieldValueFontSize}"
                            Style="{StaticResource NormalTextStyle}"
-                           Text="Finebits" />
+                           Text="{x:Bind ViewModel.PublisherDisplayName, Mode=OneTime}" />
 
                 <TextBlock x:Uid="Developer"
                            Margin="0,32,0,0"

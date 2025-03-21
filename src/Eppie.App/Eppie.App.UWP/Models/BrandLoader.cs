@@ -45,7 +45,7 @@ namespace Tuvi.App.Shared.Models
 
     internal class BrandLoader : IBrandService
     {
-        private BrandInfo _loader;
+        private readonly BrandInfo _loader;
         internal BrandLoader()
         {
             if (Loader_Eppie.NameIds.Contains(Package.Current.Id.Name))
@@ -89,6 +89,11 @@ namespace Tuvi.App.Shared.Models
         public string GetHomepage()
         {
             return GetString("Homepage");
+        }
+
+        public string GetPublisherDisplayName()
+        {
+            return Package.Current.PublisherDisplayName;
         }
 
         public string GetVersion()
