@@ -23,7 +23,6 @@ namespace Eppie.App.Shared.Services
             DataPackage dataPackage = new DataPackage();
             dataPackage.SetText(text);
             Clipboard.SetContent(dataPackage);
-            Clipboard.Flush();
         }
     }
 }
