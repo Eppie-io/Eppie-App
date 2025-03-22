@@ -233,10 +233,16 @@ namespace Tuvi.App.ViewModels
         {
             try
             {
+                var messageList = MessageList;
+                if (messageList is null)
+                {
+                    return;
+                }
+
                 await DispatcherService.RunAsync(() =>
                 {
                     var messages = SelectAppropriateMessagesFrom(e.ReceivedMessages);
-                    MessageList.AddRange(messages);
+                    messageList?.AddRange(messages);
                 }).ConfigureAwait(true);
             }
             catch (Exception ex)
