@@ -48,7 +48,7 @@ There's a preview version currently available at Microsoft Store.
   </a>
 </p>
 
-WIP
+App Store and Google Play: WIP
 
 ## Downloads
 
@@ -61,11 +61,11 @@ You may download the latest release for your system:
 
 ### Linux Binaries
 
-WIP
+- [eppie.desktop-linux-x64.tar.gz](https://github.com/Eppie-io/Eppie-App/releases/latest/download/eppie.desktop-linux-x64.tar.gz)
 
 ### macOS Binaries
 
-WIP
+- [eppie.desktop-osx-x64.tar.gz](https://github.com/Eppie-io/Eppie-App/releases/latest/download/eppie.desktop-osx-x64.tar.gz)
 
 ### Android Binaries
 
