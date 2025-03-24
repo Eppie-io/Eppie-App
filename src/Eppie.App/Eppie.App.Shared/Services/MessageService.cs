@@ -12,6 +12,10 @@ using Tuvi.App.ViewModels.Common;
 using Tuvi.App.ViewModels.Services;
 using TuviPgpLib.Entities;
 using Windows.ApplicationModel;
+using Tuvi.App.Shared.Models;
+using System.Runtime.InteropServices;
+
+
 
 
 #if WINDOWS_UWP
@@ -199,9 +203,10 @@ namespace Tuvi.App.Shared.Services
         private async Task ShowDefaultErrorMessageAsync(Exception exception)
         {
             var title = StringProvider.GetString("SendErrorReportTitle");
-
+            var brand = new BrandLoader();
             var message = $"\n________________________________________________________________________________" +
-                          $"\n App version: {Package.Current.Id.Version.Major}.{Package.Current.Id.Version.Minor}.{Package.Current.Id.Version.Build}.{Package.Current.Id.Version.Revision}" +
+                          $"\n App version: {brand.GetAppVersion()}" +
+                          $"\n OS: {RuntimeInformation.OSDescription}" +
                           $"\n {exception.TargetSite?.Name} \n {exception}";
 
             if (exception.InnerException != null)
