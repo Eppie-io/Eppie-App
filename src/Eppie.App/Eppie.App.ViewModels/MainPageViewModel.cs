@@ -404,7 +404,14 @@ namespace Tuvi.App.ViewModels
 
         private async Task SupportDevelopmentAsync()
         {
-            await PurchaseService.BuySubscriptionAsync();
+            try
+            {
+                await PurchaseService.BuySubscriptionAsync();
+            }
+            catch
+            {
+                LauncherService?.LaunchAsync(new Uri(BrandService.GetDevelopmentSupport()));
+            }
         }
 
         public IRelayCommand<Problem> CloseProblemCommand => new RelayCommand<Problem>(CloseProblem);
