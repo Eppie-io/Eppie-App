@@ -410,7 +410,7 @@ namespace Tuvi.App.ViewModels
             }
             catch
             {
-                LauncherService?.LaunchAsync(new Uri(BrandService.GetDevelopmentSupport())).ConfigureAwait(true);
+                await LauncherService.LaunchAsync(new Uri(BrandService.GetDevelopmentSupport())).ConfigureAwait(true);
             }
         }
 
@@ -532,7 +532,7 @@ namespace Tuvi.App.ViewModels
                 }
 
                 base.OnError(e);
-            });
+            }).ConfigureAwait(true);
         }
 
         private void AddProblem(string title, string solution, EmailAddress email, string message)
