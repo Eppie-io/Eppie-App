@@ -406,11 +406,11 @@ namespace Tuvi.App.ViewModels
         {
             try
             {
-                await PurchaseService.BuySubscriptionAsync();
+                await PurchaseService.BuySubscriptionAsync().ConfigureAwait(true);
             }
             catch
             {
-                LauncherService?.LaunchAsync(new Uri(BrandService.GetDevelopmentSupport()));
+                LauncherService?.LaunchAsync(new Uri(BrandService.GetDevelopmentSupport())).ConfigureAwait(true);
             }
         }
 
