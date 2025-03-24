@@ -11,5 +11,6 @@ namespace Tuvi.App.ViewModels.Services
         string GetPackageVersion();
         string GetFileVersion();
         string GetInformationalVersion();
+        string GetDevelopmentSupport();
     }
 }
