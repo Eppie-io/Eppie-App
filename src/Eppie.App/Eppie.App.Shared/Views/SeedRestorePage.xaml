@@ -8,11 +8,9 @@
                            xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
                            xmlns:local="using:Tuvi.App.Shared.Views"
                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                           xmlns:not_win="http://uno.ui/not_win"
                            xmlns:viewmodels="using:Tuvi.App.ViewModels"
-                           xmlns:win="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                            Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-                           mc:Ignorable="d not_win">
+                           mc:Ignorable="d">
 
     <local:SeedRestorePageBase.DataContext>
         <viewmodels:SeedRestorePageViewModel />
