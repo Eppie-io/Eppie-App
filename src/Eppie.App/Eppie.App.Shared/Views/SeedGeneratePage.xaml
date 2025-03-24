@@ -11,7 +11,7 @@
                             xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
                             xmlns:viewmodels="using:Tuvi.App.ViewModels"
                             Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-                            mc:Ignorable="d not_win">
+                            mc:Ignorable="d">
 
     <local:SeedGeneratePageBase.DataContext>
         <viewmodels:SeedGeneratePageViewModel />
