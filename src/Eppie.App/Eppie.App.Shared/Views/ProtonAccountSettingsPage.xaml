@@ -9,7 +9,6 @@
                                      xmlns:local="using:Tuvi.App.Shared.Views"
                                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                                      xmlns:viewmodels="using:Tuvi.App.ViewModels"
-                                     xmlns:win="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                                      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
                                      mc:Ignorable="d">
 
@@ -43,10 +42,10 @@
                                                IsEmailReadOnly="{x:Bind ViewModel.IsEmailReadonly, Mode=OneWay}"
                                                IsLocked="{x:Bind ViewModel.IsWaitingResponse, Mode=OneWay}" />
 
-        <win:ProgressBar Grid.Row="2"
-                         Margin="4"
-                         IsIndeterminate="True"
-                         Visibility="{x:Bind ViewModel.IsWaitingResponse, Mode=OneWay}" />
+        <ProgressBar Grid.Row="2"
+                     Margin="4"
+                     IsIndeterminate="True"
+                     Visibility="{x:Bind ViewModel.IsWaitingResponse, Mode=OneWay}" />
 
         <Grid Grid.Row="3" Margin="0,16,0,0">
             <Grid.ColumnDefinitions>
