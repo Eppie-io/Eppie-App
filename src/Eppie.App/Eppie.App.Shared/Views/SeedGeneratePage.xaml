@@ -9,9 +9,7 @@
                             xmlns:local="using:Tuvi.App.Shared.Views"
                             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                             xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-                            xmlns:not_win="http://uno.ui/not_win"
                             xmlns:viewmodels="using:Tuvi.App.ViewModels"
-                            xmlns:win="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                             Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
                             mc:Ignorable="d not_win">
 
@@ -56,8 +54,7 @@
               Margin="0,18"
               HorizontalAlignment="Left">
 
-            <!--  ToDo: muxc:Expander should work everywhere  -->
-            <win:Grid>
+            <Grid>
                 <muxc:Expander HorizontalContentAlignment="Left">
                     <muxc:Expander.Header>
 
@@ -92,38 +89,7 @@
 
                     </muxc:Expander.Content>
                 </muxc:Expander>
-            </win:Grid>
-            <!--  Expander is not working well in Uno (only in UWP)  -->
-            <!--  TODO: Replace with Expander or similar control in future  -->
-            <not_win:Grid>
-                <StackPanel>
-                    <TextBlock x:Uid="SeedGenerateHeader"
-                               Margin="0,18"
-                               Style="{StaticResource NormalTextStyle}" />
-
-                    <StackPanel Orientation="Horizontal">
-
-                        <TextBox InputScope="Password"
-                                 IsReadOnly="True"
-                                 IsSpellCheckEnabled="False"
-                                 IsTextPredictionEnabled="False"
-                                 Text="{x:Bind ViewModel.SeedPhrase.CleanText, Mode=OneWay}" />
-
-                        <Button x:Uid="/App.Resources/SeedGenerateCopyButton"
-                                Command="{x:Bind ViewModel.CopySeedCommand}"
-                                CommandParameter="{StaticResource ClipboardProvider}">
-                            <Button.KeyboardAccelerators>
-                                <KeyboardAccelerator Key="C" Modifiers="Control" />
-                            </Button.KeyboardAccelerators>
-                            <SymbolIcon Symbol="Copy" />
-                        </Button>
-
-                    </StackPanel>
-
-                    <Button x:Uid="SeedGenerateOtherButton" Command="{x:Bind ViewModel.GenerateSeedCommand}" />
-
-                </StackPanel>
-            </not_win:Grid>
+            </Grid>
 
         </Grid>
 
