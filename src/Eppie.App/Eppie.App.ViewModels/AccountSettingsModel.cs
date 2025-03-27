@@ -1,4 +1,4 @@
-using Tuvi.App.ViewModels.Validation;
+﻿using Tuvi.App.ViewModels.Validation;
 using Tuvi.Core.Entities;
 
 namespace Tuvi.App.ViewModels

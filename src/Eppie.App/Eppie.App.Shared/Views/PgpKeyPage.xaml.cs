@@ -1,4 +1,4 @@
-using Tuvi.App.ViewModels;
+﻿using Tuvi.App.ViewModels;
 
 namespace Tuvi.App.Shared.Views
 {

@@ -1,4 +1,4 @@
-#if WINDOWS10_0_19041_0_OR_GREATER
+﻿#if WINDOWS10_0_19041_0_OR_GREATER
 
 using System;
 using System.Linq;

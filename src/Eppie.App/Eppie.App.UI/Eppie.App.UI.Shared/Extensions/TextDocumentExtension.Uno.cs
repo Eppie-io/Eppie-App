@@ -1,4 +1,4 @@
-#if HAS_UNO
+﻿#if HAS_UNO
 
 using System;
 using System.Text;

@@ -1,4 +1,4 @@
-namespace Eppie.AI
+﻿namespace Eppie.AI
 {
 
     internal enum HardwareAccelerator

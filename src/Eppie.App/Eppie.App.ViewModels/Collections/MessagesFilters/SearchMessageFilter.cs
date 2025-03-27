@@ -1,4 +1,4 @@
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Tuvi.Core.Entities;
 
 namespace Tuvi.App.ViewModels

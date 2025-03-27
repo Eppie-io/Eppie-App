@@ -1,4 +1,4 @@
-using Tuvi.App.IncrementalLoading;
+﻿using Tuvi.App.IncrementalLoading;
 using Tuvi.App.ViewModels;
 
 #if WINDOWS_UWP

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using Windows.Graphics.Imaging;
 using Windows.Storage;

@@ -1,4 +1,4 @@
-using Uno.UI.Runtime.Skia;
+﻿using Uno.UI.Runtime.Skia;
 
 namespace Eppie.App
 {
