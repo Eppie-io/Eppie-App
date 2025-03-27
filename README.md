@@ -63,12 +63,12 @@ You may download the latest release for your system:
 ### Linux
 
 - [eppie.desktop-linux-x64.tar.gz](https://github.com/Eppie-io/Eppie-App/releases/latest/download/eppie.desktop-linux-x64.tar.gz) (x64 binaries)
-- [eppie.desktop-linux-x64.tar.gz](https://github.com/Eppie-io/Eppie-App/releases/latest/download/eppie.desktop-linux-arm64.tar.gz) (arm64 binaries)
+- [eppie.desktop-linux-arm64.tar.gz](https://github.com/Eppie-io/Eppie-App/releases/latest/download/eppie.desktop-linux-arm64.tar.gz) (arm64 binaries)
 
 ### macOS
 
 - [eppie.desktop-osx-x64.tar.gz](https://github.com/Eppie-io/Eppie-App/releases/latest/download/eppie.desktop-osx-x64.tar.gz) (x64 binaries)
-- [eppie.desktop-osx-x64.tar.gz](https://github.com/Eppie-io/Eppie-App/releases/latest/download/eppie.desktop-osx-arm64.tar.gz) (arm64 binaries)
+- [eppie.desktop-osx-arm64.tar.gz](https://github.com/Eppie-io/Eppie-App/releases/latest/download/eppie.desktop-osx-arm64.tar.gz) (arm64 binaries)
 
 ### Android
 
