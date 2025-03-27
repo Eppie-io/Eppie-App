@@ -408,11 +408,16 @@ namespace Tuvi.App.ViewModels
             return false;
         }
 
-        protected override async Task<bool> CheckEmailAccountAsync(Account accountData, CancellationToken cancellationToken = default)
+        protected override async Task<bool> CheckEmailAccountAsync(Account accountData, CancellationToken token = default)
         {
+            if (accountData is null)
+            {
+                throw new ArgumentNullException(nameof(accountData));
+            }
+
             bool[] result = await Task<bool[]>.WhenAll<bool>(
-                CheckIncomingMailServerAsync(accountData, cancellationToken),
-                CheckOutgoingMailServerAsync(accountData, cancellationToken)).ConfigureAwait(true);
+                CheckIncomingMailServerAsync(accountData, token),
+                CheckOutgoingMailServerAsync(accountData, token)).ConfigureAwait(true);
 
             return result[0] && result[1];
         }

@@ -135,7 +135,7 @@ namespace Tuvi.App.ViewModels
             return ValidationResult.Success;
         }
 
-        protected override async Task<bool> CheckEmailAccountAsync(Account accountData, CancellationToken cancellationToken = default)
+        protected override async Task<bool> CheckEmailAccountAsync(Account accountData, CancellationToken token = default)
         {
             try
             {
@@ -183,7 +183,7 @@ namespace Tuvi.App.ViewModels
 
                                 throw new NeedAdditionalAuthInfo();
                             }
-                        });
+                        }).ConfigureAwait(true);
                         return AccountSettingsModel.TwoFactorCode.Value;
                     },
                     async (ct) =>
@@ -197,7 +197,7 @@ namespace Tuvi.App.ViewModels
 
                                 throw new NeedAdditionalAuthInfo();
                             }
-                        });
+                        }).ConfigureAwait(true);
                         return AccountSettingsModel.MailboxPassword.Value;
                     },
                     default
