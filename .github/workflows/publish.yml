@@ -27,16 +27,23 @@ on: # yamllint disable-line rule:truthy
         type: choice
         default: all
         options:
-          - desktop
           - all
+          - desktop
       os:
         type: choice
         default: all
         options:
-          - windows
+          - all
           - linux
           - macos
+          - windows
+      architecture:
+        type: choice
+        default: all
+        options:
           - all
+          - arm64
+          - x64
 
   release:
     types: [published]
@@ -48,6 +55,7 @@ jobs:
 
     outputs:
       publish-os: ${{ steps.init-params.outputs.os }}
+      publish-arch: ${{ steps.init-params.outputs.arch }}
       publish-framework: ${{ steps.init-params.outputs.framework }}
       publish-binaries: ${{ steps.packages.outputs.binaries }}
       publish-snap: ${{ steps.packages.outputs.snap }}
@@ -62,16 +70,19 @@ jobs:
         id: init-params
         shell: bash
         run: |
-          os="all"
+          arch="all"
           framework="all"
+          os="all"
 
           if [[ ${{ github.event_name }} == 'workflow_dispatch' ]]; then
-            os="${{ github.event.inputs.os }}"
+            arch="${{ github.event.inputs.architecture }}"
             framework="${{ github.event.inputs.framework }}"
+            os="${{ github.event.inputs.os }}"
           fi
 
-          echo "os=$os" >> $GITHUB_OUTPUT
+          echo "arch=$arch" >> $GITHUB_OUTPUT
           echo "framework=$framework" >> $GITHUB_OUTPUT
+          echo "os=$os" >> $GITHUB_OUTPUT
 
       - name: Read configuration
         id: publish-config
@@ -102,6 +113,7 @@ jobs:
     uses: ./.github/workflows/publish-desktop-binaries.yml
     with:
       os: ${{ needs.prepare.outputs.publish-os }}
+      architecture: ${{ needs.prepare.outputs.publish-arch }}
     secrets: inherit
 
   upload-assets:

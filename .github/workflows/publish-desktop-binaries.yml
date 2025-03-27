@@ -27,13 +27,23 @@ on: # yamllint disable-line rule:truthy
         type: choice
         default: all
         options:
-          - windows
+          - all
           - linux
           - macos
+          - windows
+      architecture:
+        type: choice
+        default: all
+        options:
           - all
+          - arm64
+          - x64
   workflow_call:
     inputs:
       os:
+        type: string
+        required: true
+      architecture:
         type: string
         required: true
 
@@ -57,7 +67,7 @@ jobs:
         uses: finebits/github-actions/toolset/select-configuration@4a126d80a11c5fdc83ce884d3d23dffb30bc4495 # v2.0.0
         with:
           json-file: ./.github/configurations/publish-desktop-binaries.json
-          keywords: ${{ inputs.os }}
+          keywords: "${{ inputs.os }},${{ inputs.architecture }}"
 
       - name: Check configs
         shell: bash
@@ -159,6 +169,32 @@ jobs:
           find-what: '\"<Outlook-ClientId>\"'
           replace-with: "${{ secrets.OUTLOOK_CLIENT_ID }}"
 
+      - name: Prepare
+        if: matrix.publish.tool == 'dotnet'
+        shell: bash
+        run: |
+          semantic_version='${{ steps.assign-version.outputs.semantic-version }}'
+          numeric_version='${{ steps.assign-version.outputs.numeric-version }}'
+
+          project='${{ matrix.publish.project }}'
+          configuration='${{ matrix.publish.configuration }}'
+          framework='${{ matrix.publish.framework }}'
+          runtime='${{ matrix.publish.runtime }}'
+          publish_path='${{ env.publish-path }}'
+
+          prepare='${{ join(matrix.publish.prepare, '|') }}'
+
+          IFS_CACHE=$IFS
+          IFS='|'
+
+          options="--output=$publish_path --configuration=$configuration --framework=$framework --runtime=$runtime --property:Version=\"$semantic_version\" --property:AssemblyVersion=\"$numeric_version\""
+          for prepare_options in $prepare
+          do
+            echo "$prepare_options $options" | xargs dotnet build $project
+          done
+
+          IFS=$IFS_CACHE
+
       - name: Publish
         if: matrix.publish.tool == 'dotnet'
         shell: bash
@@ -169,10 +205,12 @@ jobs:
           project='${{ matrix.publish.project }}'
           configuration='${{ matrix.publish.configuration }}'
           framework='${{ matrix.publish.framework }}'
+          runtime='${{ matrix.publish.runtime }}'
           publish_path='${{ env.publish-path }}'
           extra_options='${{ matrix.publish.extra }}'
 
-          dotnet publish $project --output=$publish_path --configuration=$configuration --framework=$framework --property:Version="$semantic_version" --property:AssemblyVersion="$numeric_version" $extra_options
+          options="--output=$publish_path --configuration=$configuration --framework=$framework --runtime=$runtime --property:Version=\"$semantic_version\" --property:AssemblyVersion=\"$numeric_version\""
+          echo "$options  $extra_options" | xargs dotnet publish $project 
 
           rm -rf $publish_path/*.pdb
 
