@@ -58,15 +58,17 @@ You may download the latest release for your system:
 
 - [Eppie.App-x86-x64-ARM64.msixbundle](https://github.com/Eppie-io/Eppie-App/releases/latest/download/Eppie.App-x86-x64-ARM64.msixbundle) (UWP)
 - [Eppie.App.WinAppSDK-x86-x64-ARM64.msixbundle](https://github.com/Eppie-io/Eppie-App/releases/latest/download/Eppie.App.WinAppSDK-x86-x64-ARM64.msixbundle) (Windows App SDK)
-- [eppie.desktop-win-x64.zip](https://github.com/Eppie-io/Eppie-App/releases/download/v1.0.0-preview.1/eppie.desktop-win-x64.zip) (Binaries)
+- [eppie.desktop-win-x64.zip](https://github.com/Eppie-io/Eppie-App/releases/latest/download/eppie.desktop-win-x64.zip) (x64 binaries)
 
 ### Linux
 
-- [eppie.desktop-linux-x64.tar.gz](https://github.com/Eppie-io/Eppie-App/releases/latest/download/eppie.desktop-linux-x64.tar.gz) (Binaries)
+- [eppie.desktop-linux-x64.tar.gz](https://github.com/Eppie-io/Eppie-App/releases/latest/download/eppie.desktop-linux-x64.tar.gz) (x64 binaries)
+- [eppie.desktop-linux-x64.tar.gz](https://github.com/Eppie-io/Eppie-App/releases/latest/download/eppie.desktop-linux-arm64.tar.gz) (arm64 binaries)
 
 ### macOS
 
-- [eppie.desktop-osx-x64.tar.gz](https://github.com/Eppie-io/Eppie-App/releases/latest/download/eppie.desktop-osx-x64.tar.gz) (Binaries)
+- [eppie.desktop-osx-x64.tar.gz](https://github.com/Eppie-io/Eppie-App/releases/latest/download/eppie.desktop-osx-x64.tar.gz) (x64 binaries)
+- [eppie.desktop-osx-x64.tar.gz](https://github.com/Eppie-io/Eppie-App/releases/latest/download/eppie.desktop-osx-arm64.tar.gz) (arm64 binaries)
 
 ### Android
 
