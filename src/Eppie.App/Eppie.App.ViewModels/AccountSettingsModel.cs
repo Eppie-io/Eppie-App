@@ -107,6 +107,11 @@ namespace Tuvi.App.ViewModels
         public BasicAccountSettingsModel(Account account)
             : base(account)
         {
+            if (account is null)
+            {
+                throw new System.ArgumentNullException(nameof(account));
+            }
+
             if (account.AuthData is BasicAuthData basicData)
             {
                 Password.SetInitialValue(basicData.Password);
@@ -143,6 +148,11 @@ namespace Tuvi.App.ViewModels
         public OAuth2AccountSettingsModel(Account account)
             : base(account)
         {
+            if (account is null)
+            {
+                throw new System.ArgumentNullException(nameof(account));
+            }
+
             if (account.AuthData is OAuth2Data oauth2Data)
             {
                 RefreshToken = oauth2Data.RefreshToken;

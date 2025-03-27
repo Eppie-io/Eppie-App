@@ -71,6 +71,11 @@ namespace Tuvi.App.ViewModels
 
         protected async Task ProcessAccountDataAsync(Account account, CancellationToken cancellationToken = default)
         {
+            if (account is null)
+            {
+                throw new ArgumentNullException(nameof(account));
+            }
+
             bool existAccount = await Core.ExistsAccountWithEmailAddressAsync(account.Email, cancellationToken).ConfigureAwait(true);
 
             if (!existAccount)

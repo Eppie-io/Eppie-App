@@ -11,6 +11,11 @@ namespace Tuvi.App.ViewModels.Extensions
 
         public static object ReadPayloadProperty(this AuthCredential credential, string property)
         {
+            if (credential is null)
+            {
+                throw new System.ArgumentNullException(nameof(credential));
+            }
+
             try
             {
                 JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();

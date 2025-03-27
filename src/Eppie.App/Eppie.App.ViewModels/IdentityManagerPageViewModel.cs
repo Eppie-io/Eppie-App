@@ -23,8 +23,8 @@ namespace Tuvi.App.ViewModels
         {
             try
             {
-                await UpdateAccountsAsync();
-                await UpdateAIAgentsAsync();
+                await UpdateAccountsAsync().ConfigureAwait(true);
+                await UpdateAIAgentsAsync().ConfigureAwait(true);
 
                 Core.AccountAdded += Core_AccountAdded;
                 Core.AccountDeleted += Core_AccountDeleted;
