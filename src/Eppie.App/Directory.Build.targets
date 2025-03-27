@@ -1,2 +1,10 @@
-﻿<Project>
+<Project>
+  <Target Name="TargetFrameworks-Desktop">
+    <Message Text="TargetFrameworks: net9.0-desktop" Importance="high" />
+    <Message Text="MSBuildThisFileDirectory: $(MSBuildThisFileDirectory)" Importance="high" />
+
+    <XmlPoke XmlInputPath="$(MSBuildThisFileDirectory)/Eppie.App/Eppie.App.csproj" Query="/Project/PropertyGroup/TargetFrameworks" Value="net9.0-desktop" />
+    <XmlPoke XmlInputPath="$(MSBuildThisFileDirectory)/Eppie.App.UI/Eppie.App.UI.Uno/Eppie.App.UI.Uno.csproj" Query="/Project/PropertyGroup/TargetFrameworks" Value="net9.0%3Bnet9.0-desktop" />
+  </Target>
 </Project>
+
