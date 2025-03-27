@@ -1,4 +1,4 @@
-namespace Eppie.App
+﻿namespace Eppie.App
 {
     public class Program
     {

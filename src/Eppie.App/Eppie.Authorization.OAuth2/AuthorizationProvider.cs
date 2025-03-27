@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Net.Http;
 using Finebits.Authorization.OAuth2.Abstractions;
 using Finebits.Authorization.OAuth2.Google;

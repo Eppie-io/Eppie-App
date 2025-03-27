@@ -1,4 +1,4 @@
-using Tuvi.Core.Entities;
+﻿using Tuvi.Core.Entities;
 using System;
 using System.Runtime.InteropServices.WindowsRuntime;
 

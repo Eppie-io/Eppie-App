@@ -1,4 +1,4 @@
-using Android.Runtime;
+﻿using Android.Runtime;
 using Com.Nostra13.Universalimageloader.Core;
 
 namespace Eppie.App.Droid

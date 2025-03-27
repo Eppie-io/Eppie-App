@@ -1,4 +1,4 @@
-namespace Tuvi.App.Shared.Services
+﻿namespace Tuvi.App.Shared.Services
 {
     public class LocalizationService : Tuvi.App.ViewModels.Services.ILocalizationService
     {

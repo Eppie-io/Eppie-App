@@ -1,4 +1,4 @@
-using System.IdentityModel.Tokens.Jwt;
+﻿using System.IdentityModel.Tokens.Jwt;
 using Finebits.Authorization.OAuth2.Types;
 using Microsoft.IdentityModel.Tokens;
 

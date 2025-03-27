@@ -1,4 +1,4 @@
-namespace Tuvi.App.ViewModels.Services
+﻿namespace Tuvi.App.ViewModels.Services
 {
     public interface INavigationService
     {

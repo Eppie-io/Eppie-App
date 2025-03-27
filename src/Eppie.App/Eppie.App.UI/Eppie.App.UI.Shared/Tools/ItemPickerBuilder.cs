@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Windows.Storage.Pickers;
 
 #if WINDOWS_UWP

@@ -1,4 +1,4 @@
-using Tuvi.App.ViewModels.Validation;
+﻿using Tuvi.App.ViewModels.Validation;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;

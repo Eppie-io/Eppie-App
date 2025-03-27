@@ -1,4 +1,4 @@
-using Microsoft.Xaml.Interactivity;
+﻿using Microsoft.Xaml.Interactivity;
 using System;
 using System.Windows.Input;
 using Windows.System;

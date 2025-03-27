@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Eppie.App.UI.Resources;
 using Windows.UI.Text;
 

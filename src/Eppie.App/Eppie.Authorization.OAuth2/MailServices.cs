@@ -1,4 +1,4 @@
-namespace Tuvi.OAuth2
+﻿namespace Tuvi.OAuth2
 {
     public enum MailService
     {

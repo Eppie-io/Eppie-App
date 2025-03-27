@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;

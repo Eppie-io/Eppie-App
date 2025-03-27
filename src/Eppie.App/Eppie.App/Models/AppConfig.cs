@@ -1,4 +1,4 @@
-namespace Eppie.App.Models
+﻿namespace Eppie.App.Models
 {
     public record AppConfig
     {

@@ -1,4 +1,4 @@
-#if !WINDOWS_UWP
+﻿#if !WINDOWS_UWP
 
 using Tuvi.App.Shared.Models;
 using Tuvi.App.Shared.Services;

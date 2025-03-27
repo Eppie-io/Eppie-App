@@ -1,4 +1,4 @@
-#if HAS_UNO
+﻿#if HAS_UNO
 
 using Finebits.Authorization.OAuth2.Abstractions;
 using Finebits.Authorization.OAuth2.AuthenticationBroker;

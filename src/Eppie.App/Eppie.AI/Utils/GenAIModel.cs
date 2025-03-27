@@ -1,4 +1,4 @@
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using System.Text;
 using Microsoft.Extensions.AI;
 using Microsoft.ML.OnnxRuntimeGenAI;

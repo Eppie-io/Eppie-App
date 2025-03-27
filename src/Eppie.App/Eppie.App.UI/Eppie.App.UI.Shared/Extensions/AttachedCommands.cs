@@ -1,4 +1,4 @@
-using System.Windows.Input;
+﻿using System.Windows.Input;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
