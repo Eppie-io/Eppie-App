@@ -432,7 +432,7 @@ namespace Tuvi.App.ViewModels
                     InitModel(LocalAIAgentSettings.Create(), true);
                 }
 
-                await ToggleAIButtons().ConfigureAwait(true);
+                await ToggleAIButtonsAsync().ConfigureAwait(true);
                 await UpdateEmailAccountsListAsync().ConfigureAwait(true);
                 await UpdateAIAgentsListAsync().ConfigureAwait(true);
             }
@@ -456,7 +456,7 @@ namespace Tuvi.App.ViewModels
             finally
             {
                 HideProgressRing();
-                await ToggleAIButtons().ConfigureAwait(true);
+                await ToggleAIButtonsAsync().ConfigureAwait(true);
             }
         }
 
@@ -474,7 +474,7 @@ namespace Tuvi.App.ViewModels
             finally
             {
                 HideProgressRing();
-                await ToggleAIButtons().ConfigureAwait(true);
+                await ToggleAIButtonsAsync().ConfigureAwait(true);
             }
         }
 
@@ -491,7 +491,7 @@ namespace Tuvi.App.ViewModels
             IsAIProgressRingVisible = false;
         }
 
-        private async Task ToggleAIButtons()
+        private async Task ToggleAIButtonsAsync()
         {
             if (await AIService.IsLocalAIModelImportedAsync().ConfigureAwait(true))
             {
