@@ -41,7 +41,7 @@ jobs:
           - project: "src/Eppie.App/Eppie.App.sln"
             uno: "true"
 
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       - name: Support longpaths
