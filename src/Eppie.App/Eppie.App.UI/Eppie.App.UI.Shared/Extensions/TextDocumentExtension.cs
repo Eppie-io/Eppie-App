@@ -1,4 +1,4 @@
-using System.Text;
+﻿using System.Text;
 
 #if WINDOWS_UWP
 using Windows.UI.Text;

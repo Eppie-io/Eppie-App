@@ -1,4 +1,4 @@
-using Tuvi.App.Shared.Extensions;
+﻿using Tuvi.App.Shared.Extensions;
 
 #if WINDOWS_UWP
 using Windows.UI.Text;

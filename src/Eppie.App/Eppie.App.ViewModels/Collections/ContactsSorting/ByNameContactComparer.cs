@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Tuvi.Core.Entities;
 
 namespace Tuvi.App.ViewModels

@@ -1,4 +1,4 @@
-using Microsoft.Xaml.Interactivity;
+﻿using Microsoft.Xaml.Interactivity;
 using System.Windows.Input;
 
 #if WINDOWS_UWP

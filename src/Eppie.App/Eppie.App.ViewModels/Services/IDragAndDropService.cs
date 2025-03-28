@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Tuvi.App.ViewModels;
 
 namespace Eppie.App.ViewModels.Services

@@ -38,11 +38,8 @@ jobs:
     strategy:
       matrix:
         include:
-          - project: "src/Eppie.App/Eppie.App/Eppie.App.csproj"
+          - project: "src/Eppie.App/Eppie.App.sln"
             uno: "true"
-          # https://github.com/dotnet/sdk/issues/43017  
-          # - project: "src/Eppie.App/Eppie.App.UWP/Eppie.App.UWP.csproj"
-          #  uno: "false"
 
     runs-on: windows-latest
 
@@ -64,4 +61,4 @@ jobs:
 
       - name: Verify format
         shell: bash
-        run:  dotnet format "${{ matrix.project }}" --verify-no-changes --severity=error --verbosity diagnostic
+        run:  dotnet format "${{ matrix.project }}" --verify-no-changes --severity=error --verbosity diagnostic --exclude ./gitmodules/

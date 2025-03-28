@@ -1,4 +1,4 @@
-using Tuvi.App.ViewModels.Services;
+﻿using Tuvi.App.ViewModels.Services;
 using Windows.Services.Store;
 
 namespace Tuvi.App.Shared.Services

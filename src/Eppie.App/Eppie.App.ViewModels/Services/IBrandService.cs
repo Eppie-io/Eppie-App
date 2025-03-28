@@ -1,4 +1,4 @@
-namespace Tuvi.App.ViewModels.Services
+﻿namespace Tuvi.App.ViewModels.Services
 {
     public interface IBrandService
     {
@@ -11,5 +11,6 @@ namespace Tuvi.App.ViewModels.Services
         string GetPackageVersion();
         string GetFileVersion();
         string GetInformationalVersion();
+        string GetDevelopmentSupport();
     }
 }

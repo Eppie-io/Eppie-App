@@ -72,8 +72,12 @@ indent_size = 2
 end_of_line = lf
 
 [*.cs]
+
 # EOL should be normalized by Git. See https://github.com/dotnet/format/issues/1099
 end_of_line = unset
+
+# See https://github.com/dotnet/sdk/issues/9351#issuecomment-468353668
+charset = utf-8-bom
 
 # See https://github.com/dotnet/roslyn/issues/20356#issuecomment-310143926
 trim_trailing_whitespace = false

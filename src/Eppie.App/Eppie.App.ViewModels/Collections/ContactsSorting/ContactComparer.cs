@@ -1,4 +1,4 @@
-namespace Tuvi.App.ViewModels
+﻿namespace Tuvi.App.ViewModels
 {
     public abstract class ContactComparer : IExtendedComparer<ContactItem>
     {

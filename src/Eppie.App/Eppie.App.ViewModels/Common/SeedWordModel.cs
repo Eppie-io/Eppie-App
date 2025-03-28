@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -84,6 +84,11 @@ namespace Tuvi.App.ViewModels.Common
 
         public void Import(string value)
         {
+            if (value is null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
             var seedWords = PrepareImportedSeed(value);
             Clear();
             AddWords(seedWords, false);

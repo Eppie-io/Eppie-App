@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
@@ -404,7 +404,14 @@ namespace Tuvi.App.ViewModels
 
         private async Task SupportDevelopmentAsync()
         {
-            await PurchaseService.BuySubscriptionAsync();
+            try
+            {
+                await PurchaseService.BuySubscriptionAsync().ConfigureAwait(true);
+            }
+            catch
+            {
+                await LauncherService.LaunchAsync(new Uri(BrandService.GetDevelopmentSupport())).ConfigureAwait(true);
+            }
         }
 
         public IRelayCommand<Problem> CloseProblemCommand => new RelayCommand<Problem>(CloseProblem);
@@ -525,7 +532,7 @@ namespace Tuvi.App.ViewModels
                 }
 
                 base.OnError(e);
-            });
+            }).ConfigureAwait(true);
         }
 
         private void AddProblem(string title, string solution, EmailAddress email, string message)

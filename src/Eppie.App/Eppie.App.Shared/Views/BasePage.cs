@@ -1,4 +1,4 @@
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Tuvi.App.Shared.Models;
 using Tuvi.App.Shared.Services;

@@ -15,14 +15,14 @@ Out of 4+ billion email accounts in the world, about 0 belong to users.
 
 A typical mailbox contains all sorts of important private information of our business and social activity, finance, health, consumer behaviour etc. Furthermore email is the primary identity provider in the modern Internet. We use our email address to log in to hundreds of other services. Email is the core of our digital identity. Yet we do not own it. It is controlled by a server and therefore belongs to the technology provider. The server decides whether to allow us to use our identity or not. This is a privacy violation by design. Identity naturally belongs to human, it should not be a service.
 
-At its core, the users’ confidence that their data is accessible to them, and not to anyone else, relies on trust in the service. Privacy based on trust is weak. In Eppie mailbox belongs exclusively to the owner of the private key. Eppie operates autonomously in a p2p networks There are no servers or other authorities ‘providing the service’ and therefore controlling the data. Nobody has access to data, even us, the developers. The system relies solely on strong cryptography and the decetralized architecture.
+At its core, the users' confidence that their data is accessible to them, and not to anyone else, relies on trust in the service. Privacy based on trust is weak. In Eppie mailbox belongs exclusively to the owner of the private key. Eppie operates autonomously in a p2p networks There are no servers or other authorities 'providing the service' and therefore controlling the data. Nobody has access to data, even us, the developers. The system relies solely on strong cryptography and the decetralized architecture.
 
 ## Features
 
 Eppie is early in development. The p2p part is not publicly available at the moment. For now it works as a conventional email client with additional security features:
 
-- Compatibility with Gmail, Microsoft Outlook and other major email providers.
-- Eppie can authentication at Proton Mail servers (which no other native desktop clients can do, as far as we are aware).
+- Compatible with Gmail, Microsoft Outlook and other major email providers.
+- Eppie can authenticate at Proton Mail servers (which no other native desktop client can do, as far as we are aware).
 - PGP encryption is supported.
 - Local account created with [BIP39 standard](https://bitcoinwiki.org/wiki/mnemonic-phrase) Seed-Phrase.
 - Encrypted local backup.
@@ -54,75 +54,46 @@ App Store and Google Play: WIP
 
 You may download the latest release for your system:
 
-### Windows Installer
+### Windows
 
 - [Eppie.App-x86-x64-ARM64.msixbundle](https://github.com/Eppie-io/Eppie-App/releases/latest/download/Eppie.App-x86-x64-ARM64.msixbundle) (UWP)
 - [Eppie.App.WinAppSDK-x86-x64-ARM64.msixbundle](https://github.com/Eppie-io/Eppie-App/releases/latest/download/Eppie.App.WinAppSDK-x86-x64-ARM64.msixbundle) (Windows App SDK)
+- [eppie.desktop-win-x64.zip](https://github.com/Eppie-io/Eppie-App/releases/download/v1.0.0-preview.1/eppie.desktop-win-x64.zip) (Binaries)
 
-### Linux Binaries
+### Linux
 
-- [eppie.desktop-linux-x64.tar.gz](https://github.com/Eppie-io/Eppie-App/releases/latest/download/eppie.desktop-linux-x64.tar.gz)
+- [eppie.desktop-linux-x64.tar.gz](https://github.com/Eppie-io/Eppie-App/releases/latest/download/eppie.desktop-linux-x64.tar.gz) (Binaries)
 
-### macOS Binaries
+### macOS
 
-- [eppie.desktop-osx-x64.tar.gz](https://github.com/Eppie-io/Eppie-App/releases/latest/download/eppie.desktop-osx-x64.tar.gz)
+- [eppie.desktop-osx-x64.tar.gz](https://github.com/Eppie-io/Eppie-App/releases/latest/download/eppie.desktop-osx-x64.tar.gz) (Binaries)
 
-### Android Binaries
+### Android
 
 WIP
 
 ## Build from Source Code
 
-### Windows
-
-#### Prerequisites
-
-- OS: Windows 10 or later
-- IDE: Visual Studio 2022 with installed workloads and components:
-  - .Net Multi-platform App UI development
-    - Android SDK setup (with Android SDK Platform 31)
-    - .NET profiling tools
-    - Xamarin
-  - Windows application development
-    - Universal Windows Platform tools
-    - Windows 11 SDK (10.0.22621.0)
-    - Windows 10 SDK (10.0.19041.0)
-    - Windows App SDK
-
-> [!NOTE]
-> You can add the **Android SDK Platform 31** api in the **Platforms** tab in the **Android SDK Manager**  
-> **Visual Studio Menu**: **Tools** &#10148; **Android** &#10148; **Android SDK Manager**
-
-#### To Clone
+### Clone
 
 ```console
 git clone --recursive https://github.com/Eppie-io/Eppie-App.git eppie-app
 ```
 
-#### To Build and Launch
+### Setting up the environment
 
-1. Open the `src/Eppie.App/Eppie.App.sln` file in Visual Studio.
-2. Set the appropriate project as your startup project:
-   - **UWP**: Select `Eppie.App.UWP`.
-   - **Windows App SDK**: Select `Eppie.App`.
-3. Select the **x64** platform.
-   - For **Windows App SDK**, also set the target framework to `net9.0-windows10.0.22621`.
-4. Build the solution:
-   - **Visual Studio Menu**: `Build ➤ Build Solution`
-5. Launch the project:
-   - **UWP**: Run with debugging using `Debug ➤ Start Debugging (F5)` or without debugging using `Debug ➤ Start Without Debugging (Ctrl + F5)`.
-   - **Windows App SDK**: Run with debugging using `Debug ➤ Start Debugging (F5)` or without debugging using `Debug ➤ Start Without Debugging (Ctrl + F5)`.
+Use the following [guide](https://platform.uno/docs/articles/get-started-vscode.html) to set up an environment for building Eppie in **VS Code** under Windows, Linux or macOS.  
+For **Visual Studio 2022**, use [this guide](https://platform.uno/docs/articles/get-started-vs-2022.html)  
+To build the UWP project, use [Visual Studio 2022](https://platform.uno/docs/articles/get-started-vs-2022.html) with installed component **Windows application development &#10148; Universal Windows Platform tools**
 
-For instructions on creating an app package, refer to [this guide](https://platform.uno/docs/articles/uno-publishing-windows-packaged-signed.html).
+### Build and Launch
 
+To [debug Eppie](https://platform.uno/docs/articles/create-an-app-vscode.html?tabs=skia#debug-the-app) on Windows, macOS, and Linux.  
+To [debug Eppie](https://platform.uno/docs/articles/create-an-app-vs2022.html?tabs=desktop#debug-the-app) with **Visual Studio 2022**.
 
-### Linux
+To run the UWP project, open `src/Eppie.App/Eppie.App.sln` file in **Visual Studio 2022** and select `Eppie.App.UWP` as your startup project.
 
-WIP
-
-### macOS
-
-WIP
+To create Eppie packages, refer to [these instructions](https://platform.uno/docs/articles/uno-publishing-overview.html).
 
 ## Planned Features
 
@@ -131,16 +102,16 @@ As the project matures more features will be added, including but not limited to
 - Creating a decentralized Eppie account
 - Encrypted p2p messaging
 - Encrypted decentralized backup
-- Connecting existing decentralized identities, e.g. [ENS](https://ens.domains/)
+- Connecting existing decentralized identities, e.g. [ENS](https://ens.domains/)
 
 ## Technology Stack
 
-At launch Eppie will to store the data using [IPFS](https://github.com/ipfs/ipfs) infrastructure, and the transport layer will work through [SBBS](https://github.com/BeamMW/beam/wiki/Secure-bulletin-board-system-%28SBBS%29). With that being said, the architecture allows to easily plug in multiple storage and transport technologies. Eppie's e2e encryption is based on [Elliptic-curve](https://en.wikipedia.org/wiki/Elliptic-curve_cryptography) cryptography. GUI application is being written in C# with [Uno](https://github.com/unoplatform/uno), and [CLI](https://github.com/Eppie-io/Eppie-CLI) is pure C#. Eppie targets Windows, macOS, Linux, iOS, and Android platforms.
+At launch Eppie will store the data using [IPFS](https://github.com/ipfs/ipfs) infrastructure, and the transport layer will work through [SBBS](https://github.com/BeamMW/beam/wiki/Secure-bulletin-board-system-%28SBBS%29). With that being said, the architecture allows to easily plug in multiple storage and transport technologies. Eppie's e2e encryption is based on [Elliptic-curve](https://en.wikipedia.org/wiki/Elliptic-curve_cryptography) cryptography. GUI application is being written in C# with [Uno](https://github.com/unoplatform/uno), and [CLI](https://github.com/Eppie-io/Eppie-CLI) is pure C#. Eppie targets Windows, macOS, Linux, iOS, and Android platforms.
 
 ## Contribution
 
 First of all this is a pretty ambitiois project and we are greateful beyond measure for every bit of help from our community. If you decide to contribute, please create an issue first, or find an existing one, unless it's a very minor fix, like a typo.
 
-[Here](https://eppie.crowdin.com/eppie) you can help Eppie with localization.
+[Here](https://eppie.crowdin.com/eppie) you can help Eppie with localization.
 
 Also, feel free to [subscripe](https://eppie.io) to our waiting list. We might invite you for an interview or beta testing.

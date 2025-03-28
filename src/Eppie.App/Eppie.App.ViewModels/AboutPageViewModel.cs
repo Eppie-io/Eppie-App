@@ -1,8 +1,8 @@
-namespace Tuvi.App.ViewModels
+﻿namespace Tuvi.App.ViewModels
 {
     public class AboutPageViewModel : BaseViewModel
     {
-        private string _appVersion = null;
+        private string _appVersion;
         public string AppVersion
         {
             get { return _appVersion ?? (_appVersion = BrandService.GetAppVersion()); }

@@ -1,4 +1,4 @@
-using Microsoft.UI.Dispatching;
+﻿using Microsoft.UI.Dispatching;
 using Tuvi.App.ViewModels.Services;
 
 namespace Tuvi.App.Shared.Services

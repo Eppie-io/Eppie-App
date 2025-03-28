@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -65,6 +65,11 @@ namespace Tuvi.App.ViewModels.Common
 
         protected static string CreateToAdress(MessageInfo messageInfo)
         {
+            if (messageInfo is null)
+            {
+                throw new ArgumentNullException(nameof(messageInfo));
+            }
+
             var replyTo = messageInfo.MessageData.ReplyTo.FirstOrDefault();
             return replyTo != null ? replyTo.Address : messageInfo.MessageData.From.FirstOrDefault()?.Address;
         }

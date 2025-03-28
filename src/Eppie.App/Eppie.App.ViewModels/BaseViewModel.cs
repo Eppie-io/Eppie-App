@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
@@ -135,6 +135,11 @@ namespace Tuvi.App.ViewModels
 
         protected void NavigateToMailboxSettingsPage(Account account, bool isReloginNeeded)
         {
+            if (account is null)
+            {
+                throw new ArgumentNullException(nameof(account));
+            }
+
             if (StringHelper.IsDecentralizedEmail(account.Email))
             {
                 NavigationService?.Navigate(nameof(DecentralizedAccountSettingsPageViewModel), account);
@@ -165,6 +170,16 @@ namespace Tuvi.App.ViewModels
 
         protected async Task AIAgentProcessMessageAsync(LocalAIAgent agent, MessageInfo message)
         {
+            if (agent is null)
+            {
+                throw new ArgumentNullException(nameof(agent));
+            }
+
+            if (message is null)
+            {
+                throw new ArgumentNullException(nameof(message));
+            }
+
             var text = message.HasTextBody ? message.MessageTextBody : Core.GetTextUtils().GetTextFromHtml(message.MessageHtmlBody);
 
             message.AIAgentProcessedBody = GetLocalizedString("ThinkingMessage");

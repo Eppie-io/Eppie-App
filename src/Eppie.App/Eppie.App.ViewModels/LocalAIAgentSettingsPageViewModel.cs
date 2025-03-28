@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -432,7 +432,7 @@ namespace Tuvi.App.ViewModels
                     InitModel(LocalAIAgentSettings.Create(), true);
                 }
 
-                await ToggleAIButtons();
+                await ToggleAIButtonsAsync().ConfigureAwait(true);
                 await UpdateEmailAccountsListAsync().ConfigureAwait(true);
                 await UpdateAIAgentsListAsync().ConfigureAwait(true);
             }
@@ -447,7 +447,7 @@ namespace Tuvi.App.ViewModels
             ShowProgressRing();
             try
             {
-                await AIService.DeleteModelAsync();
+                await AIService.DeleteModelAsync().ConfigureAwait(true);
             }
             catch (Exception ex)
             {
@@ -456,7 +456,7 @@ namespace Tuvi.App.ViewModels
             finally
             {
                 HideProgressRing();
-                await ToggleAIButtons();
+                await ToggleAIButtonsAsync().ConfigureAwait(true);
             }
         }
 
@@ -465,7 +465,7 @@ namespace Tuvi.App.ViewModels
             ShowProgressRing();
             try
             {
-                await AIService.ImportModelAsync();
+                await AIService.ImportModelAsync().ConfigureAwait(true);
             }
             catch (Exception ex)
             {
@@ -474,7 +474,7 @@ namespace Tuvi.App.ViewModels
             finally
             {
                 HideProgressRing();
-                await ToggleAIButtons();
+                await ToggleAIButtonsAsync().ConfigureAwait(true);
             }
         }
 
@@ -491,9 +491,9 @@ namespace Tuvi.App.ViewModels
             IsAIProgressRingVisible = false;
         }
 
-        private async Task ToggleAIButtons()
+        private async Task ToggleAIButtonsAsync()
         {
-            if (await AIService.IsLocalAIModelImportedAsync())
+            if (await AIService.IsLocalAIModelImportedAsync().ConfigureAwait(true))
             {
                 IsImportAIModelButtonVisible = false;
                 IsDeleteAIModelButtonVisible = true;

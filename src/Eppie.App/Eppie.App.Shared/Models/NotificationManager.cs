@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Tuvi.App.Shared.Services;
 using Tuvi.Core;
 using Tuvi.Core.Entities;

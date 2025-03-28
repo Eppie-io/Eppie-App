@@ -1,4 +1,4 @@
-using Tuvi.App.ViewModels.Services;
+﻿using Tuvi.App.ViewModels.Services;
 using Tuvi.Core.Entities;
 
 // ToDo: Change namespace

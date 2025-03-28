@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
@@ -23,7 +23,8 @@ namespace Tuvi.App.Shared.Models
                 {"AppName", "Eppie (preview)"},
                 {"Support", "beta@eppie.io"},
                 {"Homepage", "https://eppie.io"},
-                {"License", "https://eppie.io"}
+                {"License", "https://eppie.io"},
+                {"DevelopmentSupport", "https://github.com/sponsors/Eppie-io"}
             };
         }
     }
@@ -38,7 +39,8 @@ namespace Tuvi.App.Shared.Models
                 {"AppName", "Eppie (development)"},
                 {"Support", "beta@eppie.io"},
                 {"Homepage", "https://eppie.io"},
-                {"License", "https://eppie.io"}
+                {"License", "https://eppie.io"},
+                {"DevelopmentSupport", "https://github.com/sponsors/Eppie-io"}
             };
         }
     }
@@ -119,6 +121,11 @@ namespace Tuvi.App.Shared.Models
         public string GetAppVersion()
         {
             return GetInformationalVersion() ?? GetVersion() ?? GetPackageVersion();
+        }
+
+        public string GetDevelopmentSupport()
+        {
+            return GetString("DevelopmentSupport");
         }
     }
 }

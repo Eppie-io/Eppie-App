@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Tuvi.Core.Entities;
 
@@ -40,7 +40,7 @@ namespace Tuvi.App.ViewModels
             set { SetProperty(ref _avatarInfo, value); }
         }
 
-        private LastMessageData _lastMessageData = null;
+        private LastMessageData _lastMessageData;
         public LastMessageData LastMessageData
         {
             get { return _lastMessageData; }

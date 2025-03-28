@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
@@ -235,15 +235,15 @@ namespace Tuvi.App.ViewModels
                 case PasswordActions.EnterPassword:
                     {
                         return await ProcessEnterPasswordActionAsync().ConfigureAwait(true);
-                    };
+                    }
                 case PasswordActions.SetPassword:
                     {
                         return await ProcessSetPasswordActionAsync().ConfigureAwait(true);
-                    };
+                    }
                 case PasswordActions.ChangePassword:
                     {
                         return await ProcessChangePasswordActionAsync().ConfigureAwait(true);
-                    };
+                    }
                 default:
                     {
                         return false;

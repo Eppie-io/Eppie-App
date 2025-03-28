@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -200,7 +200,7 @@ namespace Tuvi.App.ViewModels
         {
             try
             {
-                IsLocalAIEnabled = await AIService.IsEnabledAsync();
+                IsLocalAIEnabled = await AIService.IsEnabledAsync().ConfigureAwait(true);
             }
             catch (Exception e)
             {
@@ -354,7 +354,7 @@ namespace Tuvi.App.ViewModels
                 // we leaved the page
                 return;
             }
-            await MessageList.RefreshAsync();
+            await MessageList.RefreshAsync().ConfigureAwait(true);
         }
 
         private async Task<MessageInfo> GetMessageBodyAsync(MessageInfo messageInfo)
@@ -589,7 +589,12 @@ namespace Tuvi.App.ViewModels
 
         public override async Task CreateAIAgentsMenuAsync(Action<string, Action<IList<object>>> action)
         {
-            var agents = await AIService.GetAgentsAsync();
+            if (action is null)
+            {
+                throw new ArgumentNullException(nameof(action));
+            }
+
+            var agents = await AIService.GetAgentsAsync().ConfigureAwait(true);
             foreach (var agent in agents)
             {
                 action(agent.Name, (items) => ProcessMessages(agent, items));

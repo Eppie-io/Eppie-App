@@ -1,4 +1,4 @@
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using Tuvi.App.ViewModels;
 
 #if WINDOWS_UWP

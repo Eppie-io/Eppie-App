@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -88,7 +88,7 @@ namespace Tuvi.App.ViewModels
 
         private async Task InitializeAIButtonAsync()
         {
-            IsLocalAIEnabled = await AIService.IsEnabledAsync();
+            IsLocalAIEnabled = await AIService.IsEnabledAsync().ConfigureAwait(true);
         }
 
         protected async Task DeleteMessageAndGoBackAsync()
@@ -218,7 +218,12 @@ namespace Tuvi.App.ViewModels
 
         public override async Task CreateAIAgentsMenuAsync(Action<string, Action> action)
         {
-            var agents = await AIService.GetAgentsAsync();
+            if (action is null)
+            {
+                throw new ArgumentNullException(nameof(action));
+            }
+
+            var agents = await AIService.GetAgentsAsync().ConfigureAwait(true);
             foreach (var agent in agents)
             {
                 action(agent.Name, () => ProcessMessage(agent));
