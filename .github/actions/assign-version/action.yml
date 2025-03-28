@@ -25,6 +25,10 @@ outputs:
     value: ${{ steps.assign-version.outputs.semantic-version }}
   numeric-version: 
     value: ${{ steps.assign-version.outputs.numeric-version }}
+  app-version: 
+    value: ${{ steps.assign-version.outputs.app-version }}
+  app-display-version: 
+    value: ${{ steps.assign-version.outputs.app-display-version }}
 
 runs:
   using: "composite"
@@ -72,3 +76,5 @@ runs:
         build=$(($suffix_code+$revision))
 
         echo "numeric-version=$major.$minor.$build.0" >> $GITHUB_OUTPUT
+        echo "app-display-version=$major.$minor.$build" >> $GITHUB_OUTPUT
+        echo "app-version=$major" >> $GITHUB_OUTPUT

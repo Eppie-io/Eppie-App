@@ -136,6 +136,8 @@ jobs:
         run: |
           semantic_version='${{ steps.assign-version.outputs.semantic-version }}'
           numeric_version='${{ steps.assign-version.outputs.numeric-version }}'
+          app_version='${{ steps.assign-version.outputs.app-version }}'
+          app_display_version='${{ steps.assign-version.outputs.app-display-version }}'
 
           project='${{ matrix.publish.project }}'
           configuration='${{ matrix.publish.configuration }}'
@@ -148,10 +150,11 @@ jobs:
           IFS_CACHE=$IFS
           IFS='|'
 
-          options="--configuration=$configuration --framework=$framework --runtime=$runtime --property:Version=\"$semantic_version\" --property:AssemblyVersion=\"$numeric_version\" --property:PackageVersion=\"$numeric_version\""
+          options="--configuration=$configuration --framework=$framework --runtime=$runtime"
+          version_options="--property:Version=\"$semantic_version\" --property:AssemblyVersion=\"$numeric_version\" --property:PackageVersion=\"$numeric_version\" --property:ApplicationVersion=\"$app_version\" --property:ApplicationDisplayVersion=\"$app_display_version\""
           for prepare_options in $prepare
           do
-            echo "$prepare_options $options" | xargs dotnet build $project
+            echo "$prepare_options $options $version_options" | xargs dotnet build $project
           done
 
           IFS=$IFS_CACHE
@@ -162,6 +165,8 @@ jobs:
         run: |
           semantic_version='${{ steps.assign-version.outputs.semantic-version }}'
           numeric_version='${{ steps.assign-version.outputs.numeric-version }}'
+          app_version='${{ steps.assign-version.outputs.app-version }}'
+          app_display_version='${{ steps.assign-version.outputs.app-display-version }}'
 
           project='${{ matrix.publish.project }}'
           configuration='${{ matrix.publish.configuration }}'
@@ -170,8 +175,9 @@ jobs:
           publish_path='${{ env.publish-path }}'
           extra_options='${{ matrix.publish.extra }}'
 
-          options="--output=$publish_path --configuration=$configuration --framework=$framework --runtime=$runtime --property:Version=\"$semantic_version\" --property:AssemblyVersion=\"$numeric_version\" --property:PackageVersion=\"$numeric_version\""
-          echo "$options $extra_options" | xargs dotnet publish $project 
+          options="--output=$publish_path --configuration=$configuration --framework=$framework --runtime=$runtime"
+          version_options="--property:Version=\"$semantic_version\" --property:AssemblyVersion=\"$numeric_version\" --property:PackageVersion=\"$numeric_version\" --property:ApplicationVersion=\"$app_version\" --property:ApplicationDisplayVersion=\"$app_display_version\""
+          echo "$options $extra_options $version_options" | xargs dotnet publish $project 
 
           rm -rf $publish_path/*.pdb
 
@@ -191,7 +197,7 @@ jobs:
           elif [[ "$tool" == "7z"  ]]; then
             7z a -tzip "${artifact_path}/${artifact_name}.zip" "$publish_path/*" && echo "Archiving of the artifact '$artifact_name' has been completed successfully." || echo "::warning::Failed to archive artifact '$artifact_name'"
           elif [[ "$tool" == "cp" ]]; then
-            cp "$artifact_path" "$publish_path" && echo "Copying of the artifact has been completed successfully." || echo "::warning::Failed to copy artifact"
+            cp -r ${publish_path}/* ${artifact_path} && echo "Copying of the artifact has been completed successfully." || echo "::warning::Failed to copy artifact"
           else
             echo "::warning::Unknown artifact tool: '$tool'"
           fi
