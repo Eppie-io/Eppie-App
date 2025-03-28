@@ -1,0 +1,74 @@
+################################################################################
+#                                                                              #
+#   Copyright 2025 Finebits (https://finebits.com)                             #
+#                                                                              #
+#   Licensed under the Apache License, Version 2.0 (the "License");            #
+#   you may not use this file except in compliance with the License.           #
+#   You may obtain a copy of the License at                                    #
+#                                                                              #
+#       http://www.apache.org/licenses/LICENSE-2.0                             #
+#                                                                              #
+#   Unless required by applicable law or agreed to in writing, software        #
+#   distributed under the License is distributed on an "AS IS" BASIS,          #
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.   #
+#   See the License for the specific language governing permissions and        #
+#   limitations under the License.                                             #
+#                                                                              #
+################################################################################
+
+---
+
+name: Install Eppie Prerequisites
+
+outputs:
+  semantic-version: 
+    value: ${{ steps.assign-version.outputs.semantic-version }}
+  numeric-version: 
+    value: ${{ steps.assign-version.outputs.numeric-version }}
+
+runs:
+  using: "composite"
+
+  steps:
+    - name: Provide version
+      id: provide-version
+      uses: finebits/github-actions/toolset/find-out-version@4a126d80a11c5fdc83ce884d3d23dffb30bc4495 # v2.0.0
+
+    - name: Assign version
+      id: assign-version
+      shell: bash
+      run: |
+        major="${{ steps.provide-version.outputs.major }}"
+        minor="${{ steps.provide-version.outputs.minor }}"
+        patch="${{ steps.provide-version.outputs.patch }}"
+        suffix="${{ steps.provide-version.outputs.suffix }}"
+        githash="${{ steps.provide-version.outputs.githash }}"
+        run_number="${{ steps.provide-version.outputs.build }}"
+        run_attempt="${{ steps.provide-version.outputs.attempt }}"
+
+        # Semantic versioning: major.minor.patch-suffix+githash.run_number.run_attempt
+        echo "semantic-version=$major.$minor.$patch-$suffix+$githash.$run_number.$run_attempt" >> $GITHUB_OUTPUT
+
+        # https://learn.microsoft.com/en-us/windows/apps/publish/publish-your-app/msix/app-package-requirements#package-version-numbering
+        # Version numbering: major.minor.build.0
+        # build=(suffix_code + revision) 
+        # suffix_code: unknown [0] < preview [10000] < alpha [20000] < beta [30000] < rc [40000] < no-suffix [50000] < [65535]
+
+        suffix_code=0
+        case "${suffix%%.*}" in
+          "")       suffix_code=50000 ;; # release
+          rc)       suffix_code=40000 ;;
+          beta)     suffix_code=30000 ;;
+          alpha)    suffix_code=20000 ;;
+          preview)  suffix_code=10000 ;;
+          *)        suffix_code=0     ;; # unknown
+        esac
+
+        revision=${suffix##*.}
+
+        regex_number='^[1-9][0-9]*$'
+        revision=$([[ $revision =~ $regex_number ]] && echo $revision || echo $patch )
+
+        build=$(($suffix_code+$revision))
+
+        echo "numeric-version=$major.$minor.$build.0" >> $GITHUB_OUTPUT
