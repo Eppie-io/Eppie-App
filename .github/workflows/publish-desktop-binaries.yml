@@ -108,7 +108,7 @@ jobs:
         with: 
           uno-platform: true
 
-      - name: Provide version
+      - name: Assign version
         id: assign-version
         uses: ./.github/actions/assign-version
 
@@ -148,7 +148,7 @@ jobs:
           IFS_CACHE=$IFS
           IFS='|'
 
-          options="--output=$publish_path --configuration=$configuration --framework=$framework --runtime=$runtime --property:Version=\"$semantic_version\" --property:AssemblyVersion=\"$numeric_version\""
+          options="--configuration=$configuration --framework=$framework --runtime=$runtime --property:Version=\"$semantic_version\" --property:AssemblyVersion=\"$numeric_version\" --property:PackageVersion=\"$numeric_version\""
           for prepare_options in $prepare
           do
             echo "$prepare_options $options" | xargs dotnet build $project
@@ -170,8 +170,8 @@ jobs:
           publish_path='${{ env.publish-path }}'
           extra_options='${{ matrix.publish.extra }}'
 
-          options="--output=$publish_path --configuration=$configuration --framework=$framework --runtime=$runtime --property:Version=\"$semantic_version\" --property:AssemblyVersion=\"$numeric_version\""
-          echo "$options  $extra_options" | xargs dotnet publish $project 
+          options="--output=$publish_path --configuration=$configuration --framework=$framework --runtime=$runtime --property:Version=\"$semantic_version\" --property:AssemblyVersion=\"$numeric_version\" --property:PackageVersion=\"$numeric_version\""
+          echo "$options $extra_options" | xargs dotnet publish $project 
 
           rm -rf $publish_path/*.pdb
 
