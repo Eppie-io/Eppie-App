@@ -12,8 +12,9 @@
             "configuration": "release",
             "framework": "net9.0-desktop",
             "runtime": "win-x64",
-            "extra": " --property:SelfContained=true --property:PublishSingleFile=false --property:IncludeSourceRevisionInInformationalVersion=false",
+            "extra": "--property:SelfContained=true --property:PublishSingleFile=false --property:IncludeSourceRevisionInInformationalVersion=false",
             "prepare": [
+                "--target:PackageVersioning --no-restore",
                 "--target:TargetFrameworks-Desktop --no-restore"
             ]
         },
@@ -34,8 +35,9 @@
             "configuration": "release",
             "framework": "net9.0-desktop",
             "runtime": "linux-x64",
-            "extra": " --property:SelfContained=true --property:PublishSingleFile=true --property:IncludeSourceRevisionInInformationalVersion=false",
+            "extra": "--property:SelfContained=true --property:PublishSingleFile=true --property:IncludeSourceRevisionInInformationalVersion=false",
             "prepare": [
+                "--target:PackageVersioning --no-restore",
                 "--target:TargetFrameworks-Desktop --no-restore"
             ] 
         },
@@ -56,8 +58,9 @@
             "configuration": "release",
             "framework": "net9.0-desktop",
             "runtime": "linux-arm64",
-            "extra": " --property:SelfContained=true --property:PublishSingleFile=true --property:IncludeSourceRevisionInInformationalVersion=false",
+            "extra": "--property:SelfContained=true --property:PublishSingleFile=true --property:IncludeSourceRevisionInInformationalVersion=false",
             "prepare": [
+                "--target:PackageVersioning --no-restore",
                 "--target:TargetFrameworks-Desktop --no-restore"
             ] 
         },
@@ -78,8 +81,9 @@
             "configuration": "release",
             "framework": "net9.0-desktop",
             "runtime": "osx-x64",
-            "extra": " --property:SelfContained=true --property:PublishSingleFile=true --property:IncludeSourceRevisionInInformationalVersion=false",
+            "extra": "--property:SelfContained=true --property:PublishSingleFile=true --property:IncludeSourceRevisionInInformationalVersion=false",
             "prepare": [
+                "--target:PackageVersioning --no-restore",
                 "--target:TargetFrameworks-Desktop --no-restore"
             ]
         },
@@ -100,8 +104,9 @@
             "configuration": "release",
             "framework": "net9.0-desktop",
             "runtime": "osx-arm64",
-            "extra": " --property:SelfContained=true --property:PublishSingleFile=true --property:IncludeSourceRevisionInInformationalVersion=false",
+            "extra": "--property:SelfContained=true --property:PublishSingleFile=true --property:IncludeSourceRevisionInInformationalVersion=false",
             "prepare": [
+                "--target:PackageVersioning --no-restore",
                 "--target:TargetFrameworks-Desktop --no-restore"
             ]
         },

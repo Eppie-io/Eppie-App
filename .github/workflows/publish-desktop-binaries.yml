@@ -108,48 +108,9 @@ jobs:
         with: 
           uno-platform: true
 
-      - name: Provide version
-        id: provide-version
-        uses: finebits/github-actions/toolset/find-out-version@4a126d80a11c5fdc83ce884d3d23dffb30bc4495 # v2.0.0
-
       - name: Assign version
         id: assign-version
-        shell: bash
-        run: |
-          major="${{ steps.provide-version.outputs.major }}"
-          minor="${{ steps.provide-version.outputs.minor }}"
-          patch="${{ steps.provide-version.outputs.patch }}"
-          suffix="${{ steps.provide-version.outputs.suffix }}"
-          githash="${{ steps.provide-version.outputs.githash }}"
-          run_number="${{ steps.provide-version.outputs.build }}"
-          run_attempt="${{ steps.provide-version.outputs.attempt }}"
-
-          # Semantic versioning: major.minor.patch-suffix+githash.run_number.run_attempt
-          echo "semantic-version=$major.$minor.$patch-$suffix+$githash.$run_number.$run_attempt" >> $GITHUB_OUTPUT
-
-          # https://learn.microsoft.com/en-us/windows/apps/publish/publish-your-app/msix/app-package-requirements#package-version-numbering
-          # Version numbering: major.minor.build.0
-          # build=(suffix_code + revision) 
-          # suffix_code: unknown [0] < preview [10000] < alpha [20000] < beta [30000] < rc [40000] < no-suffix [50000] < [65535]
-
-          suffix_code=0
-          case "${suffix%%.*}" in
-            "")       suffix_code=50000 ;; # release
-            rc)       suffix_code=40000 ;;
-            beta)     suffix_code=30000 ;;
-            alpha)    suffix_code=20000 ;;
-            preview)  suffix_code=10000 ;;
-            *)        suffix_code=0     ;; # unknown
-          esac
-
-          revision=${suffix##*.}
-
-          regex_number='^[1-9][0-9]*$'
-          revision=$([[ $revision =~ $regex_number ]] && echo $revision || echo $patch )
-
-          build=$(($suffix_code+$revision))
-
-          echo "numeric-version=$major.$minor.$build.0" >> $GITHUB_OUTPUT
+        uses: ./.github/actions/assign-version
 
       - uses: finebits/github-actions/toolset/file/replace-text@4a126d80a11c5fdc83ce884d3d23dffb30bc4495 # v2.0.0
         with:
@@ -187,7 +148,7 @@ jobs:
           IFS_CACHE=$IFS
           IFS='|'
 
-          options="--output=$publish_path --configuration=$configuration --framework=$framework --runtime=$runtime --property:Version=\"$semantic_version\" --property:AssemblyVersion=\"$numeric_version\""
+          options="--configuration=$configuration --framework=$framework --runtime=$runtime --property:Version=\"$semantic_version\" --property:AssemblyVersion=\"$numeric_version\" --property:PackageVersion=\"$numeric_version\""
           for prepare_options in $prepare
           do
             echo "$prepare_options $options" | xargs dotnet build $project
@@ -209,8 +170,8 @@ jobs:
           publish_path='${{ env.publish-path }}'
           extra_options='${{ matrix.publish.extra }}'
 
-          options="--output=$publish_path --configuration=$configuration --framework=$framework --runtime=$runtime --property:Version=\"$semantic_version\" --property:AssemblyVersion=\"$numeric_version\""
-          echo "$options  $extra_options" | xargs dotnet publish $project 
+          options="--output=$publish_path --configuration=$configuration --framework=$framework --runtime=$runtime --property:Version=\"$semantic_version\" --property:AssemblyVersion=\"$numeric_version\" --property:PackageVersion=\"$numeric_version\""
+          echo "$options $extra_options" | xargs dotnet publish $project 
 
           rm -rf $publish_path/*.pdb
 

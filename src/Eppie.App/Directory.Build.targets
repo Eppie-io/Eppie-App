@@ -1,4 +1,27 @@
 <Project>
+
+  <Target Name="PackageVersioning">
+    <Message Text="Package Versioning" Importance="high" />
+    <Message Text="MSBuildThisFileDirectory: $(MSBuildThisFileDirectory)" Importance="high" />
+
+    <PropertyGroup>
+        <WindowsManifestNamespace>
+            <Namespace Prefix="x" Uri="http://schemas.microsoft.com/appx/manifest/foundation/windows10" />
+        </WindowsManifestNamespace>
+
+        <PrePackageVersion>$(PackageVersion).0.0.0</PrePackageVersion>
+        <Major>$(PrePackageVersion.Split('.')[0])</Major>
+        <Minor>$(PrePackageVersion.Split('.')[1])</Minor>
+        <Build>$(PrePackageVersion.Split('.')[2])</Build>
+        <Revision>$(PrePackageVersion.Split('.')[3])</Revision>
+        <PackageVersion>$(Major).$(Minor).$(Build).$(Revision)</PackageVersion>
+    </PropertyGroup>
+
+    <Message Text="Set Package Identity Version: $(PackageVersion)" Importance="high" />
+    <XmlPoke XmlInputPath="$(MSBuildThisFileDirectory)/Eppie.App/Package.appxmanifest" Namespaces="$(WindowsManifestNamespace)" Query="/x:Package/x:Identity/@Version" Value="$(PackageVersion)" />
+    <XmlPoke XmlInputPath="$(MSBuildThisFileDirectory)/Eppie.App.UWP/Package.appxmanifest" Namespaces="$(WindowsManifestNamespace)" Query="/x:Package/x:Identity/@Version" Value="$(PackageVersion)" />
+  </Target>
+
   <Target Name="TargetFrameworks-Desktop">
     <Message Text="TargetFrameworks: net9.0-desktop" Importance="high" />
     <Message Text="MSBuildThisFileDirectory: $(MSBuildThisFileDirectory)" Importance="high" />
@@ -6,5 +29,6 @@
     <XmlPoke XmlInputPath="$(MSBuildThisFileDirectory)/Eppie.App/Eppie.App.csproj" Query="/Project/PropertyGroup/TargetFrameworks" Value="net9.0-desktop" />
     <XmlPoke XmlInputPath="$(MSBuildThisFileDirectory)/Eppie.App.UI/Eppie.App.UI.Uno/Eppie.App.UI.Uno.csproj" Query="/Project/PropertyGroup/TargetFrameworks" Value="net9.0%3Bnet9.0-desktop" />
   </Target>
+
 </Project>
 
