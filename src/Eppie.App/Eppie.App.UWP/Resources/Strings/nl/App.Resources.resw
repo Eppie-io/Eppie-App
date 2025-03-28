@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -256,5 +256,29 @@
   <data name="SelectAllButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Alles selecteren</value>
     <comment>The tooltip for Select All button</comment>
+  </data>
+  <data name="AIAgentProcessMessageButton.Label" xml:space="preserve">
+    <value>AI Agent</value>
+    <comment>Text on AI Agent process button.</comment>
+  </data>
+  <data name="AIAgentProcessMessageButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>AI Agent</value>
+    <comment>The tooltip for AI Agent process button</comment>
+  </data>
+  <data name="AIOptionTopPSlider.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>The top P parameter tells the model to only consider tokens up until a cumulative probability of P. Lower this value for more predictable, focused generation and increase it for more random response.</value>
+    <comment>The tooltip for TopP AI option slider.</comment>
+  </data>
+  <data name="AIOptionTopKSlider.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>The top K parameter tells the model to only consider the K most probable tokens at each generation step. Lower this value for more predictable, focused generation and increase it for more random response.</value>
+    <comment>The tooltip for TopK AI option slider.</comment>
+  </data>
+  <data name="AIOptionTemperatureSlider.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>The temperature parameter is a scaling factor for the probability distribution of tokens during generation. Values lower than 1 will produce more deterministic response while values higher than 1 will increase ramdomness.</value>
+    <comment>The tooltip for Temperature AI option slider.</comment>
+  </data>
+  <data name="DoSampleToggle.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>If Sampling is disabled, a greedy approach will be used and the model will select the most likely token every time. If enabled,tokens will be selected based on the token probability distribution. The Top K, Top P, and Temperature parameters only apply if sampling is enabled.</value>
+    <comment>The tooltip for Sampling toggle.</comment>
   </data>
 </root>
