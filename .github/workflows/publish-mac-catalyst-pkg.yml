@@ -1,51 +1,28 @@
-################################################################################
-#                                                                              #
-#   Copyright 2025 Eppie(https://eppie.io)                                     #
-#                                                                              #
-#   Licensed under the Apache License, Version 2.0 (the "License");            #
-#   you may not use this file except in compliance with the License.           #
-#   You may obtain a copy of the License at                                    #
-#                                                                              #
-#       http://www.apache.org/licenses/LICENSE-2.0                             #
-#                                                                              #
-#   Unless required by applicable law or agreed to in writing, software        #
-#   distributed under the License is distributed on an "AS IS" BASIS,          #
-#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.   #
-#   See the License for the specific language governing permissions and        #
-#   limitations under the License.                                             #
-#                                                                              #
-################################################################################
+###############################################################################
+#
+#   Copyright 2025 Eppie(https://eppie.io)
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+#
+###############################################################################
 
 ---
 
-name: Publish Desktop Binaries
+name: "Publish Mac Catalyst"
 
 on: # yamllint disable-line rule:truthy
   workflow_dispatch:
-    inputs:
-      os:
-        type: choice
-        default: all
-        options:
-          - all
-          - linux
-          - macos
-          - windows
-      architecture:
-        type: choice
-        default: all
-        options:
-          - all
-          - arm64
-          - x64
   workflow_call:
-    inputs:
-      os:
-        type: string
-        required: true
-      architecture:
-        type: string
-        required: true
 
 jobs:
 
@@ -66,8 +43,8 @@ jobs:
         id: publish-config
         uses: finebits/github-actions/toolset/select-configuration@4a126d80a11c5fdc83ce884d3d23dffb30bc4495 # v2.0.0
         with:
-          json-file: ./.github/configurations/publish-desktop-binaries.json
-          keywords: "${{ inputs.os }},${{ inputs.architecture }}"
+          json-file: ./.github/configurations/publish-mac-catalyst-pkg.json
+          keywords: "macos,all"
 
       - name: Check configs
         shell: bash
@@ -80,7 +57,7 @@ jobs:
           fi
 
   publish:
-    name: Publish ${{ matrix.publish.framework }} ${{ matrix.publish.runtime }}
+    name: Publish ${{ matrix.publish.framework }}
     needs: prepare
     strategy:
       fail-fast: false
@@ -89,14 +66,10 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     env:
-      publish-path: './.publish/${{ matrix.publish.configuration }}/${{ matrix.publish.framework }}/${{ matrix.publish.runtime }}'
-      artifacts-path: './.artifacts/${{ matrix.publish.configuration }}/${{ matrix.publish.framework }}/${{ matrix.publish.runtime }}'
+      publish-path: './.publish/${{ matrix.publish.configuration }}/${{ matrix.publish.framework }}'
+      artifacts-path: './.artifacts/${{ matrix.publish.configuration }}/${{ matrix.publish.framework }}'
 
     steps:
-      - name: Support longpaths
-        if: ${{ runner.os == 'Windows'}}
-        run: git config --system core.longpaths true
-
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
@@ -142,7 +115,6 @@ jobs:
           project='${{ matrix.publish.project }}'
           configuration='${{ matrix.publish.configuration }}'
           framework='${{ matrix.publish.framework }}'
-          runtime='${{ matrix.publish.runtime }}'
           publish_path='${{ env.publish-path }}'
 
           prepare='${{ join(matrix.publish.prepare, '|') }}'
@@ -150,7 +122,7 @@ jobs:
           IFS_CACHE=$IFS
           IFS='|'
 
-          options="--configuration=$configuration --framework=$framework --runtime=$runtime"
+          options="--configuration=$configuration --framework=$framework"
           version_options="--property:Version=\"$semantic_version\" --property:AssemblyVersion=\"$numeric_version\" --property:PackageVersion=\"$numeric_version\" --property:ApplicationVersion=\"$app_version\" --property:ApplicationDisplayVersion=\"$app_display_version\""
           for prepare_options in $prepare
           do
@@ -159,7 +131,7 @@ jobs:
 
           IFS=$IFS_CACHE
 
-      - name: Publish
+      - name: Publish Mac Catalyst
         if: matrix.publish.tool == 'dotnet'
         shell: bash
         run: |
@@ -171,11 +143,10 @@ jobs:
           project='${{ matrix.publish.project }}'
           configuration='${{ matrix.publish.configuration }}'
           framework='${{ matrix.publish.framework }}'
-          runtime='${{ matrix.publish.runtime }}'
           publish_path='${{ env.publish-path }}'
           extra_options='${{ matrix.publish.extra }}'
 
-          options="--output=$publish_path --configuration=$configuration --framework=$framework --runtime=$runtime"
+          options="--output=$publish_path --configuration=$configuration --framework=$framework"
           version_options="--property:Version=\"$semantic_version\" --property:AssemblyVersion=\"$numeric_version\" --property:PackageVersion=\"$numeric_version\" --property:ApplicationVersion=\"$app_version\" --property:ApplicationDisplayVersion=\"$app_display_version\""
           echo "$options $extra_options $version_options" | xargs dotnet publish $project 
 
@@ -188,7 +159,7 @@ jobs:
           publish_path="${{ env.publish-path }}"
           tool='${{ matrix.artifact.tool }}'
 
-          artifact_name="eppie.desktop-${{ matrix.publish.runtime }}"
+          artifact_name="eppie.maccatalyst"
 
           mkdir -p "$artifact_path"
 
@@ -205,5 +176,5 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 # v4.6.1
         with:
-          name: Eppie.Desktop-${{ matrix.publish.runtime }} [${{ steps.assign-version.outputs.semantic-version }}]
+          name: Eppie.MacCatalyst [${{ steps.assign-version.outputs.semantic-version }}]
           path: ${{ env.artifacts-path }}

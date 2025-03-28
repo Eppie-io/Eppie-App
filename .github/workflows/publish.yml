@@ -29,6 +29,7 @@ on: # yamllint disable-line rule:truthy
         options:
           - all
           - desktop
+          - maccatalyst
       os:
         type: choice
         default: all
@@ -59,6 +60,7 @@ jobs:
       publish-framework: ${{ steps.init-params.outputs.framework }}
       publish-binaries: ${{ steps.packages.outputs.binaries }}
       publish-snap: ${{ steps.packages.outputs.snap }}
+      publish-maccatalyst-pkg: ${{ steps.packages.outputs.maccatalyst-pkg }}
 
     steps:
       - name: Checkout
@@ -95,16 +97,22 @@ jobs:
         shell: bash
         run: |
           # Publish Desktop Binaries
-          os_suitable="${{ contains(fromJSON(steps.publish-config.outputs.content).binaries.os, steps.init-params.outputs.os) }}"
-          framework_suitable="${{ contains(fromJSON(steps.publish-config.outputs.content).binaries.framework, steps.init-params.outputs.framework) }}"
-          publish_binaries=($os_suitable AND $framework_suitable)
+          os_suitable="${{ contains(fromJSON(steps.publish-config.outputs.content).desktop-binaries.os, steps.init-params.outputs.os) }}"
+          framework_suitable="${{ contains(fromJSON(steps.publish-config.outputs.content).desktop-binaries.framework, steps.init-params.outputs.framework) }}"
+          publish_binaries=$([[ $os_suitable == 'true' && $framework_suitable == 'true' ]] && echo "true" || echo "false")
           echo "binaries=$publish_binaries" >> $GITHUB_OUTPUT
 
           # Publish Desktop linux snap package
-          os_suitable="${{ contains(fromJSON(steps.publish-config.outputs.content).snap.os, steps.init-params.outputs.os) }}"
-          framework_suitable="${{ contains(fromJSON(steps.publish-config.outputs.content).snap.framework, steps.init-params.outputs.framework) }}"
-          publish_snap=($os_suitable AND $framework_suitable)
+          os_suitable="${{ contains(fromJSON(steps.publish-config.outputs.content).desktop-snap.os, steps.init-params.outputs.os) }}"
+          framework_suitable="${{ contains(fromJSON(steps.publish-config.outputs.content).desktop-snap.framework, steps.init-params.outputs.framework) }}"
+          publish_snap=$([[ $os_suitable == 'true' && $framework_suitable == 'true' ]] && echo "true" || echo "false")
           echo "snap=$publish_snap" >> $GITHUB_OUTPUT
+
+          # Publish Mac Catalyst pkg package
+          os_suitable="${{ contains(fromJSON(steps.publish-config.outputs.content).maccatalyst-pkg.os, steps.init-params.outputs.os) }}"
+          framework_suitable="${{ contains(fromJSON(steps.publish-config.outputs.content).maccatalyst-pkg.framework, steps.init-params.outputs.framework) }}"
+          publish_maccatalyst_pkg=$([[ $os_suitable == 'true' && $framework_suitable == 'true' ]] && echo "true" || echo "false")
+          echo "maccatalyst-pkg=$publish_maccatalyst_pkg" >> $GITHUB_OUTPUT
 
   publish-binaries:
     name: Publish Binaries
@@ -116,10 +124,17 @@ jobs:
       architecture: ${{ needs.prepare.outputs.publish-arch }}
     secrets: inherit
 
+  publish-maccatalyst-pkg:
+    name: Publish Mac Catalyst [.pkg]
+    needs: prepare
+    if: ${{ needs.prepare.outputs.publish-maccatalyst-pkg == 'true' }}
+    uses: ./.github/workflows/publish-mac-catalyst-pkg.yml
+    secrets: inherit
+
   upload-assets:
     name: Upload Assets
     if: github.event_name == 'release'
-    needs: [ publish-binaries ]
+    needs: [ publish-binaries, publish-maccatalyst-pkg ]
     runs-on: ubuntu-latest
     permissions:
       contents: write

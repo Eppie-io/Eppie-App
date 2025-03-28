@@ -1,0 +1,24 @@
+[
+    {
+        "keywords": [
+            "macos",
+            "x64",
+            "arm64",
+            "all"
+        ],
+        "os": "macos-latest",
+        "publish": {
+            "tool": "dotnet",
+            "project": "./src/Eppie.App/Eppie.App/Eppie.App.csproj",
+            "configuration": "release",
+            "framework": "net9.0-maccatalyst",
+            "extra": "--property:CreatePackage=true --property:IncludeSourceRevisionInInformationalVersion=false",
+            "prepare": [
+                "--target:PackageVersioning --no-restore"
+            ]
+        },
+        "artifact": {
+            "tool": "tar"
+        }
+    }
+]
