@@ -18,11 +18,23 @@
 
 ---
 
-name: "Publish Mac Catalyst"
+name: "Publish Desktop Snap Package"
 
 on: # yamllint disable-line rule:truthy
   workflow_dispatch:
+    inputs:
+      architecture:
+        type: choice
+        default: all
+        options:
+          - all
+          - x64
+
   workflow_call:
+    inputs:
+      architecture:
+        type: string
+        required: true
 
 jobs:
 
@@ -43,8 +55,8 @@ jobs:
         id: publish-config
         uses: finebits/github-actions/toolset/select-configuration@4a126d80a11c5fdc83ce884d3d23dffb30bc4495 # v2.0.0
         with:
-          json-file: ./.github/configurations/publish-mac-catalyst-pkg.json
-          keywords: "macos,all"
+          json-file: ./.github/configurations/publish-desktop-span.json
+          keywords: "linux,${{ inputs.architecture }}"
 
       - name: Check configs
         shell: bash
@@ -57,7 +69,7 @@ jobs:
           fi
 
   publish:
-    name: Publish ${{ matrix.publish.framework }}
+    name: Publish ${{ matrix.publish.framework }} ${{ matrix.publish.runtime }}
     needs: prepare
     strategy:
       fail-fast: false
@@ -66,8 +78,8 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     env:
-      publish-path: './.publish/${{ matrix.publish.configuration }}/${{ matrix.publish.framework }}'
-      artifacts-path: './.artifacts/${{ matrix.publish.configuration }}/${{ matrix.publish.framework }}'
+      publish-path: './.publish/${{ matrix.publish.configuration }}/${{ matrix.publish.framework }}/${{ matrix.publish.runtime }}'
+      artifacts-path: './.artifacts/${{ matrix.publish.configuration }}/${{ matrix.publish.framework }}/${{ matrix.publish.runtime }}'
 
     steps:
       - name: Checkout
@@ -75,6 +87,30 @@ jobs:
         with:
           fetch-depth: 0
           submodules: recursive
+
+      - name: Install Snap Prerequisites
+        shell: bash
+        run: |
+
+          linux_release=$(lsb_release --release --short)
+
+          snap_core_version='core24'
+
+          if [[ "${linux_release%%.*}" == "24" ]]; then
+            snap_core_version='core24'
+          elif [[ "${linux_release%%.*}" == "22" ]]; then
+            snap_core_version='core22'
+          elif [[ "${linux_release%%.*}" == "20" ]]; then
+            snap_core_version='core20'
+          fi
+
+          sudo apt-get install -y snapd
+          sudo snap install $snap_core_version
+          sudo snap install multipass
+          sudo snap install lxd
+          sudo snap install snapcraft --classic
+          sudo lxd init --minimal
+          sudo usermod --append --groups lxd $USER
 
       - name: Install Prerequisites
         uses: ./.github/actions/install-prerequisites
@@ -115,6 +151,7 @@ jobs:
           project='${{ matrix.publish.project }}'
           configuration='${{ matrix.publish.configuration }}'
           framework='${{ matrix.publish.framework }}'
+          runtime='${{ matrix.publish.runtime }}'
           publish_path='${{ env.publish-path }}'
 
           prepare='${{ join(matrix.publish.prepare, '|') }}'
@@ -122,7 +159,7 @@ jobs:
           IFS_CACHE=$IFS
           IFS='|'
 
-          options="--configuration=$configuration --framework=$framework"
+          options="--configuration=$configuration --framework=$framework --runtime=$runtime"
           version_options="--property:Version=\"$semantic_version\" --property:AssemblyVersion=\"$numeric_version\" --property:PackageVersion=\"$numeric_version\" --property:ApplicationVersion=\"$app_version\" --property:ApplicationDisplayVersion=\"$app_display_version\""
           for prepare_options in $prepare
           do
@@ -143,10 +180,11 @@ jobs:
           project='${{ matrix.publish.project }}'
           configuration='${{ matrix.publish.configuration }}'
           framework='${{ matrix.publish.framework }}'
+          runtime='${{ matrix.publish.runtime }}'
           publish_path='${{ env.publish-path }}'
           extra_options='${{ matrix.publish.extra }}'
 
-          options="--output=$publish_path --configuration=$configuration --framework=$framework"
+          options="--output=$publish_path --configuration=$configuration --framework=$framework --runtime=$runtime"
           version_options="--property:Version=\"$semantic_version\" --property:AssemblyVersion=\"$numeric_version\" --property:PackageVersion=\"$numeric_version\" --property:ApplicationVersion=\"$app_version\" --property:ApplicationDisplayVersion=\"$app_display_version\""
           echo "$options $extra_options $version_options" | xargs dotnet publish $project 
 
@@ -159,16 +197,16 @@ jobs:
           publish_path="${{ env.publish-path }}"
           tool='${{ matrix.artifact.tool }}'
 
-          artifact_name="eppie.maccatalyst"
+          artifact_name="eppie.desktop-snap-${{ matrix.publish.runtime }}"
 
           mkdir -p "$artifact_path"
 
           if [[ "$tool" == "tar" ]]; then
-            tar -czf "${artifact_path}/${artifact_name}.tar.gz" -C "$publish_path" . && echo "Archiving of the artifact '$artifact_name' has been completed successfully." || echo "::warning::Failed to archive artifact '$artifact_name'"
+            tar -czf "${artifact_path}/${artifact_name}.tar.gz" -C "$publish_path" $(cd "$publish_path"; ls *.snap) && echo "Archiving of the artifact '$artifact_name' has been completed successfully." || echo "::warning::Failed to archive artifact '$artifact_name'"
           elif [[ "$tool" == "7z"  ]]; then
-            7z a -tzip "${artifact_path}/${artifact_name}.zip" "$publish_path/*" && echo "Archiving of the artifact '$artifact_name' has been completed successfully." || echo "::warning::Failed to archive artifact '$artifact_name'"
+            7z a -tzip "${artifact_path}/${artifact_name}.zip" "$publish_path/*.snap" && echo "Archiving of the artifact '$artifact_name' has been completed successfully." || echo "::warning::Failed to archive artifact '$artifact_name'"
           elif [[ "$tool" == "cp" ]]; then
-            cp -r ${publish_path}/* ${artifact_path}/ && echo "Copying of the artifact has been completed successfully." || echo "::warning::Failed to copy artifact"
+            cp -r ${publish_path}/*.snap ${artifact_path}/ && echo "Copying of the artifact has been completed successfully." || echo "::warning::Failed to copy artifact"
           else
             echo "::warning::Unknown artifact tool: '$tool'"
           fi
@@ -176,5 +214,5 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 # v4.6.1
         with:
-          name: Eppie.MacCatalyst [${{ steps.assign-version.outputs.semantic-version }}]
+          name: Eppie.Desktop-snap-${{ matrix.publish.runtime }} [${{ steps.assign-version.outputs.semantic-version }}]
           path: ${{ env.artifacts-path }}

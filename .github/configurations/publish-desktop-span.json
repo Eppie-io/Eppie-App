@@ -2,6 +2,7 @@
     {
         "keywords": [
             "linux",
+            "x64",
             "all"
         ],
         "os": "ubuntu-latest",
@@ -10,7 +11,15 @@
             "project": "./src/Eppie.App/Eppie.App/Eppie.App.csproj",
             "configuration": "release",
             "framework": "net9.0-desktop",
-            "extra": " --property:SelfContained=true --property:PublishSingleFile=true --property:PackageFormat=snap"
+            "runtime": "linux-x64",
+            "extra": " --property:SelfContained=true --property:PackageFormat=snap --property:UnoSnapcraftAdditionalParameters=--destructive-mode",
+            "prepare": [
+                "--target:PackageVersioning --no-restore",
+                "--target:TargetFrameworks-Desktop --no-restore"
+            ]
+        },
+        "artifact": {
+            "tool": "tar"
         }
     }
 ]

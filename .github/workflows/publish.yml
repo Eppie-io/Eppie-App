@@ -114,8 +114,8 @@ jobs:
           publish_maccatalyst_pkg=$([[ $os_suitable == 'true' && $framework_suitable == 'true' ]] && echo "true" || echo "false")
           echo "maccatalyst-pkg=$publish_maccatalyst_pkg" >> $GITHUB_OUTPUT
 
-  publish-binaries:
-    name: Publish Binaries
+  publish-desktop-binaries:
+    name: Publish Desktop Binaries
     needs: prepare
     if: ${{ needs.prepare.outputs.publish-binaries == 'true' }}
     uses: ./.github/workflows/publish-desktop-binaries.yml
@@ -124,8 +124,17 @@ jobs:
       architecture: ${{ needs.prepare.outputs.publish-arch }}
     secrets: inherit
 
+  publish-desktop-snap:
+    name: Publish Desktop [snap]
+    needs: prepare
+    if: ${{ needs.prepare.outputs.publish-snap == 'true' }}
+    uses: ./.github/workflows/publish-desktop-snap.yml
+    with:
+      architecture: ${{ needs.prepare.outputs.publish-arch }}
+    secrets: inherit
+
   publish-maccatalyst-pkg:
-    name: Publish Mac Catalyst [.pkg]
+    name: Publish Mac Catalyst [pkg]
     needs: prepare
     if: ${{ needs.prepare.outputs.publish-maccatalyst-pkg == 'true' }}
     uses: ./.github/workflows/publish-mac-catalyst-pkg.yml
@@ -134,7 +143,7 @@ jobs:
   upload-assets:
     name: Upload Assets
     if: github.event_name == 'release'
-    needs: [ publish-binaries, publish-maccatalyst-pkg ]
+    needs: [ publish-desktop-binaries, publish-desktop-snap, publish-maccatalyst-pkg ]
     runs-on: ubuntu-latest
     permissions:
       contents: write
