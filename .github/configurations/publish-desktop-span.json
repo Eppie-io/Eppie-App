@@ -12,7 +12,7 @@
             "configuration": "release",
             "framework": "net9.0-desktop",
             "runtime": "linux-x64",
-            "extra": " --property:SelfContained=true --property:PackageFormat=snap --property:UnoSnapcraftAdditionalParameters=--destructive-mode",
+            "extra": " --property:SelfContained=true --property:PackageFormat=snap --property:UnoSnapcraftAdditionalParameters=--destructive-mode --property:IncludeSourceRevisionInInformationalVersion=false --property:ExcludePublishDebugSymbols=true",
             "prepare": [
                 "--target:PackageVersioning --no-restore",
                 "--target:TargetFrameworks-Desktop --no-restore"

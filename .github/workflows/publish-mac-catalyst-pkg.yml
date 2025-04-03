@@ -22,8 +22,21 @@ name: "Publish Mac Catalyst"
 
 on: # yamllint disable-line rule:truthy
   workflow_dispatch:
+    inputs:
+      dotnet-verbosity:
+        type: choice
+        default: minimal
+        options:
+          - quiet
+          - minimal
+          - normal
+          - detailed
+          - diagnostic
   workflow_call:
-
+    inputs:
+      dotnet-verbosity:
+        type: string
+        required: true
 jobs:
 
   prepare:
@@ -32,6 +45,7 @@ jobs:
 
     outputs:
       matrix: ${{ steps.publish-config.outputs.matrix }}
+      start-publication: ${{ steps.check-config.outputs.correct }}
 
     steps:
       - name: Checkout
@@ -47,18 +61,23 @@ jobs:
           keywords: "macos,all"
 
       - name: Check configs
+        id: check-config
         shell: bash
         run: |
           length=$( echo '${{ steps.publish-config.outputs.config-json }}' | jq '. | length' )
+          correct_config=true
 
           if(( $length == 0 )); then
-            echo "::error::No suitable publish configuration found"
-            exit 1
+            echo "::warning::No suitable publish configuration found"
+            correct_config=false
           fi
+
+          echo "correct=$correct_config" >> $GITHUB_OUTPUT
 
   publish:
     name: Publish ${{ matrix.publish.framework }}
     needs: prepare
+    if: needs.prepare.outputs.start-publication == 'true'
     strategy:
       fail-fast: false
       matrix: ${{ fromJson(needs.prepare.outputs.matrix) }}
@@ -124,9 +143,10 @@ jobs:
 
           options="--configuration=$configuration --framework=$framework"
           version_options="--property:Version=\"$semantic_version\" --property:AssemblyVersion=\"$numeric_version\" --property:PackageVersion=\"$numeric_version\" --property:ApplicationVersion=\"$app_version\" --property:ApplicationDisplayVersion=\"$app_display_version\""
+          verbosity_option="--verbosity=${{ inputs.dotnet-verbosity }}"
           for prepare_options in $prepare
           do
-            echo "$prepare_options $options $version_options" | xargs dotnet build $project
+            echo "$prepare_options $options $version_options $verbosity_option" | xargs dotnet build $project
           done
 
           IFS=$IFS_CACHE
@@ -148,9 +168,8 @@ jobs:
 
           options="--output=$publish_path --configuration=$configuration --framework=$framework"
           version_options="--property:Version=\"$semantic_version\" --property:AssemblyVersion=\"$numeric_version\" --property:PackageVersion=\"$numeric_version\" --property:ApplicationVersion=\"$app_version\" --property:ApplicationDisplayVersion=\"$app_display_version\""
-          echo "$options $extra_options $version_options" | xargs dotnet publish $project 
-
-          rm -rf $publish_path/*.pdb
+          verbosity_option="--verbosity=${{ inputs.dotnet-verbosity }}"
+          echo "$options $extra_options $version_options $verbosity_option" | xargs dotnet publish $project 
 
       - name: Prepare Artifacts
         shell: bash
