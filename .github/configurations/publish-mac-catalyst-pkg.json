@@ -12,7 +12,7 @@
             "project": "./src/Eppie.App/Eppie.App/Eppie.App.csproj",
             "configuration": "release",
             "framework": "net9.0-maccatalyst",
-            "extra": "--property:CreatePackage=true --property:IncludeSourceRevisionInInformationalVersion=false",
+            "extra": "--property:CreatePackage=true --property:IncludeSourceRevisionInInformationalVersion=false --property:UnoMacOSIncludeDebugSymbols=false",
             "prepare": [
                 "--target:PackageVersioning --no-restore"
             ]

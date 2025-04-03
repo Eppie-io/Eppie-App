@@ -19,6 +19,14 @@
 ---
 
 name: Publish
+run-name: >-
+   ${{ 
+       github.event_name == 'release' && format('Publish: {0}', github.ref_name) ||
+       github.event_name == 'workflow_dispatch' && github.event.inputs.architecture == 'all' && github.event.inputs.os == 'all' && format('Publish: {0}', github.event.inputs.framework ) || 
+       github.event_name == 'workflow_dispatch' && github.event.inputs.architecture == 'all' && format('Publish: {0} on {1}', github.event.inputs.framework, github.event.inputs.os ) || 
+       github.event_name == 'workflow_dispatch' && github.event.inputs.os == 'all' && format('Publish: {0} ({1})', github.event.inputs.framework, github.event.inputs.architecture ) || 
+       github.event_name == 'workflow_dispatch' && format('Publish: {0} ({1}) on {2}', github.event.inputs.framework, github.event.inputs.architecture, github.event.inputs.os ) || ''
+    }}
 
 on: # yamllint disable-line rule:truthy
   workflow_dispatch:
@@ -45,6 +53,15 @@ on: # yamllint disable-line rule:truthy
           - all
           - arm64
           - x64
+      dotnet-verbosity:
+        type: choice
+        default: minimal
+        options:
+          - quiet
+          - minimal
+          - normal
+          - detailed
+          - diagnostic
 
   release:
     types: [published]
@@ -55,6 +72,7 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
+      dotnet-verbosity: ${{ steps.init-params.outputs.dotnet-verbosity }}
       publish-os: ${{ steps.init-params.outputs.os }}
       publish-arch: ${{ steps.init-params.outputs.arch }}
       publish-framework: ${{ steps.init-params.outputs.framework }}
@@ -75,16 +93,19 @@ jobs:
           arch="all"
           framework="all"
           os="all"
+          dotnet_verbosity="minimal"
 
           if [[ ${{ github.event_name }} == 'workflow_dispatch' ]]; then
             arch="${{ github.event.inputs.architecture }}"
             framework="${{ github.event.inputs.framework }}"
             os="${{ github.event.inputs.os }}"
+            dotnet_verbosity="${{ github.event.inputs.dotnet-verbosity }}"
           fi
 
           echo "arch=$arch" >> $GITHUB_OUTPUT
           echo "framework=$framework" >> $GITHUB_OUTPUT
           echo "os=$os" >> $GITHUB_OUTPUT
+          echo "dotnet-verbosity=$dotnet_verbosity" >> $GITHUB_OUTPUT
 
       - name: Read configuration
         id: publish-config
@@ -92,7 +113,7 @@ jobs:
         with:
           file: ./.github/configurations/publish.json
 
-      - name: Define packages
+      - name: Define publication packages
         id: packages
         shell: bash
         run: |
@@ -102,7 +123,7 @@ jobs:
           publish_binaries=$([[ $os_suitable == 'true' && $framework_suitable == 'true' ]] && echo "true" || echo "false")
           echo "binaries=$publish_binaries" >> $GITHUB_OUTPUT
 
-          # Publish Desktop linux snap package
+          # Publish Desktop Linux snap package
           os_suitable="${{ contains(fromJSON(steps.publish-config.outputs.content).desktop-snap.os, steps.init-params.outputs.os) }}"
           framework_suitable="${{ contains(fromJSON(steps.publish-config.outputs.content).desktop-snap.framework, steps.init-params.outputs.framework) }}"
           publish_snap=$([[ $os_suitable == 'true' && $framework_suitable == 'true' ]] && echo "true" || echo "false")
@@ -122,6 +143,7 @@ jobs:
     with:
       os: ${{ needs.prepare.outputs.publish-os }}
       architecture: ${{ needs.prepare.outputs.publish-arch }}
+      dotnet-verbosity: ${{ needs.prepare.outputs.dotnet-verbosity }}
     secrets: inherit
 
   publish-desktop-snap:
@@ -131,6 +153,7 @@ jobs:
     uses: ./.github/workflows/publish-desktop-snap.yml
     with:
       architecture: ${{ needs.prepare.outputs.publish-arch }}
+      dotnet-verbosity: ${{ needs.prepare.outputs.dotnet-verbosity }}
     secrets: inherit
 
   publish-maccatalyst-pkg:
@@ -138,6 +161,8 @@ jobs:
     needs: prepare
     if: ${{ needs.prepare.outputs.publish-maccatalyst-pkg == 'true' }}
     uses: ./.github/workflows/publish-mac-catalyst-pkg.yml
+    with:
+      dotnet-verbosity: ${{ needs.prepare.outputs.dotnet-verbosity }}
     secrets: inherit
 
   upload-assets:
