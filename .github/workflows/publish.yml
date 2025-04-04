@@ -184,7 +184,7 @@ jobs:
 
   upload-assets:
     name: Upload Assets
-    if: github.event_name == 'release'
+    if: ${{ github.event_name == 'release' && !cancelled() && !failure() }}
     needs: [ publish-desktop-binaries, publish-desktop-snap, publish-desktop-app, publish-maccatalyst-pkg ]
     runs-on: ubuntu-latest
     permissions:

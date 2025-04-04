@@ -13,6 +13,6 @@
     },
     "maccatalyst-pkg":{
         "os":["macos","all"],
-        "framework":["maccatalyst","all"]
+        "framework":["maccatalyst"]
     }
 }
