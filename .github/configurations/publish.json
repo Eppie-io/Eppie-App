@@ -1,10 +1,14 @@
 {
     "desktop-binaries":{
-        "os":["windows","linux","macos","all"],
+        "os":["windows","linux","all"],
         "framework":["desktop","all"]
     },
     "desktop-snap":{
         "os":["linux","all"],
+        "framework":["desktop","all"]
+    },
+    "desktop-app":{
+        "os":["macos","all"],
         "framework":["desktop","all"]
     },
     "maccatalyst-pkg":{

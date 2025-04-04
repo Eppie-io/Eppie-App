@@ -9,7 +9,7 @@
     <CompilerGeneratedFilesOutputPath>generated</CompilerGeneratedFilesOutputPath>
 
     <!-- Display name -->
-    <ApplicationTitle>Eppie.App</ApplicationTitle>
+    <ApplicationTitle>Eppie</ApplicationTitle>
     <!-- App Identifier -->
     <ApplicationId>io.eppie.app</ApplicationId>
     <!-- Versions -->
@@ -19,6 +19,9 @@
     <ApplicationPublisher>Finebits OU</ApplicationPublisher>
     <!-- Package Description -->
     <Description>Eppie.App powered by Uno Platform.</Description>
+
+    <!-- This renames the assembly to publish the macos app package correctly -->
+    <AssemblyName>Eppie</AssemblyName>
     <!--
       If you encounter this error message:
 

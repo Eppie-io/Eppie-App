@@ -67,51 +67,5 @@
         "artifact": {
             "tool": "tar"
         }
-    },
-    {
-        "keywords": [
-            "macos",
-            "x64",
-            "all"
-        ],
-        "os": "macos-latest",
-        "publish": {
-            "tool": "dotnet",
-            "project": "./src/Eppie.App/Eppie.App/Eppie.App.csproj",
-            "configuration": "release",
-            "framework": "net9.0-desktop",
-            "runtime": "osx-x64",
-            "extra": "--property:SelfContained=true --property:PublishSingleFile=true --property:IncludeSourceRevisionInInformationalVersion=false  --property:ExcludePublishDebugSymbols=true",
-            "prepare": [
-                "--target:PackageVersioning --no-restore",
-                "--target:TargetFrameworks-Desktop --no-restore"
-            ]
-        },
-        "artifact": {
-            "tool": "tar"
-        }
-    },
-    {
-        "keywords": [
-            "macos",
-            "arm64",
-            "all"
-        ],
-        "os": "macos-latest",
-        "publish": {
-            "tool": "dotnet",
-            "project": "./src/Eppie.App/Eppie.App/Eppie.App.csproj",
-            "configuration": "release",
-            "framework": "net9.0-desktop",
-            "runtime": "osx-arm64",
-            "extra": "--property:SelfContained=true --property:PublishSingleFile=true --property:IncludeSourceRevisionInInformationalVersion=false  --property:ExcludePublishDebugSymbols=true",
-            "prepare": [
-                "--target:PackageVersioning --no-restore",
-                "--target:TargetFrameworks-Desktop --no-restore"
-            ]
-        },
-        "artifact": {
-            "tool": "tar"
-        }
     }
 ]

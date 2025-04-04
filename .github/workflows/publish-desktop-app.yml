@@ -18,19 +18,11 @@
 
 ---
 
-name: Publish Desktop [binaries]
+name: Publish Desktop [app]
 
 on: # yamllint disable-line rule:truthy
   workflow_dispatch:
     inputs:
-      os:
-        type: choice
-        default: all
-        options:
-          - all
-          - linux
-          - macos
-          - windows
       architecture:
         type: choice
         default: all
@@ -49,9 +41,6 @@ on: # yamllint disable-line rule:truthy
           - diagnostic
   workflow_call:
     inputs:
-      os:
-        type: string
-        required: true
       architecture:
         type: string
         required: true
@@ -75,12 +64,12 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Read the binaries publication configuration
+      - name: Read the macos app publication configuration
         id: publish-config
         uses: finebits/github-actions/toolset/select-configuration@4a126d80a11c5fdc83ce884d3d23dffb30bc4495 # v2.0.0
         with:
-          json-file: ./.github/configurations/publish-desktop-binaries.json
-          keywords: "${{ inputs.os }},${{ inputs.architecture }}"
+          json-file: ./.github/configurations/publish-desktop-app.json
+          keywords: "macos,${{ inputs.architecture }}"
 
       - name: Check configs
         id: check-config
@@ -125,6 +114,20 @@ jobs:
         uses: ./.github/actions/install-prerequisites
         with:
           uno-platform: true
+
+      - name: Import certificate
+        run: |
+          security create-keychain -p "${{ secrets.KEYCHAIN_PASSWORD }}" publish.keychain
+          security default-keychain -s publish.keychain
+          security unlock-keychain -p "${{ secrets.KEYCHAIN_PASSWORD }}" publish.keychain
+
+          echo "${{ secrets.MACOS_CERTIFICATE }}" | base64 --decode > certificate.p12
+          security import certificate.p12 -k publish.keychain -P "${{ secrets.MACOS_CERTIFICATE_PASSWORD }}" -T /usr/bin/codesign
+
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "${{ secrets.KEYCHAIN_PASSWORD }}" publish.keychain
+  
+          xcrun notarytool store-credentials "NOTARYTOOL_PROFILE" --apple-id "${{ secrets.APPLE_ID }}" --team-id ${{ secrets.TEAM_ID }} --password "${{ secrets.NOTARYTOOL_SPECIFIC_PASSWORD }}"
+
 
       - name: Assign version
         id: assign-version
@@ -194,10 +197,23 @@ jobs:
           publish_path='${{ env.publish-path }}'
           extra_options='${{ matrix.publish.extra }}'
 
-          options="--output=$publish_path --configuration=$configuration --framework=$framework --runtime=$runtime"
+          options="--output=$publish_path --configuration=$configuration --framework=$framework --runtime=$runtime -property:CodesignKey=\"${{ secrets.DEVELOPER_ID_APPLICATION }}\""
           version_options="--property:Version=\"$semantic_version\" --property:AssemblyVersion=\"$numeric_version\" --property:PackageVersion=\"$numeric_version\" --property:ApplicationVersion=\"$app_version\" --property:ApplicationDisplayVersion=\"$app_display_version\""
           verbosity_option="--verbosity=${{ inputs.dotnet-verbosity }}"
           echo "$options $extra_options $version_options $verbosity_option" | xargs dotnet publish $project 
+
+      - name: Notarization 
+        run: |
+          publish_path='${{ env.publish-path }}'
+          runtime='${{ matrix.publish.runtime }}'
+          app_path='${{ env.publish-path }}/Eppie.app'
+          bundle_path="${{ env.publish-path }}/Eppie-$runtime.app.zip"
+
+          # zip bundle
+          ditto -c -k --sequesterRsrc --keepParent "$app_path" "$bundle_path"
+          
+          xcrun notarytool submit "$bundle_path" --wait --keychain-profile "NOTARYTOOL_PROFILE"
+          xcrun stapler staple "$app_path"
 
       - name: Prepare Artifacts
         shell: bash
@@ -206,16 +222,10 @@ jobs:
           publish_path="${{ env.publish-path }}"
           tool='${{ matrix.artifact.tool }}'
 
-          artifact_name="eppie.desktop-${{ matrix.publish.runtime }}"
-
           mkdir -p "$artifact_path"
 
-          if [[ "$tool" == "tar" ]]; then
-            tar -czf "${artifact_path}/${artifact_name}.tar.gz" -C "$publish_path" . && echo "Archiving of the artifact '$artifact_name' has been completed successfully." || echo "::warning::Failed to archive artifact '$artifact_name'"
-          elif [[ "$tool" == "7z"  ]]; then
-            7z a -tzip "${artifact_path}/${artifact_name}.zip" "$publish_path/*" && echo "Archiving of the artifact '$artifact_name' has been completed successfully." || echo "::warning::Failed to archive artifact '$artifact_name'"
-          elif [[ "$tool" == "cp" ]]; then
-            cp -r ${publish_path}/* ${artifact_path}/ && echo "Copying of the artifact has been completed successfully." || echo "::warning::Failed to copy artifact"
+          if [[ "$tool" == "cp" ]]; then
+            cp -r $publish_path/*.zip ${artifact_path}/ && echo "Copying of the artifact has been completed successfully." || echo "::warning::Failed to copy artifact"
           else
             echo "::warning::Unknown artifact tool: '$tool'"
           fi
