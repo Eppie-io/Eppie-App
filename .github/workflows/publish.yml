@@ -77,6 +77,7 @@ jobs:
       publish-arch: ${{ steps.init-params.outputs.arch }}
       publish-framework: ${{ steps.init-params.outputs.framework }}
       publish-binaries: ${{ steps.packages.outputs.binaries }}
+      publish-app: ${{ steps.packages.outputs.app }}
       publish-snap: ${{ steps.packages.outputs.snap }}
       publish-maccatalyst-pkg: ${{ steps.packages.outputs.maccatalyst-pkg }}
 
@@ -129,6 +130,12 @@ jobs:
           publish_snap=$([[ $os_suitable == 'true' && $framework_suitable == 'true' ]] && echo "true" || echo "false")
           echo "snap=$publish_snap" >> $GITHUB_OUTPUT
 
+          # Publish Desktop Mac app package
+          os_suitable="${{ contains(fromJSON(steps.publish-config.outputs.content).desktop-app.os, steps.init-params.outputs.os) }}"
+          framework_suitable="${{ contains(fromJSON(steps.publish-config.outputs.content).desktop-app.framework, steps.init-params.outputs.framework) }}"
+          publish_app=$([[ $os_suitable == 'true' && $framework_suitable == 'true' ]] && echo "true" || echo "false")
+          echo "app=$publish_app" >> $GITHUB_OUTPUT
+
           # Publish Mac Catalyst pkg package
           os_suitable="${{ contains(fromJSON(steps.publish-config.outputs.content).maccatalyst-pkg.os, steps.init-params.outputs.os) }}"
           framework_suitable="${{ contains(fromJSON(steps.publish-config.outputs.content).maccatalyst-pkg.framework, steps.init-params.outputs.framework) }}"
@@ -142,6 +149,16 @@ jobs:
     uses: ./.github/workflows/publish-desktop-binaries.yml
     with:
       os: ${{ needs.prepare.outputs.publish-os }}
+      architecture: ${{ needs.prepare.outputs.publish-arch }}
+      dotnet-verbosity: ${{ needs.prepare.outputs.dotnet-verbosity }}
+    secrets: inherit
+
+  publish-desktop-app:
+    name: Publish Desktop [app]
+    needs: prepare
+    if: ${{ needs.prepare.outputs.publish-app == 'true' }}
+    uses: ./.github/workflows/publish-desktop-app.yml
+    with:
       architecture: ${{ needs.prepare.outputs.publish-arch }}
       dotnet-verbosity: ${{ needs.prepare.outputs.dotnet-verbosity }}
     secrets: inherit
@@ -167,8 +184,8 @@ jobs:
 
   upload-assets:
     name: Upload Assets
-    if: github.event_name == 'release'
-    needs: [ publish-desktop-binaries, publish-desktop-snap, publish-maccatalyst-pkg ]
+    if: ${{ github.event_name == 'release' && !cancelled() && !failure() }}
+    needs: [ publish-desktop-binaries, publish-desktop-snap, publish-desktop-app, publish-maccatalyst-pkg ]
     runs-on: ubuntu-latest
     permissions:
       contents: write

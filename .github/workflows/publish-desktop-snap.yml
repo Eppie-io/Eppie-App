@@ -18,7 +18,7 @@
 
 ---
 
-name: "Publish Desktop Snap Package"
+name: Publish Desktop [snap]
 
 on: # yamllint disable-line rule:truthy
   workflow_dispatch:
