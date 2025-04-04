@@ -64,11 +64,11 @@ You may download the latest release for your system:
 
 - [eppie.desktop-linux-x64.tar.gz](https://github.com/Eppie-io/Eppie-App/releases/latest/download/eppie.desktop-linux-x64.tar.gz) (x64 binaries)
 - [eppie.desktop-linux-arm64.tar.gz](https://github.com/Eppie-io/Eppie-App/releases/latest/download/eppie.desktop-linux-arm64.tar.gz) (arm64 binaries)
-- [eppie.desktop-snap-linux-x64.tar.gz](https://github.com/Eppie-io/Eppie-App/releases/latest/download/eppie.desktop-snap-linux-x64.tar.gz) (x64 span package)
+- [eppie.desktop-snap-linux-x64.tar.gz](https://github.com/Eppie-io/Eppie-App/releases/latest/download/eppie.desktop-snap-linux-x64.tar.gz) (x64 snap package)
 
 ### macOS
 
-- [Eppie-osx-arm64.app.zip](https://github.com/Eppie-io/Eppie-App/releases/latest/download/Eppie-osx-arm64.app.zip) (Apple silicon app package)
+- [Eppie-osx-arm64.app.zip](https://github.com/Eppie-io/Eppie-App/releases/latest/download/Eppie-osx-arm64.app.zip) (Apple Silicon app package)
 - [Eppie-osx-x64.app.zip](https://github.com/Eppie-io/Eppie-App/releases/latest/download/Eppie-osx-x64.app.zip) (Apple Intel app package)
 
 ### Android
