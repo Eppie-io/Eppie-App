@@ -55,25 +55,8 @@ runs:
 
         # https://learn.microsoft.com/en-us/windows/apps/publish/publish-your-app/msix/app-package-requirements#package-version-numbering
         # Version numbering: major.minor.build.0
-        # build=(suffix_code + revision) 
-        # suffix_code: unknown [0] < preview [10000] < alpha [20000] < beta [30000] < rc [40000] < no-suffix [50000] < [65535]
 
-        suffix_code=0
-        case "${suffix%%.*}" in
-          "")       suffix_code=50000 ;; # release
-          rc)       suffix_code=40000 ;;
-          beta)     suffix_code=30000 ;;
-          alpha)    suffix_code=20000 ;;
-          preview)  suffix_code=10000 ;;
-          *)        suffix_code=0     ;; # unknown
-        esac
-
-        revision=${suffix##*.}
-
-        regex_number='^[1-9][0-9]*$'
-        revision=$([[ $revision =~ $regex_number ]] && echo $revision || echo $patch )
-
-        build=$(($suffix_code+$revision))
+        build=$patch
 
         echo "numeric-version=$major.$minor.$build.0" >> $GITHUB_OUTPUT
         echo "app-display-version=$major.$minor.$build" >> $GITHUB_OUTPUT
