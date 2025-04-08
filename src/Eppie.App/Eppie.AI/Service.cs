@@ -136,7 +136,7 @@ namespace Eppie.AI
             await Task.Run(
                 async () =>
                 {
-                    await foreach (var messagePart in _model.CompleteStreamingAsync(
+                    await foreach (var messagePart in _model.GetStreamingResponseAsync(
                         new List<ChatMessage>
                         {
                             new ChatMessage(ChatRole.System, systemPrompt),

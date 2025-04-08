@@ -184,18 +184,18 @@ namespace Eppie.AI
             return prompt.ToString();
         }
 
-        public async Task<ChatCompletion> CompleteAsync(IList<ChatMessage> chatMessages, ChatOptions options = null, CancellationToken ct = default)
+        public async Task<ChatResponse> GetResponseAsync(IEnumerable<ChatMessage> chatMessages, ChatOptions options = null, CancellationToken ct = default)
         {
             var result = string.Empty;
-            await foreach (var part in CompleteStreamingAsync(chatMessages, options, ct).ConfigureAwait(false))
+            await foreach (var part in GetStreamingResponseAsync(chatMessages, options, ct).ConfigureAwait(false))
             {
                 result += part.Text;
             }
 
-            return new ChatCompletion(new ChatMessage(ChatRole.Assistant, result));
+            return new ChatResponse(new ChatMessage(ChatRole.Assistant, result));
         }
 
-        public async IAsyncEnumerable<StreamingChatCompletionUpdate> CompleteStreamingAsync(IList<ChatMessage> chatMessages, ChatOptions options = null, [EnumeratorCancellation] CancellationToken ct = default)
+        public async IAsyncEnumerable<ChatResponseUpdate> GetStreamingResponseAsync(IEnumerable<ChatMessage> chatMessages, ChatOptions options = null, [EnumeratorCancellation] CancellationToken ct = default)
         {
             var prompt = GetPrompt(chatMessages);
 
@@ -284,10 +284,10 @@ namespace Eppie.AI
                     break;
                 }
 
-                yield return new StreamingChatCompletionUpdate
+                yield return new ChatResponseUpdate
                 {
                     Role = ChatRole.Assistant,
-                    Text = part,
+                    Contents = [new TextContent(part)],
                 };
             }
         }
