@@ -314,14 +314,14 @@ namespace Eppie.App.Shared.Services
             }
         }
 
-        private async Task ReplyToMessage(ReceivedMessageInfo message, string translatedText)
+        private async Task ReplyToMessage(ReceivedMessageInfo message, string text)
         {
             var reply = new Message();
 
             reply.From.Add(message.Email);
-            reply.TextBody = translatedText;
+            reply.TextBody = text;
             reply.To.AddRange(message.Message.From);
-            reply.Subject = message.Message.Subject;
+            reply.Subject = "RE(AI): " + message.Message.Subject;
 
             await Core.SendMessageAsync(reply, false, false, CancellationToken.None).ConfigureAwait(false);
 
