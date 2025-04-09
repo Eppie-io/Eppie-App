@@ -45,10 +45,10 @@
             <ProgressRing HorizontalAlignment="Left"
                           IsActive="True"
                           Visibility="{x:Bind ViewModel.IsAIProgressRingVisible, Mode=OneWay}" />
-            <!--TODO: Temporary link to the documentation-->
-            <HyperlinkButton extensions:HyperlinkExtension.Link="https://blog.eppie.io/post/eppie-ai/"
-                             Content="How to set up your AI agent"
-                             Margin="4,0,0,0"/>
+            <!--  TODO: Temporary link to the documentation  -->
+            <HyperlinkButton Margin="4,0,0,0"
+                             extensions:HyperlinkExtension.Link="https://blog.eppie.io/post/eppie-ai/"
+                             Content="How to set up your AI agent" />
         </StackPanel>
 
         <Grid Grid.Row="1"
