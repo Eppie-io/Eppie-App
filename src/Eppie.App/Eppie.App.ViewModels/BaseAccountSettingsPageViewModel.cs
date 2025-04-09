@@ -140,6 +140,10 @@ namespace Tuvi.App.ViewModels
             catch (NeedAdditionalAuthInfo)
             {
             }
+            catch (AuthorizationException)
+            {
+                throw new NeedAdditionalAuthInfo();
+            }
             catch (Exception e)
             {
                 OnError(e);
