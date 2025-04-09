@@ -230,5 +230,18 @@ namespace Tuvi.App.ViewModels
             };
             return accountData;
         }
+
+        protected override async Task ApplySettingsAndGoBackAsync()
+        {
+            try
+            {
+                await base.ApplySettingsAndGoBackAsync().ConfigureAwait(true);
+            }
+            catch (NeedAdditionalAuthInfo)
+            {
+                AccountSettingsModel.MailboxPassword.Errors.Clear();
+                AccountSettingsModel.MailboxPassword.Errors.Add(GetLocalizedString("NeedMailboxPassword"));
+            }
+        }
     }
 }
