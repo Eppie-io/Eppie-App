@@ -140,7 +140,7 @@ namespace Tuvi.App.ViewModels
             catch (NeedAdditionalAuthInfo)
             {
             }
-            catch (AuthorizationException)
+            catch (AuthorizationException ex) when (ex.Message == "Proton: invalid mailbox password")
             {
                 throw new NeedAdditionalAuthInfo();
             }
