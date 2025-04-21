@@ -24,6 +24,29 @@
     },
     {
         "keywords": [
+            "windows",
+            "arm64",
+            "all"
+        ],
+        "os": "windows-11-arm",
+        "publish": {
+            "tool": "dotnet",
+            "project": "./src/Eppie.App/Eppie.App/Eppie.App.csproj",
+            "configuration": "release",
+            "framework": "net9.0-desktop",
+            "runtime": "win-arm64",
+            "extra": "--property:SelfContained=true --property:PublishSingleFile=false --property:IncludeSourceRevisionInInformationalVersion=false --property:ExcludePublishDebugSymbols=true",
+            "prepare": [
+                "--target:PackageVersioning --no-restore",
+                "--target:TargetFrameworks-Desktop --no-restore"
+            ]
+        },
+        "artifact": {
+            "tool": "7z"
+        }
+    },
+    {
+        "keywords": [
             "linux",
             "x64",
             "all"
