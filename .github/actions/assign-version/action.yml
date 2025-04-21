@@ -29,6 +29,8 @@ outputs:
     value: ${{ steps.provide-version.outputs.app-version }}
   app-display-version: 
     value: ${{ steps.provide-version.outputs.app-display-version }}
+  artifact-version: 
+    value: ${{ steps.provide-version.outputs.artifact-version}}
 
 runs:
   using: "composite"
@@ -43,9 +45,14 @@ runs:
         major="${{ steps.assign-version.outputs.major }}"
         minor="${{ steps.assign-version.outputs.minor }}"
         patch="${{ steps.assign-version.outputs.patch }}"
+        today="${{ steps.assign-version.outputs.today }}"
+        run_number="${{ steps.assign-version.outputs.run-number }}"
 
         # Semantic versioning: {major}.{minor}.{patch}[-{suffix}]+{today}.{run-number}.{run-attempt}.{commit-hash}
         echo "semantic-version=${{ steps.assign-version.outputs.preset-semantic-v2-extended }}" >> $GITHUB_OUTPUT
+
+        # Artifact versioning: {major}.{minor}.{patch}[-{suffix}]+{today}.{run-number}
+        echo "artifact-version=${{ steps.assign-version.outputs.preset-semantic-v1 }}+$today.$run_number" >> $GITHUB_OUTPUT
 
         # https://learn.microsoft.com/en-us/windows/apps/publish/publish-your-app/msix/app-package-requirements#package-version-numbering
         # Version numbering: major.minor.build.0
