@@ -21,5 +21,28 @@
         "artifact": {
             "tool": "tar"
         }
+    },
+    {
+        "keywords": [
+            "linux",
+            "arm64",
+            "all"
+        ],
+        "os": "ubuntu-24.04-arm",
+        "publish": {
+            "tool": "dotnet",
+            "project": "./src/Eppie.App/Eppie.App/Eppie.App.csproj",
+            "configuration": "release",
+            "framework": "net9.0-desktop",
+            "runtime": "linux-arm64",
+            "extra": " --property:SelfContained=true --property:PackageFormat=snap --property:UnoSnapcraftAdditionalParameters=--destructive-mode --property:IncludeSourceRevisionInInformationalVersion=false --property:ExcludePublishDebugSymbols=true",
+            "prepare": [
+                "--target:PackageVersioning --no-restore",
+                "--target:TargetFrameworks-Desktop --no-restore"
+            ]
+        },
+        "artifact": {
+            "tool": "tar"
+        }
     }
 ]

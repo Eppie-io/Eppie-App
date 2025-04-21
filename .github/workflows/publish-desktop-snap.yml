@@ -28,6 +28,7 @@ on: # yamllint disable-line rule:truthy
         default: all
         options:
           - all
+          - arm64
           - x64
       dotnet-verbosity:
         type: choice
@@ -100,7 +101,7 @@ jobs:
 
           linux_release=$(lsb_release --release --short)
 
-          snap_core_version='core24'
+          snap_core_version='core'
 
           if [[ "${linux_release%%.*}" == "24" ]]; then
             snap_core_version='core24'
@@ -110,6 +111,7 @@ jobs:
             snap_core_version='core20'
           fi
 
+          sudo apt-get update
           sudo apt-get install -y snapd
           sudo snap install $snap_core_version
           sudo snap install multipass
@@ -122,6 +124,7 @@ jobs:
         uses: ./.github/actions/install-prerequisites
         with:
           uno-platform: true
+          uno-check-skip: 'xcode vswin vsmac windowshyperv edgewebview2 androidemulator dotnetnewunotemplates androidsdk'
 
       - name: Assign version
         id: assign-version

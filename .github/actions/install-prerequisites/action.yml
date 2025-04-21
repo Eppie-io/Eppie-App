@@ -25,6 +25,10 @@ inputs:
     type: boolean
     default: false
 
+  uno-check-skip:
+    type: string
+    default: 'xcode vswin vsmac windowshyperv edgewebview2 androidemulator dotnetnewunotemplates'
+
   msbuild:
     type: boolean
     default: false
@@ -50,3 +54,5 @@ runs:
     - name: Setup the Uno Platform
       if: inputs.uno-platform == 'true'
       uses: finebits/github-actions/devhub/uno-platform/setup@39ec051fda4f00ab2ac5ffb6336ab0ea1ad9ad0f # v3.0.0
+      with:
+        uno-check-skip: ${{ inputs.uno-check-skip }}
