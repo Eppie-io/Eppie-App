@@ -45,7 +45,7 @@ jobs:
 
     outputs:
       matrix: ${{ steps.publish-config.outputs.matrix }}
-      start-publication: ${{ steps.check-config.outputs.correct }}
+      interrupt-publication: ${{ steps.publish-config.outputs.is-empty }}
 
     steps:
       - name: Checkout
@@ -55,29 +55,17 @@ jobs:
 
       - name: Read the binaries publication configuration
         id: publish-config
-        uses: finebits/github-actions/toolset/select-configuration@4a126d80a11c5fdc83ce884d3d23dffb30bc4495 # v2.0.0
+        uses: finebits/github-actions/toolset/select-configuration@39ec051fda4f00ab2ac5ffb6336ab0ea1ad9ad0f # v3.0.0
         with:
           json-file: ./.github/configurations/publish-mac-catalyst-pkg.json
-          keywords: "macos,all"
-
-      - name: Check configs
-        id: check-config
-        shell: bash
-        run: |
-          length=$( echo '${{ steps.publish-config.outputs.config-json }}' | jq '. | length' )
-          correct_config=true
-
-          if(( $length == 0 )); then
-            echo "::warning::No suitable publish configuration found"
-            correct_config=false
-          fi
-
-          echo "correct=$correct_config" >> $GITHUB_OUTPUT
+          keywords: |
+            macos
+            all
 
   publish:
     name: Publish ${{ matrix.publish.framework }}
     needs: prepare
-    if: needs.prepare.outputs.start-publication == 'true'
+    if: needs.prepare.outputs.interrupt-publication == 'false'
     strategy:
       fail-fast: false
       matrix: ${{ fromJson(needs.prepare.outputs.matrix) }}
