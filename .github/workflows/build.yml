@@ -1,6 +1,6 @@
 ###############################################################################
 #
-#   Copyright 2024 Eppie(https://eppie.io)
+#   Copyright 2025 Eppie(https://eppie.io)
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -78,6 +78,7 @@ jobs:
           fetch-depth: 0
 
       - name: Initializing config keywords
+        id: init
         shell: bash
         run: |
           keywords="autobuild"
@@ -85,27 +86,24 @@ jobs:
           if [[ ${{ github.event_name }} == 'schedule' ]]; then
             keywords="all"
           elif [[ ${{ github.event_name }} == 'workflow_dispatch' ]]; then
-            keywords="${{ github.event.inputs.framework }},${{ github.event.inputs.os }}"
+            keywords="${{ github.event.inputs.framework }} ${{ github.event.inputs.os }}"
           fi
 
-          echo "EPPIE_BUILD_CONFIG_KEYWORDS=$keywords" >> $GITHUB_ENV
+          echo "keywords=$keywords" >> $GITHUB_OUTPUT
 
       - name: Select Build config
         id: build-config
-        uses: finebits/github-actions/toolset/select-configuration@4a126d80a11c5fdc83ce884d3d23dffb30bc4495 # v2.0.0
+        uses: finebits/github-actions/toolset/select-configuration@39ec051fda4f00ab2ac5ffb6336ab0ea1ad9ad0f # v3.0.0
         with:
           json-file: ./.github/configurations/build.json
-          keywords: ${{ env.EPPIE_BUILD_CONFIG_KEYWORDS }}
+          keywords: ${{ steps.init.outputs.keywords }}
 
       - name: Check configs
+        if: steps.build-config.outputs.is-empty == 'true'
         shell: bash
         run: |
-          length=$( echo '${{ steps.build-config.outputs.config-json }}' | jq '. | length' )
-
-          if(( $length == 0 )); then
-            echo "::error::No suitable build configuration found"
-            exit 1
-          fi
+          echo "::error::No suitable build configuration found"
+          exit 1
 
   build:
     name: ${{ matrix.build.framework }} ${{ matrix.os }} '${{ matrix.build.project }}'
@@ -143,6 +141,7 @@ jobs:
         with:
           uno-platform: ${{ matrix.prerequisites.uno-platform == 'true' }}
           msbuild: ${{ matrix.prerequisites.msbuild == 'true' }}
+          xcode-app: ${{ matrix.prerequisites.xcode }}
 
       - name: Restore via dotnet
         if: matrix.restore.tool == 'dotnet'
