@@ -323,6 +323,10 @@ namespace Tuvi.App.IncrementalLoading
                         resultCount = (uint)data.Count();
                         AddRange(data);
                         HasMoreItems = true;
+
+                        // Waiting for new items to be processed before the next iteration. This should apply to Desktop and WebAssembly projects.
+                        // Look at https://github.com/unoplatform/uno/issues/19887
+                        await Task.Yield();
                     }
                     else
                     {
