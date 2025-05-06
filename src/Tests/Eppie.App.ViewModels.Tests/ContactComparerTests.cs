@@ -13,7 +13,7 @@ namespace Tuvi.App.ViewModels.Tests
 
             var comparer = new ByNameContactComparer();
 
-            Assert.IsTrue(comparer.Compare(contact1, contact2) > 0);
+            Assert.That(comparer.Compare(contact1, contact2), Is.GreaterThan(0));
         }
 
         [Test]
@@ -25,8 +25,11 @@ namespace Tuvi.App.ViewModels.Tests
 
             var comparer = new ByUnreadContactComparer();
 
-            Assert.IsTrue(comparer.Compare(contact1, contact2) < 0);
-            Assert.IsTrue(comparer.Compare(contact2, contact3) > 0);
+            Assert.Multiple(() =>
+            {
+                Assert.That(comparer.Compare(contact1, contact2), Is.LessThan(0));
+                Assert.That(comparer.Compare(contact2, contact3), Is.GreaterThan(0));
+            });
         }
 
         [Test]
@@ -40,7 +43,7 @@ namespace Tuvi.App.ViewModels.Tests
 
             var comparer = new ByUnreadContactComparer();
 
-            Assert.IsTrue(comparer.Compare(contact1, contact2) > 0);
+            Assert.That(comparer.Compare(contact1, contact2), Is.GreaterThan(0));
         }
 
         [Test]
@@ -54,7 +57,7 @@ namespace Tuvi.App.ViewModels.Tests
 
             var comparer = new ByUnreadContactComparer();
 
-            Assert.IsTrue(comparer.Compare(contact1, contact2) > 0);
+            Assert.That(comparer.Compare(contact1, contact2), Is.GreaterThan(0));
         }
 
         [Test]
@@ -68,7 +71,7 @@ namespace Tuvi.App.ViewModels.Tests
 
             var comparer = new ByUnreadContactComparer();
 
-            Assert.IsTrue(comparer.Compare(contact1, contact2) < 0);
+            Assert.That(comparer.Compare(contact1, contact2), Is.LessThan(0));
         }
     }
 }
