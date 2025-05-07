@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AttachButton.Label" xml:space="preserve">
+    <value>Далучыць файл</value>
+    <comment>Text for attach button</comment>
+  </data>
+  <data name="AttachButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Далучыць файл</value>
+    <comment>The tooltip for attach button</comment>
+  </data>
+  <data name="BackButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Назад</value>
+    <comment>The tooltip for back button</comment>
+  </data>
+  <data name="DeleteButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Выдаліць</value>
+    <comment>The tooltip for delete button</comment>
+  </data>
+  <data name="DeleteButton.Label" xml:space="preserve">
+    <value>Выдаліць</value>
+    <comment>Text on Delete button</comment>
+  </data>
+  <data name="MarkAsReadButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Пазначыць як прачытанае</value>
+    <comment>The tooltip for Mark as read button</comment>
+  </data>
+  <data name="MarkAsReadButton.Label" xml:space="preserve">
+    <value>Пазначыць як прачытанае</value>
+    <comment>Text on Mark as read button</comment>
+  </data>
+  <data name="MarkAsUnreadButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Пазначыць як непрачытанае</value>
+    <comment>The tooltip for Mark as unread button</comment>
+  </data>
+  <data name="MarkAsUnreadButton.Label" xml:space="preserve">
+    <value>Пазначыць як непрачытанае</value>
+    <comment>Text on Mark as unread button</comment>
+  </data>
+  <data name="ReplyButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Адказаць</value>
+    <comment>The tooltip for reply button</comment>
+  </data>
+  <data name="ReplyButton.Label" xml:space="preserve">
+    <value>Адказаць</value>
+    <comment>Text on Reply button</comment>
+  </data>
+  <data name="ReplyAllButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Адказаць усім</value>
+    <comment>The tooltip for Reply All button</comment>
+  </data>
+  <data name="ReplyAllButton.Label" xml:space="preserve">
+    <value>Адказаць усім</value>
+    <comment>Text on Reply All button</comment>
+  </data>
+  <data name="ForwardButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Пераслаць</value>
+    <comment>The tooltip for Forward email button</comment>
+  </data>
+  <data name="ForwardButton.Label" xml:space="preserve">
+    <value>Пераслаць</value>
+    <comment>Text on Forward email button</comment>
+  </data>
+  <data name="SendButton.Label" xml:space="preserve">
+    <value>Адправіць</value>
+    <comment>Text for send button</comment>
+  </data>
+  <data name="SendButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Адправіць</value>
+    <comment>The tooltip for send button</comment>
+  </data>
+  <data name="SeedGenerateCopyButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Скапіраваць seed-фразу (Ctrl+C)</value>
+    <comment>Tooltip for Copy seed phrase button</comment>
+  </data>
+  <data name="SeedRestorePasteButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Уставіць seed-фразу (Ctrl+V)</value>
+    <comment>Restore seed page paste phrase button</comment>
+  </data>
+  <data name="SaveAttachmentButton.Label" xml:space="preserve">
+    <value>Захаваць</value>
+    <comment>Text for save attached file button</comment>
+  </data>
+  <data name="SaveAttachmentButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Захаваць</value>
+    <comment>The tooltip for save attached file button</comment>
+  </data>
+  <data name="OpenAttachmentButton.Label" xml:space="preserve">
+    <value>Адкрыць</value>
+    <comment>Text for save attached file button</comment>
+  </data>
+  <data name="OpenAttachmentButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Адкрыць</value>
+    <comment>The tooltip for save attached file button</comment>
+  </data>
+  <data name="DeleteAttachmentButton.Label" xml:space="preserve">
+    <value>Выдаліць</value>
+    <comment>Text for Delete attached file button</comment>
+  </data>
+  <data name="DeleteAttachmentButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Выдаліць</value>
+    <comment>The tooltip for Delete attached file button</comment>
+  </data>
+  <data name="UpdateButton.Label" xml:space="preserve">
+    <value>Абнавіць</value>
+    <comment>Text for Update emails list button</comment>
+  </data>
+  <data name="UpdateButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Абнавіць</value>
+    <comment>The tooltip for Update emails list button</comment>
+  </data>
+  <data name="SelectionModeButton.Label" xml:space="preserve">
+    <value>Рэжым вылучэння</value>
+    <comment>Text for Selection mode button</comment>
+  </data>
+  <data name="SelectionModeButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Рэжым вылучэння</value>
+    <comment>The tooltip for Selection mode button</comment>
+  </data>
+  <data name="ClearFlagButton.Label" xml:space="preserve">
+    <value>Скасаваць выбар</value>
+    <comment>Text on Clear flag button</comment>
+  </data>
+  <data name="ClearFlagButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Прыбраць сцяжок</value>
+    <comment>The tooltip for Clear flag button</comment>
+  </data>
+  <data name="SetFlagButton.Label" xml:space="preserve">
+    <value>Выбраць</value>
+    <comment>Text on Set flag button</comment>
+  </data>
+  <data name="SetFlagButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Паставіць сцяжок</value>
+    <comment>The tooltip for Set flag button</comment>
+  </data>
+  <data name="SelectAllButton.Label" xml:space="preserve">
+    <value>Выбраць усе</value>
+    <comment>Text on Select All button.</comment>
+  </data>
+  <data name="SelectAllButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Выбраць усе</value>
+    <comment>The tooltip for Select All button</comment>
+  </data>
+  <data name="AIAgentProcessMessageButton.Label" xml:space="preserve">
+    <value>Агент AI</value>
+    <comment>Text on AI Agent process button.</comment>
+  </data>
+  <data name="AIAgentProcessMessageButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Агент AI</value>
+    <comment>The tooltip for AI Agent process button</comment>
+  </data>
+  <data name="AIOptionTopPSlider.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Параметр top P кажа мадэлі ўлічваць токены толькі да дасягнення сукупнай верагоднасці P. Паменшыце гэта значэнне для больш прадказальнай, мэтанакіраванай генерацыі і павялічце для больш выпадковага адказу.</value>
+    <comment>The tooltip for TopP AI option slider.</comment>
+  </data>
+  <data name="AIOptionTopKSlider.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Параметр top K кажа мадэлі на кожным этапе генерацыі ўлічваць толькі K найбольш верагодных токенаў. Паменшыце гэта значэнне для больш прадказальнай, мэтанакіраванай генерацыі і павялічце для больш выпадковага адказу.</value>
+    <comment>The tooltip for TopK AI option slider.</comment>
+  </data>
+  <data name="AIOptionTemperatureSlider.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Параметр тэмпературы - гэта маштабуючы каэфіцыент для размеркавання верагоднасцяў токенаў падчас генерацыі. Значэнні ніжэй за 1 дадуць больш дэтэрмінаваны адказ, а значэнні вышэй за 1 павялічаць выпадковасць.</value>
+    <comment>The tooltip for Temperature AI option slider.</comment>
+  </data>
+  <data name="DoSampleToggle.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Калі Выбарка адключаная, будзе выкарыстоўвацца прагны падыход, і мадэль будзе кожны раз выбіраць найбольш верагодны токен. Калі гэты параметр уключаны, токены будуць выбірацца на аснове размеркавання верагоднасці токена. Параметры Top K, Top P і тэмпература прымяняюцца толькі калі Выбарка ўключана.</value>
+    <comment>The tooltip for Sampling toggle.</comment>
+  </data>
+</root>
