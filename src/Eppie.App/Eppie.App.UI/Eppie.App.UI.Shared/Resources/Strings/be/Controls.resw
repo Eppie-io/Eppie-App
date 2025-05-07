@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Address.Text" xml:space="preserve">
+    <value>Адрас</value>
+    <comment>Input field caption for server address</comment>
+  </data>
+  <data name="MessageFilter.PlaceholderText" xml:space="preserve">
+    <value>Пошук</value>
+    <comment>Text displayed in Search Messages control when no search text is entered</comment>
+  </data>
+  <data name="ConfirmPassword.Text" xml:space="preserve">
+    <value>Пацвердзіць пароль</value>
+    <comment>Input field caption for confirm password</comment>
+  </data>
+  <data name="CurrentPassword.Text" xml:space="preserve">
+    <value>Бягучы пароль</value>
+    <comment>Input field caption for current password</comment>
+  </data>
+  <data name="EmailAddress.Text" xml:space="preserve">
+    <value>Адрас электроннай пошты</value>
+    <comment>Input field caption for email address</comment>
+  </data>
+  <data name="TwoFactorCode.Text" xml:space="preserve">
+    <value>Код двухфактарнай аўтэнтыфікацыі</value>
+    <comment>Input field caption for two factor authentication code</comment>
+  </data>
+  <data name="IncomingServer.Text" xml:space="preserve">
+    <value>Сервер уваходнай пошты</value>
+    <comment>Caption for incoming email server settings</comment>
+  </data>
+  <data name="OutgoingServer.Text" xml:space="preserve">
+    <value>Сервер выходнай эл.пошты</value>
+    <comment>Caption for outgoing email server settings</comment>
+  </data>
+  <data name="Password.Text" xml:space="preserve">
+    <value>Увядзіце пароль</value>
+    <comment>Input field caption for password</comment>
+  </data>
+  <data name="MailboxPassword.Text" xml:space="preserve">
+    <value>Увядзіце другі пароль</value>
+    <comment>Input field caption for second password</comment>
+  </data>
+  <data name="Port.Text" xml:space="preserve">
+    <value>Порт</value>
+    <comment>Input field caption for server port</comment>
+  </data>
+  <data name="Protocol.Text" xml:space="preserve">
+    <value>Пратакол</value>
+    <comment>Caption for select network protocol</comment>
+  </data>
+  <data name="RememberPassword.Content" xml:space="preserve">
+    <value>Запомніць мой пароль</value>
+    <comment>Checkbox text for option to remeber pasword</comment>
+  </data>
+  <data name="SenderName.Text" xml:space="preserve">
+    <value>Адпраўляйце паведамленні пад гэтым імем</value>
+    <comment>Input field caption for sender name</comment>
+  </data>
+  <data name="ContactsTab.Header" xml:space="preserve">
+    <value>Кантакты</value>
+    <comment>The header for Tab with list of contacts</comment>
+  </data>
+  <data name="MailboxesTab.Header" xml:space="preserve">
+    <value>Усе скрынкі</value>
+    <comment>The header for Tab with list of mailboxes (user connected e-mail accounts)</comment>
+  </data>
+  <data name="ChangeContactAvatarMenuItem.Text" xml:space="preserve">
+    <value>Змяніць аватар</value>
+    <comment>Text of the context menu item that changes contact's avatar</comment>
+  </data>
+  <data name="RemoveContactMenuItem.Text" xml:space="preserve">
+    <value>Выдаліць</value>
+    <comment>The text of context menu item that removes contact from address book</comment>
+  </data>
+  <data name="ContactFilter.PlaceholderText" xml:space="preserve">
+    <value>Пошук</value>
+    <comment>Text displayed in Search Contacts control when no search text is entered</comment>
+  </data>
+  <data name="BackupAccountSettingsCheckBox.Content" xml:space="preserve">
+    <value>Уключыце рэзервовае капіраванне дадзеных для гэтага ўліковага запісу</value>
+    <comment>The label for option Enable backup for Account settings</comment>
+  </data>
+  <data name="BackupAccountMessagesCheckBox.Content" xml:space="preserve">
+    <value>Уключыце рэзервовае капіраванне загружаных эл.лістоў для гэтага ўліковага запісу</value>
+    <comment>The label for option Enable backup for downloaded emails</comment>
+  </data>
+  <data name="CancelMessagesDeleteButton.Content" xml:space="preserve">
+    <value>Адрабіць</value>
+    <comment>Text of the button which cancels deleting messages</comment>
+  </data>
+  <data name="BackupLabel.Text" xml:space="preserve">
+    <value>Рэзервовая копія</value>
+    <comment>The label of section with backup options on settings page</comment>
+  </data>
+  <data name="CheckNewMessagesIntervalLabel.Text" xml:space="preserve">
+    <value>Інтэрвал праверкі новых паведамленняў (у хвілінах)</value>
+    <comment>The label of input field to enter check messages interval value in minutes</comment>
+  </data>
+</root>
