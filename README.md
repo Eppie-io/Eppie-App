@@ -56,7 +56,7 @@ You may download the latest release for your system:
 
 ### Windows
 
-- [Eppie.App-x86-x64-ARM64.msixbundle](https://github.com/Eppie-io/Eppie-App/releases/latest/download/Eppie.App-x86-x64-ARM64.msixbundle) (UWP)
+- [**[Recommended] Eppie.App-x86-x64-ARM64.msixbundle**](https://github.com/Eppie-io/Eppie-App/releases/latest/download/Eppie.App-x86-x64-ARM64.msixbundle) (UWP)
 - [Eppie.App.WinAppSDK-x86-x64-ARM64.msixbundle](https://github.com/Eppie-io/Eppie-App/releases/latest/download/Eppie.App.WinAppSDK-x86-x64-ARM64.msixbundle) (Windows App SDK)
 - [eppie.desktop-win-x64.zip](https://github.com/Eppie-io/Eppie-App/releases/latest/download/eppie.desktop-win-x64.zip) (x64 binaries)
 
