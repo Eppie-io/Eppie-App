@@ -114,10 +114,10 @@ namespace Tuvi.App.ViewModels
             BrandService = brandService;
         }
 
-        protected IPurchaseService PurchaseService { get; private set; }
-        public void SetPurchaseService(IPurchaseService purchaseService)
+        protected IAppStoreService AppStoreService { get; private set; }
+        public void SetAppStoreService(IAppStoreService appStoreService)
         {
-            PurchaseService = purchaseService;
+            AppStoreService = appStoreService;
         }
 
         protected IDragAndDropService DragAndDropService { get; private set; }

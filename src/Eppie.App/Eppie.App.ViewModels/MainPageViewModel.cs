@@ -424,7 +424,7 @@ namespace Tuvi.App.ViewModels
         {
             try
             {
-                await PurchaseService.BuySubscriptionAsync().ConfigureAwait(true);
+                await AppStoreService.BuySubscriptionAsync().ConfigureAwait(true);
             }
             catch
             {
@@ -460,10 +460,34 @@ namespace Tuvi.App.ViewModels
                 //const string downloadUrl = "http://localhost:7071/api/DownloadBackupFunction?name=";
 
                 await Core.RestoreFromBackupIfNeededAsync(new Uri(downloadUrl)).ConfigureAwait(true);
+
+                await RequestReviewAsync().ConfigureAwait(true);
             }
             catch (Exception ex)
             {
                 OnError(ex);
+            }
+        }
+
+        private async Task RequestReviewAsync()
+        {
+            const int ReviewRequestsThreshold = 10;
+            const int ReviewRequestsDisabled = -1;
+
+            var count = LocalSettingsService.RequestReviewCount;
+
+            if (count > ReviewRequestsThreshold)
+            {
+                if (await MessageService.ShowRequestReviewMessageAsync().ConfigureAwait(true))
+                {
+                    await AppStoreService.RequestReviewAsync().ConfigureAwait(true);
+
+                    LocalSettingsService.RequestReviewCount = ReviewRequestsDisabled;
+                }
+            }
+            else if (count != ReviewRequestsDisabled)
+            {
+                LocalSettingsService.RequestReviewCount++;
             }
         }
 

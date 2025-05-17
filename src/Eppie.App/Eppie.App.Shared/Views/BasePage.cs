@@ -82,7 +82,7 @@ namespace Tuvi.App.Shared.Views
             ViewModel.SetDispatcherService(new DispatcherService());
             ViewModel.SetBrandService(new BrandLoader());
             ViewModel.SetLauncherService(new LauncherService());
-            ViewModel.SetPurchaseService(new PurchaseService());
+            ViewModel.SetAppStoreService(new AppStoreService());
             ViewModel.SetDragAndDropService(new DragAndDropService());
             AfterDataContextChanged();
         }
