@@ -16,21 +16,44 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Tuvi.App.ViewModels.Services;
 using Windows.Services.Store;
+using Windows.System;
 
 namespace Tuvi.App.Shared.Services
 {
-    public class PurchaseService : IPurchaseService
+    public class AppStoreService : IAppStoreService
     {
         public Task BuySubscriptionAsync()
         {
             var subscription = new SubscriptionProduct("<InAppOfferToken>", "<ProductId>");
             return subscription.PurchaseAsync();
+        }
+
+        public async Task<bool> RequestReviewAsync()
+        {
+            try
+            {
+                var context = StoreContext.GetDefault();
+
+#if WINDOWS10_0_19041_0_OR_GREATER
+                //TODO: Need to pass the window handle to init StoreContext
+                //nint hwnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
+                //WinRT.Interop.InitializeWithWindow.Initialize(context, hwnd);
+#endif
+                var result = await context.RequestRateAndReviewAppAsync();
+
+                return result.Status == StoreRateAndReviewStatus.Succeeded;
+            }
+            catch
+            {
+                // Replace with actual product ID
+                string productId = "<ProductId>";
+
+                var uri = new Uri($"ms-windows-store://review/?ProductId={productId}");
+
+                return await Launcher.LaunchUriAsync(uri);
+            }
         }
     }
 

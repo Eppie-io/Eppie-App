@@ -493,6 +493,15 @@ namespace Tuvi.App.Shared.Services
                 StringProvider.GetString("RemoveAIAgentDialogRejectText"));
         }
 
+        public Task<bool> ShowRequestReviewMessageAsync()
+        {
+            return ShowDialogAsync(
+                StringProvider.GetString("RequestReviewDialogTitle"),
+                StringProvider.GetString("RequestReviewDialogMessage"),
+                StringProvider.GetString("MsgBtnYes"),
+                StringProvider.GetString("MsgBtnNo"));
+        }
+
         public Task ShowNeedToCreateSeedPhraseMessageAsync()
         {
             return ShowInfoMessageAsync(
