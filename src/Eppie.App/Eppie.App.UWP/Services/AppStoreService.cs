@@ -16,17 +16,29 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Tuvi.App.ViewModels.Services;
 using Windows.Services.Store;
 
 namespace Tuvi.App.Shared.Services
 {
-    public class PurchaseService : IPurchaseService
+    public class AppStoreService : IAppStoreService
     {
         public Task BuySubscriptionAsync()
         {
             var subscription = new SubscriptionProduct("<InAppOfferToken>", "<ProductId>");
             return subscription.PurchaseAsync();
+        }
+
+        public async Task<bool> RequestReviewAsync()
+        {
+            var context = StoreContext.GetDefault();
+            var result = await context.RequestRateAndReviewAppAsync();
+
+            return result.Status == StoreRateAndReviewStatus.Succeeded;
         }
     }
 

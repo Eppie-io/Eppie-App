@@ -126,7 +126,7 @@
     <Compile Include="Models\BrandLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DispatcherService.cs" />
-    <Compile Include="Services\PurchaseService.cs" />
+    <Compile Include="Services\AppStoreService.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
