@@ -28,5 +28,6 @@ namespace Tuvi.App.ViewModels.Services
         string SelectedMailFilterForAllMessagesPage { get; set; }
         string SelectedMailFilterForFolderMessagesPage { get; set; }
         string SelectedMailFilterForContactMessagesPage { get; set; }
+        int RequestReviewCount { get; set; }
     }
 }
