@@ -299,11 +299,6 @@ namespace Tuvi.App.ViewModels
 
         internal LocalAIAgent ToAIAgent(Account linkedAccount)
         {
-            if (string.IsNullOrEmpty(linkedAccount?.Email.Address))
-            {
-                linkedAccount = null;
-            }
-
             CurrentAgent.Name = Name;
             CurrentAgent.AgentSpecialty = AgentSpecialty;
             CurrentAgent.SystemPrompt = SystemPrompt;
