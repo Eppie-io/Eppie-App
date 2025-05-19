@@ -91,6 +91,21 @@ namespace Tuvi.App.Shared.Services
             }
         }
 
+        /// <summary>
+        /// Stores the number of times the main page has been opened before showing the request to rate the app.
+        /// </summary>
+        public int RequestReviewCount
+        {
+            get
+            {
+                return GetOption(0, nameof(RequestReviewCount));
+            }
+            set
+            {
+                SetOption(value);
+            }
+        }
+
         #region Set/Get option
 
         private ApplicationDataContainer AppLocalSettings { get { return ApplicationData.Current.LocalSettings; } }
