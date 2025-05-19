@@ -29,7 +29,11 @@ namespace Tuvi.App.Shared.Services
     {
         public Task BuySubscriptionAsync()
         {
-            var subscription = new SubscriptionProduct("<InAppOfferToken>", "<ProductId>");
+            const string InAppOfferToken = "<InAppOfferToken>";
+            const string AppOfferProductId = "<AppOfferProductId>";
+
+            var subscription = new SubscriptionProduct(InAppOfferToken, AppOfferProductId);
+
             return subscription.PurchaseAsync();
         }
 

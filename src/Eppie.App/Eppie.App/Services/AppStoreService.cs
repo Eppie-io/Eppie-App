@@ -26,7 +26,11 @@ namespace Tuvi.App.Shared.Services
     {
         public Task BuySubscriptionAsync()
         {
-            var subscription = new SubscriptionProduct("<InAppOfferToken>", "<ProductId>");
+            const string InAppOfferToken = "<InAppOfferToken>";
+            const string AppOfferProductId = "<AppOfferProductId>";
+
+            var subscription = new SubscriptionProduct(InAppOfferToken, AppOfferProductId);
+
             return subscription.PurchaseAsync();
         }
 
@@ -48,9 +52,9 @@ namespace Tuvi.App.Shared.Services
             catch
             {
                 // Replace with actual product ID
-                string productId = "<ProductId>";
+                string AppProductId = "<AppProductId>";
 
-                var uri = new Uri($"ms-windows-store://review/?ProductId={productId}");
+                var uri = new Uri($"ms-windows-store://review/?ProductId={AppProductId}");
 
                 return await Launcher.LaunchUriAsync(uri);
             }
