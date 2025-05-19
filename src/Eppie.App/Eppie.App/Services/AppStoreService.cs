@@ -52,7 +52,7 @@ namespace Tuvi.App.Shared.Services
             catch
             {
                 // Replace with actual product ID
-                string AppProductId = "<AppProductId>";
+                const string AppProductId = "<AppProductId>";
 
                 var uri = new Uri($"ms-windows-store://review/?ProductId={AppProductId}");
 
