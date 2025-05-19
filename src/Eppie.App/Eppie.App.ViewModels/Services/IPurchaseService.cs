@@ -20,8 +20,9 @@ using System.Threading.Tasks;
 
 namespace Tuvi.App.ViewModels.Services
 {
-    public interface IPurchaseService
+    public interface IAppStoreService
     {
         Task BuySubscriptionAsync();
+        Task<bool> RequestReviewAsync();
     }
 }

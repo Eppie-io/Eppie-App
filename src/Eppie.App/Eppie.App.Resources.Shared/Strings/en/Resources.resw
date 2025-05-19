@@ -970,4 +970,20 @@ Subject: {3}
     <value>None</value>
     <comment>Indicates the absence of a selection in a combobox.</comment>
   </data>
+  <data name="RequestReviewDialogTitle" xml:space="preserve">
+    <value>Rate the app!</value>
+    <comment>Dialog title asking the user to rate the application</comment>
+  </data>
+  <data name="RequestReviewDialogMessage" xml:space="preserve">
+    <value>Did you like the app?</value>
+    <comment>Dialog message asking the user if they liked the application</comment>
+  </data>
+  <data name="MsgBtnYes" xml:space="preserve">
+    <value>Yes</value>
+    <comment>Button text for confirming a positive response</comment>
+  </data>
+  <data name="MsgBtnNo" xml:space="preserve">
+    <value>No</value>
+    <comment>Button text for confirming a negative response</comment>
+  </data>
 </root>
