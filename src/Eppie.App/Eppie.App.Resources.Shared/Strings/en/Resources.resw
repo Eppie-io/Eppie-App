@@ -986,4 +986,12 @@ Subject: {3}
     <value>No</value>
     <comment>Button text for confirming a negative response</comment>
   </data>
+  <data name="AuthenticationTitle" xml:space="preserve">
+    <value>Authentication</value>
+    <comment>Title for authentication dialog</comment>
+  </data>
+  <data name="AuthenticationContenet" xml:space="preserve">
+    <value>Please complete the authentication in your browser.</value>
+    <comment>Message shown to user to complete authentication in browser</comment>
+  </data>
 </root>

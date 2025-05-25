@@ -22,6 +22,7 @@ using Finebits.Authorization.OAuth2.Abstractions;
 using Finebits.Authorization.OAuth2.AuthenticationBroker;
 using Finebits.Authorization.OAuth2.Google;
 using Finebits.Authorization.OAuth2.Outlook;
+using Finebits.Authorization.OAuth2.Types;
 using Tuvi.OAuth2;
 
 namespace Tuvi.App.Shared.Authorization
@@ -56,7 +57,7 @@ namespace Tuvi.App.Shared.Authorization
                 throw new InvalidOperationException("DesktopAuthenticationBroker is not supported");
             }
 
-            return new DesktopAuthenticationBroker(new WebBrowserLauncher());
+            return new AuthenticationBroker(new DesktopAuthenticationBroker(new WebBrowserLauncher()));
         }
     }
 }
