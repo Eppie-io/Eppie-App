@@ -481,9 +481,9 @@ namespace Tuvi.App.ViewModels
                 if (await MessageService.ShowRequestReviewMessageAsync().ConfigureAwait(true))
                 {
                     await AppStoreService.RequestReviewAsync().ConfigureAwait(true);
-
-                    LocalSettingsService.RequestReviewCount = ReviewRequestsDisabled;
                 }
+
+                LocalSettingsService.RequestReviewCount = ReviewRequestsDisabled;
             }
             else if (count != ReviewRequestsDisabled)
             {

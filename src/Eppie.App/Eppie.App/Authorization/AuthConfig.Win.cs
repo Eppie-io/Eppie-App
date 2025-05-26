@@ -57,7 +57,7 @@ namespace Tuvi.App.Shared.Authorization
                 throw new InvalidOperationException("DesktopAuthenticationBroker is not supported");
             }
 
-            return new DesktopAuthenticationBroker(new WebBrowserLauncher());
+            return new AuthenticationBroker(new DesktopAuthenticationBroker(new WebBrowserLauncher()));
         }
     }
 }

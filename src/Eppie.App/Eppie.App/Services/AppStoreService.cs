@@ -41,9 +41,9 @@ namespace Tuvi.App.Shared.Services
                 var context = StoreContext.GetDefault();
 
 #if WINDOWS10_0_19041_0_OR_GREATER
-                //TODO: Need to pass the window handle to init StoreContext
-                //nint hwnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
-                //WinRT.Interop.InitializeWithWindow.Initialize(context, hwnd);
+                var window = Eppie.App.Shared.App.MainWindow;
+                nint hwnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
+                WinRT.Interop.InitializeWithWindow.Initialize(context, hwnd);
 #endif
                 var result = await context.RequestRateAndReviewAppAsync();
 
