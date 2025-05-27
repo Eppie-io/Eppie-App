@@ -416,6 +416,11 @@ namespace Tuvi.App.ViewModels
             {
                 AccountSettingsModel.OutgoingServerAddress.Errors.Add(GetLocalizedString("ConnectionError"));
             }
+            catch (AuthenticationException)
+            {
+                AccountSettingsModel.OutgoingServerAddress.Errors.Add(GetLocalizedString("AuthenticationError"));
+                NotifyToCheckEmailAndPasswordFields();
+            }
             catch (OperationCanceledException)
             {
             }
@@ -490,6 +495,24 @@ namespace Tuvi.App.ViewModels
             {
                 basicAccountModel.Password.Errors.Clear();
                 basicAccountModel.Password.Errors.Add(GetLocalizedString("CheckPasswordNotification"));
+
+                if (string.IsNullOrEmpty(basicAccountModel.IncomingLogin.Value))
+                {
+                    basicAccountModel.IncomingLogin.Errors.Clear();
+                    basicAccountModel.IncomingLogin.Errors.Add(GetLocalizedString("CheckEmailNotification"));
+
+                    basicAccountModel.IncomingPassword.Errors.Clear();
+                    basicAccountModel.IncomingPassword.Errors.Add(GetLocalizedString("CheckPasswordNotification"));
+                }
+
+                if (string.IsNullOrEmpty(basicAccountModel.OutgoingLogin.Value))
+                {
+                    basicAccountModel.OutgoingLogin.Errors.Clear();
+                    basicAccountModel.OutgoingLogin.Errors.Add(GetLocalizedString("CheckEmailNotification"));
+
+                    basicAccountModel.OutgoingPassword.Errors.Clear();
+                    basicAccountModel.OutgoingPassword.Errors.Add(GetLocalizedString("CheckPasswordNotification"));
+                }
             }
         }
     }
