@@ -408,7 +408,7 @@ namespace Tuvi.App.ViewModels
 
             try
             {
-                var credentialsProvider = Core.CredentialsManager.CreateCredentialsProvider(accountData);
+                var credentialsProvider = Core.CredentialsManager.CreateOutgoingCredentialsProvider(accountData);
                 await Core.TestMailServerAsync(accountData.OutgoingServerAddress, accountData.OutgoingServerPort, accountData.OutgoingMailProtocol, credentialsProvider, cancellationToken).ConfigureAwait(true);
                 return true;
             }
@@ -446,7 +446,7 @@ namespace Tuvi.App.ViewModels
 
             try
             {
-                var credentialsProvider = Core.CredentialsManager.CreateCredentialsProvider(accountData);
+                var credentialsProvider = Core.CredentialsManager.CreateIncomingCredentialsProvider(accountData);
                 await Core.TestMailServerAsync(accountData.IncomingServerAddress, accountData.IncomingServerPort, accountData.IncomingMailProtocol, credentialsProvider, cancellationToken).ConfigureAwait(true);
                 return true;
             }
