@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -212,5 +212,17 @@
   <data name="CheckNewMessagesIntervalLabel.Text" xml:space="preserve">
     <value>Check new messages interval (in minutes)</value>
     <comment>The label of input field to enter check messages interval value in minutes</comment>
+  </data>
+  <data name="UseSeparateCredentials.Content" xml:space="preserve">
+    <value>Use separate login and password</value>
+    <comment>Checkbox text for enabling separate login and password fields</comment>
+  </data>
+  <data name="ServerLogin.Text" xml:space="preserve">
+    <value>Login</value>
+    <comment>Input field caption for server login</comment>
+  </data>
+  <data name="ServerPassword.Text" xml:space="preserve">
+    <value>Password</value>
+    <comment>Input field caption for server password</comment>
   </data>
 </root>
