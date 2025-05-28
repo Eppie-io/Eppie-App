@@ -153,6 +153,10 @@ namespace Tuvi.App.ViewModels
                 if (AccountSettingsModel is BasicAccountSettingsModel basicAccountSettingsModel)
                 {
                     basicAccountSettingsModel.Password.NeedsValidation = true;
+                    basicAccountSettingsModel.IncomingLogin.NeedsValidation = true;
+                    basicAccountSettingsModel.IncomingPassword.NeedsValidation = true;
+                    basicAccountSettingsModel.OutgoingLogin.NeedsValidation = true;
+                    basicAccountSettingsModel.OutgoingPassword.NeedsValidation = true;
                 }
                 ValidateProperty(AccountSettingsModel, nameof(AccountSettingsModel));
                 return false;
@@ -176,6 +180,10 @@ namespace Tuvi.App.ViewModels
                 if (accountModel is BasicAccountSettingsModel basicAccountModel)
                 {
                     basicAccountModel.Password.Errors.Clear();
+                    basicAccountModel.IncomingLogin.Errors.Clear();
+                    basicAccountModel.IncomingPassword.Errors.Clear();
+                    basicAccountModel.OutgoingLogin.Errors.Clear();
+                    basicAccountModel.OutgoingPassword.Errors.Clear();
                 }
                 accountModel.OutgoingServerAddress.Errors.Clear();
                 accountModel.IncomingServerAddress.Errors.Clear();
@@ -496,7 +504,7 @@ namespace Tuvi.App.ViewModels
                 basicAccountModel.Password.Errors.Clear();
                 basicAccountModel.Password.Errors.Add(GetLocalizedString("CheckPasswordNotification"));
 
-                if (string.IsNullOrEmpty(basicAccountModel.IncomingLogin.Value))
+                if (basicAccountModel.UseSeparateIncomingCredentials)
                 {
                     basicAccountModel.IncomingLogin.Errors.Clear();
                     basicAccountModel.IncomingLogin.Errors.Add(GetLocalizedString("CheckEmailNotification"));
@@ -505,7 +513,7 @@ namespace Tuvi.App.ViewModels
                     basicAccountModel.IncomingPassword.Errors.Add(GetLocalizedString("CheckPasswordNotification"));
                 }
 
-                if (string.IsNullOrEmpty(basicAccountModel.OutgoingLogin.Value))
+                if (basicAccountModel.UseSeparateOutgoingCredentials)
                 {
                     basicAccountModel.OutgoingLogin.Errors.Clear();
                     basicAccountModel.OutgoingLogin.Errors.Add(GetLocalizedString("CheckEmailNotification"));
