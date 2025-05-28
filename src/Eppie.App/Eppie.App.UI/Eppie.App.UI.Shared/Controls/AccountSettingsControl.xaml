@@ -127,7 +127,8 @@
                                           Grid.Column="0"
                                           Grid.ColumnSpan="2"
                                           Margin="0,8,0,0"
-                                          IsChecked="{x:Bind BasicAccountSettingsModel.UseSeparateOutgoingCredentials, Mode=TwoWay}" />
+                                          IsChecked="{x:Bind BasicAccountSettingsModel.UseSeparateOutgoingCredentials, Mode=TwoWay}"
+                                          Visibility="{x:Bind BasicAccountSettingsModel, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}" />
 
                                 <!--  Block for SMTP login and password fields  -->
                                 <StackPanel Grid.Row="3"
@@ -219,7 +220,8 @@
                                           Grid.Column="0"
                                           Grid.ColumnSpan="3"
                                           Margin="0,8,0,0"
-                                          IsChecked="{x:Bind BasicAccountSettingsModel.UseSeparateIncomingCredentials, Mode=TwoWay}" />
+                                          IsChecked="{x:Bind BasicAccountSettingsModel.UseSeparateIncomingCredentials, Mode=TwoWay}"
+                                          Visibility="{x:Bind BasicAccountSettingsModel, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}" />
 
                                 <!--  Block for IMAP/POP3 login and password fields  -->
                                 <StackPanel Grid.Row="3"
