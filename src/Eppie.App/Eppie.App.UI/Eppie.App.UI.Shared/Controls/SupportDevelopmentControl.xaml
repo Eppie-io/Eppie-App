@@ -44,7 +44,7 @@
                     <TextBlock VerticalAlignment="Bottom"
                                FontSize="24"
                                FontWeight="Bold"
-                               Text="{x:Bind Price, Mode=OneWay}"/>
+                               Text="{x:Bind Price, Mode=OneWay}" />
                     <TextBlock x:Uid="/Eppie.App.UI/Controls/PricePerMonthText"
                                Margin="4,0,0,0"
                                VerticalAlignment="Bottom" />
