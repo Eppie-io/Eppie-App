@@ -372,6 +372,29 @@ namespace Tuvi.App.ViewModels
 
         public ICommand SupportDevelopmentCommand => new AsyncRelayCommand(SupportDevelopmentAsync);
 
+
+        private string _supportDevelopmentPrice;
+        public string SupportDevelopmentPrice
+        {
+            get => _supportDevelopmentPrice;
+            private set
+            {
+                _supportDevelopmentPrice = value;
+                OnPropertyChanged(nameof(SupportDevelopmentPrice));
+            }
+        }
+
+        private bool _isSupportDevelopmentButtonVisible;
+        public bool IsSupportDevelopmentButtonVisible
+        {
+            get => _isSupportDevelopmentButtonVisible;
+            private set
+            {
+                _isSupportDevelopmentButtonVisible = value;
+                OnPropertyChanged(nameof(IsSupportDevelopmentButtonVisible));
+            }
+        }
+
         public ObservableCollection<Problem> Problems { get; } = new ObservableCollection<Problem>();
 
         private async void NavigateToMailboxSettingsForRelogin(EmailAddress emailAddress)
@@ -425,6 +448,7 @@ namespace Tuvi.App.ViewModels
             try
             {
                 await AppStoreService.BuySubscriptionAsync().ConfigureAwait(true);
+                UpdateSupportDevelopmentButton();
             }
             catch
             {
@@ -453,6 +477,7 @@ namespace Tuvi.App.ViewModels
                 SubscribeOnCoreEvents();
 
                 UpdateUnreadCounts();
+                UpdateSupportDevelopmentButton();
 
                 // Test node URI
                 const string downloadUrl = "https://testnet.eppie.io/api/DownloadBackupFunction?code=1&name=";
@@ -857,6 +882,23 @@ namespace Tuvi.App.ViewModels
         {
             var accounts = await Core.GetCompositeAccountsAsync().ConfigureAwait(true);
             return !accounts.Any();
+        }
+
+        private async void UpdateSupportDevelopmentButton()
+        {
+            try
+            {
+                IsSupportDevelopmentButtonVisible = !await AppStoreService.IsSubscriptionEnabledAsync().ConfigureAwait(true);
+
+                if (IsSupportDevelopmentButtonVisible)
+                {
+                    SupportDevelopmentPrice = await AppStoreService.GetSubscriptionPriceAsync().ConfigureAwait(true);
+                }
+            }
+            catch (Exception e)
+            {
+                OnError(e);
+            }
         }
     }
 }

@@ -78,18 +78,43 @@
             </winui:NavigationView.MenuItems>
 
             <winui:NavigationView.PaneFooter>
-                <controls:NavPanelTabControl TabModel="{x:Bind ViewModel.NavPanelTabModel, Mode=OneWay}" Visibility="{x:Bind NavigationMenu.IsPaneOpen, Mode=OneWay}" />
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <controls:NavPanelTabControl Grid.Row="0"
+                                                 TabModel="{x:Bind ViewModel.NavPanelTabModel, Mode=OneWay}"
+                                                 Visibility="{x:Bind NavigationMenu.IsPaneOpen, Mode=OneWay}" />
+                    <Button Grid.Row="1"
+                            Height="36"
+                            Margin="4,8,4,0"
+                            HorizontalAlignment="Stretch"
+                            Visibility="{x:Bind ViewModel.IsSupportDevelopmentButtonVisible, Mode=OneWay}">
+                        <Button.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                <GradientStop Offset="0.0" Color="#FFD9EE" />
+                                <GradientStop Offset="0.5" Color="#FFFFFF" />
+                                <GradientStop Offset="1.0" Color="#D9FFFF" />
+                            </LinearGradientBrush>
+                        </Button.Background>
+                        <Button.Flyout>
+                            <Flyout x:Name="MyFlyout">
+                                <controls:SupportDevelopmentControl Price="{x:Bind ViewModel.SupportDevelopmentPrice, Mode=OneWay}" SupportDevelopmentCommand="{x:Bind ViewModel.SupportDevelopmentCommand}" />
+                            </Flyout>
+                        </Button.Flyout>
+                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                            <FontIcon Margin="0,0,8,0"
+                                      FontSize="14"
+                                      Foreground="Black"
+                                      Glyph="&#xEB52;" />
+                            <TextBlock x:Uid="SupportDevelopmentButton" Foreground="Black" />
+                        </StackPanel>
+                    </Button>
+                </Grid>
             </winui:NavigationView.PaneFooter>
 
             <winui:NavigationView.FooterMenuItems>
-
-                <winui:NavigationViewItem x:Uid="SupportDevelopmentNavigationItem"
-                                          extensions:AttachedCommands.ClickCommand="{x:Bind ViewModel.SupportDevelopmentCommand}"
-                                          SelectsOnInvoked="False">
-                    <winui:NavigationViewItem.Icon>
-                        <FontIcon Glyph="&#xEC32;" />
-                    </winui:NavigationViewItem.Icon>
-                </winui:NavigationViewItem>
 
                 <winui:NavigationViewItem x:Uid="AboutAppNavigationItem"
                                           extensions:AttachedCommands.ClickCommand="{x:Bind ShowAboutPageCommand}"
