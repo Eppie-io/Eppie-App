@@ -99,7 +99,7 @@
                             </LinearGradientBrush>
                         </Button.Background>
                         <Button.Flyout>
-                            <Flyout x:Name="MyFlyout">
+                            <Flyout>
                                 <controls:SupportDevelopmentControl Price="{x:Bind ViewModel.SupportDevelopmentPrice, Mode=OneWay}" SupportDevelopmentCommand="{x:Bind ViewModel.SupportDevelopmentCommand}" />
                             </Flyout>
                         </Button.Flyout>
