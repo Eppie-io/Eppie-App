@@ -19,18 +19,19 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
+
+using Eppie.App.Shared.Helpers;
 using Eppie.App.Shared.Services;
+using Eppie.App.ViewModels.Services;
+using Microsoft.Extensions.Hosting;
 using Tuvi.App.Shared.Models;
 using Tuvi.App.Shared.Services;
 using Tuvi.App.ViewModels.Services;
 using Tuvi.Core;
+using Tuvi.Core.Entities;
 using Tuvi.OAuth2;
 using Windows.Globalization;
 using Windows.Storage;
-using Eppie.App.ViewModels.Services;
-using Tuvi.Core.Entities;
-
-
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -62,9 +63,10 @@ namespace Eppie.App.Shared
 
         private ErrorHandler _errorHandler;
 
+        protected IHost Host { get; private set; }
 
         /// <summary>
-        /// Initializes the singleton application object.  This is the first line of authored code
+        /// Initializes the singleton application object. This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
         public App()
@@ -72,6 +74,7 @@ namespace Eppie.App.Shared
             try
             {
                 InitializeLogging();
+                BuildHost();
                 InitializeComponent();
                 SubscribeToEvents();
                 ConfigureServices();
@@ -121,6 +124,15 @@ namespace Eppie.App.Shared
         private void AIService_ExceptionOccurred(object sender, ExceptionEventArgs e)
         {
             OnError(e.Exception);
+        }
+
+        private void BuildHost()
+        {
+            IHostBuilder builder = EppieHost.CreateBuilder();
+
+#if !WINDOWS_UWP // ToDo: UWP project needs to be migrated to net9.0
+            Host = builder.Build();
+#endif
         }
 
         private void CreateAuth()
