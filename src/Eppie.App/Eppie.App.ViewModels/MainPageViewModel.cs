@@ -895,6 +895,11 @@ namespace Tuvi.App.ViewModels
                     SupportDevelopmentPrice = await AppStoreService.GetSubscriptionPriceAsync().ConfigureAwait(true);
                 }
             }
+            catch (NotImplementedException)
+            {
+                //TODO: Uno support
+                //IsSupportDevelopmentButtonVisible = true;
+            }
             catch (Exception e)
             {
                 OnError(e);
