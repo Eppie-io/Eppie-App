@@ -129,6 +129,10 @@
     <value>Support Development</value>
     <comment>Navigation item to open 'Support Development' page</comment>
   </data>
+  <data name="SupportDevelopmentButton.Text" xml:space="preserve">
+    <value>Support Development</value>
+    <comment>Button to open 'Support Development' page</comment>
+  </data>
   <data name="IdentityManagerNavigationItem.Content" xml:space="preserve">
     <value>Identity manager</value>
     <comment>Navigation item for open Identity Manager page</comment>

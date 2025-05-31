@@ -18,11 +18,13 @@
 
 using System.Threading.Tasks;
 
-namespace Tuvi.App.ViewModels.Services
+namespace Eppie.App.ViewModels.Services
 {
     public interface IAppStoreService
     {
         Task BuySubscriptionAsync();
+        Task<bool> IsSubscriptionEnabledAsync();
+        Task<string> GetSubscriptionPriceAsync();
         Task<bool> RequestReviewAsync();
     }
 }

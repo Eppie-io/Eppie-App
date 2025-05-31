@@ -16,91 +16,21 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-using Tuvi.App.ViewModels.Services;
-using Windows.Services.Store;
-using Windows.System;
-
-namespace Tuvi.App.Shared.Services
+namespace Eppie.App.Shared.Services
 {
-    public class AppStoreService : IAppStoreService
+    public class AppStoreService : BaseAppStoreService
     {
-        public Task BuySubscriptionAsync()
+        SubscriptionProduct _Subscription;
+        protected override SubscriptionProduct GetSubscriptionProduct()
         {
             const string InAppOfferToken = "<InAppOfferToken>";
             const string AppOfferProductId = "<AppOfferProductId>";
 
-            var subscription = new SubscriptionProduct(InAppOfferToken, AppOfferProductId);
-
-            return subscription.PurchaseAsync();
-        }
-
-        public async Task<bool> RequestReviewAsync()
-        {
-            try
+            if (_Subscription is null)
             {
-                var context = StoreContext.GetDefault();
-
-#if WINDOWS10_0_19041_0_OR_GREATER
-                var window = Eppie.App.Shared.App.MainWindow;
-                nint hwnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
-                WinRT.Interop.InitializeWithWindow.Initialize(context, hwnd);
-#endif
-                var result = await context.RequestRateAndReviewAppAsync();
-
-                return result.Status == StoreRateAndReviewStatus.Succeeded;
+                _Subscription = new SubscriptionProduct(InAppOfferToken, AppOfferProductId);
             }
-            catch
-            {
-                // Replace with actual product ID
-                const string AppProductId = "<AppProductId>";
-
-                var uri = new Uri($"ms-windows-store://review/?ProductId={AppProductId}");
-
-                return await Launcher.LaunchUriAsync(uri);
-            }
-        }
-    }
-
-    public class SubscriptionProduct
-    {
-        private string InAppOfferToken { get; }
-        private string ProductId { get; }
-
-        public SubscriptionProduct(string token, string storeId)
-        {
-            InAppOfferToken = token;
-            ProductId = storeId;
-        }
-
-        private StoreContext _storeContext = null;
-        protected StoreContext GetStoreContext()
-        {
-            if (_storeContext == null)
-            {
-                _storeContext = StoreContext.GetDefault();
-            }
-
-            return _storeContext;
-        }
-
-        public async Task PurchaseAsync()
-        {
-            StoreContext context = StoreContext.GetDefault();
-
-            const string productKind = "Durable";
-            string[] productKinds = { productKind };
-
-            List<String> filterList = new List<string>(productKinds);
-            string[] storeIds = new string[] { ProductId };
-
-            StoreProductQueryResult queryResult = await context.GetStoreProductsAsync(filterList, storeIds);
-
-            StoreProduct subscription = queryResult.Products.FirstOrDefault().Value;
-
-            if (subscription != null && !subscription.IsInUserCollection)
-            {
-                await subscription.RequestPurchaseAsync();
-            }
+            return _Subscription;
         }
     }
 }
