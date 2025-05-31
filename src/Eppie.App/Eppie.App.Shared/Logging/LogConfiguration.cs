@@ -36,6 +36,7 @@ namespace Eppie.App.Shared.Logging
         public static LoggerConfiguration AddLogging(this LoggerConfiguration configuration, LogLevel logLevel)
         {
             configuration.MinimumLevel.Is(logLevel.ToLogEventLevel())
+                         .Enrich.WithProperty(nameof(Helpers.Platform), Helpers.PlatformTools.CurrentPlatform)
                          .Enrich.WithEnvironmentName()
                          .Enrich.WithThreadId()
                          .Enrich.WithThreadName();
