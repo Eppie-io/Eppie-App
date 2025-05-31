@@ -43,7 +43,7 @@ namespace Tuvi.App.Shared.Services
 
         public async void OnError(Exception e, bool silent)
         {
-            LoggingExtension.Log(this).LogError(e, "");
+            LoggingExtension.Log(this).LogError(e, "An error has occurred");
             try
             {
                 await Dispatcher.RunAsync(async () =>
