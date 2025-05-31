@@ -19,6 +19,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\EppieHost.Uno.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\EppieHost.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Logging\LogConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Logging\LoggingExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\NotificationManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\AIService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ClipboardProvider.cs" />
