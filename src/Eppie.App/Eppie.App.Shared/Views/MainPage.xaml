@@ -27,16 +27,15 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Grid x:Name="RootGrid">
-                            <Border x:Name="BackgroundBorder"
-                                    Background="{TemplateBinding Background}"
-                                    CornerRadius="4">
-                                <ContentPresenter x:Name="ContentPresenter"
-                                                  HorizontalAlignment="Center"
-                                                  VerticalAlignment="Center"
-                                                  Content="{TemplateBinding Content}"
-                                                  ContentTemplate="{TemplateBinding ContentTemplate}" />
-                            </Border>
+                        <Border x:Name="BackgroundBorder"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="4">
+                            <ContentPresenter x:Name="ContentPresenter"
+                                              Padding="{TemplateBinding Padding}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              Content="{TemplateBinding Content}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}" />
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup x:Name="CommonStates">
                                     <VisualState x:Name="Normal" />
@@ -88,42 +87,8 @@
                                         </Storyboard>
                                     </VisualState>
                                 </VisualStateGroup>
-                                <VisualStateGroup x:Name="PaneStates">
-                                    <VisualState x:Name="PaneOpen">
-                                        <VisualState.StateTriggers>
-                                            <StateTrigger IsActive="{Binding IsPaneOpen, ElementName=NavigationMenu, Mode=OneWay}" />
-                                        </VisualState.StateTriggers>
-                                        <VisualState.Setters>
-                                            <Setter Target="RootGrid.Width" Value="Auto" />
-                                            <Setter Target="RootGrid.Height" Value="36" />
-                                            <Setter Target="RootGrid.HorizontalAlignment" Value="Stretch" />
-                                            <Setter Target="ContentPresenter.ContentTemplate" Value="{x:Null}" />
-                                            <Setter Target="ContentPresenter.Content" Value="{TemplateBinding Content}" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                    <VisualState x:Name="PaneClosed">
-                                        <VisualState.StateTriggers>
-                                            <StateTrigger IsActive="{Binding IsPaneOpen, ElementName=NavigationMenu, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}" />
-                                        </VisualState.StateTriggers>
-                                        <VisualState.Setters>
-                                            <Setter Target="RootGrid.Width" Value="48" />
-                                            <Setter Target="RootGrid.Height" Value="48" />
-                                            <Setter Target="RootGrid.HorizontalAlignment" Value="Center" />
-                                            <Setter Target="RootGrid.VerticalAlignment" Value="Center" />
-                                            <Setter Target="ContentPresenter.ContentTemplate">
-                                                <Setter.Value>
-                                                    <DataTemplate>
-                                                        <FontIcon FontSize="14"
-                                                                  Foreground="Black"
-                                                                  Glyph="&#xEB52;" />
-                                                    </DataTemplate>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                </VisualStateGroup>
                             </VisualStateManager.VisualStateGroups>
-                        </Grid>
+                        </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -209,15 +174,20 @@
                             Visibility="{x:Bind ViewModel.IsSupportDevelopmentButtonVisible, Mode=OneWay}">
                         <Button.Flyout>
                             <Flyout>
-                                <controls:SupportDevelopmentControl Price="{x:Bind ViewModel.SupportDevelopmentPrice, Mode=OneWay}" SupportDevelopmentCommand="{x:Bind ViewModel.SupportDevelopmentCommand}" />
+                                <controls:SupportDevelopmentControl IsStorePaymentProcessor="{x:Bind ViewModel.IsStorePaymentProcessor, Mode=OneWay}"
+                                                                    Price="{x:Bind ViewModel.SupportDevelopmentPrice, Mode=OneWay}"
+                                                                    SupportDevelopmentCommand="{x:Bind ViewModel.SupportDevelopmentCommand}" />
                             </Flyout>
                         </Button.Flyout>
                         <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-                            <FontIcon Margin="0,0,8,0"
-                                      FontSize="14"
+                            <FontIcon Margin="1,0,0,0"
+                                      HorizontalAlignment="Center"
+                                      FontSize="15"
                                       Foreground="Black"
                                       Glyph="&#xEB52;" />
-                            <TextBlock x:Uid="SupportDevelopmentButton" Foreground="Black" />
+                            <TextBlock x:Uid="SupportDevelopmentButton"
+                                       Margin="8,0,0,0"
+                                       Foreground="Black" />
                         </StackPanel>
                     </Button>
                 </Grid>

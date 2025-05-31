@@ -43,6 +43,14 @@ namespace Tuvi.App.Shared.Controls
         public static readonly DependencyProperty SupportDevelopmentCommandProperty =
             DependencyProperty.Register(nameof(SupportDevelopmentCommand), typeof(ICommand), typeof(SupportDevelopmentControl), new PropertyMetadata(null));
 
+        public bool IsStorePaymentProcessor
+        {
+            get { return (bool)GetValue(IsStorePaymentProcessorProperty); }
+            set { SetValue(IsStorePaymentProcessorProperty, value); }
+        }
+        public static readonly DependencyProperty IsStorePaymentProcessorProperty =
+            DependencyProperty.Register(nameof(IsStorePaymentProcessor), typeof(bool), typeof(SupportDevelopmentControl), new PropertyMetadata(null));
+
         public string Price
         {
             get { return (string)GetValue(PriceProperty); }

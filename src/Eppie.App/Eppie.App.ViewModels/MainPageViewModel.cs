@@ -373,6 +373,17 @@ namespace Tuvi.App.ViewModels
         public ICommand SupportDevelopmentCommand => new AsyncRelayCommand(SupportDevelopmentAsync);
 
 
+        private bool _isStorePaymentProcessor = true;
+        public bool IsStorePaymentProcessor
+        {
+            get => _isStorePaymentProcessor;
+            private set
+            {
+                _isStorePaymentProcessor = value;
+                OnPropertyChanged(nameof(IsStorePaymentProcessor));
+            }
+        }
+
         private string _supportDevelopmentPrice;
         public string SupportDevelopmentPrice
         {
@@ -897,8 +908,9 @@ namespace Tuvi.App.ViewModels
             }
             catch (NotImplementedException)
             {
-                //TODO: Uno support
-                //IsSupportDevelopmentButtonVisible = true;
+                IsSupportDevelopmentButtonVisible = true;
+                IsStorePaymentProcessor = false;
+                SupportDevelopmentPrice = "$3";
             }
             catch (Exception e)
             {

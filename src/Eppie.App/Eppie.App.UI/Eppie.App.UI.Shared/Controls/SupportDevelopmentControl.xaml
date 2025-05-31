@@ -9,11 +9,10 @@
              d:DesignWidth="400"
              mc:Ignorable="d">
 
-    <Border Width="300"
+    <Border MaxWidth="320"
             Padding="24"
             HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            BorderThickness="1">
+            VerticalAlignment="Center">
 
         <Grid>
             <Grid.RowDefinitions>
@@ -26,7 +25,7 @@
                 <Grid HorizontalAlignment="Left">
                     <Ellipse Width="92"
                              Height="92"
-                             Fill="LightGray" />
+                             Fill="#F0F0F0" />
                     <FontIcon HorizontalAlignment="Center"
                               VerticalAlignment="Center"
                               FontSize="48"
@@ -38,7 +37,15 @@
                            FontSize="24"
                            FontWeight="Bold" />
 
-                <TextBlock x:Uid="/Eppie.App.UI/Controls/SupportDevelopmentText" TextWrapping="Wrap" />
+                <StackPanel>
+                    <TextBlock x:Uid="/Eppie.App.UI/Controls/SupportDevelopmentText" TextWrapping="Wrap" />
+                    <TextBlock x:Uid="/Eppie.App.UI/Controls/SupportDevelopmentStoreProvider"
+                               TextWrapping="Wrap"
+                               Visibility="{x:Bind IsStorePaymentProcessor, Mode=OneTime}" />
+                    <TextBlock x:Uid="/Eppie.App.UI/Controls/SupportDevelopmentGitHubProvider"
+                               TextWrapping="Wrap"
+                               Visibility="{x:Bind IsStorePaymentProcessor, Mode=OneTime, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+                </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Bottom"

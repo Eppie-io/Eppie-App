@@ -222,7 +222,15 @@
     <comment>Caption on the 'Support Development' page</comment>
   </data>
   <data name="SupportDevelopmentText.Text" xml:space="preserve">
-    <value>Your donation helps us build an open-source peer-to-peer alternative to Gmail. Purchases are processed through the Microsoft Store.</value>
+    <value>Your support helps us build an open-source peer-to-peer alternative to Gmail.</value>
+    <comment>Text on the 'Support Development' page</comment>
+  </data>
+  <data name="SupportDevelopmentStoreProvider.Text" xml:space="preserve">
+    <value>Payments are processed through the Microsoft Store.</value>
+    <comment>Text on the 'Support Development' page</comment>
+  </data>
+  <data name="SupportDevelopmentGitHubProvider.Text" xml:space="preserve">
+    <value>Payments are processed through GitHub Sponsors.</value>
     <comment>Text on the 'Support Development' page</comment>
   </data>
   <data name="PricePerMonthText.Text" xml:space="preserve">
