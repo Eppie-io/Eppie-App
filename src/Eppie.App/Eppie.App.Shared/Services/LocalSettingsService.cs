@@ -19,6 +19,7 @@
 using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using Microsoft.Extensions.Logging;
 using Tuvi.App.ViewModels;
 using Tuvi.App.ViewModels.Services;
 using Windows.Storage;
@@ -106,6 +107,22 @@ namespace Tuvi.App.Shared.Services
             }
         }
 
+        /// <summary>
+        /// Property to store logging severity levels.
+        /// </summary>
+        public LogLevel LogLevel
+        {
+            get
+            {
+                return GetEnumOption(LogLevel.Error);
+            }
+
+            set
+            {
+                SetEnumOption(value);
+            }
+        }
+
         #region Set/Get option
 
         private ApplicationDataContainer AppLocalSettings { get { return ApplicationData.Current.LocalSettings; } }
@@ -135,6 +152,25 @@ namespace Tuvi.App.Shared.Services
             catch (Exception e)
             {
                 Debug.WriteLine(e.Message);
+            }
+
+            return defaultValue;
+        }
+
+        private void SetEnumOption<TEnum>(TEnum value, [CallerMemberName] string key = null)
+            where TEnum : struct, Enum
+        {
+            SetOption<string>(value.ToString(), key);
+        }
+
+        private TEnum GetEnumOption<TEnum>(TEnum defaultValue, [CallerMemberName] string key = null)
+            where TEnum : struct, Enum
+        {
+            string value = GetOption<string>(defaultValue.ToString(), key);
+
+            if (Enum.TryParse<TEnum>(value, true, out TEnum result))
+            {
+                return result;
             }
 
             return defaultValue;

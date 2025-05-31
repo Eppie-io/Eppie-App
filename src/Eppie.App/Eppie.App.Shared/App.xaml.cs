@@ -79,6 +79,7 @@ namespace Eppie.App.Shared
         {
             try
             {
+                InitializeSettings();
                 InitializeLogger();
                 LogLaunchInformation();
 
@@ -95,9 +96,15 @@ namespace Eppie.App.Shared
             }
         }
 
+        private void InitializeSettings()
+        {
+            LocalSettingsService = new LocalSettingsService();
+            ApplicationLanguages.PrimaryLanguageOverride = LocalSettingsService.Language;
+        }
+
         private void InitializeLogger()
         {
-            LoggerFactory = new Serilog.LoggerConfiguration().AddLogging().CreateLoggerFactory();
+            LoggerFactory = new Serilog.LoggerConfiguration().AddLogging(LocalSettingsService.LogLevel).CreateLoggerFactory();
             Logger = LoggerFactory.CreateLogger<App>();
         }
 
@@ -113,9 +120,6 @@ namespace Eppie.App.Shared
         {
             CreateAuth();
             CreateCore();
-
-            LocalSettingsService = new LocalSettingsService();
-            ApplicationLanguages.PrimaryLanguageOverride = LocalSettingsService.Language;
 
             CreateAIService();
         }

@@ -33,10 +33,9 @@ namespace Eppie.App.Shared.Logging
         public static readonly string LogFolderPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, FolderName);
         private static readonly string AppLogFilePath = Path.Combine(LogFolderPath, AppLogFileName);
 
-        public static LoggerConfiguration AddLogging(this LoggerConfiguration configuration)
+        public static LoggerConfiguration AddLogging(this LoggerConfiguration configuration, LogLevel logLevel)
         {
-            // ToDo: read MinimumLevel value from setting
-            configuration.MinimumLevel.Is(Serilog.Events.LogEventLevel.Information)
+            configuration.MinimumLevel.Is(logLevel.ToLogEventLevel())
                          .Enrich.WithEnvironmentName()
                          .Enrich.WithThreadId()
                          .Enrich.WithThreadName();

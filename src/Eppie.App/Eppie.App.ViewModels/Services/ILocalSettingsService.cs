@@ -16,6 +16,8 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
+using Microsoft.Extensions.Logging;
+
 namespace Tuvi.App.ViewModels.Services
 {
     /// <summary>
@@ -29,5 +31,6 @@ namespace Tuvi.App.ViewModels.Services
         string SelectedMailFilterForFolderMessagesPage { get; set; }
         string SelectedMailFilterForContactMessagesPage { get; set; }
         int RequestReviewCount { get; set; }
+        LogLevel LogLevel { get; set; }
     }
 }
