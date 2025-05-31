@@ -18,12 +18,16 @@
 
 using System;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 using Eppie.App.Shared.Helpers;
+using Eppie.App.Shared.Logging;
 using Eppie.App.Shared.Services;
 using Eppie.App.ViewModels.Services;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Tuvi.App.Shared.Models;
 using Tuvi.App.Shared.Services;
 using Tuvi.App.ViewModels.Services;
@@ -48,8 +52,10 @@ namespace Eppie.App.Shared
     public partial class App : Application
     {
         private static readonly string DataBaseFileName = "TuviMail.db";
-
         private static readonly string DataFolder = ApplicationData.Current.LocalFolder.Path;
+
+        public static ILoggerFactory LoggerFactory { get; private set; }
+        private ILogger<App> Logger { get; set; }
 
         public INavigationService NavigationService { get; private set; }
         public ITuviMail Core { get; private set; }
@@ -73,9 +79,12 @@ namespace Eppie.App.Shared
         {
             try
             {
-                InitializeLogging();
+                InitializeLogger();
+                LogLaunchInformation();
+
                 BuildHost();
                 InitializeComponent();
+
                 SubscribeToEvents();
                 ConfigureServices();
                 InitializeNotifications();
@@ -86,9 +95,10 @@ namespace Eppie.App.Shared
             }
         }
 
-        private static void InitializeLogging()
+        private void InitializeLogger()
         {
-            // ToDo: Add logging
+            LoggerFactory = new Serilog.LoggerConfiguration().AddLogging().CreateLoggerFactory();
+            Logger = LoggerFactory.CreateLogger<App>();
         }
 
         private void SubscribeToEvents()
@@ -128,7 +138,7 @@ namespace Eppie.App.Shared
 
         private void BuildHost()
         {
-            IHostBuilder builder = EppieHost.CreateBuilder();
+            IHostBuilder builder = EppieHost.CreateBuilder(LoggerFactory);
 
 #if !WINDOWS_UWP // ToDo: UWP project needs to be migrated to net9.0
             Host = builder.Build();
@@ -142,8 +152,11 @@ namespace Eppie.App.Shared
 
         private void CreateCore()
         {
-            var tokenRefresher = AuthorizationFactory.GetTokenRefresher(AuthProvider);
-            Core = ComponentBuilder.Components.CreateTuviMailCore(Path.Combine(DataFolder, DataBaseFileName), new Tuvi.Core.ImplementationDetailsProvider("Tuvi seed", "Tuvi.Package", "backup@system.service.tuvi.com"), tokenRefresher);
+            ITokenRefresher tokenRefresher = AuthorizationFactory.GetTokenRefresher(AuthProvider);
+            Core = ComponentBuilder.Components.CreateTuviMailCore(Path.Combine(DataFolder, DataBaseFileName),
+                                                                  new Tuvi.Core.ImplementationDetailsProvider("Tuvi seed", "Tuvi.Package", "backup@system.service.tuvi.com"),
+                                                                  tokenRefresher,
+                                                                  LoggerFactory);
             _notificationManager = new NotificationManager(Core, OnError);
             Core.WipeAllDataNeeded += OnWipeAllDataNeeded;
         }
@@ -230,7 +243,14 @@ namespace Eppie.App.Shared
 
         private void OnError(Exception exception)
         {
+            Logger?.LogError(exception, "An error has occurred");
             _errorHandler?.OnError(exception, false);
+        }
+
+        private void LogLaunchInformation()
+        {
+            BrandLoader brand = new BrandLoader();
+            Logger?.LogInformation("Launching the {AppName} app version {AppVersion} on {OSDescription} OS", brand.GetName(), brand.GetAppVersion(), RuntimeInformation.OSDescription);
         }
     }
 }
