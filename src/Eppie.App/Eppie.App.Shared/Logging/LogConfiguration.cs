@@ -16,10 +16,12 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
+using System.Collections.Generic;
 using System.IO;
 
 using Microsoft.Extensions.Logging;
 using Serilog;
+using Serilog.Enrichers.Sensitive;
 using Serilog.Extensions.Logging;
 using Serilog.Formatting.Compact;
 using Windows.Storage;
@@ -39,7 +41,19 @@ namespace Eppie.App.Shared.Logging
                          .Enrich.WithProperty(nameof(Helpers.Platform), Helpers.PlatformTools.CurrentPlatform)
                          .Enrich.WithEnvironmentName()
                          .Enrich.WithThreadId()
-                         .Enrich.WithThreadName();
+                         .Enrich.WithThreadName()
+                         .Enrich.WithSensitiveDataMasking(options =>
+                         {
+                             options.Mode = MaskingMode.Globally;
+#if DEBUG
+                             options.MaskingOperators = new List<IMaskingOperator>
+                             {
+                                 new HashTransformOperator<EmailAddressMaskingOperator>(),
+                                 new HashTransformOperator<IbanMaskingOperator>(),
+                                 new HashTransformOperator<CreditCardMaskingOperator>()
+                             };
+#endif
+                         });
 
 #if !__WASM__
             configuration.AddFileLogging(AppLogFilePath);
