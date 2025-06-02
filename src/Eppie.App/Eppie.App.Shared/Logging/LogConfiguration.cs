@@ -22,6 +22,7 @@ using System.IO;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Enrichers.Sensitive;
+using Serilog.Exceptions;
 using Serilog.Extensions.Logging;
 using Serilog.Formatting.Compact;
 using Windows.Storage;
@@ -42,6 +43,9 @@ namespace Eppie.App.Shared.Logging
                          .Enrich.WithEnvironmentName()
                          .Enrich.WithThreadId()
                          .Enrich.WithThreadName()
+#if DEBUG
+                         .Enrich.WithExceptionDetails()
+#endif
                          .Enrich.WithSensitiveDataMasking(options =>
                          {
                              options.Mode = MaskingMode.Globally;
