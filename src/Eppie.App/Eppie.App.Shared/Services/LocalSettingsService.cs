@@ -98,7 +98,7 @@ namespace Tuvi.App.Shared.Services
         {
             get
             {
-                return GetOption(0, nameof(RequestReviewCount));
+                return GetOption(0);
             }
             set
             {
