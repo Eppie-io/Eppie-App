@@ -994,4 +994,8 @@ Subject: {3}
     <value>Please complete the authentication in your browser.</value>
     <comment>Message shown to user to complete authentication in browser</comment>
   </data>
+  <data name="LoggingOption.Header" xml:space="preserve">
+    <value>Logging level</value>
+    <comment>Header for the logging level option.</comment>
+  </data>  
 </root>
