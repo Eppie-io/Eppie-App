@@ -17,11 +17,13 @@
 // ---------------------------------------------------------------------------- //
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.Logging;
 using Tuvi.App.ViewModels.Services;
 
 namespace Tuvi.App.ViewModels
@@ -130,6 +132,23 @@ namespace Tuvi.App.ViewModels
 
                 var brandName = BrandService.GetName();
                 RestartMessage = string.Format(message, brandName);
+            }
+        }
+
+        public IReadOnlyList<LogLevel> LogLevels { get; } = Enum.GetValues(typeof(LogLevel))
+                                                             .Cast<LogLevel>()
+                                                             .ToList();
+
+        public LogLevel SelectedLogLevel
+        {
+            get => LocalSettingsService.LogLevel;
+            set
+            {
+                if (LocalSettingsService.LogLevel != value)
+                {
+                    LocalSettingsService.LogLevel = value;
+                    OnPropertyChanged();
+                }
             }
         }
     }
