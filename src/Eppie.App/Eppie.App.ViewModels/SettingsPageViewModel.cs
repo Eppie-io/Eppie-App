@@ -56,6 +56,8 @@ namespace Tuvi.App.ViewModels
 
         public ICommand WipeApplicationDataCommand => new AsyncRelayCommand(WipeApplicationDataAsync);
 
+        public ICommand OpenLogFolderCommand => new AsyncRelayCommand(OpenLogFolderAsync);
+
         private async Task WipeApplicationDataAsync()
         {
             try
@@ -151,5 +153,12 @@ namespace Tuvi.App.ViewModels
                 }
             }
         }
+
+        private Task OpenLogFolderAsync()
+        {
+            return LauncherService.OpenFolderAsync(LocalSettingsService.LogFolderPath);
+        }
+
+        public string LogFolder => LocalSettingsService.LogFolderPath;
     }
 }

@@ -19,6 +19,7 @@
 using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using Eppie.App.Shared.Logging;
 using Microsoft.Extensions.Logging;
 using Tuvi.App.ViewModels;
 using Tuvi.App.ViewModels.Services;
@@ -114,7 +115,7 @@ namespace Tuvi.App.Shared.Services
         {
             get
             {
-                return GetEnumOption(LogLevel.Error);
+                return GetEnumOption(LogLevel.None);
             }
 
             set
@@ -122,6 +123,11 @@ namespace Tuvi.App.Shared.Services
                 SetEnumOption(value);
             }
         }
+
+        /// <summary>
+        /// Property to get the path to the log folder.
+        /// </summary>
+        public string LogFolderPath => LogConfiguration.LogFolderPath;
 
         #region Set/Get option
 
