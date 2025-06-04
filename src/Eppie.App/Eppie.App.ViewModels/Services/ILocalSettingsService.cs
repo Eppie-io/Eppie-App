@@ -32,5 +32,6 @@ namespace Tuvi.App.ViewModels.Services
         string SelectedMailFilterForContactMessagesPage { get; set; }
         int RequestReviewCount { get; set; }
         LogLevel LogLevel { get; set; }
+        string LogFolderPath { get; }
     }
 }

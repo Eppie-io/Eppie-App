@@ -997,5 +997,9 @@ Subject: {3}
   <data name="LoggingOption.Header" xml:space="preserve">
     <value>Logging level</value>
     <comment>Header for the logging level option.</comment>
-  </data>  
+  </data>
+  <data name="OpenLogFolderButton.Content" xml:space="preserve">
+    <value>Open log folder</value>
+    <comment>Button for the opening log folder.</comment>
+  </data>
 </root>
