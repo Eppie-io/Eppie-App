@@ -30,11 +30,11 @@ namespace Tuvi.App.ViewModels
 {
     public class SettingsPageViewModel : BaseViewModel
     {
-        private bool _showRestartMessage;
-        public bool ShowRestartMessage
+        private bool _isShowRestartMessage;
+        public bool IsShowRestartMessage
         {
-            get { return _showRestartMessage; }
-            set { SetProperty(ref _showRestartMessage, value); }
+            get { return _isShowRestartMessage; }
+            set { SetProperty(ref _isShowRestartMessage, value); }
         }
 
         private string _restartMessage = string.Empty;
@@ -57,6 +57,20 @@ namespace Tuvi.App.ViewModels
         public ICommand WipeApplicationDataCommand => new AsyncRelayCommand(WipeApplicationDataAsync);
 
         public ICommand OpenLogFolderCommand => new AsyncRelayCommand(OpenLogFolderAsync);
+
+        override public void OnNavigatedTo(object data)
+        {
+            base.OnNavigatedTo(data);
+
+            LocalSettingsService.SettingsChanged += LocalSettingsService_SettingsChanged;
+        }
+
+        override public void OnNavigatedFrom()
+        {
+            base.OnNavigatedFrom();
+
+            LocalSettingsService.SettingsChanged -= LocalSettingsService_SettingsChanged;
+        }
 
         private async Task WipeApplicationDataAsync()
         {
@@ -124,17 +138,23 @@ namespace Tuvi.App.ViewModels
             return $"{appName} backup {DateTime.Now:D}.bak";
         }
 
-        public void ChangeLanguage(string language, string message)
+        public void ChangeLanguage(string language)
         {
             if (LocalSettingsService.Language != language)
             {
                 LocalSettingsService.Language = language;
 
-                ShowRestartMessage = true;
-
-                var brandName = BrandService.GetName();
-                RestartMessage = string.Format(message, brandName);
+                ShowRestartMessage();
             }
+        }
+
+        private void ShowRestartMessage()
+        {
+            var message = GetLocalizedString("RestartApplication");
+            IsShowRestartMessage = true;
+
+            var brandName = BrandService.GetName();
+            RestartMessage = string.Format(message, brandName);
         }
 
         public IReadOnlyList<LogLevel> LogLevels { get; } = Enum.GetValues(typeof(LogLevel))
@@ -149,6 +169,7 @@ namespace Tuvi.App.ViewModels
                 if (LocalSettingsService.LogLevel != value)
                 {
                     LocalSettingsService.LogLevel = value;
+                    ShowRestartMessage();
                     OnPropertyChanged();
                 }
             }
@@ -160,5 +181,11 @@ namespace Tuvi.App.ViewModels
         }
 
         public string LogFolder => LocalSettingsService.LogFolderPath;
+
+        private void LocalSettingsService_SettingsChanged(object sender, EventArgs e)
+        {
+            OnPropertyChanged(nameof(SelectedLogLevel));
+        }
+
     }
 }

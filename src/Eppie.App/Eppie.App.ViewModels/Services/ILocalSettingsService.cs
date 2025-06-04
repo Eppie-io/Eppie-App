@@ -16,6 +16,7 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
+using System;
 using Microsoft.Extensions.Logging;
 
 namespace Tuvi.App.ViewModels.Services
@@ -26,6 +27,8 @@ namespace Tuvi.App.ViewModels.Services
     /// </summary>
     public interface ILocalSettingsService
     {
+        event EventHandler SettingsChanged;
+
         string Language { get; set; }
         string SelectedMailFilterForAllMessagesPage { get; set; }
         string SelectedMailFilterForFolderMessagesPage { get; set; }

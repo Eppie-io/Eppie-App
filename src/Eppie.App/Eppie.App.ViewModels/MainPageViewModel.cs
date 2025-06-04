@@ -26,7 +26,10 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.Logging;
+using Org.BouncyCastle.Tsp;
 using Tuvi.App.ViewModels.Common;
+using Tuvi.App.ViewModels.Services;
 using Tuvi.Core.Entities;
 
 namespace Tuvi.App.ViewModels
@@ -450,7 +453,7 @@ namespace Tuvi.App.ViewModels
                 await UpdateContactsAsync().ConfigureAwait(true);
                 await UpdateAccountListAsync().ConfigureAwait(true);
 
-                SubscribeOnCoreEvents();
+                SubscribeEvents();
 
                 UpdateUnreadCounts();
 
@@ -462,6 +465,8 @@ namespace Tuvi.App.ViewModels
                 await Core.RestoreFromBackupIfNeededAsync(new Uri(downloadUrl)).ConfigureAwait(true);
 
                 await RequestReviewAsync().ConfigureAwait(true);
+
+                LogEnabledWarning();
             }
             catch (Exception ex)
             {
@@ -516,10 +521,10 @@ namespace Tuvi.App.ViewModels
         public override void OnNavigatedFrom()
         {
             base.OnNavigatedFrom();
-            UnsubscribeFromCoreEvents();
+            UnsubscribeEvents();
         }
 
-        private void SubscribeOnCoreEvents()
+        private void SubscribeEvents()
         {
             Core.ExceptionOccurred += OnCoreException;
             Core.UnreadMessagesReceived += OnUnreadMessagesReceived;
@@ -530,9 +535,11 @@ namespace Tuvi.App.ViewModels
             Core.ContactAdded += OnContactAdded;
             Core.ContactChanged += OnContactChanged;
             Core.ContactDeleted += OnContactDeleted;
+
+            LocalSettingsService.SettingsChanged += LocalSettingsService_SettingsChanged;
         }
 
-        private void UnsubscribeFromCoreEvents()
+        private void UnsubscribeEvents()
         {
             Core.ExceptionOccurred -= OnCoreException;
             Core.UnreadMessagesReceived -= OnUnreadMessagesReceived;
@@ -543,6 +550,8 @@ namespace Tuvi.App.ViewModels
             Core.ContactAdded -= OnContactAdded;
             Core.ContactChanged -= OnContactChanged;
             Core.ContactDeleted -= OnContactDeleted;
+
+            LocalSettingsService.SettingsChanged -= LocalSettingsService_SettingsChanged;
         }
 
         private void OnCoreException(object sender, ExceptionEventArgs e)
@@ -857,6 +866,46 @@ namespace Tuvi.App.ViewModels
         {
             var accounts = await Core.GetCompositeAccountsAsync().ConfigureAwait(true);
             return !accounts.Any();
+        }
+
+        private void LogEnabledWarning()
+        {
+            var title = GetLocalizedString("LogEnabledWarningTitle");
+            var solution = GetLocalizedString("DisableLogging");
+            var loggingWarning = Problems.FirstOrDefault(x => { return x.Title == title && x.SolutionText == solution; });
+
+            if (LocalSettingsService.LogLevel != LogLevel.None && loggingWarning is null)
+            {
+                Problems.Add(new Problem()
+                {
+                    ViewModel = this,
+                    Title = title,
+                    SolutionText = solution,
+                    Email = null,
+                    Message = GetLocalizedString("LogEnabledWarningMessage"),
+                    ActionCommand = new RelayCommand<Problem>((p) =>
+                    {
+                        LocalSettingsService.LogLevel = LogLevel.None;
+                        CloseProblem(p);
+                    })
+                });
+            }
+            else if (LocalSettingsService.LogLevel == LogLevel.None && loggingWarning != null)
+            {
+                CloseProblem(loggingWarning);
+            }
+        }
+
+        private void LocalSettingsService_SettingsChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                LogEnabledWarning();
+            }
+            catch (Exception ex)
+            {
+                OnError(ex);
+            }
         }
     }
 }

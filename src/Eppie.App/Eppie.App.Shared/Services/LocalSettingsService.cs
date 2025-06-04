@@ -33,6 +33,8 @@ namespace Tuvi.App.Shared.Services
     /// </summary>
     public class LocalSettingsService : ILocalSettingsService
     {
+        public event EventHandler SettingsChanged;
+
         /// <summary>
         /// Property to store the UI language
         /// </summary>
@@ -117,7 +119,6 @@ namespace Tuvi.App.Shared.Services
             {
                 return GetEnumOption(LogLevel.None);
             }
-
             set
             {
                 SetEnumOption(value);
@@ -138,6 +139,7 @@ namespace Tuvi.App.Shared.Services
             try
             {
                 AppLocalSettings.Values[key] = value;
+                SettingsChanged?.Invoke(this, EventArgs.Empty);
             }
             catch (Exception e)
             {
