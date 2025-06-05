@@ -30,11 +30,11 @@ namespace Tuvi.App.ViewModels
 {
     public class SettingsPageViewModel : BaseViewModel
     {
-        private bool _isShowRestartMessage;
-        public bool IsShowRestartMessage
+        private bool _isRestartMessageVisible;
+        public bool IsRestartMessageVisible
         {
-            get { return _isShowRestartMessage; }
-            set { SetProperty(ref _isShowRestartMessage, value); }
+            get { return _isRestartMessageVisible; }
+            set { SetProperty(ref _isRestartMessageVisible, value); }
         }
 
         private string _restartMessage = string.Empty;
@@ -151,7 +151,7 @@ namespace Tuvi.App.ViewModels
         private void ShowRestartMessage()
         {
             var message = GetLocalizedString("RestartApplication");
-            IsShowRestartMessage = true;
+            IsRestartMessageVisible = true;
 
             var brandName = BrandService.GetName();
             RestartMessage = string.Format(message, brandName);
