@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -236,5 +236,17 @@
   <data name="PricePerMonthText.Text" xml:space="preserve">
     <value>per month</value>
     <comment>Text after price on the 'Support Development' page</comment>
+  </data>
+  <data name="UseSeparateCredentials.Content" xml:space="preserve">
+    <value>Use separate login and password</value>
+    <comment>Checkbox text for enabling separate login and password fields</comment>
+  </data>
+  <data name="ServerLogin.Text" xml:space="preserve">
+    <value>Login</value>
+    <comment>Input field caption for server login</comment>
+  </data>
+  <data name="ServerPassword.Text" xml:space="preserve">
+    <value>Password</value>
+    <comment>Input field caption for server password</comment>
   </data>
 </root>
