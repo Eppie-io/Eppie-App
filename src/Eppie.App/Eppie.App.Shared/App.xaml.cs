@@ -106,7 +106,7 @@ namespace Eppie.App.Shared
         {
             Serilog.Core.LoggingLevelSwitch logLevelSwitch = new Serilog.Core.LoggingLevelSwitch(LocalSettingsService.LogLevel.ToLogEventLevel());
 
-            LocalSettingsService.SettingsChanged += (sender, args) =>
+            LocalSettingsService.SettingChanged += (sender, args) =>
             {
                 if (args.Name == nameof(LocalSettingsService.LogLevel))
                 {
