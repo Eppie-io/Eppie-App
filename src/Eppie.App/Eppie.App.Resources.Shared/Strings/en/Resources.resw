@@ -1003,7 +1003,7 @@ Subject: {3}
     <comment>Button for the opening log folder.</comment>
   </data>
   <data name="LogEnabledWarningMessage" xml:space="preserve">
-    <value>Loging is enabled.</value>
+    <value>Logging is enabled.</value>
     <comment>The message of the logging enabled warning.</comment>
   </data>
   <data name="WarningProblemTitle" xml:space="preserve">
