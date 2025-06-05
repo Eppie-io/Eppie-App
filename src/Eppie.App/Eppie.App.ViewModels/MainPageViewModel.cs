@@ -536,7 +536,7 @@ namespace Tuvi.App.ViewModels
             Core.ContactChanged += OnContactChanged;
             Core.ContactDeleted += OnContactDeleted;
 
-            LocalSettingsService.SettingsChanged += LocalSettingsService_SettingsChanged;
+            LocalSettingsService.SettingChanged += LocalSettingsService_SettingChanged;
         }
 
         private void UnsubscribeEvents()
@@ -551,7 +551,7 @@ namespace Tuvi.App.ViewModels
             Core.ContactChanged -= OnContactChanged;
             Core.ContactDeleted -= OnContactDeleted;
 
-            LocalSettingsService.SettingsChanged -= LocalSettingsService_SettingsChanged;
+            LocalSettingsService.SettingChanged -= LocalSettingsService_SettingChanged;
         }
 
         private void OnCoreException(object sender, ExceptionEventArgs e)
@@ -896,11 +896,14 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        private void LocalSettingsService_SettingsChanged(object sender, EventArgs e)
+        private void LocalSettingsService_SettingChanged(object sender, SettingChangedEventArgs args)
         {
             try
             {
-                LogEnabledWarning();
+                if (args.Name == nameof(LocalSettingsService.LogLevel))
+                {
+                    LogEnabledWarning();
+                }
             }
             catch (Exception ex)
             {

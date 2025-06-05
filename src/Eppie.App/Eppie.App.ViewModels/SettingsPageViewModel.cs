@@ -62,14 +62,14 @@ namespace Tuvi.App.ViewModels
         {
             base.OnNavigatedTo(data);
 
-            LocalSettingsService.SettingsChanged += LocalSettingsService_SettingsChanged;
+            LocalSettingsService.SettingChanged += LocalSettingsService_SettingChanged;
         }
 
         override public void OnNavigatedFrom()
         {
             base.OnNavigatedFrom();
 
-            LocalSettingsService.SettingsChanged -= LocalSettingsService_SettingsChanged;
+            LocalSettingsService.SettingChanged -= LocalSettingsService_SettingChanged;
         }
 
         private async Task WipeApplicationDataAsync()
@@ -169,7 +169,6 @@ namespace Tuvi.App.ViewModels
                 if (LocalSettingsService.LogLevel != value)
                 {
                     LocalSettingsService.LogLevel = value;
-                    ShowRestartMessage();
                     OnPropertyChanged();
                 }
             }
@@ -182,9 +181,12 @@ namespace Tuvi.App.ViewModels
 
         public string LogFolder => LocalSettingsService.LogFolderPath;
 
-        private void LocalSettingsService_SettingsChanged(object sender, EventArgs e)
+        private void LocalSettingsService_SettingChanged(object sender, SettingChangedEventArgs args)
         {
-            OnPropertyChanged(nameof(SelectedLogLevel));
+            if (args.Name == nameof(LocalSettingsService.LogLevel))
+            {
+                OnPropertyChanged(nameof(SelectedLogLevel));
+            }
         }
 
     }

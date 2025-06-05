@@ -33,7 +33,10 @@ namespace Tuvi.App.Shared.Services
     /// </summary>
     public class LocalSettingsService : ILocalSettingsService
     {
-        public event EventHandler SettingsChanged;
+        /// <summary>
+        /// The event arises when any setting changed.
+        /// </summary>
+        public event EventHandler<SettingChangedEventArgs> SettingChanged;
 
         /// <summary>
         /// Property to store the UI language
@@ -139,7 +142,7 @@ namespace Tuvi.App.Shared.Services
             try
             {
                 AppLocalSettings.Values[key] = value;
-                SettingsChanged?.Invoke(this, EventArgs.Empty);
+                SettingChanged?.Invoke(this, new SettingChangedEventArgs(key));
             }
             catch (Exception e)
             {

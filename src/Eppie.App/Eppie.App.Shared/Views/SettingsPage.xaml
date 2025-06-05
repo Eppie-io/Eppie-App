@@ -37,17 +37,17 @@
 
         <ScrollViewer Grid.Row="1">
             <StackPanel>
+                <TextBlock Margin="8,0,0,0"
+                           Style="{StaticResource NormalTextStyle}"
+                           Text="Language" />
+
                 <TextBlock MaxWidth="310"
-                           Margin="8,0,0,4"
+                           Margin="8,8,0,4"
                            HorizontalAlignment="Left"
                            FontStyle="Italic"
                            Text="{x:Bind ViewModel.RestartMessage, Mode=OneWay}"
                            TextWrapping="Wrap"
                            Visibility="{x:Bind ViewModel.IsShowRestartMessage, Mode=OneWay}" />
-
-                <TextBlock Margin="8,8,0,0"
-                           Style="{StaticResource NormalTextStyle}"
-                           Text="Language" />
 
                 <controls:LanguageSelectionControl x:Name="LanguageSelector"
                                                    Margin="8"

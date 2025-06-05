@@ -27,7 +27,7 @@ namespace Tuvi.App.ViewModels.Services
     /// </summary>
     public interface ILocalSettingsService
     {
-        event EventHandler SettingsChanged;
+        event EventHandler<SettingChangedEventArgs> SettingChanged;
 
         string Language { get; set; }
         string SelectedMailFilterForAllMessagesPage { get; set; }
@@ -36,5 +36,15 @@ namespace Tuvi.App.ViewModels.Services
         int RequestReviewCount { get; set; }
         LogLevel LogLevel { get; set; }
         string LogFolderPath { get; }
+    }
+
+    public class SettingChangedEventArgs : EventArgs
+    {
+        public string Name { get; }
+
+        public SettingChangedEventArgs(string name)
+        {
+            Name = name;
+        }
     }
 }
