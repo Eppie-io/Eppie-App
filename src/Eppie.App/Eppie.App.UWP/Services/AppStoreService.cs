@@ -16,76 +16,21 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Tuvi.App.ViewModels.Services;
-using Windows.Services.Store;
-
-namespace Tuvi.App.Shared.Services
+namespace Eppie.App.Shared.Services
 {
-    public class AppStoreService : IAppStoreService
+    public class AppStoreService : BaseAppStoreService
     {
-        public Task BuySubscriptionAsync()
+        SubscriptionProduct _Subscription;
+        protected override SubscriptionProduct GetSubscriptionProduct()
         {
             const string InAppOfferToken = "<InAppOfferToken>";
             const string AppOfferProductId = "<AppOfferProductId>";
 
-            var subscription = new SubscriptionProduct(InAppOfferToken, AppOfferProductId);
-
-            return subscription.PurchaseAsync();
-        }
-
-        public async Task<bool> RequestReviewAsync()
-        {
-            var context = StoreContext.GetDefault();
-            var result = await context.RequestRateAndReviewAppAsync();
-
-            return result.Status == StoreRateAndReviewStatus.Succeeded;
-        }
-    }
-
-    public class SubscriptionProduct
-    {
-        private string InAppOfferToken { get; }
-        private string ProductId { get; }
-
-        public SubscriptionProduct(string token, string storeId)
-        {
-            InAppOfferToken = token;
-            ProductId = storeId;
-        }
-
-        private StoreContext _storeContext = null;
-        protected StoreContext GetStoreContext()
-        {
-            if (_storeContext == null)
+            if (_Subscription is null)
             {
-                _storeContext = StoreContext.GetDefault();
+                _Subscription = new SubscriptionProduct(InAppOfferToken, AppOfferProductId);
             }
-
-            return _storeContext;
-        }
-
-        public async Task PurchaseAsync()
-        {
-            StoreContext context = StoreContext.GetDefault();
-
-            const string productKind = "Durable";
-            string[] productKinds = { productKind };
-
-            List<String> filterList = new List<string>(productKinds);
-            string[] storeIds = new string[] { ProductId };
-
-            StoreProductQueryResult queryResult = await context.GetStoreProductsAsync(filterList, storeIds);
-
-            StoreProduct subscription = queryResult.Products.FirstOrDefault().Value;
-
-            if (subscription != null && !subscription.IsInUserCollection)
-            {
-                await subscription.RequestPurchaseAsync();
-            }
+            return _Subscription;
         }
     }
 }
