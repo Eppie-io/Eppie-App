@@ -199,7 +199,7 @@ namespace Tuvi.App.ViewModels.Common
             };
             toEmails.AddRange(messageInfo.MessageData.To.Where(email => !messageInfo.Email.HasSameAddress(email)).Select(email => email.Address));
 
-            var to = string.Join(", ", toEmails.Distinct());
+            var to = string.Join(", ", toEmails.Distinct()).Trim();
 
             return to;
         }

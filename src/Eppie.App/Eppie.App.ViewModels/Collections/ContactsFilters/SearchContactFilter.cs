@@ -34,7 +34,7 @@ namespace Tuvi.App.ViewModels
         public bool ItemPassedFilter(ContactItem item)
         {
             return string.IsNullOrEmpty(SearchText)
-                || StringHelper.StringContains(item?.FullName, SearchText, StringComparison.CurrentCultureIgnoreCase)
+                || StringHelper.StringContains(item?.DisplayName, SearchText, StringComparison.CurrentCultureIgnoreCase)
                 || StringHelper.EmailContains(item?.Email.Address, SearchText);
         }
     }

@@ -17,22 +17,24 @@
 // ---------------------------------------------------------------------------- //
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.Logging;
 using Tuvi.App.ViewModels.Services;
 
 namespace Tuvi.App.ViewModels
 {
     public class SettingsPageViewModel : BaseViewModel
     {
-        private bool _showRestartMessage;
-        public bool ShowRestartMessage
+        private bool _isRestartMessageVisible;
+        public bool IsRestartMessageVisible
         {
-            get { return _showRestartMessage; }
-            set { SetProperty(ref _showRestartMessage, value); }
+            get { return _isRestartMessageVisible; }
+            set { SetProperty(ref _isRestartMessageVisible, value); }
         }
 
         private string _restartMessage = string.Empty;
@@ -53,6 +55,22 @@ namespace Tuvi.App.ViewModels
         public ICommand ImportBackupCommand => new AsyncRelayCommand<IFileOperationProvider>(ImportBackupFromFileAsync);
 
         public ICommand WipeApplicationDataCommand => new AsyncRelayCommand(WipeApplicationDataAsync);
+
+        public ICommand OpenLogFolderCommand => new AsyncRelayCommand(OpenLogFolderAsync);
+
+        override public void OnNavigatedTo(object data)
+        {
+            base.OnNavigatedTo(data);
+
+            LocalSettingsService.SettingChanged += LocalSettingsService_SettingChanged;
+        }
+
+        override public void OnNavigatedFrom()
+        {
+            base.OnNavigatedFrom();
+
+            LocalSettingsService.SettingChanged -= LocalSettingsService_SettingChanged;
+        }
 
         private async Task WipeApplicationDataAsync()
         {
@@ -120,17 +138,56 @@ namespace Tuvi.App.ViewModels
             return $"{appName} backup {DateTime.Now:D}.bak";
         }
 
-        public void ChangeLanguage(string language, string message)
+        public void ChangeLanguage(string language)
         {
             if (LocalSettingsService.Language != language)
             {
                 LocalSettingsService.Language = language;
 
-                ShowRestartMessage = true;
-
-                var brandName = BrandService.GetName();
-                RestartMessage = string.Format(message, brandName);
+                ShowRestartMessage();
             }
         }
+
+        private void ShowRestartMessage()
+        {
+            var message = GetLocalizedString("RestartApplication");
+            IsRestartMessageVisible = true;
+
+            var brandName = BrandService.GetName();
+            RestartMessage = string.Format(message, brandName);
+        }
+
+        public IReadOnlyList<LogLevel> LogLevels { get; } = Enum.GetValues(typeof(LogLevel))
+                                                             .Cast<LogLevel>()
+                                                             .ToList();
+
+        public LogLevel SelectedLogLevel
+        {
+            get => LocalSettingsService.LogLevel;
+            set
+            {
+                if (LocalSettingsService.LogLevel != value)
+                {
+                    LocalSettingsService.LogLevel = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private Task OpenLogFolderAsync()
+        {
+            return LauncherService.OpenFolderAsync(LocalSettingsService.LogFolderPath);
+        }
+
+        public string LogFolder => LocalSettingsService.LogFolderPath;
+
+        private void LocalSettingsService_SettingChanged(object sender, SettingChangedEventArgs args)
+        {
+            if (args.Name == nameof(LocalSettingsService.LogLevel))
+            {
+                OnPropertyChanged(nameof(SelectedLogLevel));
+            }
+        }
+
     }
 }

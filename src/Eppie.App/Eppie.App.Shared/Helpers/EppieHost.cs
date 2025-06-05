@@ -16,42 +16,42 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-using Tuvi.App.ViewModels;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
-#if WINDOWS_UWP
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-#else
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-#endif
-
-namespace Tuvi.App.Shared.Views
+namespace Eppie.App.Shared.Helpers
 {
-    public partial class SettingsPageBase : BasePage<SettingsPageViewModel, BaseViewModel>
+    internal static partial class EppieHost
     {
-    }
-
-    public sealed partial class SettingsPage : SettingsPageBase
-    {
-        public SettingsPage()
+        private static IHostBuilder ConfugureDefault(this IHostBuilder hostBuilder)
         {
-            this.InitializeComponent();
+            const string EnvironmentVariablesPrefix = "EPPIE_";
+
+#if DEBUG
+            hostBuilder.UseEnvironment(Environments.Development); // Switch to Development environment when running in DEBUG
+#endif
+            hostBuilder.ConfigureHostConfiguration(builder => builder.AddEnvironmentVariables(EnvironmentVariablesPrefix))
+                       .ConfigureServices(RegisterServices);
+
+            return hostBuilder;
         }
 
-        private void OnLoaded(object sender, RoutedEventArgs e)
+        private static void RegisterServices(HostBuilderContext context, IServiceCollection services)
         {
-            InitLanguage();
+            // TODO: Register your services
+            //services.AddSingleton<IMyService, MyService>();
         }
 
-        private void InitLanguage()
+        private static IHostBuilder AddLoggerFactory(this IHostBuilder hostBuilder, ILoggerFactory loggerFactory)
         {
-            LanguageSelector.InitSelection((Application.Current as Eppie.App.Shared.App).LocalSettingsService.Language);
-        }
+            hostBuilder.ConfigureServices((context, services) =>
+            {
+                services.AddSingleton(loggerFactory);
+            });
 
-        private void OnLanguageChanged(object sender, string language)
-        {
-            ViewModel.ChangeLanguage(language);
+            return hostBuilder;
         }
     }
 }

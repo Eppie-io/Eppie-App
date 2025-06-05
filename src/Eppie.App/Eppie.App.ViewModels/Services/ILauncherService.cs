@@ -24,5 +24,6 @@ namespace Tuvi.App.ViewModels.Services
     public interface ILauncherService
     {
         Task<bool> LaunchAsync(Uri uri);
+        Task<bool> OpenFolderAsync(string folderPath);
     }
 }
