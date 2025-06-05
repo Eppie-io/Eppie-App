@@ -16,42 +16,53 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
+using System;
 using Tuvi.App.ViewModels;
+using System.Windows.Input;
+
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 #else
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
 #endif
 
-namespace Tuvi.App.Shared.Views
+namespace Tuvi.App.Shared.Controls
 {
-    public partial class SettingsPageBase : BasePage<SettingsPageViewModel, BaseViewModel>
+    public sealed partial class SupportDevelopmentControl : UserControl
     {
-    }
+        public ICommand SupportDevelopmentCommand
+        {
+            get { return (ICommand)GetValue(SupportDevelopmentCommandProperty); }
+            set { SetValue(SupportDevelopmentCommandProperty, value); }
+        }
+        public static readonly DependencyProperty SupportDevelopmentCommandProperty =
+            DependencyProperty.Register(nameof(SupportDevelopmentCommand), typeof(ICommand), typeof(SupportDevelopmentControl), new PropertyMetadata(null));
 
-    public sealed partial class SettingsPage : SettingsPageBase
-    {
-        public SettingsPage()
+        public bool IsStorePaymentProcessor
+        {
+            get { return (bool)GetValue(IsStorePaymentProcessorProperty); }
+            set { SetValue(IsStorePaymentProcessorProperty, value); }
+        }
+        public static readonly DependencyProperty IsStorePaymentProcessorProperty =
+            DependencyProperty.Register(nameof(IsStorePaymentProcessor), typeof(bool), typeof(SupportDevelopmentControl), new PropertyMetadata(null));
+
+        public string Price
+        {
+            get { return (string)GetValue(PriceProperty); }
+            set { SetValue(PriceProperty, value); }
+        }
+        public static readonly DependencyProperty PriceProperty =
+            DependencyProperty.Register(nameof(Price), typeof(string), typeof(SupportDevelopmentControl), new PropertyMetadata(null));
+
+
+        public SupportDevelopmentControl()
         {
             this.InitializeComponent();
-        }
-
-        private void OnLoaded(object sender, RoutedEventArgs e)
-        {
-            InitLanguage();
-        }
-
-        private void InitLanguage()
-        {
-            LanguageSelector.InitSelection((Application.Current as Eppie.App.Shared.App).LocalSettingsService.Language);
-        }
-
-        private void OnLanguageChanged(object sender, string language)
-        {
-            ViewModel.ChangeLanguage(language);
         }
     }
 }

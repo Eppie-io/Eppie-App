@@ -26,7 +26,10 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.Logging;
+using Org.BouncyCastle.Tsp;
 using Tuvi.App.ViewModels.Common;
+using Tuvi.App.ViewModels.Services;
 using Tuvi.Core.Entities;
 
 namespace Tuvi.App.ViewModels
@@ -372,6 +375,40 @@ namespace Tuvi.App.ViewModels
 
         public ICommand SupportDevelopmentCommand => new AsyncRelayCommand(SupportDevelopmentAsync);
 
+
+        private bool _isStorePaymentProcessor = true;
+        public bool IsStorePaymentProcessor
+        {
+            get => _isStorePaymentProcessor;
+            private set
+            {
+                _isStorePaymentProcessor = value;
+                OnPropertyChanged(nameof(IsStorePaymentProcessor));
+            }
+        }
+
+        private string _supportDevelopmentPrice;
+        public string SupportDevelopmentPrice
+        {
+            get => _supportDevelopmentPrice;
+            private set
+            {
+                _supportDevelopmentPrice = value;
+                OnPropertyChanged(nameof(SupportDevelopmentPrice));
+            }
+        }
+
+        private bool _isSupportDevelopmentButtonVisible;
+        public bool IsSupportDevelopmentButtonVisible
+        {
+            get => _isSupportDevelopmentButtonVisible;
+            private set
+            {
+                _isSupportDevelopmentButtonVisible = value;
+                OnPropertyChanged(nameof(IsSupportDevelopmentButtonVisible));
+            }
+        }
+
         public ObservableCollection<Problem> Problems { get; } = new ObservableCollection<Problem>();
 
         private async void NavigateToMailboxSettingsForRelogin(EmailAddress emailAddress)
@@ -425,6 +462,7 @@ namespace Tuvi.App.ViewModels
             try
             {
                 await AppStoreService.BuySubscriptionAsync().ConfigureAwait(true);
+                UpdateSupportDevelopmentButton();
             }
             catch
             {
@@ -450,9 +488,10 @@ namespace Tuvi.App.ViewModels
                 await UpdateContactsAsync().ConfigureAwait(true);
                 await UpdateAccountListAsync().ConfigureAwait(true);
 
-                SubscribeOnCoreEvents();
+                SubscribeEvents();
 
                 UpdateUnreadCounts();
+                UpdateSupportDevelopmentButton();
 
                 // Test node URI
                 const string downloadUrl = "https://testnet.eppie.io/api/DownloadBackupFunction?code=1&name=";
@@ -462,6 +501,8 @@ namespace Tuvi.App.ViewModels
                 await Core.RestoreFromBackupIfNeededAsync(new Uri(downloadUrl)).ConfigureAwait(true);
 
                 await RequestReviewAsync().ConfigureAwait(true);
+
+                LogEnabledWarning();
             }
             catch (Exception ex)
             {
@@ -516,10 +557,10 @@ namespace Tuvi.App.ViewModels
         public override void OnNavigatedFrom()
         {
             base.OnNavigatedFrom();
-            UnsubscribeFromCoreEvents();
+            UnsubscribeEvents();
         }
 
-        private void SubscribeOnCoreEvents()
+        private void SubscribeEvents()
         {
             Core.ExceptionOccurred += OnCoreException;
             Core.UnreadMessagesReceived += OnUnreadMessagesReceived;
@@ -530,9 +571,11 @@ namespace Tuvi.App.ViewModels
             Core.ContactAdded += OnContactAdded;
             Core.ContactChanged += OnContactChanged;
             Core.ContactDeleted += OnContactDeleted;
+
+            LocalSettingsService.SettingChanged += LocalSettingsService_SettingChanged;
         }
 
-        private void UnsubscribeFromCoreEvents()
+        private void UnsubscribeEvents()
         {
             Core.ExceptionOccurred -= OnCoreException;
             Core.UnreadMessagesReceived -= OnUnreadMessagesReceived;
@@ -543,6 +586,8 @@ namespace Tuvi.App.ViewModels
             Core.ContactAdded -= OnContactAdded;
             Core.ContactChanged -= OnContactChanged;
             Core.ContactDeleted -= OnContactDeleted;
+
+            LocalSettingsService.SettingChanged -= LocalSettingsService_SettingChanged;
         }
 
         private void OnCoreException(object sender, ExceptionEventArgs e)
@@ -857,6 +902,72 @@ namespace Tuvi.App.ViewModels
         {
             var accounts = await Core.GetCompositeAccountsAsync().ConfigureAwait(true);
             return !accounts.Any();
+        }
+
+        private async void UpdateSupportDevelopmentButton()
+        {
+            try
+            {
+                IsSupportDevelopmentButtonVisible = !await AppStoreService.IsSubscriptionEnabledAsync().ConfigureAwait(true);
+
+                if (IsSupportDevelopmentButtonVisible)
+                {
+                    SupportDevelopmentPrice = await AppStoreService.GetSubscriptionPriceAsync().ConfigureAwait(true);
+                }
+            }
+            catch (NotImplementedException)
+            {
+                IsSupportDevelopmentButtonVisible = true;
+                IsStorePaymentProcessor = false;
+                SupportDevelopmentPrice = "$3";
+            }
+            catch (Exception e)
+            {
+                OnError(e);
+            }
+        }
+
+        private void LogEnabledWarning()
+        {
+            var title = GetLocalizedString("LogEnabledWarningTitle");
+            var solution = GetLocalizedString("DisableLogging");
+            var loggingWarning = Problems.FirstOrDefault(x => { return x.Title == title && x.SolutionText == solution; });
+
+            if (LocalSettingsService.LogLevel != LogLevel.None && loggingWarning is null)
+            {
+                Problems.Add(new Problem()
+                {
+                    ViewModel = this,
+                    Title = title,
+                    SolutionText = solution,
+                    Email = null,
+                    Message = GetLocalizedString("LogEnabledWarningMessage"),
+                    ActionCommand = new RelayCommand<Problem>((p) =>
+                    {
+                        LocalSettingsService.LogLevel = LogLevel.None;
+                        CloseProblem(p);
+                    })
+                });
+            }
+            else if (LocalSettingsService.LogLevel == LogLevel.None && loggingWarning != null)
+            {
+                CloseProblem(loggingWarning);
+            }
+        }
+
+        private void LocalSettingsService_SettingChanged(object sender, SettingChangedEventArgs args)
+        {
+            try
+            {
+                if (args.Name == nameof(LocalSettingsService.LogLevel))
+                {
+                    LogEnabledWarning();
+                }
+            }
+            catch (Exception ex)
+            {
+                OnError(ex);
+            }
         }
     }
 }

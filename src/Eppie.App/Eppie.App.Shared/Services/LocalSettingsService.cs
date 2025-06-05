@@ -19,6 +19,8 @@
 using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using Eppie.App.Shared.Logging;
+using Microsoft.Extensions.Logging;
 using Tuvi.App.ViewModels;
 using Tuvi.App.ViewModels.Services;
 using Windows.Storage;
@@ -31,6 +33,11 @@ namespace Tuvi.App.Shared.Services
     /// </summary>
     public class LocalSettingsService : ILocalSettingsService
     {
+        /// <summary>
+        /// The event arises when any setting changed.
+        /// </summary>
+        public event EventHandler<SettingChangedEventArgs> SettingChanged;
+
         /// <summary>
         /// Property to store the UI language
         /// </summary>
@@ -98,13 +105,33 @@ namespace Tuvi.App.Shared.Services
         {
             get
             {
-                return GetOption(0, nameof(RequestReviewCount));
+                return GetOption(0);
             }
             set
             {
                 SetOption(value);
             }
         }
+
+        /// <summary>
+        /// Property to store logging severity levels.
+        /// </summary>
+        public LogLevel LogLevel
+        {
+            get
+            {
+                return GetEnumOption(LogLevel.None);
+            }
+            set
+            {
+                SetEnumOption(value);
+            }
+        }
+
+        /// <summary>
+        /// Property to get the path to the log folder.
+        /// </summary>
+        public string LogFolderPath => LogConfiguration.LogFolderPath;
 
         #region Set/Get option
 
@@ -115,6 +142,7 @@ namespace Tuvi.App.Shared.Services
             try
             {
                 AppLocalSettings.Values[key] = value;
+                SettingChanged?.Invoke(this, new SettingChangedEventArgs(key));
             }
             catch (Exception e)
             {
@@ -135,6 +163,25 @@ namespace Tuvi.App.Shared.Services
             catch (Exception e)
             {
                 Debug.WriteLine(e.Message);
+            }
+
+            return defaultValue;
+        }
+
+        private void SetEnumOption<TEnum>(TEnum value, [CallerMemberName] string key = null)
+            where TEnum : struct, Enum
+        {
+            SetOption<string>(value.ToString(), key);
+        }
+
+        private TEnum GetEnumOption<TEnum>(TEnum defaultValue, [CallerMemberName] string key = null)
+            where TEnum : struct, Enum
+        {
+            string value = GetOption<string>(defaultValue.ToString(), key);
+
+            if (Enum.TryParse<TEnum>(value, true, out TEnum result))
+            {
+                return result;
             }
 
             return defaultValue;

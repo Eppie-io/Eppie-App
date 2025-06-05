@@ -16,42 +16,15 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-using Tuvi.App.ViewModels;
+using System.Threading.Tasks;
 
-#if WINDOWS_UWP
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-#else
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-#endif
-
-namespace Tuvi.App.Shared.Views
+namespace Eppie.App.ViewModels.Services
 {
-    public partial class SettingsPageBase : BasePage<SettingsPageViewModel, BaseViewModel>
+    public interface IAppStoreService
     {
-    }
-
-    public sealed partial class SettingsPage : SettingsPageBase
-    {
-        public SettingsPage()
-        {
-            this.InitializeComponent();
-        }
-
-        private void OnLoaded(object sender, RoutedEventArgs e)
-        {
-            InitLanguage();
-        }
-
-        private void InitLanguage()
-        {
-            LanguageSelector.InitSelection((Application.Current as Eppie.App.Shared.App).LocalSettingsService.Language);
-        }
-
-        private void OnLanguageChanged(object sender, string language)
-        {
-            ViewModel.ChangeLanguage(language);
-        }
+        Task BuySubscriptionAsync();
+        Task<bool> IsSubscriptionEnabledAsync();
+        Task<string> GetSubscriptionPriceAsync();
+        Task<bool> RequestReviewAsync();
     }
 }
