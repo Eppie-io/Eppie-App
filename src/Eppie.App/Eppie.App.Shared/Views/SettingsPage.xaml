@@ -47,7 +47,7 @@
                            FontStyle="Italic"
                            Text="{x:Bind ViewModel.RestartMessage, Mode=OneWay}"
                            TextWrapping="Wrap"
-                           Visibility="{x:Bind ViewModel.ShowRestartMessage, Mode=OneWay}" />
+                           Visibility="{x:Bind ViewModel.IsRestartMessageVisible, Mode=OneWay}" />
 
                 <controls:LanguageSelectionControl x:Name="LanguageSelector"
                                                    Margin="8"

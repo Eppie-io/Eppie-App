@@ -122,7 +122,6 @@ namespace Tuvi.App.Shared.Services
             {
                 return GetEnumOption(LogLevel.None);
             }
-
             set
             {
                 SetEnumOption(value);
