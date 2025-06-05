@@ -24,6 +24,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Logging\LoggingExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\NotificationManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\AIService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\AppStoreService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ClipboardProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\DragAndDropService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ErrorHandler.cs" />
