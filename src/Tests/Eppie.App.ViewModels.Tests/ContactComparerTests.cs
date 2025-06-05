@@ -38,8 +38,8 @@ namespace Tuvi.App.ViewModels.Tests
             var email1 = new EmailAddress("aaa@mail.com");
             var email2 = new EmailAddress("bbb@mail.com");
 
-            var contact1 = new ContactItem { FullName = "aaa", Email = email1, LastMessageData = new LastMessageData(email1, 1, new DateTime(2022, 12, 27)) };
-            var contact2 = new ContactItem { FullName = "bbb", Email = email2, LastMessageData = new LastMessageData(email2, 5, new DateTime(2022, 12, 28)) };
+            var contact1 = new ContactItem { FullName = "aaa", Email = email1, LastMessageData = new LastMessageData(1, email1, 1, new DateTime(2022, 12, 27)) };
+            var contact2 = new ContactItem { FullName = "bbb", Email = email2, LastMessageData = new LastMessageData(2, email2, 5, new DateTime(2022, 12, 28)) };
 
             var comparer = new ByUnreadContactComparer();
 
@@ -52,8 +52,8 @@ namespace Tuvi.App.ViewModels.Tests
             var email1 = new EmailAddress("aaa@mail.com");
             var email2 = new EmailAddress("bbb@mail.com");
 
-            var contact1 = new ContactItem { FullName = "aaa", Email = email1, UnreadMessagesCount = 4, LastMessageData = new LastMessageData(email1, 1, new DateTime(2022, 12, 27)) };
-            var contact2 = new ContactItem { FullName = "bbb", Email = email2, UnreadMessagesCount = 2, LastMessageData = new LastMessageData(email2, 5, new DateTime(2022, 12, 28)) };
+            var contact1 = new ContactItem { FullName = "aaa", Email = email1, UnreadMessagesCount = 4, LastMessageData = new LastMessageData(1, email1, 1, new DateTime(2022, 12, 27)) };
+            var contact2 = new ContactItem { FullName = "bbb", Email = email2, UnreadMessagesCount = 2, LastMessageData = new LastMessageData(2, email2, 5, new DateTime(2022, 12, 28)) };
 
             var comparer = new ByUnreadContactComparer();
 
@@ -66,8 +66,8 @@ namespace Tuvi.App.ViewModels.Tests
             var email1 = new EmailAddress("aaa@mail.com");
             var email2 = new EmailAddress("bbb@mail.com");
 
-            var contact1 = new ContactItem { FullName = "aaa", Email = email1, UnreadMessagesCount = 4, LastMessageData = new LastMessageData(email1, 1, new DateTime(2022, 12, 27)) };
-            var contact2 = new ContactItem { FullName = "bbb", Email = email2, UnreadMessagesCount = 2, LastMessageData = new LastMessageData(email2, 5, new DateTime(2022, 12, 27)) };
+            var contact1 = new ContactItem { FullName = "aaa", Email = email1, UnreadMessagesCount = 4, LastMessageData = new LastMessageData(1, email1, 1, new DateTime(2022, 12, 27)) };
+            var contact2 = new ContactItem { FullName = "bbb", Email = email2, UnreadMessagesCount = 2, LastMessageData = new LastMessageData(2, email2, 5, new DateTime(2022, 12, 27)) };
 
             var comparer = new ByUnreadContactComparer();
 
