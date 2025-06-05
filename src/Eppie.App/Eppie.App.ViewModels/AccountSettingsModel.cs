@@ -122,6 +122,27 @@ namespace Tuvi.App.ViewModels
     public class BasicAccountSettingsModel : AccountSettingsModel
     {
         public ValidatableProperty<string> Password { get; } = new ValidatableProperty<string>();
+
+        // Fields for separate SMTP login and password
+        private bool _useSeparateOutgoingCredentials;
+        public bool UseSeparateOutgoingCredentials
+        {
+            get => _useSeparateOutgoingCredentials;
+            set => SetProperty(ref _useSeparateOutgoingCredentials, value);
+        }
+        public ValidatableProperty<string> OutgoingLogin { get; } = new ValidatableProperty<string>();
+        public ValidatableProperty<string> OutgoingPassword { get; } = new ValidatableProperty<string>();
+
+        // Fields for separate IMAP/POP3 login and password
+        private bool _useSeparateIncomingCredentials;
+        public bool UseSeparateIncomingCredentials
+        {
+            get => _useSeparateIncomingCredentials;
+            set => SetProperty(ref _useSeparateIncomingCredentials, value);
+        }
+        public ValidatableProperty<string> IncomingLogin { get; } = new ValidatableProperty<string>();
+        public ValidatableProperty<string> IncomingPassword { get; } = new ValidatableProperty<string>();
+
         public BasicAccountSettingsModel(Account account)
             : base(account)
         {
@@ -133,15 +154,63 @@ namespace Tuvi.App.ViewModels
             if (account.AuthData is BasicAuthData basicData)
             {
                 Password.SetInitialValue(basicData.Password);
+
+                UseSeparateOutgoingCredentials = !string.IsNullOrEmpty(basicData.OutgoingLogin) || !string.IsNullOrEmpty(basicData.OutgoingPassword);
+                if (UseSeparateOutgoingCredentials)
+                {
+                    OutgoingLogin.SetInitialValue(basicData.OutgoingLogin);
+                    OutgoingPassword.SetInitialValue(basicData.OutgoingPassword);
+                }
+                else
+                {
+                    OutgoingLogin.SetInitialValue(string.Empty);
+                    OutgoingPassword.SetInitialValue(string.Empty);
+                }
+
+                UseSeparateIncomingCredentials = !string.IsNullOrEmpty(basicData.IncomingLogin) || !string.IsNullOrEmpty(basicData.IncomingPassword);
+                if (UseSeparateIncomingCredentials)
+                {
+                    IncomingLogin.SetInitialValue(basicData.IncomingLogin);
+                    IncomingPassword.SetInitialValue(basicData.IncomingPassword);
+                }
+                else
+                {
+                    IncomingLogin.SetInitialValue(string.Empty);
+                    IncomingPassword.SetInitialValue(string.Empty);
+                }
             }
             else
             {
                 Password.SetInitialValue(string.Empty);
+
+                OutgoingLogin.SetInitialValue(string.Empty);
+                OutgoingPassword.SetInitialValue(string.Empty);
+                UseSeparateOutgoingCredentials = false;
+
+                IncomingLogin.SetInitialValue(string.Empty);
+                IncomingPassword.SetInitialValue(string.Empty);
+                UseSeparateIncomingCredentials = false;
             }
 
             Password.PropertyChanged += (sender, args) =>
             {
                 OnValidatablePropertyChanged<string>(nameof(Password), args.PropertyName);
+            };
+            OutgoingLogin.PropertyChanged += (sender, args) =>
+            {
+                OnValidatablePropertyChanged<string>(nameof(OutgoingLogin), args.PropertyName);
+            };
+            OutgoingPassword.PropertyChanged += (sender, args) =>
+            {
+                OnValidatablePropertyChanged<string>(nameof(OutgoingPassword), args.PropertyName);
+            };
+            IncomingLogin.PropertyChanged += (sender, args) =>
+            {
+                OnValidatablePropertyChanged<string>(nameof(IncomingLogin), args.PropertyName);
+            };
+            IncomingPassword.PropertyChanged += (sender, args) =>
+            {
+                OnValidatablePropertyChanged<string>(nameof(IncomingPassword), args.PropertyName);
             };
             SynchronizationInterval.PropertyChanged += (sender, args) =>
             {
@@ -152,7 +221,21 @@ namespace Tuvi.App.ViewModels
         public override Account ToAccount()
         {
             CurrentAccount = base.ToAccount();
-            CurrentAccount.AuthData = new BasicAuthData() { Password = Password.Value };
+            var basicAuth = new BasicAuthData() { Password = Password.Value };
+
+            if (UseSeparateOutgoingCredentials)
+            {
+                basicAuth.OutgoingLogin = OutgoingLogin.Value;
+                basicAuth.OutgoingPassword = OutgoingPassword.Value;
+            }
+
+            if (UseSeparateIncomingCredentials)
+            {
+                basicAuth.IncomingLogin = IncomingLogin.Value;
+                basicAuth.IncomingPassword = IncomingPassword.Value;
+            }
+
+            CurrentAccount.AuthData = basicAuth;
 
             return CurrentAccount;
         }

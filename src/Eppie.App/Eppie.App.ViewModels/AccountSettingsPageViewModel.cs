@@ -153,6 +153,10 @@ namespace Tuvi.App.ViewModels
                 if (AccountSettingsModel is BasicAccountSettingsModel basicAccountSettingsModel)
                 {
                     basicAccountSettingsModel.Password.NeedsValidation = true;
+                    basicAccountSettingsModel.IncomingLogin.NeedsValidation = true;
+                    basicAccountSettingsModel.IncomingPassword.NeedsValidation = true;
+                    basicAccountSettingsModel.OutgoingLogin.NeedsValidation = true;
+                    basicAccountSettingsModel.OutgoingPassword.NeedsValidation = true;
                 }
                 ValidateProperty(AccountSettingsModel, nameof(AccountSettingsModel));
                 return false;
@@ -176,6 +180,10 @@ namespace Tuvi.App.ViewModels
                 if (accountModel is BasicAccountSettingsModel basicAccountModel)
                 {
                     basicAccountModel.Password.Errors.Clear();
+                    basicAccountModel.IncomingLogin.Errors.Clear();
+                    basicAccountModel.IncomingPassword.Errors.Clear();
+                    basicAccountModel.OutgoingLogin.Errors.Clear();
+                    basicAccountModel.OutgoingPassword.Errors.Clear();
                 }
                 accountModel.OutgoingServerAddress.Errors.Clear();
                 accountModel.IncomingServerAddress.Errors.Clear();
@@ -408,13 +416,18 @@ namespace Tuvi.App.ViewModels
 
             try
             {
-                var credentialsProvider = Core.CredentialsManager.CreateCredentialsProvider(accountData);
+                var credentialsProvider = Core.CredentialsManager.CreateOutgoingCredentialsProvider(accountData);
                 await Core.TestMailServerAsync(accountData.OutgoingServerAddress, accountData.OutgoingServerPort, accountData.OutgoingMailProtocol, credentialsProvider, cancellationToken).ConfigureAwait(true);
                 return true;
             }
             catch (ConnectionException)
             {
                 AccountSettingsModel.OutgoingServerAddress.Errors.Add(GetLocalizedString("ConnectionError"));
+            }
+            catch (AuthenticationException)
+            {
+                AccountSettingsModel.OutgoingServerAddress.Errors.Add(GetLocalizedString("AuthenticationError"));
+                NotifyToCheckEmailAndPasswordFields();
             }
             catch (OperationCanceledException)
             {
@@ -446,7 +459,7 @@ namespace Tuvi.App.ViewModels
 
             try
             {
-                var credentialsProvider = Core.CredentialsManager.CreateCredentialsProvider(accountData);
+                var credentialsProvider = Core.CredentialsManager.CreateIncomingCredentialsProvider(accountData);
                 await Core.TestMailServerAsync(accountData.IncomingServerAddress, accountData.IncomingServerPort, accountData.IncomingMailProtocol, credentialsProvider, cancellationToken).ConfigureAwait(true);
                 return true;
             }
@@ -490,6 +503,24 @@ namespace Tuvi.App.ViewModels
             {
                 basicAccountModel.Password.Errors.Clear();
                 basicAccountModel.Password.Errors.Add(GetLocalizedString("CheckPasswordNotification"));
+
+                if (basicAccountModel.UseSeparateIncomingCredentials)
+                {
+                    basicAccountModel.IncomingLogin.Errors.Clear();
+                    basicAccountModel.IncomingLogin.Errors.Add(GetLocalizedString("CheckEmailNotification"));
+
+                    basicAccountModel.IncomingPassword.Errors.Clear();
+                    basicAccountModel.IncomingPassword.Errors.Add(GetLocalizedString("CheckPasswordNotification"));
+                }
+
+                if (basicAccountModel.UseSeparateOutgoingCredentials)
+                {
+                    basicAccountModel.OutgoingLogin.Errors.Clear();
+                    basicAccountModel.OutgoingLogin.Errors.Add(GetLocalizedString("CheckEmailNotification"));
+
+                    basicAccountModel.OutgoingPassword.Errors.Clear();
+                    basicAccountModel.OutgoingPassword.Errors.Add(GetLocalizedString("CheckPasswordNotification"));
+                }
             }
         }
     }
