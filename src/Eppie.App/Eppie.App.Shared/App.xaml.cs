@@ -104,7 +104,19 @@ namespace Eppie.App.Shared
 
         private void InitializeLogger()
         {
-            LoggerFactory = new Serilog.LoggerConfiguration().AddLogging(LocalSettingsService.LogLevel).CreateLoggerFactory();
+            Serilog.Core.LoggingLevelSwitch logLevelSwitch = new Serilog.Core.LoggingLevelSwitch(LocalSettingsService.LogLevel.ToLogEventLevel());
+
+            LocalSettingsService.SettingsChanged += (sender, args) =>
+            {
+                if (args.Name == nameof(LocalSettingsService.LogLevel))
+                {
+                    logLevelSwitch.MinimumLevel = LocalSettingsService.LogLevel.ToLogEventLevel();
+                }
+            };
+
+            LoggerFactory = new Serilog.LoggerConfiguration().AddLogging()
+                                                             .UseLogLevelSwitch(logLevelSwitch)
+                                                             .CreateLoggerFactory();
             Logger = LoggerFactory.CreateLogger<App>();
         }
 

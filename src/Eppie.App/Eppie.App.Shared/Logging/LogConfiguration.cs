@@ -21,6 +21,7 @@ using System.IO;
 
 using Microsoft.Extensions.Logging;
 using Serilog;
+using Serilog.Core;
 using Serilog.Enrichers.Sensitive;
 using Serilog.Exceptions;
 using Serilog.Extensions.Logging;
@@ -36,7 +37,7 @@ namespace Eppie.App.Shared.Logging
         public static readonly string LogFolderPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, FolderName);
         private static readonly string AppLogFilePath = Path.Combine(LogFolderPath, AppLogFileName);
 
-        public static LoggerConfiguration AddLogging(this LoggerConfiguration configuration, LogLevel logLevel)
+        public static LoggerConfiguration AddLogging(this LoggerConfiguration configuration, LogLevel logLevel = LogLevel.Information)
         {
             configuration.MinimumLevel.Is(logLevel.ToLogEventLevel())
                          .Enrich.WithProperty(nameof(Helpers.Platform), Helpers.PlatformTools.CurrentPlatform)
@@ -68,6 +69,11 @@ namespace Eppie.App.Shared.Logging
 #endif
 
             return configuration;
+        }
+
+        public static LoggerConfiguration UseLogLevelSwitch(this LoggerConfiguration configuration, LoggingLevelSwitch logLevelSwitch)
+        {
+            return configuration.MinimumLevel.ControlledBy(logLevelSwitch);
         }
 
         public static ILoggerFactory CreateLoggerFactory(this LoggerConfiguration configuration)
