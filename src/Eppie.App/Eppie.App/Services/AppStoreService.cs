@@ -16,42 +16,21 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-using Tuvi.App.ViewModels;
-
-#if WINDOWS_UWP
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-#else
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-#endif
-
-namespace Tuvi.App.Shared.Views
+namespace Eppie.App.Shared.Services
 {
-    public partial class SettingsPageBase : BasePage<SettingsPageViewModel, BaseViewModel>
+    public class AppStoreService : BaseAppStoreService
     {
-    }
-
-    public sealed partial class SettingsPage : SettingsPageBase
-    {
-        public SettingsPage()
+        SubscriptionProduct _Subscription;
+        protected override SubscriptionProduct GetSubscriptionProduct()
         {
-            this.InitializeComponent();
-        }
+            const string InAppOfferToken = "<InAppOfferToken>";
+            const string AppOfferProductId = "<AppOfferProductId>";
 
-        private void OnLoaded(object sender, RoutedEventArgs e)
-        {
-            InitLanguage();
-        }
-
-        private void InitLanguage()
-        {
-            LanguageSelector.InitSelection((Application.Current as Eppie.App.Shared.App).LocalSettingsService.Language);
-        }
-
-        private void OnLanguageChanged(object sender, string language)
-        {
-            ViewModel.ChangeLanguage(language);
+            if (_Subscription is null)
+            {
+                _Subscription = new SubscriptionProduct(InAppOfferToken, AppOfferProductId);
+            }
+            return _Subscription;
         }
     }
 }

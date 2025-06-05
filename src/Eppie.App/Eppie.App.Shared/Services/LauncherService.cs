@@ -29,5 +29,15 @@ namespace Tuvi.App.Shared.Services
         {
             return Launcher.LaunchUriAsync(uri).AsTask();
         }
+
+        public Task<bool> OpenFolderAsync(string folderPath)
+        {
+            if (string.IsNullOrEmpty(folderPath))
+            {
+                throw new ArgumentException("Folder path cannot be null or empty.", nameof(folderPath));
+            }
+
+            return Launcher.LaunchFolderPathAsync(folderPath).AsTask();
+        }
     }
 }

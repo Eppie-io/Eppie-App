@@ -16,62 +16,52 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-using System;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using Tuvi.App.ViewModels.Services;
-using Tuvi.Core.Logging;
+using Serilog.Events;
 
-namespace Tuvi.App.Shared.Services
+namespace Eppie.App.Shared.Logging
 {
-    public class ErrorHandler : IErrorHandler
+    public static class LoggingExtensions
     {
-        private IMessageService MessageService { get; set; }
-
-        private readonly DispatcherService _dispatcher = new DispatcherService();
-        protected DispatcherService Dispatcher { get => _dispatcher; }
-
-        public ErrorHandler()
+        public static LogEventLevel ToLogEventLevel(this LogLevel logLevel)
         {
-        }
-
-        public void SetMessageService(IMessageService messageService)
-        {
-            MessageService = messageService;
-        }
-
-
-        public async void OnError(Exception e, bool silent)
-        {
-            LoggingExtension.Log(this).LogError(e, "An error has occurred");
-            try
+            switch (logLevel)
             {
-                await Dispatcher.RunAsync(async () =>
-                {
-                    try
-                    {
-                        await OnErrorAsync(e, silent).ConfigureAwait(true);
-                    }
-                    catch
-                    {
-                    }
-                });
-            }
-            catch
-            {
+                case LogLevel.Trace:
+                    return LogEventLevel.Verbose;
+                case LogLevel.Debug:
+                    return LogEventLevel.Debug;
+                case LogLevel.Information:
+                    return LogEventLevel.Information;
+                case LogLevel.Warning:
+                    return LogEventLevel.Warning;
+                case LogLevel.Error:
+                    return LogEventLevel.Error;
+                case LogLevel.Critical:
+                    return LogEventLevel.Fatal;
+                default:
+                    return LevelAlias.Off;
             }
         }
 
-        private async Task OnErrorAsync(Exception e, bool silent)
+        public static LogLevel ToLogLevel(this LogEventLevel logEventLevel)
         {
-            if (e is OperationCanceledException)
+            switch (logEventLevel)
             {
-                return;
-            }
-
-            if (!silent && MessageService != null)
-            {
-                await MessageService.ShowErrorMessageAsync(e).ConfigureAwait(true);
+                case LogEventLevel.Verbose:
+                    return LogLevel.Trace;
+                case LogEventLevel.Debug:
+                    return LogLevel.Debug;
+                case LogEventLevel.Information:
+                    return LogLevel.Information;
+                case LogEventLevel.Warning:
+                    return LogLevel.Warning;
+                case LogEventLevel.Error:
+                    return LogLevel.Error;
+                case LogEventLevel.Fatal:
+                    return LogLevel.Critical;
+                default:
+                    return LogLevel.None;
             }
         }
     }

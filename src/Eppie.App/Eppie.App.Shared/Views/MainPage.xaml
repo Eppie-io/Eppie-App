@@ -15,6 +15,86 @@
                     NavigationCacheMode="Enabled"
                     mc:Ignorable="d xamarin">
 
+    <Page.Resources>
+        <LinearGradientBrush x:Key="ButtonGradientBrush" StartPoint="0,0" EndPoint="1,0">
+            <GradientStop Offset="0.0" Color="#FFD9EE" />
+            <GradientStop Offset="0.5" Color="#FFFFFF" />
+            <GradientStop Offset="1.0" Color="#D9FFFF" />
+        </LinearGradientBrush>
+
+        <Style x:Key="GradientButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource ButtonGradientBrush}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="BackgroundBorder"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="4">
+                            <ContentPresenter x:Name="ContentPresenter"
+                                              Padding="{TemplateBinding Padding}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              Content="{TemplateBinding Content}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}" />
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal" />
+                                    <VisualState x:Name="PointerOver">
+                                        <Storyboard>
+                                            <ColorAnimation EnableDependentAnimation="True"
+                                                            Storyboard.TargetName="BackgroundBorder"
+                                                            Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)"
+                                                            To="#FFD9EE"
+                                                            Duration="0:0:0.2" />
+                                            <ColorAnimation EnableDependentAnimation="True"
+                                                            Storyboard.TargetName="BackgroundBorder"
+                                                            Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)"
+                                                            To="#EEEEEE"
+                                                            Duration="0:0:0.2" />
+                                            <ColorAnimation EnableDependentAnimation="True"
+                                                            Storyboard.TargetName="BackgroundBorder"
+                                                            Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[2].(GradientStop.Color)"
+                                                            To="#D9FFFF"
+                                                            Duration="0:0:0.2" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <ColorAnimation EnableDependentAnimation="True"
+                                                            Storyboard.TargetName="BackgroundBorder"
+                                                            Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)"
+                                                            To="#FFD9EE"
+                                                            Duration="0:0:0.1" />
+                                            <ColorAnimation EnableDependentAnimation="True"
+                                                            Storyboard.TargetName="BackgroundBorder"
+                                                            Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)"
+                                                            To="#DDDDDD"
+                                                            Duration="0:0:0.1" />
+                                            <ColorAnimation EnableDependentAnimation="True"
+                                                            Storyboard.TargetName="BackgroundBorder"
+                                                            Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[2].(GradientStop.Color)"
+                                                            To="#D9FFFF"
+                                                            Duration="0:0:0.1" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Disabled">
+                                        <Storyboard>
+                                            <DoubleAnimation EnableDependentAnimation="True"
+                                                             Storyboard.TargetName="BackgroundBorder"
+                                                             Storyboard.TargetProperty="Opacity"
+                                                             To="0.5"
+                                                             Duration="0:0:0.1" />
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
     <local:MainPageBase.DataContext>
         <viewmodels:MainPageViewModel />
     </local:MainPageBase.DataContext>
@@ -78,18 +158,42 @@
             </winui:NavigationView.MenuItems>
 
             <winui:NavigationView.PaneFooter>
-                <controls:NavPanelTabControl TabModel="{x:Bind ViewModel.NavPanelTabModel, Mode=OneWay}" Visibility="{x:Bind NavigationMenu.IsPaneOpen, Mode=OneWay}" />
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <controls:NavPanelTabControl Grid.Row="0"
+                                                 TabModel="{x:Bind ViewModel.NavPanelTabModel, Mode=OneWay}"
+                                                 Visibility="{x:Bind NavigationMenu.IsPaneOpen, Mode=OneWay}" />
+                    <Button Grid.Row="1"
+                            Height="36"
+                            Margin="4,8,4,0"
+                            HorizontalAlignment="Stretch"
+                            Style="{StaticResource GradientButtonStyle}"
+                            Visibility="{x:Bind ViewModel.IsSupportDevelopmentButtonVisible, Mode=OneWay}">
+                        <Button.Flyout>
+                            <Flyout>
+                                <controls:SupportDevelopmentControl IsStorePaymentProcessor="{x:Bind ViewModel.IsStorePaymentProcessor, Mode=OneWay}"
+                                                                    Price="{x:Bind ViewModel.SupportDevelopmentPrice, Mode=OneWay}"
+                                                                    SupportDevelopmentCommand="{x:Bind ViewModel.SupportDevelopmentCommand}" />
+                            </Flyout>
+                        </Button.Flyout>
+                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                            <FontIcon Margin="1,0,0,0"
+                                      HorizontalAlignment="Center"
+                                      FontSize="15"
+                                      Foreground="Black"
+                                      Glyph="&#xEB52;" />
+                            <TextBlock x:Uid="SupportDevelopmentButton"
+                                       Margin="8,0,0,0"
+                                       Foreground="Black" />
+                        </StackPanel>
+                    </Button>
+                </Grid>
             </winui:NavigationView.PaneFooter>
 
             <winui:NavigationView.FooterMenuItems>
-
-                <winui:NavigationViewItem x:Uid="SupportDevelopmentNavigationItem"
-                                          extensions:AttachedCommands.ClickCommand="{x:Bind ViewModel.SupportDevelopmentCommand}"
-                                          SelectsOnInvoked="False">
-                    <winui:NavigationViewItem.Icon>
-                        <FontIcon Glyph="&#xEC32;" />
-                    </winui:NavigationViewItem.Icon>
-                </winui:NavigationViewItem>
 
                 <winui:NavigationViewItem x:Uid="AboutAppNavigationItem"
                                           extensions:AttachedCommands.ClickCommand="{x:Bind ShowAboutPageCommand}"

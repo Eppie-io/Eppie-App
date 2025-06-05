@@ -16,42 +16,31 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-using Tuvi.App.ViewModels;
-
 #if WINDOWS_UWP
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-#else
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-#endif
 
-namespace Tuvi.App.Shared.Views
+using System;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+
+namespace Eppie.App.Shared.Helpers
 {
-    public partial class SettingsPageBase : BasePage<SettingsPageViewModel, BaseViewModel>
+    internal static partial class EppieHost
     {
-    }
-
-    public sealed partial class SettingsPage : SettingsPageBase
-    {
-        public SettingsPage()
+        public static IHostBuilder CreateBuilder(ILoggerFactory loggerFactory)
         {
-            this.InitializeComponent();
+            return Host.CreateDefaultBuilder(Environment.GetCommandLineArgs()).ConfugureDefault().ConfugureUwp().AddLoggerFactory(loggerFactory);
         }
 
-        private void OnLoaded(object sender, RoutedEventArgs e)
+        public static IHostBuilder CreateBuilder()
         {
-            InitLanguage();
+            return Host.CreateDefaultBuilder(Environment.GetCommandLineArgs()).ConfugureDefault().ConfugureUwp();
         }
 
-        private void InitLanguage()
+        private static IHostBuilder ConfugureUwp(this IHostBuilder builder)
         {
-            LanguageSelector.InitSelection((Application.Current as Eppie.App.Shared.App).LocalSettingsService.Language);
-        }
-
-        private void OnLanguageChanged(object sender, string language)
-        {
-            ViewModel.ChangeLanguage(language);
+            return builder;
         }
     }
 }
+
+#endif

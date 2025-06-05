@@ -17,16 +17,31 @@
     <PackageVersion Include="Finebits.Authorization.OAuth2.AuthenticationBroker.Desktop" Version="0.4.0-preview.1" />
     <PackageVersion Include="Finebits.Authorization.OAuth2.Google" Version="0.4.0-preview.1" />
     <PackageVersion Include="Finebits.Authorization.OAuth2.Outlook" Version="0.4.0-preview.1" />
+    <PackageVersion Include="Microsoft.Extensions.AI.Abstractions" Version="9.5.0-preview.1.25262.9" />
+    <PackageVersion Include="Microsoft.ML.OnnxRuntimeGenAI.DirectML" Version="0.5.2" />
     <PackageVersion Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.2.14" />
     <PackageVersion Include="Microsoft.Services.Store.Engagement" Version="10.2307.3001" />
     <PackageVersion Include="Microsoft.UI.Xaml" Version="2.8.7" />
-    <PackageVersion Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="3.0.0" />
     <PackageVersion Include="Microsoft.Xaml.Behaviors.Uwp.Managed" Version="3.0.0" />
+    <PackageVersion Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="3.0.0" />
+    <PackageVersion Include="Serilog" Version="4.3.0" />
+    <PackageVersion Include="Serilog.Enrichers.Environment" Version="3.0.1" />
+    <PackageVersion Include="Serilog.Enrichers.Process" Version="3.0.0" />
+    <PackageVersion Include="Serilog.Enrichers.Sensitive" Version="1.7.3" />
+    <PackageVersion Include="Serilog.Enrichers.Thread" Version="4.0.0" />
+    <PackageVersion Include="Serilog.Exceptions" Version="8.4.0" />
+    <PackageVersion Include="Serilog.Expressions" Version="5.0.0" />
+    <PackageVersion Include="Serilog.Extensions.Hosting" Version="9.0.0" />
+    <PackageVersion Include="Serilog.Extensions.Logging" Version="9.0.1" />
+    <PackageVersion Include="Serilog.Formatting.Compact" Version="3.0.0" />
+    <PackageVersion Include="Serilog.Sinks.Async" Version="2.1.0" />
+    <PackageVersion Include="Serilog.Sinks.Console" Version="6.0.0" />
+    <PackageVersion Include="Serilog.Sinks.Debug" Version="3.0.0" />
+    <PackageVersion Include="Serilog.Sinks.File" Version="7.0.0" />
+    <PackageVersion Include="Serilog.Sinks.Xamarin" Version="1.0.0" />
     <PackageVersion Include="System.IdentityModel.Tokens.Jwt" Version="8.9.0" />
     <PackageVersion Include="System.Private.Uri" Version="4.3.2" />
     <PackageVersion Include="Uno.Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.4.2" />
     <PackageVersion Include="Uno.Toolkit.UI" Version="6.4.6" />
-    <PackageVersion Include="Microsoft.Extensions.AI.Abstractions" Version="9.5.0-preview.1.25262.9" />
-    <PackageVersion Include="Microsoft.ML.OnnxRuntimeGenAI.DirectML" Version="0.5.2" />
   </ItemGroup>
 </Project>

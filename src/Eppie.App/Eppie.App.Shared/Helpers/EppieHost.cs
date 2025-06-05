@@ -16,12 +16,42 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
-namespace Tuvi.App.ViewModels.Services
+namespace Eppie.App.Shared.Helpers
 {
-    public interface IPurchaseService
+    internal static partial class EppieHost
     {
-        Task BuySubscriptionAsync();
+        private static IHostBuilder ConfugureDefault(this IHostBuilder hostBuilder)
+        {
+            const string EnvironmentVariablesPrefix = "EPPIE_";
+
+#if DEBUG
+            hostBuilder.UseEnvironment(Environments.Development); // Switch to Development environment when running in DEBUG
+#endif
+            hostBuilder.ConfigureHostConfiguration(builder => builder.AddEnvironmentVariables(EnvironmentVariablesPrefix))
+                       .ConfigureServices(RegisterServices);
+
+            return hostBuilder;
+        }
+
+        private static void RegisterServices(HostBuilderContext context, IServiceCollection services)
+        {
+            // TODO: Register your services
+            //services.AddSingleton<IMyService, MyService>();
+        }
+
+        private static IHostBuilder AddLoggerFactory(this IHostBuilder hostBuilder, ILoggerFactory loggerFactory)
+        {
+            hostBuilder.ConfigureServices((context, services) =>
+            {
+                services.AddSingleton(loggerFactory);
+            });
+
+            return hostBuilder;
+        }
     }
 }

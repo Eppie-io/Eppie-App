@@ -16,42 +16,25 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-using Tuvi.App.ViewModels;
+using Serilog.Enrichers.Sensitive;
 
-#if WINDOWS_UWP
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-#else
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-#endif
-
-namespace Tuvi.App.Shared.Views
+namespace Eppie.App.Shared.Logging
 {
-    public partial class SettingsPageBase : BasePage<SettingsPageViewModel, BaseViewModel>
+    public class HashTransformOperator<TBaseMaskingOperator> : IMaskingOperator
+        where TBaseMaskingOperator : IMaskingOperator, new()
     {
-    }
+        private TBaseMaskingOperator BaseOperator { get; } = new TBaseMaskingOperator();
 
-    public sealed partial class SettingsPage : SettingsPageBase
-    {
-        public SettingsPage()
+        public MaskingResult Mask(string input, string mask)
         {
-            this.InitializeComponent();
-        }
+            MaskingResult result = BaseOperator.Mask(input, mask);
 
-        private void OnLoaded(object sender, RoutedEventArgs e)
-        {
-            InitLanguage();
-        }
+            if (result.Match)
+            {
+                result.Result = string.Concat("#", input.GetHashCode().ToString());
+            }
 
-        private void InitLanguage()
-        {
-            LanguageSelector.InitSelection((Application.Current as Eppie.App.Shared.App).LocalSettingsService.Language);
-        }
-
-        private void OnLanguageChanged(object sender, string language)
-        {
-            ViewModel.ChangeLanguage(language);
+            return result;
         }
     }
 }

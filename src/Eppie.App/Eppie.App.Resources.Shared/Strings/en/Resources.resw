@@ -129,6 +129,10 @@
     <value>Support Development</value>
     <comment>Navigation item to open 'Support Development' page</comment>
   </data>
+  <data name="SupportDevelopmentButton.Text" xml:space="preserve">
+    <value>Support Development</value>
+    <comment>Button to open 'Support Development' page</comment>
+  </data>
   <data name="IdentityManagerNavigationItem.Content" xml:space="preserve">
     <value>Identity manager</value>
     <comment>Navigation item for open Identity Manager page</comment>
@@ -969,5 +973,49 @@ Subject: {3}
   <data name="NoneText" xml:space="preserve">
     <value>None</value>
     <comment>Indicates the absence of a selection in a combobox.</comment>
+  </data>
+  <data name="RequestReviewDialogTitle" xml:space="preserve">
+    <value>Rate the app!</value>
+    <comment>Dialog title asking the user to rate the application</comment>
+  </data>
+  <data name="RequestReviewDialogMessage" xml:space="preserve">
+    <value>Did you like the app?</value>
+    <comment>Dialog message asking the user if they liked the application</comment>
+  </data>
+  <data name="MsgBtnYes" xml:space="preserve">
+    <value>Yes</value>
+    <comment>Button text for confirming a positive response</comment>
+  </data>
+  <data name="MsgBtnNo" xml:space="preserve">
+    <value>No</value>
+    <comment>Button text for confirming a negative response</comment>
+  </data>
+  <data name="AuthenticationTitle" xml:space="preserve">
+    <value>Authentication</value>
+    <comment>Title for authentication dialog</comment>
+  </data>
+  <data name="AuthenticationContenet" xml:space="preserve">
+    <value>Please complete the authentication in your browser.</value>
+    <comment>Message shown to user to complete authentication in browser</comment>
+  </data>
+  <data name="LoggingOption.Header" xml:space="preserve">
+    <value>Logging level</value>
+    <comment>Header for the logging level option.</comment>
+  </data>
+  <data name="OpenLogFolderButton.Content" xml:space="preserve">
+    <value>Open log folder</value>
+    <comment>Button for the opening log folder.</comment>
+  </data>
+  <data name="LogEnabledWarningMessage" xml:space="preserve">
+    <value>Logging is enabled.</value>
+    <comment>The message of the logging enabled warning.</comment>
+  </data>
+  <data name="WarningProblemTitle" xml:space="preserve">
+    <value>Warning!</value>
+    <comment>The title of the warning.</comment>
+  </data>
+  <data name="DisableLogging" xml:space="preserve">
+    <value>Disable logging</value>
+    <comment>The title of the disable logging solution button.</comment>
   </data>
 </root>
