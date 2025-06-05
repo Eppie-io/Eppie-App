@@ -1,6 +1,7 @@
 ﻿<local:AboutPageBase x:Class="Tuvi.App.Shared.Views.AboutPage"
                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:controls="using:Eppie.App.UI.Controls"
                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                      xmlns:extensions="using:Tuvi.App.Shared.Extensions"
                      xmlns:local="using:Tuvi.App.Shared.Views"
@@ -62,6 +63,14 @@
                            FontSize="{StaticResource FieldValueFontSize}"
                            Style="{StaticResource NormalTextStyle}"
                            Text="{x:Bind ViewModel.AppVersion, Mode=OneTime}" />
+
+                <Button Margin="0,32,0,0" Content="What's new">
+                    <Button.Flyout>
+                        <Flyout>
+                            <controls:WhatsNewControl />
+                        </Flyout>
+                    </Button.Flyout>
+                </Button>
 
                 <TextBlock x:Uid="Publisher"
                            Margin="0,32,0,0"
