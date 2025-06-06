@@ -297,17 +297,12 @@ namespace Tuvi.App.ViewModels
             return new LocalAIAgentSettings(agent);
         }
 
-        internal LocalAIAgent ToAIAgent(EmailAddress linkedAccount)
+        internal LocalAIAgent ToAIAgent(Account linkedAccount)
         {
-            if (string.IsNullOrEmpty(linkedAccount?.Address))
-            {
-                linkedAccount = null;
-            }
-
             CurrentAgent.Name = Name;
             CurrentAgent.AgentSpecialty = AgentSpecialty;
             CurrentAgent.SystemPrompt = SystemPrompt;
-            CurrentAgent.Email = linkedAccount;
+            CurrentAgent.Account = linkedAccount;
             CurrentAgent.IsAllowedToSendingEmail = IsAllowedToSendingEmails && linkedAccount != null;
 
             CurrentAgent.DoSample = DoSample;
@@ -584,7 +579,8 @@ namespace Tuvi.App.ViewModels
             IsWaitingResponse = true;
             try
             {
-                var agentData = AgentSettingsModel.ToAIAgent(LinkedAccount);
+                var account = string.IsNullOrEmpty(LinkedAccount.Address) ? null : await Core.GetAccountAsync(LinkedAccount).ConfigureAwait(true);
+                var agentData = AgentSettingsModel.ToAIAgent(account);
 
                 agentData.PreProcessorAgent = string.IsNullOrEmpty(PreProcessorAIAgent?.SystemPrompt) ? null : PreProcessorAIAgent;
                 agentData.PostProcessorAgent = string.IsNullOrEmpty(PostProcessorAIAgent?.SystemPrompt) ? null : PostProcessorAIAgent;
