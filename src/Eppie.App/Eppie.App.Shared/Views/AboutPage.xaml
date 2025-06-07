@@ -61,7 +61,8 @@
                                                   Price="{x:Bind ViewModel.SupportDevelopmentPrice, Mode=OneWay}"
                                                   SupportDevelopmentCommand="{x:Bind ViewModel.SupportDevelopmentCommand}"
                                                   TwitterUrl="{x:Bind ViewModel.TwitterLink, Mode=OneTime}"
-                                                  Version="{x:Bind ViewModel.AppVersion, Mode=OneTime}" />
+                                                  Version="{x:Bind ViewModel.AppVersion, Mode=OneTime}"
+                                                  IsSupportDevelopmentButtonVisible="{x:Bind ViewModel.IsSupportDevelopmentButtonVisible, Mode=OneWay}" />
                     </Flyout>
                 </Button.Flyout>
             </Button>

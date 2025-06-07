@@ -73,6 +73,15 @@ namespace Eppie.App.UI.Controls
             DependencyProperty.Register(nameof(TwitterUrl), typeof(string), typeof(WhatsNewControl), new PropertyMetadata(null));
 
 
+        public bool IsSupportDevelopmentButtonVisible
+        {
+            get { return (bool)GetValue(IsSupportDevelopmentButtonVisibleProperty); }
+            set { SetValue(IsSupportDevelopmentButtonVisibleProperty, value); }
+        }
+        public static readonly DependencyProperty IsSupportDevelopmentButtonVisibleProperty =
+            DependencyProperty.Register(nameof(IsSupportDevelopmentButtonVisible), typeof(bool), typeof(WhatsNewControl), new PropertyMetadata(null));
+
+
         public event EventHandler CloseRequested;
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)

@@ -90,7 +90,8 @@
                 <local:SupportDevelopmentControl IsIconVisible="False"
                                                  IsStorePaymentProcessor="{x:Bind IsStorePaymentProcessor, Mode=OneWay}"
                                                  Price="{x:Bind Price, Mode=OneWay}"
-                                                 SupportDevelopmentCommand="{x:Bind SupportDevelopmentCommand}" />
+                                                 SupportDevelopmentCommand="{x:Bind SupportDevelopmentCommand}"
+                                                 Visibility="{x:Bind IsSupportDevelopmentButtonVisible, Mode=OneWay}" />
 
             </StackPanel>
         </ScrollViewer>
