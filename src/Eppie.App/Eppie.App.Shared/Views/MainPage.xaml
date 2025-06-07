@@ -175,7 +175,7 @@
                         <Button.Flyout>
                             <Flyout>
                                 <controls:SupportDevelopmentControl MaxWidth="320"
-                                                                    Margin="24"                                                                    
+                                                                    Margin="24"
                                                                     IsIconVisible="True"
                                                                     IsStorePaymentProcessor="{x:Bind ViewModel.IsStorePaymentProcessor, Mode=OneWay}"
                                                                     Price="{x:Bind ViewModel.SupportDevelopmentPrice, Mode=OneWay}"
