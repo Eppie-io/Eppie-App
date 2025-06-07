@@ -42,7 +42,9 @@ namespace Tuvi.App.Shared.Models
                 {"Support", "beta@eppie.io"},
                 {"Homepage", "https://eppie.io"},
                 {"License", "https://eppie.io"},
-                {"DevelopmentSupport", "https://github.com/sponsors/Eppie-io"}
+                {"DevelopmentSupport", "https://github.com/sponsors/Eppie-io"},
+                {"TwitterHandle", "@EppieApp"},
+                {"GitHubUrl", "https://github.com/Eppie-io/Eppie-App"}
             };
         }
     }
@@ -58,7 +60,9 @@ namespace Tuvi.App.Shared.Models
                 {"Support", "beta@eppie.io"},
                 {"Homepage", "https://eppie.io"},
                 {"License", "https://eppie.io"},
-                {"DevelopmentSupport", "https://github.com/sponsors/Eppie-io"}
+                {"DevelopmentSupport", "https://github.com/sponsors/Eppie-io"},
+                {"TwitterHandle", "@EppieApp"},
+                {"GitHubUrl", "https://github.com/Eppie-io/Eppie-App"}
             };
         }
     }
@@ -144,6 +148,16 @@ namespace Tuvi.App.Shared.Models
         public string GetDevelopmentSupport()
         {
             return GetString("DevelopmentSupport");
+        }
+
+        public string GetTwitterHandle()
+        {
+            return GetString("TwitterHandle");
+        }
+
+        public string GetGitHubUrl()
+        {
+            return GetString("GitHubUrl");
         }
     }
 }

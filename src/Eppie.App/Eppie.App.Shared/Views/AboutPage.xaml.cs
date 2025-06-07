@@ -16,6 +16,7 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
+using System;
 using Tuvi.App.ViewModels;
 
 namespace Tuvi.App.Shared.Views
@@ -29,6 +30,11 @@ namespace Tuvi.App.Shared.Views
         public AboutPage()
         {
             this.InitializeComponent();
+        }
+
+        private void WhatsNewControl_CloseRequested(object sender, EventArgs e)
+        {
+            WhatsNewFlyout.Hide();
         }
     }
 }

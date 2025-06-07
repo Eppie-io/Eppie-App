@@ -1018,4 +1018,12 @@ Subject: {3}
     <value>Disable logging</value>
     <comment>The title of the disable logging solution button.</comment>
   </data>
+  <data name="WhatsNewButton.Content" xml:space="preserve">
+    <value>What's new</value>
+    <comment>A text for the What's new button.</comment>
+  </data>
+  <data name="WhatsNewTwitPostText" xml:space="preserve">
+    <value>New version of {0} available now. Check out what's new.</value>
+    <comment>A text for the twitter post about new app version.</comment>
+  </data>
 </root>

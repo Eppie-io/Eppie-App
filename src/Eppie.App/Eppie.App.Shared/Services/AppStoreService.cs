@@ -129,6 +129,12 @@ namespace Eppie.App.Shared.Services
             StoreProductQueryResult queryResult = await context.GetStoreProductsAsync(filterList, storeIds);
 
             StoreProduct product = queryResult.Products.FirstOrDefault().Value;
+
+            if (product is null)
+            {
+                throw new NotImplementedException("Purchase is not implemented for this platform.");
+            }
+
             return product;
         }
 
