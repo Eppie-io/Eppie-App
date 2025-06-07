@@ -58,11 +58,11 @@
                     <Flyout x:Name="WhatsNewFlyout">
                         <controls:WhatsNewControl CloseRequested="WhatsNewControl_CloseRequested"
                                                   IsStorePaymentProcessor="{x:Bind ViewModel.IsStorePaymentProcessor, Mode=OneWay}"
+                                                  IsSupportDevelopmentButtonVisible="{x:Bind ViewModel.IsSupportDevelopmentButtonVisible, Mode=OneWay}"
                                                   Price="{x:Bind ViewModel.SupportDevelopmentPrice, Mode=OneWay}"
                                                   SupportDevelopmentCommand="{x:Bind ViewModel.SupportDevelopmentCommand}"
                                                   TwitterUrl="{x:Bind ViewModel.TwitterLink, Mode=OneTime}"
-                                                  Version="{x:Bind ViewModel.AppVersion, Mode=OneTime}"
-                                                  IsSupportDevelopmentButtonVisible="{x:Bind ViewModel.IsSupportDevelopmentButtonVisible, Mode=OneWay}" />
+                                                  Version="{x:Bind ViewModel.AppVersion, Mode=OneTime}" />
                     </Flyout>
                 </Button.Flyout>
             </Button>
