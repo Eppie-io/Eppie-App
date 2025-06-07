@@ -27,22 +27,46 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <StackPanel Height="40"
-                    Margin="4,4,4,16"
-                    VerticalAlignment="Center"
-                    Orientation="Horizontal">
+        <Grid Height="40"
+              Margin="4,4,4,16"
+              HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
 
-            <FontIcon Margin="12,0,12,0"
+            <FontIcon Margin="8,0,8,0"
+                      HorizontalAlignment="Left"
                       VerticalAlignment="Center"
                       xamarin:FontFamily="/Assets/Fonts/segmdl2.ttf#"
                       FontSize="{StaticResource IconFontSize}"
                       Glyph="&#xE946;" />
 
             <TextBlock x:Uid="AboutApp"
+                       Grid.Column="1"
                        Margin="0,0,4,0"
+                       HorizontalAlignment="Left"
                        VerticalAlignment="Center"
                        Style="{StaticResource PageSubtitleTextStyle}" />
-        </StackPanel>
+
+            <Button x:Uid="WhatsNewButton"
+                    Grid.Column="2"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center">
+                <Button.Flyout>
+                    <Flyout x:Name="WhatsNewFlyout">
+                        <controls:WhatsNewControl CloseRequested="WhatsNewControl_CloseRequested"
+                                                  IsStorePaymentProcessor="{x:Bind ViewModel.IsStorePaymentProcessor, Mode=OneWay}"
+                                                  Price="{x:Bind ViewModel.SupportDevelopmentPrice, Mode=OneWay}"
+                                                  SupportDevelopmentCommand="{x:Bind ViewModel.SupportDevelopmentCommand}"
+                                                  TwitterUrl="{x:Bind ViewModel.TwitterLink, Mode=OneTime}"
+                                                  Version="{x:Bind ViewModel.AppVersion, Mode=OneTime}" />
+                    </Flyout>
+                </Button.Flyout>
+            </Button>
+
+        </Grid>
 
         <ScrollViewer x:Name="ScrollViewer"
                       Grid.Row="1"
@@ -63,14 +87,6 @@
                            FontSize="{StaticResource FieldValueFontSize}"
                            Style="{StaticResource NormalTextStyle}"
                            Text="{x:Bind ViewModel.AppVersion, Mode=OneTime}" />
-
-                <Button Margin="0,32,0,0" Content="What's new">
-                    <Button.Flyout>
-                        <Flyout>
-                            <controls:WhatsNewControl />
-                        </Flyout>
-                    </Button.Flyout>
-                </Button>
 
                 <TextBlock x:Uid="Publisher"
                            Margin="0,32,0,0"

@@ -31,7 +31,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 #endif
 
-namespace Tuvi.App.Shared.Controls
+namespace Eppie.App.UI.Controls
 {
     public sealed partial class SupportDevelopmentControl : UserControl
     {
@@ -59,6 +59,13 @@ namespace Tuvi.App.Shared.Controls
         public static readonly DependencyProperty PriceProperty =
             DependencyProperty.Register(nameof(Price), typeof(string), typeof(SupportDevelopmentControl), new PropertyMetadata(null));
 
+        public bool IsIconVisible
+        {
+            get { return (bool)GetValue(IsIconVisibleProperty); }
+            set { SetValue(IsIconVisibleProperty, value); }
+        }
+        public static readonly DependencyProperty IsIconVisibleProperty =
+            DependencyProperty.Register(nameof(IsIconVisible), typeof(bool), typeof(SupportDevelopmentControl), new PropertyMetadata(null));
 
         public SupportDevelopmentControl()
         {

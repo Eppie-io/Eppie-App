@@ -1,8 +1,9 @@
-﻿<UserControl x:Class="Tuvi.App.Shared.Controls.NavPanelTabControl"
+﻿<UserControl x:Class="Eppie.App.UI.Controls.NavPanelTabControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="using:Tuvi.App.Shared.Controls"
+             xmlns:controls="using:Tuvi.App.Shared.Controls"
+             xmlns:local="using:Eppie.App.UI.Controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewmodels="using:Tuvi.App.ViewModels"
              xmlns:winuicontrols="using:Microsoft.UI.Xaml.Controls"
@@ -29,7 +30,7 @@
                                     Grid.Row="1"
                                     QueryIcon="Find"
                                     Text="{x:Bind Contacts.SearchFilter.SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    <local:ContactsListControl Grid.Row="2" ContactsModel="{x:Bind Mode=OneWay}" />
+                    <controls:ContactsListControl Grid.Row="2" ContactsModel="{x:Bind Mode=OneWay}" />
                 </Grid>
             </winuicontrols:TabViewItem>
         </DataTemplate>
@@ -39,7 +40,7 @@
                 <winuicontrols:TabViewItem.IconSource>
                     <winuicontrols:SymbolIconSource Symbol="Account" />
                 </winuicontrols:TabViewItem.IconSource>
-                <local:MailBoxesListControl MailBoxesModel="{x:Bind Mode=OneWay}" />
+                <controls:MailBoxesListControl MailBoxesModel="{x:Bind Mode=OneWay}" />
             </winuicontrols:TabViewItem>
         </DataTemplate>
 

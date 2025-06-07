@@ -16,6 +16,9 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
+using System;
+using System.Windows.Input;
+
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -28,6 +31,55 @@ namespace Eppie.App.UI.Controls
 {
     public sealed partial class WhatsNewControl : UserControl
     {
+        public string Version
+        {
+            get { return (string)GetValue(VersionProperty); }
+            set { SetValue(VersionProperty, value); }
+        }
+        public static readonly DependencyProperty VersionProperty =
+            DependencyProperty.Register(nameof(Version), typeof(string), typeof(WhatsNewControl), new PropertyMetadata(null));
+
+        public ICommand SupportDevelopmentCommand
+        {
+            get { return (ICommand)GetValue(SupportDevelopmentCommandProperty); }
+            set { SetValue(SupportDevelopmentCommandProperty, value); }
+        }
+        public static readonly DependencyProperty SupportDevelopmentCommandProperty =
+            DependencyProperty.Register(nameof(SupportDevelopmentCommand), typeof(ICommand), typeof(WhatsNewControl), new PropertyMetadata(null));
+
+        public bool IsStorePaymentProcessor
+        {
+            get { return (bool)GetValue(IsStorePaymentProcessorProperty); }
+            set { SetValue(IsStorePaymentProcessorProperty, value); }
+        }
+        public static readonly DependencyProperty IsStorePaymentProcessorProperty =
+            DependencyProperty.Register(nameof(IsStorePaymentProcessor), typeof(bool), typeof(WhatsNewControl), new PropertyMetadata(null));
+
+        public string Price
+        {
+            get { return (string)GetValue(PriceProperty); }
+            set { SetValue(PriceProperty, value); }
+        }
+        public static readonly DependencyProperty PriceProperty =
+            DependencyProperty.Register(nameof(Price), typeof(string), typeof(WhatsNewControl), new PropertyMetadata(null));
+
+
+        public string TwitterUrl
+        {
+            get { return (string)GetValue(TwitterUrlProperty); }
+            set { SetValue(TwitterUrlProperty, value); }
+        }
+        public static readonly DependencyProperty TwitterUrlProperty =
+            DependencyProperty.Register(nameof(TwitterUrl), typeof(string), typeof(WhatsNewControl), new PropertyMetadata(null));
+
+
+        public event EventHandler CloseRequested;
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            CloseRequested?.Invoke(this, EventArgs.Empty);
+        }
+
         public WhatsNewControl()
         {
             this.InitializeComponent();
