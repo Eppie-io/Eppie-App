@@ -21,8 +21,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using BackupServiceClientLibrary;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Eppie.App.ViewModels.Services;
 using Tuvi.App.ViewModels.Services;
 using Tuvi.Core.Entities;
@@ -84,8 +86,80 @@ namespace Tuvi.App.ViewModels
             LauncherService = launcherService;
         }
 
+        public ICommand SupportDevelopmentCommand => new AsyncRelayCommand(SupportDevelopmentAsync);
+
+        private bool _isStorePaymentProcessor = true;
+        public bool IsStorePaymentProcessor
+        {
+            get => _isStorePaymentProcessor;
+            private set
+            {
+                _isStorePaymentProcessor = value;
+                OnPropertyChanged(nameof(IsStorePaymentProcessor));
+            }
+        }
+
+        private string _supportDevelopmentPrice;
+        public string SupportDevelopmentPrice
+        {
+            get => _supportDevelopmentPrice;
+            private set
+            {
+                _supportDevelopmentPrice = value;
+                OnPropertyChanged(nameof(SupportDevelopmentPrice));
+            }
+        }
+
+        private bool _isSupportDevelopmentButtonVisible;
+        public bool IsSupportDevelopmentButtonVisible
+        {
+            get => _isSupportDevelopmentButtonVisible;
+            private set
+            {
+                _isSupportDevelopmentButtonVisible = value;
+                OnPropertyChanged(nameof(IsSupportDevelopmentButtonVisible));
+            }
+        }
+
+        private async void UpdateSupportDevelopmentButton()
+        {
+            try
+            {
+                IsSupportDevelopmentButtonVisible = !await AppStoreService.IsSubscriptionEnabledAsync().ConfigureAwait(true);
+
+                if (IsSupportDevelopmentButtonVisible)
+                {
+                    SupportDevelopmentPrice = await AppStoreService.GetSubscriptionPriceAsync().ConfigureAwait(true);
+                }
+            }
+            catch (NotImplementedException)
+            {
+                IsSupportDevelopmentButtonVisible = true;
+                IsStorePaymentProcessor = false;
+                SupportDevelopmentPrice = "$3";
+            }
+            catch (Exception e)
+            {
+                OnError(e);
+            }
+        }
+
+        private async Task SupportDevelopmentAsync()
+        {
+            try
+            {
+                await AppStoreService.BuySubscriptionAsync().ConfigureAwait(true);
+                UpdateSupportDevelopmentButton();
+            }
+            catch
+            {
+                await LauncherService.LaunchAsync(new Uri(BrandService.GetDevelopmentSupport())).ConfigureAwait(true);
+            }
+        }
+
         virtual public void OnNavigatedTo(object data)
         {
+            UpdateSupportDevelopmentButton();
         }
 
         virtual public void OnNavigatedFrom()

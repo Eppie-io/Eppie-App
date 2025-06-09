@@ -30,5 +30,7 @@ namespace Tuvi.App.ViewModels.Services
         string GetFileVersion();
         string GetInformationalVersion();
         string GetDevelopmentSupport();
+        string GetTwitterHandle();
+        string GetGitHubUrl();
     }
 }

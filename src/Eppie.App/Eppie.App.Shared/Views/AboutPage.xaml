@@ -1,6 +1,7 @@
 ﻿<local:AboutPageBase x:Class="Tuvi.App.Shared.Views.AboutPage"
                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:controls="using:Eppie.App.UI.Controls"
                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                      xmlns:extensions="using:Tuvi.App.Shared.Extensions"
                      xmlns:local="using:Tuvi.App.Shared.Views"
@@ -26,22 +27,47 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <StackPanel Height="40"
-                    Margin="4,4,4,16"
-                    VerticalAlignment="Center"
-                    Orientation="Horizontal">
+        <Grid Height="40"
+              Margin="4,4,4,16"
+              HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
 
-            <FontIcon Margin="12,0,12,0"
+            <FontIcon Margin="8,0,8,0"
+                      HorizontalAlignment="Left"
                       VerticalAlignment="Center"
                       xamarin:FontFamily="/Assets/Fonts/segmdl2.ttf#"
                       FontSize="{StaticResource IconFontSize}"
                       Glyph="&#xE946;" />
 
             <TextBlock x:Uid="AboutApp"
+                       Grid.Column="1"
                        Margin="0,0,4,0"
+                       HorizontalAlignment="Left"
                        VerticalAlignment="Center"
                        Style="{StaticResource PageSubtitleTextStyle}" />
-        </StackPanel>
+
+            <Button x:Uid="WhatsNewButton"
+                    Grid.Column="2"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center">
+                <Button.Flyout>
+                    <Flyout x:Name="WhatsNewFlyout">
+                        <controls:WhatsNewControl CloseRequested="WhatsNewControl_CloseRequested"
+                                                  IsStorePaymentProcessor="{x:Bind ViewModel.IsStorePaymentProcessor, Mode=OneWay}"
+                                                  IsSupportDevelopmentButtonVisible="{x:Bind ViewModel.IsSupportDevelopmentButtonVisible, Mode=OneWay}"
+                                                  Price="{x:Bind ViewModel.SupportDevelopmentPrice, Mode=OneWay}"
+                                                  SupportDevelopmentCommand="{x:Bind ViewModel.SupportDevelopmentCommand}"
+                                                  TwitterUrl="{x:Bind ViewModel.TwitterLink, Mode=OneTime}"
+                                                  Version="{x:Bind ViewModel.AppVersion, Mode=OneTime}" />
+                    </Flyout>
+                </Button.Flyout>
+            </Button>
+
+        </Grid>
 
         <ScrollViewer x:Name="ScrollViewer"
                       Grid.Row="1"

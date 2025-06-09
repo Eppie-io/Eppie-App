@@ -1,0 +1,100 @@
+﻿<UserControl x:Class="Eppie.App.UI.Controls.WhatsNewControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="using:Eppie.App.UI.Controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             MaxWidth="360"
+             MaxHeight="620"
+             d:DesignHeight="300"
+             d:DesignWidth="400"
+             mc:Ignorable="d">
+
+    <Grid Padding="4,0,4,8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!--  Header  -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <!--  Share Button  -->
+            <HyperlinkButton Grid.Column="0"
+                             Margin="-12,0,0,0"
+                             NavigateUri="{x:Bind TwitterUrl, Mode=OneTime}">
+                <SymbolIcon Symbol="Share" />
+            </HyperlinkButton>
+
+            <!--  Title  -->
+            <TextBlock x:Uid="/Eppie.App.UI/Controls/WhatsNew"
+                       Grid.Column="1"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" />
+
+            <!--  Close Button  -->
+            <AppBarButton Grid.Column="2"
+                          Width="48"
+                          Height="48"
+                          Margin="0,0,-12,0"
+                          VerticalAlignment="Top"
+                          Click="CloseButton_Click">
+                <SymbolIcon Symbol="Cancel" />
+            </AppBarButton>
+        </Grid>
+
+        <ScrollViewer Grid.Row="1"
+                      Margin="0,12,0,0"
+                      Padding="2,0,8,0">
+            <StackPanel Spacing="20">
+
+                <!--  Version  -->
+                <StackPanel HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal"
+                            Spacing="4">
+                    <TextBlock x:Uid="/Eppie.App.UI/Controls/Version" />
+                    <TextBlock Text="{x:Bind Version, Mode=OneWay}" />
+                </StackPanel>
+
+                <!--  News 1 is in English only for now  -->
+                <StackPanel Spacing="12">
+                    <TextBlock Style="{StaticResource SubtitleTextBlockStyle}"
+                               Text="Eppie is now in Japanese and Belarusian"
+                               TextWrapping="Wrap" />
+                    <TextBlock Text="Thanks to our community, Eppie is now available in two more languages. Want your language next? Go Crowdin. To change language, open Settings." TextWrapping="Wrap" />
+                    <HyperlinkButton HorizontalAlignment="Left"
+                                     BorderBrush="{ThemeResource SystemControlForegroundAccentBrush}"
+                                     Content="Open Crowdin"
+                                     NavigateUri="https://eppie.crowdin.com/eppie" />
+                </StackPanel>
+
+                <!--  News 2 is in English only for now  -->
+                <StackPanel Spacing="12">
+                    <TextBlock Style="{StaticResource SubtitleTextBlockStyle}"
+                               Text="Join the open-source build on GitHub"
+                               TextWrapping="Wrap" />
+                    <TextBlock Text="Shape the future of intelligent peer-to-peer communication and open new ways for people to interact. Contribute, send pull requests, or just follow the progress in real time." TextWrapping="Wrap" />
+                    <HyperlinkButton HorizontalAlignment="Left"
+                                     BorderBrush="{ThemeResource SystemControlForegroundAccentBrush}"
+                                     Content="Open GitHub"
+                                     NavigateUri="https://github.com/Eppie-io/Eppie-App" />
+                </StackPanel>
+
+                <local:SupportDevelopmentControl IsIconVisible="False"
+                                                 IsStorePaymentProcessor="{x:Bind IsStorePaymentProcessor, Mode=OneWay}"
+                                                 Price="{x:Bind Price, Mode=OneWay}"
+                                                 SupportDevelopmentCommand="{x:Bind SupportDevelopmentCommand}"
+                                                 Visibility="{x:Bind IsSupportDevelopmentButtonVisible, Mode=OneWay}" />
+
+            </StackPanel>
+        </ScrollViewer>
+
+    </Grid>
+</UserControl>
