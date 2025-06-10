@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Uno.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net9.0-android;net9.0-ios;net9.0-maccatalyst;net9.0-windows10.0.19041;net9.0-browserwasm;net9.0-desktop</TargetFrameworks>
+    <TargetFrameworks>net9.0-android;net9.0-ios;net9.0-windows10.0.19041;net9.0-browserwasm;net9.0-desktop</TargetFrameworks>
 
     <OutputType>Exe</OutputType>
     <UnoSingleProject>true</UnoSingleProject>
@@ -55,7 +55,6 @@
   <PropertyGroup Condition="'$(RuntimeIdentifier)'==''">
     <!-- Default values for command line builds -->
     <RuntimeIdentifier Condition="$(TargetFramework.Contains('ios'))">iossimulator-x64</RuntimeIdentifier>
-    <RuntimeIdentifier Condition="$(TargetFramework.Contains('maccatalyst'))">maccatalyst-x64</RuntimeIdentifier>
   </PropertyGroup>
 
   <!-- Workaround for https://github.com/unoplatform/uno/issues/18552#issuecomment-2438052084 -->
@@ -114,7 +113,7 @@
     <PackageReference Include="CommunityToolkit.WinUI.Controls.TokenizingTextBox" />
   </ItemGroup>
 
-  <ItemGroup Condition="$(TargetFramework.Contains('android')) OR $(TargetFramework.Contains('ios')) OR $(TargetFramework.Contains('maccatalyst'))">
+  <ItemGroup Condition="$(TargetFramework.Contains('android')) OR $(TargetFramework.Contains('ios'))">
     <PackageReference Include="Serilog.Sinks.Xamarin" />
   </ItemGroup>
 
