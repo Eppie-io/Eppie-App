@@ -17,9 +17,11 @@
       UnoFeatures let's you quickly add and manage implicit package references based on the features you want to use.
       https://aka.platform.uno/singleproject-features
     -->
-    <!--
-    <UnoFeatures></UnoFeatures>
-    -->
+
+    <UnoFeatures>
+      WebView;
+    </UnoFeatures>
+
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(RuntimeIdentifier)'==''">
