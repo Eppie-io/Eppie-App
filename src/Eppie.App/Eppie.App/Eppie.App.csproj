@@ -39,14 +39,15 @@
       https://aka.platform.uno/singleproject-features
     -->
     <UnoFeatures>
-      Lottie;
-      Hosting;
-      Toolkit;
-      Logging;
-      Mvvm;
       Configuration;
+      Hosting;
       Localization;
+      Logging;
+      Lottie;
+      Mvvm;
       ThemeService;
+      Toolkit;
+      WebView;
     </UnoFeatures>
     <DefaultLanguage>en</DefaultLanguage>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
