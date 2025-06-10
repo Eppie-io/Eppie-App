@@ -17,6 +17,7 @@
 // ---------------------------------------------------------------------------- //
 
 using UIKit;
+using Uno.UI.Hosting;
 
 namespace Eppie.App.iOS
 {
@@ -25,9 +26,12 @@ namespace Eppie.App.iOS
         // This is the main entry point of the application.
         public static void Main(string[] args)
         {
-            // if you want to use a different Application Delegate class from "AppDelegate"
-            // you can specify it here.
-            UIApplication.Main(args, null, typeof(Eppie.App.Shared.App));
+            var host = UnoPlatformHostBuilder.Create()
+                                             .App(() => new Eppie.App.Shared.App())
+                                             .UseAppleUIKit()
+                                             .Build();
+
+            host.Run();
         }
     }
 }
