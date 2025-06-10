@@ -37,7 +37,6 @@ on: # yamllint disable-line rule:truthy
         options:
           - all
           - desktop
-          - maccatalyst
       os:
         type: choice
         default: all
@@ -79,7 +78,6 @@ jobs:
       publish-binaries: ${{ steps.packages.outputs.binaries }}
       publish-app: ${{ steps.packages.outputs.app }}
       publish-snap: ${{ steps.packages.outputs.snap }}
-      publish-maccatalyst-pkg: ${{ steps.packages.outputs.maccatalyst-pkg }}
 
     steps:
       - name: Checkout
@@ -136,12 +134,6 @@ jobs:
           publish_app=$([[ $os_suitable == 'true' && $framework_suitable == 'true' ]] && echo "true" || echo "false")
           echo "app=$publish_app" >> $GITHUB_OUTPUT
 
-          # Publish Mac Catalyst pkg package
-          os_suitable="${{ contains(fromJSON(steps.publish-config.outputs.content).maccatalyst-pkg.os, steps.init-params.outputs.os) }}"
-          framework_suitable="${{ contains(fromJSON(steps.publish-config.outputs.content).maccatalyst-pkg.framework, steps.init-params.outputs.framework) }}"
-          publish_maccatalyst_pkg=$([[ $os_suitable == 'true' && $framework_suitable == 'true' ]] && echo "true" || echo "false")
-          echo "maccatalyst-pkg=$publish_maccatalyst_pkg" >> $GITHUB_OUTPUT
-
   publish-desktop-binaries:
     name: Publish Desktop Binaries
     needs: prepare
@@ -173,19 +165,10 @@ jobs:
       dotnet-verbosity: ${{ needs.prepare.outputs.dotnet-verbosity }}
     secrets: inherit
 
-  publish-maccatalyst-pkg:
-    name: Publish Mac Catalyst [pkg]
-    needs: prepare
-    if: ${{ needs.prepare.outputs.publish-maccatalyst-pkg == 'true' }}
-    uses: ./.github/workflows/publish-mac-catalyst-pkg.yml
-    with:
-      dotnet-verbosity: ${{ needs.prepare.outputs.dotnet-verbosity }}
-    secrets: inherit
-
   upload-assets:
     name: Upload Assets
     if: ${{ github.event_name == 'release' && !cancelled() && !failure() }}
-    needs: [ publish-desktop-binaries, publish-desktop-snap, publish-desktop-app, publish-maccatalyst-pkg ]
+    needs: [ publish-desktop-binaries, publish-desktop-snap, publish-desktop-app ]
     runs-on: ubuntu-latest
     permissions:
       contents: write

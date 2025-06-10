@@ -60,7 +60,6 @@
         }
     },
 
-
     {
         "keywords": [
             "wasm",
@@ -122,7 +121,6 @@
         }
     },
 
-
     {
         "keywords": [
             "winui",
@@ -167,28 +165,6 @@
             "project": "./src/Eppie.App/Eppie.App/Eppie.App.csproj",
             "configuration": "release",
             "framework": "net9.0-ios",
-            "extra": "--verbosity=minimal --nologo"
-        }
-    },
-
-    {
-        "keywords": [
-            "maccatalyst",
-            "macos",
-            "uno",
-            "all"
-        ],
-        "os": "macos-15",
-        "prerequisites": {
-            "msbuild": "false",
-            "uno-platform": "true",
-            "xcode": "/Applications/Xcode_16.3.app"
-        },
-        "build": {
-            "tool": "dotnet",
-            "project": "./src/Eppie.App/Eppie.App/Eppie.App.csproj",
-            "configuration": "release",
-            "framework": "net9.0-maccatalyst",
             "extra": "--verbosity=minimal --nologo"
         }
     },

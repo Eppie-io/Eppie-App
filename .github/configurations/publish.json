@@ -10,9 +10,5 @@
     "desktop-app":{
         "os":["macos","all"],
         "framework":["desktop","all"]
-    },
-    "maccatalyst-pkg":{
-        "os":["macos","all"],
-        "framework":["maccatalyst"]
     }
 }
