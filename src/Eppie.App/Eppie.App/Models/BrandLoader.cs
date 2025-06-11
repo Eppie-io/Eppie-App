@@ -19,7 +19,6 @@
 using System.Diagnostics;
 using System.Reflection;
 using Tuvi.App.ViewModels.Services;
-using Uno.Extensions.Specialized;
 
 namespace Tuvi.App.Shared.Models
 {
