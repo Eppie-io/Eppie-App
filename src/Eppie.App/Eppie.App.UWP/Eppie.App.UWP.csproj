@@ -209,7 +209,6 @@
     <PackageReference Include="Serilog.Sinks.File" />
     <!-- The default version of the 'System.Private.Uri' package is 4.3.0, which has a vulnerability -->
     <PackageReference Include="System.Private.Uri" />
-    <PackageReference Include="Uno.Toolkit.UI" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\ComponentBuilder\ComponentBuilder.csproj">

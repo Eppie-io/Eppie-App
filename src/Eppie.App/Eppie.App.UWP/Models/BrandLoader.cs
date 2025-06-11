@@ -21,7 +21,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using Tuvi.App.ViewModels.Services;
-using Uno.Extensions.Specialized;
 using Windows.ApplicationModel;
 
 namespace Tuvi.App.Shared.Models

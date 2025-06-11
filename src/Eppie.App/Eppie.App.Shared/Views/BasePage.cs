@@ -61,8 +61,10 @@ namespace Tuvi.App.Shared.Views
 
         public BasePage()
         {
+#if __ANDROID__ || __IOS__
             // TODO: investigate a leak here. DependancyPropertyChanged handler retains whole page (TVM-551)
-            Uno.UI.Toolkit.VisibleBoundsPadding.SetPaddingMask(this, Uno.UI.Toolkit.VisibleBoundsPadding.PaddingMask.All);
+            // Uno.UI.Toolkit.VisibleBoundsPadding.SetPaddingMask(this, Uno.UI.Toolkit.VisibleBoundsPadding.PaddingMask.All);
+#endif
 
             DataContextChanged += BasePage_DataContextChanged;
         }

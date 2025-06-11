@@ -46,7 +46,6 @@
       Lottie;
       Mvvm;
       ThemeService;
-      Toolkit;
       WebView;
     </UnoFeatures>
     <DefaultLanguage>en</DefaultLanguage>
