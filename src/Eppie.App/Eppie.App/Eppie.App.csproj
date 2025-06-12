@@ -45,6 +45,7 @@
       Logging;
       Lottie;
       Mvvm;
+      Svg;
       ThemeService;
       Toolkit;
       WebView;

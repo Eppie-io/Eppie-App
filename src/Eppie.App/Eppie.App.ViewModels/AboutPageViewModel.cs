@@ -16,21 +16,29 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
+using System;
+
 namespace Tuvi.App.ViewModels
 {
     public class AboutPageViewModel : BaseViewModel
     {
         public string AppVersion => BrandService.GetAppVersion();
 
+        public string AppHomepage => BrandService.GetHomepage();
+
         public string PublisherDisplayName => BrandService.GetPublisherDisplayName();
 
         public string ApplicationName => BrandService.GetName();
+
+        public string GithubLink => BrandService.GetGitHubUrl();
 
         public string SupportEmail => BrandService.GetSupport();
 
         public string SupportEmailLink => $"mailto:{SupportEmail}";
 
-        public string TwitterLink
+        public string TwitterLink => $"https://twitter.com/{BrandService.GetTwitterHandle()}";
+
+        public string TwitterPostLink
         {
             get
             {
@@ -40,6 +48,22 @@ namespace Tuvi.App.ViewModels
                 text = string.Format(text, twitterHandle);
 
                 return $"https://twitter.com/intent/tweet?text={text}&url={githubUrl}";
+            }
+        }
+
+        public async void RequestReview()
+        {
+            try
+            {
+                await AppStoreService.RequestReviewAsync().ConfigureAwait(true);
+            }
+            catch (NotImplementedException)
+            {
+                await LauncherService.LaunchAsync(new Uri(GithubLink)).ConfigureAwait(true);
+            }
+            catch (Exception ex)
+            {
+                OnError(ex);
             }
         }
     }

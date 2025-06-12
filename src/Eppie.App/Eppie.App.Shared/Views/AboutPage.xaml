@@ -3,7 +3,6 @@
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                      xmlns:controls="using:Eppie.App.UI.Controls"
                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                     xmlns:extensions="using:Tuvi.App.Shared.Extensions"
                      xmlns:local="using:Tuvi.App.Shared.Views"
                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                      xmlns:viewmodels="using:Tuvi.App.ViewModels"
@@ -14,45 +13,29 @@
         <viewmodels:AboutPageViewModel />
     </local:AboutPageBase.DataContext>
 
-    <local:AboutPageBase.Resources>
-        <ResourceDictionary>
-            <x:Double x:Key="FieldValueFontSize">12</x:Double>
-        </ResourceDictionary>
-    </local:AboutPageBase.Resources>
-
     <Grid Padding="36,0,0,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="1*" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
+        <!--  Header  -->
         <Grid Height="40"
-              Margin="4,4,4,16"
+              Margin="4,4,4,8"
               HorizontalAlignment="Stretch">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <FontIcon Margin="8,0,8,0"
-                      HorizontalAlignment="Left"
-                      VerticalAlignment="Center"
-                      xamarin:FontFamily="/Assets/Fonts/segmdl2.ttf#"
-                      FontSize="{StaticResource IconFontSize}"
-                      Glyph="&#xE946;" />
 
             <TextBlock x:Uid="AboutApp"
-                       Grid.Column="1"
-                       Margin="0,0,4,0"
-                       HorizontalAlignment="Left"
                        VerticalAlignment="Center"
                        Style="{StaticResource PageSubtitleTextStyle}" />
 
             <Button x:Uid="WhatsNewButton"
-                    Grid.Column="2"
-                    HorizontalAlignment="Right"
+                    Grid.Column="1"
                     VerticalAlignment="Center">
                 <Button.Flyout>
                     <Flyout x:Name="WhatsNewFlyout">
@@ -61,76 +44,164 @@
                                                   IsSupportDevelopmentButtonVisible="{x:Bind ViewModel.IsSupportDevelopmentButtonVisible, Mode=OneWay}"
                                                   Price="{x:Bind ViewModel.SupportDevelopmentPrice, Mode=OneWay}"
                                                   SupportDevelopmentCommand="{x:Bind ViewModel.SupportDevelopmentCommand}"
-                                                  TwitterUrl="{x:Bind ViewModel.TwitterLink, Mode=OneTime}"
+                                                  TwitterUrl="{x:Bind ViewModel.TwitterPostLink, Mode=OneTime}"
                                                   Version="{x:Bind ViewModel.AppVersion, Mode=OneTime}" />
                     </Flyout>
                 </Button.Flyout>
             </Button>
-
         </Grid>
 
-        <ScrollViewer x:Name="ScrollViewer"
-                      Grid.Row="1"
+        <!--  Content  -->
+        <ScrollViewer Grid.Row="1"
+                      Margin="0,8,-38,0"
+                      Padding="0,0,36,0"
                       HorizontalScrollBarVisibility="Disabled"
-                      HorizontalScrollMode="Disabled"
                       VerticalScrollBarVisibility="Auto"
-                      VerticalScrollMode="Auto"
                       ZoomMode="Disabled">
 
-            <StackPanel Margin="16,0,8,16">
+            <StackPanel Spacing="20">
 
-                <TextBlock Style="{StaticResource NormalTextStyle}" Text="{x:Bind ViewModel.ApplicationName, Mode=OneWay}" />
+                <!--  App info  -->
+                <StackPanel Spacing="12">
 
-                <TextBlock x:Uid="Version"
-                           Margin="0,32,0,0"
-                           Style="{StaticResource NormalTextStyle}" />
-                <TextBlock Margin="0,4,0,0"
-                           FontSize="{StaticResource FieldValueFontSize}"
-                           Style="{StaticResource NormalTextStyle}"
-                           Text="{x:Bind ViewModel.AppVersion, Mode=OneTime}" />
+                    <TextBlock>
+                        <Run Text="{x:Bind ViewModel.ApplicationName, Mode=OneTime}" />
+                        <Run x:Uid="Version" />
+                        <Run Text="{x:Bind ViewModel.AppVersion, Mode=OneTime}" />
+                    </TextBlock>
 
-                <TextBlock x:Uid="Publisher"
-                           Margin="0,32,0,0"
-                           Style="{StaticResource NormalTextStyle}" />
-                <TextBlock Margin="0,4,0,0"
-                           FontSize="{StaticResource FieldValueFontSize}"
-                           Style="{StaticResource NormalTextStyle}"
-                           Text="{x:Bind ViewModel.PublisherDisplayName, Mode=OneTime}" />
+                    <TextBlock x:Uid="AboutDescription"
+                               Style="{StaticResource SubtitleTextBlockStyle}"
+                               TextWrapping="Wrap" />
 
-                <TextBlock x:Uid="Developer"
-                           Margin="0,32,0,0"
-                           Style="{StaticResource NormalTextStyle}" />
-                <TextBlock Margin="0,4,0,0"
-                           FontSize="{StaticResource FieldValueFontSize}"
-                           Style="{StaticResource NormalTextStyle}"
-                           Text="Tuvisoft" />
-
-                <TextBlock x:Uid="Thanks"
-                           Margin="0,32,0,0"
-                           Style="{StaticResource NormalTextStyle}"
-                           TextWrapping="Wrap" />
-                <StackPanel>
-                    <HyperlinkButton extensions:HyperlinkExtension.Link="{StaticResource PlatformUnoLink}" Content="{StaticResource PlatformUnoName}" />
-                    <HyperlinkButton extensions:HyperlinkExtension.Link="{StaticResource MailKitLink}" Content="{StaticResource MailKitName}" />
+                    <TextBlock TextWrapping="Wrap">
+                        <Run x:Uid="AboutNetworkInfo" />
+                        <Hyperlink NavigateUri="{x:Bind ViewModel.AppHomepage, Mode=OneTime}">
+                            <Run Text="{x:Bind ViewModel.AppHomepage, Mode=OneTime}" />
+                        </Hyperlink>
+                    </TextBlock>
                 </StackPanel>
 
-                <TextBlock x:Uid="SupportLabel"
-                           Margin="0,32,0,0"
-                           Style="{StaticResource NormalTextStyle}"
-                           TextWrapping="Wrap" />
-                <StackPanel>
-                    <HyperlinkButton extensions:HyperlinkExtension.Link="{x:Bind ViewModel.SupportEmailLink, Mode=OneWay}" Content="{x:Bind ViewModel.SupportEmail, Mode=OneWay}" />
+
+                <!--  Mission  -->
+                <StackPanel Spacing="12">
+                    <TextBlock x:Uid="MissionTitle" Style="{StaticResource SubtitleTextBlockStyle}" />
+                    <TextBlock x:Uid="MissionText" TextWrapping="Wrap" />
                 </StackPanel>
+
+
+                <!--  Join our mission  -->
+                <StackPanel>
+                    <TextBlock x:Uid="JoinMission" />
+                    <StackPanel Margin="0,4,0,0"
+                                Orientation="Horizontal"
+                                Spacing="4">
+                        <HyperlinkButton Padding="4" NavigateUri="{x:Bind ViewModel.TwitterLink, Mode=OneTime}">
+                            <HyperlinkButton.Content>
+                                <Image Width="32"
+                                       Height="32"
+                                       Source="ms-appx:///Assets/Svg/twitter.svg"
+                                       Stretch="Uniform" />
+                            </HyperlinkButton.Content>
+                        </HyperlinkButton>
+                        <HyperlinkButton Padding="4" NavigateUri="{x:Bind ViewModel.GithubLink, Mode=OneTime}">
+                            <HyperlinkButton.Content>
+                                <Image Width="32"
+                                       Height="32"
+                                       Source="ms-appx:///Assets/Svg/github.svg"
+                                       Stretch="Uniform" />
+                            </HyperlinkButton.Content>
+                        </HyperlinkButton>
+                    </StackPanel>
+                </StackPanel>
+
+
+                <!--  Rate the app  -->
+                <StackPanel>
+                    <TextBlock x:Uid="ReviewAppTitle" />
+                    <RatingControl HorizontalAlignment="Left" Tapped="RatingControl_Tapped" />
+                </StackPanel>
+
+
+                <!--  Contact Section  -->
+                <Grid ColumnSpacing="16" RowSpacing="8">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!--  Support  -->
+                    <TextBlock x:Uid="SupportLabel"
+                               Grid.Row="0"
+                               Grid.Column="0"
+                               VerticalAlignment="Center" />
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="1"
+                               VerticalAlignment="Center">
+                        <Hyperlink NavigateUri="{x:Bind ViewModel.SupportEmailLink, Mode=OneWay}">
+                            <Run Text="{x:Bind ViewModel.SupportEmail, Mode=OneWay}" />
+                        </Hyperlink>
+                    </TextBlock>
+
+                    <!--  Publisher  -->
+                    <TextBlock x:Uid="Publisher"
+                               Grid.Row="1"
+                               Grid.Column="0"
+                               VerticalAlignment="Center" />
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="1"
+                               VerticalAlignment="Center"
+                               Text="{x:Bind ViewModel.PublisherDisplayName, Mode=OneTime}" />
+
+                    <!--  Developer  -->
+                    <TextBlock x:Uid="Developer"
+                               Grid.Row="2"
+                               Grid.Column="0"
+                               VerticalAlignment="Center" />
+                    <TextBlock Grid.Row="2"
+                               Grid.Column="1"
+                               VerticalAlignment="Center"
+                               Text="{StaticResource Developer}" />
+
+                    <!--  Thanks to  -->
+                    <TextBlock x:Uid="Thanks"
+                               Grid.Row="3"
+                               Grid.Column="0"
+                               TextWrapping="Wrap" />
+                    <TextBlock Grid.Row="3" Grid.Column="1">
+                        <Hyperlink NavigateUri="{StaticResource MailKitLink}">
+                            <Run Text="{StaticResource MailKitName}" />
+                        </Hyperlink>
+                        <LineBreak />
+                        <Hyperlink NavigateUri="{StaticResource PlatformUnoLink}">
+                            <Run Text="{StaticResource PlatformUnoName}" />
+                        </Hyperlink>
+                        <LineBreak />
+                        <Hyperlink NavigateUri="{StaticResource AllLibsLink}">
+                            <Run x:Uid="AllLibs" />
+                        </Hyperlink>
+                        <LineBreak />
+                        <Hyperlink NavigateUri="{StaticResource TranslatorsLink}">
+                            <Run x:Uid="Translators" />
+                        </Hyperlink>
+                    </TextBlock>
+                </Grid>
 
             </StackPanel>
-
         </ScrollViewer>
 
+        <!--  Footer  -->
         <TextBlock x:Uid="Copyright"
                    Grid.Row="2"
-                   Grid.ColumnSpan="2"
-                   Margin="16"
+                   Margin="0,12,0,12"
                    TextWrapping="Wrap" />
-
     </Grid>
 </local:AboutPageBase>

@@ -42,7 +42,10 @@ namespace Tuvi.App.ViewModels
                 throw new ArgumentNullException(nameof(y));
             }
 
-            var result = DateTimeOffset.Compare(y.LastMessageData.Date, x.LastMessageData.Date);
+            var xDate = x.LastMessageData?.Date ?? DateTimeOffset.MinValue;
+            var yDate = y.LastMessageData?.Date ?? DateTimeOffset.MinValue;
+
+            var result = DateTimeOffset.Compare(yDate, xDate);
             if (result == 0)
             {
                 result = StringHelper.CompareEmails(x.Email.Address, y.Email.Address);

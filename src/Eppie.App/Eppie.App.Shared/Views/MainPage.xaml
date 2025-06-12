@@ -212,7 +212,7 @@
                        CompactPaneLength="48"
                        DisplayMode="Inline"
                        IsPaneOpen="False"
-                       OpenPaneLength="360"
+                       OpenPaneLength="400"
                        PaneBackground="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}">
                 <SplitView.Pane>
                     <Grid>
