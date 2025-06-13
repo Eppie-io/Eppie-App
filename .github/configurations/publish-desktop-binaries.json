@@ -12,10 +12,9 @@
             "configuration": "release",
             "framework": "net9.0-desktop",
             "runtime": "win-x64",
-            "extra": "--property:SelfContained=true --property:PublishSingleFile=false --property:IncludeSourceRevisionInInformationalVersion=false --property:ExcludePublishDebugSymbols=true",
+            "extra": "--property:SelfContained=true --property:PublishSingleFile=false --property:IncludeSourceRevisionInInformationalVersion=false --property:ExcludePublishDebugSymbols=true --property:OverrideTargetFrameworks=net9.0-desktop",
             "prepare": [
-                "--target:PackageVersioning --no-restore",
-                "--target:TargetFrameworks-Desktop --no-restore"
+                "--target:PackageVersioning --no-restore"
             ]
         },
         "artifact": {
@@ -35,10 +34,9 @@
             "configuration": "release",
             "framework": "net9.0-desktop",
             "runtime": "win-arm64",
-            "extra": "--property:SelfContained=true --property:PublishSingleFile=false --property:IncludeSourceRevisionInInformationalVersion=false --property:ExcludePublishDebugSymbols=true",
+            "extra": "--property:SelfContained=true --property:PublishSingleFile=false --property:IncludeSourceRevisionInInformationalVersion=false --property:ExcludePublishDebugSymbols=true --property:OverrideTargetFrameworks=net9.0-desktop",
             "prepare": [
-                "--target:PackageVersioning --no-restore",
-                "--target:TargetFrameworks-Desktop --no-restore"
+                "--target:PackageVersioning --no-restore"
             ]
         },
         "artifact": {
@@ -58,10 +56,9 @@
             "configuration": "release",
             "framework": "net9.0-desktop",
             "runtime": "linux-x64",
-            "extra": "--property:SelfContained=true --property:PublishSingleFile=true --property:IncludeSourceRevisionInInformationalVersion=false  --property:ExcludePublishDebugSymbols=true",
+            "extra": "--property:SelfContained=true --property:PublishSingleFile=true --property:IncludeSourceRevisionInInformationalVersion=false  --property:ExcludePublishDebugSymbols=true --property:OverrideTargetFrameworks=net9.0-desktop",
             "prepare": [
-                "--target:PackageVersioning --no-restore",
-                "--target:TargetFrameworks-Desktop --no-restore"
+                "--target:PackageVersioning --no-restore"
             ] 
         },
         "artifact": {
@@ -81,10 +78,9 @@
             "configuration": "release",
             "framework": "net9.0-desktop",
             "runtime": "linux-arm64",
-            "extra": "--property:SelfContained=true --property:PublishSingleFile=true --property:IncludeSourceRevisionInInformationalVersion=false  --property:ExcludePublishDebugSymbols=true",
+            "extra": "--property:SelfContained=true --property:PublishSingleFile=true --property:IncludeSourceRevisionInInformationalVersion=false  --property:ExcludePublishDebugSymbols=true --property:OverrideTargetFrameworks=net9.0-desktop",
             "prepare": [
-                "--target:PackageVersioning --no-restore",
-                "--target:TargetFrameworks-Desktop --no-restore"
+                "--target:PackageVersioning --no-restore"
             ] 
         },
         "artifact": {
