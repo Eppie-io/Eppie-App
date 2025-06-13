@@ -12,10 +12,9 @@
             "configuration": "release",
             "framework": "net9.0-desktop",
             "runtime": "osx-x64",
-            "extra": "--property:SelfContained=true --property:PublishSingleFile=true --property:PackageFormat=app --property:UnoMacOSIncludeDebugSymbols=false",
+            "extra": "--property:SelfContained=true --property:PublishSingleFile=true --property:PackageFormat=app --property:UnoMacOSIncludeDebugSymbols=false --property:OverrideTargetFrameworks=net9.0-desktop",
             "prepare": [
-                "--target:PackageVersioning --no-restore",
-                "--target:TargetFrameworks-Desktop --no-restore"
+                "--target:PackageVersioning --no-restore"
             ]
         },
         "artifact": {
@@ -35,10 +34,9 @@
             "configuration": "release",
             "framework": "net9.0-desktop",
             "runtime": "osx-arm64",
-            "extra": "--property:SelfContained=true --property:PublishSingleFile=true --property:PackageFormat=app --property:UnoMacOSIncludeDebugSymbols=false",
+            "extra": "--property:SelfContained=true --property:PublishSingleFile=true --property:PackageFormat=app --property:UnoMacOSIncludeDebugSymbols=false --property:OverrideTargetFrameworks=net9.0-desktop",
             "prepare": [
-                "--target:PackageVersioning --no-restore",
-                "--target:TargetFrameworks-Desktop --no-restore"
+                "--target:PackageVersioning --no-restore"
             ]
         },
         "artifact": {
