@@ -20,9 +20,9 @@
       https://aka.platform.uno/singleproject-features
     -->
 
-    <UnoFeatures>
-      WebView;
-    </UnoFeatures>
+    <!--
+      <UnoFeatures></UnoFeatures>
+    -->
 
   </PropertyGroup>
 
