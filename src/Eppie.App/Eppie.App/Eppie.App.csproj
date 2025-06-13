@@ -48,6 +48,21 @@
       ThemeService;
       WebView;
     </UnoFeatures>
+
+    <!--
+      ToDo: Workaround for https://github.com/unoplatform/uno/discussions/20772
+            Remove this after fix - https://github.com/unoplatform/uno/issues/20782
+     -->
+    <UnoFeatures Condition="$(RuntimeIdentifier.Contains('osx'))">
+      Configuration;
+      Hosting;
+      Localization;
+      Logging;
+      Lottie;
+      Mvvm;
+      ThemeService;
+    </UnoFeatures>
+
     <DefaultLanguage>en</DefaultLanguage>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
   </PropertyGroup>
