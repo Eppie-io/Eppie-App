@@ -18,6 +18,13 @@
 
 using System;
 using Tuvi.App.ViewModels;
+using Windows.UI.Input;
+
+#if WINDOWS_UWP
+using Windows.UI.Xaml.Input;
+#else
+using Microsoft.UI.Xaml.Input;
+#endif
 
 namespace Tuvi.App.Shared.Views
 {
@@ -35,6 +42,11 @@ namespace Tuvi.App.Shared.Views
         private void WhatsNewControl_CloseRequested(object sender, EventArgs e)
         {
             WhatsNewFlyout.Hide();
+        }
+
+        private void RatingControl_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            ViewModel.RequestReview();
         }
     }
 }

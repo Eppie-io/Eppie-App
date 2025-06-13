@@ -45,6 +45,7 @@
       Logging;
       Lottie;
       Mvvm;
+      Svg;
       ThemeService;
       WebView;
     </UnoFeatures>

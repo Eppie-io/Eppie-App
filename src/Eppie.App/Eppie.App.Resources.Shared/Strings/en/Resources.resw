@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AboutApp.Text" xml:space="preserve">
-    <value>About</value>
+    <value>ABOUT</value>
     <comment>About application page title</comment>
   </data>
   <data name="AboutAppNavigationItem.Content" xml:space="preserve">
@@ -471,7 +471,7 @@ You need to enable IMAP for this account first and try again.</value>
     <comment>A label for the support email</comment>
   </data>
   <data name="Version.Text" xml:space="preserve">
-    <value>Version:</value>
+    <value>Version</value>
     <comment>A label for the application version</comment>
   </data>
   <data name="WelcomePageCreateAccountButton.Text" xml:space="preserve">
@@ -978,6 +978,10 @@ Subject: {3}
     <value>Rate the app!</value>
     <comment>Dialog title asking the user to rate the application</comment>
   </data>
+  <data name="ReviewAppTitle.Text" xml:space="preserve">
+    <value>Rate the app</value>
+    <comment>Dialog title asking the user to rate the application</comment>
+  </data>
   <data name="RequestReviewDialogMessage" xml:space="preserve">
     <value>Did you like the app?</value>
     <comment>Dialog message asking the user if they liked the application</comment>
@@ -1025,5 +1029,33 @@ Subject: {3}
   <data name="WhatsNewTwitPostText" xml:space="preserve">
     <value>New version of {0} available now. Check out what's new.</value>
     <comment>A text for the twitter post about new app version.</comment>
+  </data>
+  <data name="MissionTitle.Text" xml:space="preserve">
+    <value>Mission</value>
+    <comment>A text for the title of Mission text.</comment>
+  </data>
+  <data name="MissionText.Text" xml:space="preserve">
+    <value>To reinvent email as a peer-to-peer experience — providerless, intelligent, and user-owned — to open new ways for people to interact beyond the limits of traditional email.</value>
+    <comment>A text for the Mission.</comment>
+  </data>
+  <data name="JoinMission.Text" xml:space="preserve">
+    <value>Join our mission</value>
+    <comment>Header text for the application's social media list.</comment>
+  </data>
+  <data name="AboutDescription.Text" xml:space="preserve">
+    <value>Eppie is a peer-to-peer email with local AI, built for independent minds as an alternative to centralized platforms.</value>
+    <comment>A text for the Description on the About page.</comment>
+  </data>
+  <data name="AboutNetworkInfo.Text" xml:space="preserve">
+    <value>At 100,000 people, the decentralized network goes live. Every new user brings it closer. Learn more at</value>
+    <comment>A text for the Network Info on the About page.</comment>
+  </data>
+  <data name="AllLibs.Text" xml:space="preserve">
+    <value>All libs</value>
+    <comment>Text for other libs in the thaks list.</comment>
+  </data>
+  <data name="Translators.Text" xml:space="preserve">
+    <value>Translators</value>
+    <comment>Text for the translators in the thaks list.</comment>
   </data>
 </root>
