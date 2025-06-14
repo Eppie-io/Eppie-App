@@ -16,6 +16,7 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
@@ -115,12 +116,16 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        public void SetUnreadCount(EmailAddress contactEmail, int unreadCount)
+        public void SetUnreadCount(IReadOnlyDictionary<EmailAddress, int> counts)
         {
-            var contactItem = GetContactByEmail(contactEmail);
-            if (contactItem != null)
+            if (counts is null)
             {
-                contactItem.UnreadMessagesCount = unreadCount;
+                throw new ArgumentException("Parameter can not be null", nameof(counts));
+            }
+
+            foreach (var contact in Contacts)
+            {
+                contact.UnreadMessagesCount = counts.TryGetValue(contact.Email, out int unreadCount) ? unreadCount : 0;
             }
         }
     }
