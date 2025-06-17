@@ -750,10 +750,7 @@ namespace Tuvi.App.ViewModels
             var counts = await Core.GetUnreadMessagesCountByContactAsync().ConfigureAwait(true);
             await DispatcherService.RunAsync(() =>
             {
-                foreach (var p in counts)
-                {
-                    ContactsModel.SetUnreadCount(p.Key, p.Value);
-                }
+                ContactsModel.SetUnreadCount(counts);
             }).ConfigureAwait(true);
         }
 
