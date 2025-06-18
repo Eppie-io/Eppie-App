@@ -541,7 +541,7 @@ namespace Tuvi.App.ViewModels
                 }
                 else
                 {
-                    await Core.DeleteMessagesAsync(messages.Select(x => x.MessageData).ToList(), cancellationToken).ConfigureAwait(true);
+                    await Core.DeleteMessagesAsync(messages.Select(x => x.MessageData).ToList(), CancellationToken.None).ConfigureAwait(true);
 
                     foreach (var messageInfo in messages)
                     {
