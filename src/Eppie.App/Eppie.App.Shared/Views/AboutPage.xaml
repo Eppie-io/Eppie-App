@@ -22,7 +22,7 @@
 
         <!--  Header  -->
         <Grid Height="40"
-              Margin="4,4,4,8"
+              Margin="4,4,4,16"
               HorizontalAlignment="Stretch">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -59,10 +59,10 @@
                       VerticalScrollBarVisibility="Auto"
                       ZoomMode="Disabled">
 
-            <StackPanel Spacing="20">
+            <StackPanel Spacing="28">
 
                 <!--  App info  -->
-                <StackPanel Spacing="12">
+                <StackPanel Spacing="16">
 
                     <TextBlock>
                         <Run Text="{x:Bind ViewModel.ApplicationName, Mode=OneTime}" />
@@ -71,7 +71,8 @@
                     </TextBlock>
 
                     <TextBlock x:Uid="AboutDescription"
-                               Style="{StaticResource SubtitleTextBlockStyle}"
+                               FontSize="16"
+                               FontWeight="SemiBold"
                                TextWrapping="Wrap" />
 
                     <TextBlock TextWrapping="Wrap">
@@ -84,8 +85,10 @@
 
 
                 <!--  Mission  -->
-                <StackPanel Spacing="12">
-                    <TextBlock x:Uid="MissionTitle" Style="{StaticResource SubtitleTextBlockStyle}" />
+                <StackPanel Spacing="16">
+                    <TextBlock x:Uid="MissionTitle"
+                               FontSize="16"
+                               FontWeight="SemiBold" />
                     <TextBlock x:Uid="MissionText" TextWrapping="Wrap" />
                 </StackPanel>
 
