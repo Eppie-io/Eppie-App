@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AboutApp.Text" xml:space="preserve">
-    <value>ABOUT</value>
+    <value>About</value>
     <comment>About application page title</comment>
   </data>
   <data name="AboutAppNavigationItem.Content" xml:space="preserve">
@@ -471,7 +471,7 @@ You need to enable IMAP for this account first and try again.</value>
     <comment>A label for the support email</comment>
   </data>
   <data name="Version.Text" xml:space="preserve">
-    <value>Version</value>
+    <value>version</value>
     <comment>A label for the application version</comment>
   </data>
   <data name="WelcomePageCreateAccountButton.Text" xml:space="preserve">

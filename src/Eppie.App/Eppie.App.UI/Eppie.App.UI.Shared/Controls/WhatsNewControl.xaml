@@ -69,10 +69,16 @@
                                Text="Eppie is now in Japanese and Belarusian"
                                TextWrapping="Wrap" />
                     <TextBlock Text="Thanks to our community, Eppie is now available in two more languages. Want your language next? Go Crowdin. To change language, open Settings." TextWrapping="Wrap" />
-                    <HyperlinkButton HorizontalAlignment="Left"
-                                     BorderBrush="{ThemeResource SystemControlForegroundAccentBrush}"
-                                     Content="Open Crowdin"
-                                     NavigateUri="https://eppie.crowdin.com/eppie" />
+                    <HyperlinkButton Margin="-12,0,0,0"
+                                     HorizontalAlignment="Left"
+                                     NavigateUri="https://eppie.crowdin.com/eppie">
+                        <HyperlinkButton.Content>
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <FontIcon Glyph="&#xE8A7;" />
+                                <TextBlock Text="Open Crowdin" />
+                            </StackPanel>
+                        </HyperlinkButton.Content>
+                    </HyperlinkButton>
                 </StackPanel>
 
                 <!--  News 2 is in English only for now  -->
@@ -81,10 +87,16 @@
                                Text="Join the open-source build on GitHub"
                                TextWrapping="Wrap" />
                     <TextBlock Text="Shape the future of intelligent peer-to-peer communication and open new ways for people to interact. Contribute, send pull requests, or just follow the progress in real time." TextWrapping="Wrap" />
-                    <HyperlinkButton HorizontalAlignment="Left"
-                                     BorderBrush="{ThemeResource SystemControlForegroundAccentBrush}"
-                                     Content="Open GitHub"
-                                     NavigateUri="https://github.com/Eppie-io/Eppie-App" />
+                    <HyperlinkButton Margin="-12,0,0,0"
+                                     HorizontalAlignment="Left"
+                                     NavigateUri="https://github.com/Eppie-io/Eppie-App">
+                        <HyperlinkButton.Content>
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <FontIcon Glyph="&#xE8A7;" />
+                                <TextBlock Text="Open GitHub" />
+                            </StackPanel>
+                        </HyperlinkButton.Content>
+                    </HyperlinkButton>
                 </StackPanel>
 
                 <local:SupportDevelopmentControl IsIconVisible="False"
