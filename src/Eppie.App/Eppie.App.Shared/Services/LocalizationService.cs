@@ -16,13 +16,37 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
+using System;
+using System.Collections.Generic;
+using Microsoft.Extensions.DependencyInjection;
+using Windows.Globalization;
+
 namespace Tuvi.App.Shared.Services
 {
     public class LocalizationService : Tuvi.App.ViewModels.Services.ILocalizationService
     {
+        public IReadOnlyList<string> ManifestLanguages => GetManifestLanguages();
+
+        private IServiceProvider ServiceProvider { get; }
+
+        public LocalizationService(IServiceProvider serviceProvider)
+        {
+            ServiceProvider = serviceProvider;
+        }
+
         public string GetString(string resource)
         {
             return Eppie.App.UI.Resources.StringProvider.GetInstance().GetString(resource);
+        }
+
+        private IReadOnlyList<string> GetManifestLanguages()
+        {
+#if WINDOWS10_0_19041_0_OR_GREATER || WINDOWS_UWP
+            return ApplicationLanguages.ManifestLanguages;
+#else
+            var localizationService = ServiceProvider.GetService<Uno.Extensions.Localization.ILocalizationService>();
+            return localizationService.SupportedCultures.Select(culture => culture.Name).ToList();
+#endif
         }
     }
 }

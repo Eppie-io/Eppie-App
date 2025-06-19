@@ -69,7 +69,7 @@ namespace Eppie.App.Shared
 
         private ErrorHandler _errorHandler;
 
-        protected IHost Host { get; private set; }
+        public IHost Host { get; private set; }
 
         /// <summary>
         /// Initializes the singleton application object. This is the first line of authored code
@@ -266,7 +266,11 @@ namespace Eppie.App.Shared
         private void LogLaunchInformation()
         {
             BrandLoader brand = new BrandLoader();
-            Logger?.LogInformation("Launching the {AppName} app version {AppVersion} on {OSDescription} OS", brand.GetName(), brand.GetAppVersion(), RuntimeInformation.OSDescription);
+            Logger?.LogInformation("Launching the {AppName} app (version {AppVersion}; language {Language}) on {OSDescription} OS",
+                                   brand.GetName(),
+                                   brand.GetAppVersion(),
+                                   ApplicationLanguages.PrimaryLanguageOverride,
+                                   RuntimeInformation.OSDescription);
         }
     }
 }
