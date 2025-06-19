@@ -44,6 +44,8 @@ namespace Tuvi.App.ViewModels
             set { SetProperty(ref _restartMessage, value); }
         }
 
+        public IReadOnlyList<string> ManifestLanguages => LocalizationService.ManifestLanguages;
+
         public ICommand PgpKeysCommand => new RelayCommand(() => NavigationService?.Navigate(nameof(PgpKeysPageViewModel)));
 
         public ICommand ChangeMasterPasswordCommand => new RelayCommand(() => NavigationService?.Navigate(nameof(PasswordPageViewModel), PasswordActions.ChangePassword));

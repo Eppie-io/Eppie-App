@@ -67,7 +67,7 @@ namespace Tuvi.App.ViewModels
             AIService = aiService;
         }
 
-        private ILocalizationService LocalizationService { get; set; }
+        protected ILocalizationService LocalizationService { get; set; }
         public void SetLocalizationService(ILocalizationService localizationService)
         {
             LocalizationService = localizationService;
@@ -173,7 +173,7 @@ namespace Tuvi.App.ViewModels
 
         protected string GetLocalizedString(string resource)
         {
-            return LocalizationService?.GetString(resource) ?? "";
+            return LocalizationService?.GetString(resource) ?? string.Empty;
         }
 
         protected IDispatcherService DispatcherService { get; private set; }

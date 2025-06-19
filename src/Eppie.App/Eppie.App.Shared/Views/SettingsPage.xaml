@@ -51,7 +51,8 @@
 
                 <controls:LanguageSelectionControl x:Name="LanguageSelector"
                                                    Margin="8"
-                                                   LanguageChangedHandler="OnLanguageChanged" />
+                                                   LanguageChangedHandler="OnLanguageChanged"
+                                                   ManifestLanguages="{x:Bind ViewModel.ManifestLanguages, Mode=OneTime}" />
 
                 <HyperlinkButton Margin="0,0,0,8"
                                  extensions:HyperlinkExtension.Link="https://eppie.crowdin.com/eppie"

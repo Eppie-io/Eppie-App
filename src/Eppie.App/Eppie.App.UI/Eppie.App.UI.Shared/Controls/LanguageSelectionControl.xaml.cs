@@ -19,8 +19,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Globalization;
 using Eppie.App.UI.Resources;
-using Windows.Globalization;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -45,8 +45,18 @@ namespace Tuvi.App.Shared.Controls
 
     public sealed partial class LanguageSelectionControl : UserControl
     {
-        public event EventHandler<string> LanguageChangedHandler;
         private static readonly StringProvider StringProvider = StringProvider.GetInstance();
+
+        public IReadOnlyList<string> ManifestLanguages
+        {
+            get { return (IReadOnlyList<string>)GetValue(ManifestLanguagesProperty); }
+            set { SetValue(ManifestLanguagesProperty, value); }
+        }
+
+        public static readonly DependencyProperty ManifestLanguagesProperty =
+            DependencyProperty.Register(nameof(ManifestLanguages), typeof(IReadOnlyList<string>), typeof(LanguageSelectionControl), new PropertyMetadata(null));
+
+        public event EventHandler<string> LanguageChangedHandler;
 
         private List<ComboBoxValue> _values = new List<ComboBoxValue>();
         private bool _selectionInited;
@@ -61,15 +71,14 @@ namespace Tuvi.App.Shared.Controls
         {
             _values = new List<ComboBoxValue>
             {
-                new ComboBoxValue {DisplayName = StringProvider.GetString("SystemDefaultLanguage"), LanguageTag = ""}
+                new ComboBoxValue {DisplayName = StringProvider.GetString("SystemDefaultLanguage"), LanguageTag = string.Empty}
             };
 
-            IEnumerable<Language> orderedSupportedLanguages =
-                ApplicationLanguages.ManifestLanguages.Select(lang => new Language(lang)).OrderBy(lang => lang.DisplayName);
+            IEnumerable<CultureInfo> orderedSupportedCultures = ManifestLanguages.Select(lang => new CultureInfo(lang, false)).OrderBy(culture => culture.Name);
 
-            foreach (var lang in orderedSupportedLanguages)
+            foreach (var culture in orderedSupportedCultures)
             {
-                AddLanguage(lang);
+                AddCulture(culture);
             }
 
             LanguageComboBox.ItemsSource = _values;
@@ -92,9 +101,9 @@ namespace Tuvi.App.Shared.Controls
             }
         }
 
-        private void AddLanguage(Language lang)
+        private void AddCulture(CultureInfo culture)
         {
-            _values.Add(new ComboBoxValue { DisplayName = lang.DisplayName, LanguageTag = lang.LanguageTag });
+            _values.Add(new ComboBoxValue { DisplayName = GetDisplayName(culture), LanguageTag = culture.Name });
         }
 
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -109,5 +118,11 @@ namespace Tuvi.App.Shared.Controls
                 }
             }
         }
+
+        public static string GetDisplayName(CultureInfo culture)
+        {
+            return culture.TextInfo.ToTitleCase(culture.NativeName);
+        }
+
     }
 }
