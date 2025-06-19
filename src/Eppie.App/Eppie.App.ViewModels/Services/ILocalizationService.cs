@@ -16,10 +16,13 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
+using System.Collections.Generic;
+
 namespace Tuvi.App.ViewModels.Services
 {
     public interface ILocalizationService
     {
+        IReadOnlyList<string> ManifestLanguages { get; }
         string GetString(string resource);
     }
 }
