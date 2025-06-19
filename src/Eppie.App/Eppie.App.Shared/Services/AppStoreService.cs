@@ -66,7 +66,8 @@ namespace Eppie.App.Shared.Services
             {
                 _StoreContext = StoreContext.GetDefault();
 
-#if WINDOWS10_0_19041_0_OR_GREATER
+                // ToDo: Add `WINDOWS_WINUI` constant to Eppie.App project with `Condition="$(TargetFramework.Contains('windows10'))"`
+#if WINDOWS10_0_19041_0_OR_GREATER && !WINDOWS_UWP
                 var window = Eppie.App.Shared.App.MainWindow;
                 nint hwnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
                 WinRT.Interop.InitializeWithWindow.Initialize(_StoreContext, hwnd);
