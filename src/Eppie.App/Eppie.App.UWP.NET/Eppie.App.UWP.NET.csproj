@@ -20,6 +20,23 @@
 
     <DefineConstants>$(DefineConstants);WINDOWS_UWP;AI_ENABLED</DefineConstants>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\ComponentBuilder\ComponentBuilder.csproj" />
+    <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core.Backup\Tuvi.Core.Backup.csproj" />
+    <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core.DataStorage\Tuvi.Core.DataStorage.csproj" />
+    <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core.Entities\Tuvi.Core.Entities.csproj" />
+    <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core.Logging\Tuvi.Core.Logging.csproj" />
+    <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core.Mail.Impl\Tuvi.Core.Mail.Impl.csproj" />
+    <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core.Mail\Tuvi.Core.Mail.csproj" />
+    <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core\Tuvi.Core.csproj" />
+    <ProjectReference Include="..\..\..\gitmodules\TuviCore\gitmodules\TuviPgpLib\TuviPgpLib\TuviPgpLib.csproj" />
+    <ProjectReference Include="..\Eppie.AI\Eppie.AI.csproj" />
+    <ProjectReference Include="..\Eppie.App.UI\Eppie.App.UI.UWP.NET\Eppie.App.UI.UWP.NET.csproj" />
+    <ProjectReference Include="..\Eppie.App.ViewModels\Eppie.App.ViewModels.csproj" />
+    <ProjectReference Include="..\Eppie.Authorization.OAuth2\Eppie.Authorization.OAuth2.csproj" />
+  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.AI.Abstractions" />
     <PackageReference Include="Microsoft.ML.OnnxRuntimeGenAI.DirectML" />
