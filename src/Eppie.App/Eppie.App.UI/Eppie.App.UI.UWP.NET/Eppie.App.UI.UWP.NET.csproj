@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
+    <UseUwp>true</UseUwp>
+
+    <AssemblyName>Eppie.App.UI</AssemblyName>
+    <RootNamespace>Eppie.App.UI</RootNamespace>
+    <DefaultLanguage>en</DefaultLanguage>
+
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <IsAotCompatible>false</IsAotCompatible>
+    <DisableRuntimeMarshalling>true</DisableRuntimeMarshalling>
+    <CsWinRTAotOptimizerEnabled>false</CsWinRTAotOptimizerEnabled>
+
+    <DefineConstants>$(DefineConstants);WINDOWS_UWP</DefineConstants>
+  </PropertyGroup>
+</Project>
