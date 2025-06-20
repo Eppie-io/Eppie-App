@@ -16,7 +16,8 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-#if WINDOWS10_0_19041_0_OR_GREATER
+// ToDo: Add `WINDOWS_WINUI` constant to Eppie.App.UI.Uno project with `Condition="$(TargetFramework.Contains('windows10'))"`
+#if WINDOWS10_0_19041_0_OR_GREATER && !WINDOWS_UWP
 
 using System;
 using System.Linq;
