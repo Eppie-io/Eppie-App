@@ -63,12 +63,6 @@ jobs:
           uno-platform: ${{ matrix.language == 'csharp' }}
           msbuild: ${{ matrix.language == 'csharp' }}
 
-      - name: Test Build CodeQL
-        if: matrix.language == 'csharp'
-        shell: pwsh
-        run: |
-          msbuild -target:Build -restore:True -verbosity:minimal -consoleLoggerParameters:Summary -maxCpuCount -property:Configuration=Debug ./src/Eppie.App/Eppie.App.sln
-
       # Initializes the CodeQL tools for scanning.
       - name: Initialize CodeQL
         uses: github/codeql-action/init@181d5eefc20863364f96762470ba6f862bdef56b # v3.29.2
@@ -85,7 +79,7 @@ jobs:
         if: matrix.language == 'csharp'
         shell: pwsh
         run: |
-          msbuild -target:Rebuild -restore:True -verbosity:minimal -consoleLoggerParameters:Summary -maxCpuCount -property:Configuration=Debug ./src/Eppie.App/Eppie.App.sln
+          msbuild -target:Build -restore:True -verbosity:minimal -consoleLoggerParameters:Summary -maxCpuCount -property:Configuration=Debug ./src/Eppie.App/Eppie.App.sln
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@181d5eefc20863364f96762470ba6f862bdef56b # v3.29.2
