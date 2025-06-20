@@ -2,10 +2,20 @@
   <PropertyGroup>
     <TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
-    <Nullable>enable</Nullable>
     <UseUwp>true</UseUwp>
-    <DefaultLanguage>en-US</DefaultLanguage>
-    <IsAotCompatible>true</IsAotCompatible>
+
+    <AssemblyName>Eppie.App.UI</AssemblyName>
+    <RootNamespace>Eppie.App.UI</RootNamespace>
+    <DefaultLanguage>en</DefaultLanguage>
+
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <IsAotCompatible>false</IsAotCompatible>
     <DisableRuntimeMarshalling>true</DisableRuntimeMarshalling>
+
+    <EmitCompilerGeneratedFiles>false</EmitCompilerGeneratedFiles>
+    <CompilerGeneratedFilesOutputPath>generated</CompilerGeneratedFilesOutputPath>
+
+    <DefineConstants>$(DefineConstants);WINDOWS_UWP</DefineConstants>
   </PropertyGroup>
 </Project>
