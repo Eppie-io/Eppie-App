@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
@@ -44,6 +44,7 @@
     <PackageReference Include="Microsoft.Services.Store.Engagement" />
     <PackageReference Include="Microsoft.UI.Xaml" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Uwp.Managed" />
+    <PackageReference Include="Microsoft.Windows.SDK.CPP" />
     <PackageReference Include="Serilog" />
     <PackageReference Include="Serilog.Enrichers.Environment" />
     <PackageReference Include="Serilog.Enrichers.Process" />
