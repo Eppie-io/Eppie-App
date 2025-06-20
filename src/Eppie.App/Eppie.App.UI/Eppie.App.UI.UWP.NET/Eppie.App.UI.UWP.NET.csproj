@@ -13,9 +13,6 @@
     <IsAotCompatible>false</IsAotCompatible>
     <DisableRuntimeMarshalling>true</DisableRuntimeMarshalling>
 
-    <EmitCompilerGeneratedFiles>false</EmitCompilerGeneratedFiles>
-    <CompilerGeneratedFilesOutputPath>generated</CompilerGeneratedFilesOutputPath>
-
     <DefineConstants>$(DefineConstants);WINDOWS_UWP</DefineConstants>
   </PropertyGroup>
 </Project>

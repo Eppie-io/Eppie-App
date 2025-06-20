@@ -17,9 +17,6 @@
     <DisableRuntimeMarshalling>true</DisableRuntimeMarshalling>
     <EnableMsixTooling>true</EnableMsixTooling>
 
-    <EmitCompilerGeneratedFiles>false</EmitCompilerGeneratedFiles>
-    <CompilerGeneratedFilesOutputPath>generated</CompilerGeneratedFilesOutputPath>
-
     <DefineConstants>$(DefineConstants);WINDOWS_UWP;AI_ENABLED</DefineConstants>
   </PropertyGroup>
 </Project>
