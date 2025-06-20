@@ -7,15 +7,19 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="9751ba70-4024-4434-81cf-310158ba1a48"
-    Publisher="CN=Developer"
+    Name="Tuvisoft.Eppie"
+    Publisher="CN=DAC4344D-4C49-4539-938D-A1947B946DCD"
     Version="1.0.0.0" />
 
+  <!--
+  UWP native mp:PhoneIdentity property is
+  <mp:PhoneIdentity PhoneProductId="d0dcdbce-b73c-4b0f-8253-32ee2bcf4831" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  -->
   <mp:PhoneIdentity PhoneProductId="9751ba70-4024-4434-81cf-310158ba1a48" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>Eppie.App.UWP.NET</DisplayName>
-    <PublisherDisplayName>Developer</PublisherDisplayName>
+    <DisplayName>Eppie</DisplayName>
+    <PublisherDisplayName>Finebits</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -32,10 +36,10 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="Eppie.App.UWP.NET.App">
       <uap:VisualElements
-        DisplayName="Eppie.App.UWP.NET"
+        DisplayName="Eppie"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
-        Description="Eppie.App.UWP.NET"
+        Description="Eppie App (UWP net9)"
         BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
