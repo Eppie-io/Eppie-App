@@ -204,9 +204,16 @@
                         <TextBlock Grid.Column="5"
                                    Margin="4,0,0,0"
                                    HorizontalAlignment="Right"
-                                   FontWeight="{Binding IsMarkedAsRead, Converter={StaticResource InverseBoolToFontWeightConverter}}"
                                    Opacity="0.6"
-                                   Text="{Binding DateBriefString}" />
+                                   Text="{Binding DateBriefString}"
+                                   Visibility="{Binding IsMarkedAsRead}" />
+
+                        <TextBlock Grid.Column="5"
+                                   Margin="4,0,0,0"
+                                   HorizontalAlignment="Right"
+                                   Foreground="{StaticResource SystemControlForegroundAccentBrush}"
+                                   Text="{Binding DateBriefString}"
+                                   Visibility="{Binding IsMarkedAsRead, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
                     </Grid>
 
                     <!--</SwipeControl>-->
