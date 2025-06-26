@@ -164,6 +164,6 @@
     <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\nl\Controls.resw" />
     <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\pl\Controls.resw" />
     <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\ru\Controls.resw" />
-    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\zh-CN\Controls.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Strings\zh-Hans\Controls.resw" />
   </ItemGroup>
 </Project>
