@@ -82,7 +82,10 @@ namespace Eppie.App.UI.Behaviors
             {
                 if (e.Key == VirtualKey.Enter)
                 {
-                    ApplyCommand?.Execute(null);
+                    if (ApplyCommand != null && ApplyCommand.CanExecute(null))
+                    {
+                        ApplyCommand.Execute(null);
+                    }
                 }
                 else if (e.Key == VirtualKey.Escape)
                 {

@@ -77,6 +77,11 @@ namespace Tuvi.App.ViewModels
             isAcceptEnabledForce = ValidateSeedWordsAreNotEmpty(seedPhrase, validationContext) == ValidationResult.Success
                                    && ValidateSeedWordsAreInDictionary(seedPhrase, validationContext) == ValidationResult.Success;
 
+            if (AcceptSeedCommand.CanExecute(null))
+            {
+                SeedPhrase = seedPhrase;
+            }
+
             AcceptSeedCommand.NotifyCanExecuteChanged();
         }
 
