@@ -64,9 +64,9 @@ namespace Eppie.App.Shared.Services
         {
             if (_StoreContext == null)
             {
+#if WINDOWS10_0_19041_0_OR_GREATER
                 _StoreContext = StoreContext.GetDefault();
 
-#if WINDOWS10_0_19041_0_OR_GREATER
                 var window = Eppie.App.Shared.App.MainWindow;
                 nint hwnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
                 WinRT.Interop.InitializeWithWindow.Initialize(_StoreContext, hwnd);
@@ -120,6 +120,11 @@ namespace Eppie.App.Shared.Services
 
         private static async Task<StoreProduct> GetProductAsync(StoreContext context, string id)
         {
+            if (context is null)
+            {
+                throw new NotImplementedException("Purchase is not implemented for this platform.");
+            }
+
             const string DurableProductKind = "Durable";
             string[] productKinds = { DurableProductKind };
 
