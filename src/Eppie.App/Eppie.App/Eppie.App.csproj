@@ -65,7 +65,7 @@
 
   <!-- Android signing configuration for Release mode -->
   <PropertyGroup Condition="'$(Configuration)'=='Release' And '$(TargetFramework)'=='net9.0-android'">
-    <AndroidKeyStore>True</AndroidKeyStore>
+    <AndroidKeyStore>False</AndroidKeyStore>
     <AndroidSigningKeyStore></AndroidSigningKeyStore>
     <AndroidSigningKeyAlias></AndroidSigningKeyAlias>
     <AndroidSigningKeyPass></AndroidSigningKeyPass>
