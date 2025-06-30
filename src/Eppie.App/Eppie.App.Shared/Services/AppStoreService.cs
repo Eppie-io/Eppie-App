@@ -64,9 +64,12 @@ namespace Eppie.App.Shared.Services
         {
             if (_StoreContext == null)
             {
-#if WINDOWS10_0_19041_0_OR_GREATER
-                _StoreContext = StoreContext.GetDefault();
 
+#if WINDOWS10_0_19041_0_OR_GREATER || WINDOWS_UWP
+                _StoreContext = StoreContext.GetDefault();
+#endif
+
+#if WINDOWS10_0_19041_0_OR_GREATER
                 var window = Eppie.App.Shared.App.MainWindow;
                 nint hwnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
                 WinRT.Interop.InitializeWithWindow.Initialize(_StoreContext, hwnd);
