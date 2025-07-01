@@ -47,7 +47,7 @@
         <Setter Property="FontWeight" Value="SemiBold" />
     </Style>
 
-    <converters:BoolToStyleConverter x:Key="InverseIsMarkedAsReadToTextStyleConverter"
+    <converters:BoolToStyleConverter x:Key="InverseBoolToAccentTextBlockStyleConverter"
                                      FalseValue="{StaticResource AccentTextStyle}"
                                      TrueValue="{StaticResource BodyTextBlockStyle}" />
 
