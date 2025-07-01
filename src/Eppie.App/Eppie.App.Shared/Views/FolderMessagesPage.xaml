@@ -129,16 +129,18 @@
 
                             <!--  using Binding instead of Binding shows updated fields of item in message list after returning back to cached page  -->
 
-                            <TextBlock x:Uid="MessageFrom" FontWeight="{Binding IsMarkedAsRead, Converter={StaticResource InverseBoolToFontWeightConverter}}" />
+                            <TextBlock x:Uid="MessageFrom"
+                                       Style="{Binding IsMarkedAsRead, Converter={StaticResource InverseIsMarkedAsReadToTextStyleConverter}}" />
 
                             <TextBlock Margin="4,0,4,0"
-                                       FontWeight="{Binding IsMarkedAsRead, Converter={StaticResource InverseBoolToFontWeightConverter}}"
+                                       Style="{Binding IsMarkedAsRead, Converter={StaticResource InverseIsMarkedAsReadToTextStyleConverter}}"
                                        Text="{Binding MessageSender}" />
 
-                            <TextBlock x:Uid="MessageTo" FontWeight="{Binding IsMarkedAsRead, Converter={StaticResource InverseBoolToFontWeightConverter}}" />
+                            <TextBlock x:Uid="MessageTo"
+                                       Style="{Binding IsMarkedAsRead, Converter={StaticResource InverseIsMarkedAsReadToTextStyleConverter}}" />
 
                             <TextBlock Margin="4,0,4,0"
-                                       FontWeight="{Binding IsMarkedAsRead, Converter={StaticResource InverseBoolToFontWeightConverter}}"
+                                       Style="{Binding IsMarkedAsRead, Converter={StaticResource InverseIsMarkedAsReadToTextStyleConverter}}"
                                        Text="{Binding MessageReceiver}" />
 
                         </StackPanel>
@@ -146,7 +148,7 @@
                         <TextBlock Grid.Row="1"
                                    Grid.ColumnSpan="5"
                                    Margin="8,0,0,0"
-                                   FontWeight="{Binding IsMarkedAsRead, Converter={StaticResource InverseBoolToFontWeightConverter}}"
+                                   Style="{Binding IsMarkedAsRead, Converter={StaticResource InverseIsMarkedAsReadToTextStyleConverter}}"
                                    Text="{Binding MessageSubject}" />
 
                         <TextBlock Grid.Row="2"
@@ -204,16 +206,8 @@
                         <TextBlock Grid.Column="5"
                                    Margin="4,0,0,0"
                                    HorizontalAlignment="Right"
-                                   Opacity="0.6"
-                                   Text="{Binding DateBriefString}"
-                                   Visibility="{Binding IsMarkedAsRead}" />
-
-                        <TextBlock Grid.Column="5"
-                                   Margin="4,0,0,0"
-                                   HorizontalAlignment="Right"
-                                   Foreground="{StaticResource SystemControlForegroundAccentBrush}"
-                                   Text="{Binding DateBriefString}"
-                                   Visibility="{Binding IsMarkedAsRead, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+                                   Style="{Binding IsMarkedAsRead, Converter={StaticResource InverseIsMarkedAsReadToTextStyleConverter}}"
+                                   Text="{Binding DateBriefString}" />
                     </Grid>
 
                     <!--</SwipeControl>-->

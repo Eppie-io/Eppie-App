@@ -71,6 +71,7 @@ namespace Tuvi.App.Converters
     }
     public class BoolToHorizontalAlignConverter : BoolToValueConverter<HorizontalAlignment> { }
     public class BoolToThicknessConverter : BoolToValueConverter<Thickness> { }
+    public class BoolToStyleConverter : BoolToValueConverter<Style> { }
 
     public class BoolToResourceConverter : BoolToStringConverter
     {
