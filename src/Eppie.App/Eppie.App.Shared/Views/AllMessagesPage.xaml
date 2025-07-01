@@ -130,15 +130,13 @@
 
                             <!--  using Binding instead of x:Bind shows updated fields of item in message list after returning back to cached page  -->
 
-                            <TextBlock x:Uid="MessageFrom"
-                                       Style="{Binding IsMarkedAsRead, Converter={StaticResource InverseIsMarkedAsReadToTextStyleConverter}}" />
+                            <TextBlock x:Uid="MessageFrom" Style="{Binding IsMarkedAsRead, Converter={StaticResource InverseIsMarkedAsReadToTextStyleConverter}}" />
 
                             <TextBlock Margin="4,0,4,0"
                                        Style="{Binding IsMarkedAsRead, Converter={StaticResource InverseIsMarkedAsReadToTextStyleConverter}}"
                                        Text="{Binding MessageSender}" />
 
-                            <TextBlock x:Uid="MessageTo"
-                                       Style="{Binding IsMarkedAsRead, Converter={StaticResource InverseIsMarkedAsReadToTextStyleConverter}}" />
+                            <TextBlock x:Uid="MessageTo" Style="{Binding IsMarkedAsRead, Converter={StaticResource InverseIsMarkedAsReadToTextStyleConverter}}" />
 
                             <TextBlock Margin="4,0,4,0"
                                        Style="{Binding IsMarkedAsRead, Converter={StaticResource InverseIsMarkedAsReadToTextStyleConverter}}"
