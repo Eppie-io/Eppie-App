@@ -16,6 +16,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eppie.App.UWP", "Eppie.App.UWP\Eppie.App.UWP.csproj", "{CAE118DC-8F0D-476E-A64A-AE165C754C92}"
+	ProjectSection(ProjectDependencies) = postProject
+		{395E1262-AED9-4341-8B9F-B8CFC40CEA5F} = {395E1262-AED9-4341-8B9F-B8CFC40CEA5F}
+		{B64ED254-C7AA-4DE9-AAA2-72DE6E8CCA9B} = {B64ED254-C7AA-4DE9-AAA2-72DE6E8CCA9B}
+	EndProjectSection
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Eppie.App.Shared", "Eppie.App.Shared\Eppie.App.Shared.shproj", "{C4918D44-FB8A-442F-BDE5-69106B2DA412}"
 EndProject
@@ -94,6 +98,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eppie.App.UI.Uno", "Eppie.App.UI\Eppie.App.UI.Uno\Eppie.App.UI.Uno.csproj", "{E66E9BBD-2F75-453F-83B9-709F67517261}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eppie.App.UI.UWP", "Eppie.App.UI\Eppie.App.UI.UWP\Eppie.App.UI.UWP.csproj", "{A6C30ED1-6213-427E-B255-E5E8C69E6D0E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{395E1262-AED9-4341-8B9F-B8CFC40CEA5F} = {395E1262-AED9-4341-8B9F-B8CFC40CEA5F}
+		{B64ED254-C7AA-4DE9-AAA2-72DE6E8CCA9B} = {B64ED254-C7AA-4DE9-AAA2-72DE6E8CCA9B}
+	EndProjectSection
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Eppie.App.UI.Shared", "Eppie.App.UI\Eppie.App.UI.Shared\Eppie.App.UI.Shared.shproj", "{2443C114-C401-45FC-91DC-6C6F1EA97D58}"
 EndProject
