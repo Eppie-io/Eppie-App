@@ -16,7 +16,6 @@
     <PublishProfile>win-$(Platform).pubxml</PublishProfile>
     <DisableRuntimeMarshalling>true</DisableRuntimeMarshalling>
     <EnableMsixTooling>true</EnableMsixTooling>
-    <CsWinRTAotOptimizerEnabled>false</CsWinRTAotOptimizerEnabled>
 
     <DefineConstants>$(DefineConstants);WINDOWS_UWP;AI_ENABLED</DefineConstants>
   </PropertyGroup>

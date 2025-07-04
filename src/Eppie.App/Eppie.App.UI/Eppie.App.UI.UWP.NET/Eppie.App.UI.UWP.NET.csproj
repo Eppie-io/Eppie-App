@@ -12,7 +12,6 @@
     <Nullable>disable</Nullable>
     <IsAotCompatible>false</IsAotCompatible>
     <DisableRuntimeMarshalling>true</DisableRuntimeMarshalling>
-    <CsWinRTAotOptimizerEnabled>false</CsWinRTAotOptimizerEnabled>
 
     <DefineConstants>$(DefineConstants);WINDOWS_UWP</DefineConstants>
   </PropertyGroup>
