@@ -12,7 +12,6 @@
     <Nullable>disable</Nullable>
     <IsAotCompatible>false</IsAotCompatible>
     <DisableRuntimeMarshalling>true</DisableRuntimeMarshalling>
-    <CsWinRTAotOptimizerEnabled>false</CsWinRTAotOptimizerEnabled>
 
     <DefineConstants>$(DefineConstants);WINDOWS_UWP</DefineConstants>
   </PropertyGroup>
@@ -33,7 +32,6 @@
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Uwp.Controls.TokenizingTextBox" />
     <PackageReference Include="Microsoft.UI.Xaml" />
-    <PackageReference Include="Microsoft.Windows.SDK.CPP" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Uwp.Managed" />
     <PackageReference Include="System.Private.Uri" />
   </ItemGroup>
