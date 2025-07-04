@@ -79,7 +79,8 @@ jobs:
         if: matrix.language == 'csharp'
         shell: pwsh
         run: |
-          msbuild -target:Build -restore:True -verbosity:minimal -consoleLoggerParameters:Summary -maxCpuCount -property:Configuration=Debug ./src/Eppie.App/Eppie.App.sln
+          $verbosity=$(("${{ runner.debug }}" -eq 1) ? "-verbosity:detailed" : "-verbosity:minimal")
+          msbuild -target:Build -restore:True -maxCpuCount -consoleLoggerParameters:Summary $verbosity -property:CsWinRTAotOptimizerEnabled=false ./src/Eppie.App/Eppie.App.sln
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@181d5eefc20863364f96762470ba6f862bdef56b # v3.29.2
