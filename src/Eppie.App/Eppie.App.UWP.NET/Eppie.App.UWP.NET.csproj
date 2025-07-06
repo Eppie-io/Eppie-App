@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
@@ -16,6 +16,8 @@
     <PublishProfile>win-$(Platform).pubxml</PublishProfile>
     <DisableRuntimeMarshalling>true</DisableRuntimeMarshalling>
     <EnableMsixTooling>true</EnableMsixTooling>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <CsWinRTIncludes>Microsoft.Services.Store.Engagement</CsWinRTIncludes>
 
     <DefineConstants>$(DefineConstants);WINDOWS_UWP;AI_ENABLED</DefineConstants>
   </PropertyGroup>
@@ -36,12 +38,23 @@
     <ProjectReference Include="..\Eppie.Authorization.OAuth2\Eppie.Authorization.OAuth2.csproj" />
   </ItemGroup>
 
+  <Import Project="..\Eppie.App.Resources.Shared\Eppie.App.Resources.Shared.projitems" Label="Shared" />
+  <Import Project="..\Eppie.App.Shared\Eppie.App.Shared.projitems" Label="Shared" />
+
+  <!-- This hides references to shared .xaml files from the "Eppie.App.Shared" project. -->
+  <ItemGroup>
+    <None Include="..\Eppie.App.Shared\*.xaml" Visible="false" />
+    <None Include="..\Eppie.App.Shared\StaticResources\*.xaml" Visible="false" />
+    <None Include="..\Eppie.App.Shared\Views\*.xaml" Visible="false" />
+  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.AI.Abstractions" />
     <PackageReference Include="Microsoft.ML.OnnxRuntimeGenAI.DirectML" />
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" />
     <PackageReference Include="Microsoft.Services.Store.Engagement" />
     <PackageReference Include="Microsoft.UI.Xaml" />
+    <PackageReference Include="Microsoft.Windows.CsWinRT" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Uwp.Managed" />
     <PackageReference Include="Serilog" />
     <PackageReference Include="Serilog.Enrichers.Environment" />
@@ -59,6 +72,10 @@
     <PackageReference Include="Serilog.Sinks.File" />
     <!-- The default version of the 'System.Private.Uri' package is 4.3.0, which has a vulnerability -->
     <PackageReference Include="System.Private.Uri" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <SDKReference Include="Microsoft.Services.Store.Engagement, Version=10.0" />
   </ItemGroup>
 
   <!-- This hides references to binaries from the "Microsoft.AI.DirectML" package. -->

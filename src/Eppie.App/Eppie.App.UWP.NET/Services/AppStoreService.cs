@@ -16,18 +16,21 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-using Windows.UI.Xaml.Controls;
-
-namespace Eppie.App.UWP.NET
+namespace Eppie.App.Shared.Services
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a <see cref="Frame">.
-    /// </summary>
-    public sealed partial class MainPage : Page
+    public class AppStoreService : BaseAppStoreService
     {
-        public MainPage()
+        SubscriptionProduct _Subscription;
+        protected override SubscriptionProduct GetSubscriptionProduct()
         {
-            InitializeComponent();
+            const string InAppOfferToken = "<InAppOfferToken>";
+            const string AppOfferProductId = "<AppOfferProductId>";
+
+            if (_Subscription is null)
+            {
+                _Subscription = new SubscriptionProduct(InAppOfferToken, AppOfferProductId);
+            }
+            return _Subscription;
         }
     }
 }
