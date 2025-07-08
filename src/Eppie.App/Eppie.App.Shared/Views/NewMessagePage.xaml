@@ -177,7 +177,8 @@
                                          Grid.ColumnSpan="2"
                                          Margin="4,4,0,0"
                                          Contacts="{x:Bind ViewModel.Contacts, Mode=OneWay}"
-                                         SelectedContacts="{x:Bind ViewModel.Copy, Mode=OneWay}" />
+                                         SelectedContacts="{x:Bind ViewModel.Copy, Mode=OneWay}"
+                                         UntokenizedContact="{x:Bind ViewModel.UntokenizedContactCopy, Mode=TwoWay}" />
 
             <!--  Hidden copy  -->
             <TextBlock x:Uid="HiddenCopyTo"
@@ -191,7 +192,8 @@
                                          Grid.ColumnSpan="2"
                                          Margin="4,4,0,0"
                                          Contacts="{x:Bind ViewModel.Contacts, Mode=OneWay}"
-                                         SelectedContacts="{x:Bind ViewModel.HiddenCopy, Mode=OneWay}" />
+                                         SelectedContacts="{x:Bind ViewModel.HiddenCopy, Mode=OneWay}"
+                                         UntokenizedContact="{x:Bind ViewModel.UntokenizedContactHiddenCopy, Mode=TwoWay}" />
 
             <!--  Subject  -->
             <TextBlock x:Uid="MessageSubject"

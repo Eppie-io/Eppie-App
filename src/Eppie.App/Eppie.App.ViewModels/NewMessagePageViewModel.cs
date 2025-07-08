@@ -149,6 +149,28 @@ namespace Tuvi.App.ViewModels
             }
         }
 
+        private ContactItem _untokenizedContactCopy;
+        public ContactItem UntokenizedContactCopy
+        {
+            get { return _untokenizedContactCopy; }
+            set
+            {
+                SetProperty(ref _untokenizedContactCopy, value);
+                SendMessageAndGoBackCommand.NotifyCanExecuteChanged();
+            }
+        }
+
+        private ContactItem _untokenizedContactHiddenCopy;
+        public ContactItem UntokenizedContactHiddenCopy
+        {
+            get { return _untokenizedContactHiddenCopy; }
+            set
+            {
+                SetProperty(ref _untokenizedContactHiddenCopy, value);
+                SendMessageAndGoBackCommand.NotifyCanExecuteChanged();
+            }
+        }
+
         private string _subject = string.Empty;
         public string Subject
         {
@@ -218,7 +240,11 @@ namespace Tuvi.App.ViewModels
 
                 return _canSendMessage
                     && !errors.Any()
-                    && (To.Count > 0 || UntokenizedContactTo != null);
+                    && (
+                        To.Count > 0 || UntokenizedContactTo != null ||
+                        Copy.Count > 0 || UntokenizedContactCopy != null ||
+                        HiddenCopy.Count > 0 || UntokenizedContactHiddenCopy != null
+                    );
             }
             set
             {
@@ -431,7 +457,15 @@ namespace Tuvi.App.ViewModels
                 message.To.Add(UntokenizedContactTo.ToEmailAddress());
             }
             message.Cc.AddRange(Copy.Select(contact => contact.ToEmailAddress()));
+            if (UntokenizedContactCopy != null && !message.Cc.Any(address => address.HasSameAddress(UntokenizedContactCopy.Email)))
+            {
+                message.Cc.Add(UntokenizedContactCopy.ToEmailAddress());
+            }
             message.Bcc.AddRange(HiddenCopy.Select(contact => contact.ToEmailAddress()));
+            if (UntokenizedContactHiddenCopy != null && !message.Bcc.Any(address => address.HasSameAddress(UntokenizedContactHiddenCopy.Email)))
+            {
+                message.Bcc.Add(UntokenizedContactHiddenCopy.ToEmailAddress());
+            }
 
             message.Subject = Subject;
 
