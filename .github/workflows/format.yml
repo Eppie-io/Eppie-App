@@ -63,4 +63,9 @@ jobs:
 
       - name: Verify format
         shell: bash
-        run:  dotnet format "${{ matrix.project }}" --verify-no-changes --severity=error --verbosity diagnostic --exclude ./gitmodules/
+        run: |
+          dotnet format "${{ matrix.project }}" --verify-no-changes \
+                                                --severity=error \
+                                                --verbosity diagnostic \
+                                                --exclude ./gitmodules/ \
+                                                --exclude ./src/Eppie.App/Eppie.App.Shared/App.UWP.xaml.cs

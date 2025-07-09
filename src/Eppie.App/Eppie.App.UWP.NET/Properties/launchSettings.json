@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "Eppie.App.UWP.NET": {
+      "commandName": "MsixPackage"
+    }
+  }
+}

@@ -16,31 +16,21 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-// ToDo: Add `WINDOWS_WINUI` constant to Eppie.App.UI.Uno project with `Condition="$(TargetFramework.Contains('windows10'))"`
-#if WINDOWS10_0_19041_0_OR_GREATER && !WINDOWS_UWP
-
-using System;
-using System.Linq;
-using System.Text;
-using Microsoft.UI.Text;
-
-namespace Tuvi.App.Shared.Extensions
+namespace Eppie.App.Shared.Services
 {
-    public static partial class TextDocumentExtension
+    public class AppStoreService : BaseAppStoreService
     {
-        public static string ToHtml(this RichEditTextDocument document)
+        SubscriptionProduct _Subscription;
+        protected override SubscriptionProduct GetSubscriptionProduct()
         {
-            ArgumentNullException.ThrowIfNull(document);
+            const string InAppOfferToken = "<InAppOfferToken>";
+            const string AppOfferProductId = "<AppOfferProductId>";
 
-            document.GetText(TextGetOptions.None, out string text);
-
-            // it seems that we have a bug in rich edit and we always get extra '\r, cut it off
-            int length = text.Last() == SpecialChar.NewLine ? text.Length - 1 : text.Length;
-            ITextRange txtRange = document.GetRange(0, length);
-
-            return GetHtml(txtRange, length);
+            if (_Subscription is null)
+            {
+                _Subscription = new SubscriptionProduct(InAppOfferToken, AppOfferProductId);
+            }
+            return _Subscription;
         }
     }
 }
-
-#endif
