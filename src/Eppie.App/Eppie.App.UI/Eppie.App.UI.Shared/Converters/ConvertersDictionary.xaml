@@ -43,8 +43,8 @@
     <Style x:Key="AccentTextStyle"
            BasedOn="{StaticResource BodyTextBlockStyle}"
            TargetType="TextBlock">
-        <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundAccentBrush}" />
-        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="{ThemeResource AccentTextFillColorPrimaryBrush}" />
+        <Setter Property="FontWeight" Value="Bold" />
     </Style>
 
     <converters:BoolToStyleConverter x:Key="InverseBoolToAccentTextBlockStyleConverter"
