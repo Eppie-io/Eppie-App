@@ -12,7 +12,7 @@
             "configuration": "release",
             "framework": "net9.0-desktop",
             "runtime": "osx-x64",
-            "extra": "--property:SelfContained=true --property:PublishSingleFile=true --property:PackageFormat=app --property:UnoMacOSIncludeDebugSymbols=false --property:OverrideTargetFrameworks=net9.0-desktop",
+            "extra": "--property:SelfContained=true --property:PackageFormat=app --property:UnoMacOSIncludeDebugSymbols=false --property:OverrideTargetFrameworks=net9.0-desktop",
             "prepare": [
                 "--target:PackageVersioning --no-restore"
             ]
@@ -34,7 +34,7 @@
             "configuration": "release",
             "framework": "net9.0-desktop",
             "runtime": "osx-arm64",
-            "extra": "--property:SelfContained=true --property:PublishSingleFile=true --property:PackageFormat=app --property:UnoMacOSIncludeDebugSymbols=false --property:OverrideTargetFrameworks=net9.0-desktop",
+            "extra": "--property:SelfContained=true --property:PackageFormat=app --property:UnoMacOSIncludeDebugSymbols=false --property:OverrideTargetFrameworks=net9.0-desktop",
             "prepare": [
                 "--target:PackageVersioning --no-restore"
             ]
