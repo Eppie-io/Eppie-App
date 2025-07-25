@@ -53,7 +53,8 @@ namespace Eppie.App.UI.Tools
         where TPicker : new()
         where TBuilder : CommonBuilder<TPicker>, new()
     {
-#if WINDOWS10_0_19041_0_OR_GREATER
+        // ToDo: Add `WINDOWS_WINUI` constant to Eppie.App.UI.Uno project with `Condition="$(TargetFramework.Contains('windows10'))"`
+#if WINDOWS10_0_19041_0_OR_GREATER && !WINDOWS_UWP
         protected static void InitializePickerWindow(object picker, Window window)
         {
             nint hwnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
@@ -65,7 +66,8 @@ namespace Eppie.App.UI.Tools
         {
             TBuilder builder = new TBuilder();
 
-#if WINDOWS10_0_19041_0_OR_GREATER
+            // ToDo: Add `WINDOWS_WINUI` constant to Eppie.App.UI.Uno project with `Condition="$(TargetFramework.Contains('windows10'))"`
+#if WINDOWS10_0_19041_0_OR_GREATER && !WINDOWS_UWP
             builder.PreBuildAction = (picker) => InitializePickerWindow(picker, window);
 #endif
 
