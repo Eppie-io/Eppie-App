@@ -5,7 +5,7 @@
             "x64",
             "all"
         ],
-        "os": "macos-15",
+        "os": "macos-13",
         "publish": {
             "tool": "dotnet",
             "project": "./src/Eppie.App/Eppie.App/Eppie.App.csproj",
