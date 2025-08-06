@@ -206,18 +206,18 @@ namespace Tuvi.App.ViewModels
             set { SetProperty(ref _isSigned, value); }
         }
 
-        private bool _isDecentralized;
-        public bool IsDecentralized
+        private bool _isChangeCryptographyEnabled;
+        public bool IsChangeCryptographyEnabled
         {
-            get { return _isDecentralized; }
-            set { SetProperty(ref _isDecentralized, value); }
+            get { return _isChangeCryptographyEnabled; }
+            set { SetProperty(ref _isChangeCryptographyEnabled, value); }
         }
 
-        private bool _isProton;
-        public bool IsProton
+        private bool _isAdvancedSettingsVisible;
+        public bool IsAdvancedSettingsVisible
         {
-            get { return _isProton; }
-            set { SetProperty(ref _isProton, value); }
+            get { return _isAdvancedSettingsVisible; }
+            set { SetProperty(ref _isAdvancedSettingsVisible, value); }
         }
 
         public bool HasAttachments => Attachments.Any();
@@ -420,7 +420,7 @@ namespace Tuvi.App.ViewModels
             {
                 CanSendMessage = false;
 
-                if ((IsDecentralized || From.IsHybrid || IsEncrypted || IsSigned) && !await Core.GetSecurityManager().IsSeedPhraseInitializedAsync().ConfigureAwait(true))
+                if ((From.IsDecentralized || IsEncrypted || IsSigned) && !await Core.GetSecurityManager().IsSeedPhraseInitializedAsync().ConfigureAwait(true))
                 {
                     await MessageService.ShowNeedToCreateSeedPhraseMessageAsync().ConfigureAwait(true);
 
@@ -567,23 +567,14 @@ namespace Tuvi.App.ViewModels
 
         public void OnFromChanged()
         {
-            // If the sender is a ProtonMail account, then the message encrypted and signed directly by Proton
-            IsProton = Proton.Extensions.IsProton(From);
-            if (IsProton)
-            {
-                IsSigned
-                    = IsEncrypted
-                    = IsDecentralized
-                    = false;
-            }
-            else
-            {
-                // If the sender is a decentralized account, then the message is decentralized, encrypted, and signed by default
-                IsSigned
-                    = IsEncrypted
-                    = IsDecentralized
-                    = StringHelper.IsDecentralizedEmail(From);
-            }
+            // If the sender is a Decentralized or Hybrid account, then the message encrypted and signed automatically
+            IsChangeCryptographyEnabled = !From.IsDecentralized;
+
+            IsSigned
+                = IsEncrypted
+                = !IsChangeCryptographyEnabled;
+
+            IsAdvancedSettingsVisible = !Proton.Extensions.IsProton(From) && !From.IsDecentralized;
         }
 
         protected override async void ProcessMessage(LocalAIAgent agent)

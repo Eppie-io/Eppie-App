@@ -82,11 +82,6 @@ namespace Tuvi.App.ViewModels
             ValidateProperty(AccountSettingsModel, nameof(AccountSettingsModel));
         }
 
-        public AccountSettingsPageViewModel() : base()
-        {
-            CreateHybridAddress = new AsyncRelayCommand(CreateHybridAddressAsync, () => !IsHybridAddress);
-        }
-
         public override async void OnNavigatedTo(object data)
         {
             try
@@ -226,34 +221,9 @@ namespace Tuvi.App.ViewModels
             return ValidationResult.Success;
         }
 
-        public IRelayCommand CreateHybridAddress { get; }
-
         public bool IsBasicAccount
         {
             get { return AccountSettingsModel is BasicAccountSettingsModel; }
-        }
-
-        public bool ShowHybridAddressButton
-        {
-            get
-            {
-                //TODO: Disabled for now
-                //return !IsHybridAddress && !IsCreatingAccountMode;
-                return false;
-            }
-        }
-
-        public bool IsHybridAddress
-        {
-            get
-            {
-                if (AccountSettingsModel.Email.Value != null)
-                {
-                    return new EmailAddress(AccountSettingsModel.Email.Value).IsHybrid;
-                }
-
-                return false;
-            }
         }
 
         private Array _incomingProtocolTypes;
@@ -400,13 +370,6 @@ namespace Tuvi.App.ViewModels
         public void OnAuthorizationError(Exception ex)
         {
             OnError(ex);
-            GoBack();
-        }
-
-        private async Task CreateHybridAddressAsync()
-        {
-            await Core.CreateHybridEmailAsync(new EmailAddress(AccountSettingsModel.Email.Value)).ConfigureAwait(true);
-
             GoBack();
         }
 

@@ -85,6 +85,11 @@ namespace Tuvi.App.ViewModels
 
         public virtual Account ToAccount()
         {
+            if (Email.Value is null)
+            {
+                return null;
+            }
+
             CurrentAccount.Email = new EmailAddress(Email.Value, SenderName);
 
             CurrentAccount.IsBackupAccountSettingsEnabled = IsBackupAccountSettingsEnabled;
@@ -92,7 +97,7 @@ namespace Tuvi.App.ViewModels
             CurrentAccount.SynchronizationInterval = int.TryParse(SynchronizationInterval.Value, out int interval)
                 ? interval
                 : DefaultSynchronizationInterval;
-            CurrentAccount.Type = (int)MailBoxType.Email;
+            CurrentAccount.Type = MailBoxType.Email;
 
             CurrentAccount.OutgoingMailProtocol = MailProtocol.SMTP;
             CurrentAccount.OutgoingServerAddress = OutgoingServerAddress.Value;
@@ -102,7 +107,6 @@ namespace Tuvi.App.ViewModels
             CurrentAccount.IncomingServerPort = IncomingServerPort;
 
             return CurrentAccount;
-
         }
 
         public static AccountSettingsModel Create(Account account)
@@ -220,6 +224,11 @@ namespace Tuvi.App.ViewModels
 
         public override Account ToAccount()
         {
+            if (Email.Value is null)
+            {
+                return null;
+            }
+
             CurrentAccount = base.ToAccount();
             var basicAuth = new BasicAuthData() { Password = Password.Value };
 
@@ -263,6 +272,11 @@ namespace Tuvi.App.ViewModels
 
         public override Account ToAccount()
         {
+            if (Email.Value is null)
+            {
+                return null;
+            }
+
             CurrentAccount = base.ToAccount();
             CurrentAccount.AuthData = new OAuth2Data()
             {

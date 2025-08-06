@@ -63,7 +63,6 @@ namespace Tuvi.App.ViewModels
         public virtual Account ToAccount()
         {
             CurrentAccount.Email = new EmailAddress(Email, SenderName);
-            CurrentAccount.Type = (int)MailBoxType.Dec;
             return CurrentAccount;
         }
 
@@ -122,15 +121,7 @@ namespace Tuvi.App.ViewModels
         {
             try
             {
-                if (data is Account accountData)
-                {
-                    InitModel(DecentralizedAccountSettingsModel.Create(accountData), false);
-                }
-                else
-                {
-                    accountData = await Core.NewDecentralizedAccountAsync().ConfigureAwait(true);
-                    InitModel(DecentralizedAccountSettingsModel.Create(accountData), true);
-                }
+                await InitModel(data).ConfigureAwait(true);
             }
             catch (Exception e)
             {
@@ -138,10 +129,35 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        private void InitModel(DecentralizedAccountSettingsModel accountSettingsModel, bool isCreatingMode)
+        private async Task InitModel(object data)
         {
-            IsCreatingAccountMode = isCreatingMode;
-            AccountSettingsModel = accountSettingsModel;
+            if (data is Account accountData)
+            {
+                IsCreatingAccountMode = false;
+                AccountSettingsModel = DecentralizedAccountSettingsModel.Create(accountData);
+            }
+            else
+            {
+                IsCreatingAccountMode = true;
+                accountData = await CreateDecentralizedAccountAsync(default).ConfigureAwait(true);
+                AccountSettingsModel = DecentralizedAccountSettingsModel.Create(accountData);
+            }
+        }
+
+        public async Task<Account> CreateDecentralizedAccountAsync(CancellationToken cancellationToken)
+        {
+            var (emailName, index) = await Core.GetSecurityManager().GetNextDecAccountPublicKeyAsync(cancellationToken).ConfigureAwait(false);
+
+            var email = EmailAddress.CreateDecentralizedAddress(emailName, $"{index}");
+
+            return new Account()
+            {
+                Email = email,
+                IsBackupAccountSettingsEnabled = true,
+                IsBackupAccountMessagesEnabled = true,
+                Type = MailBoxType.Dec,
+                DecentralizedAccountIndex = index,
+            };
         }
 
         private async Task ApplySettingsAndGoBackAsync()
@@ -225,10 +241,6 @@ namespace Tuvi.App.ViewModels
 
         private void DoCancel()
         {
-            // TODO: TVM-347 Suspend mailbox until relogin
-            // if there was a relogin, and the user did not update the data,
-            // then we need to suspend work with this email until the data is updated
-
             if (_isWaitingResponse)
             {
                 CancelAsyncOperation();

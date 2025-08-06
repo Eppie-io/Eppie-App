@@ -514,6 +514,10 @@ You need to enable IMAP for this account first and try again.</value>
     <value>Attention</value>
     <comment>The title of the dialog shown when user wants to wipe all application data</comment>
   </data>
+  <data name="NewMessageAdvancedSettings.Header" xml:space="preserve">
+    <value>Advanced Settings</value>
+    <comment>Section header in the new message window for Advanced Settings.</comment>
+  </data>
   <data name="MessageEncrypted.Content" xml:space="preserve">
     <value>Encrypt</value>
     <comment>Encryption enable checkbox text on NewMessage view</comment>
@@ -781,10 +785,6 @@ Subject: {3}
   <data name="ErrorReportEmailTitle" xml:space="preserve">
     <value>An error report</value>
     <comment>Title in the email message with error report</comment>
-  </data>
-  <data name="MessageDecentralized.Content" xml:space="preserve">
-    <value>Send decentralized</value>
-    <comment>Send message using decentralized simulation</comment>
   </data>
   <data name="BackupAccountSettingsCheckBox.Content" xml:space="preserve">
     <value>Enable data backup for this account</value>

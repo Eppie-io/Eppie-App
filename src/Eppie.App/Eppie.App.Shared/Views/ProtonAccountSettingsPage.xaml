@@ -30,11 +30,26 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Button x:Uid="RemoveAccountButton"
-                Margin="4"
-                HorizontalAlignment="Right"
-                Command="{x:Bind ViewModel.RemoveAccountCommand}"
-                Visibility="{x:Bind ViewModel.IsCreatingAccountMode, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Button x:Uid="HybridAddressButton"
+                    Grid.Column="1"
+                    Margin="4"
+                    Command="{x:Bind ViewModel.CreateHybridAddress}"
+                    Visibility="{x:Bind ViewModel.ShowHybridAddressButton, Mode=OneWay}" />
+
+            <Button x:Uid="RemoveAccountButton"
+                    Grid.Column="2"
+                    Margin="4"
+                    HorizontalAlignment="Right"
+                    Command="{x:Bind ViewModel.RemoveAccountCommand}"
+                    Visibility="{x:Bind ViewModel.IsCreatingAccountMode, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+        </Grid>
 
         <controls:ProtonAccountSettingsControl x:Name="AccountSettings"
                                                Grid.Row="1"

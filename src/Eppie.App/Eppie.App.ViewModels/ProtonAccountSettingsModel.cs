@@ -53,6 +53,11 @@ namespace Tuvi.App.ViewModels
 
         public Account ToAccount()
         {
+            if (Email.Value is null)
+            {
+                return null;
+            }
+
             CurrentAccount.Email = new EmailAddress(Email.Value, SenderName);
 
             CurrentAccount.AuthData = new BasicAuthData() { Password = Password.Value };
@@ -61,10 +66,9 @@ namespace Tuvi.App.ViewModels
             CurrentAccount.SynchronizationInterval = int.TryParse(SynchronizationInterval.Value, out int interval)
                 ? interval
                 : DefaultSynchronizationInterval;
-            CurrentAccount.Type = (int)MailBoxType.Proton;
+            CurrentAccount.Type = MailBoxType.Proton;
 
             return CurrentAccount;
-
         }
 
         public static ProtonAccountSettingsModel Create(Account account)

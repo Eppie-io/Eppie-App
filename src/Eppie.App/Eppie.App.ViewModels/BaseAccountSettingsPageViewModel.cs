@@ -22,6 +22,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
+using Tuvi.Core;
 using Tuvi.Core.Entities;
 
 namespace Tuvi.App.ViewModels
@@ -69,6 +70,59 @@ namespace Tuvi.App.ViewModels
             get { return !IsWaitingResponse && !HasErrors; }
         }
 
+        private bool _isHybridAddress;
+        public bool IsHybridAddress
+        {
+            get
+            {
+                CheckLinkedHybridAccountExists();
+                return _isHybridAddress;
+            }
+
+            protected set
+            {
+                SetProperty(ref _isHybridAddress, value);
+                OnPropertyChanged(nameof(IsHybridAddress));
+                OnPropertyChanged(nameof(ShowHybridAddressButton));
+            }
+        }
+
+        private async void CheckLinkedHybridAccountExists()
+        {
+            try
+            {
+                var email = AccountSettingsModelToAccount()?.Email;
+                if (email != null)
+                {
+                    var deckey = Core.GetSecurityManager().GetEmailPublicKeyString(email);
+                    var hybridAddress = email.MakeHybrid(deckey);
+
+                    var account = await Core.GetAccountAsync(hybridAddress).ConfigureAwait(true);
+
+                    IsHybridAddress = account != null;
+                }
+            }
+            catch (AccountIsNotExistInDatabaseException)
+            {
+                // Account not found, do nothing
+            }
+            catch (Exception e)
+            {
+                OnError(e);
+                return;
+            }
+        }
+
+        public bool ShowHybridAddressButton
+        {
+            get
+            {
+                //TODO: Disabled for now
+                //return !IsHybridAddress && !IsCreatingAccountMode;
+                return false;
+            }
+        }
+
         public bool IsRemoveButtonEnabled => !IsWaitingResponse;
 
         public IRelayCommand ApplySettingsCommand { get; }
@@ -79,11 +133,14 @@ namespace Tuvi.App.ViewModels
 
         public ICommand HandleErrorCommand => new RelayCommand<object>(ex => OnError(ex as Exception));
 
+        public IRelayCommand CreateHybridAddress { get; }
 
         public BaseAccountSettingsPageViewModel()
         {
             ApplySettingsCommand = new AsyncRelayCommand(ApplySettingsAndGoBackAsync, () => IsApplyButtonEnabled);
             RemoveAccountCommand = new AsyncRelayCommand(RemoveAccountAndGoBackAsync, () => IsRemoveButtonEnabled);
+            CreateHybridAddress = new AsyncRelayCommand(CreateHybridAddressAsync, () => !IsHybridAddress);
+
             ErrorsChanged += (sender, e) => ApplySettingsCommand.NotifyCanExecuteChanged();
         }
 
@@ -233,6 +290,13 @@ namespace Tuvi.App.ViewModels
             {
                 IsWaitingResponse = false;
             }
+        }
+
+        private async Task CreateHybridAddressAsync()
+        {
+            await Core.CreateHybridAccountAsync(AccountSettingsModelToAccount()).ConfigureAwait(true);
+
+            GoBack();
         }
 
         protected virtual Account AccountSettingsModelToAccount()
