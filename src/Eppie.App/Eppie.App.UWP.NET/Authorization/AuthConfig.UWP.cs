@@ -16,29 +16,41 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-// ToDo: Add `WINDOWS_WINUI` constant to Eppie.App.UI.Uno project with `Condition="$(TargetFramework.Contains('windows10'))"`
-#if WINDOWS10_0_19041_0_OR_GREATER && !WINDOWS_UWP
+#if WINDOWS_UWP
 
 using System;
-using System.Linq;
-using System.Text;
-using Microsoft.UI.Text;
+using Finebits.Authorization.OAuth2.Abstractions;
+using Finebits.Authorization.OAuth2.Google;
+using Finebits.Authorization.OAuth2.Outlook;
+using Tuvi.OAuth2;
 
-namespace Tuvi.App.Shared.Extensions
+namespace Tuvi.App.Shared.Authorization
 {
-    public static partial class TextDocumentExtension
+    internal static partial class AuthConfig
     {
-        public static string ToHtml(this RichEditTextDocument document)
+        public static AuthorizationConfiguration GetAuthorizationConfiguration()
         {
-            ArgumentNullException.ThrowIfNull(document);
+            return new AuthorizationConfiguration
+            {
+                AuthenticationBrokerCreator = GetAuthenticationBroker,
+                GoogleConfigurationCreator = () => new GoogleConfiguration
+                {
+                    ClientId = "<ClientId>",
+                    RedirectUri = new Uri("<RedirectUri>"),
+                    ScopeList = GmailScope
+                },
+                OutlookConfigurationCreator = () => new OutlookConfiguration
+                {
+                    ClientId = "<ClientId>",
+                    RedirectUri = new Uri("<RedirectUri>"),
+                    ScopeList = OutlookScope
+                }
+            };
+        }
 
-            document.GetText(TextGetOptions.None, out string text);
-
-            // it seems that we have a bug in rich edit and we always get extra '\r, cut it off
-            int length = text.Last() == SpecialChar.NewLine ? text.Length - 1 : text.Length;
-            ITextRange txtRange = document.GetRange(0, length);
-
-            return GetHtml(txtRange, length);
+        private static IAuthenticationBroker GetAuthenticationBroker()
+        {
+            return new AuthenticationBroker();
         }
     }
 }

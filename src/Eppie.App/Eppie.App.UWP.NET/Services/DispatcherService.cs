@@ -16,31 +16,27 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-// ToDo: Add `WINDOWS_WINUI` constant to Eppie.App.UI.Uno project with `Condition="$(TargetFramework.Contains('windows10'))"`
-#if WINDOWS10_0_19041_0_OR_GREATER && !WINDOWS_UWP
-
 using System;
-using System.Linq;
-using System.Text;
-using Microsoft.UI.Text;
+using System.Threading.Tasks;
+using Tuvi.App.ViewModels.Services;
+using Windows.UI.Core;
 
-namespace Tuvi.App.Shared.Extensions
+namespace Tuvi.App.Shared.Services
 {
-    public static partial class TextDocumentExtension
+    public class DispatcherService : IDispatcherService
     {
-        public static string ToHtml(this RichEditTextDocument document)
+        private readonly CoreDispatcher _dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
+
+        public async Task RunAsync(Action action)
         {
-            ArgumentNullException.ThrowIfNull(document);
-
-            document.GetText(TextGetOptions.None, out string text);
-
-            // it seems that we have a bug in rich edit and we always get extra '\r, cut it off
-            int length = text.Last() == SpecialChar.NewLine ? text.Length - 1 : text.Length;
-            ITextRange txtRange = document.GetRange(0, length);
-
-            return GetHtml(txtRange, length);
+            if (_dispatcher.HasThreadAccess)
+            {
+                action();
+            }
+            else
+            {
+                await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(action));
+            }
         }
     }
 }
-
-#endif

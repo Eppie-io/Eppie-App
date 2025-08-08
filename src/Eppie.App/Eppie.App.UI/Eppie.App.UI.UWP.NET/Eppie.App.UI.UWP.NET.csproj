@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
+    <UseUwp>true</UseUwp>
+
+    <AssemblyName>Eppie.App.UI</AssemblyName>
+    <RootNamespace>Eppie.App.UI</RootNamespace>
+    <DefaultLanguage>en</DefaultLanguage>
+
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <IsAotCompatible>false</IsAotCompatible>
+    <DisableRuntimeMarshalling>true</DisableRuntimeMarshalling>
+
+    <DefineConstants>$(DefineConstants);WINDOWS_UWP</DefineConstants>
+  </PropertyGroup>
+
+  <Import Project="..\Eppie.App.UI.Shared\Eppie.App.UI.Shared.projitems" Label="Shared" />
+  <!-- This hides references to shared .xaml files from the "Eppie.App.UI.Shared" project. -->
+  <ItemGroup>
+    <None Include="..\Eppie.App.UI.Shared\Controls\*.xaml" Visible="false" />
+    <None Include="..\Eppie.App.UI.Shared\Styles\*.xaml" Visible="false" />
+    <None Include="..\Eppie.App.UI.Shared\Converters\*.xaml" Visible="false" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core.Entities\Tuvi.Core.Entities.csproj" />
+    <ProjectReference Include="..\..\Eppie.App.ViewModels\Eppie.App.ViewModels.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Uwp.Controls.TokenizingTextBox" />
+    <PackageReference Include="Microsoft.UI.Xaml" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Uwp.Managed" />
+    <PackageReference Include="System.Private.Uri" />
+  </ItemGroup>
+
+</Project>
