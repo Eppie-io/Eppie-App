@@ -205,8 +205,8 @@
                            Grid.Row="5"
                            Grid.Column="1"
                            Margin="4,8,0,0"
-                           Visibility="{x:Bind ViewModel.IsAdvancedSettingsVisible, Mode=OneWay}"
-                           HorizontalContentAlignment="Left">
+                           HorizontalContentAlignment="Left"
+                           Visibility="{x:Bind ViewModel.IsAdvancedSettingsVisible, Mode=OneWay}">
                 <muxc:Expander.Content>
                     <StackPanel Orientation="Horizontal">
                         <!--  OpenPGP encryption and signature  -->
