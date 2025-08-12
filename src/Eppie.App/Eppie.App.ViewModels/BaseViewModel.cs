@@ -87,6 +87,7 @@ namespace Tuvi.App.ViewModels
         }
 
         public ICommand SupportDevelopmentCommand => new AsyncRelayCommand(SupportDevelopmentAsync);
+        public ICommand PgpKeysCommand => new RelayCommand(() => NavigationService?.Navigate(nameof(PgpKeysPageViewModel)));
 
         private bool _isStorePaymentProcessor = true;
         public bool IsStorePaymentProcessor
@@ -232,7 +233,7 @@ namespace Tuvi.App.ViewModels
                 throw new ArgumentNullException(nameof(account));
             }
 
-            if (StringHelper.IsDecentralizedEmail(account.Email))
+            if (account.Email.IsDecentralized)
             {
                 NavigationService?.Navigate(nameof(DecentralizedAccountSettingsPageViewModel), account);
             }
