@@ -568,12 +568,8 @@ namespace Tuvi.App.ViewModels
         public void OnFromChanged()
         {
             // If the sender is a Decentralized or Hybrid account, then the message encrypted and signed automatically
+            IsSigned = IsEncrypted = From.IsDecentralized;
             IsChangeCryptographyEnabled = !From.IsDecentralized;
-
-            IsSigned
-                = IsEncrypted
-                = !IsChangeCryptographyEnabled;
-
             IsAdvancedSettingsVisible = !Proton.Extensions.IsProton(From) && !From.IsDecentralized;
         }
 
