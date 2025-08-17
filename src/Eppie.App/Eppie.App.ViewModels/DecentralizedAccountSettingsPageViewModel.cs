@@ -17,6 +17,7 @@
 // ---------------------------------------------------------------------------- //
 
 using System;
+using System.Collections.ObjectModel;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -26,6 +27,20 @@ using Tuvi.Core.Entities;
 
 namespace Tuvi.App.ViewModels
 {
+    public class Network
+    {
+        public string Name { get; }
+        public NetworkType NetworkType { get; }
+
+        public Network(string name, NetworkType networkType)
+        {
+            Name = name ?? throw new ArgumentNullException(nameof(name));
+            NetworkType = networkType;
+        }
+
+        public override string ToString() => Name;
+    }
+
     public class DecentralizedAccountSettingsModel : ObservableObject
     {
         protected Account CurrentAccount { get; set; }
@@ -44,20 +59,57 @@ namespace Tuvi.App.ViewModels
             set => SetProperty(ref _senderName, value);
         }
 
+        private ObservableCollection<Network> _networkOptions;
+        public ObservableCollection<Network> NetworkOptions
+        {
+            get => _networkOptions;
+            private set => SetProperty(ref _networkOptions, value);
+        }
+
+        private Network _selectedNetwork;
+        public Network SelectedNetwork
+        {
+            get => _selectedNetwork;
+            set
+            {
+                SetProperty(ref _selectedNetwork, value);
+                OnPropertyChanged(nameof(IsSecretKeyVisible));
+            }
+        }
+
+        private bool _isNetworkLocked;
+        public bool IsNetworkLocked
+        {
+            get => _isNetworkLocked;
+            set => SetProperty(ref _isNetworkLocked, value);
+        }
+
+        private string _secretKeyWIF;
+        public string SecretKeyWIF
+        {
+            get => _secretKeyWIF;
+            set => SetProperty(ref _secretKeyWIF, value);
+        }
+
+        public bool IsSecretKeyVisible
+        {
+            get => SelectedNetwork.NetworkType == NetworkType.Bitcoin;
+        }
+
         public DecentralizedAccountSettingsModel()
         {
-        }
-        protected DecentralizedAccountSettingsModel(Account account)
-        {
-            if (account == null)
+            _networkOptions = new ObservableCollection<Network>
             {
-                throw new ArgumentNullException(nameof(account));
-            }
+                new Network("Eppie Testnet", NetworkType.Eppie),
+                new Network("Bitcoin Testnet", NetworkType.Bitcoin)
+            };
 
-            Email = account.Email.Address;
-            SenderName = account.Email.Name;
+            _selectedNetwork = _networkOptions[0];
+        }
 
-            CurrentAccount = account;
+        protected DecentralizedAccountSettingsModel(Account account) : this()
+        {
+            UpdateAccount(account);
         }
 
         public virtual Account ToAccount()
@@ -70,6 +122,22 @@ namespace Tuvi.App.ViewModels
         {
             return new DecentralizedAccountSettingsModel(account);
         }
+
+        public void UpdateAccount(Account account)
+        {
+            CurrentAccount = account ?? throw new ArgumentNullException(nameof(account));
+            Email = account.Email.Address;
+            SenderName = account.Email.Name;
+
+            if (account.Email.Network == NetworkType.Eppie)
+            {
+                SelectedNetwork = NetworkOptions[0];
+            }
+            else if (account.Email.Network == NetworkType.Bitcoin)
+            {
+                SelectedNetwork = NetworkOptions[1];
+            }
+        }
     }
 
     public class DecentralizedAccountSettingsPageViewModel : BaseViewModel, IDisposable
@@ -78,7 +146,20 @@ namespace Tuvi.App.ViewModels
         public DecentralizedAccountSettingsModel AccountSettingsModel
         {
             get => _accountSettingsModel;
-            set => SetProperty(ref _accountSettingsModel, value, true);
+            set
+            {
+                if (_accountSettingsModel != null)
+                {
+                    _accountSettingsModel.PropertyChanged -= OnAccountSettingsModelPropertyChanged;
+                }
+
+                SetProperty(ref _accountSettingsModel, value, true);
+
+                if (_accountSettingsModel != null)
+                {
+                    _accountSettingsModel.PropertyChanged += OnAccountSettingsModelPropertyChanged;
+                }
+            }
         }
 
         private bool _isWaitingResponse;
@@ -135,20 +216,27 @@ namespace Tuvi.App.ViewModels
             {
                 IsCreatingAccountMode = false;
                 AccountSettingsModel = DecentralizedAccountSettingsModel.Create(accountData);
+                AccountSettingsModel.IsNetworkLocked = !IsCreatingAccountMode;
+
+                if (accountData.Email.Network == NetworkType.Bitcoin)
+                {
+                    AccountSettingsModel.SecretKeyWIF = Core.GetSecurityManager().GetSecretKeyWIF(accountData);
+                }
             }
             else
             {
                 IsCreatingAccountMode = true;
-                accountData = await CreateDecentralizedAccountAsync(default).ConfigureAwait(true);
+                accountData = await CreateDecentralizedAccountAsync(NetworkType.Eppie, default).ConfigureAwait(true);
                 AccountSettingsModel = DecentralizedAccountSettingsModel.Create(accountData);
+                AccountSettingsModel.IsNetworkLocked = !IsCreatingAccountMode;
             }
         }
 
-        public async Task<Account> CreateDecentralizedAccountAsync(CancellationToken cancellationToken)
+        public async Task<Account> CreateDecentralizedAccountAsync(NetworkType networkType, CancellationToken cancellationToken)
         {
-            var (emailName, index) = await Core.GetSecurityManager().GetNextDecAccountPublicKeyAsync(cancellationToken).ConfigureAwait(false);
+            var (publicKey, accountIndex) = await Core.GetSecurityManager().GetNextDecAccountPublicKeyAsync(networkType, cancellationToken).ConfigureAwait(true);
 
-            var email = EmailAddress.CreateDecentralizedAddress(emailName, $"{index}");
+            var email = EmailAddress.CreateDecentralizedAddress(networkType, publicKey, $"#{accountIndex}");
 
             return new Account()
             {
@@ -156,7 +244,7 @@ namespace Tuvi.App.ViewModels
                 IsBackupAccountSettingsEnabled = true,
                 IsBackupAccountMessagesEnabled = true,
                 Type = MailBoxType.Dec,
-                DecentralizedAccountIndex = index,
+                DecentralizedAccountIndex = accountIndex
             };
         }
 
@@ -286,6 +374,29 @@ namespace Tuvi.App.ViewModels
             finally
             {
                 IsWaitingResponse = false;
+            }
+        }
+
+        private async void OnAccountSettingsModelPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(DecentralizedAccountSettingsModel.SelectedNetwork) &&
+                !_accountSettingsModel.IsNetworkLocked)
+            {
+                try
+                {
+                    _accountSettingsModel.IsNetworkLocked = true;
+                    var accountData = await CreateDecentralizedAccountAsync(AccountSettingsModel.SelectedNetwork.NetworkType, default).ConfigureAwait(true);
+                    AccountSettingsModel.UpdateAccount(accountData);
+                    AccountSettingsModel.SecretKeyWIF = AccountSettingsModel.SelectedNetwork.NetworkType == NetworkType.Bitcoin ? Core.GetSecurityManager().GetSecretKeyWIF(accountData) : string.Empty;
+                }
+                catch (Exception ex)
+                {
+                    OnError(ex);
+                }
+                finally
+                {
+                    _accountSettingsModel.IsNetworkLocked = false;
+                }
             }
         }
 

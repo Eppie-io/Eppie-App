@@ -104,10 +104,6 @@ namespace Tuvi.App.Shared.Services
             {
                 return ShowNoSecretKeyErrorMessageAsync(noSecretKeyException.KeyId);
             }
-            else if (exception is NoPublicKeyException noPublicKeyException)
-            {
-                return ShowNoPublicKeyErrorMessageAsync(noPublicKeyException.EmailAddress.DisplayName);
-            }
             else if (exception is MessageDecryptionException decryptionException)
             {
                 return ShowDecryptionErrorMessageAsync(decryptionException.Message);
@@ -427,6 +423,10 @@ namespace Tuvi.App.Shared.Services
             if (coreException is NewMessagesCheckFailedException newMessagesCheckFailedException)
             {
                 return ShowNewMessagesCheckFailedErrorMessageAsync(newMessagesCheckFailedException);
+            }
+            else if (coreException is NoPublicKeyException noPublicKeyException)
+            {
+                return ShowNoPublicKeyErrorMessageAsync(noPublicKeyException.Email.DisplayName);
             }
             else
             {

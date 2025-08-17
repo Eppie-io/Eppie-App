@@ -22,7 +22,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
-using Tuvi.Core;
 using Tuvi.Core.Entities;
 
 namespace Tuvi.App.ViewModels

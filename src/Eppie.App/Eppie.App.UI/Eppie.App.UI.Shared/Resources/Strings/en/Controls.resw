@@ -257,4 +257,16 @@
     <value>WHAT'S NEW</value>
     <comment>A title for the What's new window.</comment>
   </data>
+  <data name="NetworkName.Header" xml:space="preserve">
+    <value>Network</value>
+    <comment>A title for the Network combobox</comment>
+  </data>
+  <data name="SecretKeyWIF.Text" xml:space="preserve">
+    <value>Secret key (WIF)</value>
+    <comment>Title for the Wallet Import Format (WIF) private key display field.</comment>
+  </data>
+  <data name="WarningTestnet.Text" xml:space="preserve">
+    <value>Warning: Testnet addresses are for testing only. Not for real-world use. Use at your own risk.</value>
+    <comment>Warning for testnet addresses.</comment>
+  </data>
 </root>
