@@ -32,7 +32,7 @@ namespace Tuvi.App.ViewModels
         Outlook,
         Decentralized,
         Proton,
-        LoacalAIAgent
+        LocalAIAgent
     }
 
     public class ServiceInfo
@@ -91,7 +91,7 @@ namespace Tuvi.App.ViewModels
                 NavigationService?.Navigate(nameof(ProtonAccountSettingsPageViewModel));
                 return;
             }
-            if (SelectedService.Key == ServiceKey.LoacalAIAgent)
+            if (SelectedService.Key == ServiceKey.LocalAIAgent)
             {
                 NavigationService?.Navigate(nameof(LocalAIAgentSettingsPageViewModel));
                 return;
@@ -129,7 +129,7 @@ namespace Tuvi.App.ViewModels
 
             if (AIService.IsAvailable())
             {
-                Services.Add(new ServiceInfo(ServiceKey.LoacalAIAgent, GetLocalizedString("LoacalAIAgentServiceTitle"), GetLocalizedString("LoacalAIAgentServiceDescription")));
+                Services.Add(new ServiceInfo(ServiceKey.LocalAIAgent, GetLocalizedString("LocalAIAgentServiceTitle"), GetLocalizedString("LocalAIAgentServiceDescription")));
             }
 
             SelectedService = Services.First();
