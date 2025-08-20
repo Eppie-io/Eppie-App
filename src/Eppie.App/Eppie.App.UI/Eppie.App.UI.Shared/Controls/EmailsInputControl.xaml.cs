@@ -111,7 +111,7 @@ namespace Tuvi.App.Shared.Controls
             {
                 var email = new EmailAddress(text);
 
-                if (EmailValidator.Validate(email.IsHybrid ? email.StandardAddress : text, allowTopLevelDomains: true))
+                if (EmailValidator.Validate(email.StandardAddress, allowTopLevelDomains: true))
                 {
                     contact = new ContactItem()
                     {
