@@ -926,11 +926,11 @@ ________________________________________________________________________
     <value>AI エージェントの名前を入力...</value>
     <comment>The placeholder text for AI agent name edit box</comment>
   </data>
-  <data name="LoacalAIAgentServiceTitle" xml:space="preserve">
+  <data name="LocalAIAgentServiceTitle" xml:space="preserve">
     <value>ローカル AI エージェント (Beta)</value>
     <comment>A type of service listed when adding a new service, referring to local AI agents (e.g., translator, writer, corrector, etc.).</comment>
   </data>
-  <data name="LoacalAIAgentServiceDescription" xml:space="preserve">
+  <data name="LocalAIAgentServiceDescription" xml:space="preserve">
     <value>作文、翻訳、校正ほかにも...</value>
     <comment>A description of service listed when adding a new service, referring to local AI agents (e.g., translator, writer, corrector, etc.).</comment>
   </data>
