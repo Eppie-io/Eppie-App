@@ -497,15 +497,20 @@ namespace Tuvi.App.ViewModels
             if (emails != null)
             {
                 char[] separators = { ',', ';' };
-                return emails.Split(separators, StringSplitOptions.RemoveEmptyEntries).Select(email => EmailAddress.Parse(email)).Where(email => ValidateEmail(email.Address) == ValidationResult.Success);
+                return emails.Split(separators, StringSplitOptions.RemoveEmptyEntries).Select(email => EmailAddress.Parse(email)).Where(email => ValidateEmail(email) == ValidationResult.Success);
             }
 
             return Enumerable.Empty<EmailAddress>();
         }
 
-        public static ValidationResult ValidateEmail(string email, ValidationContext context = null)
+        public static ValidationResult ValidateEmail(EmailAddress email, ValidationContext context = null)
         {
-            return EmailValidator.Validate(email, allowTopLevelDomains: true) ? ValidationResult.Success : new ValidationResult(string.Empty);
+            if (email is null)
+            {
+                return new ValidationResult("Email address cannot be null.");
+            }
+
+            return EmailValidator.Validate(email.StandardAddress, allowTopLevelDomains: true) ? ValidationResult.Success : new ValidationResult(string.Empty);
         }
 
         private void AttachPickedFiles(IEnumerable<AttachedFileInfo> files)
