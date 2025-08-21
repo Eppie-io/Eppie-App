@@ -43,6 +43,14 @@ namespace Tuvi.App.Shared.Controls
             this.InitializeComponent();
         }
 
+        private void RenameContactMenuItemClick(object sender, RoutedEventArgs args)
+        {
+            if (sender is FrameworkElement frameworkElement && frameworkElement.Tag is ContactItem contactItem)
+            {
+                ContactsModel?.RenameContactCommand?.Execute(contactItem);
+            }
+        }
+
         private void ChangeContactAvatarMenuItemClick(object sender, RoutedEventArgs args)
         {
             if (sender is FrameworkElement frameworkElement && frameworkElement.Tag is ContactItem contactItem)
