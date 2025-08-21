@@ -285,19 +285,29 @@ namespace Tuvi.App.ViewModels
                 }
                 await DispatcherService.RunAsync(() =>
                 {
-                    var deletedMessage = messageList.FirstOrDefault(m => m.MessageID == e.MessageID && m.Email.HasSameAddress(e.Email) && m.Folder.HasSameName(e.Folder));
-
-                    if (deletedMessage != null)
-                    {
-                        messageList.Remove(deletedMessage);
-                    }
+                    RemoveMatchingMessage(messageList, e);
+                    RemoveMatchingMessage(messageList.OriginalItems, e);
                 }).ConfigureAwait(true);
             }
             catch (Exception ex)
             {
                 OnError(ex);
             }
+
+            void RemoveMatchingMessage(ICollection<MessageInfo> collection, MessageDeletedEventArgs arg)
+            {
+                var message = collection.FirstOrDefault(m =>
+                    m.MessageID == arg.MessageID &&
+                    m.Email.HasSameAddress(arg.Email) &&
+                    m.Folder.HasSameName(arg.Folder));
+
+                if (message != null)
+                {
+                    collection.Remove(message);
+                }
+            }
         }
+
         private async void OnMessagesAttributeChanged(object sender, MessagesAttributeChangedEventArgs e)
         {
             try
