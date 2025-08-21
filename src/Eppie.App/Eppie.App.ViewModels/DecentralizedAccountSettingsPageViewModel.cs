@@ -26,43 +26,32 @@ using Tuvi.Core.Entities;
 
 namespace Tuvi.App.ViewModels
 {
-    public class DecentralizedAccountSettingsModel : ObservableObject
+    public class DecentralizedAccountSettingsModel : BaseAccountSettingsModel
     {
-        protected Account CurrentAccount { get; set; }
-
-        private string _email;
-        public string Email
-        {
-            get => _email;
-            set => SetProperty(ref _email, value);
-        }
-
-        private string _senderName;
-        public string SenderName
-        {
-            get => _senderName;
-            set => SetProperty(ref _senderName, value);
-        }
-
         public DecentralizedAccountSettingsModel()
         {
         }
-        protected DecentralizedAccountSettingsModel(Account account)
+
+        protected DecentralizedAccountSettingsModel(Account account) : base(account)
         {
-            if (account == null)
-            {
-                throw new ArgumentNullException(nameof(account));
-            }
-
-            Email = account.Email.Address;
-            SenderName = account.Email.Name;
-
-            CurrentAccount = account;
         }
 
         public virtual Account ToAccount()
         {
-            CurrentAccount.Email = new EmailAddress(Email, SenderName);
+            if (Email.Value is null)
+            {
+                return null;
+            }
+
+            CurrentAccount.Email = new EmailAddress(Email.Value, SenderName);
+
+            CurrentAccount.IsBackupAccountSettingsEnabled = true;
+            CurrentAccount.IsBackupAccountMessagesEnabled = true;
+            CurrentAccount.SynchronizationInterval = int.TryParse(SynchronizationInterval.Value, out int interval)
+                ? interval
+                : DefaultSynchronizationInterval;
+            CurrentAccount.Type = MailBoxType.Dec;
+
             return CurrentAccount;
         }
 
