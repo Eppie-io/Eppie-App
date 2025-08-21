@@ -754,6 +754,14 @@ namespace Tuvi.App.ViewModels
             }).ConfigureAwait(true);
         }
 
+        public async Task RenameContactAsync(ContactItem contactItem)
+        {
+            if (contactItem != null)
+            {
+                await Core.SetContactNameAsync(contactItem.Email, contactItem.FullName).ConfigureAwait(true);
+            }
+        }
+
         public async Task SetContactAvatarAsync(ContactItem contactItem, byte[] avatarBytes, int avatarWidth, int avatarHeight, CancellationToken cancellationToken = default)
         {
             if (contactItem != null)
@@ -774,15 +782,15 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        public void InitializeNavPanelTabModel(ICommand contactClickCommand, ICommand changeContactAvatarCommand, ICommand mailBoxItemClick, ICommand mailBoxItemDrop)
+        public void InitializeNavPanelTabModel(ICommand contactClickCommand, ICommand renameContactCommand, ICommand changeContactAvatarCommand, ICommand mailBoxItemClick, ICommand mailBoxItemDrop)
         {
-            ContactsModel contactsModel = CreateContactsModel(contactClickCommand, changeContactAvatarCommand);
+            ContactsModel contactsModel = CreateContactsModel(contactClickCommand, renameContactCommand, changeContactAvatarCommand);
             MailBoxesModel mailBoxesModel = new MailBoxesModel(mailBoxItemClick, mailBoxItemDrop);
 
             NavPanelTabModel = new NavPanelTabModel(contactsModel, mailBoxesModel);
         }
 
-        private ContactsModel CreateContactsModel(ICommand contactClickCommand, ICommand changeContactAvatarCommand)
+        private ContactsModel CreateContactsModel(ICommand contactClickCommand, ICommand renameContactCommand, ICommand changeContactAvatarCommand)
         {
             IExtendedComparer<ContactItem>[] contactSortingVariants = new IExtendedComparer<ContactItem>[]
             {
@@ -796,6 +804,7 @@ namespace Tuvi.App.ViewModels
                 ContactClickCommand = contactClickCommand,
                 RemoveContactCommand = RemoveContactCommand,
                 ChangeContactAvatarCommand = changeContactAvatarCommand,
+                RenameContactCommand = renameContactCommand,
 
                 Contacts = new ManagedCollection<ContactItem>()
                 {

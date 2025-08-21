@@ -52,6 +52,8 @@ namespace Tuvi.App.Shared.Views
 
         public ICommand ContactItemClickCommand => new RelayCommand<ContactItem>((contactItem) => contentFrame.Navigate(typeof(ContactMessagesPage), new ContactMessagesPageViewModel.NavigationData() { ContactItem = contactItem, ErrorHandler = this }));
 
+        public ICommand RenameContactCommand => new AsyncRelayCommand<ContactItem>(RenameContactAsync);
+
         public ICommand ChangeContactPictureCommand => new AsyncRelayCommand<ContactItem>(ChangeContactPictureAsync);
 
         public ICommand ShowAboutPageCommand => new RelayCommand(ToggleAboutPane);
@@ -64,7 +66,7 @@ namespace Tuvi.App.Shared.Views
         {
             this.InitializeComponent();
 
-            ViewModel.InitializeNavPanelTabModel(ContactItemClickCommand, ChangeContactPictureCommand, MailBoxItemClickCommand, MailBoxItemDropCommand);
+            ViewModel.InitializeNavPanelTabModel(ContactItemClickCommand, RenameContactCommand, ChangeContactPictureCommand, MailBoxItemClickCommand, MailBoxItemDropCommand);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -175,6 +177,14 @@ namespace Tuvi.App.Shared.Views
         {
             ViewModel.OnShowAllMessages();
             contentFrame.Navigate(typeof(AllMessagesPage), new AllMessagesPageViewModel.NavigationData() { ErrorHandler = this });
+        }
+
+        private async Task RenameContactAsync(ContactItem contactItem)
+        {
+            const string NewName = "New name";
+            contactItem.FullName = NewName;
+
+            await ViewModel.RenameContactAsync(contactItem).ConfigureAwait(true);
         }
 
         private async Task ChangeContactPictureAsync(ContactItem contactItem)
