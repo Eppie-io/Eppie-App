@@ -44,14 +44,6 @@ namespace Tuvi.App.ViewModels
 
     public class DecentralizedAccountSettingsModel : BaseAccountSettingsModel
     {
-        public DecentralizedAccountSettingsModel()
-        {
-        }
-
-        protected DecentralizedAccountSettingsModel(Account account) : base(account)
-        {
-        }
-
         private ObservableCollection<Network> _networkOptions;
         public ObservableCollection<Network> NetworkOptions
         {
@@ -89,7 +81,7 @@ namespace Tuvi.App.ViewModels
             get => SelectedNetwork.NetworkType == NetworkType.Bitcoin;
         }
 
-        public DecentralizedAccountSettingsModel()
+        protected DecentralizedAccountSettingsModel(Account account) : base(account)
         {
             _networkOptions = new ObservableCollection<Network>
             {
@@ -98,10 +90,7 @@ namespace Tuvi.App.ViewModels
             };
 
             _selectedNetwork = _networkOptions[0];
-        }
 
-        protected DecentralizedAccountSettingsModel(Account account) : this()
-        {
             UpdateAccount(account);
         }
 
@@ -111,7 +100,7 @@ namespace Tuvi.App.ViewModels
             {
                 return null;
             }
-            
+
             CurrentAccount.Email = new EmailAddress(Email.Value, SenderName);
 
             CurrentAccount.IsBackupAccountSettingsEnabled = true;
@@ -132,7 +121,7 @@ namespace Tuvi.App.ViewModels
         public void UpdateAccount(Account account)
         {
             CurrentAccount = account ?? throw new ArgumentNullException(nameof(account));
-            Email = account.Email.Address;
+            Email.Value = account.Email.Address;
             SenderName = account.Email.Name;
 
             SelectedNetwork = NetworkOptions.FirstOrDefault(x => x.NetworkType == account.Email.Network) ?? NetworkOptions.First();
