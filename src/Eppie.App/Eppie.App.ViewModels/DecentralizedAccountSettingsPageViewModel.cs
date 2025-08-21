@@ -18,6 +18,7 @@
 
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -129,14 +130,7 @@ namespace Tuvi.App.ViewModels
             Email = account.Email.Address;
             SenderName = account.Email.Name;
 
-            if (account.Email.Network == NetworkType.Eppie)
-            {
-                SelectedNetwork = NetworkOptions[0];
-            }
-            else if (account.Email.Network == NetworkType.Bitcoin)
-            {
-                SelectedNetwork = NetworkOptions[1];
-            }
+            SelectedNetwork = NetworkOptions.FirstOrDefault(x => x.NetworkType == account.Email.Network) ?? NetworkOptions.First();
         }
     }
 
