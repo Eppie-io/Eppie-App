@@ -181,9 +181,6 @@ namespace Tuvi.App.Shared.Views
 
         private async Task RenameContactAsync(ContactItem contactItem)
         {
-            const string NewName = "New name";
-            contactItem.FullName = NewName;
-
             await ViewModel.RenameContactAsync(contactItem).ConfigureAwait(true);
         }
 
