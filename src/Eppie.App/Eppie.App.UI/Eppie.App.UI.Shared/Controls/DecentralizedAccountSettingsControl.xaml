@@ -35,12 +35,13 @@
                          HorizontalAlignment="Stretch"
                          IsReadOnly="True"
                          IsSpellCheckEnabled="False"
-                         Text="{x:Bind AccountSettingsModel.Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                         Text="{x:Bind AccountSettingsModel.Email, Mode=OneWay}" />
 
                 <TextBlock x:Uid="/Eppie.App.UI/Controls/SenderName" Margin="0,16,0,4" />
                 <controls:PromptTextInputControl HorizontalAlignment="Stretch"
                                                  IsSpellCheckEnabled="False"
                                                  Text="{x:Bind AccountSettingsModel.SenderName, Mode=TwoWay}" />
+
 
                 <muxc:Expander Margin="0,16,0,4"
                                HorizontalContentAlignment="Left"
@@ -64,7 +65,16 @@
                     </muxc:Expander.Content>
                 </muxc:Expander>
 
-            </StackPanel>
+                <StackPanel Margin="0,16,0,4">
+                    <TextBlock x:Uid="/Eppie.App.UI/Controls/CheckNewMessagesIntervalLabel" Margin="0,0,0,4" />
+                    <local:ErrorControl HorizontalAlignment="Stretch" Property="{x:Bind AccountSettingsModel.SynchronizationInterval, Mode=OneWay}">
+                        <local:ErrorControl.InnerContent>
+                            <TextBox IsSpellCheckEnabled="False" Text="{x:Bind AccountSettingsModel.SynchronizationInterval.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </local:ErrorControl.InnerContent>
+                    </local:ErrorControl>
+                </StackPanel>
+
+          </StackPanel>
         </ScrollViewer>
     </Grid>
 </UserControl>

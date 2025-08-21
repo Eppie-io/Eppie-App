@@ -42,22 +42,14 @@ namespace Tuvi.App.ViewModels
         public override string ToString() => Name;
     }
 
-    public class DecentralizedAccountSettingsModel : ObservableObject
+    public class DecentralizedAccountSettingsModel : BaseAccountSettingsModel
     {
-        protected Account CurrentAccount { get; set; }
-
-        private string _email;
-        public string Email
+        public DecentralizedAccountSettingsModel()
         {
-            get => _email;
-            set => SetProperty(ref _email, value);
         }
 
-        private string _senderName;
-        public string SenderName
+        protected DecentralizedAccountSettingsModel(Account account) : base(account)
         {
-            get => _senderName;
-            set => SetProperty(ref _senderName, value);
         }
 
         private ObservableCollection<Network> _networkOptions;
@@ -115,7 +107,20 @@ namespace Tuvi.App.ViewModels
 
         public virtual Account ToAccount()
         {
-            CurrentAccount.Email = new EmailAddress(Email, SenderName);
+            if (Email.Value is null)
+            {
+                return null;
+            }
+            
+            CurrentAccount.Email = new EmailAddress(Email.Value, SenderName);
+
+            CurrentAccount.IsBackupAccountSettingsEnabled = true;
+            CurrentAccount.IsBackupAccountMessagesEnabled = true;
+            CurrentAccount.SynchronizationInterval = int.TryParse(SynchronizationInterval.Value, out int interval)
+                ? interval
+                : DefaultSynchronizationInterval;
+            CurrentAccount.Type = MailBoxType.Dec;
+
             return CurrentAccount;
         }
 
