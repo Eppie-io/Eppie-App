@@ -69,6 +69,7 @@ namespace Tuvi.App.ViewModels
             set => SetProperty(ref _isNetworkLocked, value);
         }
 
+        // TODO: Zeroize WIF key after using it
         private string _secretKeyWIF;
         public string SecretKeyWIF
         {
@@ -208,7 +209,7 @@ namespace Tuvi.App.ViewModels
 
                 if (accountData.Email.Network == NetworkType.Bitcoin)
                 {
-                    AccountSettingsModel.SecretKeyWIF = Core.GetSecurityManager().GetSecretKeyWIF(accountData);
+                    AccountSettingsModel.SecretKeyWIF = await Core.GetSecurityManager().GetSecretKeyWIFAsync(accountData).ConfigureAwait(true);
                 }
             }
             else
@@ -375,7 +376,10 @@ namespace Tuvi.App.ViewModels
                     _accountSettingsModel.IsNetworkLocked = true;
                     var accountData = await CreateDecentralizedAccountAsync(AccountSettingsModel.SelectedNetwork.NetworkType, default).ConfigureAwait(true);
                     AccountSettingsModel.UpdateAccount(accountData);
-                    AccountSettingsModel.SecretKeyWIF = AccountSettingsModel.SelectedNetwork.NetworkType == NetworkType.Bitcoin ? Core.GetSecurityManager().GetSecretKeyWIF(accountData) : string.Empty;
+                    if (AccountSettingsModel.SelectedNetwork.NetworkType == NetworkType.Bitcoin)
+                    {
+                        AccountSettingsModel.SecretKeyWIF = await Core.GetSecurityManager().GetSecretKeyWIFAsync(accountData).ConfigureAwait(true);
+                    }
                 }
                 catch (Exception ex)
                 {
