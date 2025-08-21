@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="using:Tuvi.App.Shared.Controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
              d:DesignHeight="300"
              d:DesignWidth="400"
              mc:Ignorable="d">
@@ -13,7 +14,23 @@
         <ScrollViewer IsEnabled="{x:Bind IsLocked, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}">
             <StackPanel Margin="0,0,20,0" Orientation="Vertical">
 
-                <TextBlock x:Uid="/Eppie.App.UI/Controls/EmailAddress" Margin="0,0,0,4" />
+                <ComboBox x:Uid="/Eppie.App.UI/Controls/NetworkName"
+                          Margin="0,16,0,4"
+                          IsEnabled="{x:Bind AccountSettingsModel.IsNetworkLocked, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}"
+                          ItemsSource="{x:Bind AccountSettingsModel.NetworkOptions, Mode=OneWay}"
+                          SelectedItem="{x:Bind AccountSettingsModel.SelectedNetwork, Mode=TwoWay}" />
+
+                <Border Margin="0,16,0,4"
+                        Padding="4"
+                        Background="{ThemeResource SystemFillColorCautionBackgroundBrush}"
+                        CornerRadius="4">
+                    <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                        <SymbolIcon Margin="0,0,10,0" Symbol="Important" />
+                        <TextBlock x:Uid="/Eppie.App.UI/Controls/WarningTestnet" TextWrapping="Wrap" />
+                    </StackPanel>
+                </Border>
+
+                <TextBlock x:Uid="/Eppie.App.UI/Controls/EmailAddress" Margin="0,16,0,4" />
                 <TextBox x:Name="EmailBox"
                          HorizontalAlignment="Stretch"
                          IsReadOnly="True"
@@ -25,6 +42,28 @@
                                                  IsSpellCheckEnabled="False"
                                                  Text="{x:Bind AccountSettingsModel.SenderName, Mode=TwoWay}" />
 
+
+                <muxc:Expander Margin="0,16,0,4"
+                               HorizontalContentAlignment="Left"
+                               Visibility="{x:Bind AccountSettingsModel.IsSecretKeyVisible, Mode=OneWay}">
+                    <muxc:Expander.Header>
+
+                        <TextBlock x:Uid="/Eppie.App.UI/Controls/SecretKeyWIF" Style="{StaticResource NormalTextStyle}" />
+
+                    </muxc:Expander.Header>
+                    <muxc:Expander.Content>
+                        <StackPanel Orientation="Horizontal">
+
+                            <TextBox InputScope="Password"
+                                     IsReadOnly="True"
+                                     IsSpellCheckEnabled="False"
+                                     IsTextPredictionEnabled="False"
+                                     Text="{x:Bind AccountSettingsModel.SecretKeyWIF, Mode=OneWay}" />
+
+                        </StackPanel>
+
+                    </muxc:Expander.Content>
+                </muxc:Expander>
 
                 <StackPanel Margin="0,16,0,4">
                     <TextBlock x:Uid="/Eppie.App.UI/Controls/CheckNewMessagesIntervalLabel" Margin="0,0,0,4" />
