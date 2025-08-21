@@ -1058,4 +1058,20 @@ Subject: {3}
     <value>Translators</value>
     <comment>Text for the translators in the thaks list.</comment>
   </data>
+  <data name="RenameContactDialogTitle" xml:space="preserve">
+    <value>Rename Contact</value>
+    <comment>Title of the rename contact dialog</comment>
+  </data>
+  <data name="RenameContactDialogPrimaryButtonText" xml:space="preserve">
+    <value>Rename</value>
+    <comment>Text for the rename button in the dialog</comment>
+  </data>
+  <data name="RenameContactDialogCloseButtonText" xml:space="preserve">
+    <value>Cancel</value>
+    <comment>Text for the cancel button in the dialog</comment>
+  </data>
+  <data name="RenameContactDialogTextBoxHeader" xml:space="preserve">
+    <value>New name</value>
+    <comment>Header for the textbox in the rename contact dialog</comment>
+  </data>
 </root>
