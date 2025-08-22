@@ -181,6 +181,10 @@
     <value>Mailboxes</value>
     <comment>The header for Tab with list of mailboxes (user connected e-mail accounts)</comment>
   </data>
+  <data name="RenameContactMenuItem.Text" xml:space="preserve">
+    <value>Rename contact</value>
+    <comment>Text of the context menu item that renames contact</comment>
+  </data>
   <data name="ChangeContactAvatarMenuItem.Text" xml:space="preserve">
     <value>Change avatar</value>
     <comment>Text of the context menu item that changes contact's avatar</comment>

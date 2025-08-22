@@ -17,6 +17,7 @@
 // ---------------------------------------------------------------------------- //
 
 using Tuvi.App.ViewModels;
+using Eppie.App.UI.Resources;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -30,6 +31,8 @@ namespace Tuvi.App.Shared.Controls
 {
     public sealed partial class ContactsListControl : UserControl
     {
+        private static readonly StringProvider StringProvider = StringProvider.GetInstance();
+
         public ContactsModel ContactsModel
         {
             get { return (ContactsModel)GetValue(ContactsModelProperty); }
@@ -41,6 +44,53 @@ namespace Tuvi.App.Shared.Controls
         public ContactsListControl()
         {
             this.InitializeComponent();
+        }
+
+        private void RenameContactMenuItemClick(object sender, RoutedEventArgs args)
+        {
+            if (sender is FrameworkElement frameworkElement && frameworkElement.Tag is ContactItem contactItem)
+            {
+                var dialog = new ContentDialog
+                {
+                    Title = StringProvider.GetString("RenameContactDialogTitle"),
+                    PrimaryButtonText = StringProvider.GetString("RenameContactDialogPrimaryButtonText"),
+                    CloseButtonText = StringProvider.GetString("RenameContactDialogCloseButtonText")
+                };
+
+                var stackPanel = new StackPanel { Spacing = 8 };
+                var textBox = new TextBox { Header = StringProvider.GetString("RenameContactDialogTextBoxHeader"), Text = contactItem.DisplayName, AcceptsReturn = false };
+                textBox.SelectAll();
+
+                stackPanel.Children.Add(textBox);
+                dialog.Content = stackPanel;
+
+                textBox.KeyDown += (s, e) =>
+                {
+                    if (e.Key == Windows.System.VirtualKey.Enter)
+                    {
+                        dialog.Hide();
+
+                        RenameCommand(contactItem, textBox);
+                    }
+                    else if (e.Key == Windows.System.VirtualKey.Escape)
+                    {
+                        dialog.Hide();
+                    }
+                };
+
+                dialog.PrimaryButtonClick += (s, e) =>
+                {
+                    RenameCommand(contactItem, textBox);
+                };
+
+                _ = dialog.ShowAsync();
+            }
+
+            void RenameCommand(ContactItem contact, TextBox textBox)
+            {
+                contactItem.FullName = textBox.Text;
+                ContactsModel?.RenameContactCommand?.Execute(contactItem);
+            }
         }
 
         private void ChangeContactAvatarMenuItemClick(object sender, RoutedEventArgs args)

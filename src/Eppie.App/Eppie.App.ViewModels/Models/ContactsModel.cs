@@ -45,6 +45,13 @@ namespace Tuvi.App.ViewModels
             set { SetProperty(ref _contactClickCommand, value); }
         }
 
+        private ICommand _renameContactCommand;
+        public ICommand RenameContactCommand
+        {
+            get { return _renameContactCommand; }
+            set { SetProperty(ref _renameContactCommand, value); }
+        }
+
         private ICommand _changeContactAvatarCommand;
         public ICommand ChangeContactAvatarCommand
         {
