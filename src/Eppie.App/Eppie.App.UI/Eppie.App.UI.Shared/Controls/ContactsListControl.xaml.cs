@@ -59,6 +59,8 @@ namespace Tuvi.App.Shared.Controls
 
                 var stackPanel = new StackPanel { Spacing = 8 };
                 var textBox = new TextBox { Header = StringProvider.GetString("RenameContactDialogTextBoxHeader"), Text = contactItem.DisplayName, AcceptsReturn = false };
+                textBox.SelectAll();
+
                 stackPanel.Children.Add(textBox);
                 dialog.Content = stackPanel;
 

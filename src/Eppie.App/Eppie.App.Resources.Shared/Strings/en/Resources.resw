@@ -1071,7 +1071,7 @@ Subject: {3}
     <comment>Text for the cancel button in the dialog</comment>
   </data>
   <data name="RenameContactDialogTextBoxHeader" xml:space="preserve">
-    <value>New name</value>
+    <value>Enter a new name for the contact</value>
     <comment>Header for the textbox in the rename contact dialog</comment>
   </data>
 </root>
