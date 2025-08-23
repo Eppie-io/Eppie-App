@@ -236,10 +236,16 @@ namespace Tuvi.App.ViewModels
         {
             get
             {
-                var errors = GetErrors(nameof(To));
+                // Check that all correspondents have valid emails
+                bool allValid = To.All(c => c?.Email != null && IsEmailValid(c.Email))
+                    && (UntokenizedContactTo == null || (UntokenizedContactTo.Email != null && IsEmailValid(UntokenizedContactTo.Email)))
+                    && Copy.All(c => c?.Email != null && IsEmailValid(c.Email))
+                    && (UntokenizedContactCopy == null || (UntokenizedContactCopy.Email != null && IsEmailValid(UntokenizedContactCopy.Email)))
+                    && HiddenCopy.All(c => c?.Email != null && IsEmailValid(c.Email))
+                    && (UntokenizedContactHiddenCopy == null || (UntokenizedContactHiddenCopy.Email != null && IsEmailValid(UntokenizedContactHiddenCopy.Email)));
 
                 return _canSendMessage
-                    && !errors.Any()
+                    && allValid
                     && (
                         To.Count > 0 || UntokenizedContactTo != null ||
                         Copy.Count > 0 || UntokenizedContactCopy != null ||
@@ -277,10 +283,13 @@ namespace Tuvi.App.ViewModels
         public NewMessagePageViewModel()
         {
             SendMessageAndGoBackCommand = new AsyncRelayCommand(SendMessageAndGoBackAsync, () => CanSendMessage);
-            To.CollectionChanged += OnToCollectionChanged;
+
+            To.CollectionChanged += OnCollectionChanged;
+            Copy.CollectionChanged += OnCollectionChanged;
+            HiddenCopy.CollectionChanged += OnCollectionChanged;
         }
 
-        private void OnToCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             SendMessageAndGoBackCommand.NotifyCanExecuteChanged();
         }
@@ -301,9 +310,7 @@ namespace Tuvi.App.ViewModels
             {
                 Attachments.CollectionChanged += NotifyHasAttachmentsChanged;
 
-                await UpdateEmailAccountsListAsync().ConfigureAwait(true);
-
-                await UpdateContactsAsync().ConfigureAwait(true);
+                await UpdateEmailAccountsAndContactsAsync().ConfigureAwait(true);
 
                 if (data is NewMessageData messageData)
                 {
@@ -402,16 +409,18 @@ namespace Tuvi.App.ViewModels
             return FromList.FirstOrDefault((email) => StringHelper.AreEmailsEqual(email.Address, messageData.From.Address)) ?? FromList.First();
         }
 
-        private async Task UpdateEmailAccountsListAsync()
+        private async Task UpdateEmailAccountsAndContactsAsync()
         {
             var accounts = await Core.GetCompositeAccountsAsync().ConfigureAwait(true);
             FromList.SetItems(accounts.SelectMany(account => account.Addresses));
-        }
 
-        private async Task UpdateContactsAsync()
-        {
             var contacts = await Core.GetContactsAsync().ConfigureAwait(true);
-            Contacts.SetItems(contacts.Select(contact => new ContactItem(contact)));
+            var contactItems = contacts.Select(contact => new ContactItem(contact));
+            // Add email addresses from accounts as contacts too
+            var accountContactItems = accounts.SelectMany(account => account.Addresses)
+                                              .Select(address => new ContactItem(address));
+
+            Contacts.SetItems(accountContactItems.Concat(contactItems));
         }
 
         private async Task SendMessageAndGoBackAsync()
@@ -497,20 +506,20 @@ namespace Tuvi.App.ViewModels
             if (emails != null)
             {
                 char[] separators = { ',', ';' };
-                return emails.Split(separators, StringSplitOptions.RemoveEmptyEntries).Select(email => EmailAddress.Parse(email)).Where(email => ValidateEmail(email) == ValidationResult.Success);
+                return emails.Split(separators, StringSplitOptions.RemoveEmptyEntries).Select(email => EmailAddress.Parse(email)).Where(email => IsEmailValid(email));
             }
 
             return Enumerable.Empty<EmailAddress>();
         }
 
-        public static ValidationResult ValidateEmail(EmailAddress email, ValidationContext context = null)
+        public static bool IsEmailValid(EmailAddress email)
         {
             if (email is null)
             {
-                return new ValidationResult("Email address cannot be null.");
+                return false;
             }
 
-            return EmailValidator.Validate(email.StandardAddress, allowTopLevelDomains: true) ? ValidationResult.Success : new ValidationResult(string.Empty);
+            return EmailValidator.Validate(email.StandardAddress, allowTopLevelDomains: true);
         }
 
         private void AttachPickedFiles(IEnumerable<AttachedFileInfo> files)

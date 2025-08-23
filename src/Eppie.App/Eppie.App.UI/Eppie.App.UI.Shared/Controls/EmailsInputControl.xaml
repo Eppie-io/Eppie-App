@@ -59,6 +59,7 @@
 
                 <TextBlock Grid.Column="2"
                            VerticalAlignment="Center"
+                           Style="{x:Bind Email, Converter={StaticResource EmailValidityToStyleConverter}}"
                            Text="{x:Bind DisplayName, Mode=OneWay}" />
 
             </Grid>
@@ -69,9 +70,11 @@
     <Grid>
 
         <controls:TokenizingTextBox ItemsSource="{x:Bind SelectedContacts, Mode=OneWay}"
+                                    LostFocus="SuggestBox_LostFocus"
                                     SuggestedItemTemplate="{StaticResource SuggestContactItemTemplate}"
                                     TextChanged="SuggestBox_TextChanged"
                                     TokenDelimiter=";"
+                                    TokenItemAdded="SuggestBox_TokenItemAdded"
                                     TokenItemAdding="SuggestBox_TokenItemAdding"
                                     TokenItemTemplate="{StaticResource TokenContactItemTemplate}" />
 
