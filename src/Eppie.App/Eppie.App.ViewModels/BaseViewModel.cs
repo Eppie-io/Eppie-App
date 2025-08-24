@@ -277,7 +277,8 @@ namespace Tuvi.App.ViewModels
             message.AIAgentProcessedBody = GetLocalizedString("ThinkingMessage");
             var thinking = true;
 
-            message.AIAgentProcessedBody = await AIService.ProcessTextAsync(
+            message.AIAgentProcessedBody = await AIService.ProcessTextAsync
+            (
                 agent,
                 text,
                 CancellationToken.None,
