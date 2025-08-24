@@ -277,24 +277,20 @@ namespace Tuvi.App.ViewModels
             message.AIAgentProcessedBody = GetLocalizedString("ThinkingMessage");
             var thinking = true;
 
-            var ai = AIService;
-            if (ai != null)
-            {
-                message.AIAgentProcessedBody = await ai.ProcessTextAsync(
-                    agent,
-                    text,
-                    CancellationToken.None,
-                    textPart => DispatcherService.RunAsync(() =>
+            message.AIAgentProcessedBody = await AIService.ProcessTextAsync(
+                agent,
+                text,
+                CancellationToken.None,
+                textPart => DispatcherService.RunAsync(() =>
+                {
+                    if (thinking)
                     {
-                        if (thinking)
-                        {
-                            message.AIAgentProcessedBody = string.Empty;
-                            thinking = false;
-                        }
-                        message.AIAgentProcessedBody += textPart;
-                    })
-                ).ConfigureAwait(true);
-            }
+                        message.AIAgentProcessedBody = string.Empty;
+                        thinking = false;
+                    }
+                    message.AIAgentProcessedBody += textPart;
+                })
+            ).ConfigureAwait(true);
 
             try
             {
