@@ -38,8 +38,7 @@ namespace Tuvi.App.Converters
 
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            var email = value as EmailAddress;
-            if (email != null && EmailValidator.Validate(email.StandardAddress, allowTopLevelDomains: true))
+            if (value is EmailAddress email && EmailValidator.Validate(email.StandardAddress, allowTopLevelDomains: true))
             {
                 return ValidEmailStyle;
             }

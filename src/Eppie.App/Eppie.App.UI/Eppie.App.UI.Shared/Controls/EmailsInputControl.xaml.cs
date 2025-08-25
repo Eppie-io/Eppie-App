@@ -186,8 +186,7 @@ namespace Tuvi.App.Shared.Controls
 
         private void SuggestBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (UntokenizedContact != null &&
-                UntokenizedContact.Email != null &&
+            if (UntokenizedContact?.Email != null &&
                 !SelectedContacts.Any(c => c.Email != null && c.Email.Address == UntokenizedContact.Email.Address))
             {
                 SelectedContacts.Add(UntokenizedContact);
