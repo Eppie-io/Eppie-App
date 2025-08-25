@@ -514,12 +514,7 @@ namespace Tuvi.App.ViewModels
 
         public static bool IsEmailValid(EmailAddress email)
         {
-            if (email is null)
-            {
-                return false;
-            }
-
-            return EmailValidator.Validate(email.StandardAddress, allowTopLevelDomains: true);
+            return email != null && EmailValidator.Validate(email.StandardAddress, allowTopLevelDomains: true);
         }
 
         private void AttachPickedFiles(IEnumerable<AttachedFileInfo> files)
