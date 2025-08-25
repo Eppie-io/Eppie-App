@@ -114,10 +114,10 @@ namespace Tuvi.App.Shared.Controls
             // Remove any contact that was added by LostFocus from partial user input
             if (!string.IsNullOrWhiteSpace(userInputText) && args is ContactItem addedContact && addedContact != null)
             {
-                var partialContact = SelectedContacts.LastOrDefault(c => c != addedContact &&
-                    !string.IsNullOrWhiteSpace(c.DisplayName) &&
-                    string.Equals(c.DisplayName, userInputText, StringComparison.OrdinalIgnoreCase));
-                SelectedContacts.Remove(partialContact);
+                if (partialContact != null)
+                {
+                    SelectedContacts.Remove(partialContact);
+                }
             }
 
             // Compare only the last two contacts and remove one if their emails match
