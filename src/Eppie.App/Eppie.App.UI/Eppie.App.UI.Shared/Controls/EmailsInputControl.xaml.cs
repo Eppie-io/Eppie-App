@@ -62,9 +62,11 @@ namespace Tuvi.App.Shared.Controls
         public static readonly DependencyProperty ContactsProperty =
             DependencyProperty.Register(nameof(Contacts), typeof(object), typeof(EmailsInputControl), new PropertyMetadata(new ObservableCollection<ContactItem>()));
 
-
+        private string _oldUserInputText = string.Empty;
         private void SuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
+            _oldUserInputText = string.Empty;
+
             var text = sender.Text.Trim();
 
             if (args.CheckCurrent() && args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
@@ -100,27 +102,80 @@ namespace Tuvi.App.Shared.Controls
             }
         }
 
+        private void SuggestBox_TokenItemAdded(TokenizingTextBox sender, object args)
+        {
+            // Remove contact added by LostFocus if its DisplayName matches the previous user input
+            var userInputText = _oldUserInputText?.Trim();
+
+            _oldUserInputText = string.Empty;
+            sender.Text = string.Empty;
+            UntokenizedContact = null;
+
+            // Remove any contact that was added by LostFocus from partial user input
+            if (!string.IsNullOrWhiteSpace(userInputText) && args is ContactItem addedContact && addedContact != null)
+            {
+                var partialContact = SelectedContacts.LastOrDefault(c => c != addedContact &&
+                    !string.IsNullOrWhiteSpace(c.DisplayName) &&
+                    string.Equals(c.DisplayName, userInputText, StringComparison.OrdinalIgnoreCase));
+
+                if (partialContact != null)
+                {
+                    SelectedContacts.Remove(partialContact);
+                }
+            }
+
+            // Compare only the last two contacts and remove one if their emails match
+            if (SelectedContacts.Count >= 2)
+            {
+                var last = SelectedContacts[SelectedContacts.Count - 1];
+                var prev = SelectedContacts[SelectedContacts.Count - 2];
+                if (last.Email == prev.Email)
+                {
+                    SelectedContacts.Remove(last);
+                }
+            }
+        }
 
         private ContactItem GetContactItemFromText(string text)
         {
+            text = CleanAddress(text);
+
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                return null;
+            }
+
             // Take the text and convert it to our data type (if we have a matching one).
             var contact = GetMatchedItem(text);
 
             // Otherwise, create a new version of our data type
             if (contact is null)
             {
-                var email = new EmailAddress(text);
-
-                if (EmailValidator.Validate(email.StandardAddress, allowTopLevelDomains: true))
+                contact = new ContactItem()
                 {
-                    contact = new ContactItem()
-                    {
-                        Email = email
-                    };
-                }
+                    Email = new EmailAddress(text)
+                };
             }
 
             return contact;
+        }
+
+        private static string CleanAddress(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                return string.Empty;
+            }
+
+            var result = email.Trim();
+
+            const string MailtoPrefix = "mailto:";
+            if (result.StartsWith(MailtoPrefix, StringComparison.OrdinalIgnoreCase))
+            {
+                result = result.Substring(MailtoPrefix.Length);
+            }
+
+            return result;
         }
 
         private ContactItem GetMatchedItem(string searchText)
@@ -133,6 +188,21 @@ namespace Tuvi.App.Shared.Controls
             return Contacts.FirstOrDefault(contact => StringHelper.AreEmailsEqual(contact.Email.Address, searchText));
         }
 
+        private void SuggestBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (UntokenizedContact?.Email != null &&
+                !SelectedContacts.Any(c => c.Email != null && c.Email.Address == UntokenizedContact.Email.Address))
+            {
+                SelectedContacts.Add(UntokenizedContact);
+
+                UntokenizedContact = null;
+                if (sender is TokenizingTextBox tokenizingTextBox)
+                {
+                    _oldUserInputText = tokenizingTextBox.Text;
+                    tokenizingTextBox.Text = string.Empty;
+                }
+            }
+        }
 
         public EmailsInputControl()
         {

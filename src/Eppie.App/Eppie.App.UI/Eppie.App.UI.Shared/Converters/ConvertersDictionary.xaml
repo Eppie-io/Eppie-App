@@ -51,4 +51,19 @@
                                      FalseValue="{StaticResource AccentTextStyle}"
                                      TrueValue="{StaticResource BodyTextBlockStyle}" />
 
+    <Style x:Key="ValidEmailTextBlockStyle"
+           BasedOn="{StaticResource BodyTextBlockStyle}"
+           TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{ThemeResource TextFillColorPrimaryBrush}" />
+    </Style>
+    <Style x:Key="InvalidEmailTextBlockStyle"
+           BasedOn="{StaticResource BodyTextBlockStyle}"
+           TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{ThemeResource SystemControlErrorTextForegroundBrush}" />
+    </Style>
+
+    <converters:EmailValidityToStyleConverter x:Key="EmailValidityToStyleConverter"
+                                              InvalidEmailStyle="{StaticResource InvalidEmailTextBlockStyle}"
+                                              ValidEmailStyle="{StaticResource ValidEmailTextBlockStyle}" />
+
 </ResourceDictionary>
