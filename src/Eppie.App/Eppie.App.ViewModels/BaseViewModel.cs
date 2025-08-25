@@ -40,14 +40,19 @@ namespace Tuvi.App.ViewModels
             ErrorHandler?.SetMessageService(MessageService);
         }
 
-        public void SetCore(Func<Tuvi.Core.ITuviMail> coreProvider)
+        protected Tuvi.Core.ITuviMail Core { get { return CoreProvider(); } }
+        private Func<Tuvi.Core.ITuviMail> CoreProvider { get; set; }
+        public void SetCoreProvider(Func<Tuvi.Core.ITuviMail> coreProvider)
         {
             CoreProvider = coreProvider;
         }
 
-        private Func<Tuvi.Core.ITuviMail> CoreProvider { get; set; }
-
-        protected Tuvi.Core.ITuviMail Core { get { return CoreProvider(); } }
+        protected IAIService AIService { get { return AIServiceProvider(); } }
+        private Func<IAIService> AIServiceProvider { get; set; }
+        public void SetAIServiceProvider(Func<IAIService> provider)
+        {
+            AIServiceProvider = provider;
+        }
 
         protected INavigationService NavigationService { get; private set; }
         public void SetNavigationService(INavigationService navigationService)
@@ -59,12 +64,6 @@ namespace Tuvi.App.ViewModels
         public void SetLocalSettingsService(ILocalSettingsService localSettingsService)
         {
             LocalSettingsService = localSettingsService;
-        }
-
-        protected IAIService AIService { get; private set; }
-        public void SetAIService(IAIService aiService)
-        {
-            AIService = aiService;
         }
 
         protected ILocalizationService LocalizationService { get; set; }
@@ -283,19 +282,15 @@ namespace Tuvi.App.ViewModels
                 agent,
                 text,
                 CancellationToken.None,
-                (textPart) =>
+                textPart => DispatcherService.RunAsync(() =>
                 {
-                    DispatcherService.RunAsync(() =>
+                    if (thinking)
                     {
-                        if (thinking)
-                        {
-                            message.AIAgentProcessedBody = string.Empty;
-                            thinking = false;
-                        }
-
-                        message.AIAgentProcessedBody += textPart;
-                    });
-                }
+                        message.AIAgentProcessedBody = string.Empty;
+                        thinking = false;
+                    }
+                    message.AIAgentProcessedBody += textPart;
+                })
             ).ConfigureAwait(true);
 
             try

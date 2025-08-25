@@ -74,10 +74,10 @@ namespace Tuvi.App.Shared.Views
             var app = Application.Current as Eppie.App.Shared.App;
 
             ViewModel = DataContext as TViewModel;
-            ViewModel.SetCore(() => app.Core);
+            ViewModel.SetCoreProvider(() => app.Core);
+            ViewModel.SetAIServiceProvider(() => app.AIService);
             ViewModel.SetNavigationService(app.NavigationService);
             ViewModel.SetLocalSettingsService(app.LocalSettingsService);
-            ViewModel.SetAIService(app.AIService);
             ViewModel.SetLocalizationService(new LocalizationService(app.Host?.Services));
             ViewModel.SetMessageService(new MessageService(() => app.XamlRoot));
             ViewModel.SetErrorHandler(new ErrorHandler());
