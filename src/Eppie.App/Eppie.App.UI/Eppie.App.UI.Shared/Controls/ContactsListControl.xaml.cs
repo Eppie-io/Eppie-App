@@ -54,7 +54,8 @@ namespace Tuvi.App.Shared.Controls
                 {
                     Title = StringProvider.GetString("RenameContactDialogTitle"),
                     PrimaryButtonText = StringProvider.GetString("RenameContactDialogPrimaryButtonText"),
-                    CloseButtonText = StringProvider.GetString("RenameContactDialogCloseButtonText")
+                    CloseButtonText = StringProvider.GetString("RenameContactDialogCloseButtonText"),
+                    XamlRoot = this.XamlRoot
                 };
 
                 var stackPanel = new StackPanel { Spacing = 8 };
@@ -88,8 +89,8 @@ namespace Tuvi.App.Shared.Controls
 
             void RenameCommand(ContactItem contact, TextBox textBox)
             {
-                contactItem.FullName = textBox.Text;
-                ContactsModel?.RenameContactCommand?.Execute(contactItem);
+                contact.FullName = textBox.Text;
+                ContactsModel?.RenameContactCommand?.Execute(contact);
             }
         }
 
