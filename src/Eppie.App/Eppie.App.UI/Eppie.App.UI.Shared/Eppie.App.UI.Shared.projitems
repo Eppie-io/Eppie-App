@@ -12,6 +12,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\DialogBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\ListViewItemClickBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\TreeViewItemInvokeBehavior.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\EmailValidityToStyleConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\SupportDevelopmentControl.xaml.cs">
       <DependentUpon>SupportDevelopmentControl.xaml</DependentUpon>
     </Compile>
