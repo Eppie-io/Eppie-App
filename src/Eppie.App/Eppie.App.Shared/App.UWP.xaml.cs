@@ -39,6 +39,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Globalization;
 using Windows.Storage;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -167,6 +168,13 @@ namespace Eppie.App.Shared
             {
                 OnError(e);
             }
+        }
+
+        private void ConfigurePreferredMinimumSize()
+        {
+            // https://learn.microsoft.com/en-us/uwp/api/windows.ui.viewmanagement.applicationview.setpreferredminsize?view=winrt-26100#remarks
+            // The largest allowed minimum size is 500 x 500 effective pixels.
+            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(MinWidth, MinHeight));
         }
     }
 }

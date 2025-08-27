@@ -18,11 +18,15 @@
 
 #if !WINDOWS_UWP
 
+using Microsoft.UI.Windowing;
 using Tuvi.App.Shared.Models;
 using Tuvi.App.Shared.Services;
 using Tuvi.App.Shared.Views;
 using Tuvi.App.ViewModels;
 using Uno.Resizetizer;
+using Windows.Foundation;
+using Windows.Graphics;
+using Windows.UI.ViewManagement;
 
 namespace Eppie.App.Shared
 {
@@ -92,6 +96,45 @@ namespace Eppie.App.Shared
         private void InitializeNotifications()
         {
 
+        }
+
+        private void ConfigurePreferredMinimumSize()
+        {
+#if HAS_UNO
+
+            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(MinWidth, MinHeight));
+
+            // SetPreferredMinSize method doesn't work in Linux OS
+            if (OperatingSystem.IsLinux() && MainWindow?.AppWindow is not null)
+            {
+                MainWindow.SizeChanged += async (s, e) =>
+                {
+                    if (e.Size.Width < MinWidth && e.Size.Height < MinHeight)
+                    {
+                        await Task.Delay(100).ConfigureAwait(true);
+                        MainWindow.AppWindow.Resize(new SizeInt32 { Width = MinWidth, Height = MinHeight });
+                    }
+                    else if (e.Size.Width < MinWidth)
+                    {
+                        await Task.Delay(100).ConfigureAwait(true);
+                        MainWindow.AppWindow.Resize(new SizeInt32 { Width = MinWidth, Height = MainWindow.AppWindow.Size.Height });
+                    }
+                    else if (e.Size.Height < MinHeight)
+                    {
+                        await Task.Delay(100).ConfigureAwait(true);
+                        MainWindow.AppWindow.Resize(new SizeInt32 { Width = MainWindow.AppWindow.Size.Width, Height = MinHeight });
+                    }
+                };
+            }
+
+#else  // WinAppSDk
+
+            OverlappedPresenter presenter = OverlappedPresenter.Create();
+            presenter.PreferredMinimumWidth = MinWidth;
+            presenter.PreferredMinimumHeight = MinHeight;
+            MainWindow?.AppWindow.SetPresenter(presenter);
+
+#endif
         }
     }
 }

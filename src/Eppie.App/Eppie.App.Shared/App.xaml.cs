@@ -54,6 +54,13 @@ namespace Eppie.App.Shared
         private static readonly string DataBaseFileName = "TuviMail.db";
         private static readonly string DataFolder = ApplicationData.Current.LocalFolder.Path;
 
+        // The minimum window size is the size of the Xbox app, excluding the TV-safe zone.
+        // https://learn.microsoft.com/en-us/windows/apps/design/devices/designing-for-tv#scale-factor-and-adaptive-layout
+        // https://learn.microsoft.com/en-us/windows/apps/design/devices/designing-for-tv#tv-safe-area
+        // (1920 x 1080 pixels) in 200% scale excluding (48px,27px,48px,27px) area
+        private const int MinWidth = 864;       // 1920 / 2 - 48 - 48 = 864
+        private const int MinHeight = 486;      // 1080 / 2 - 27 - 27 = 486
+
         public static ILoggerFactory LoggerFactory { get; private set; }
         private ILogger<App> Logger { get; set; }
 
@@ -196,6 +203,8 @@ namespace Eppie.App.Shared
 
             _errorHandler = new ErrorHandler();
             _errorHandler.SetMessageService(new MessageService(() => XamlRoot));
+
+            ConfigurePreferredMinimumSize();
 
             return frame;
         }
