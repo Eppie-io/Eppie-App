@@ -65,11 +65,11 @@ namespace Tuvi.App.ViewModels
                 }
                 else if (string.IsNullOrEmpty(Folder?.FullName))
                 {
-                    return Email.Address;
+                    return Email.DisplayAddress;
                 }
                 else
                 {
-                    return $"{Email.Address}/{Folder?.FullName}";
+                    return $"{Email.DisplayAddress}/{Folder?.FullName}";
                 }
             }
         }

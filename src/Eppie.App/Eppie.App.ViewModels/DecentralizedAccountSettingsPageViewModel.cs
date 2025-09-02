@@ -21,10 +21,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Input;
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Tuvi.Core.Entities;
+using EmailValidation;
 
 namespace Tuvi.App.ViewModels
 {
@@ -59,6 +58,7 @@ namespace Tuvi.App.ViewModels
             {
                 SetProperty(ref _selectedNetwork, value);
                 OnPropertyChanged(nameof(IsSecretKeyVisible));
+                OnPropertyChanged(nameof(IsSenderNameVisible));
             }
         }
 
@@ -82,6 +82,18 @@ namespace Tuvi.App.ViewModels
             get => SelectedNetwork.NetworkType == NetworkType.Bitcoin;
         }
 
+        public bool IsSenderNameVisible
+        {
+            get => SelectedNetwork.NetworkType == NetworkType.Eppie && !CurrentAccount.Email.IsHybrid;
+        }
+
+        private string _claimedName;
+        public string ClaimedName
+        {
+            get => _claimedName;
+            set => SetProperty(ref _claimedName, value);
+        }
+
         protected DecentralizedAccountSettingsModel(Account account) : base(account)
         {
             _networkOptions = new ObservableCollection<Network>
@@ -102,7 +114,10 @@ namespace Tuvi.App.ViewModels
                 return null;
             }
 
-            CurrentAccount.Email = new EmailAddress(Email.Value, SenderName);
+            if (IsSenderNameVisible && !string.IsNullOrEmpty(ClaimedName))
+            {
+                CurrentAccount.Email = new EmailAddress(CurrentAccount.Email.Address, ClaimedName);
+            }
 
             CurrentAccount.IsBackupAccountSettingsEnabled = true;
             CurrentAccount.IsBackupAccountMessagesEnabled = true;
@@ -121,15 +136,30 @@ namespace Tuvi.App.ViewModels
 
         public void UpdateAccount(Account account)
         {
-            CurrentAccount = account ?? throw new ArgumentNullException(nameof(account));
-            Email.Value = account.Email.Address;
-            SenderName = account.Email.Name;
+            if (account == null)
+            {
+                throw new ArgumentNullException(nameof(account));
+            }
 
+            CurrentAccount = new Account
+            {
+                Id = account.Id,
+                Email = account.Email,
+                IsBackupAccountSettingsEnabled = account.IsBackupAccountSettingsEnabled,
+                IsBackupAccountMessagesEnabled = account.IsBackupAccountMessagesEnabled,
+                SynchronizationInterval = account.SynchronizationInterval,
+                Type = account.Type,
+                DecentralizedAccountIndex = account.DecentralizedAccountIndex
+            };
+
+            Email.Value = account.Email.DisplayAddress;
+            SenderName.Value = account.Email.Name;
+            ClaimedName = account.Email.Name;
             SelectedNetwork = NetworkOptions.FirstOrDefault(x => x.NetworkType == account.Email.Network) ?? NetworkOptions.First();
         }
     }
 
-    public class DecentralizedAccountSettingsPageViewModel : BaseViewModel, IDisposable
+    public class DecentralizedAccountSettingsPageViewModel : BaseAccountSettingsPageViewModel
     {
         private DecentralizedAccountSettingsModel _accountSettingsModel;
         public DecentralizedAccountSettingsModel AccountSettingsModel
@@ -148,43 +178,47 @@ namespace Tuvi.App.ViewModels
                 {
                     _accountSettingsModel.PropertyChanged += OnAccountSettingsModelPropertyChanged;
                 }
+
+                ClaimNameCommand?.NotifyCanExecuteChanged();
             }
         }
-
-        private bool _isWaitingResponse;
-        public bool IsWaitingResponse
-        {
-            get { return _isWaitingResponse; }
-            set
-            {
-                SetProperty(ref _isWaitingResponse, value);
-                ApplySettingsCommand.NotifyCanExecuteChanged();
-                RemoveAccountCommand.NotifyCanExecuteChanged();
-            }
-        }
-
-        private bool _isCreatingAccountMode = true;
-        public bool IsCreatingAccountMode
-        {
-            get { return _isCreatingAccountMode; }
-            private set { SetProperty(ref _isCreatingAccountMode, value); }
-        }
-
-        public IRelayCommand ApplySettingsCommand { get; }
 
         public IRelayCommand JoinWaitingListCommand => new RelayCommand(DoJoinWaitingList);
 
-        public IRelayCommand RemoveAccountCommand { get; }
+        public IRelayCommand ClaimNameCommand { get; }
 
-        public ICommand CancelSettingsCommand => new RelayCommand(DoCancel);
+        private bool _isClaimingName;
+        public bool IsClaimingName
+        {
+            get => _isClaimingName;
+            private set
+            {
+                SetProperty(ref _isClaimingName, value);
+                ClaimNameCommand.NotifyCanExecuteChanged();
+            }
+        }
 
-        public ICommand HandleErrorCommand => new RelayCommand<object>(ex => OnError(ex as Exception));
 
         public DecentralizedAccountSettingsPageViewModel()
         {
-            ApplySettingsCommand = new AsyncRelayCommand(ApplySettingsAndGoBackAsync, () => !IsWaitingResponse);
-            RemoveAccountCommand = new AsyncRelayCommand(RemoveAccountAndGoBackAsync, () => !IsWaitingResponse);
+            ClaimNameCommand = new AsyncRelayCommand(ClaimNameAsync, CanClaimExecute);
             ErrorsChanged += (sender, e) => ApplySettingsCommand.NotifyCanExecuteChanged();
+        }
+
+        private bool CanClaimExecute()
+        {
+            if (_accountSettingsModel is null || _isClaimingName || IsWaitingResponse || !_accountSettingsModel.IsSenderNameVisible)
+            {
+                return false;
+            }
+
+            var desired = _accountSettingsModel.SenderName.Value;
+            if (string.IsNullOrWhiteSpace(desired))
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public override async void OnNavigatedTo(object data)
@@ -225,7 +259,7 @@ namespace Tuvi.App.ViewModels
         {
             var (publicKey, accountIndex) = await Core.GetSecurityManager().GetNextDecAccountPublicKeyAsync(networkType, cancellationToken).ConfigureAwait(true);
 
-            var email = EmailAddress.CreateDecentralizedAddress(networkType, publicKey, $"#{accountIndex}");
+            var email = EmailAddress.CreateDecentralizedAddress(networkType, publicKey);
 
             return new Account()
             {
@@ -237,70 +271,9 @@ namespace Tuvi.App.ViewModels
             };
         }
 
-        private async Task ApplySettingsAndGoBackAsync()
+        protected override Account AccountSettingsModelToAccount()
         {
-            IsWaitingResponse = true;
-            try
-            {
-                var accountData = AccountSettingsModel.ToAccount();
-                var result = await ApplyAccountSettingsAsync(accountData).ConfigureAwait(true);
-                if (result)
-                {
-                    NavigateFromCurrentPage();
-                }
-            }
-            catch (Exception e)
-            {
-                OnError(e);
-            }
-            finally
-            {
-                IsWaitingResponse = false;
-            }
-        }
-
-        CancellationTokenSource _cts;
-
-        private async Task<bool> ApplyAccountSettingsAsync(Account accountData)
-        {
-            _cts = new CancellationTokenSource();
-            try
-            {
-                await ProcessAccountDataAsync(accountData, _cts.Token).ConfigureAwait(true);
-                return true;
-            }
-            catch (OperationCanceledException)
-            {
-                return false;
-            }
-        }
-
-        private async Task ProcessAccountDataAsync(Account account, CancellationToken cancellationToken = default)
-        {
-            bool existAccount = await Core.ExistsAccountWithEmailAddressAsync(account.Email, cancellationToken).ConfigureAwait(true);
-
-            if (!existAccount)
-            {
-                await Core.AddAccountAsync(account, cancellationToken).ConfigureAwait(true);
-            }
-            else
-            {
-                await Core.UpdateAccountAsync(account, cancellationToken).ConfigureAwait(true);
-            }
-
-            await BackupIfNeededAsync().ConfigureAwait(true);
-        }
-
-        private void NavigateFromCurrentPage()
-        {
-            if (IsCreatingAccountMode)
-            {
-                NavigationService?.GoBackToOrNavigate(nameof(MainPageViewModel));
-            }
-            else
-            {
-                NavigationService?.GoBackOrNavigate(nameof(MainPageViewModel));
-            }
+            return AccountSettingsModel.ToAccount();
         }
 
         private async void DoJoinWaitingList()
@@ -308,68 +281,21 @@ namespace Tuvi.App.ViewModels
             try
             {
                 await LauncherService.LaunchAsync(new Uri(BrandService.GetHomepage())).ConfigureAwait(true);
-                DoCancel();
-            }
-            catch (Exception e)
-            {
-                OnError(e);
-            }
-        }
-
-        private void DoCancel()
-        {
-            if (_isWaitingResponse)
-            {
-                CancelAsyncOperation();
-            }
-            else
-            {
                 GoBack();
             }
-        }
-
-        private void GoBack()
-        {
-            NavigationService?.GoBack();
-        }
-
-        private void CancelAsyncOperation()
-        {
-            _cts?.Cancel();
-        }
-
-        private async Task RemoveAccountAndGoBackAsync()
-        {
-            try
-            {
-                IsWaitingResponse = true;
-
-                bool isConfirmed = await MessageService.ShowRemoveAccountDialogAsync().ConfigureAwait(true);
-
-                if (isConfirmed)
-                {
-                    var account = AccountSettingsModel.ToAccount();
-                    await Core.DeleteAccountAsync(account).ConfigureAwait(true);
-
-                    await BackupIfNeededAsync().ConfigureAwait(true);
-
-                    GoBack();
-                }
-            }
             catch (Exception e)
             {
                 OnError(e);
-            }
-            finally
-            {
-                IsWaitingResponse = false;
             }
         }
 
         private async void OnAccountSettingsModelPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(DecentralizedAccountSettingsModel.SelectedNetwork) &&
-                !_accountSettingsModel.IsNetworkLocked)
+            if (e.PropertyName == nameof(DecentralizedAccountSettingsModel.SenderName))
+            {
+                ClaimNameCommand?.NotifyCanExecuteChanged();
+            }
+            else if (e.PropertyName == nameof(DecentralizedAccountSettingsModel.SelectedNetwork) && !_accountSettingsModel.IsNetworkLocked)
             {
                 try
                 {
@@ -388,27 +314,86 @@ namespace Tuvi.App.ViewModels
                 finally
                 {
                     _accountSettingsModel.IsNetworkLocked = false;
+                    ClaimNameCommand?.NotifyCanExecuteChanged();
                 }
             }
         }
 
-        public void Dispose()
+        private async Task ClaimNameAsync()
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        private bool _isDisposed;
-        protected virtual void Dispose(bool disposing)
-        {
-            if (_isDisposed) return;
-
-            if (disposing)
+            if (AccountSettingsModel == null || !AccountSettingsModel.IsSenderNameVisible)
             {
-                _cts?.Dispose();
+                return;
             }
 
-            _isDisposed = true;
+            var nameRaw = AccountSettingsModel.SenderName.Value?.Trim();
+            AccountSettingsModel.SenderName.Errors.Clear();
+
+            if (!ValidateName(nameRaw, out var normalized, out var errorKey))
+            {
+                AccountSettingsModel.SenderName.Errors.Add(GetLocalizedString(errorKey));
+                return;
+            }
+
+            try
+            {
+                IsClaimingName = true;
+                var account = AccountSettingsModel.ToAccount();
+                var result = await Core.ClaimDecentralizedNameAsync(normalized, account.Email).ConfigureAwait(true);
+                if (result)
+                {
+                    OnNameClaimSucceededAsync(normalized, account);
+                }
+                else
+                {
+                    AccountSettingsModel.SenderName.Errors.Add(GetLocalizedString("NameAlreadyTakenError"));
+                }
+            }
+            catch (Exception ex)
+            {
+                AccountSettingsModel.SenderName.Errors.Add(GetLocalizedString("ClaimNameFailedError"));
+                OnError(ex);
+            }
+            finally
+            {
+                IsClaimingName = false;
+                ClaimNameCommand.NotifyCanExecuteChanged();
+            }
+        }
+
+        private void OnNameClaimSucceededAsync(string normalized, Account account)
+        {
+            AccountSettingsModel.ClaimedName = normalized;
+            AccountSettingsModel.SenderName.Value = normalized;
+            AccountSettingsModel.Email.Value = EmailAddress.CreateDecentralizedAddress(account.Email.Network, normalized).DisplayAddress;
+        }
+
+        private static bool ValidateName(string name, out string normalized, out string errorKey)
+        {
+            normalized = string.Empty;
+            errorKey = string.Empty;
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                errorKey = "NameIsEmptyError";
+                return false;
+            }
+
+            if (name.IndexOf('+') >= 0)
+            {
+                errorKey = "InvalidNameError";
+                return false;
+            }
+            name = name.ToLowerInvariant();
+
+            var syntheticEmail = EmailAddress.CreateDecentralizedAddress(NetworkType.Eppie, name);
+            if (!EmailValidator.Validate(syntheticEmail.Address, allowTopLevelDomains: true))
+            {
+                errorKey = "InvalidNameError";
+                return false;
+            }
+
+            normalized = name;
+            return true;
         }
     }
 }

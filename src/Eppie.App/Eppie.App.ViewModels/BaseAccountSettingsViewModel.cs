@@ -33,13 +33,7 @@ namespace Tuvi.App.ViewModels
         protected Account CurrentAccount { get; set; }
         public ValidatableProperty<string> Email { get; } = new ValidatableProperty<string>();
         public ValidatableProperty<string> SynchronizationInterval { get; } = new ValidatableProperty<string>();
-
-        private string _senderName;
-        public string SenderName
-        {
-            get => _senderName;
-            set => SetProperty(ref _senderName, value);
-        }
+        public ValidatableProperty<string> SenderName { get; } = new ValidatableProperty<string>();
 
         private bool _isBackupAccountSettingsEnabled = true;
         public bool IsBackupAccountSettingsEnabled
@@ -66,7 +60,21 @@ namespace Tuvi.App.ViewModels
         public BaseAccountSettingsModel()
         {
             Email.SetInitialValue(string.Empty);
+            SenderName.SetInitialValue(string.Empty);
             SynchronizationInterval.SetInitialValue(DefaultSynchronizationInterval.ToString());
+
+            Email.PropertyChanged += (sender, args) =>
+            {
+                OnValidatablePropertyChanged<string>(nameof(Email), args.PropertyName);
+            };
+            SenderName.PropertyChanged += (sender, args) =>
+            {
+                OnValidatablePropertyChanged<string>(nameof(SenderName), args.PropertyName);
+            };
+            SynchronizationInterval.PropertyChanged += (sender, args) =>
+            {
+                OnValidatablePropertyChanged<string>(nameof(SynchronizationInterval), args.PropertyName);
+            };
         }
         protected BaseAccountSettingsModel(Account account)
         {
@@ -80,7 +88,7 @@ namespace Tuvi.App.ViewModels
             if (account.Email != null)
             {
                 Email.SetInitialValue(account.Email.Address);
-                SenderName = account.Email.Name;
+                SenderName.SetInitialValue(account.Email.Name);
             }
 
             IsBackupAccountSettingsEnabled = account.IsBackupAccountSettingsEnabled;
@@ -90,6 +98,10 @@ namespace Tuvi.App.ViewModels
             Email.PropertyChanged += (sender, args) =>
             {
                 OnValidatablePropertyChanged<string>(nameof(Email), args.PropertyName);
+            };
+            SenderName.PropertyChanged += (sender, args) =>
+            {
+                OnValidatablePropertyChanged<string>(nameof(SenderName), args.PropertyName);
             };
             SynchronizationInterval.PropertyChanged += (sender, args) =>
             {

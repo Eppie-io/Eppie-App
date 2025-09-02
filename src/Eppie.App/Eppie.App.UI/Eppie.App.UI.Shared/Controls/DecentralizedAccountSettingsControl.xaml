@@ -31,17 +31,34 @@
                 </Border>
 
                 <TextBlock x:Uid="/Eppie.App.UI/Controls/EmailAddress" Margin="0,16,0,4" />
-                <TextBox x:Name="EmailBox"
-                         HorizontalAlignment="Stretch"
+                <TextBox HorizontalAlignment="Stretch"
                          IsReadOnly="True"
                          IsSpellCheckEnabled="False"
-                         Text="{x:Bind AccountSettingsModel.Email, Mode=OneWay}" />
+                         Text="{x:Bind AccountSettingsModel.Email.Value, Mode=OneWay}" />
 
-                <TextBlock x:Uid="/Eppie.App.UI/Controls/SenderName" Margin="0,16,0,4" />
-                <controls:PromptTextInputControl HorizontalAlignment="Stretch"
-                                                 IsSpellCheckEnabled="False"
-                                                 Text="{x:Bind AccountSettingsModel.SenderName, Mode=TwoWay}" />
-
+                <StackPanel Visibility="{x:Bind AccountSettingsModel.IsSenderNameVisible, Mode=OneWay}">
+                    <TextBlock x:Uid="/Eppie.App.UI/Controls/SenderName" Margin="0,16,0,4" />
+                    <local:ErrorControl HorizontalAlignment="Stretch" Property="{x:Bind AccountSettingsModel.SenderName, Mode=OneWay}">
+                        <local:ErrorControl.InnerContent>
+                            <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                <controls:PromptTextInputControl Width="240"
+                                                                 IsSpellCheckEnabled="False"
+                                                                 Text="{x:Bind AccountSettingsModel.SenderName.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <Button Margin="8,0,0,0" Command="{x:Bind ClaimNameCommand, Mode=OneWay}">
+                                    <Grid>
+                                        <TextBlock x:Uid="/Eppie.App.UI/Controls/ClaimNameButton"
+                                                   Text="Claim"
+                                                   Visibility="{x:Bind IsClaimingName, Converter={StaticResource InverseBoolToVisibilityConverter}, Mode=OneWay}" />
+                                        <ProgressRing Width="16"
+                                                      Height="16"
+                                                      IsActive="{x:Bind IsClaimingName, Mode=OneWay}"
+                                                      Visibility="{x:Bind IsClaimingName, Mode=OneWay}" />
+                                    </Grid>
+                                </Button>
+                            </StackPanel>
+                        </local:ErrorControl.InnerContent>
+                    </local:ErrorControl>
+                </StackPanel>
 
                 <muxc:Expander Margin="0,16,0,4"
                                HorizontalContentAlignment="Left"

@@ -101,7 +101,7 @@ namespace Tuvi.App.ViewModels
 
         private void AddRootItem(CompositeAccount account)
         {
-            var rootItem = new MailBoxItem(account.Email, account.DefaultInboxFolder, account.Email.Address, true);
+            var rootItem = new MailBoxItem(account.Email, account.DefaultInboxFolder, account.Email.DisplayAddress, true);
             foreach (var folder in account.FoldersStructure)
             {
                 AddFolderItem(rootItem, account.Email, folder);

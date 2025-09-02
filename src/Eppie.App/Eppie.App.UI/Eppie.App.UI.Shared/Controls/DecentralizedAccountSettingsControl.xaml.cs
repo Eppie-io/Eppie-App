@@ -16,6 +16,7 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
+using System.Windows.Input;
 using Tuvi.App.ViewModels;
 
 #if WINDOWS_UWP
@@ -45,6 +46,22 @@ namespace Tuvi.App.Shared.Controls
         }
         public static readonly DependencyProperty IsLockedProperty =
             DependencyProperty.Register(nameof(IsLocked), typeof(bool), typeof(DecentralizedAccountSettingsControl), new PropertyMetadata(false));
+
+        public ICommand ClaimNameCommand
+        {
+            get { return (ICommand)GetValue(ClaimNameCommandProperty); }
+            set { SetValue(ClaimNameCommandProperty, value); }
+        }
+        public static readonly DependencyProperty ClaimNameCommandProperty =
+            DependencyProperty.Register(nameof(ClaimNameCommand), typeof(ICommand), typeof(DecentralizedAccountSettingsControl), new PropertyMetadata(null));
+
+        public bool IsClaimingName
+        {
+            get { return (bool)GetValue(IsClaimingNameProperty); }
+            set { SetValue(IsClaimingNameProperty, value); }
+        }
+        public static readonly DependencyProperty IsClaimingNameProperty =
+            DependencyProperty.Register(nameof(IsClaimingName), typeof(bool), typeof(DecentralizedAccountSettingsControl), new PropertyMetadata(false));
 
         public DecentralizedAccountSettingsControl()
         {

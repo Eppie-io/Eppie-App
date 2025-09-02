@@ -39,6 +39,8 @@
         <controls:DecentralizedAccountSettingsControl x:Name="AccountSettings"
                                                       Grid.Row="1"
                                                       AccountSettingsModel="{x:Bind ViewModel.AccountSettingsModel, Mode=OneWay}"
+                                                      ClaimNameCommand="{x:Bind ViewModel.ClaimNameCommand, Mode=OneWay}"
+                                                      IsClaimingName="{x:Bind ViewModel.IsClaimingName, Mode=OneWay}"
                                                       IsLocked="{x:Bind ViewModel.IsWaitingResponse, Mode=OneWay}" />
 
         <ProgressBar Grid.Row="2"

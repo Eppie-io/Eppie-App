@@ -37,13 +37,13 @@
                            Grid.Column="2"
                            FontSize="12"
                            Opacity="0.6"
-                           Text="{x:Bind Email.Address, Mode=OneWay}" />
+                           Text="{x:Bind Email.DisplayAddress, Mode=OneWay}" />
 
             </Grid>
         </DataTemplate>
 
         <DataTemplate x:Key="TokenContactItemTemplate" x:DataType="viewmodels:ContactItem">
-            <Grid ToolTipService.ToolTip="{x:Bind Email.Address, Mode=OneWay}">
+            <Grid ToolTipService.ToolTip="{x:Bind Email.DisplayAddress, Mode=OneWay}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="8" />
