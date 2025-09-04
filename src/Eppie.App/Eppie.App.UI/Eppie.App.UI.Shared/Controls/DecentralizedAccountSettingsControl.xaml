@@ -46,9 +46,7 @@
                                                                  Text="{x:Bind AccountSettingsModel.SenderName.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <Button Margin="8,0,0,0" Command="{x:Bind ClaimNameCommand, Mode=OneWay}">
                                     <Grid>
-                                        <TextBlock x:Uid="/Eppie.App.UI/Controls/ClaimNameButton"
-                                                   Text="Claim"
-                                                   Visibility="{x:Bind IsClaimingName, Converter={StaticResource InverseBoolToVisibilityConverter}, Mode=OneWay}" />
+                                        <TextBlock x:Uid="/Eppie.App.UI/Controls/ClaimNameButton" Visibility="{x:Bind IsClaimingName, Converter={StaticResource InverseBoolToVisibilityConverter}, Mode=OneWay}" />
                                         <ProgressRing Width="16"
                                                       Height="16"
                                                       IsActive="{x:Bind IsClaimingName, Mode=OneWay}"
