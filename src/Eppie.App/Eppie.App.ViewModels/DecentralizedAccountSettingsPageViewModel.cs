@@ -23,7 +23,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using Tuvi.Core.Entities;
-using EmailValidation;
 
 namespace Tuvi.App.ViewModels
 {
