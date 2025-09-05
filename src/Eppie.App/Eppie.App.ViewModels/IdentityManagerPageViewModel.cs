@@ -46,6 +46,7 @@ namespace Tuvi.App.ViewModels
 
                 Core.AccountAdded += Core_AccountAdded;
                 Core.AccountDeleted += Core_AccountDeleted;
+                Core.AccountUpdated += Core_AccountUpdated;
 
                 AIService.AgentAdded += AIService_AgentAdded;
                 AIService.AgentDeleted += AIService_AgentDeleted;
@@ -61,10 +62,11 @@ namespace Tuvi.App.ViewModels
         {
             AIService.AgentAdded -= AIService_AgentAdded;
             AIService.AgentDeleted -= AIService_AgentDeleted;
-            AIService.AgentDeleted -= AIService_AgentUpdated;
+            AIService.AgentUpdated -= AIService_AgentUpdated;
 
             Core.AccountAdded -= Core_AccountAdded;
             Core.AccountDeleted -= Core_AccountDeleted;
+            Core.AccountUpdated -= Core_AccountUpdated;
         }
 
         private async Task UpdateAccountsAsync()
@@ -99,7 +101,26 @@ namespace Tuvi.App.ViewModels
             {
                 try
                 {
-                    EmailAccounts.Remove(e.Account);
+                    EmailAccounts.Remove(EmailAccounts.FirstOrDefault(account => account.Id == e.Account.Id));
+                }
+                catch (Exception ex)
+                {
+                    OnError(ex);
+                }
+            });
+        }
+
+        private void Core_AccountUpdated(object sender, AccountEventArgs e)
+        {
+            DispatcherService.RunAsync(() =>
+            {
+                try
+                {
+                    var index = EmailAccounts.IndexOf(EmailAccounts.FirstOrDefault(account => account.Id == e.Account.Id));
+                    if (index >= 0)
+                    {
+                        EmailAccounts[index] = e.Account;
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -129,7 +150,7 @@ namespace Tuvi.App.ViewModels
             {
                 try
                 {
-                    AIAgents.Remove(e.AIAgent);
+                    AIAgents.Remove(AIAgents.FirstOrDefault(agent => agent.Id == e.AIAgent.Id));
                 }
                 catch (Exception ex)
                 {

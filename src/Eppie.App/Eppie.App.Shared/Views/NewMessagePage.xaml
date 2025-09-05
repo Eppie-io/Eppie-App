@@ -140,7 +140,7 @@
                       SelectionChanged="onFromChanged">
                 <ComboBox.ItemTemplate>
                     <DataTemplate x:DataType="entities:EmailAddress">
-                        <TextBlock Text="{x:Bind DisplayName, Mode=OneWay}" />
+                        <TextBlock Text="{x:Bind DisplayAddress, Mode=OneWay}" />
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>

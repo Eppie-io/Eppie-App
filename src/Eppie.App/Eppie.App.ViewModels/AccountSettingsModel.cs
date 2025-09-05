@@ -90,7 +90,7 @@ namespace Tuvi.App.ViewModels
                 return null;
             }
 
-            CurrentAccount.Email = new EmailAddress(Email.Value, SenderName);
+            CurrentAccount.Email = new EmailAddress(Email.Value, SenderName.Value);
 
             CurrentAccount.IsBackupAccountSettingsEnabled = IsBackupAccountSettingsEnabled;
             CurrentAccount.IsBackupAccountMessagesEnabled = IsBackupAccountMessagesEnabled;

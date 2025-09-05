@@ -1074,4 +1074,24 @@ Subject: {3}
     <value>Enter a new name for the contact</value>
     <comment>Header for the textbox in the rename contact dialog</comment>
   </data>
+  <data name="NameAlreadyTakenError" xml:space="preserve">
+    <value>Name already taken.</value>
+    <comment>Error shown when desired decentralized name is already claimed</comment>
+  </data>
+  <data name="ClaimNameFailedError" xml:space="preserve">
+    <value>Claim failed.</value>
+    <comment>Error shown when name claim request fails</comment>
+  </data>
+  <data name="NameIsEmptyError" xml:space="preserve">
+    <value>Name is empty.</value>
+    <comment>Error shown when user tries to claim empty name</comment>
+  </data>
+  <data name="InvalidNameError" xml:space="preserve">
+    <value>Invalid name.</value>
+    <comment>Error shown when name does not pass validation rules</comment>
+  </data>
+  <data name="ClaimNameButton.Text" xml:space="preserve">
+    <value>Claim</value>
+    <comment>Button text to claim decentralized name</comment>
+  </data>
 </root>

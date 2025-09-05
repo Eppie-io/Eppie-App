@@ -59,7 +59,7 @@
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="entities:Account">
                             <Grid>
-                                <TextBlock Text="{x:Bind Email.Address, Mode=OneWay}" />
+                                <TextBlock Text="{x:Bind Email.DisplayAddress, Mode=OneWay}" />
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>

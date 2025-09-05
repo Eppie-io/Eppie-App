@@ -58,7 +58,7 @@ namespace Tuvi.App.ViewModels
                 return null;
             }
 
-            CurrentAccount.Email = new EmailAddress(Email.Value, SenderName);
+            CurrentAccount.Email = new EmailAddress(Email.Value, SenderName.Value);
 
             CurrentAccount.AuthData = new BasicAuthData() { Password = Password.Value };
             CurrentAccount.IsBackupAccountSettingsEnabled = IsBackupAccountSettingsEnabled;

@@ -350,9 +350,9 @@ namespace Tuvi.App.ViewModels
         {
             AccountSettingsModel.Email.Value = userProfile.Email;
 
-            if (string.IsNullOrEmpty(AccountSettingsModel.SenderName))
+            if (string.IsNullOrEmpty(AccountSettingsModel.SenderName.Value))
             {
-                AccountSettingsModel.SenderName = userProfile.Name;
+                AccountSettingsModel.SenderName.Value = userProfile.Name;
             }
 
             if (AccountSettingsModel is OAuth2AccountSettingsModel model)
