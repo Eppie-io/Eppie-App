@@ -136,7 +136,7 @@ namespace Tuvi.App.ViewModels
 
         public void UpdateAccount(Account account)
         {
-            if (account == null)
+            if (account is null)
             {
                 throw new ArgumentNullException(nameof(account));
             }
@@ -321,7 +321,7 @@ namespace Tuvi.App.ViewModels
 
         private async Task ClaimNameAsync()
         {
-            if (AccountSettingsModel == null || !AccountSettingsModel.IsSenderNameVisible)
+            if (AccountSettingsModel is null || !AccountSettingsModel.IsSenderNameVisible)
             {
                 return;
             }
