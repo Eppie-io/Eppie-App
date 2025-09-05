@@ -141,16 +141,7 @@ namespace Tuvi.App.ViewModels
                 throw new ArgumentNullException(nameof(account));
             }
 
-            CurrentAccount = new Account
-            {
-                Id = account.Id,
-                Email = account.Email,
-                IsBackupAccountSettingsEnabled = account.IsBackupAccountSettingsEnabled,
-                IsBackupAccountMessagesEnabled = account.IsBackupAccountMessagesEnabled,
-                SynchronizationInterval = account.SynchronizationInterval,
-                Type = account.Type,
-                DecentralizedAccountIndex = account.DecentralizedAccountIndex
-            };
+            CurrentAccount = account;
 
             Email.Value = account.Email.DisplayAddress;
             SenderName.Value = account.Email.Name;
