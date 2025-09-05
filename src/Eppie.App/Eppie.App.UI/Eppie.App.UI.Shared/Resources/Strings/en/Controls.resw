@@ -273,4 +273,8 @@
     <value>Warning: Testnet addresses are for testing only. Not for real-world use. Use at your own risk.</value>
     <comment>Warning for testnet addresses.</comment>
   </data>
+  <data name="ClaimNameButton.Text" xml:space="preserve">
+    <value>Claim</value>
+    <comment>Button text to claim decentralized name</comment>
+  </data>
 </root>
