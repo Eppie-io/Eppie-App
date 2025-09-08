@@ -1090,8 +1090,4 @@ Subject: {3}
     <value>Invalid name.</value>
     <comment>Error shown when name does not pass validation rules</comment>
   </data>
-  <data name="ClaimNameButton.Text" xml:space="preserve">
-    <value>Claim</value>
-    <comment>Button text to claim decentralized name</comment>
-  </data>
 </root>
