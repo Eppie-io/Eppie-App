@@ -51,6 +51,9 @@
       <DependentUpon>MessageListControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\NavPanelTabControl.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\NewAccountSettingsControl.xaml.cs">
+      <DependentUpon>NewAccountSettingsControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\PasswordControl.xaml.cs">
       <DependentUpon>PasswordControl.xaml</DependentUpon>
     </Compile>
@@ -85,6 +88,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Tools\UITools.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)Controls\NewAccountSettingsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="$(MSBuildThisFileDirectory)Controls\SupportDevelopmentControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
