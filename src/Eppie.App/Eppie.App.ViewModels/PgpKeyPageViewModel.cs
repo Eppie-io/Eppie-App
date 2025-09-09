@@ -162,16 +162,13 @@ namespace Tuvi.App.ViewModels
         {
             try
             {
-                // Show confirmation dialog
                 bool userConfirmed = await MessageService.ShowRemovePgpKeyDialogAsync().ConfigureAwait(true);
 
                 if (userConfirmed)
                 {
-                    // Delete the key using SecurityManager.RemovePgpKeys
                     var emailAddress = new EmailAddress(key.UserIdentity, string.Empty);
                     Core.GetSecurityManager().RemovePgpKeys(emailAddress);
 
-                    // Navigate back to the keys list
                     NavigationService?.GoBack();
                 }
             }
