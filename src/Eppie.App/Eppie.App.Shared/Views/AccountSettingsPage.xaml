@@ -22,15 +22,16 @@
                                   HandleErrorCommand="{x:Bind ViewModel.HandleErrorCommand}" />
     </interactivity:Interaction.Behaviors>
 
-    <Grid Padding="16">
+    <Grid Padding="0,24">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="1*" />
-            <RowDefinition Height="Auto" />
+            <!--<RowDefinition Height="Auto" />-->
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Grid>
+        <!--
+        <Grid Margin="44,0,48,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
@@ -49,38 +50,78 @@
                     Command="{x:Bind ViewModel.RemoveAccountCommand}"
                     Visibility="{x:Bind ViewModel.IsCreatingAccountMode, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
         </Grid>
+        -->
 
 
-        <controls:AccountSettingsControl x:Name="AccountSettings"
-                                         Grid.Row="1"
-                                         AccountSettingsModel="{x:Bind ViewModel.AccountSettingsModel, Mode=OneWay}"
-                                         IncomingProtocolTypes="{x:Bind ViewModel.IncomingProtocolTypes, Mode=OneWay}"
-                                         IsEmailReadOnly="{x:Bind ViewModel.IsEmailReadonly, Mode=OneWay}"
-                                         IsLocked="{x:Bind ViewModel.IsWaitingResponse, Mode=OneWay}" />
+        <!--  ToDo: Add Text string to resources  -->
+        <TextBlock Grid.Row="0"
+                   Margin="44,0,48,24"
+                   FontSize="14"
+                   Text="SERVICE SETTINGS" />
 
-        <ProgressBar Grid.Row="2"
+        <ScrollViewer Grid.Row="1" IsEnabled="{x:Bind ViewModel.IsWaitingResponse, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}">
+            <controls:NewAccountSettingsControl x:Name="AccountSettings"
+                                                Margin="44,12,48,0"
+                                                AccountSettingsModel="{x:Bind ViewModel.AccountSettingsModel, Mode=OneWay}"
+                                                IncomingProtocolTypes="{x:Bind ViewModel.IncomingProtocolTypes, Mode=OneWay}"
+                                                IsEmailReadOnly="{x:Bind ViewModel.IsEmailReadonly, Mode=OneWay}" />
+        </ScrollViewer>
+
+        <!--<ProgressBar Grid.Row="2"
                      Margin="4"
                      IsIndeterminate="True"
-                     Visibility="{x:Bind ViewModel.IsWaitingResponse, Mode=OneWay}" />
+                     Visibility="{x:Bind ViewModel.IsWaitingResponse, Mode=OneWay}" />-->
 
-        <Grid Grid.Row="3" Margin="0,16,0,0">
+        <Grid Grid.Row="3" Margin="44,24,48,0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
 
-            <Button x:Uid="Apply"
-                    Margin="0,4,4,4"
-                    HorizontalAlignment="Stretch"
-                    Command="{x:Bind ViewModel.ApplySettingsCommand, Mode=OneWay}" />
+            <Button Width="148" Command="{x:Bind ViewModel.ApplySettingsCommand, Mode=OneWay}">
+                <Grid>
+                    <ProgressRing Width="18"
+                                  Height="18"
+                                  Visibility="{x:Bind ViewModel.IsWaitingResponse, Mode=OneWay}" />
+                    <!--  ToDo: Add Text string to resources  -->
+                    <TextBlock x:Name="ApplyText"
+                               Text="Apply"
+                               Visibility="{x:Bind ViewModel.IsWaitingResponse, Converter={StaticResource InverseBoolToVisibilityConverter}, Mode=OneWay}" />
+                </Grid>
+            </Button>
 
             <Button x:Uid="Cancel"
                     Grid.Column="1"
-                    Margin="4,4,0,4"
-                    HorizontalAlignment="Stretch"
+                    Width="148"
+                    Margin="8,0"
                     Command="{x:Bind ViewModel.CancelSettingsCommand}" />
 
-        </Grid>
+            <Button x:Uid="RemoveAccountButton"
+                    Grid.Column="2"
+                    Width="148"
+                    HorizontalAlignment="Right"
+                    Command="{x:Bind ViewModel.RemoveAccountCommand}"
+                    Foreground="Red"
+                    Visibility="{x:Bind ViewModel.IsCreatingAccountMode, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
 
+            <!--<Button x:Uid="RemoveAccountButton"
+                    Grid.Column="2"
+                    Margin="4"
+                    Command="{x:Bind ViewModel.RemoveAccountCommand}"
+                    Visibility="{x:Bind ViewModel.IsCreatingAccountMode, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />-->
+
+            <!--<Button x:Uid="Apply"
+                    Margin="0,4,4,4"
+                    HorizontalAlignment="Stretch"
+                    Command="{x:Bind ViewModel.ApplySettingsCommand, Mode=OneWay}" />-->
+
+            <!--<Button x:Uid="Cancel"
+                    Grid.Column="1"
+                    Margin="4,4,0,4"
+                    HorizontalAlignment="Stretch"
+                    Command="{x:Bind ViewModel.CancelSettingsCommand}" />-->
+
+        </Grid>
     </Grid>
 </local:AccountSettingsPageBase>
