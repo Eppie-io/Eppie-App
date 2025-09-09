@@ -1,0 +1,553 @@
+﻿<UserControl x:Class="Tuvi.App.Shared.Controls.NewAccountSettingsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="using:Tuvi.App.Shared.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="using:Tuvi.App.Shared.Controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+             d:DesignHeight="300"
+             d:DesignWidth="400"
+             mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <Thickness x:Key="TextDescriptionMargin">0,2,0,0</Thickness>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <StackPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="376" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="28" />
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0"
+                        Grid.Column="0"
+                        Margin="0,0,36,0"
+                        Orientation="Vertical">
+                <!--  ToDo: Update string resources  -->
+                <TextBlock x:Uid="/Eppie.App.UI/Controls/EmailAddress" />
+                <!--  ToDo: Update string resources  -->
+                <TextBlock Margin="{StaticResource TextDescriptionMargin}"
+                           Foreground="{ThemeResource TextFillColorSecondary}"
+                           Text="Enter the address for this service."
+                           TextWrapping="WrapWholeWords" />
+            </StackPanel>
+
+            <local:ErrorControl Grid.Row="0"
+                                Grid.Column="1"
+                                Height="68"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top"
+                                Property="{x:Bind AccountSettingsModel.Email, Mode=OneWay}">
+                <local:ErrorControl.InnerContent>
+                    <!--  ToDo: Update string resources  -->
+                    <TextBox x:Name="EmailBoxNew"
+                             Width="272"
+                             HorizontalAlignment="Left"
+                             VerticalAlignment="Top"
+                             IsReadOnly="{x:Bind IsEmailReadOnly, Mode=OneWay}"
+                             IsSpellCheckEnabled="False"
+                             PlaceholderText="Enter email address"
+                             Text="{x:Bind AccountSettingsModel.Email.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </local:ErrorControl.InnerContent>
+            </local:ErrorControl>
+
+            <StackPanel Grid.Row="1"
+                        Grid.Column="0"
+                        Margin="0,0,36,0"
+                        Orientation="Vertical"
+                        Visibility="{x:Bind BasicAccountSettingsModel, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}">
+                <TextBlock x:Uid="/Eppie.App.UI/Controls/PasswordCaption" />
+                <TextBlock x:Uid="/Eppie.App.UI/Controls/PasswordNote"
+                           Margin="{StaticResource TextDescriptionMargin}"
+                           Foreground="{ThemeResource TextFillColorSecondary}"
+                           TextWrapping="WrapWholeWords" />
+            </StackPanel>
+
+            <local:ErrorControl Grid.Row="1"
+                                Grid.Column="1"
+                                Height="68"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top"
+                                Visibility="{x:Bind BasicAccountSettingsModel, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}"
+                                Property="{x:Bind BasicAccountSettingsModel.Password, Mode=OneWay}">
+                <local:ErrorControl.InnerContent>
+                    <PasswordBox x:Uid="/Eppie.App.UI/Controls/PasswordBox"
+                                 Width="272"
+                                 HorizontalAlignment="Left"
+                                 VerticalAlignment="Top"
+                                 Password="{x:Bind BasicAccountSettingsModel.Password.Value, Mode=TwoWay}" />
+                </local:ErrorControl.InnerContent>
+            </local:ErrorControl>
+
+            <StackPanel Grid.Row="2"
+                        Grid.Column="0"
+                        Margin="0,0,36,0"
+                        Orientation="Vertical">
+                <TextBlock x:Uid="/Eppie.App.UI/Controls/SenderNameCaption" />
+                <TextBlock x:Uid="/Eppie.App.UI/Controls/SenderNameNote"
+                           Margin="{StaticResource TextDescriptionMargin}"
+                           Foreground="{ThemeResource TextFillColorSecondary}"
+                           Text="Name shown in the 'From' field of your emails."
+                           TextWrapping="WrapWholeWords" />
+            </StackPanel>
+            <TextBox x:Uid="/Eppie.App.UI/Controls/SenderNameBox"
+                     Grid.Row="2"
+                     Grid.Column="1"
+                     Width="272"
+                     Margin="0,0,0,36"
+                     HorizontalAlignment="Left"
+                     VerticalAlignment="Top"
+                     IsSpellCheckEnabled="False"
+                     Text="{x:Bind AccountSettingsModel.SenderName.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+            <StackPanel Grid.Row="3"
+                        Grid.Column="0"
+                        Margin="0,0,36,0"
+                        Orientation="Vertical">
+                <TextBlock x:Uid="/Eppie.App.UI/Controls/SignatureCaption" />
+                <TextBlock x:Uid="/Eppie.App.UI/Controls/SignatureNote"
+                           Margin="{StaticResource TextDescriptionMargin}"
+                           Foreground="{ThemeResource TextFillColorSecondary}"
+                           TextWrapping="WrapWholeWords" />
+                <TextBlock Foreground="{ThemeResource TextFillColorSecondary}" TextWrapping="WrapWholeWords">
+                    <Span>
+                        <LineBreak />
+                        <!--  ToDo: Move NavigateUri to model  -->
+                        <Hyperlink NavigateUri="https://eppie.io">
+                            <Run x:Uid="/Eppie.App.UI/Controls/SignatureLink" />
+                        </Hyperlink>
+                    </Span>
+                </TextBlock>
+            </StackPanel>
+
+            <Grid Grid.Row="3"
+                  Grid.Column="1"
+                  Margin="0,0,0,36">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <ToggleSwitch x:Name="SignatureSwitch" />
+                <TextBlock Grid.Column="1"
+                           HorizontalAlignment="Right"
+                           VerticalAlignment="Center"
+                           FontSize="14"
+                           TextAlignment="Right"
+                           TextTrimming="CharacterEllipsis">
+                    <Span>
+                        <Run x:Uid="/Eppie.App.UI/Controls/DefaultSignatureFirstPart" />
+                        <!--  ToDo: Move NavigateUri to model  -->
+                        <!--  ToDo: Take `Eppie` from brand loader  -->
+                        <Hyperlink NavigateUri="https://eppie.io">Eppie</Hyperlink>
+                        <Run x:Uid="/Eppie.App.UI/Controls/DefaultSignatureSecondPart" />
+                    </Span>
+                </TextBlock>
+                <!--  ToDo: Add logic  -->
+                <TextBox x:Uid="/Eppie.App.UI/Controls/SignatureBox"
+                         Grid.Row="1"
+                         Grid.ColumnSpan="2"
+                         Height="80"
+                         HorizontalAlignment="Stretch"
+                         AcceptsReturn="True"
+                         IsEnabled="{x:Bind SignatureSwitch.IsOn, Mode=OneWay}" />
+            </Grid>
+
+            <TextBlock x:Uid="/Eppie.App.UI/Controls/AdvancedSettingsCaption"
+                       Grid.Row="4"
+                       Grid.Column="0"
+                       Margin="0,0,36,0"
+                       VerticalAlignment="Center" />
+
+            <!--  ToDo: Add logic  -->
+            <ComboBox x:Name="SettingsModeSelector"
+                      Grid.Row="4"
+                      Grid.Column="1"
+                      Width="180"
+                      HorizontalAlignment="Left"
+                      VerticalAlignment="Top">
+                <ComboBox.Items>
+                    <ComboBoxItem x:Uid="/Eppie.App.UI/Controls/AdvancedSettingsDefaultMode" />
+                    <ComboBoxItem x:Uid="/Eppie.App.UI/Controls/AdvancedSettingsCustomMode" />
+                </ComboBox.Items>
+            </ComboBox>
+
+            <!--  ToDo: Add logic  -->
+            <Button x:Uid="/Eppie.App.UI/Controls/AdvancedSettingsResetButton"
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top" />
+
+        </Grid>
+
+        <Grid x:Name="CustomSection" Margin="0,8,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="376" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="28" />
+            </Grid.RowDefinitions>
+
+
+            <StackPanel Grid.Row="0"
+                        Grid.Column="0"
+                        Margin="0,0,36,0"
+                        Orientation="Vertical">
+                <TextBlock x:Uid="/Eppie.App.UI/Controls/BackupCaption" />
+                <TextBlock x:Uid="/Eppie.App.UI/Controls/BackupNote"
+                           Margin="{StaticResource TextDescriptionMargin}"
+                           Foreground="{ThemeResource TextFillColorSecondary}"
+                           TextWrapping="WrapWholeWords" />
+            </StackPanel>
+
+            <StackPanel Grid.Row="0"
+                        Grid.Column="1"
+                        Margin="0,0,0,36"
+                        Orientation="Vertical">
+                <CheckBox x:Name="BackupAccountSettingsCheckBoxNew"
+                          x:Uid="/Eppie.App.UI/Controls/BackupSettingsCheckBox"
+                          IsChecked="{x:Bind AccountSettingsModel.IsBackupAccountSettingsEnabled, Mode=TwoWay}" />
+                <CheckBox x:Uid="/Eppie.App.UI/Controls/BackupMessagesCheckBox"
+                          IsChecked="{x:Bind AccountSettingsModel.IsBackupAccountMessagesEnabled, Mode=TwoWay}"
+                          IsEnabled="{x:Bind BackupAccountSettingsCheckBoxNew.IsChecked, Mode=OneWay, Converter={StaticResource NullableBoolToBoolConverter}}" />
+            </StackPanel>
+
+
+            <StackPanel Grid.Row="1"
+                        Grid.Column="0"
+                        Margin="0,0,36,0"
+                        Orientation="Vertical">
+                <TextBlock x:Uid="/Eppie.App.UI/Controls/ServerSettingsCaption" />
+                <TextBlock x:Uid="/Eppie.App.UI/Controls/ServerSettingsNote"
+                           Margin="{StaticResource TextDescriptionMargin}"
+                           Foreground="{ThemeResource TextFillColorSecondary}"
+                           TextWrapping="WrapWholeWords" />
+            </StackPanel>
+
+            <StackPanel Grid.Row="1"
+                        Grid.Column="1"
+                        Margin="0,0,0,16"
+                        Orientation="Vertical">
+
+                <!--  Outgoing server expander  -->
+                <muxc:Expander Margin="0,0,0,8"
+                               HorizontalAlignment="Stretch"
+                               HorizontalContentAlignment="Stretch">
+                    <muxc:Expander.Header>
+                        <TextBlock x:Uid="/Eppie.App.UI/Controls/OutgoingServer" Style="{StaticResource NormalTextStyle}" />
+                    </muxc:Expander.Header>
+                    <Grid MinWidth="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <!--  Address  -->
+                        <StackPanel Grid.Row="0"
+                                    Grid.Column="0"
+                                    Orientation="Vertical">
+                            <TextBlock x:Uid="/Eppie.App.UI/Controls/Address" Margin="0,0,0,8" />
+                            <local:ErrorControl Property="{x:Bind AccountSettingsModel.OutgoingServerAddress, Mode=OneWay}">
+                                <local:ErrorControl.InnerContent>
+                                    <TextBox IsSpellCheckEnabled="False" Text="{x:Bind AccountSettingsModel.OutgoingServerAddress.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </local:ErrorControl.InnerContent>
+                            </local:ErrorControl>
+                        </StackPanel>
+
+                        <!--  Port  -->
+                        <StackPanel Grid.Row="0"
+                                    Grid.Column="1"
+                                    Width="64"
+                                    Margin="8,0,0,0"
+                                    Orientation="Vertical">
+                            <TextBlock x:Uid="/Eppie.App.UI/Controls/Port" Margin="0,0,0,8" />
+                            <controls:PromptTextInputControl VerticalAlignment="Top"
+                                                             IsSpellCheckEnabled="False"
+                                                             Text="{x:Bind AccountSettingsModel.OutgoingServerPort, Mode=TwoWay, Converter={StaticResource IntToStringConverter}}" />
+                        </StackPanel>
+
+                        <!--  Checkbox for separate SMTP login and password  -->
+                        <CheckBox x:Name="SeparateSmtpCredentialsCheckBoxNew"
+                                  x:Uid="/Eppie.App.UI/Controls/UseSeparateCredentials"
+                                  Grid.Row="1"
+                                  Grid.Column="0"
+                                  Grid.ColumnSpan="2"
+                                  Margin="0,16,0,0"
+                                  IsChecked="{x:Bind BasicAccountSettingsModel.UseSeparateOutgoingCredentials, Mode=TwoWay}"
+                                  Visibility="{x:Bind BasicAccountSettingsModel, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}" />
+
+                        <StackPanel Grid.Row="2"
+                                    Grid.Column="0"
+                                    Grid.ColumnSpan="2"
+                                    MinWidth="0"
+                                    Visibility="{x:Bind SeparateSmtpCredentialsCheckBoxNew.IsChecked, Mode=OneWay}">
+
+
+                            <TextBlock x:Uid="/Eppie.App.UI/Controls/ServerLogin" Margin="0,16,0,8" />
+                            <local:ErrorControl Property="{x:Bind BasicAccountSettingsModel.OutgoingLogin, Mode=OneWay}">
+                                <local:ErrorControl.InnerContent>
+                                    <TextBox MinWidth="0"
+                                             IsSpellCheckEnabled="False"
+                                             Text="{x:Bind BasicAccountSettingsModel.OutgoingLogin.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </local:ErrorControl.InnerContent>
+                            </local:ErrorControl>
+                            <TextBlock x:Uid="/Eppie.App.UI/Controls/ServerPassword" Margin="0,16,0,8" />
+                            <local:ErrorControl Property="{x:Bind BasicAccountSettingsModel.OutgoingPassword, Mode=OneWay}">
+                                <local:ErrorControl.InnerContent>
+                                    <PasswordBox MinWidth="0" Password="{x:Bind BasicAccountSettingsModel.OutgoingPassword.Value, Mode=TwoWay}" />
+                                </local:ErrorControl.InnerContent>
+                            </local:ErrorControl>
+
+                        </StackPanel>
+                    </Grid>
+                </muxc:Expander>
+
+
+                <!--  Incoming server expander  -->
+
+                <muxc:Expander HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                    <muxc:Expander.Header>
+                        <TextBlock x:Uid="/Eppie.App.UI/Controls/IncomingServer" Style="{StaticResource NormalTextStyle}" />
+                    </muxc:Expander.Header>
+                    <Grid MinWidth="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <!--  Protocol  -->
+                        <StackPanel Grid.Row="0"
+                                    Grid.Column="0"
+                                    Width="88"
+                                    Orientation="Vertical">
+                            <TextBlock x:Uid="/Eppie.App.UI/Controls/Protocol" Margin="0,0,0,8" />
+                            <ComboBox HorizontalAlignment="Stretch"
+                                      ItemsSource="{x:Bind IncomingProtocolTypes, Mode=OneWay}"
+                                      SelectedItem="{x:Bind AccountSettingsModel.IncomingMailProtocol, Mode=TwoWay}" />
+                        </StackPanel>
+
+                        <!--  Address  -->
+                        <StackPanel Grid.Row="0"
+                                    Grid.Column="1"
+                                    Margin="8,0,0,0"
+                                    Orientation="Vertical">
+                            <TextBlock x:Uid="/Eppie.App.UI/Controls/Address" Margin="0,0,0,8" />
+                            <local:ErrorControl Property="{x:Bind AccountSettingsModel.IncomingServerAddress, Mode=OneWay}">
+                                <local:ErrorControl.InnerContent>
+                                    <TextBox IsSpellCheckEnabled="False" Text="{x:Bind AccountSettingsModel.IncomingServerAddress.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </local:ErrorControl.InnerContent>
+                            </local:ErrorControl>
+                        </StackPanel>
+
+                        <!--  Port  -->
+                        <StackPanel Grid.Row="0"
+                                    Grid.Column="2"
+                                    Width="64"
+                                    Margin="8,0,0,0"
+                                    Orientation="Vertical">
+                            <TextBlock x:Uid="/Eppie.App.UI/Controls/Port" Margin="0,0,0,8" />
+                            <controls:PromptTextInputControl VerticalAlignment="Top"
+                                                             IsSpellCheckEnabled="False"
+                                                             Text="{x:Bind AccountSettingsModel.IncomingServerPort, Mode=TwoWay, Converter={StaticResource IntToStringConverter}}" />
+                        </StackPanel>
+
+
+                        <!--  Checkbox for separate IMAP/POP3 login and password  -->
+                        <CheckBox x:Name="SeparateImapCredentialsCheckBoxNew"
+                                  x:Uid="/Eppie.App.UI/Controls/UseSeparateCredentials"
+                                  Grid.Row="1"
+                                  Grid.Column="0"
+                                  Grid.ColumnSpan="3"
+                                  Margin="0,16,0,0"
+                                  IsChecked="{x:Bind BasicAccountSettingsModel.UseSeparateIncomingCredentials, Mode=TwoWay}"
+                                  Visibility="{x:Bind BasicAccountSettingsModel, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}" />
+
+                        <!--  Block for IMAP/POP3 login and password fields  -->
+                        <StackPanel Grid.Row="2"
+                                    Grid.Column="0"
+                                    Grid.ColumnSpan="3"
+                                    MinWidth="0"
+                                    Visibility="{x:Bind SeparateImapCredentialsCheckBoxNew.IsChecked, Mode=OneWay}">
+                            <TextBlock x:Uid="/Eppie.App.UI/Controls/ServerLogin" Margin="0,16,0,8" />
+                            <local:ErrorControl Property="{x:Bind BasicAccountSettingsModel.IncomingLogin, Mode=OneWay}">
+                                <local:ErrorControl.InnerContent>
+                                    <TextBox MinWidth="0"
+                                             IsSpellCheckEnabled="False"
+                                             Text="{x:Bind BasicAccountSettingsModel.IncomingLogin.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </local:ErrorControl.InnerContent>
+                            </local:ErrorControl>
+                            <TextBlock x:Uid="/Eppie.App.UI/Controls/ServerPassword" Margin="0,16,0,8" />
+                            <local:ErrorControl Property="{x:Bind BasicAccountSettingsModel.IncomingPassword, Mode=OneWay}">
+                                <local:ErrorControl.InnerContent>
+                                    <PasswordBox MinWidth="0" Password="{x:Bind BasicAccountSettingsModel.IncomingPassword.Value, Mode=TwoWay}" />
+                                </local:ErrorControl.InnerContent>
+                            </local:ErrorControl>
+                        </StackPanel>
+
+                    </Grid>
+                </muxc:Expander>
+            </StackPanel>
+
+            <TextBlock x:Uid="/Eppie.App.UI/Controls/SynchronizationIntervalCaption"
+                       Grid.Row="2"
+                       Grid.Column="0"
+                       Margin="0,0,36,0" />
+
+            <StackPanel Grid.Row="2"
+                        Grid.Column="1"
+                        Margin="0,0,0,36"
+                        Orientation="Horizontal">
+                <local:ErrorControl HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    Property="{x:Bind AccountSettingsModel.SynchronizationInterval, Mode=OneWay}">
+                    <local:ErrorControl.InnerContent>
+                        <TextBox IsSpellCheckEnabled="False" Text="{x:Bind AccountSettingsModel.SynchronizationInterval.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    </local:ErrorControl.InnerContent>
+                </local:ErrorControl>
+                <TextBlock x:Uid="/Eppie.App.UI/Controls/SynchronizationIntervalUnits"
+                           Margin="12,0"
+                           VerticalAlignment="Center" />
+            </StackPanel>
+
+            <StackPanel Grid.Row="3"
+                        Grid.Column="0"
+                        Margin="0,0,36,0"
+                        Orientation="Vertical">
+                <TextBlock x:Uid="/Eppie.App.UI/Controls/EncryptionKeysCaption" />
+                <TextBlock x:Uid="/Eppie.App.UI/Controls/EncryptionKeysNote"
+                           Margin="{StaticResource TextDescriptionMargin}"
+                           Foreground="{ThemeResource TextFillColorSecondary}"
+                           TextWrapping="WrapWholeWords" />
+            </StackPanel>
+
+            <muxc:Expander Grid.Row="3"
+                           Grid.Column="1"
+                           HorizontalAlignment="Stretch"
+                           VerticalAlignment="Top"
+                           HorizontalContentAlignment="Stretch">
+                <muxc:Expander.Header>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <!--  ToDo: Get value from SettingsModel  -->
+                        <TextBlock VerticalAlignment="Center"
+                                   Text="ME8EAAAAABMFK4EEAAOCAWTP3QMQGHZ78RJRFWBH (hardcode)"
+                                   TextTrimming="CharacterEllipsis" />
+                        <!--  ToDo: Add logic  -->
+                        <Button x:Uid="/Eppie.App.UI/Controls/CopyEncryptionKeyButton"
+                                Grid.Column="1"
+                                Margin="8,0,0,0"
+                                HorizontalAlignment="Right" />
+                    </Grid>
+                </muxc:Expander.Header>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock x:Uid="/Eppie.App.UI/Controls/EncryptionKeyIdLabel"
+                               Grid.Row="0"
+                               Grid.Column="0" />
+                    <!--  ToDo: Get value from SettingsModel  -->
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="1"
+                               Margin="24,0,0,0"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                               Text="1234567890ABCDEF (hardcode)"
+                               TextTrimming="CharacterEllipsis" />
+
+                    <TextBlock x:Uid="/Eppie.App.UI/Controls/EncryptionKeyAlgorithmLabel"
+                               Grid.Row="1"
+                               Grid.Column="0"
+                               Margin="0,4,0,0" />
+                    <!--  ToDo: Get value from SettingsModel  -->
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="1"
+                               Margin="24,4,0,0"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                               Text="ECDa 256 bit (hardcode)"
+                               TextTrimming="CharacterEllipsis" />
+
+                    <TextBlock x:Uid="/Eppie.App.UI/Controls/EncryptionKeyCreationTimeLabel"
+                               Grid.Row="2"
+                               Grid.Column="0"
+                               Margin="0,4,0,0" />
+                    <!--  ToDo: Get value from SettingsModel  -->
+                    <TextBlock Grid.Row="2"
+                               Grid.Column="1"
+                               Margin="24,4,0,0"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                               Text="Thursday, January 1, 1970 12:00:00 AM (hardcode)"
+                               TextTrimming="CharacterEllipsis" />
+
+                    <TextBlock x:Uid="/Eppie.App.UI/Controls/EncryptionKeyExpirationDateLabel"
+                               Grid.Row="3"
+                               Grid.Column="0"
+                               Margin="0,4,0,0" />
+                    <!--  ToDo: Get value from SettingsModel  -->
+                    <TextBlock Grid.Row="3"
+                               Grid.Column="1"
+                               Margin="24,4,0,0"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                               Text="Never (hardcode)"
+                               TextTrimming="CharacterEllipsis" />
+
+                    <StackPanel Grid.Row="4"
+                                Grid.ColumnSpan="2"
+                                Margin="0,8,0,0"
+                                HorizontalAlignment="Right"
+                                Orientation="Horizontal">
+                        <!--  ToDo: Add logic  -->
+                        <Button x:Uid="/Eppie.App.UI/Controls/ExportEncryptionKeyButton" />
+                        <!--  ToDo: Add logic  -->
+                        <Button x:Uid="/Eppie.App.UI/Controls/SendEncryptionKeyButton" Margin="8,0,0,0" />
+                    </StackPanel>
+                </Grid>
+            </muxc:Expander>
+
+        </Grid>
+    </StackPanel>
+</UserControl>
