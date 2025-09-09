@@ -24,6 +24,7 @@ using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using Tuvi.App.ViewModels.Common;
 using Tuvi.App.ViewModels.Services;
+using Tuvi.Core.Entities;
 using TuviPgpLib.Entities;
 
 namespace Tuvi.App.ViewModels
@@ -163,12 +164,13 @@ namespace Tuvi.App.ViewModels
             {
                 // Show confirmation dialog
                 bool userConfirmed = await MessageService.ShowRemovePgpKeyDialogAsync().ConfigureAwait(true);
-                
+
                 if (userConfirmed)
                 {
                     // Delete the key using SecurityManager.RemovePgpKeys
-                    await Core.GetSecurityManager().RemovePgpKeys(new[] { key.KeyId }).ConfigureAwait(true);
-                    
+                    var emailAddress = new EmailAddress(key.UserIdentity, string.Empty);
+                    Core.GetSecurityManager().RemovePgpKeys(emailAddress);
+
                     // Navigate back to the keys list
                     NavigationService?.GoBack();
                 }
