@@ -16,6 +16,12 @@
         <viewmodels:AccountSettingsPageViewModel />
     </local:AccountSettingsPageBase.DataContext>
 
+    <local:AccountSettingsPageBase.Resources>
+        <ResourceDictionary>
+            <SolidColorBrush x:Key="RemoveAccountButtonBrush" Color="Red" />
+        </ResourceDictionary>
+    </local:AccountSettingsPageBase.Resources>
+
     <interactivity:Interaction.Behaviors>
         <behaviors:DialogBehavior ApplyCommand="{x:Bind ViewModel.ApplySettingsCommand}"
                                   CancelCommand="{x:Bind ViewModel.CancelSettingsCommand}"
@@ -29,11 +35,10 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <!--  ToDo: Add Text string to resources  -->
-        <TextBlock Grid.Row="0"
+        <TextBlock x:Uid="ServiceSettingsTitle"
+                   Grid.Row="0"
                    Margin="44,0,48,24"
-                   FontSize="14"
-                   Text="SERVICE SETTINGS" />
+                   FontSize="14" />
 
         <ScrollViewer Grid.Row="1" IsEnabled="{x:Bind ViewModel.IsWaitingResponse, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}">
             <controls:NewAccountSettingsControl x:Name="AccountSettings"
@@ -55,10 +60,7 @@
                     <ProgressRing Width="18"
                                   Height="18"
                                   Visibility="{x:Bind ViewModel.IsWaitingResponse, Mode=OneWay}" />
-                    <!--  ToDo: Add Text string to resources  -->
-                    <TextBlock x:Name="ApplyText"
-                               Text="Apply"
-                               Visibility="{x:Bind ViewModel.IsWaitingResponse, Converter={StaticResource InverseBoolToVisibilityConverter}, Mode=OneWay}" />
+                    <TextBlock x:Uid="ApplyButtonContent" Visibility="{x:Bind ViewModel.IsWaitingResponse, Converter={StaticResource InverseBoolToVisibilityConverter}, Mode=OneWay}" />
                 </Grid>
             </Button>
 
@@ -73,7 +75,7 @@
                     Width="148"
                     HorizontalAlignment="Right"
                     Command="{x:Bind ViewModel.RemoveAccountCommand}"
-                    Foreground="Red"
+                    Foreground="{StaticResource RemoveAccountButtonBrush}"
                     Visibility="{x:Bind ViewModel.IsCreatingAccountMode, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
         </Grid>
     </Grid>
