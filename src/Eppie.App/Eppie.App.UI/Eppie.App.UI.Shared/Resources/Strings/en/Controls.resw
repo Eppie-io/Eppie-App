@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -276,5 +276,139 @@
   <data name="ClaimNameButton.Text" xml:space="preserve">
     <value>Claim</value>
     <comment>Button text to claim decentralized name</comment>
+  </data>
+  <data name="PasswordCaption.Text" xml:space="preserve">
+    <value>Login password</value>
+    <comment>Input field caption for password</comment>
+  </data>
+  <data name="PasswordNote.Text" xml:space="preserve">
+    <value>Enter the password for this address.</value>
+    <comment>Note on the password input field</comment>
+  </data>
+  <data name="PasswordBox.PlaceholderText" xml:space="preserve">
+    <value>Enter password</value>
+    <comment>Text displayed in Password TextBox when no search text is entered</comment>
+  </data>
+  <data name="SenderNameCaption.Text" xml:space="preserve">
+    <value>Display name</value>
+    <comment>Input field caption for sender name</comment>
+  </data>
+  <data name="SenderNameNote.Text" xml:space="preserve">
+    <value>Name shown in the “From” field.</value>
+    <comment>Note on the sender name input field</comment>
+  </data>
+  <data name="SenderNameBox.PlaceholderText" xml:space="preserve">
+    <value>Name</value>
+    <comment>Text displayed in Sender TextBox when no search text is entered</comment>
+  </data>
+  <data name="SignatureCaption.Text" xml:space="preserve">
+    <value>Signature</value>
+    <comment>Input field caption for signature</comment>
+  </data>
+  <data name="SignatureNote.Text" xml:space="preserve">
+    <value>Each signature moves peer-to-peer communication closer for everyone.</value>
+    <comment>Note on the signature input field</comment>
+  </data>
+  <data name="SignatureLink.Text" xml:space="preserve">
+    <value>Learn more</value>
+    <comment>Display text of the link to additional information</comment>
+  </data>
+  <data name="SignatureBox.PlaceholderText" xml:space="preserve">
+    <value>Enter your signature</value>
+    <comment>Text displayed in Signature TextBox when no search text is entered</comment>
+  </data>
+  <data name="DefaultSignatureFirstPart.Text" xml:space="preserve">
+    <value>Sent from an</value>
+    <comment>The first part (Sent from an) of the sentence: "Sent from an Eppie hybrid address"</comment>
+  </data>
+  <data name="DefaultSignatureSecondPart.Text" xml:space="preserve">
+    <value>hybrid address</value>
+    <comment>The second part (hybrid address) of the sentence: "Sent from an Eppie hybrid address"</comment>
+  </data>
+  <data name="AdvancedSettingsCaption.Text" xml:space="preserve">
+    <value>Advanced settings</value>
+    <comment>Combo box caption for advanced settings</comment>
+  </data>
+  <data name="AdvancedSettingsDefaultMode.Content" xml:space="preserve">
+    <value>Default</value>
+    <comment>Text of combo box item for default settings mode</comment>
+  </data>
+  <data name="AdvancedSettingsCustomMode.Content" xml:space="preserve">
+    <value>Custom</value>
+    <comment>Text of combo box item for custom settings mode</comment>
+  </data>
+  <data name="AdvancedSettingsResetButton.Content" xml:space="preserve">
+    <value>Set default</value>
+    <comment>Text for the button to reset advanced settings</comment>
+  </data>
+  <data name="BackupCaption.Text" xml:space="preserve">
+    <value>Backup</value>
+    <comment>Caption of the backup options section in account settings</comment>
+  </data>
+  <data name="BackupNote.Text" xml:space="preserve">
+    <value>Select options for this address.</value>
+    <comment>Note of section with backup options on account settings</comment>
+  </data>
+  <data name="BackupSettingsCheckBox.Content" xml:space="preserve">
+    <value>Backup settings</value>
+    <comment>The label for option Enable backup for account settings</comment>
+  </data>
+  <data name="BackupMessagesCheckBox.Content" xml:space="preserve">
+    <value>Backup emails</value>
+    <comment>The label for option Enable backup for downloaded emails</comment>
+  </data>
+  <data name="ServerSettingsCaption.Text" xml:space="preserve">
+    <value>IMAP/SMTP settings</value>
+    <comment>Caption of the server options section in account settings</comment>
+  </data>
+  <data name="ServerSettingsNote.Text" xml:space="preserve">
+    <value>Default settings are automatically configured, but you can manually adjust them anytime.</value>
+    <comment>Note of section with server options on account settings</comment>
+  </data>
+  <data name="SynchronizationIntervalCaption.Text" xml:space="preserve">
+    <value>Synchronization interval</value>
+    <comment>Caption of input field to enter check messages interval value in minutes</comment>
+  </data>
+  <data name="SynchronizationIntervalUnits.Text" xml:space="preserve">
+    <value>minutes</value>
+    <comment>Minutes - units of time measurement</comment>
+  </data>
+  <data name="EncryptionKeysCaption.Text" xml:space="preserve">
+    <!-- Todo: Try not using PGP : Encryption Keys -->
+    <value>PGP keys</value>
+    <comment>Caption for the encryption settings section in account settings</comment>
+  </data>
+  <data name="EncryptionKeysNote.Text" xml:space="preserve">
+    <!-- Todo: Try not using PGP, Eppie, e2e-->
+    <value>Eppie generates a PGP key for each address to enable secure e2e communication.</value>
+    <comment>Note for the encryption settings section in account settings. Eppie is a brand that doesn't translate</comment>
+  </data>
+  <data name="CopyEncryptionKeyButton.Content" xml:space="preserve">
+    <value>Copy</value>
+    <comment>Text for the button to copy encryption key</comment>
+  </data>
+  <data name="ExportEncryptionKeyButton.Content" xml:space="preserve">
+    <value>Export to file</value>
+    <comment>Text for the button to export the encryption key to a file</comment>
+  </data>
+  <data name="SendEncryptionKeyButton.Content" xml:space="preserve">
+    <value>Send by email</value>
+    <comment>Text for the button to send encryption key by email</comment>
+  </data>
+  <data name="EncryptionKeyIdLabel.Text" xml:space="preserve">
+    <value>KeyID</value>
+    <comment>Label of the field containing the encryption key identifier</comment>
+  </data>
+  <data name="EncryptionKeyAlgorithmLabel.Text" xml:space="preserve">
+    <value>Algorithm</value>
+    <comment>Label of the field containing the name of the encryption key algorithm</comment>
+  </data>
+  <data name="EncryptionKeyCreationTimeLabel.Text" xml:space="preserve">
+    <value>Created</value>
+    <comment>Label of the field containing the creation time of the encryption key</comment>
+  </data>
+  <data name="EncryptionKeyExpirationDateLabel.Text" xml:space="preserve">
+    <value>Expires</value>
+    <comment>Label of the field containing the expiration date of the encryption key</comment>
   </data>
 </root>
