@@ -82,6 +82,8 @@ namespace Tuvi.App.ViewModels
 
         public ICommand SendPgpKeyCommand => new AsyncRelayCommand(SendKeyByEmailAsync);
 
+        public ICommand DeletePgpKeyCommand => new AsyncRelayCommand(DeleteKeyAsync);
+
         public override void OnNavigatedTo(object data)
         {
             if (data is PgpKeyInfo key)
@@ -148,6 +150,28 @@ namespace Tuvi.App.ViewModels
 
                 var shareKeyMessageData = new SharePublicKeyMessageData(key.UserIdentity, fileContent, defaultFileName, defaultMessageSubject);
                 NavigationService?.Navigate(nameof(NewMessagePageViewModel), shareKeyMessageData);
+            }
+            catch (Exception e)
+            {
+                OnError(e);
+            }
+        }
+
+        private async Task DeleteKeyAsync()
+        {
+            try
+            {
+                // Show confirmation dialog
+                bool userConfirmed = await MessageService.ShowRemovePgpKeyDialogAsync().ConfigureAwait(true);
+                
+                if (userConfirmed)
+                {
+                    // Delete the key using SecurityManager.RemovePgpKeys
+                    await Core.GetSecurityManager().RemovePgpKeys(new[] { key.KeyId }).ConfigureAwait(true);
+                    
+                    // Navigate back to the keys list
+                    NavigationService?.GoBack();
+                }
             }
             catch (Exception e)
             {
