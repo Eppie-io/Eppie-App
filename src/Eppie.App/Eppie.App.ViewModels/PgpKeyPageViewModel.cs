@@ -166,7 +166,7 @@ namespace Tuvi.App.ViewModels
 
                 if (userConfirmed)
                 {
-                    var emailAddress = new EmailAddress(key.UserIdentity, string.Empty);
+                    var emailAddress = new EmailAddress(key.UserIdentity);
                     Core.GetSecurityManager().RemovePgpKeys(emailAddress);
 
                     NavigationService?.GoBack();
