@@ -493,6 +493,15 @@ namespace Tuvi.App.Shared.Services
                 StringProvider.GetString("RemoveAIAgentDialogRejectText"));
         }
 
+        public Task<bool> ShowRemovePgpKeyDialogAsync()
+        {
+            return ShowDialogAsync(
+                StringProvider.GetString("RemovePgpKeyDialogTitle"),
+                StringProvider.GetString("RemovePgpKeyDialogMessage"),
+                StringProvider.GetString("RemovePgpKeyDialogAcceptText"),
+                StringProvider.GetString("RemovePgpKeyDialogRejectText"));
+        }
+
         public Task<bool> ShowRequestReviewMessageAsync()
         {
             return ShowDialogAsync(
