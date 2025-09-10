@@ -546,6 +546,26 @@ You need to enable IMAP for this account first and try again.</value>
     <value>Send key by email</value>
     <comment>Send PGP key by email button content</comment>
   </data>
+  <data name="PgpKeyDeleteButton.Content" xml:space="preserve">
+    <value>Delete key</value>
+    <comment>Delete PGP key button content</comment>
+  </data>
+  <data name="RemovePgpKeyDialogTitle" xml:space="preserve">
+    <value>Attention</value>
+    <comment>The title of the dialog shown when user wants to remove PGP key</comment>
+  </data>
+  <data name="RemovePgpKeyDialogMessage" xml:space="preserve">
+    <value>This action will permanently delete the PGP key from your keychain</value>
+    <comment>Dialog message shown when user wants to remove PGP key</comment>
+  </data>
+  <data name="RemovePgpKeyDialogAcceptText" xml:space="preserve">
+    <value>Delete</value>
+    <comment>Accept button text for dialog shown when user wants to remove PGP key</comment>
+  </data>
+  <data name="RemovePgpKeyDialogRejectText" xml:space="preserve">
+    <value>Cancel</value>
+    <comment>Cancel button text for dialog shown when user wants to remove PGP key</comment>
+  </data>
   <data name="PgpKeyAlgorithm.Text" xml:space="preserve">
     <value>Algorithm</value>
     <comment>Pgp key details cipher algorithm text label</comment>

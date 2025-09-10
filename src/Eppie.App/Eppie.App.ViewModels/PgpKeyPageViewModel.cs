@@ -24,6 +24,7 @@ using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using Tuvi.App.ViewModels.Common;
 using Tuvi.App.ViewModels.Services;
+using Tuvi.Core.Entities;
 using TuviPgpLib.Entities;
 
 namespace Tuvi.App.ViewModels
@@ -81,6 +82,8 @@ namespace Tuvi.App.ViewModels
         public ICommand ExportPgpKeyCommand => new AsyncRelayCommand<IFileOperationProvider>(ExportKeyToFileAsync);
 
         public ICommand SendPgpKeyCommand => new AsyncRelayCommand(SendKeyByEmailAsync);
+
+        public ICommand DeletePgpKeyCommand => new AsyncRelayCommand(DeleteKeyAsync);
 
         public override void OnNavigatedTo(object data)
         {
@@ -148,6 +151,26 @@ namespace Tuvi.App.ViewModels
 
                 var shareKeyMessageData = new SharePublicKeyMessageData(key.UserIdentity, fileContent, defaultFileName, defaultMessageSubject);
                 NavigationService?.Navigate(nameof(NewMessagePageViewModel), shareKeyMessageData);
+            }
+            catch (Exception e)
+            {
+                OnError(e);
+            }
+        }
+
+        private async Task DeleteKeyAsync()
+        {
+            try
+            {
+                bool userConfirmed = await MessageService.ShowRemovePgpKeyDialogAsync().ConfigureAwait(true);
+
+                if (userConfirmed)
+                {
+                    var emailAddress = new EmailAddress(key.UserIdentity);
+                    Core.GetSecurityManager().RemovePgpKeys(emailAddress);
+
+                    NavigationService?.GoBack();
+                }
             }
             catch (Exception e)
             {
