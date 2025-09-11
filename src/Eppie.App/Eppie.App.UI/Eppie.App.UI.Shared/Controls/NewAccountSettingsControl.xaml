@@ -190,6 +190,7 @@
             <Button x:Uid="/Eppie.App.UI/Controls/AdvancedSettingsResetButton"
                     Grid.Row="4"
                     Grid.Column="1"
+                    MinWidth="148"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Top" />
 
