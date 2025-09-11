@@ -294,7 +294,7 @@
     <comment>Input field caption for sender name</comment>
   </data>
   <data name="SenderNameNote.Text" xml:space="preserve">
-    <value>Name shown in the “From” field.</value>
+    <value>Name shown in the "From" field of your emails.</value>
     <comment>Note on the sender name input field</comment>
   </data>
   <data name="SenderNameBox.PlaceholderText" xml:space="preserve">
@@ -306,7 +306,7 @@
     <comment>Input field caption for signature</comment>
   </data>
   <data name="SignatureNote.Text" xml:space="preserve">
-    <value>Each signature moves peer-to-peer communication closer for everyone.</value>
+    <value>Each signature brings peer-to-peer communication closer for everyone.</value>
     <comment>Note on the signature input field</comment>
   </data>
   <data name="SignatureLink.Text" xml:space="preserve">
@@ -338,7 +338,7 @@
     <comment>Text of combo box item for custom settings mode</comment>
   </data>
   <data name="AdvancedSettingsResetButton.Content" xml:space="preserve">
-    <value>Set default</value>
+    <value>Restore defaults</value>
     <comment>Text for the button to reset advanced settings</comment>
   </data>
   <data name="BackupCaption.Text" xml:space="preserve">
@@ -380,7 +380,7 @@
   </data>
   <data name="EncryptionKeysNote.Text" xml:space="preserve">
     <!-- Todo: Try not using PGP, Eppie, e2e-->
-    <value>Eppie generates a PGP key for each address to enable secure e2e communication.</value>
+    <value>Eppie generates a PGP key for each address to enable secure end-to-end communication.</value>
     <comment>Note for the encryption settings section in account settings. Eppie is a brand that doesn't translate</comment>
   </data>
   <data name="CopyEncryptionKeyButton.Content" xml:space="preserve">
@@ -396,7 +396,7 @@
     <comment>Text for the button to send encryption key by email</comment>
   </data>
   <data name="EncryptionKeyIdLabel.Text" xml:space="preserve">
-    <value>KeyID</value>
+    <value>Key ID</value>
     <comment>Label of the field containing the encryption key identifier</comment>
   </data>
   <data name="EncryptionKeyAlgorithmLabel.Text" xml:space="preserve">

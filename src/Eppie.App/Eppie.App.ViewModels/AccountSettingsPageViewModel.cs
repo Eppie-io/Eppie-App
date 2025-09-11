@@ -20,7 +20,6 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.Input;
 using Finebits.Authorization.OAuth2.Abstractions;
 using Finebits.Authorization.OAuth2.Types;
 using Tuvi.App.ViewModels.Extensions;
@@ -88,11 +87,11 @@ namespace Tuvi.App.ViewModels
             {
                 if (data is Account accountData)
                 {
-                    InitModel(AccountSettingsModel.Create(accountData), false);
+                    await InitModelAsync(AccountSettingsModel.Create(accountData), false).ConfigureAwait(true);
                 }
                 else if (data is OAuth2.MailService mailService && mailService != OAuth2.MailService.Unknown)
                 {
-                    InitModel(new OAuth2AccountSettingsModel(DefaultAccountConfig.CreateDefaultOAuth2Account(mailService)), true);
+                    await InitModelAsync(new OAuth2AccountSettingsModel(DefaultAccountConfig.CreateDefaultOAuth2Account(mailService)), true).ConfigureAwait(true);
 
                     await LoginAsync(mailService).ConfigureAwait(true);
                 }
@@ -101,7 +100,7 @@ namespace Tuvi.App.ViewModels
                     // It looks like the authorization data is out of date, you need to ask the user to authorization again.
 
                     var account = needReloginData.Account;
-                    InitModel(AccountSettingsModel.Create(account), false);
+                    await InitModelAsync(AccountSettingsModel.Create(account), false).ConfigureAwait(true);
 
                     if (account.AuthData is OAuth2Data oAuth2Data)
                     {
@@ -114,7 +113,7 @@ namespace Tuvi.App.ViewModels
                 }
                 else
                 {
-                    InitModel(new BasicAccountSettingsModel(Account.Default), true);
+                    await InitModelAsync(new BasicAccountSettingsModel(Account.Default), true).ConfigureAwait(true);
                 }
             }
             catch (Exception e)
@@ -123,14 +122,16 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        private void InitModel(AccountSettingsModel accountSettingsModel, bool isCreatingMode)
+        private async Task InitModelAsync(AccountSettingsModel accountSettingsModel, bool isCreatingMode)
         {
             IsCreatingAccountMode = isCreatingMode;
             AccountSettingsModel = accountSettingsModel;
 
-            accountSettingsModel.Email.NeedsValidation = !isCreatingMode;
-            accountSettingsModel.OutgoingServerAddress.NeedsValidation = !isCreatingMode;
-            accountSettingsModel.IncomingServerAddress.NeedsValidation = !isCreatingMode;
+            AccountSettingsModel.Email.NeedsValidation = !isCreatingMode;
+            AccountSettingsModel.OutgoingServerAddress.NeedsValidation = !isCreatingMode;
+            AccountSettingsModel.IncomingServerAddress.NeedsValidation = !isCreatingMode;
+
+            await AccountSettingsModel.InitModelAsync(CoreProvider, NavigationService).ConfigureAwait(true);
         }
 
         protected override bool IsValid()
@@ -231,7 +232,7 @@ namespace Tuvi.App.ViewModels
         {
             get
             {
-                if (_incomingProtocolTypes == null)
+                if (_incomingProtocolTypes is null)
                 {
                     _incomingProtocolTypes = Array.CreateInstance(typeof(MailProtocol), 2);
                     _incomingProtocolTypes.SetValue(MailProtocol.IMAP, 0);
