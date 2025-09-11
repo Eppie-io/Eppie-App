@@ -44,6 +44,8 @@
             <controls:NewAccountSettingsControl x:Name="AccountSettings"
                                                 Margin="44,12,48,0"
                                                 AccountSettingsModel="{x:Bind ViewModel.AccountSettingsModel, Mode=OneWay}"
+                                                ClipboardProvider="{StaticResource ClipboardProvider}"
+                                                FileProvider="{StaticResource FileOperationProvider}"
                                                 IncomingProtocolTypes="{x:Bind ViewModel.IncomingProtocolTypes, Mode=OneWay}"
                                                 IsEmailReadOnly="{x:Bind ViewModel.IsEmailReadonly, Mode=OneWay}" />
         </ScrollViewer>
@@ -70,6 +72,8 @@
                     Margin="8,0"
                     Command="{x:Bind ViewModel.CancelSettingsCommand}" />
 
+            <!--  TODO: Change Foreground to ThemeResource SystemFillColorCriticalBrush  -->
+            <!--  TODO: Create CriticalActionButtonStyle  -->
             <Button x:Uid="RemoveAccountButton"
                     Grid.Column="2"
                     Width="148"

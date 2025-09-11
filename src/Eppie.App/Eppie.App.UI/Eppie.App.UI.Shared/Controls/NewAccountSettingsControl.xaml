@@ -99,7 +99,6 @@
                 <TextBlock x:Uid="/Eppie.App.UI/Controls/SenderNameNote"
                            Margin="{StaticResource TextDescriptionMargin}"
                            Foreground="{ThemeResource TextFillColorSecondary}"
-                           Text="Name shown in the 'From' field of your emails."
                            TextWrapping="WrapWholeWords" />
             </StackPanel>
             <TextBox x:Uid="/Eppie.App.UI/Controls/SenderNameBox"
@@ -308,7 +307,6 @@
                                     MinWidth="0"
                                     Visibility="{x:Bind SeparateSmtpCredentialsCheckBoxNew.IsChecked, Mode=OneWay}">
 
-
                             <TextBlock x:Uid="/Eppie.App.UI/Controls/ServerLogin" Margin="0,16,0,8" />
                             <local:ErrorControl Property="{x:Bind BasicAccountSettingsModel.OutgoingLogin, Mode=OneWay}">
                                 <local:ErrorControl.InnerContent>
@@ -444,7 +442,8 @@
             <StackPanel Grid.Row="3"
                         Grid.Column="0"
                         Margin="0,0,36,0"
-                        Orientation="Vertical">
+                        Orientation="Vertical"
+                        Visibility="{x:Bind AccountSettingsModel.PgpKeyModel, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}">
                 <TextBlock x:Uid="/Eppie.App.UI/Controls/EncryptionKeysCaption" />
                 <TextBlock x:Uid="/Eppie.App.UI/Controls/EncryptionKeysNote"
                            Margin="{StaticResource TextDescriptionMargin}"
@@ -456,22 +455,23 @@
                            Grid.Column="1"
                            HorizontalAlignment="Stretch"
                            VerticalAlignment="Top"
-                           HorizontalContentAlignment="Stretch">
+                           HorizontalContentAlignment="Stretch"
+                           Visibility="{x:Bind AccountSettingsModel.PgpKeyModel, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}">
                 <muxc:Expander.Header>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <!--  ToDo: Get value from SettingsModel  -->
                         <TextBlock VerticalAlignment="Center"
-                                   Text="ME8EAAAAABMFK4EEAAOCAWTP3QMQGHZ78RJRFWBH (hardcode)"
+                                   Text="{x:Bind AccountSettingsModel.PgpKeyModel.Fingerprint, Mode=OneWay}"
                                    TextTrimming="CharacterEllipsis" />
-                        <!--  ToDo: Add logic  -->
                         <Button x:Uid="/Eppie.App.UI/Controls/CopyEncryptionKeyButton"
                                 Grid.Column="1"
                                 Margin="8,0,0,0"
-                                HorizontalAlignment="Right" />
+                                HorizontalAlignment="Right"
+                                Command="{x:Bind AccountSettingsModel.PgpKeyModel.CopyPgpKeyCommand, Mode=OneWay}"
+                                CommandParameter="{x:Bind ClipboardProvider, Mode=OneWay}" />
                     </Grid>
                 </muxc:Expander.Header>
 
@@ -491,48 +491,44 @@
                     <TextBlock x:Uid="/Eppie.App.UI/Controls/EncryptionKeyIdLabel"
                                Grid.Row="0"
                                Grid.Column="0" />
-                    <!--  ToDo: Get value from SettingsModel  -->
                     <TextBlock Grid.Row="0"
                                Grid.Column="1"
                                Margin="24,0,0,0"
                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                               Text="1234567890ABCDEF (hardcode)"
+                               Text="{x:Bind AccountSettingsModel.PgpKeyModel.KeyId, Mode=OneWay}"
                                TextTrimming="CharacterEllipsis" />
 
                     <TextBlock x:Uid="/Eppie.App.UI/Controls/EncryptionKeyAlgorithmLabel"
                                Grid.Row="1"
                                Grid.Column="0"
                                Margin="0,4,0,0" />
-                    <!--  ToDo: Get value from SettingsModel  -->
                     <TextBlock Grid.Row="1"
                                Grid.Column="1"
                                Margin="24,4,0,0"
                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                               Text="ECDa 256 bit (hardcode)"
+                               Text="{x:Bind AccountSettingsModel.PgpKeyModel.Algorithm, Mode=OneWay}"
                                TextTrimming="CharacterEllipsis" />
 
                     <TextBlock x:Uid="/Eppie.App.UI/Controls/EncryptionKeyCreationTimeLabel"
                                Grid.Row="2"
                                Grid.Column="0"
                                Margin="0,4,0,0" />
-                    <!--  ToDo: Get value from SettingsModel  -->
                     <TextBlock Grid.Row="2"
                                Grid.Column="1"
                                Margin="24,4,0,0"
                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                               Text="Thursday, January 1, 1970 12:00:00 AM (hardcode)"
+                               Text="{x:Bind AccountSettingsModel.PgpKeyModel.Created, Mode=OneWay}"
                                TextTrimming="CharacterEllipsis" />
 
                     <TextBlock x:Uid="/Eppie.App.UI/Controls/EncryptionKeyExpirationDateLabel"
                                Grid.Row="3"
                                Grid.Column="0"
                                Margin="0,4,0,0" />
-                    <!--  ToDo: Get value from SettingsModel  -->
                     <TextBlock Grid.Row="3"
                                Grid.Column="1"
                                Margin="24,4,0,0"
                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                               Text="Never (hardcode)"
+                               Text="{x:Bind AccountSettingsModel.PgpKeyModel.Expires, Mode=OneWay}"
                                TextTrimming="CharacterEllipsis" />
 
                     <StackPanel Grid.Row="4"
@@ -540,10 +536,12 @@
                                 Margin="0,8,0,0"
                                 HorizontalAlignment="Right"
                                 Orientation="Horizontal">
-                        <!--  ToDo: Add logic  -->
-                        <Button x:Uid="/Eppie.App.UI/Controls/ExportEncryptionKeyButton" />
-                        <!--  ToDo: Add logic  -->
-                        <Button x:Uid="/Eppie.App.UI/Controls/SendEncryptionKeyButton" Margin="8,0,0,0" />
+                        <Button x:Uid="/Eppie.App.UI/Controls/ExportEncryptionKeyButton"
+                                Command="{x:Bind AccountSettingsModel.PgpKeyModel.ExportPgpKeyCommand, Mode=OneWay}"
+                                CommandParameter="{x:Bind FileProvider, Mode=OneWay}" />
+                        <Button x:Uid="/Eppie.App.UI/Controls/SendEncryptionKeyButton"
+                                Margin="8,0,0,0"
+                                Command="{x:Bind AccountSettingsModel.PgpKeyModel.SendPgpKeyCommand, Mode=OneWay}" />
                     </StackPanel>
                 </Grid>
             </muxc:Expander>

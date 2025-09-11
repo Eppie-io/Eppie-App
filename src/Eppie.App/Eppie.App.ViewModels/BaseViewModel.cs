@@ -41,7 +41,7 @@ namespace Tuvi.App.ViewModels
         }
 
         protected Tuvi.Core.ITuviMail Core { get { return CoreProvider(); } }
-        private Func<Tuvi.Core.ITuviMail> CoreProvider { get; set; }
+        protected Func<Tuvi.Core.ITuviMail> CoreProvider { get; private set; }
         public void SetCoreProvider(Func<Tuvi.Core.ITuviMail> coreProvider)
         {
             CoreProvider = coreProvider;

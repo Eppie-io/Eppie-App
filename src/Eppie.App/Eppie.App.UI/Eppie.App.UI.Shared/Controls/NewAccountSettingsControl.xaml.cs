@@ -18,6 +18,7 @@
 
 using System;
 using Tuvi.App.ViewModels;
+using Tuvi.App.ViewModels.Services;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -70,6 +71,23 @@ namespace Tuvi.App.Shared.Controls
         }
         public static readonly DependencyProperty IncomingProtocolTypesProperty =
             DependencyProperty.Register(nameof(IncomingProtocolTypes), typeof(Array), typeof(NewAccountSettingsControl), new PropertyMetadata(null));
+
+        // Providers for commands
+        public IClipboardProvider ClipboardProvider
+        {
+            get { return (IClipboardProvider)GetValue(ClipboardProviderProperty); }
+            set { SetValue(ClipboardProviderProperty, value); }
+        }
+        public static readonly DependencyProperty ClipboardProviderProperty =
+            DependencyProperty.Register(nameof(ClipboardProvider), typeof(IClipboardProvider), typeof(NewAccountSettingsControl), new PropertyMetadata(null));
+
+        public IFileOperationProvider FileProvider
+        {
+            get { return (IFileOperationProvider)GetValue(FileProviderProperty); }
+            set { SetValue(FileProviderProperty, value); }
+        }
+        public static readonly DependencyProperty FileProviderProperty =
+            DependencyProperty.Register(nameof(FileProvider), typeof(IFileOperationProvider), typeof(NewAccountSettingsControl), new PropertyMetadata(null));
 
         public NewAccountSettingsControl()
         {

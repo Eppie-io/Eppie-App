@@ -17,9 +17,12 @@
 // ---------------------------------------------------------------------------- //
 
 using System;
+using System.Linq;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Tuvi.App.ViewModels.Validation;
 using Tuvi.Core.Entities;
+using TuviPgpLib.Entities;
 
 namespace Tuvi.App.ViewModels
 {
@@ -29,6 +32,11 @@ namespace Tuvi.App.ViewModels
         /// Default interval value (in minutes) for checking new messages
         /// </summary>
         protected const int DefaultSynchronizationInterval = 10;
+
+        private Func<Tuvi.Core.ITuviMail> CoreProvider { get; set; }
+        private Tuvi.Core.ITuviMail Core => CoreProvider != null ? CoreProvider() : null;
+
+        private Services.INavigationService NavigationService { get; set; }
 
         protected Account CurrentAccount { get; set; }
         public ValidatableProperty<string> Email { get; } = new ValidatableProperty<string>();
@@ -57,6 +65,13 @@ namespace Tuvi.App.ViewModels
             set { SetProperty(ref _isBackupAccountMessagesEnabled, value); }
         }
 
+        private PgpKeyPageViewModel _pgpKeyModel;
+        public PgpKeyPageViewModel PgpKeyModel
+        {
+            get { return _pgpKeyModel; }
+            set { SetProperty(ref _pgpKeyModel, value); }
+        }
+
         public BaseAccountSettingsModel()
         {
             Email.SetInitialValue(string.Empty);
@@ -76,9 +91,10 @@ namespace Tuvi.App.ViewModels
                 OnValidatablePropertyChanged<string>(nameof(SynchronizationInterval), args.PropertyName);
             };
         }
+
         protected BaseAccountSettingsModel(Account account)
         {
-            if (account == null)
+            if (account is null)
             {
                 throw new ArgumentNullException(nameof(account));
             }
@@ -107,6 +123,46 @@ namespace Tuvi.App.ViewModels
             {
                 OnValidatablePropertyChanged<string>(nameof(SynchronizationInterval), args.PropertyName);
             };
+        }
+
+        public async Task InitModelAsync(Func<Tuvi.Core.ITuviMail> provider, Services.INavigationService navigationService)
+        {
+            CoreProvider = provider;
+            NavigationService = navigationService;
+            await InitializePgpKeyInfoAsync(CurrentAccount).ConfigureAwait(true);
+        }
+
+        private async Task InitializePgpKeyInfoAsync(Account account)
+        {
+            var email = account?.Email?.Address;
+            if (string.IsNullOrEmpty(email) || Core is null)
+            {
+                return;
+            }
+
+            var keys = await Task.Run(() => Core.GetSecurityManager().GetPublicPgpKeysInfo()).ConfigureAwait(true);
+            var matched = keys.Where(k => !string.IsNullOrEmpty(k.UserIdentity) && k.UserIdentity.IndexOf(email, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+            var key = matched.FirstOrDefault(k => k.IsEncryptionKey) ?? matched.FirstOrDefault();
+
+            SetPgpKeyInfo(key);
+        }
+
+        private void SetPgpKeyInfo(PgpKeyInfo keyInfo)
+        {
+            if (keyInfo is null)
+            {
+                PgpKeyModel = null;
+                return;
+            }
+
+            if (PgpKeyModel is null)
+            {
+                PgpKeyModel = new PgpKeyPageViewModel();
+                PgpKeyModel.SetCoreProvider(CoreProvider);
+                PgpKeyModel.SetNavigationService(NavigationService);
+            }
+
+            PgpKeyModel.SetKey(keyInfo);
         }
 
         /// <summary>
