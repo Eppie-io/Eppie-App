@@ -72,7 +72,6 @@ namespace Tuvi.App.Shared.Controls
         public static readonly DependencyProperty IncomingProtocolTypesProperty =
             DependencyProperty.Register(nameof(IncomingProtocolTypes), typeof(Array), typeof(NewAccountSettingsControl), new PropertyMetadata(null));
 
-        // Providers for commands
         public IClipboardProvider ClipboardProvider
         {
             get { return (IClipboardProvider)GetValue(ClipboardProviderProperty); }
@@ -88,6 +87,30 @@ namespace Tuvi.App.Shared.Controls
         }
         public static readonly DependencyProperty FileProviderProperty =
             DependencyProperty.Register(nameof(FileProvider), typeof(IFileOperationProvider), typeof(NewAccountSettingsControl), new PropertyMetadata(null));
+
+        public int SelectedSettingsModeIndex
+        {
+            get { return (int)GetValue(SelectedSettingsModeIndexProperty); }
+            set { SetValue(SelectedSettingsModeIndexProperty, value); }
+        }
+        public static readonly DependencyProperty SelectedSettingsModeIndexProperty =
+            DependencyProperty.Register(nameof(SelectedSettingsModeIndex), typeof(int), typeof(NewAccountSettingsControl), new PropertyMetadata(0));
+
+        public bool ShouldAutoExpandOutgoingServer
+        {
+            get { return (bool)GetValue(ShouldAutoExpandOutgoingServerProperty); }
+            set { SetValue(ShouldAutoExpandOutgoingServerProperty, value); }
+        }
+        public static readonly DependencyProperty ShouldAutoExpandOutgoingServerProperty =
+            DependencyProperty.Register(nameof(ShouldAutoExpandOutgoingServer), typeof(bool), typeof(NewAccountSettingsControl), new PropertyMetadata(false));
+
+        public bool ShouldAutoExpandIncomingServer
+        {
+            get { return (bool)GetValue(ShouldAutoExpandIncomingServerProperty); }
+            set { SetValue(ShouldAutoExpandIncomingServerProperty, value); }
+        }
+        public static readonly DependencyProperty ShouldAutoExpandIncomingServerProperty =
+            DependencyProperty.Register(nameof(ShouldAutoExpandIncomingServer), typeof(bool), typeof(NewAccountSettingsControl), new PropertyMetadata(false));
 
         public NewAccountSettingsControl()
         {
