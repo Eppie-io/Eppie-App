@@ -43,8 +43,8 @@
                                                 IncomingProtocolTypes="{x:Bind ViewModel.IncomingProtocolTypes, Mode=OneWay}"
                                                 IsEmailReadOnly="{x:Bind ViewModel.IsEmailReadonly, Mode=OneWay}"
                                                 SelectedSettingsModeIndex="{x:Bind ViewModel.SettingsModeIndex, Mode=TwoWay}"
-                                                ShouldAutoExpandIncomingServer="{x:Bind ViewModel.ShouldAutoExpandIncomingServer, Mode=OneWay}"
-                                                ShouldAutoExpandOutgoingServer="{x:Bind ViewModel.ShouldAutoExpandOutgoingServer, Mode=OneWay}" />
+                                                ShouldAutoExpandIncomingServer="{x:Bind ViewModel.ShouldAutoExpandIncomingServer, Mode=TwoWay}"
+                                                ShouldAutoExpandOutgoingServer="{x:Bind ViewModel.ShouldAutoExpandOutgoingServer, Mode=TwoWay}" />
         </ScrollViewer>
 
         <Grid Grid.Row="3" Margin="44,24,48,0">
