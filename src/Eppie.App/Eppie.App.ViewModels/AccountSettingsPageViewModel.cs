@@ -254,12 +254,11 @@ namespace Tuvi.App.ViewModels
                     var error = viewModel.GetLocalizedString("FieldIsEmptyNotification");
                     accountModel.IncomingServerAddress.Errors.Add(error);
 
-                    viewModel.ShouldAutoExpandIncomingServer = true;
                     if (viewModel.SettingsMode == AccountSettingsMode.Default)
                     {
                         viewModel.SettingsMode = AccountSettingsMode.Custom;
                     }
-                    viewModel.OnPropertyChanged(nameof(ShouldAutoExpandIncomingServer));
+                    viewModel.ShouldAutoExpandIncomingServer = true;
 
                     return new ValidationResult(error);
                 }
@@ -279,12 +278,11 @@ namespace Tuvi.App.ViewModels
                     var error = viewModel.GetLocalizedString("FieldIsEmptyNotification");
                     accountModel.OutgoingServerAddress.Errors.Add(error);
 
-                    viewModel.ShouldAutoExpandOutgoingServer = true;
                     if (viewModel.SettingsMode == AccountSettingsMode.Default)
                     {
                         viewModel.SettingsMode = AccountSettingsMode.Custom;
                     }
-                    viewModel.OnPropertyChanged(nameof(ShouldAutoExpandOutgoingServer));
+                    viewModel.ShouldAutoExpandOutgoingServer = true;
 
                     return new ValidationResult(error);
                 }
