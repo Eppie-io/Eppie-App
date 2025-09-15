@@ -137,6 +137,14 @@
     <value>Email address</value>
     <comment>Input field caption for email address</comment>
   </data>
+  <data name="EmailAddressDescription.Text" xml:space="preserve">
+    <value>Enter your email address for this mail service.</value>
+    <comment>Description for email address input field</comment>
+  </data>
+  <data name="EmailAddressBox.PlaceholderText" xml:space="preserve">
+    <value>Enter email address</value>
+    <comment>Placeholder text for email address input field</comment>
+  </data>
   <data name="TwoFactorCode.Text" xml:space="preserve">
     <value>Two factor authentication code</value>
     <comment>Input field caption for two factor authentication code</comment>
