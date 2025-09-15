@@ -28,8 +28,39 @@ using Tuvi.OAuth2;
 
 namespace Tuvi.App.ViewModels
 {
+    public enum AccountSettingsMode
+    {
+        Default = 0,
+        Custom = 1
+    }
+
     public class AccountSettingsPageViewModel : BaseAccountSettingsPageViewModel
     {
+        public int SettingsModeIndex
+        {
+            get => (int)SettingsMode;
+            set
+            {
+                if ((int)SettingsMode != value)
+                {
+                    SettingsMode = (AccountSettingsMode)value;
+                }
+            }
+        }
+
+        private AccountSettingsMode _settingsMode = AccountSettingsMode.Default;
+        public AccountSettingsMode SettingsMode
+        {
+            get => _settingsMode;
+            set
+            {
+                if (SetProperty(ref _settingsMode, value))
+                {
+                    OnPropertyChanged(nameof(SettingsModeIndex));
+                }
+            }
+        }
+
         public class NeedReloginData
         {
             public Account Account { get; set; }
@@ -40,6 +71,20 @@ namespace Tuvi.App.ViewModels
             public string Name { get; set; }
             public string Email { get; set; }
             public bool IsFilled => !string.IsNullOrEmpty(Email);
+        }
+
+        private bool _shouldAutoExpandOutgoingServer;
+        public bool ShouldAutoExpandOutgoingServer
+        {
+            get => _shouldAutoExpandOutgoingServer;
+            set => SetProperty(ref _shouldAutoExpandOutgoingServer, value);
+        }
+
+        private bool _shouldAutoExpandIncomingServer;
+        public bool ShouldAutoExpandIncomingServer
+        {
+            get => _shouldAutoExpandIncomingServer;
+            set => SetProperty(ref _shouldAutoExpandIncomingServer, value);
         }
 
         public AuthorizationProvider AuthProvider { get; private set; }
@@ -68,6 +113,8 @@ namespace Tuvi.App.ViewModels
                 SetProperty(ref _accountSettingsModel, value, true);
                 OnPropertyChanged(nameof(IsBasicAccount));
                 OnPropertyChanged(nameof(IsEmailReadonly));
+                OnPropertyChanged(nameof(ShouldAutoExpandOutgoingServer));
+                OnPropertyChanged(nameof(ShouldAutoExpandIncomingServer));
 
                 if (_accountSettingsModel != null)
                 {
@@ -132,6 +179,14 @@ namespace Tuvi.App.ViewModels
             AccountSettingsModel.IncomingServerAddress.NeedsValidation = !isCreatingMode;
 
             await AccountSettingsModel.InitModelAsync(CoreProvider, NavigationService).ConfigureAwait(true);
+
+            SettingsMode = (isCreatingMode && accountSettingsModel is BasicAccountSettingsModel)
+                ? AccountSettingsMode.Custom
+                : AccountSettingsMode.Default;
+
+            ShouldAutoExpandOutgoingServer
+                = ShouldAutoExpandIncomingServer
+                = SettingsMode == AccountSettingsMode.Custom;
         }
 
         protected override bool IsValid()
@@ -198,6 +253,13 @@ namespace Tuvi.App.ViewModels
                 {
                     var error = viewModel.GetLocalizedString("FieldIsEmptyNotification");
                     accountModel.IncomingServerAddress.Errors.Add(error);
+
+                    if (viewModel.SettingsMode == AccountSettingsMode.Default)
+                    {
+                        viewModel.SettingsMode = AccountSettingsMode.Custom;
+                    }
+                    viewModel.ShouldAutoExpandIncomingServer = true;
+
                     return new ValidationResult(error);
                 }
             }
@@ -215,6 +277,13 @@ namespace Tuvi.App.ViewModels
                 {
                     var error = viewModel.GetLocalizedString("FieldIsEmptyNotification");
                     accountModel.OutgoingServerAddress.Errors.Add(error);
+
+                    if (viewModel.SettingsMode == AccountSettingsMode.Default)
+                    {
+                        viewModel.SettingsMode = AccountSettingsMode.Custom;
+                    }
+                    viewModel.ShouldAutoExpandOutgoingServer = true;
+
                     return new ValidationResult(error);
                 }
             }
