@@ -66,4 +66,6 @@
                                               InvalidEmailStyle="{StaticResource InvalidEmailTextBlockStyle}"
                                               ValidEmailStyle="{StaticResource ValidEmailTextBlockStyle}" />
 
+    <converters:DoubleToGridLengthConverter x:Key="DoubleToGridLengthConverter" />
+
 </ResourceDictionary>
