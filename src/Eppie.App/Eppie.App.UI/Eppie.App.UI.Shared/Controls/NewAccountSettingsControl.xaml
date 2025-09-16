@@ -37,12 +37,10 @@
                         Grid.Column="0"
                         Margin="0,0,36,0"
                         Orientation="Vertical">
-                <!--  ToDo: Update string resources  -->
                 <TextBlock x:Uid="/Eppie.App.UI/Controls/EmailAddress" />
-                <!--  ToDo: Update string resources  -->
-                <TextBlock Margin="{StaticResource TextDescriptionMargin}"
+                <TextBlock x:Uid="/Eppie.App.UI/Controls/EmailAddressDescription"
+                           Margin="{StaticResource TextDescriptionMargin}"
                            Foreground="{ThemeResource TextFillColorSecondary}"
-                           Text="Enter the address for this service."
                            TextWrapping="WrapWholeWords" />
             </StackPanel>
 
@@ -53,14 +51,12 @@
                                 VerticalAlignment="Top"
                                 Property="{x:Bind AccountSettingsModel.Email, Mode=OneWay}">
                 <local:ErrorControl.InnerContent>
-                    <!--  ToDo: Update string resources  -->
-                    <TextBox x:Name="EmailBoxNew"
+                    <TextBox x:Uid="/Eppie.App.UI/Controls/EmailAddressBox"
                              Width="272"
                              HorizontalAlignment="Left"
                              VerticalAlignment="Top"
                              IsReadOnly="{x:Bind IsEmailReadOnly, Mode=OneWay}"
                              IsSpellCheckEnabled="False"
-                             PlaceholderText="Enter email address"
                              Text="{x:Bind AccountSettingsModel.Email.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </local:ErrorControl.InnerContent>
             </local:ErrorControl>
@@ -125,8 +121,7 @@
                 <TextBlock Foreground="{ThemeResource TextFillColorSecondary}" TextWrapping="WrapWholeWords">
                     <Span>
                         <LineBreak />
-                        <!--  ToDo: Move NavigateUri to model  -->
-                        <Hyperlink NavigateUri="https://eppie.io">
+                        <Hyperlink NavigateUri="{Binding Homepage, Source={StaticResource Brand}}">
                             <Run x:Uid="/Eppie.App.UI/Controls/SignatureLink" />
                         </Hyperlink>
                     </Span>
@@ -153,9 +148,9 @@
                            TextTrimming="CharacterEllipsis">
                     <Span>
                         <Run x:Uid="/Eppie.App.UI/Controls/DefaultSignatureFirstPart" />
-                        <!--  ToDo: Move NavigateUri to model  -->
-                        <!--  ToDo: Take `Eppie` from brand loader  -->
-                        <Hyperlink NavigateUri="https://eppie.io">Eppie</Hyperlink>
+                        <Hyperlink NavigateUri="{Binding Homepage, Source={StaticResource Brand}}">
+                            <Run Text="{Binding Name, Source={StaticResource Brand}}" />
+                        </Hyperlink>
                         <Run x:Uid="/Eppie.App.UI/Controls/DefaultSignatureSecondPart" />
                     </Span>
                 </TextBlock>
