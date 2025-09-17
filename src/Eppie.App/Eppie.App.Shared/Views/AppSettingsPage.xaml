@@ -1,0 +1,251 @@
+﻿<local:AppSettingsPageBase x:Class="Tuvi.App.Shared.Views.AppSettingsPage"
+                           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                           xmlns:controls="using:Tuvi.App.Shared.Controls"
+                           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                           xmlns:local="using:Tuvi.App.Shared.Views"
+                           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                           xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+                           xmlns:viewmodels="using:Tuvi.App.ViewModels"
+                           Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                           Loaded="OnLoaded"
+                           mc:Ignorable="d">
+
+    <local:AppSettingsPageBase.DataContext>
+        <viewmodels:SettingsPageViewModel />
+    </local:AppSettingsPageBase.DataContext>
+
+    <local:AppSettingsPageBase.Resources>
+
+        <Style x:Key="SettingsSectionSubtitleTextBlockStyle"
+               BasedOn="{StaticResource SubtitleTextBlockStyle}"
+               TargetType="TextBlock">
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="FontWeight" Value="Medium" />
+            <Setter Property="Margin" Value="0,0,0,24" />
+        </Style>
+
+
+        <x:Double x:Key="NormalOptionGapHeight">36</x:Double>
+        <x:Double x:Key="GroupOptionGapHeight">24</x:Double>
+        <x:Double x:Key="EndSectionOptionGapHeight">48</x:Double>
+
+        <x:Double x:Key="NormalOptionControlWidth">276</x:Double>
+        <x:Double x:Key="ButtonMinWidth">80</x:Double>
+
+        <Thickness x:Key="PageHorizontalContentPadding">44,0,48,0</Thickness>
+
+    </local:AppSettingsPageBase.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0"
+              Margin="0,24"
+              Padding="{StaticResource PageHorizontalContentPadding}">
+
+            <!--  ToDo: Move Text to resources  -->
+            <!--  ToDo: Update the resources after issue #839 is closed.  -->
+            <TextBlock FontSize="14" Text="ACCOUNT SETTINGS" />
+
+            <Button HorizontalAlignment="Right" VerticalAlignment="Top">
+                <StackPanel Orientation="Horizontal">
+                    <!--  ToDo: &#xF3B1; icon not showing in desktop app (default font is uno-fluentui-assets.ttf)  -->
+                    <FontIcon x:Name="FontIconSignOut"
+                              Margin="0,0,4,0"
+                              FontSize="16"
+                              Glyph="&#xF3B1;" />
+                    <TextBlock Text="Sign out" />
+                </StackPanel>
+            </Button>
+        </Grid>
+
+        <ScrollViewer Grid.Row="1" Padding="{StaticResource PageHorizontalContentPadding}">
+            <StackPanel x:Name="SettingsControl" Margin="0,0,0,24">
+
+                <!--  ToDo: Move Text to resources  -->
+                <TextBlock Style="{StaticResource SettingsSectionSubtitleTextBlockStyle}" Text="Appearance" />
+
+                <!--  ToDo: Move Caption, TextNote to resources  -->
+                <controls:OptionControl Caption="Language"
+                                        GapHeight="{StaticResource NormalOptionGapHeight}"
+                                        TextNote="Choose the app language.">
+                    <controls:OptionControl.OptionContent>
+                        <Grid>
+                            <ComboBox x:Name="LanguageCombobox"
+                                      Width="{StaticResource NormalOptionControlWidth}"
+                                      HorizontalAlignment="Left">
+                                <x:String>(System default)</x:String>
+                                <x:String>English (USA)</x:String>
+                                <x:String>Polish</x:String>
+                            </ComboBox>
+                            <TextBlock HorizontalAlignment="Right"
+                                       Foreground="{ThemeResource TextFillColorSecondary}"
+                                       Style="{StaticResource BodyTextBlockStyle}">
+                                <Span>
+                                    <!--  ToDo: Move Text to resources  -->
+                                    <!--  ToDo: Get NavigateUri from BrandLoader  -->
+                                    <Run Text="Help us with " />
+                                    <Hyperlink NavigateUri="https://crowdin.com/">
+                                        <Run Text="translation" />
+                                    </Hyperlink>
+                                </Span>
+                            </TextBlock>
+                        </Grid>
+                    </controls:OptionControl.OptionContent>
+                </controls:OptionControl>
+
+                <!--  ToDo: Move Caption, TextNote to resources  -->
+                <controls:OptionControl Caption="Themes"
+                                        GapHeight="{StaticResource EndSectionOptionGapHeight}"
+                                        TextNote="Select your preferred color scheme.">
+                    <controls:OptionControl.OptionContent>
+                        <ComboBox x:Name="ThemeCombobox"
+                                  Width="{StaticResource NormalOptionControlWidth}"
+                                  HorizontalAlignment="Left">
+                            <x:String>(System mode)</x:String>
+                            <x:String>Light mode</x:String>
+                            <x:String>Dark mode</x:String>
+                        </ComboBox>
+                    </controls:OptionControl.OptionContent>
+                </controls:OptionControl>
+
+                <!--  ToDo: Move Text to resources  -->
+                <TextBlock Style="{StaticResource SettingsSectionSubtitleTextBlockStyle}" Text="Security" />
+
+
+                <!--  ToDo: Move Caption to resources  -->
+                <controls:OptionControl Caption="Ask for password on every launch"
+                                        GapHeight="{StaticResource NormalOptionGapHeight}"
+                                        HideNote="True">
+                    <controls:OptionControl.OptionContent>
+                        <Grid>
+                            <ToggleSwitch HorizontalAlignment="Left" VerticalAlignment="Center" />
+                            <!--  ToDo: Move Content to resources  -->
+                            <Button HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    Content="Change password" />
+                        </Grid>
+                    </controls:OptionControl.OptionContent>
+                </controls:OptionControl>
+
+                <!--  ToDo: Move Caption, TextNote to resources  -->
+                <controls:OptionControl Caption="Seed phrase"
+                                        GapHeight="{StaticResource GroupOptionGapHeight}"
+                                        TextNote="Your seed phrase is the key to your account. Keep it safe and never share.">
+                    <controls:OptionControl.OptionContent>
+                        <muxc:Expander HorizontalAlignment="Stretch" Header="View your phrase">
+                            <TextBlock Text="Not Implemented" />
+                        </muxc:Expander>
+                    </controls:OptionControl.OptionContent>
+                </controls:OptionControl>
+
+                <!--  ToDo: Move Caption to resources  -->
+                <controls:OptionControl Caption="Confirm your seed phrase"
+                                        GapHeight="{StaticResource NormalOptionGapHeight}"
+                                        HideNote="True">
+                    <controls:OptionControl.OptionContent>
+                        <Grid>
+                            <!--  ToDo: Move Content to resources  -->
+                            <Button MinWidth="{StaticResource ButtonMinWidth}"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Content="Confirm" />
+                            <!--  ToDo: Move Text to resources  -->
+                            <TextBlock HorizontalAlignment="Right"
+                                       VerticalAlignment="Center"
+                                       Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+                                       Text="Waiting for your confirmation" />
+                        </Grid>
+                    </controls:OptionControl.OptionContent>
+                </controls:OptionControl>
+
+                <!--  ToDo: Move Caption, TextNote to resources  -->
+                <controls:OptionControl Caption="Local backup"
+                                        GapHeight="{StaticResource GroupOptionGapHeight}"
+                                        TextNote="Save a full copy of all your data to a file.">
+                    <controls:OptionControl.OptionContent>
+                        <Button MinWidth="{StaticResource ButtonMinWidth}"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top"
+                                Content="Export" />
+                    </controls:OptionControl.OptionContent>
+                </controls:OptionControl>
+
+                <!--  ToDo: Move Caption to resources  -->
+                <controls:OptionControl Caption="Restore your data from file"
+                                        GapHeight="{StaticResource NormalOptionGapHeight}"
+                                        HideNote="True">
+                    <controls:OptionControl.OptionContent>
+                        <!--  ToDo: Move Content to resources  -->
+                        <Button MinWidth="{StaticResource ButtonMinWidth}"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Content="Restore" />
+                    </controls:OptionControl.OptionContent>
+                </controls:OptionControl>
+
+
+                <!--  ToDo: Move Caption, TextNote to resources  -->
+                <controls:OptionControl Caption="PGP keys"
+                                        GapHeight="{StaticResource EndSectionOptionGapHeight}"
+                                        TextNote="View and configure your PGP keys.">
+                    <controls:OptionControl.OptionContent>
+                        <Grid>
+                            <!--  ToDo: Move Content to resources  -->
+                            <Button MinWidth="{StaticResource ButtonMinWidth}"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top"
+                                    Content="Import" />
+                            <HyperlinkButton MinWidth="{StaticResource ButtonMinWidth}"
+                                             HorizontalAlignment="Right"
+                                             VerticalAlignment="Top">
+                                <StackPanel Orientation="Horizontal">
+                                    <!--  ToDo: Move Text to resources  -->
+                                    <TextBlock Text="View all" />
+                                    <FontIcon Margin="4,0,0,0"
+                                              FontSize="16"
+                                              Glyph="&#xE76C;" />
+                                </StackPanel>
+                            </HyperlinkButton>
+                        </Grid>
+                    </controls:OptionControl.OptionContent>
+                </controls:OptionControl>
+
+
+                <!--  ToDo: Move Text to resources  -->
+                <TextBlock Style="{StaticResource SettingsSectionSubtitleTextBlockStyle}" Text="Development" />
+
+
+                <!--  ToDo: Move Caption, TextNote to resources  -->
+                <controls:OptionControl Caption="Logging level"
+                                        GapHeight="{StaticResource EndSectionOptionGapHeight}"
+                                        TextNote="Set the detail level for app logs.">
+                    <controls:OptionControl.OptionContent>
+                        <Grid>
+                            <ComboBox x:Name="LogCombobox"
+                                      Width="{StaticResource NormalOptionControlWidth}"
+                                      HorizontalAlignment="Left"
+                                      VerticalAlignment="Top">
+                                <x:String>None</x:String>
+                                <x:String>Trace</x:String>
+                                <x:String>Debug</x:String>
+                                <x:String>Information</x:String>
+                                <x:String>Warning</x:String>
+                                <x:String>Error</x:String>
+                                <x:String>Critical</x:String>
+                            </ComboBox>
+                            <!--  ToDo: Move Content to resources  -->
+                            <Button HorizontalAlignment="Right"
+                                    VerticalAlignment="Top"
+                                    Content="Open log folder" />
+                        </Grid>
+                    </controls:OptionControl.OptionContent>
+                </controls:OptionControl>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</local:AppSettingsPageBase>
