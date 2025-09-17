@@ -73,9 +73,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BitmapSourceConverters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BoolToValueConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ConverterChain.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Converters\GridConverters.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Converters\JoinConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\StringConverters.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\JoinConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\GridConverters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\TimeConverters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ValueToBoolConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\VisibilityConverters.cs" />
@@ -92,6 +92,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)Tools\UITools.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)Controls\OptionControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Controls\SupportDevelopmentControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="$(MSBuildThisFileDirectory)Controls\AccountSettingsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -136,10 +144,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Controls\OptionControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="$(MSBuildThisFileDirectory)Controls\PasswordControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -149,10 +153,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Controls\ProtonAccountSettingsControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Controls\SupportDevelopmentControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
