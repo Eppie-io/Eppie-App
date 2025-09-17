@@ -28,12 +28,12 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace Tuvi.App.Shared.Views
 {
-    // ToDo: It can be deleted
+    // ToDo: Issue #840 - It can be deleted
     public partial class SettingsPageBase : BasePage<SettingsPageViewModel, BaseViewModel>
     {
     }
 
-    // ToDo: It can be deleted
+    // ToDo: Issue #840 - It can be deleted
     public sealed partial class SettingsPage : SettingsPageBase
     {
         public SettingsPage()
