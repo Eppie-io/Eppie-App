@@ -27,7 +27,6 @@ using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Logging;
-using Org.BouncyCastle.Tsp;
 using Tuvi.App.ViewModels.Common;
 using Tuvi.App.ViewModels.Services;
 using Tuvi.Core.Entities;
@@ -896,6 +895,11 @@ namespace Tuvi.App.ViewModels
                 {
                     LogEnabledWarning();
                 }
+
+                // ToDo: Issue #840 - In case of LocalSettingsService.Language change
+                // Show InfoBar
+                // Message: Message: You need to restart the app for the language change to take effect.
+                // Action: Restart app button if possible
             }
             catch (Exception ex)
             {
