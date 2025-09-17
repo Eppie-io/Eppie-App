@@ -44,7 +44,9 @@
                                                 IsEmailReadOnly="{x:Bind ViewModel.IsEmailReadonly, Mode=OneWay}"
                                                 SelectedSettingsModeIndex="{x:Bind ViewModel.SettingsModeIndex, Mode=TwoWay}"
                                                 ShouldAutoExpandIncomingServer="{x:Bind ViewModel.ShouldAutoExpandIncomingServer, Mode=TwoWay}"
-                                                ShouldAutoExpandOutgoingServer="{x:Bind ViewModel.ShouldAutoExpandOutgoingServer, Mode=TwoWay}" />
+                                                ShouldAutoExpandOutgoingServer="{x:Bind ViewModel.ShouldAutoExpandOutgoingServer, Mode=TwoWay}"
+                                                CreateHybridAddressCommand="{x:Bind ViewModel.CreateHybridAddressCommand, Mode=OneWay}"
+                                                ShowHybridAddressButton="{x:Bind ViewModel.ShowHybridAddressButton, Mode=OneWay}"/>
         </ScrollViewer>
 
         <Grid Grid.Row="3" Margin="44,24,48,0">
@@ -54,7 +56,9 @@
                 <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
 
-            <Button MinWidth="148" Command="{x:Bind ViewModel.ApplySettingsCommand, Mode=OneWay}">
+            <Button MinWidth="148"
+                    Command="{x:Bind ViewModel.ApplySettingsCommand, Mode=OneWay}"
+                    Style="{StaticResource AccentButtonStyle}">
                 <Grid>
                     <ProgressRing Width="18"
                                   Height="18"

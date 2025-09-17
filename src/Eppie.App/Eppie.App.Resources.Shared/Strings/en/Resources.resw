@@ -1098,4 +1098,8 @@ Subject: {3}
     <value>SERVICE SETTINGS</value>
     <comment>A title for the service settings page.</comment>
   </data>
+  <data name="DefaultSignatureText" xml:space="preserve">
+    <value>Sent from an Eppie (https://eppie.io) hybrid address.</value>
+    <comment>Default message footer signature.</comment>
+  </data>
 </root>
