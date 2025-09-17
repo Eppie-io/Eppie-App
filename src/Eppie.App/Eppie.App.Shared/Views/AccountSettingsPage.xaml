@@ -39,14 +39,14 @@
                                                 Margin="44,12,48,0"
                                                 AccountSettingsModel="{x:Bind ViewModel.AccountSettingsModel, Mode=OneWay}"
                                                 ClipboardProvider="{StaticResource ClipboardProvider}"
+                                                CreateHybridAddressCommand="{x:Bind ViewModel.CreateHybridAddressCommand, Mode=OneWay}"
                                                 FileProvider="{StaticResource FileOperationProvider}"
                                                 IncomingProtocolTypes="{x:Bind ViewModel.IncomingProtocolTypes, Mode=OneWay}"
                                                 IsEmailReadOnly="{x:Bind ViewModel.IsEmailReadonly, Mode=OneWay}"
                                                 SelectedSettingsModeIndex="{x:Bind ViewModel.SettingsModeIndex, Mode=TwoWay}"
                                                 ShouldAutoExpandIncomingServer="{x:Bind ViewModel.ShouldAutoExpandIncomingServer, Mode=TwoWay}"
                                                 ShouldAutoExpandOutgoingServer="{x:Bind ViewModel.ShouldAutoExpandOutgoingServer, Mode=TwoWay}"
-                                                CreateHybridAddressCommand="{x:Bind ViewModel.CreateHybridAddressCommand, Mode=OneWay}"
-                                                ShowHybridAddressButton="{x:Bind ViewModel.ShowHybridAddressButton, Mode=OneWay}"/>
+                                                ShowHybridAddressButton="{x:Bind ViewModel.ShowHybridAddressButton, Mode=OneWay}" />
         </ScrollViewer>
 
         <Grid Grid.Row="3" Margin="44,24,48,0">
