@@ -85,7 +85,8 @@ namespace Tuvi.App.Shared.Views
         {
             if (args.IsSettingsInvoked)
             {
-                ToggleSettingsPane();
+                //ToggleSettingsPane(); can be deleted
+                ShowAppSettings();
             }
             else if (args.InvokedItemContainer is DependencyObject dependencyObject)
             {
@@ -110,6 +111,7 @@ namespace Tuvi.App.Shared.Views
             }
         }
 
+        // ToDo: _isSettingsOpen and ToggleSettingsPane can be deleted
         private bool _isSettingsOpen;
         private void ToggleSettingsPane()
         {
@@ -177,6 +179,11 @@ namespace Tuvi.App.Shared.Views
         {
             ViewModel.OnShowAllMessages();
             contentFrame.Navigate(typeof(AllMessagesPage), new AllMessagesPageViewModel.NavigationData() { ErrorHandler = this });
+        }
+
+        private void ShowAppSettings()
+        {
+            contentFrame.Navigate(typeof(AppSettingsPage), new AllMessagesPageViewModel.NavigationData() { ErrorHandler = this });
         }
 
         private async Task RenameContactAsync(ContactItem contactItem)

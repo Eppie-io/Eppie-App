@@ -26,34 +26,26 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 #endif
 
+// ToDo: change namespace
 namespace Tuvi.App.Shared.Views
 {
-    // ToDo: It can be deleted
-    public partial class SettingsPageBase : BasePage<SettingsPageViewModel, BaseViewModel>
+    // ToDo: Rename SettingsPageViewModel or replace it with a new one
+    public partial class AppSettingsPageBase : BasePage<SettingsPageViewModel, BaseViewModel>
     {
     }
 
-    // ToDo: It can be deleted
-    public sealed partial class SettingsPage : SettingsPageBase
+    public sealed partial class AppSettingsPage : AppSettingsPageBase
     {
-        public SettingsPage()
+        public AppSettingsPage()
         {
             this.InitializeComponent();
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            InitLanguage();
-        }
-
-        private void InitLanguage()
-        {
-            LanguageSelector.InitSelection((Application.Current as Eppie.App.Shared.App).LocalSettingsService.Language);
-        }
-
-        private void OnLanguageChanged(object sender, string language)
-        {
-            ViewModel.ChangeLanguage(language);
+            LanguageCombobox.SelectedIndex = 0;
+            ThemeCombobox.SelectedIndex = 0;
+            LogCombobox.SelectedIndex = 0;
         }
     }
 }
