@@ -29,7 +29,7 @@ using Microsoft.UI.Xaml.Controls;
 // ToDo: change namespace
 namespace Tuvi.App.Shared.Views
 {
-    // ToDo: Rename SettingsPageViewModel or replace it with a new one
+    // ToDo: Issue #840 - Rename SettingsPageViewModel or replace it with a new one
     public partial class AppSettingsPageBase : BasePage<SettingsPageViewModel, BaseViewModel>
     {
     }
@@ -43,9 +43,18 @@ namespace Tuvi.App.Shared.Views
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            LanguageCombobox.SelectedIndex = 0;
             ThemeCombobox.SelectedIndex = 0;
-            LogCombobox.SelectedIndex = 0;
+            InitLanguage();
+        }
+
+        private void InitLanguage()
+        {
+            LanguageSelector.InitSelection((Application.Current as Eppie.App.Shared.App).LocalSettingsService.Language);
+        }
+
+        private void OnLanguageChanged(object sender, string language)
+        {
+            ViewModel.ChangeLanguage(language);
         }
     }
 }
