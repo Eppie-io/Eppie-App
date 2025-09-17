@@ -154,6 +154,10 @@
                     VerticalAlignment="Center"
                     Command="{x:Bind ViewModel.SendPgpKeyCommand}" />
 
+            <Button x:Uid="PgpKeyDeleteButton"
+                    VerticalAlignment="Center"
+                    Command="{x:Bind ViewModel.DeletePgpKeyCommand}" />
+
         </StackPanel>
 
     </Grid>

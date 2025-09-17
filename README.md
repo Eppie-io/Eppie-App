@@ -7,7 +7,7 @@
 [![GitHub release downloads](https://img.shields.io/github/downloads/Eppie-io/Eppie-App/total)](https://github.com/Eppie-io/Eppie-App/releases)
 
 ## Intro
-
+![Eppie](/screenshots/Eppie.png)
 [Eppie](https://eppie.io) is a next-gen _providerless_ email that allows its users to own their accounts, addresses and data. In addition to its own p2p network Eppie can communicate with other popular decentralized networks, like Ethereum, and is capable of interacting with conventional IMAP/SMTP email. It is beautiful and easy to use, just like a normal email client.
 
 ## Motivation
@@ -32,12 +32,12 @@ Eppie is early in development. The p2p part is not publicly available at the mom
 
 <details>
   <summary>Main Screen</summary>
-  <img src="https://github.com/user-attachments/assets/30301949-4b25-4ad8-be72-e954d9211aeb" alt="Main Screen"/>
+  <img src="/screenshots/MainPage.png" alt="Main Screen"/>
 </details>
 
 <details>
   <summary>Settings Page</summary>
-  <img src="https://github.com/user-attachments/assets/fb183b2f-766b-4910-9119-c7b8ab66781a" alt="Settings Page"/>
+  <img src="/screenshots/Settings.png" alt="Settings Page"/>
 </details>
 
 ## Install from Microsoft Store, App Store or Google Play
