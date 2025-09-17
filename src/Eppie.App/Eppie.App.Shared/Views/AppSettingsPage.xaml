@@ -25,7 +25,6 @@
             <Setter Property="Margin" Value="0,0,0,24" />
         </Style>
 
-
         <x:Double x:Key="NormalOptionGapHeight">36</x:Double>
         <x:Double x:Key="GroupOptionGapHeight">24</x:Double>
         <x:Double x:Key="EndSectionOptionGapHeight">48</x:Double>
@@ -79,6 +78,9 @@
                     <controls:OptionControl.OptionContent>
                         <Grid>
                             <!--  ToDo: Issue #840 - In the old code there is a TextBlock about restarting here.  -->
+                            <!--  ToDo: Issue #840 - Now Use InfoBar Message: You need to restart the app for the language change to take effect.
+                                                                     Action: Restart app button if possible
+                            -->
 
                             <!--  ToDo: Issue #840 - Check logic  -->
                             <controls:LanguageSelectionControl x:Name="LanguageSelector"
@@ -111,9 +113,9 @@
                         <ComboBox x:Name="ThemeCombobox"
                                   Width="{StaticResource NormalOptionControlWidth}"
                                   HorizontalAlignment="Left">
-                            <x:String>(System mode)</x:String>
-                            <x:String>Light mode</x:String>
-                            <x:String>Dark mode</x:String>
+                            <x:String>(System mode) hardcode</x:String>
+                            <x:String>Light mode hardcode</x:String>
+                            <x:String>Dark mode hardcode</x:String>
                         </ComboBox>
                     </controls:OptionControl.OptionContent>
                 </controls:OptionControl>
