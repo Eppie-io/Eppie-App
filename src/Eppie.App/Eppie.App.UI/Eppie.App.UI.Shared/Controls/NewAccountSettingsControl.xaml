@@ -570,7 +570,6 @@
                         Margin="0,0,0,36"
                         Orientation="Vertical">
                 <Button x:Uid="/Eppie.App.UI/Controls/HybridAddressButton"
-                        Grid.Column="1"
                         Command="{x:Bind CreateHybridAddressCommand}"
                         Visibility="{x:Bind ShowHybridAddressButton, Mode=OneWay}" />
             </StackPanel>
