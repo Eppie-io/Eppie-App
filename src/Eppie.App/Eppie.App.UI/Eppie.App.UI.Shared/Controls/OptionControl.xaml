@@ -1,0 +1,82 @@
+﻿<UserControl x:Class="Tuvi.App.Shared.Controls.OptionControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="using:Tuvi.App.Shared.Controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DesignHeight="300"
+             d:DesignWidth="400"
+             mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <Thickness x:Key="NoteTextBlockMargin">0,4,0,0</Thickness>
+        <Thickness x:Key="OptionNameColumnMargin">0,0,36,0</Thickness>
+
+        <x:Double x:Key="DefaultOptionNameColumnWidth">376</x:Double>
+        <GridLength x:Key="DefaultOptionNameColumnGridLength">376</GridLength>
+
+        <Style x:Key="OptionCaptionTextBlockStyle"
+               BasedOn="{StaticResource BodyTextBlockStyle}"
+               TargetType="TextBlock" />
+        <Style x:Key="OptionNoteTextBlockStyle"
+               BasedOn="{StaticResource BodyTextBlockStyle}"
+               TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{ThemeResource TextFillColorSecondary}" />
+            <Setter Property="Margin" Value="{StaticResource NoteTextBlockMargin}" />
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="{StaticResource DefaultOptionNameColumnGridLength}"
+                              MinWidth="{StaticResource DefaultOptionNameColumnWidth}"
+                              MaxWidth="{StaticResource DefaultOptionNameColumnWidth}" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="{x:Bind GapHeight, Mode=OneWay, Converter={StaticResource DoubleToGridLengthConverter}}"
+                           MinHeight="{x:Bind GapHeight, Mode=OneWay}"
+                           MaxHeight="{x:Bind GapHeight, Mode=OneWay}" />
+        </Grid.RowDefinitions>
+
+        <StackPanel x:Name="HeaderArea"
+                    Grid.Row="0"
+                    Grid.RowSpan="2"
+                    Grid.Column="0"
+                    Margin="{StaticResource OptionNameColumnMargin}"
+                    VerticalAlignment="Top">
+            <TextBlock x:Name="CaptionTextBlock"
+                       VerticalAlignment="Top"
+                       Style="{StaticResource OptionCaptionTextBlockStyle}"
+                       Text="{x:Bind Caption, Mode=OneWay}"
+                       TextTrimming="CharacterEllipsis" />
+            <TextBlock x:Name="NoteTextBlock"
+                       VerticalAlignment="Top"
+                       Style="{StaticResource OptionNoteTextBlockStyle}"
+                       TextTrimming="CharacterEllipsis"
+                       TextWrapping="WrapWholeWords" />
+        </StackPanel>
+
+        <ContentPresenter Grid.Row="0"
+                          Grid.Column="1"
+                          Content="{x:Bind OptionContent, Mode=OneTime}" />
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="CommonStates">
+                <VisualState x:Name="Normal" />
+                <VisualState x:Name="HideNoteText">
+                    <VisualState.StateTriggers>
+                        <StateTrigger IsActive="{x:Bind HideNote, Mode=OneWay}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="NoteTextBlock.Visibility" Value="Collapsed" />
+                        <Setter Target="CaptionTextBlock.VerticalAlignment" Value="Center" />
+                        <Setter Target="HeaderArea.VerticalAlignment" Value="Center" />
+                        <Setter Target="HeaderArea.(Grid.RowSpan)" Value="1" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </Grid>
+</UserControl>
