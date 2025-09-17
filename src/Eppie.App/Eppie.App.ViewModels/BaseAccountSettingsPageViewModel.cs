@@ -132,13 +132,13 @@ namespace Tuvi.App.ViewModels
 
         public ICommand HandleErrorCommand => new RelayCommand<object>(ex => OnError(ex as Exception));
 
-        public IRelayCommand CreateHybridAddress { get; }
+        public IRelayCommand CreateHybridAddressCommand { get; }
 
         public BaseAccountSettingsPageViewModel()
         {
             ApplySettingsCommand = new AsyncRelayCommand(ApplySettingsAndGoBackAsync, () => IsApplyButtonEnabled);
             RemoveAccountCommand = new AsyncRelayCommand(RemoveAccountAndGoBackAsync, () => IsRemoveButtonEnabled);
-            CreateHybridAddress = new AsyncRelayCommand(CreateHybridAddressAsync, () => !IsHybridAddress);
+            CreateHybridAddressCommand = new AsyncRelayCommand(CreateHybridAddressAsync, () => !IsHybridAddress);
 
             ErrorsChanged += (sender, e) => ApplySettingsCommand.NotifyCanExecuteChanged();
         }

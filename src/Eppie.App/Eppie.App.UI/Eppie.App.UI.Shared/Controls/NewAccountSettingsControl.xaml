@@ -139,7 +139,7 @@
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                <ToggleSwitch x:Name="SignatureSwitch" />
+                <ToggleSwitch x:Name="SignatureSwitch" IsOn="{x:Bind AccountSettingsModel.IsMessageFooterEnabled, Mode=TwoWay}" />
                 <TextBlock Grid.Column="1"
                            HorizontalAlignment="Right"
                            VerticalAlignment="Center"
@@ -154,14 +154,14 @@
                         <Run x:Uid="/Eppie.App.UI/Controls/DefaultSignatureSecondPart" />
                     </Span>
                 </TextBlock>
-                <!--  ToDo: Add logic  -->
                 <TextBox x:Uid="/Eppie.App.UI/Controls/SignatureBox"
                          Grid.Row="1"
                          Grid.ColumnSpan="2"
                          Height="80"
                          HorizontalAlignment="Stretch"
                          AcceptsReturn="True"
-                         IsEnabled="{x:Bind SignatureSwitch.IsOn, Mode=OneWay}" />
+                         IsEnabled="{x:Bind SignatureSwitch.IsOn, Mode=OneWay}"
+                         Text="{x:Bind AccountSettingsModel.MessageFooter, Mode=TwoWay}" />
             </Grid>
 
             <TextBlock x:Uid="/Eppie.App.UI/Controls/AdvancedSettingsCaption"
@@ -201,6 +201,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -458,6 +459,7 @@
 
             <muxc:Expander Grid.Row="3"
                            Grid.Column="1"
+                           Margin="0,0,0,36"
                            HorizontalAlignment="Stretch"
                            VerticalAlignment="Top"
                            HorizontalContentAlignment="Stretch"
@@ -550,6 +552,27 @@
                     </StackPanel>
                 </Grid>
             </muxc:Expander>
+
+            <StackPanel Grid.Row="4"
+                        Grid.Column="0"
+                        Margin="0,0,36,0"
+                        Orientation="Vertical"
+                        Visibility="{x:Bind ShowHybridAddressButton, Mode=OneWay}">
+                <TextBlock x:Uid="/Eppie.App.UI/Controls/HybridCaption" />
+                <TextBlock x:Uid="/Eppie.App.UI/Controls/HybridNote"
+                           Margin="{StaticResource TextDescriptionMargin}"
+                           Foreground="{ThemeResource TextFillColorSecondary}"
+                           TextWrapping="WrapWholeWords" />
+            </StackPanel>
+
+            <StackPanel Grid.Row="4"
+                        Grid.Column="1"
+                        Margin="0,0,0,36"
+                        Orientation="Vertical">
+                <Button x:Uid="/Eppie.App.UI/Controls/HybridAddressButton"
+                        Command="{x:Bind CreateHybridAddressCommand}"
+                        Visibility="{x:Bind ShowHybridAddressButton, Mode=OneWay}" />
+            </StackPanel>
 
         </Grid>
     </StackPanel>

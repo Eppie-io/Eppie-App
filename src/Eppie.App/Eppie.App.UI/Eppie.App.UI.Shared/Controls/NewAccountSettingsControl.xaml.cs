@@ -19,6 +19,7 @@
 using System;
 using Tuvi.App.ViewModels;
 using Tuvi.App.ViewModels.Services;
+using System.Windows.Input;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -111,6 +112,23 @@ namespace Tuvi.App.Shared.Controls
         }
         public static readonly DependencyProperty ShouldAutoExpandIncomingServerProperty =
             DependencyProperty.Register(nameof(ShouldAutoExpandIncomingServer), typeof(bool), typeof(NewAccountSettingsControl), new PropertyMetadata(false));
+
+        public ICommand CreateHybridAddressCommand
+        {
+            get { return (ICommand)GetValue(CreateHybridAddressProperty); }
+            set { SetValue(CreateHybridAddressProperty, value); }
+        }
+        public static readonly DependencyProperty CreateHybridAddressProperty =
+            DependencyProperty.Register(nameof(CreateHybridAddressCommand), typeof(ICommand), typeof(NewAccountSettingsControl), new PropertyMetadata(null));
+
+        public bool ShowHybridAddressButton
+        {
+            get { return (bool)GetValue(ShowHybridAddressButtonProperty); }
+            set { SetValue(ShowHybridAddressButtonProperty, value); }
+        }
+        public static readonly DependencyProperty ShowHybridAddressButtonProperty =
+            DependencyProperty.Register(nameof(ShowHybridAddressButton), typeof(bool), typeof(NewAccountSettingsControl), new PropertyMetadata(false));
+
 
         public NewAccountSettingsControl()
         {

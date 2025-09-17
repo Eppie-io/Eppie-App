@@ -40,7 +40,7 @@
             <Button x:Uid="HybridAddressButton"
                     Grid.Column="1"
                     Margin="4"
-                    Command="{x:Bind ViewModel.CreateHybridAddress}"
+                    Command="{x:Bind ViewModel.CreateHybridAddressCommand}"
                     Visibility="{x:Bind ViewModel.ShowHybridAddressButton, Mode=OneWay}" />
 
             <Button x:Uid="RemoveAccountButton"

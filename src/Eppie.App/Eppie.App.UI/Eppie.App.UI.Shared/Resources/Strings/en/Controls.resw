@@ -419,4 +419,16 @@
     <value>Expires</value>
     <comment>Label of the field containing the expiration date of the encryption key</comment>
   </data>
+  <data name="HybridAddressButton.Content" xml:space="preserve">
+    <value>Create hybrid address</value>
+    <comment>Create hybrid address button text in account settings</comment>
+  </data>
+  <data name="HybridCaption.Text" xml:space="preserve">
+    <value>Hybrid address</value>
+    <comment>Hybrid address caption text in account settings</comment>
+  </data>
+  <data name="HybridNote.Text" xml:space="preserve">
+    <value>Create hybrid email address</value>
+    <comment>Hybrid address note text in account settings.</comment>
+  </data>
 </root>
