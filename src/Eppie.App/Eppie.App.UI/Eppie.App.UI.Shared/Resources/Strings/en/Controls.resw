@@ -435,4 +435,8 @@
     <value>Create hybrid email address</value>
     <comment>Hybrid address note text in account settings.</comment>
   </data>
+  <data name="ConnectionStatus.Text" xml:space="preserve">
+    <value>Connected</value>
+    <comment>Server connection status.</comment>
+  </data>
 </root>
