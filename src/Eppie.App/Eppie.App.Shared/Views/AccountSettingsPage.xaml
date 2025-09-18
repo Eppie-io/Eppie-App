@@ -29,7 +29,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <TextBlock x:Uid="ServiceSettingsTitle"
+        <TextBlock x:Uid="AddressSettingsTitle"
                    Grid.Row="0"
                    Margin="44,0,48,24"
                    FontSize="14" />

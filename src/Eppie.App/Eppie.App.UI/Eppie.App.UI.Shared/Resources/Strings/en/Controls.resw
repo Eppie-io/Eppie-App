@@ -137,7 +137,11 @@
     <value>Email address</value>
     <comment>Input field caption for email address</comment>
   </data>
-  <data name="EmailAddressDescription.Text" xml:space="preserve">
+  <data name="EmailAddressOption.Caption" xml:space="preserve">
+    <value>Email address</value>
+    <comment>Input field caption for email address</comment>
+  </data>
+  <data name="EmailAddressOption.TextNote" xml:space="preserve">
     <value>Enter your email address for this mail service.</value>
     <comment>Description for email address input field</comment>
   </data>
@@ -285,11 +289,11 @@
     <value>Claim</value>
     <comment>Button text to claim decentralized name</comment>
   </data>
-  <data name="PasswordCaption.Text" xml:space="preserve">
+  <data name="PasswordOption.Caption" xml:space="preserve">
     <value>Login password</value>
     <comment>Input field caption for password</comment>
   </data>
-  <data name="PasswordNote.Text" xml:space="preserve">
+  <data name="PasswordOption.TextNote" xml:space="preserve">
     <value>Enter the password for this address.</value>
     <comment>Note on the password input field</comment>
   </data>
@@ -297,11 +301,11 @@
     <value>Enter password</value>
     <comment>Text displayed in Password TextBox when no search text is entered</comment>
   </data>
-  <data name="SenderNameCaption.Text" xml:space="preserve">
+  <data name="SenderNameOption.Caption" xml:space="preserve">
     <value>Display name</value>
     <comment>Input field caption for sender name</comment>
   </data>
-  <data name="SenderNameNote.Text" xml:space="preserve">
+  <data name="SenderNameOption.TextNote" xml:space="preserve">
     <value>Name shown in the "From" field of your emails.</value>
     <comment>Note on the sender name input field</comment>
   </data>
@@ -309,7 +313,7 @@
     <value>Name</value>
     <comment>Text displayed in Sender TextBox when no search text is entered</comment>
   </data>
-  <data name="SignatureCaption.Text" xml:space="preserve">
+  <data name="SignatureOption.Caption" xml:space="preserve">
     <value>Signature</value>
     <comment>Input field caption for signature</comment>
   </data>
@@ -333,7 +337,7 @@
     <value>hybrid address</value>
     <comment>The second part (hybrid address) of the sentence: "Sent from an Eppie hybrid address"</comment>
   </data>
-  <data name="AdvancedSettingsCaption.Text" xml:space="preserve">
+  <data name="AdvancedOption.Caption" xml:space="preserve">
     <value>Advanced settings</value>
     <comment>Combo box caption for advanced settings</comment>
   </data>
@@ -349,11 +353,11 @@
     <value>Restore defaults</value>
     <comment>Text for the button to reset advanced settings</comment>
   </data>
-  <data name="BackupCaption.Text" xml:space="preserve">
+  <data name="BackupOption.Caption" xml:space="preserve">
     <value>Backup</value>
     <comment>Caption of the backup options section in account settings</comment>
   </data>
-  <data name="BackupNote.Text" xml:space="preserve">
+  <data name="BackupOption.TextNote" xml:space="preserve">
     <value>Select options for this address.</value>
     <comment>Note of section with backup options on account settings</comment>
   </data>
@@ -365,15 +369,15 @@
     <value>Backup emails</value>
     <comment>The label for option Enable backup for downloaded emails</comment>
   </data>
-  <data name="ServerSettingsCaption.Text" xml:space="preserve">
+  <data name="ServerOption.Caption" xml:space="preserve">
     <value>IMAP/SMTP settings</value>
     <comment>Caption of the server options section in account settings</comment>
   </data>
-  <data name="ServerSettingsNote.Text" xml:space="preserve">
+  <data name="ServerOption.TextNote" xml:space="preserve">
     <value>Default settings are automatically configured, but you can manually adjust them anytime.</value>
     <comment>Note of section with server options on account settings</comment>
   </data>
-  <data name="SynchronizationIntervalCaption.Text" xml:space="preserve">
+  <data name="SynchronizationIntervalOption.Caption" xml:space="preserve">
     <value>Synchronization interval</value>
     <comment>Caption of input field to enter check messages interval value in minutes</comment>
   </data>
@@ -381,13 +385,13 @@
     <value>minutes</value>
     <comment>Minutes - units of time measurement</comment>
   </data>
-  <data name="EncryptionKeysCaption.Text" xml:space="preserve">
+  <data name="EncryptionOption.Caption" xml:space="preserve">
     <!-- Todo: Try not using PGP : Encryption Keys -->
     <value>PGP keys</value>
     <comment>Caption for the encryption settings section in account settings</comment>
   </data>
-  <data name="EncryptionKeysNote.Text" xml:space="preserve">
-    <!-- Todo: Try not using PGP, Eppie, e2e-->
+  <data name="EncryptionOption.TextNote" xml:space="preserve">
+    <!-- Todo: Try not using PGP, Eppie-->
     <value>Eppie generates a PGP key for each address to enable secure end-to-end communication.</value>
     <comment>Note for the encryption settings section in account settings. Eppie is a brand that doesn't translate</comment>
   </data>
@@ -423,11 +427,11 @@
     <value>Create hybrid address</value>
     <comment>Create hybrid address button text in account settings</comment>
   </data>
-  <data name="HybridCaption.Text" xml:space="preserve">
+  <data name="HybridAddressOption.Caption" xml:space="preserve">
     <value>Hybrid address</value>
     <comment>Hybrid address caption text in account settings</comment>
   </data>
-  <data name="HybridNote.Text" xml:space="preserve">
+  <data name="HybridAddressOption.TextNote" xml:space="preserve">
     <value>Create hybrid email address</value>
     <comment>Hybrid address note text in account settings.</comment>
   </data>
