@@ -29,6 +29,7 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace Tuvi.App.Shared.Controls
 {
+    // ToDo: Issue #839 - It can be deleted
     public sealed partial class AccountSettingsControl : UserControl
     {
         public AccountSettingsModel AccountSettingsModel

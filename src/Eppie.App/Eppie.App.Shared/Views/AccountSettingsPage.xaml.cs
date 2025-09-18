@@ -26,6 +26,7 @@ using Microsoft.UI.Xaml;
 
 namespace Tuvi.App.Shared.Views
 {
+    // ToDo: Issue #839 - Rename it to EmailAddressSettingsPage
     public partial class AccountSettingsPageBase : BasePage<AccountSettingsPageViewModel, BaseViewModel>
     {
     }

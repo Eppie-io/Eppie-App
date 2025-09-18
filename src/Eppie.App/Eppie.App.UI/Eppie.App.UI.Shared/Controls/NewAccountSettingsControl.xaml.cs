@@ -31,6 +31,7 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace Tuvi.App.Shared.Controls
 {
+    // ToDo: Issue #839 -  Rename it to EmailSettingsControl
     public sealed partial class NewAccountSettingsControl : UserControl
     {
         public AccountSettingsModel AccountSettingsModel
