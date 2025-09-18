@@ -33,10 +33,8 @@
     <StackPanel>
         <StackPanel>
 
-            <controls:OptionControl Caption="/Eppie.App.UI/Controls/EmailAddress"
-                                    GapHeight="{StaticResource ErrorOptionGapHeight}"
-                                    TextNote="/Eppie.App.UI/Controls/EmailAddressDescription">
             <!--  ToDo: Issue #839 - Сreate a read-only mode using the new design  -->
+            <controls:OptionControl x:Uid="/Eppie.App.UI/Controls/EmailAddressOption" GapHeight="{StaticResource ErrorOptionGapHeight}">
                 <controls:OptionControl.OptionContent>
                     <local:ErrorControl Height="{StaticResource ErrorControlHeight}"
                                         HorizontalAlignment="Left"
@@ -55,9 +53,8 @@
                 </controls:OptionControl.OptionContent>
             </controls:OptionControl>
 
-            <controls:OptionControl Caption="/Eppie.App.UI/Controls/PasswordCaption"
+            <controls:OptionControl x:Uid="/Eppie.App.UI/Controls/PasswordOption"
                                     GapHeight="{StaticResource ErrorOptionGapHeight}"
-                                    TextNote="/Eppie.App.UI/Controls/PasswordNote"
                                     Visibility="{x:Bind BasicAccountSettingsModel, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}">
                 <controls:OptionControl.OptionContent>
                     <local:ErrorControl Height="{StaticResource ErrorControlHeight}"
@@ -76,9 +73,7 @@
                 </controls:OptionControl.OptionContent>
             </controls:OptionControl>
 
-            <controls:OptionControl Caption="/Eppie.App.UI/Controls/SenderNameCaption"
-                                    GapHeight="{StaticResource NormalOptionGapHeight}"
-                                    TextNote="/Eppie.App.UI/Controls/SenderNameNote">
+            <controls:OptionControl x:Uid="/Eppie.App.UI/Controls/SenderNameOption" GapHeight="{StaticResource NormalOptionGapHeight}">
                 <controls:OptionControl.OptionContent>
                     <TextBox x:Uid="/Eppie.App.UI/Controls/SenderNameBox"
                              Width="{StaticResource TextBoxWidth}"
@@ -89,7 +84,7 @@
                 </controls:OptionControl.OptionContent>
             </controls:OptionControl>
 
-            <controls:OptionControl Caption="/Eppie.App.UI/Controls/SignatureCaption" GapHeight="{StaticResource NormalOptionGapHeight}">
+            <controls:OptionControl x:Uid="/Eppie.App.UI/Controls/SignatureOption" GapHeight="{StaticResource NormalOptionGapHeight}">
                 <controls:OptionControl.InlineNote>
                     <Span>
                         <Run x:Uid="/Eppie.App.UI/Controls/SignatureNote" />
@@ -137,7 +132,7 @@
                 </controls:OptionControl.OptionContent>
             </controls:OptionControl>
 
-            <controls:OptionControl Caption="/Eppie.App.UI/Controls/AdvancedSettingsCaption"
+            <controls:OptionControl x:Uid="/Eppie.App.UI/Controls/AdvancedOption"
                                     GapHeight="{StaticResource NormalOptionGapHeight}"
                                     HideNote="True">
                 <controls:OptionControl.OptionContent>
@@ -172,9 +167,7 @@
 
         <StackPanel x:Name="CustomSection" Visibility="{x:Bind SettingsModeSelector.SelectedIndex, Mode=OneWay, Converter={StaticResource IntToVisibilityConverter}}">
 
-            <controls:OptionControl Caption="/Eppie.App.UI/Controls/BackupCaption"
-                                    GapHeight="{StaticResource NormalOptionGapHeight}"
-                                    TextNote="/Eppie.App.UI/Controls/BackupNote">
+            <controls:OptionControl x:Uid="/Eppie.App.UI/Controls/BackupOption" GapHeight="{StaticResource NormalOptionGapHeight}">
                 <controls:OptionControl.OptionContent>
                     <StackPanel Orientation="Vertical">
                         <CheckBox x:Name="BackupAccountSettingsCheckBoxNew"
@@ -187,9 +180,7 @@
                 </controls:OptionControl.OptionContent>
             </controls:OptionControl>
 
-            <controls:OptionControl Caption="/Eppie.App.UI/Controls/ServerSettingsCaption"
-                                    GapHeight="{StaticResource RelatedOptionGapHeight}"
-                                    TextNote="/Eppie.App.UI/Controls/ServerSettingsNote">
+            <controls:OptionControl x:Uid="/Eppie.App.UI/Controls/ServerOption" GapHeight="{StaticResource RelatedOptionGapHeight}">
                 <controls:OptionControl.OptionContent>
                     <StackPanel Orientation="Vertical">
 
@@ -370,7 +361,7 @@
             </controls:OptionControl>
 
             <!--  ToDo: Issue #839 - The layout is broken if there is an error  -->
-            <controls:OptionControl Caption="/Eppie.App.UI/Controls/SynchronizationIntervalCaption"
+            <controls:OptionControl x:Uid="/Eppie.App.UI/Controls/SynchronizationIntervalOption"
                                     GapHeight="{StaticResource NormalOptionGapHeight}"
                                     HideNote="True">
                 <controls:OptionControl.OptionContent>
@@ -389,9 +380,8 @@
                 </controls:OptionControl.OptionContent>
             </controls:OptionControl>
 
-            <controls:OptionControl Caption="/Eppie.App.UI/Controls/EncryptionKeysCaption"
+            <controls:OptionControl x:Uid="/Eppie.App.UI/Controls/EncryptionOption"
                                     GapHeight="{StaticResource NormalOptionGapHeight}"
-                                    TextNote="/Eppie.App.UI/Controls/EncryptionKeysNote"
                                     Visibility="{x:Bind AccountSettingsModel.PgpKeyModel, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}">
                 <controls:OptionControl.OptionContent>
                     <muxc:Expander HorizontalAlignment="Stretch"
@@ -488,9 +478,8 @@
                 </controls:OptionControl.OptionContent>
             </controls:OptionControl>
 
-            <controls:OptionControl Caption="/Eppie.App.UI/Controls/HybridCaption"
+            <controls:OptionControl x:Uid="/Eppie.App.UI/Controls/HybridAddressOption"
                                     GapHeight="{StaticResource NormalOptionGapHeight}"
-                                    TextNote="/Eppie.App.UI/Controls/HybridNote"
                                     Visibility="{x:Bind ShowHybridAddressButton, Mode=OneWay}">
                 <controls:OptionControl.OptionContent>
                     <Button x:Uid="/Eppie.App.UI/Controls/HybridAddressButton" Command="{x:Bind CreateHybridAddressCommand}" />
