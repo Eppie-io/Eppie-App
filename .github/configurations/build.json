@@ -6,7 +6,7 @@
             "uno",
             "all"
         ],
-        "os": "windows-latest",
+        "os": "windows-2025",
         "prerequisites": {
             "msbuild": "false",
             "uno-platform": "true"
@@ -67,7 +67,7 @@
             "uno",
             "all"
         ],
-        "os": "windows-latest",
+        "os": "windows-2025",
         "prerequisites": {
             "msbuild": "false",
             "uno-platform": "true"
@@ -128,7 +128,7 @@
             "uno",
             "all"
         ],
-        "os": "windows-latest",
+        "os": "windows-2025",
         "prerequisites": {
             "msbuild": "true",
             "uno-platform": "true"
@@ -176,7 +176,7 @@
             "uno",
             "all"
         ],
-        "os": "windows-latest",
+        "os": "windows-2025",
         "prerequisites": {
             "msbuild": "false",
             "uno-platform": "true"
@@ -236,7 +236,7 @@
             "windows",
             "all"
         ],
-        "os": "windows-latest",
+        "os": "windows-2022",
         "prerequisites": {
             "msbuild": "true",
             "uno-platform": "false"
@@ -258,7 +258,7 @@
         "keywords": [
             "autobuild"
         ],
-        "os": "windows-latest",
+        "os": "windows-2022",
         "prerequisites": {
             "msbuild": "true",
             "uno-platform": "true"
