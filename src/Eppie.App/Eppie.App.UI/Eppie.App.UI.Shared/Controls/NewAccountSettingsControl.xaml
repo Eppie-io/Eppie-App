@@ -13,8 +13,6 @@
 
     <UserControl.Resources>
         <ResourceDictionary>
-            <Thickness x:Key="TextDescriptionMargin">0,2,0,0</Thickness>
-            <converters:IntToVisibilityConverter x:Key="IntToVisibilityConverter" />
             <x:Double x:Key="TextBoxWidth">276</x:Double>
             <x:Double x:Key="AdvancedSettingsSelectorWidth">108</x:Double>
             <x:Double x:Key="ButtonMinWidth">148</x:Double>
