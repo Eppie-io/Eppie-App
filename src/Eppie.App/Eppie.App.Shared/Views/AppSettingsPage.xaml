@@ -36,7 +36,6 @@
 
     </local:AppSettingsPageBase.Resources>
 
-    <!--  ToDo: Issue #840 - Update the string resources after issue #839 is closed.  -->
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -47,8 +46,7 @@
               Margin="0,24"
               Padding="{StaticResource PageHorizontalContentPadding}">
 
-            <!--  ToDo: Issue #840 - Move Text to resources  -->
-            <TextBlock FontSize="14" Text="ACCOUNT SETTINGS" />
+            <TextBlock x:Uid="ApplicationSettingsTitle" FontSize="14" />
 
             <!--  ToDo: Issue #840 - Check logic  -->
             <Button HorizontalAlignment="Right"
@@ -56,11 +54,10 @@
                     Command="{x:Bind ViewModel.WipeApplicationDataCommand}">
                 <StackPanel Orientation="Horizontal">
                     <!--  ToDo: Issue #840 - &#xF3B1; icon not showing in desktop app (default font is uno-fluentui-assets.ttf)  -->
-                    <FontIcon x:Name="FontIconSignOut"
-                              Margin="0,0,4,0"
+                    <FontIcon Margin="0,0,4,0"
                               FontSize="16"
                               Glyph="&#xF3B1;" />
-                    <TextBlock Text="Sign out" />
+                    <TextBlock x:Uid="SignOutButtonContent" />
                 </StackPanel>
             </Button>
         </Grid>
@@ -68,13 +65,9 @@
         <ScrollViewer Grid.Row="1" Padding="{StaticResource PageHorizontalContentPadding}">
             <StackPanel x:Name="SettingsControl" Margin="0,0,0,24">
 
-                <!--  ToDo: Issue #840 - Move Text to resources  -->
-                <TextBlock Style="{StaticResource SettingsSectionSubtitleTextBlockStyle}" Text="Appearance" />
+                <TextBlock x:Uid="AppearanceSettingsSectionSubtitle" Style="{StaticResource SettingsSectionSubtitleTextBlockStyle}" />
 
-                <!--  ToDo: Issue #840 - Move Caption, TextNote to resources  -->
-                <controls:OptionControl Caption="Language"
-                                        GapHeight="{StaticResource NormalOptionGapHeight}"
-                                        TextNote="Choose the app language.">
+                <controls:OptionControl x:Uid="LanguageOption" GapHeight="{StaticResource NormalOptionGapHeight}">
                     <controls:OptionControl.OptionContent>
                         <Grid>
                             <!--  ToDo: Issue #840 - In the old code there is a TextBlock about restarting here.  -->
@@ -93,11 +86,10 @@
                                        Foreground="{ThemeResource TextFillColorSecondary}"
                                        Style="{StaticResource BodyTextBlockStyle}">
                                 <Span>
-                                    <!--  ToDo: Issue #840 - Move Text to resources  -->
+                                    <Run x:Uid="HelpTranslateFirstPart" />
                                     <!--  ToDo: Issue #840 - Get NavigateUri from BrandLoader  -->
-                                    <Run Text="Help us with " />
                                     <Hyperlink NavigateUri="https://eppie.crowdin.com/eppie">
-                                        <Run Text="translation" />
+                                        <Run x:Uid="HelpTranslateSecondPart" />
                                     </Hyperlink>
                                 </Span>
                             </TextBlock>
@@ -105,11 +97,9 @@
                     </controls:OptionControl.OptionContent>
                 </controls:OptionControl>
 
-                <!--  ToDo: Issue #840 - Move Caption, TextNote to resources  -->
                 <!--  ToDo: Issue #840 - Add logic  -->
-                <controls:OptionControl Caption="Themes"
-                                        GapHeight="{StaticResource EndSectionOptionGapHeight}"
-                                        TextNote="Select your preferred color scheme.">
+                <controls:OptionControl x:Uid="ThemesOption" GapHeight="{StaticResource EndSectionOptionGapHeight}">
+
                     <controls:OptionControl.OptionContent>
                         <ComboBox x:Name="ThemeCombobox"
                                   Width="{StaticResource NormalOptionControlWidth}"
@@ -121,66 +111,53 @@
                     </controls:OptionControl.OptionContent>
                 </controls:OptionControl>
 
-                <!--  ToDo: Issue #840 - Move Text to resources  -->
-                <TextBlock Style="{StaticResource SettingsSectionSubtitleTextBlockStyle}" Text="Security" />
+                <TextBlock x:Uid="SecuritySettingsSectionSubtitle" Style="{StaticResource SettingsSectionSubtitleTextBlockStyle}" />
 
-
-                <!--  ToDo: Issue #840 - Move Caption to resources  -->
-                <controls:OptionControl Caption="Ask for password on every launch"
+                <controls:OptionControl x:Uid="LaunchPasswordOption"
                                         GapHeight="{StaticResource NormalOptionGapHeight}"
                                         HideNote="True">
                     <controls:OptionControl.OptionContent>
                         <Grid>
                             <!--  ToDo: Issue #840 - Add logic  -->
                             <ToggleSwitch HorizontalAlignment="Left" VerticalAlignment="Center" />
-                            <!--  ToDo: Issue #840 - Move Content to resources  -->
                             <!--  ToDo: Issue #840 - Check logic  -->
-                            <Button HorizontalAlignment="Right"
+                            <Button x:Uid="ChangeMasterPasswordButton"
+                                    HorizontalAlignment="Right"
                                     VerticalAlignment="Center"
-                                    Command="{x:Bind ViewModel.ChangeMasterPasswordCommand}"
-                                    Content="Change password" />
+                                    Command="{x:Bind ViewModel.ChangeMasterPasswordCommand}" />
                         </Grid>
                     </controls:OptionControl.OptionContent>
                 </controls:OptionControl>
 
-                <!--  ToDo: Issue #840 - Move Caption, TextNote to resources  -->
-                <!--  ToDo: Issue #840 - Add logic  -->
-                <controls:OptionControl Caption="Seed phrase"
-                                        GapHeight="{StaticResource GroupOptionGapHeight}"
-                                        TextNote="Your seed phrase is the key to your account. Keep it safe and never share.">
+                <controls:OptionControl x:Uid="SeedPhraseOption" GapHeight="{StaticResource GroupOptionGapHeight}">
                     <controls:OptionControl.OptionContent>
-                        <muxc:Expander HorizontalAlignment="Stretch" Header="View your phrase">
+                        <!--  ToDo: Issue #840 - Add logic  -->
+                        <muxc:Expander x:Uid="SeedPhraseExpander" HorizontalAlignment="Stretch">
                             <TextBlock Text="Not Implemented" />
                         </muxc:Expander>
                     </controls:OptionControl.OptionContent>
                 </controls:OptionControl>
 
-                <!--  ToDo: Issue #840 - Move Caption to resources  -->
-                <controls:OptionControl Caption="Confirm your seed phrase"
+                <controls:OptionControl x:Uid="ConfirmSeedPhraseOption"
                                         GapHeight="{StaticResource NormalOptionGapHeight}"
                                         HideNote="True">
                     <controls:OptionControl.OptionContent>
                         <Grid>
-                            <!--  ToDo: Issue #840 - Move Content to resources  -->
                             <!--  ToDo: Issue #840 - Check logic  -->
-                            <Button MinWidth="{StaticResource ButtonMinWidth}"
+                            <Button x:Uid="ConfirmSeedPhraseButton"
+                                    MinWidth="{StaticResource ButtonMinWidth}"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
-                                    Command="{x:Bind ViewModel.ConfirmSeedPhraseCommand}"
-                                    Content="Confirm" />
-                            <!--  ToDo: Issue #840 - Move Text to resources  -->
-                            <TextBlock HorizontalAlignment="Right"
+                                    Command="{x:Bind ViewModel.ConfirmSeedPhraseCommand}" />
+                            <TextBlock x:Uid="ConfirmSeedPhraseNote"
+                                       HorizontalAlignment="Right"
                                        VerticalAlignment="Center"
-                                       Foreground="{ThemeResource SystemFillColorCriticalBrush}"
-                                       Text="Waiting for your confirmation" />
+                                       Foreground="{ThemeResource SystemFillColorCriticalBrush}" />
                         </Grid>
                     </controls:OptionControl.OptionContent>
                 </controls:OptionControl>
 
-                <!--  ToDo: Issue #840 - Move Caption, TextNote to resources  -->
-                <controls:OptionControl Caption="Local backup"
-                                        GapHeight="{StaticResource GroupOptionGapHeight}"
-                                        TextNote="Save a full copy of all your data to a file.">
+                <controls:OptionControl x:Uid="ExportToFileOption" GapHeight="{StaticResource GroupOptionGapHeight}">
                     <controls:OptionControl.OptionContent>
                         <!--  ToDo: Issue #840 - Check logic  -->
                         <Button MinWidth="{StaticResource ButtonMinWidth}"
@@ -192,35 +169,28 @@
                     </controls:OptionControl.OptionContent>
                 </controls:OptionControl>
 
-                <!--  ToDo: Issue #840 - Move Caption to resources  -->
-                <controls:OptionControl Caption="Restore your data from file"
+                <controls:OptionControl x:Uid="RestoreFromFileOption"
                                         GapHeight="{StaticResource NormalOptionGapHeight}"
                                         HideNote="True">
                     <controls:OptionControl.OptionContent>
-                        <!--  Issue #840 - ToDo: Move Content to resources  -->
                         <!--  ToDo: Issue #840 - Check logic  -->
-                        <Button MinWidth="{StaticResource ButtonMinWidth}"
+                        <Button x:Uid="RestoreFromFileButton"
+                                MinWidth="{StaticResource ButtonMinWidth}"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 Command="{x:Bind ViewModel.ImportBackupCommand}"
-                                CommandParameter="{StaticResource FileOperationProvider}"
-                                Content="Restore" />
+                                CommandParameter="{StaticResource FileOperationProvider}" />
                     </controls:OptionControl.OptionContent>
                 </controls:OptionControl>
 
-
-                <!--  ToDo: Issue #840 - Move Caption, TextNote to resources  -->
-                <controls:OptionControl Caption="PGP keys"
-                                        GapHeight="{StaticResource EndSectionOptionGapHeight}"
-                                        TextNote="View and configure your PGP keys.">
+                <controls:OptionControl x:Uid="EncryptionKeyOption" GapHeight="{StaticResource EndSectionOptionGapHeight}">
                     <controls:OptionControl.OptionContent>
                         <Grid>
-                            <!--  ToDo: Issue #840 - Move Content to resources  -->
                             <!--  ToDo: Issue #840 - Add logic  -->
-                            <Button MinWidth="{StaticResource ButtonMinWidth}"
+                            <Button x:Uid="EncryptionKeyImportButton"
+                                    MinWidth="{StaticResource ButtonMinWidth}"
                                     HorizontalAlignment="Left"
-                                    VerticalAlignment="Top"
-                                    Content="Import" />
+                                    VerticalAlignment="Top" />
 
                             <!--  ToDo: Issue #840 - Check logic  -->
                             <!--  ToDo: Issue #840 - Rename PgpKeysCommand  -->
@@ -229,8 +199,7 @@
                                              VerticalAlignment="Top"
                                              Command="{x:Bind ViewModel.PgpKeysCommand}">
                                 <StackPanel Orientation="Horizontal">
-                                    <!--  ToDo: Issue #840 - Move Text to resources  -->
-                                    <TextBlock Text="View all" />
+                                    <TextBlock x:Uid="ViewAllEncryptionKeyButtonContent" />
                                     <FontIcon Margin="4,0,0,0"
                                               FontSize="16"
                                               Glyph="&#xE76C;" />
@@ -241,14 +210,9 @@
                 </controls:OptionControl>
 
 
-                <!--  ToDo: Issue #840 - Move Text to resources  -->
-                <TextBlock Style="{StaticResource SettingsSectionSubtitleTextBlockStyle}" Text="Development" />
+                <TextBlock x:Uid="DevelopmentSettingsSectionSubtitle" Style="{StaticResource SettingsSectionSubtitleTextBlockStyle}" />
 
-
-                <!--  ToDo: Issue #840 - Move Caption, TextNote to resources  -->
-                <controls:OptionControl Caption="Logging level"
-                                        GapHeight="{StaticResource EndSectionOptionGapHeight}"
-                                        TextNote="Set the detail level for app logs.">
+                <controls:OptionControl x:Uid="LoggingOption" GapHeight="{StaticResource EndSectionOptionGapHeight}">
                     <controls:OptionControl.OptionContent>
                         <Grid>
                             <!--  ToDo: Issue #840 - Check logic  -->
@@ -258,12 +222,11 @@
                                       ItemsSource="{x:Bind ViewModel.LogLevels, Mode=OneWay}"
                                       SelectedItem="{x:Bind ViewModel.SelectedLogLevel, Mode=TwoWay}" />
 
-                            <!--  ToDo: Issue #840 - Move Content to resources  -->
                             <!--  ToDo: Issue #840 - Check logic  -->
-                            <Button HorizontalAlignment="Right"
+                            <Button x:Uid="OpenLogFolderButton"
+                                    HorizontalAlignment="Right"
                                     VerticalAlignment="Top"
-                                    Command="{x:Bind ViewModel.OpenLogFolderCommand}"
-                                    Content="Open log folder">
+                                    Command="{x:Bind ViewModel.OpenLogFolderCommand}">
                                 <ToolTipService.ToolTip>
                                     <TextBlock Text="{x:Bind ViewModel.LogFolder, Mode=OneTime}" TextWrapping="Wrap" />
                                 </ToolTipService.ToolTip>
