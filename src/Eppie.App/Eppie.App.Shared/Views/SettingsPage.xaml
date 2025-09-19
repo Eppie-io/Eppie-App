@@ -1,4 +1,5 @@
-﻿<local:SettingsPageBase x:Class="Tuvi.App.Shared.Views.SettingsPage"
+﻿<!--  ToDo: Issue #840 - It can be deleted  -->
+<local:SettingsPageBase x:Class="Tuvi.App.Shared.Views.SettingsPage"
                         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                         xmlns:behaviors="using:Eppie.App.UI.Behaviors"
@@ -118,7 +119,7 @@
                         HorizontalAlignment="Stretch"
                         Command="{x:Bind ViewModel.WipeApplicationDataCommand}" />
 
-                <ComboBox x:Uid="LoggingOption"
+                <ComboBox x:Uid="LoggingOptionOld"
                           Margin="8,8"
                           HorizontalAlignment="Stretch"
                           ItemsSource="{x:Bind ViewModel.LogLevels, Mode=OneWay}"
