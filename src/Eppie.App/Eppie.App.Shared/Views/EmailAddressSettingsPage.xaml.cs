@@ -18,17 +18,25 @@
 
 using Tuvi.App.ViewModels;
 
+#if WINDOWS_UWP
+using Windows.UI.Xaml;
+#else
+using Microsoft.UI.Xaml;
+#endif
+
 namespace Tuvi.App.Shared.Views
 {
-    public partial class DecentralizedAccountSettingsPageBase : BasePage<DecentralizedAccountSettingsPageViewModel, BaseViewModel>
+    public partial class EmailAddressSettingsPageBase : BasePage<EmailAddressSettingsPageViewModel, BaseViewModel>
     {
     }
 
-    public sealed partial class DecentralizedAccountSettingsPage : DecentralizedAccountSettingsPageBase
+    public sealed partial class EmailAddressSettingsPage : EmailAddressSettingsPageBase
     {
-        public DecentralizedAccountSettingsPage()
+        public EmailAddressSettingsPage()
         {
             this.InitializeComponent();
+
+            ViewModel.SetAuthProvider((Application.Current as Eppie.App.Shared.App)?.AuthProvider);
         }
     }
 }

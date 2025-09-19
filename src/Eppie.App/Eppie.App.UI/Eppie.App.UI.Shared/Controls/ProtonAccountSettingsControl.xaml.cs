@@ -30,13 +30,13 @@ namespace Tuvi.App.Shared.Controls
 {
     public sealed partial class ProtonAccountSettingsControl : UserControl
     {
-        public ProtonAccountSettingsModel AccountSettingsModel
+        public ProtonAddressSettingsModel ProtonAddressSettingsModel
         {
-            get { return (ProtonAccountSettingsModel)GetValue(AccountSettingsModelProperty); }
-            set { SetValue(AccountSettingsModelProperty, value); }
+            get { return (ProtonAddressSettingsModel)GetValue(ProtonAddressSettingsModelProperty); }
+            set { SetValue(ProtonAddressSettingsModelProperty, value); }
         }
-        public static readonly DependencyProperty AccountSettingsModelProperty =
-            DependencyProperty.Register(nameof(AccountSettingsModel), typeof(ProtonAccountSettingsModel), typeof(ProtonAccountSettingsControl), new PropertyMetadata(null));
+        public static readonly DependencyProperty ProtonAddressSettingsModelProperty =
+            DependencyProperty.Register(nameof(ProtonAddressSettingsModel), typeof(ProtonAddressSettingsModel), typeof(ProtonAccountSettingsControl), new PropertyMetadata(null));
 
         public bool IsLocked
         {

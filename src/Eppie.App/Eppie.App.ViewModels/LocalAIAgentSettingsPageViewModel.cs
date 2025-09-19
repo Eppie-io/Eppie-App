@@ -568,10 +568,10 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        private void InitModel(LocalAIAgentSettings accountSettingsModel, bool isCreatingMode)
+        private void InitModel(LocalAIAgentSettings agentSettingsModel, bool isCreatingMode)
         {
             IsCreatingAgentMode = isCreatingMode;
-            AgentSettingsModel = accountSettingsModel;
+            AgentSettingsModel = agentSettingsModel;
         }
 
         private async Task ApplySettingsAndGoBackAsync()

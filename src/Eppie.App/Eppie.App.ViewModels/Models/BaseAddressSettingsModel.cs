@@ -26,7 +26,7 @@ using TuviPgpLib.Entities;
 
 namespace Tuvi.App.ViewModels
 {
-    public class BaseAccountSettingsModel : ObservableObject
+    public abstract class BaseAddressSettingsModel : ObservableObject
     {
         /// <summary>
         /// Default interval value (in minutes) for checking new messages
@@ -72,7 +72,7 @@ namespace Tuvi.App.ViewModels
             set { SetProperty(ref _pgpKeyModel, value); }
         }
 
-        public BaseAccountSettingsModel()
+        protected BaseAddressSettingsModel()
         {
             Email.SetInitialValue(string.Empty);
             SenderName.SetInitialValue(string.Empty);
@@ -92,7 +92,7 @@ namespace Tuvi.App.ViewModels
             };
         }
 
-        protected BaseAccountSettingsModel(Account account)
+        protected BaseAddressSettingsModel(Account account)
         {
             if (account is null)
             {

@@ -31,13 +31,13 @@ namespace Tuvi.App.Shared.Controls
 {
     public sealed partial class DecentralizedAccountSettingsControl : UserControl
     {
-        public DecentralizedAccountSettingsModel AccountSettingsModel
+        public DecentralizedAddressSettingsModel DecentralizedAddressSettingsModel
         {
-            get { return (DecentralizedAccountSettingsModel)GetValue(AccountSettingsModelProperty); }
-            set { SetValue(AccountSettingsModelProperty, value); }
+            get { return (DecentralizedAddressSettingsModel)GetValue(DecentralizedAddressSettingsModelProperty); }
+            set { SetValue(DecentralizedAddressSettingsModelProperty, value); }
         }
-        public static readonly DependencyProperty AccountSettingsModelProperty =
-            DependencyProperty.Register(nameof(AccountSettingsModel), typeof(DecentralizedAccountSettingsModel), typeof(DecentralizedAccountSettingsControl), new PropertyMetadata(null));
+        public static readonly DependencyProperty DecentralizedAddressSettingsModelProperty =
+            DependencyProperty.Register(nameof(DecentralizedAddressSettingsModel), typeof(DecentralizedAddressSettingsModel), typeof(DecentralizedAccountSettingsControl), new PropertyMetadata(null));
 
         public bool IsLocked
         {

@@ -234,28 +234,28 @@ namespace Tuvi.App.ViewModels
 
             if (account.Email.IsDecentralized)
             {
-                NavigationService?.Navigate(nameof(DecentralizedAccountSettingsPageViewModel), account);
+                NavigationService?.Navigate(nameof(DecentralizedAddressSettingsPageViewModel), account);
             }
             else if (Proton.Extensions.IsProton(account.Email))
             {
                 if (isReloginNeeded)
                 {
-                    NavigationService?.Navigate(nameof(ProtonAccountSettingsPageViewModel), new ProtonAccountSettingsPageViewModel.NeedReloginData { Account = account });
+                    NavigationService?.Navigate(nameof(ProtonAddressSettingsPageViewModel), new ProtonAddressSettingsPageViewModel.NeedReloginData { Account = account });
                 }
                 else
                 {
-                    NavigationService?.Navigate(nameof(ProtonAccountSettingsPageViewModel), account);
+                    NavigationService?.Navigate(nameof(ProtonAddressSettingsPageViewModel), account);
                 }
             }
             else
             {
                 if (isReloginNeeded)
                 {
-                    NavigationService?.Navigate(nameof(AccountSettingsPageViewModel), new AccountSettingsPageViewModel.NeedReloginData { Account = account });
+                    NavigationService?.Navigate(nameof(EmailAddressSettingsPageViewModel), new EmailAddressSettingsPageViewModel.NeedReloginData { Account = account });
                 }
                 else
                 {
-                    NavigationService?.Navigate(nameof(AccountSettingsPageViewModel), account);
+                    NavigationService?.Navigate(nameof(EmailAddressSettingsPageViewModel), account);
                 }
             }
         }
