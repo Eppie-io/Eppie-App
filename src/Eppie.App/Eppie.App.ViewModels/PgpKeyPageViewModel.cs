@@ -89,7 +89,15 @@ namespace Tuvi.App.ViewModels
         {
             if (data is PgpKeyInfo key)
             {
-                this.key = key;
+                SetKey(key);
+            }
+        }
+
+        public void SetKey(PgpKeyInfo keyInfo)
+        {
+            if (keyInfo != null)
+            {
+                key = keyInfo;
                 SetKeyInformation();
             }
         }

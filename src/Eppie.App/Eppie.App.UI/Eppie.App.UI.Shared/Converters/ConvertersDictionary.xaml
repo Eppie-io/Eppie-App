@@ -10,6 +10,7 @@
                               FalseValue="True"
                               TrueValue="False" />
     <converters:IntToStringConverter x:Key="IntToStringConverter" />
+    <converters:NullableBoolToBoolConverter x:Key="NullableBoolToBoolConverter" />
     <converters:BoolToFontWeightConverter x:Key="BoolToFontWeightConverter"
                                           FalseValue="Normal"
                                           TrueValue="Bold" />

@@ -22,6 +22,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Logging\HashTransformOperator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Logging\LogConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Logging\LoggingExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)StaticResources\BrandResource.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\NotificationManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\AIService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\AppStoreService.cs" />
@@ -51,8 +52,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Views\AccountSettingsPage.xaml.cs">
-      <DependentUpon>AccountSettingsPage.xaml</DependentUpon>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\EmailAddressSettingsPage.xaml.cs">
+      <DependentUpon>EmailAddressSettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\AllMessagesPage.xaml.cs">
       <DependentUpon>AllMessagesPage.xaml</DependentUpon>
@@ -60,8 +61,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\ContactMessagesPage.xaml.cs">
       <DependentUpon>ContactMessagesPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Views\DecentralizedAccountSettingsPage.xaml.cs">
-      <DependentUpon>DecentralizedAccountSettingsPage.xaml</DependentUpon>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\DecentralizedAddressSettingsPage.xaml.cs">
+      <DependentUpon>DecentralizedAddressSettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\FolderMessagesPage.xaml.cs">
       <DependentUpon>FolderMessagesPage.xaml</DependentUpon>
@@ -87,8 +88,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\PgpKeysPage.xaml.cs">
       <DependentUpon>PgpKeysPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Views\ProtonAccountSettingsPage.xaml.cs">
-      <DependentUpon>ProtonAccountSettingsPage.xaml</DependentUpon>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\ProtonAddressSettingsPage.xaml.cs">
+      <DependentUpon>ProtonAddressSettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\SeedGeneratePage.xaml.cs">
       <DependentUpon>SeedGeneratePage.xaml</DependentUpon>
@@ -126,7 +127,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Views\AccountSettingsPage.xaml">
+    <Page Include="$(MSBuildThisFileDirectory)Views\EmailAddressSettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -142,7 +143,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Views\DecentralizedAccountSettingsPage.xaml">
+    <Page Include="$(MSBuildThisFileDirectory)Views\DecentralizedAddressSettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -178,7 +179,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Views\ProtonAccountSettingsPage.xaml">
+    <Page Include="$(MSBuildThisFileDirectory)Views\ProtonAddressSettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

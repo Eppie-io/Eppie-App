@@ -21,7 +21,7 @@ using Tuvi.Core.Entities;
 
 namespace Tuvi.App.ViewModels
 {
-    public class AccountSettingsModel : BaseAccountSettingsModel
+    public class EmailAddressSettingsModel : BaseAddressSettingsModel
     {
         public ValidatableProperty<string> OutgoingServerAddress { get; } = new ValidatableProperty<string>();
         public ValidatableProperty<string> IncomingServerAddress { get; } = new ValidatableProperty<string>();
@@ -60,18 +60,34 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        public AccountSettingsModel() : base()
+        private string _messageFooter;
+        public string MessageFooter
+        {
+            get { return _messageFooter; }
+            set { SetProperty(ref _messageFooter, value); }
+        }
+
+        private bool _isMessageFooterEnabled;
+        public bool IsMessageFooterEnabled
+        {
+            get { return _isMessageFooterEnabled; }
+            set { SetProperty(ref _isMessageFooterEnabled, value); }
+        }
+
+        public EmailAddressSettingsModel() : base()
         {
             OutgoingServerAddress.SetInitialValue(string.Empty);
             IncomingServerAddress.SetInitialValue(string.Empty);
         }
-        protected AccountSettingsModel(Account account) : base(account)
+        protected EmailAddressSettingsModel(Account account) : base(account)
         {
             OutgoingServerAddress.SetInitialValue(account.OutgoingServerAddress);
             IncomingServerAddress.SetInitialValue(account.IncomingServerAddress);
             OutgoingServerPort = account.OutgoingServerPort;
             IncomingServerPort = account.IncomingServerPort;
             IncomingMailProtocol = account.IncomingMailProtocol;
+            MessageFooter = account.MessageFooter;
+            IsMessageFooterEnabled = account.IsMessageFooterEnabled;
 
             OutgoingServerAddress.PropertyChanged += (sender, args) =>
             {
@@ -105,25 +121,27 @@ namespace Tuvi.App.ViewModels
             CurrentAccount.IncomingMailProtocol = IncomingMailProtocol;
             CurrentAccount.IncomingServerAddress = IncomingServerAddress.Value;
             CurrentAccount.IncomingServerPort = IncomingServerPort;
+            CurrentAccount.MessageFooter = MessageFooter;
+            CurrentAccount.IsMessageFooterEnabled = IsMessageFooterEnabled;
 
             return CurrentAccount;
         }
 
-        public static AccountSettingsModel Create(Account account)
+        public static EmailAddressSettingsModel Create(Account account)
         {
             switch (account?.AuthData)
             {
                 case OAuth2Data oauth2:
-                    return new OAuth2AccountSettingsModel(account);
+                    return new OAuth2EmailAddressSettingsModel(account);
                 case BasicAuthData basic:
-                    return new BasicAccountSettingsModel(account);
+                    return new BasicEmailAddressSettingsModel(account);
             }
 
-            return new BasicAccountSettingsModel(account);
+            return new BasicEmailAddressSettingsModel(account);
         }
     }
 
-    public class BasicAccountSettingsModel : AccountSettingsModel
+    public class BasicEmailAddressSettingsModel : EmailAddressSettingsModel
     {
         public ValidatableProperty<string> Password { get; } = new ValidatableProperty<string>();
 
@@ -147,7 +165,7 @@ namespace Tuvi.App.ViewModels
         public ValidatableProperty<string> IncomingLogin { get; } = new ValidatableProperty<string>();
         public ValidatableProperty<string> IncomingPassword { get; } = new ValidatableProperty<string>();
 
-        public BasicAccountSettingsModel(Account account)
+        public BasicEmailAddressSettingsModel(Account account)
             : base(account)
         {
             if (account is null)
@@ -250,12 +268,12 @@ namespace Tuvi.App.ViewModels
         }
     }
 
-    public class OAuth2AccountSettingsModel : AccountSettingsModel
+    public class OAuth2EmailAddressSettingsModel : EmailAddressSettingsModel
     {
         public string RefreshToken { get; set; }
         public string AuthAssistantId { get; set; }
 
-        public OAuth2AccountSettingsModel(Account account)
+        public OAuth2EmailAddressSettingsModel(Account account)
             : base(account)
         {
             if (account is null)

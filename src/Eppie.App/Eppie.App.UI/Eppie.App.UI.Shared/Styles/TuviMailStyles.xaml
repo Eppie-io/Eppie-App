@@ -8,6 +8,9 @@
             <SolidColorBrush x:Key="EmailProviderListBackground" Color="White" />
             <SolidColorBrush x:Key="EmailProviderItemForeground" Color="Black" />
             <SolidColorBrush x:Key="InfoBarBackground" Color="#BBFFFFFF" />
+
+
+
         </ResourceDictionary>
         <ResourceDictionary x:Key="Dark">
             <SolidColorBrush x:Key="InactiveBackground" Color="#808080" />
@@ -48,6 +51,12 @@
     <Style x:Key="ValidationErrorTextStyle" TargetType="TextBlock">
         <Setter Property="Foreground" Value="{StaticResource ValidationErrorBrush}" />
         <Setter Property="FontSize" Value="10" />
+    </Style>
+
+    <Style x:Key="CriticalActionButtonStyle"
+           BasedOn="{StaticResource DefaultButtonStyle}"
+           TargetType="Button">
+        <Setter Property="Foreground" Value="{ThemeResource SystemFillColorCriticalBrush}" />
     </Style>
 
 </ResourceDictionary>

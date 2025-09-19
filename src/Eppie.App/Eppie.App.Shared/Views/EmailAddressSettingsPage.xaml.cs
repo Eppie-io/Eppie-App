@@ -26,13 +26,13 @@ using Microsoft.UI.Xaml;
 
 namespace Tuvi.App.Shared.Views
 {
-    public partial class AccountSettingsPageBase : BasePage<AccountSettingsPageViewModel, BaseViewModel>
+    public partial class EmailAddressSettingsPageBase : BasePage<EmailAddressSettingsPageViewModel, BaseViewModel>
     {
     }
 
-    public sealed partial class AccountSettingsPage : AccountSettingsPageBase
+    public sealed partial class EmailAddressSettingsPage : EmailAddressSettingsPageBase
     {
-        public AccountSettingsPage()
+        public EmailAddressSettingsPage()
         {
             this.InitializeComponent();
 

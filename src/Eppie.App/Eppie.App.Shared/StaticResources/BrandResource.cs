@@ -16,19 +16,24 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-using Tuvi.App.ViewModels;
+using Tuvi.App.ViewModels.Services;
 
-namespace Tuvi.App.Shared.Views
+namespace Tuvi.App.Shared.Models
 {
-    public partial class ProtonAccountSettingsPageBase : BasePage<ProtonAccountSettingsPageViewModel, BaseViewModel>
+    public sealed class BrandResource
     {
-    }
+        private readonly IBrandService _brand;
 
-    public sealed partial class ProtonAccountSettingsPage : ProtonAccountSettingsPageBase
-    {
-        public ProtonAccountSettingsPage()
+        public BrandResource()
         {
-            this.InitializeComponent();
+            _brand = new BrandLoader();
         }
+
+        public string Name => _brand.GetName();
+        public string Homepage => _brand.GetHomepage();
+        public string Support => _brand.GetSupport();
+        public string GitHubUrl => _brand.GetGitHubUrl();
+        public string DevelopmentSupport => _brand.GetDevelopmentSupport();
+        public string TwitterHandle => _brand.GetTwitterHandle();
     }
 }

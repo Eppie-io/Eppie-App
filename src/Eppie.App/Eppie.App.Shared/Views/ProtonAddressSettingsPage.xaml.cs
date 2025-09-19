@@ -20,13 +20,13 @@ using Tuvi.App.ViewModels;
 
 namespace Tuvi.App.Shared.Views
 {
-    public partial class DecentralizedAccountSettingsPageBase : BasePage<DecentralizedAccountSettingsPageViewModel, BaseViewModel>
+    public partial class ProtonAddressSettingsPageBase : BasePage<ProtonAddressSettingsPageViewModel, BaseViewModel>
     {
     }
 
-    public sealed partial class DecentralizedAccountSettingsPage : DecentralizedAccountSettingsPageBase
+    public sealed partial class ProtonAddressSettingsPage : ProtonAddressSettingsPageBase
     {
-        public DecentralizedAccountSettingsPage()
+        public ProtonAddressSettingsPage()
         {
             this.InitializeComponent();
         }

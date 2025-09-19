@@ -19,9 +19,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\SupportDevelopmentControl.xaml.cs">
       <DependentUpon>SupportDevelopmentControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\AccountSettingsControl.xaml.cs">
-      <DependentUpon>AccountSettingsControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\AttachmentListControl.xaml.cs">
       <DependentUpon>AttachmentListControl.xaml</DependentUpon>
     </Compile>
@@ -54,6 +51,9 @@
       <DependentUpon>MessageListControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\NavPanelTabControl.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\EmailSettingsControl.xaml.cs">
+      <DependentUpon>EmailSettingsControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\PasswordControl.xaml.cs">
       <DependentUpon>PasswordControl.xaml</DependentUpon>
     </Compile>
@@ -97,10 +97,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Controls\AccountSettingsControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="$(MSBuildThisFileDirectory)Controls\AttachmentListControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -134,6 +130,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Controls\MessageListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Controls\EmailSettingsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

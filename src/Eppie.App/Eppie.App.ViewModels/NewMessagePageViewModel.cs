@@ -20,7 +20,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -130,10 +129,34 @@ namespace Tuvi.App.ViewModels
                 if (_from != value)
                 {
                     SetProperty(ref _from, value);
-                    _ = UpdateDraftMessageAsync();
+                    OnFromUpdated();
                 }
             }
         }
+
+        private void OnFromUpdated()
+        {
+            _ = UpdateDraftMessageAsync();
+            _ = UpdateMessageFooterAsync();
+        }
+
+        private async Task UpdateMessageFooterAsync()
+        {
+            if (From is null)
+            {
+                return;
+            }
+
+            var account = await Core.GetAccountAsync(From).ConfigureAwait(true);
+            var accountFooter = account?.MessageFooter ?? string.Empty;
+
+            if (account != null && account.IsMessageFooterEnabled && string.IsNullOrWhiteSpace(TextBody))
+            {
+                string defaultFooter = GetLocalizedString("DefaultSignatureText");
+                TextBody = $"{Environment.NewLine}{Environment.NewLine}{accountFooter}{Environment.NewLine}{defaultFooter}";
+            }
+        }
+
         public ObservableCollection<ContactItem> To { get; } = new ObservableCollection<ContactItem>();
         public ObservableCollection<ContactItem> Copy { get; } = new ObservableCollection<ContactItem>();
         public ObservableCollection<ContactItem> HiddenCopy { get; } = new ObservableCollection<ContactItem>();

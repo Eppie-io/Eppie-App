@@ -83,12 +83,12 @@ namespace Tuvi.App.ViewModels
             }
             if (SelectedService.Key == ServiceKey.Decentralized)
             {
-                NavigationService?.Navigate(nameof(DecentralizedAccountSettingsPageViewModel));
+                NavigationService?.Navigate(nameof(DecentralizedAddressSettingsPageViewModel));
                 return;
             }
             if (SelectedService.Key == ServiceKey.Proton)
             {
-                NavigationService?.Navigate(nameof(ProtonAccountSettingsPageViewModel));
+                NavigationService?.Navigate(nameof(ProtonAddressSettingsPageViewModel));
                 return;
             }
             if (SelectedService.Key == ServiceKey.LocalAIAgent)
@@ -115,7 +115,7 @@ namespace Tuvi.App.ViewModels
                     break;
             }
 
-            NavigationService?.Navigate(nameof(AccountSettingsPageViewModel), mailServerId);
+            NavigationService?.Navigate(nameof(EmailAddressSettingsPageViewModel), mailServerId);
         }
 
 

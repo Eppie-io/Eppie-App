@@ -20,7 +20,6 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.Input;
 using Finebits.Authorization.OAuth2.Abstractions;
 using Finebits.Authorization.OAuth2.Types;
 using Tuvi.App.ViewModels.Extensions;
@@ -29,8 +28,39 @@ using Tuvi.OAuth2;
 
 namespace Tuvi.App.ViewModels
 {
-    public class AccountSettingsPageViewModel : BaseAccountSettingsPageViewModel
+    public enum AdvancedSettingsMode
     {
+        Default = 0,
+        Custom = 1
+    }
+
+    public class EmailAddressSettingsPageViewModel : BaseAddressSettingsPageViewModel
+    {
+        public int SettingsModeIndex
+        {
+            get => (int)SettingsMode;
+            set
+            {
+                if ((int)SettingsMode != value)
+                {
+                    SettingsMode = (AdvancedSettingsMode)value;
+                }
+            }
+        }
+
+        private AdvancedSettingsMode _settingsMode = AdvancedSettingsMode.Default;
+        public AdvancedSettingsMode SettingsMode
+        {
+            get => _settingsMode;
+            set
+            {
+                if (SetProperty(ref _settingsMode, value))
+                {
+                    OnPropertyChanged(nameof(SettingsModeIndex));
+                }
+            }
+        }
+
         public class NeedReloginData
         {
             public Account Account { get; set; }
@@ -43,6 +73,20 @@ namespace Tuvi.App.ViewModels
             public bool IsFilled => !string.IsNullOrEmpty(Email);
         }
 
+        private bool _shouldAutoExpandOutgoingServer;
+        public bool ShouldAutoExpandOutgoingServer
+        {
+            get => _shouldAutoExpandOutgoingServer;
+            set => SetProperty(ref _shouldAutoExpandOutgoingServer, value);
+        }
+
+        private bool _shouldAutoExpandIncomingServer;
+        public bool ShouldAutoExpandIncomingServer
+        {
+            get => _shouldAutoExpandIncomingServer;
+            set => SetProperty(ref _shouldAutoExpandIncomingServer, value);
+        }
+
         public AuthorizationProvider AuthProvider { get; private set; }
 
         public void SetAuthProvider(AuthorizationProvider authProvider)
@@ -50,36 +94,38 @@ namespace Tuvi.App.ViewModels
             AuthProvider = authProvider;
         }
 
-        private AccountSettingsModel _accountSettingsModel;
-        [CustomValidation(typeof(AccountSettingsPageViewModel), nameof(ClearValidationErrors))]
-        [CustomValidation(typeof(AccountSettingsPageViewModel), nameof(ValidateOutgoingServerAddressIsNotEmpty))]
-        [CustomValidation(typeof(AccountSettingsPageViewModel), nameof(ValidateIncomingServerAddressIsNotEmpty))]
-        [CustomValidation(typeof(BaseAccountSettingsPageViewModel), nameof(ValidateEmailIsNotEmpty))]
-        [CustomValidation(typeof(BaseAccountSettingsPageViewModel), nameof(ValidateSynchronizationIntervalIsCorrect))]
-        public AccountSettingsModel AccountSettingsModel
+        private EmailAddressSettingsModel _addressSettingsModel;
+        [CustomValidation(typeof(EmailAddressSettingsPageViewModel), nameof(ClearValidationErrors))]
+        [CustomValidation(typeof(EmailAddressSettingsPageViewModel), nameof(ValidateOutgoingServerAddressIsNotEmpty))]
+        [CustomValidation(typeof(EmailAddressSettingsPageViewModel), nameof(ValidateIncomingServerAddressIsNotEmpty))]
+        [CustomValidation(typeof(BaseAddressSettingsPageViewModel), nameof(ValidateEmailIsNotEmpty))]
+        [CustomValidation(typeof(BaseAddressSettingsPageViewModel), nameof(ValidateSynchronizationIntervalIsCorrect))]
+        public EmailAddressSettingsModel AddressSettingsModel
         {
-            get { return _accountSettingsModel; }
+            get { return _addressSettingsModel; }
             set
             {
-                if (_accountSettingsModel != null)
+                if (_addressSettingsModel != null)
                 {
-                    _accountSettingsModel.PropertyChanged -= OnAccountSettingsModelPropertyChanged;
+                    _addressSettingsModel.PropertyChanged -= OnAddressSettingsModelPropertyChanged;
                 }
 
-                SetProperty(ref _accountSettingsModel, value, true);
-                OnPropertyChanged(nameof(IsBasicAccount));
+                SetProperty(ref _addressSettingsModel, value, true);
+                OnPropertyChanged(nameof(IsBasicAaddress));
                 OnPropertyChanged(nameof(IsEmailReadonly));
+                OnPropertyChanged(nameof(ShouldAutoExpandOutgoingServer));
+                OnPropertyChanged(nameof(ShouldAutoExpandIncomingServer));
 
-                if (_accountSettingsModel != null)
+                if (_addressSettingsModel != null)
                 {
-                    _accountSettingsModel.PropertyChanged += OnAccountSettingsModelPropertyChanged;
+                    _addressSettingsModel.PropertyChanged += OnAddressSettingsModelPropertyChanged;
                 }
             }
         }
 
-        private void OnAccountSettingsModelPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void OnAddressSettingsModelPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            ValidateProperty(AccountSettingsModel, nameof(AccountSettingsModel));
+            ValidateProperty(AddressSettingsModel, nameof(AddressSettingsModel));
         }
 
         public override async void OnNavigatedTo(object data)
@@ -88,11 +134,11 @@ namespace Tuvi.App.ViewModels
             {
                 if (data is Account accountData)
                 {
-                    InitModel(AccountSettingsModel.Create(accountData), false);
+                    await InitModelAsync(EmailAddressSettingsModel.Create(accountData), false).ConfigureAwait(true);
                 }
                 else if (data is OAuth2.MailService mailService && mailService != OAuth2.MailService.Unknown)
                 {
-                    InitModel(new OAuth2AccountSettingsModel(DefaultAccountConfig.CreateDefaultOAuth2Account(mailService)), true);
+                    await InitModelAsync(new OAuth2EmailAddressSettingsModel(DefaultAccountConfig.CreateDefaultOAuth2Account(mailService)), true).ConfigureAwait(true);
 
                     await LoginAsync(mailService).ConfigureAwait(true);
                 }
@@ -101,7 +147,7 @@ namespace Tuvi.App.ViewModels
                     // It looks like the authorization data is out of date, you need to ask the user to authorization again.
 
                     var account = needReloginData.Account;
-                    InitModel(AccountSettingsModel.Create(account), false);
+                    await InitModelAsync(EmailAddressSettingsModel.Create(account), false).ConfigureAwait(true);
 
                     if (account.AuthData is OAuth2Data oAuth2Data)
                     {
@@ -114,7 +160,7 @@ namespace Tuvi.App.ViewModels
                 }
                 else
                 {
-                    InitModel(new BasicAccountSettingsModel(Account.Default), true);
+                    await InitModelAsync(new BasicEmailAddressSettingsModel(Account.Default), true).ConfigureAwait(true);
                 }
             }
             catch (Exception e)
@@ -123,80 +169,97 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        private void InitModel(AccountSettingsModel accountSettingsModel, bool isCreatingMode)
+        private async Task InitModelAsync(EmailAddressSettingsModel addressSettingsModel, bool isCreatingMode)
         {
             IsCreatingAccountMode = isCreatingMode;
-            AccountSettingsModel = accountSettingsModel;
+            AddressSettingsModel = addressSettingsModel;
 
-            accountSettingsModel.Email.NeedsValidation = !isCreatingMode;
-            accountSettingsModel.OutgoingServerAddress.NeedsValidation = !isCreatingMode;
-            accountSettingsModel.IncomingServerAddress.NeedsValidation = !isCreatingMode;
+            AddressSettingsModel.Email.NeedsValidation = !isCreatingMode;
+            AddressSettingsModel.OutgoingServerAddress.NeedsValidation = !isCreatingMode;
+            AddressSettingsModel.IncomingServerAddress.NeedsValidation = !isCreatingMode;
+
+            await AddressSettingsModel.InitModelAsync(CoreProvider, NavigationService).ConfigureAwait(true);
+
+            SettingsMode = (isCreatingMode && addressSettingsModel is BasicEmailAddressSettingsModel)
+                ? AdvancedSettingsMode.Custom
+                : AdvancedSettingsMode.Default;
+
+            ShouldAutoExpandOutgoingServer
+                = ShouldAutoExpandIncomingServer
+                = SettingsMode == AdvancedSettingsMode.Custom;
         }
 
         protected override bool IsValid()
         {
-            if ((!IsEmailReadonly && string.IsNullOrEmpty(AccountSettingsModel.Email.Value))
-                || string.IsNullOrEmpty(AccountSettingsModel.OutgoingServerAddress.Value)
-                || string.IsNullOrEmpty(AccountSettingsModel.IncomingServerAddress.Value))
+            if ((!IsEmailReadonly && string.IsNullOrEmpty(AddressSettingsModel.Email.Value))
+                || string.IsNullOrEmpty(AddressSettingsModel.OutgoingServerAddress.Value)
+                || string.IsNullOrEmpty(AddressSettingsModel.IncomingServerAddress.Value))
             {
                 // Validator will block Apply button and show notification
                 // if Email, Outgoing server address or Incoming server address 
                 // fields are empty even if values were not entered
-                AccountSettingsModel.Email.NeedsValidation = true;
-                AccountSettingsModel.OutgoingServerAddress.NeedsValidation = true;
-                AccountSettingsModel.IncomingServerAddress.NeedsValidation = true;
-                if (AccountSettingsModel is BasicAccountSettingsModel basicAccountSettingsModel)
+                AddressSettingsModel.Email.NeedsValidation = true;
+                AddressSettingsModel.OutgoingServerAddress.NeedsValidation = true;
+                AddressSettingsModel.IncomingServerAddress.NeedsValidation = true;
+                if (AddressSettingsModel is BasicEmailAddressSettingsModel basicAddressSettingsModel)
                 {
-                    basicAccountSettingsModel.Password.NeedsValidation = true;
-                    basicAccountSettingsModel.IncomingLogin.NeedsValidation = true;
-                    basicAccountSettingsModel.IncomingPassword.NeedsValidation = true;
-                    basicAccountSettingsModel.OutgoingLogin.NeedsValidation = true;
-                    basicAccountSettingsModel.OutgoingPassword.NeedsValidation = true;
+                    basicAddressSettingsModel.Password.NeedsValidation = true;
+                    basicAddressSettingsModel.IncomingLogin.NeedsValidation = true;
+                    basicAddressSettingsModel.IncomingPassword.NeedsValidation = true;
+                    basicAddressSettingsModel.OutgoingLogin.NeedsValidation = true;
+                    basicAddressSettingsModel.OutgoingPassword.NeedsValidation = true;
                 }
-                ValidateProperty(AccountSettingsModel, nameof(AccountSettingsModel));
+                ValidateProperty(AddressSettingsModel, nameof(AddressSettingsModel));
                 return false;
             }
 
             return true;
         }
 
-        protected override Account AccountSettingsModelToAccount()
+        protected override Account AddressSettingsModelToAccount()
         {
-            return AccountSettingsModel.ToAccount();
+            return AddressSettingsModel.ToAccount();
         }
 
-        public static ValidationResult ClearValidationErrors(AccountSettingsModel accountModel, ValidationContext _)
+        public static ValidationResult ClearValidationErrors(EmailAddressSettingsModel addressSettingsModel, ValidationContext _)
         {
-            if (accountModel != null)
+            if (addressSettingsModel != null)
             {
-                accountModel.Email.Errors.Clear();
-                accountModel.SynchronizationInterval.Errors.Clear();
+                addressSettingsModel.Email.Errors.Clear();
+                addressSettingsModel.SynchronizationInterval.Errors.Clear();
 
-                if (accountModel is BasicAccountSettingsModel basicAccountModel)
+                if (addressSettingsModel is BasicEmailAddressSettingsModel basicAddressSettingsModel)
                 {
-                    basicAccountModel.Password.Errors.Clear();
-                    basicAccountModel.IncomingLogin.Errors.Clear();
-                    basicAccountModel.IncomingPassword.Errors.Clear();
-                    basicAccountModel.OutgoingLogin.Errors.Clear();
-                    basicAccountModel.OutgoingPassword.Errors.Clear();
+                    basicAddressSettingsModel.Password.Errors.Clear();
+                    basicAddressSettingsModel.IncomingLogin.Errors.Clear();
+                    basicAddressSettingsModel.IncomingPassword.Errors.Clear();
+                    basicAddressSettingsModel.OutgoingLogin.Errors.Clear();
+                    basicAddressSettingsModel.OutgoingPassword.Errors.Clear();
                 }
-                accountModel.OutgoingServerAddress.Errors.Clear();
-                accountModel.IncomingServerAddress.Errors.Clear();
+                addressSettingsModel.OutgoingServerAddress.Errors.Clear();
+                addressSettingsModel.IncomingServerAddress.Errors.Clear();
             }
 
             return ValidationResult.Success;
         }
 
-        public static ValidationResult ValidateIncomingServerAddressIsNotEmpty(AccountSettingsModel accountModel, ValidationContext context)
+        public static ValidationResult ValidateIncomingServerAddressIsNotEmpty(EmailAddressSettingsModel addressSettingsModel, ValidationContext context)
         {
-            if (context?.ObjectInstance is AccountSettingsPageViewModel viewModel)
+            if (context?.ObjectInstance is EmailAddressSettingsPageViewModel viewModel)
             {
-                if (accountModel != null &&
-                    accountModel.IncomingServerAddress.NeedsValidation &&
-                    string.IsNullOrEmpty(accountModel.IncomingServerAddress.Value))
+                if (addressSettingsModel != null &&
+                    addressSettingsModel.IncomingServerAddress.NeedsValidation &&
+                    string.IsNullOrEmpty(addressSettingsModel.IncomingServerAddress.Value))
                 {
                     var error = viewModel.GetLocalizedString("FieldIsEmptyNotification");
-                    accountModel.IncomingServerAddress.Errors.Add(error);
+                    addressSettingsModel.IncomingServerAddress.Errors.Add(error);
+
+                    if (viewModel.SettingsMode == AdvancedSettingsMode.Default)
+                    {
+                        viewModel.SettingsMode = AdvancedSettingsMode.Custom;
+                    }
+                    viewModel.ShouldAutoExpandIncomingServer = true;
+
                     return new ValidationResult(error);
                 }
             }
@@ -204,16 +267,23 @@ namespace Tuvi.App.ViewModels
             return ValidationResult.Success;
         }
 
-        public static ValidationResult ValidateOutgoingServerAddressIsNotEmpty(AccountSettingsModel accountModel, ValidationContext context)
+        public static ValidationResult ValidateOutgoingServerAddressIsNotEmpty(EmailAddressSettingsModel addressSettingsModel, ValidationContext context)
         {
-            if (context?.ObjectInstance is AccountSettingsPageViewModel viewModel)
+            if (context?.ObjectInstance is EmailAddressSettingsPageViewModel viewModel)
             {
-                if (accountModel != null &&
-                    accountModel.OutgoingServerAddress.NeedsValidation &&
-                    string.IsNullOrEmpty(accountModel.OutgoingServerAddress.Value))
+                if (addressSettingsModel != null &&
+                    addressSettingsModel.OutgoingServerAddress.NeedsValidation &&
+                    string.IsNullOrEmpty(addressSettingsModel.OutgoingServerAddress.Value))
                 {
                     var error = viewModel.GetLocalizedString("FieldIsEmptyNotification");
-                    accountModel.OutgoingServerAddress.Errors.Add(error);
+                    addressSettingsModel.OutgoingServerAddress.Errors.Add(error);
+
+                    if (viewModel.SettingsMode == AdvancedSettingsMode.Default)
+                    {
+                        viewModel.SettingsMode = AdvancedSettingsMode.Custom;
+                    }
+                    viewModel.ShouldAutoExpandOutgoingServer = true;
+
                     return new ValidationResult(error);
                 }
             }
@@ -221,9 +291,9 @@ namespace Tuvi.App.ViewModels
             return ValidationResult.Success;
         }
 
-        public bool IsBasicAccount
+        public bool IsBasicAaddress
         {
-            get { return AccountSettingsModel is BasicAccountSettingsModel; }
+            get { return AddressSettingsModel is BasicEmailAddressSettingsModel; }
         }
 
         private Array _incomingProtocolTypes;
@@ -231,7 +301,7 @@ namespace Tuvi.App.ViewModels
         {
             get
             {
-                if (_incomingProtocolTypes == null)
+                if (_incomingProtocolTypes is null)
                 {
                     _incomingProtocolTypes = Array.CreateInstance(typeof(MailProtocol), 2);
                     _incomingProtocolTypes.SetValue(MailProtocol.IMAP, 0);
@@ -338,7 +408,7 @@ namespace Tuvi.App.ViewModels
 
         private void OnAuthorizationFailed(string errorNotification)
         {
-            AccountSettingsModel.Email.Errors.Add(errorNotification);
+            AddressSettingsModel.Email.Errors.Add(errorNotification);
         }
 
         private static bool IsUserCorrect(UserProfile profile, string userId)
@@ -348,14 +418,14 @@ namespace Tuvi.App.ViewModels
 
         private void OnAuthorizationCompleted(UserProfile userProfile, OAuth2.MailService mailService, Credential credential)
         {
-            AccountSettingsModel.Email.Value = userProfile.Email;
+            AddressSettingsModel.Email.Value = userProfile.Email;
 
-            if (string.IsNullOrEmpty(AccountSettingsModel.SenderName.Value))
+            if (string.IsNullOrEmpty(AddressSettingsModel.SenderName.Value))
             {
-                AccountSettingsModel.SenderName.Value = userProfile.Name;
+                AddressSettingsModel.SenderName.Value = userProfile.Name;
             }
 
-            if (AccountSettingsModel is OAuth2AccountSettingsModel model)
+            if (AddressSettingsModel is OAuth2EmailAddressSettingsModel model)
             {
                 model.RefreshToken = credential.RefreshToken;
                 model.AuthAssistantId = mailService.ToString();
@@ -375,7 +445,7 @@ namespace Tuvi.App.ViewModels
 
         private async Task<bool> CheckOutgoingMailServerAsync(Account accountData, CancellationToken cancellationToken = default)
         {
-            AccountSettingsModel.OutgoingServerAddress.Errors.Clear();
+            AddressSettingsModel.OutgoingServerAddress.Errors.Clear();
 
             try
             {
@@ -385,11 +455,11 @@ namespace Tuvi.App.ViewModels
             }
             catch (ConnectionException)
             {
-                AccountSettingsModel.OutgoingServerAddress.Errors.Add(GetLocalizedString("ConnectionError"));
+                AddressSettingsModel.OutgoingServerAddress.Errors.Add(GetLocalizedString("ConnectionError"));
             }
             catch (AuthenticationException)
             {
-                AccountSettingsModel.OutgoingServerAddress.Errors.Add(GetLocalizedString("AuthenticationError"));
+                AddressSettingsModel.OutgoingServerAddress.Errors.Add(GetLocalizedString("AuthenticationError"));
                 NotifyToCheckEmailAndPasswordFields();
             }
             catch (OperationCanceledException)
@@ -397,7 +467,7 @@ namespace Tuvi.App.ViewModels
             }
             catch (Exception ex)
             {
-                OnError(new Exception(AccountSettingsModel.OutgoingServerAddress.Value + "\n" + ex.Message));
+                OnError(new Exception(AddressSettingsModel.OutgoingServerAddress.Value + "\n" + ex.Message));
             }
             return false;
         }
@@ -418,7 +488,7 @@ namespace Tuvi.App.ViewModels
 
         private async Task<bool> CheckIncomingMailServerAsync(Account accountData, CancellationToken cancellationToken = default)
         {
-            AccountSettingsModel.IncomingServerAddress.Errors.Clear();
+            AddressSettingsModel.IncomingServerAddress.Errors.Clear();
 
             try
             {
@@ -432,57 +502,57 @@ namespace Tuvi.App.ViewModels
                 // Unambiguous definition fails. With MailKit comes one bug for these two cases.
                 // But as an option: if Web authentication was used, then the email and password are correct,
                 // and perhaps the problem is disabled IMAP access.
-                if (IsBasicAccount)
+                if (IsBasicAaddress)
                 {
-                    AccountSettingsModel.IncomingServerAddress.Errors.Add(GetLocalizedString("AuthenticationError"));
+                    AddressSettingsModel.IncomingServerAddress.Errors.Add(GetLocalizedString("AuthenticationError"));
                     NotifyToCheckEmailAndPasswordFields();
                 }
                 else
                 {
-                    AccountSettingsModel.IncomingServerAddress.Errors.Add(GetLocalizedString("AccessDenied"));
-                    await MessageService.ShowEnableImapMessageAsync(AccountSettingsModel.Email.Value).ConfigureAwait(true);
+                    AddressSettingsModel.IncomingServerAddress.Errors.Add(GetLocalizedString("AccessDenied"));
+                    await MessageService.ShowEnableImapMessageAsync(AddressSettingsModel.Email.Value).ConfigureAwait(true);
                 }
             }
             catch (ConnectionException)
             {
-                AccountSettingsModel.IncomingServerAddress.Errors.Add(GetLocalizedString("ConnectionError"));
+                AddressSettingsModel.IncomingServerAddress.Errors.Add(GetLocalizedString("ConnectionError"));
             }
             catch (OperationCanceledException)
             {
             }
             catch (Exception ex)
             {
-                OnError(new Exception(AccountSettingsModel.IncomingServerAddress.Value + "\n" + ex.Message));
+                OnError(new Exception(AddressSettingsModel.IncomingServerAddress.Value + "\n" + ex.Message));
             }
             return false;
         }
 
         private void NotifyToCheckEmailAndPasswordFields()
         {
-            AccountSettingsModel.Email.Errors.Clear();
-            AccountSettingsModel.Email.Errors.Add(GetLocalizedString("CheckEmailNotification"));
+            AddressSettingsModel.Email.Errors.Clear();
+            AddressSettingsModel.Email.Errors.Add(GetLocalizedString("CheckEmailNotification"));
 
-            if (AccountSettingsModel is BasicAccountSettingsModel basicAccountModel)
+            if (AddressSettingsModel is BasicEmailAddressSettingsModel basicAddressModel)
             {
-                basicAccountModel.Password.Errors.Clear();
-                basicAccountModel.Password.Errors.Add(GetLocalizedString("CheckPasswordNotification"));
+                basicAddressModel.Password.Errors.Clear();
+                basicAddressModel.Password.Errors.Add(GetLocalizedString("CheckPasswordNotification"));
 
-                if (basicAccountModel.UseSeparateIncomingCredentials)
+                if (basicAddressModel.UseSeparateIncomingCredentials)
                 {
-                    basicAccountModel.IncomingLogin.Errors.Clear();
-                    basicAccountModel.IncomingLogin.Errors.Add(GetLocalizedString("CheckEmailNotification"));
+                    basicAddressModel.IncomingLogin.Errors.Clear();
+                    basicAddressModel.IncomingLogin.Errors.Add(GetLocalizedString("CheckEmailNotification"));
 
-                    basicAccountModel.IncomingPassword.Errors.Clear();
-                    basicAccountModel.IncomingPassword.Errors.Add(GetLocalizedString("CheckPasswordNotification"));
+                    basicAddressModel.IncomingPassword.Errors.Clear();
+                    basicAddressModel.IncomingPassword.Errors.Add(GetLocalizedString("CheckPasswordNotification"));
                 }
 
-                if (basicAccountModel.UseSeparateOutgoingCredentials)
+                if (basicAddressModel.UseSeparateOutgoingCredentials)
                 {
-                    basicAccountModel.OutgoingLogin.Errors.Clear();
-                    basicAccountModel.OutgoingLogin.Errors.Add(GetLocalizedString("CheckEmailNotification"));
+                    basicAddressModel.OutgoingLogin.Errors.Clear();
+                    basicAddressModel.OutgoingLogin.Errors.Add(GetLocalizedString("CheckEmailNotification"));
 
-                    basicAccountModel.OutgoingPassword.Errors.Clear();
-                    basicAccountModel.OutgoingPassword.Errors.Add(GetLocalizedString("CheckPasswordNotification"));
+                    basicAddressModel.OutgoingPassword.Errors.Clear();
+                    basicAddressModel.OutgoingPassword.Errors.Add(GetLocalizedString("CheckPasswordNotification"));
                 }
             }
         }

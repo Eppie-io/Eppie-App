@@ -26,7 +26,7 @@ using Tuvi.Core.Entities;
 
 namespace Tuvi.App.ViewModels
 {
-    public class BaseAccountSettingsPageViewModel : BaseViewModel, IDisposable
+    public abstract class BaseAddressSettingsPageViewModel : BaseViewModel, IDisposable
     {
         protected class NeedAdditionalAuthInfo : Exception
         {
@@ -90,7 +90,7 @@ namespace Tuvi.App.ViewModels
         {
             try
             {
-                var email = AccountSettingsModelToAccount()?.Email;
+                var email = AddressSettingsModelToAccount()?.Email;
                 if (email != null)
                 {
                     var deckey = await Core.GetSecurityManager().GetEmailPublicKeyStringAsync(email).ConfigureAwait(true);
@@ -132,13 +132,13 @@ namespace Tuvi.App.ViewModels
 
         public ICommand HandleErrorCommand => new RelayCommand<object>(ex => OnError(ex as Exception));
 
-        public IRelayCommand CreateHybridAddress { get; }
+        public IRelayCommand CreateHybridAddressCommand { get; }
 
-        public BaseAccountSettingsPageViewModel()
+        protected BaseAddressSettingsPageViewModel()
         {
             ApplySettingsCommand = new AsyncRelayCommand(ApplySettingsAndGoBackAsync, () => IsApplyButtonEnabled);
             RemoveAccountCommand = new AsyncRelayCommand(RemoveAccountAndGoBackAsync, () => IsRemoveButtonEnabled);
-            CreateHybridAddress = new AsyncRelayCommand(CreateHybridAddressAsync, () => !IsHybridAddress);
+            CreateHybridAddressCommand = new AsyncRelayCommand(CreateHybridAddressAsync, () => !IsHybridAddress);
 
             ErrorsChanged += (sender, e) => ApplySettingsCommand.NotifyCanExecuteChanged();
         }
@@ -186,8 +186,8 @@ namespace Tuvi.App.ViewModels
             IsWaitingResponse = true;
             try
             {
-                var accountData = AccountSettingsModelToAccount();
-                var result = await ApplyAccountSettingsAsync(accountData).ConfigureAwait(true);
+                var accountData = AddressSettingsModelToAccount();
+                var result = await ApplySettingsAsync(accountData).ConfigureAwait(true);
                 if (result)
                 {
                     NavigateFromCurrentPage();
@@ -210,7 +210,7 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        private async Task<bool> ApplyAccountSettingsAsync(Account accountData)
+        private async Task<bool> ApplySettingsAsync(Account accountData)
         {
             _cts = new CancellationTokenSource();
             bool result = await CheckEmailAccountAsync(accountData, _cts.Token).ConfigureAwait(true);
@@ -273,7 +273,7 @@ namespace Tuvi.App.ViewModels
 
                 if (isConfirmed)
                 {
-                    var account = AccountSettingsModelToAccount();
+                    var account = AddressSettingsModelToAccount();
                     await Core.DeleteAccountAsync(account).ConfigureAwait(true);
 
                     await BackupIfNeededAsync().ConfigureAwait(true);
@@ -293,19 +293,19 @@ namespace Tuvi.App.ViewModels
 
         private async Task CreateHybridAddressAsync()
         {
-            await Core.CreateHybridAccountAsync(AccountSettingsModelToAccount()).ConfigureAwait(true);
+            await Core.CreateHybridAccountAsync(AddressSettingsModelToAccount()).ConfigureAwait(true);
 
             GoBack();
         }
 
-        protected virtual Account AccountSettingsModelToAccount()
+        protected virtual Account AddressSettingsModelToAccount()
         {
             return null;
         }
 
-        public static ValidationResult ValidateEmailIsNotEmpty(BaseAccountSettingsModel accountModel, ValidationContext context)
+        public static ValidationResult ValidateEmailIsNotEmpty(BaseAddressSettingsModel accountModel, ValidationContext context)
         {
-            if (context?.ObjectInstance is BaseAccountSettingsPageViewModel viewModel &&
+            if (context?.ObjectInstance is BaseAddressSettingsPageViewModel viewModel &&
                 !viewModel.IsEmailReadonly)
             {
                 if (accountModel != null &&
@@ -321,9 +321,9 @@ namespace Tuvi.App.ViewModels
             return ValidationResult.Success;
         }
 
-        public static ValidationResult ValidateSynchronizationIntervalIsCorrect(BaseAccountSettingsModel accountModel, ValidationContext context)
+        public static ValidationResult ValidateSynchronizationIntervalIsCorrect(BaseAddressSettingsModel accountModel, ValidationContext context)
         {
-            if (context?.ObjectInstance is BaseAccountSettingsPageViewModel viewModel)
+            if (context?.ObjectInstance is BaseAddressSettingsPageViewModel viewModel)
             {
                 if (accountModel != null &&
                     accountModel.SynchronizationInterval.NeedsValidation)

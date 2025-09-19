@@ -41,7 +41,7 @@ namespace Tuvi.App.ViewModels
         public override string ToString() => Name;
     }
 
-    public class DecentralizedAccountSettingsModel : BaseAccountSettingsModel
+    public class DecentralizedAddressSettingsModel : BaseAddressSettingsModel
     {
         private ObservableCollection<Network> _networkOptions;
         public ObservableCollection<Network> NetworkOptions
@@ -94,7 +94,7 @@ namespace Tuvi.App.ViewModels
             set => SetProperty(ref _claimedName, value);
         }
 
-        protected DecentralizedAccountSettingsModel(Account account) : base(account)
+        protected DecentralizedAddressSettingsModel(Account account) : base(account)
         {
             _networkOptions = new ObservableCollection<Network>
             {
@@ -129,9 +129,9 @@ namespace Tuvi.App.ViewModels
             return CurrentAccount;
         }
 
-        public static DecentralizedAccountSettingsModel Create(Account account)
+        public static DecentralizedAddressSettingsModel Create(Account account)
         {
-            return new DecentralizedAccountSettingsModel(account);
+            return new DecentralizedAddressSettingsModel(account);
         }
 
         public void UpdateAccount(Account account)
@@ -150,24 +150,24 @@ namespace Tuvi.App.ViewModels
         }
     }
 
-    public class DecentralizedAccountSettingsPageViewModel : BaseAccountSettingsPageViewModel
+    public class DecentralizedAddressSettingsPageViewModel : BaseAddressSettingsPageViewModel
     {
-        private DecentralizedAccountSettingsModel _accountSettingsModel;
-        public DecentralizedAccountSettingsModel AccountSettingsModel
+        private DecentralizedAddressSettingsModel _addressSettingsModel;
+        public DecentralizedAddressSettingsModel AddressSettingsModel
         {
-            get => _accountSettingsModel;
+            get => _addressSettingsModel;
             set
             {
-                if (_accountSettingsModel != null)
+                if (_addressSettingsModel != null)
                 {
-                    _accountSettingsModel.PropertyChanged -= OnAccountSettingsModelPropertyChanged;
+                    _addressSettingsModel.PropertyChanged -= OnAddressSettingsModelPropertyChanged;
                 }
 
-                SetProperty(ref _accountSettingsModel, value, true);
+                SetProperty(ref _addressSettingsModel, value, true);
 
-                if (_accountSettingsModel != null)
+                if (_addressSettingsModel != null)
                 {
-                    _accountSettingsModel.PropertyChanged += OnAccountSettingsModelPropertyChanged;
+                    _addressSettingsModel.PropertyChanged += OnAddressSettingsModelPropertyChanged;
                 }
 
                 ClaimNameCommand?.NotifyCanExecuteChanged();
@@ -190,7 +190,7 @@ namespace Tuvi.App.ViewModels
         }
 
 
-        public DecentralizedAccountSettingsPageViewModel()
+        public DecentralizedAddressSettingsPageViewModel()
         {
             ClaimNameCommand = new AsyncRelayCommand(ClaimNameAsync, CanClaimExecute);
             ErrorsChanged += (sender, e) => ApplySettingsCommand.NotifyCanExecuteChanged();
@@ -198,12 +198,12 @@ namespace Tuvi.App.ViewModels
 
         private bool CanClaimExecute()
         {
-            if (_accountSettingsModel is null || _isClaimingName || IsWaitingResponse || !_accountSettingsModel.IsSenderNameVisible)
+            if (_addressSettingsModel is null || _isClaimingName || IsWaitingResponse || !_addressSettingsModel.IsSenderNameVisible)
             {
                 return false;
             }
 
-            var desired = _accountSettingsModel.SenderName.Value;
+            var desired = _addressSettingsModel.SenderName.Value;
             if (string.IsNullOrWhiteSpace(desired))
             {
                 return false;
@@ -229,20 +229,20 @@ namespace Tuvi.App.ViewModels
             if (data is Account accountData)
             {
                 IsCreatingAccountMode = false;
-                AccountSettingsModel = DecentralizedAccountSettingsModel.Create(accountData);
-                AccountSettingsModel.IsNetworkLocked = !IsCreatingAccountMode;
+                AddressSettingsModel = DecentralizedAddressSettingsModel.Create(accountData);
+                AddressSettingsModel.IsNetworkLocked = !IsCreatingAccountMode;
 
                 if (accountData.Email.Network == NetworkType.Bitcoin)
                 {
-                    AccountSettingsModel.SecretKeyWIF = await Core.GetSecurityManager().GetSecretKeyWIFAsync(accountData).ConfigureAwait(true);
+                    AddressSettingsModel.SecretKeyWIF = await Core.GetSecurityManager().GetSecretKeyWIFAsync(accountData).ConfigureAwait(true);
                 }
             }
             else
             {
                 IsCreatingAccountMode = true;
                 accountData = await CreateDecentralizedAccountAsync(NetworkType.Eppie, default).ConfigureAwait(true);
-                AccountSettingsModel = DecentralizedAccountSettingsModel.Create(accountData);
-                AccountSettingsModel.IsNetworkLocked = !IsCreatingAccountMode;
+                AddressSettingsModel = DecentralizedAddressSettingsModel.Create(accountData);
+                AddressSettingsModel.IsNetworkLocked = !IsCreatingAccountMode;
             }
         }
 
@@ -262,9 +262,9 @@ namespace Tuvi.App.ViewModels
             };
         }
 
-        protected override Account AccountSettingsModelToAccount()
+        protected override Account AddressSettingsModelToAccount()
         {
-            return AccountSettingsModel.ToAccount();
+            return AddressSettingsModel.ToAccount();
         }
 
         private async void DoJoinWaitingList()
@@ -280,22 +280,22 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        private async void OnAccountSettingsModelPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private async void OnAddressSettingsModelPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(DecentralizedAccountSettingsModel.SenderName))
+            if (e.PropertyName == nameof(DecentralizedAddressSettingsModel.SenderName))
             {
                 ClaimNameCommand?.NotifyCanExecuteChanged();
             }
-            else if (e.PropertyName == nameof(DecentralizedAccountSettingsModel.SelectedNetwork) && !_accountSettingsModel.IsNetworkLocked)
+            else if (e.PropertyName == nameof(DecentralizedAddressSettingsModel.SelectedNetwork) && !_addressSettingsModel.IsNetworkLocked)
             {
                 try
                 {
-                    _accountSettingsModel.IsNetworkLocked = true;
-                    var accountData = await CreateDecentralizedAccountAsync(AccountSettingsModel.SelectedNetwork.NetworkType, default).ConfigureAwait(true);
-                    AccountSettingsModel.UpdateAccount(accountData);
-                    if (AccountSettingsModel.SelectedNetwork.NetworkType == NetworkType.Bitcoin)
+                    _addressSettingsModel.IsNetworkLocked = true;
+                    var accountData = await CreateDecentralizedAccountAsync(AddressSettingsModel.SelectedNetwork.NetworkType, default).ConfigureAwait(true);
+                    AddressSettingsModel.UpdateAccount(accountData);
+                    if (AddressSettingsModel.SelectedNetwork.NetworkType == NetworkType.Bitcoin)
                     {
-                        AccountSettingsModel.SecretKeyWIF = await Core.GetSecurityManager().GetSecretKeyWIFAsync(accountData).ConfigureAwait(true);
+                        AddressSettingsModel.SecretKeyWIF = await Core.GetSecurityManager().GetSecretKeyWIFAsync(accountData).ConfigureAwait(true);
                     }
                 }
                 catch (Exception ex)
@@ -304,7 +304,7 @@ namespace Tuvi.App.ViewModels
                 }
                 finally
                 {
-                    _accountSettingsModel.IsNetworkLocked = false;
+                    _addressSettingsModel.IsNetworkLocked = false;
                     ClaimNameCommand?.NotifyCanExecuteChanged();
                 }
             }
@@ -312,24 +312,24 @@ namespace Tuvi.App.ViewModels
 
         private async Task ClaimNameAsync()
         {
-            if (AccountSettingsModel is null || !AccountSettingsModel.IsSenderNameVisible)
+            if (AddressSettingsModel is null || !AddressSettingsModel.IsSenderNameVisible)
             {
                 return;
             }
 
-            var nameRaw = AccountSettingsModel.SenderName.Value?.Trim();
-            AccountSettingsModel.SenderName.Errors.Clear();
+            var nameRaw = AddressSettingsModel.SenderName.Value?.Trim();
+            AddressSettingsModel.SenderName.Errors.Clear();
 
             if (!ValidateName(nameRaw, out var normalized, out var errorKey))
             {
-                AccountSettingsModel.SenderName.Errors.Add(GetLocalizedString(errorKey));
+                AddressSettingsModel.SenderName.Errors.Add(GetLocalizedString(errorKey));
                 return;
             }
 
             try
             {
                 IsClaimingName = true;
-                var account = AccountSettingsModel.ToAccount();
+                var account = AddressSettingsModel.ToAccount();
                 var result = await Core.ClaimDecentralizedNameAsync(normalized, account.Email).ConfigureAwait(true);
                 if (result)
                 {
@@ -337,12 +337,12 @@ namespace Tuvi.App.ViewModels
                 }
                 else
                 {
-                    AccountSettingsModel.SenderName.Errors.Add(GetLocalizedString("NameAlreadyTakenError"));
+                    AddressSettingsModel.SenderName.Errors.Add(GetLocalizedString("NameAlreadyTakenError"));
                 }
             }
             catch (Exception ex)
             {
-                AccountSettingsModel.SenderName.Errors.Add(GetLocalizedString("ClaimNameFailedError"));
+                AddressSettingsModel.SenderName.Errors.Add(GetLocalizedString("ClaimNameFailedError"));
                 OnError(ex);
             }
             finally
@@ -354,9 +354,9 @@ namespace Tuvi.App.ViewModels
 
         private void OnNameClaimSucceededAsync(string normalized, Account account)
         {
-            AccountSettingsModel.ClaimedName = normalized;
-            AccountSettingsModel.SenderName.Value = normalized;
-            AccountSettingsModel.Email.Value = EmailAddress.CreateDecentralizedAddress(account.Email.Network, normalized).DisplayAddress;
+            AddressSettingsModel.ClaimedName = normalized;
+            AddressSettingsModel.SenderName.Value = normalized;
+            AddressSettingsModel.Email.Value = EmailAddress.CreateDecentralizedAddress(account.Email.Network, normalized).DisplayAddress;
         }
 
         private static bool ValidateName(string name, out string normalized, out string errorKey)
