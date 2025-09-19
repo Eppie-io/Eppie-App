@@ -33,6 +33,7 @@
                TargetType="TextBlock">
             <Setter Property="FontSize" Value="18" />
             <Setter Property="FontWeight" Value="Medium" />
+            <Setter Property="IsTextSelectionEnabled" Value="True" />
         </Style>
     </UserControl.Resources>
 
