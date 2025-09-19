@@ -31,32 +31,31 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace Tuvi.App.Shared.Controls
 {
-    // ToDo: Issue #839 -  Rename it to EmailSettingsControl
-    public sealed partial class NewAccountSettingsControl : UserControl
+    public sealed partial class EmailSettingsControl : UserControl
     {
-        public AccountSettingsModel AccountSettingsModel
+        public EmailAddressSettingsModel EmailAddressSettingsModel
         {
-            get { return (AccountSettingsModel)GetValue(AccountSettingsModelProperty); }
-            set { SetValue(AccountSettingsModelProperty, value); }
+            get { return (EmailAddressSettingsModel)GetValue(EmailAddressSettingsModelProperty); }
+            set { SetValue(EmailAddressSettingsModelProperty, value); }
         }
-        public static readonly DependencyProperty AccountSettingsModelProperty =
-            DependencyProperty.Register(nameof(AccountSettingsModel), typeof(AccountSettingsModel), typeof(NewAccountSettingsControl), new PropertyMetadata(null, OnModelChanged));
+        public static readonly DependencyProperty EmailAddressSettingsModelProperty =
+            DependencyProperty.Register(nameof(EmailAddressSettingsModel), typeof(EmailAddressSettingsModel), typeof(EmailSettingsControl), new PropertyMetadata(null, OnModelChanged));
 
         private static void OnModelChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
-            if (dependencyObject is NewAccountSettingsControl control)
+            if (dependencyObject is EmailSettingsControl control)
             {
-                control.BasicAccountSettingsModel = control.AccountSettingsModel as BasicAccountSettingsModel;
+                control.BasicEmailAddressSettingsModel = control.EmailAddressSettingsModel as BasicEmailAddressSettingsModel;
             }
         }
 
-        public BasicAccountSettingsModel BasicAccountSettingsModel
+        public BasicEmailAddressSettingsModel BasicEmailAddressSettingsModel
         {
-            get { return (BasicAccountSettingsModel)GetValue(BasicAccountSettingsModelProperty); }
-            private set { SetValue(BasicAccountSettingsModelProperty, value); }
+            get { return (BasicEmailAddressSettingsModel)GetValue(BasicEmailAddressSettingsModelProperty); }
+            private set { SetValue(BasicEmailAddressSettingsModelProperty, value); }
         }
-        public static readonly DependencyProperty BasicAccountSettingsModelProperty =
-            DependencyProperty.Register(nameof(BasicAccountSettingsModel), typeof(BasicAccountSettingsModel), typeof(NewAccountSettingsControl), new PropertyMetadata(null));
+        public static readonly DependencyProperty BasicEmailAddressSettingsModelProperty =
+            DependencyProperty.Register(nameof(BasicEmailAddressSettingsModel), typeof(BasicEmailAddressSettingsModel), typeof(EmailSettingsControl), new PropertyMetadata(null));
 
         public bool IsEmailReadOnly
         {
@@ -64,7 +63,7 @@ namespace Tuvi.App.Shared.Controls
             set { SetValue(IsEmailReadOnlyProperty, value); }
         }
         public static readonly DependencyProperty IsEmailReadOnlyProperty =
-            DependencyProperty.Register(nameof(IsEmailReadOnly), typeof(bool), typeof(NewAccountSettingsControl), new PropertyMetadata(false));
+            DependencyProperty.Register(nameof(IsEmailReadOnly), typeof(bool), typeof(EmailSettingsControl), new PropertyMetadata(false));
 
         public Array IncomingProtocolTypes
         {
@@ -72,7 +71,7 @@ namespace Tuvi.App.Shared.Controls
             set { SetValue(IncomingProtocolTypesProperty, value); }
         }
         public static readonly DependencyProperty IncomingProtocolTypesProperty =
-            DependencyProperty.Register(nameof(IncomingProtocolTypes), typeof(Array), typeof(NewAccountSettingsControl), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(IncomingProtocolTypes), typeof(Array), typeof(EmailSettingsControl), new PropertyMetadata(null));
 
         public IClipboardProvider ClipboardProvider
         {
@@ -80,7 +79,7 @@ namespace Tuvi.App.Shared.Controls
             set { SetValue(ClipboardProviderProperty, value); }
         }
         public static readonly DependencyProperty ClipboardProviderProperty =
-            DependencyProperty.Register(nameof(ClipboardProvider), typeof(IClipboardProvider), typeof(NewAccountSettingsControl), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(ClipboardProvider), typeof(IClipboardProvider), typeof(EmailSettingsControl), new PropertyMetadata(null));
 
         public IFileOperationProvider FileProvider
         {
@@ -88,7 +87,7 @@ namespace Tuvi.App.Shared.Controls
             set { SetValue(FileProviderProperty, value); }
         }
         public static readonly DependencyProperty FileProviderProperty =
-            DependencyProperty.Register(nameof(FileProvider), typeof(IFileOperationProvider), typeof(NewAccountSettingsControl), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(FileProvider), typeof(IFileOperationProvider), typeof(EmailSettingsControl), new PropertyMetadata(null));
 
         public int SelectedSettingsModeIndex
         {
@@ -96,7 +95,7 @@ namespace Tuvi.App.Shared.Controls
             set { SetValue(SelectedSettingsModeIndexProperty, value); }
         }
         public static readonly DependencyProperty SelectedSettingsModeIndexProperty =
-            DependencyProperty.Register(nameof(SelectedSettingsModeIndex), typeof(int), typeof(NewAccountSettingsControl), new PropertyMetadata(0));
+            DependencyProperty.Register(nameof(SelectedSettingsModeIndex), typeof(int), typeof(EmailSettingsControl), new PropertyMetadata(0));
 
         public bool ShouldAutoExpandOutgoingServer
         {
@@ -104,7 +103,7 @@ namespace Tuvi.App.Shared.Controls
             set { SetValue(ShouldAutoExpandOutgoingServerProperty, value); }
         }
         public static readonly DependencyProperty ShouldAutoExpandOutgoingServerProperty =
-            DependencyProperty.Register(nameof(ShouldAutoExpandOutgoingServer), typeof(bool), typeof(NewAccountSettingsControl), new PropertyMetadata(false));
+            DependencyProperty.Register(nameof(ShouldAutoExpandOutgoingServer), typeof(bool), typeof(EmailSettingsControl), new PropertyMetadata(false));
 
         public bool ShouldAutoExpandIncomingServer
         {
@@ -112,7 +111,7 @@ namespace Tuvi.App.Shared.Controls
             set { SetValue(ShouldAutoExpandIncomingServerProperty, value); }
         }
         public static readonly DependencyProperty ShouldAutoExpandIncomingServerProperty =
-            DependencyProperty.Register(nameof(ShouldAutoExpandIncomingServer), typeof(bool), typeof(NewAccountSettingsControl), new PropertyMetadata(false));
+            DependencyProperty.Register(nameof(ShouldAutoExpandIncomingServer), typeof(bool), typeof(EmailSettingsControl), new PropertyMetadata(false));
 
         public ICommand CreateHybridAddressCommand
         {
@@ -120,7 +119,7 @@ namespace Tuvi.App.Shared.Controls
             set { SetValue(CreateHybridAddressProperty, value); }
         }
         public static readonly DependencyProperty CreateHybridAddressProperty =
-            DependencyProperty.Register(nameof(CreateHybridAddressCommand), typeof(ICommand), typeof(NewAccountSettingsControl), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(CreateHybridAddressCommand), typeof(ICommand), typeof(EmailSettingsControl), new PropertyMetadata(null));
 
         public bool ShowHybridAddressButton
         {
@@ -128,10 +127,10 @@ namespace Tuvi.App.Shared.Controls
             set { SetValue(ShowHybridAddressButtonProperty, value); }
         }
         public static readonly DependencyProperty ShowHybridAddressButtonProperty =
-            DependencyProperty.Register(nameof(ShowHybridAddressButton), typeof(bool), typeof(NewAccountSettingsControl), new PropertyMetadata(false));
+            DependencyProperty.Register(nameof(ShowHybridAddressButton), typeof(bool), typeof(EmailSettingsControl), new PropertyMetadata(false));
 
 
-        public NewAccountSettingsControl()
+        public EmailSettingsControl()
         {
             this.InitializeComponent();
         }

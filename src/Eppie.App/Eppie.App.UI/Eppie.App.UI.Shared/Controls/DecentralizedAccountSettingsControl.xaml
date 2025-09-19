@@ -16,9 +16,9 @@
 
                 <ComboBox x:Uid="/Eppie.App.UI/Controls/NetworkName"
                           Margin="0,16,0,4"
-                          IsEnabled="{x:Bind AccountSettingsModel.IsNetworkLocked, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}"
-                          ItemsSource="{x:Bind AccountSettingsModel.NetworkOptions, Mode=OneWay}"
-                          SelectedItem="{x:Bind AccountSettingsModel.SelectedNetwork, Mode=TwoWay}" />
+                          IsEnabled="{x:Bind DecentralizedAddressSettingsModel.IsNetworkLocked, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}"
+                          ItemsSource="{x:Bind DecentralizedAddressSettingsModel.NetworkOptions, Mode=OneWay}"
+                          SelectedItem="{x:Bind DecentralizedAddressSettingsModel.SelectedNetwork, Mode=TwoWay}" />
 
                 <Border Margin="0,16,0,4"
                         Padding="4"
@@ -34,16 +34,16 @@
                 <TextBox HorizontalAlignment="Stretch"
                          IsReadOnly="True"
                          IsSpellCheckEnabled="False"
-                         Text="{x:Bind AccountSettingsModel.Email.Value, Mode=OneWay}" />
+                         Text="{x:Bind DecentralizedAddressSettingsModel.Email.Value, Mode=OneWay}" />
 
-                <StackPanel Visibility="{x:Bind AccountSettingsModel.IsSenderNameVisible, Mode=OneWay}">
+                <StackPanel Visibility="{x:Bind DecentralizedAddressSettingsModel.IsSenderNameVisible, Mode=OneWay}">
                     <TextBlock x:Uid="/Eppie.App.UI/Controls/SenderName" Margin="0,16,0,4" />
-                    <local:ErrorControl HorizontalAlignment="Stretch" Property="{x:Bind AccountSettingsModel.SenderName, Mode=OneWay}">
+                    <local:ErrorControl HorizontalAlignment="Stretch" Property="{x:Bind DecentralizedAddressSettingsModel.SenderName, Mode=OneWay}">
                         <local:ErrorControl.InnerContent>
                             <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
                                 <controls:PromptTextInputControl Width="240"
                                                                  IsSpellCheckEnabled="False"
-                                                                 Text="{x:Bind AccountSettingsModel.SenderName.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                                 Text="{x:Bind DecentralizedAddressSettingsModel.SenderName.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <Button Margin="8,0,0,0" Command="{x:Bind ClaimNameCommand, Mode=OneWay}">
                                     <Grid>
                                         <TextBlock x:Uid="/Eppie.App.UI/Controls/ClaimNameButton" Visibility="{x:Bind IsClaimingName, Converter={StaticResource InverseBoolToVisibilityConverter}, Mode=OneWay}" />
@@ -60,7 +60,7 @@
 
                 <muxc:Expander Margin="0,16,0,4"
                                HorizontalContentAlignment="Left"
-                               Visibility="{x:Bind AccountSettingsModel.IsSecretKeyVisible, Mode=OneWay}">
+                               Visibility="{x:Bind DecentralizedAddressSettingsModel.IsSecretKeyVisible, Mode=OneWay}">
                     <muxc:Expander.Header>
 
                         <TextBlock x:Uid="/Eppie.App.UI/Controls/SecretKeyWIF" Style="{StaticResource NormalTextStyle}" />
@@ -73,7 +73,7 @@
                                      IsReadOnly="True"
                                      IsSpellCheckEnabled="False"
                                      IsTextPredictionEnabled="False"
-                                     Text="{x:Bind AccountSettingsModel.SecretKeyWIF, Mode=OneWay}" />
+                                     Text="{x:Bind DecentralizedAddressSettingsModel.SecretKeyWIF, Mode=OneWay}" />
 
                         </StackPanel>
 
@@ -82,9 +82,9 @@
 
                 <StackPanel Margin="0,16,0,4">
                     <TextBlock x:Uid="/Eppie.App.UI/Controls/CheckNewMessagesIntervalLabel" Margin="0,0,0,4" />
-                    <local:ErrorControl HorizontalAlignment="Stretch" Property="{x:Bind AccountSettingsModel.SynchronizationInterval, Mode=OneWay}">
+                    <local:ErrorControl HorizontalAlignment="Stretch" Property="{x:Bind DecentralizedAddressSettingsModel.SynchronizationInterval, Mode=OneWay}">
                         <local:ErrorControl.InnerContent>
-                            <TextBox IsSpellCheckEnabled="False" Text="{x:Bind AccountSettingsModel.SynchronizationInterval.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox IsSpellCheckEnabled="False" Text="{x:Bind DecentralizedAddressSettingsModel.SynchronizationInterval.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </local:ErrorControl.InnerContent>
                     </local:ErrorControl>
                 </StackPanel>

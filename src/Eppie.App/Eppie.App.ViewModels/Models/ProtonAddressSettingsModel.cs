@@ -21,17 +21,17 @@ using Tuvi.Core.Entities;
 
 namespace Tuvi.App.ViewModels
 {
-    public class ProtonAccountSettingsModel : BaseAccountSettingsModel
+    public class ProtonAddressSettingsModel : BaseAddressSettingsModel
     {
         public ValidatableProperty<string> TwoFactorCode { get; } = new ValidatableProperty<string>();
         public ValidatableProperty<string> Password { get; } = new ValidatableProperty<string>();
         public ValidatableProperty<string> MailboxPassword { get; } = new ValidatableProperty<string>();
 
-        public ProtonAccountSettingsModel() : base()
+        public ProtonAddressSettingsModel() : base()
         {
         }
 
-        protected ProtonAccountSettingsModel(Account account) : base(account)
+        protected ProtonAddressSettingsModel(Account account) : base(account)
         {
             Password.SetInitialValue(string.Empty);
             TwoFactorCode.SetInitialValue(string.Empty);
@@ -71,9 +71,9 @@ namespace Tuvi.App.ViewModels
             return CurrentAccount;
         }
 
-        public static ProtonAccountSettingsModel Create(Account account)
+        public static ProtonAddressSettingsModel Create(Account account)
         {
-            return new ProtonAccountSettingsModel(account);
+            return new ProtonAddressSettingsModel(account);
         }
     }
 }
