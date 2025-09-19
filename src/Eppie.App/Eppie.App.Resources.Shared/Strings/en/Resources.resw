@@ -209,14 +209,6 @@
     <value>Change master password.</value>
     <comment>Text on "Change password" page</comment>
   </data>
-  <data name="ChangeMasterPasswordButton.Content" xml:space="preserve">
-    <value>Change master password</value>
-    <comment>Text on "Change master password" button</comment>
-  </data>
-  <data name="ConfirmSeedPhraseButton.Content" xml:space="preserve">
-    <value>Confirm recovery phrase</value>
-    <comment>Text on "Confirm recovery phrase" button</comment>
-  </data>
   <data name="CheckEmailNotification" xml:space="preserve">
     <value>Check email</value>
     <comment>Notification message that is shown when user needs to check entered email</comment>
@@ -1026,7 +1018,8 @@ Subject: {3}
     <value>Please complete the authentication in your browser.</value>
     <comment>Message shown to user to complete authentication in browser</comment>
   </data>
-  <data name="LoggingOption.Header" xml:space="preserve">
+  <!--  Todo: Issue #840 - It can be deleted along with the SettingsPage.xaml page-->
+  <data name="LoggingOptionOld.Header" xml:space="preserve">
     <value>Logging level</value>
     <comment>Header for the logging level option.</comment>
   </data>
@@ -1121,5 +1114,121 @@ Subject: {3}
   <data name="DefaultSignatureText" xml:space="preserve">
     <value>Sent from an Eppie (https://eppie.io) hybrid address.</value>
     <comment>Default message footer signature.</comment>
+  </data>
+  <data name="ApplicationSettingsTitle.Text" xml:space="preserve">
+    <value>SETTINGS</value>
+    <comment>Title of the application settings page</comment>
+  </data>
+  <data name="AppearanceSettingsSectionSubtitle.Text" xml:space="preserve">
+    <value>Appearance</value>
+    <comment>Subtitle for the appearance settings section</comment>
+  </data>
+  <data name="SecuritySettingsSectionSubtitle.Text" xml:space="preserve">
+    <value>Security</value>
+    <comment>Subtitle for the security settings section</comment>
+  </data>
+  <data name="DevelopmentSettingsSectionSubtitle.Text" xml:space="preserve">
+    <value>Development</value>
+    <comment>Subtitle for the development settings section</comment>
+  </data>
+  <data name="LanguageOption.Caption" xml:space="preserve">
+    <value>Language</value>
+    <comment>Caption for the option with language lists</comment>
+  </data>
+    <data name="LanguageOption.TextNote" xml:space="preserve">
+    <value>Choose the app language.</value>
+    <comment>Note for the option with language lists</comment>
+  </data>
+  <data name="ThemesOption.Caption" xml:space="preserve">
+    <value>Themes</value>
+    <comment>Caption for the option with theme lists</comment>
+  </data>
+  <data name="ThemesOption.TextNote" xml:space="preserve">
+    <value>Select your preferred color scheme.</value>
+    <comment>Note for the option with theme lists</comment>
+  </data>
+  <data name="LaunchPasswordOption.Caption" xml:space="preserve">
+    <value>Ask for password on every launch</value>
+    <comment>Caption for the option ???</comment>
+  </data>
+  <data name="SeedPhraseOption.Caption" xml:space="preserve">
+    <value>Seed phrase</value>
+    <comment>Caption for the option with the seed phrase</comment>
+  </data>
+  <data name="SeedPhraseOption.TextNote" xml:space="preserve">
+    <value>Your seed phrase is the key to your account. Keep it safe and never share.</value>
+    <comment>Note for the option with the seed phrase</comment>
+  </data>
+  <data name="ConfirmSeedPhraseOption.Caption" xml:space="preserve">
+    <value>Confirm your seed phrase</value>
+    <comment>Caption for the option to confirm the seed phrase</comment>
+  </data>
+  <data name="ExportToFileOption.Caption" xml:space="preserve">
+    <value>Local backup</value>
+    <comment>Caption for the option to export data to a file</comment>
+  </data>
+  <data name="ExportToFileOption.TextNote" xml:space="preserve">
+    <value>Save a full copy of all your data to a file.</value>
+    <comment>Note for the option to export data to a file</comment>
+  </data>
+  <data name="RestoreFromFileOption.Caption" xml:space="preserve">
+    <value>Restore your data from file</value>
+    <comment>Caption for the option to restore from a file</comment>
+  </data>
+  <data name="EncryptionKeyOption.Caption" xml:space="preserve">
+    <value>PGP keys</value>
+    <comment>Caption for the option with encryption keys</comment>
+  </data>
+  <data name="EncryptionKeyOption.TextNote" xml:space="preserve">
+    <value>View and configure your PGP keys.</value>
+    <comment>Note for the option with encryption keys</comment>
+  </data>
+  <data name="LoggingOption.Caption" xml:space="preserve">
+    <value>Logging level</value>
+    <comment>Caption for the logging option</comment>
+  </data>
+  <data name="LoggingOption.TextNote" xml:space="preserve">
+    <value>Set the detail level for app logs.</value>
+    <comment>Note for the logging option</comment>
+  </data>
+  <data name="SignOutButtonContent.Text" xml:space="preserve">
+    <value>Sign out</value>
+    <comment>Sign out button text</comment>
+  </data>
+  <data name="ViewAllEncryptionKeyButtonContent.Text" xml:space="preserve">
+    <value>View All</value>
+    <comment>View all encryption keys button text</comment>
+  </data>
+  <data name="RestoreFromFileButton.Content" xml:space="preserve">
+    <value>Restore</value>
+    <comment>Restore your data from file button text</comment>
+  </data>
+  <data name="EncryptionKeyImportButton.Content" xml:space="preserve">
+    <value>Import</value>
+    <comment>Import encryption key from file button text</comment>
+  </data>
+  <data name="ChangeMasterPasswordButton.Content" xml:space="preserve">
+    <value>Change password</value>
+    <comment>Change master password button text</comment>
+  </data>
+  <data name="ConfirmSeedPhraseButton.Content" xml:space="preserve">
+    <value>Confirm</value>
+    <comment>Confirm seed phrase button text</comment>
+  </data>
+  <data name="SeedPhraseExpander.Header" xml:space="preserve">
+    <value>View your phrase</value>
+    <comment>Header for the control with the seed phrase</comment>
+  </data>
+  <data name="ConfirmSeedPhraseNote.Text" xml:space="preserve">
+    <value>Waiting for your confirmation</value>
+    <comment>Text of the note that the seed phrase is not confirmed</comment>
+  </data>
+  <data name="HelpTranslateFirstPart.Text" xml:space="preserve">
+    <value>Help us with</value>
+    <comment>The first part (Help us with) of the sentence: "Help us with translation"</comment>
+  </data>
+  <data name="HelpTranslateSecondPart.Text" xml:space="preserve">
+    <value>translation</value>
+    <comment>The second part (translation) of the sentence: "Help us with translation"</comment>
   </data>
 </root>
