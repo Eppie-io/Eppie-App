@@ -54,10 +54,8 @@
                     Command="{x:Bind ViewModel.WipeApplicationDataCommand}">
                 <StackPanel Orientation="Horizontal">
                     <!--  ToDo: Issue #840 - &#xF3B1; icon not showing in desktop app (default font is uno-fluentui-assets.ttf)  -->
-                    <FontIcon Margin="0,0,4,0"
-                              FontSize="16"
-                              Glyph="&#xF3B1;" />
-                    <TextBlock x:Uid="SignOutButtonContent" />
+                    <FontIcon FontSize="16" Glyph="&#xF3B1;" />
+                    <TextBlock x:Uid="SignOutButtonContent" Margin="4,0,0,0" />
                 </StackPanel>
             </Button>
         </Grid>
@@ -104,9 +102,9 @@
                         <ComboBox x:Name="ThemeCombobox"
                                   Width="{StaticResource NormalOptionControlWidth}"
                                   HorizontalAlignment="Left">
-                            <x:String>(System mode) hardcode</x:String>
-                            <x:String>Light mode hardcode</x:String>
-                            <x:String>Dark mode hardcode</x:String>
+                            <x:String>(System mode) [hardcode]</x:String>
+                            <x:String>Light mode [hardcode]</x:String>
+                            <x:String>Dark mode [hardcode]</x:String>
                         </ComboBox>
                     </controls:OptionControl.OptionContent>
                 </controls:OptionControl>
@@ -131,9 +129,32 @@
 
                 <controls:OptionControl x:Uid="SeedPhraseOption" GapHeight="{StaticResource GroupOptionGapHeight}">
                     <controls:OptionControl.OptionContent>
-                        <!--  ToDo: Issue #840 - Add logic  -->
-                        <muxc:Expander x:Uid="SeedPhraseExpander" HorizontalAlignment="Stretch">
-                            <TextBlock Text="Not Implemented" />
+                        <muxc:Expander x:Uid="SeedPhraseExpander"
+                                       HorizontalAlignment="Stretch"
+                                       HorizontalContentAlignment="Stretch">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <!--  ToDo: Issue #840 - Add logic  -->
+                                <TextBlock Grid.Column="0"
+                                           HorizontalAlignment="Left"
+                                           VerticalAlignment="Center"
+                                           IsTextSelectionEnabled="True"
+                                           Text="one two three four five six seven eight nine ten eleven twelve [hardcode]"
+                                           TextWrapping="WrapWholeWords" />
+                                <!--  ToDo: Issue #840 - Add copy command  -->
+                                <Button Grid.Column="1"
+                                        Margin="8,0,0,0"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Center">
+                                    <StackPanel Orientation="Horizontal">
+                                        <SymbolIcon Symbol="Copy" />
+                                        <TextBlock x:Uid="CopySeedPhraseButtonContent" Margin="4,0,0,0" />
+                                    </StackPanel>
+                                </Button>
+                            </Grid>
                         </muxc:Expander>
                     </controls:OptionControl.OptionContent>
                 </controls:OptionControl>
