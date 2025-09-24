@@ -26,21 +26,24 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 #endif
 
+// ToDo: change namespace
 namespace Tuvi.App.Shared.Views
 {
-    public partial class SettingsPageBase : BasePage<SettingsPageViewModel, BaseViewModel>
+    // ToDo: Issue #840 - Rename SettingsPageViewModel or replace it with a new one
+    public partial class AppSettingsPageBase : BasePage<SettingsPageViewModel, BaseViewModel>
     {
     }
 
-    public sealed partial class SettingsPage : SettingsPageBase
+    public sealed partial class AppSettingsPage : AppSettingsPageBase
     {
-        public SettingsPage()
+        public AppSettingsPage()
         {
             this.InitializeComponent();
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
+            ThemeCombobox.SelectedIndex = 0;
             InitLanguage();
         }
 
