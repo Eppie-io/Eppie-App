@@ -85,8 +85,7 @@
                                        Style="{StaticResource BodyTextBlockStyle}">
                                 <Span>
                                     <Run x:Uid="HelpTranslateFirstPart" />
-                                    <!--  ToDo: Issue #840 - Get NavigateUri from BrandLoader  -->
-                                    <Hyperlink NavigateUri="https://eppie.crowdin.com/eppie">
+                                    <Hyperlink NavigateUri="{Binding Source={StaticResource Brand}, Path=Translation}">
                                         <Run x:Uid="HelpTranslateSecondPart" />
                                     </Hyperlink>
                                 </Span>
