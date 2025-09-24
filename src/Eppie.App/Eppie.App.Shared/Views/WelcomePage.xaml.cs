@@ -27,15 +27,6 @@ namespace Tuvi.App.Shared.Views
 
     public sealed partial class WelcomePage : WelcomePageBase
     {
-        public string LicenseLink
-        {
-            get
-            {
-                var brand = new BrandLoader();
-                return brand.GetLicenseLink();
-            }
-        }
-
         public WelcomePage()
         {
             this.InitializeComponent();
