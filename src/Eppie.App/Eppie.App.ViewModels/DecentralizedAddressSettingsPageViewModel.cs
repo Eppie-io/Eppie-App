@@ -79,7 +79,7 @@ namespace Tuvi.App.ViewModels
 
         public bool IsSecretKeyVisible
         {
-            get => SelectedNetwork.NetworkType == NetworkType.Bitcoin;
+            get => SelectedNetwork.NetworkType == NetworkType.Bitcoin || SelectedNetwork.NetworkType == NetworkType.Ethereum;
         }
 
         public bool IsSenderNameVisible
@@ -99,7 +99,8 @@ namespace Tuvi.App.ViewModels
             _networkOptions = new ObservableCollection<Network>
             {
                 new Network("Eppie Testnet", NetworkType.Eppie),
-                new Network("Bitcoin Testnet", NetworkType.Bitcoin)
+                new Network("Bitcoin Testnet", NetworkType.Bitcoin),
+                new Network("Ethereum Testnet", NetworkType.Ethereum)
             };
 
             _selectedNetwork = _networkOptions[0];
@@ -232,9 +233,9 @@ namespace Tuvi.App.ViewModels
                 AddressSettingsModel = DecentralizedAddressSettingsModel.Create(accountData);
                 AddressSettingsModel.IsNetworkLocked = !IsCreatingAccountMode;
 
-                if (accountData.Email.Network == NetworkType.Bitcoin)
+                if (accountData.Email.Network == NetworkType.Bitcoin || accountData.Email.Network == NetworkType.Ethereum)
                 {
-                    AddressSettingsModel.SecretKeyWIF = await Core.GetSecurityManager().GetSecretKeyWIFAsync(accountData).ConfigureAwait(true);
+                    AddressSettingsModel.SecretKeyWIF = await Core.GetSecurityManager().GetSecretKeyWIFAsync(accountData, default).ConfigureAwait(true);
                 }
             }
             else
@@ -293,9 +294,9 @@ namespace Tuvi.App.ViewModels
                     _addressSettingsModel.IsNetworkLocked = true;
                     var accountData = await CreateDecentralizedAccountAsync(AddressSettingsModel.SelectedNetwork.NetworkType, default).ConfigureAwait(true);
                     AddressSettingsModel.UpdateAccount(accountData);
-                    if (AddressSettingsModel.SelectedNetwork.NetworkType == NetworkType.Bitcoin)
+                    if (AddressSettingsModel.SelectedNetwork.NetworkType == NetworkType.Bitcoin || AddressSettingsModel.SelectedNetwork.NetworkType == NetworkType.Ethereum)
                     {
-                        AddressSettingsModel.SecretKeyWIF = await Core.GetSecurityManager().GetSecretKeyWIFAsync(accountData).ConfigureAwait(true);
+                        AddressSettingsModel.SecretKeyWIF = await Core.GetSecurityManager().GetSecretKeyWIFAsync(accountData, default).ConfigureAwait(true);
                     }
                 }
                 catch (Exception ex)

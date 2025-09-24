@@ -111,6 +111,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tuvi.Core.Dec.Bitcoin", "..
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tuvi.Core.Dec.Impl", "..\..\gitmodules\TuviCore\Sources\Tuvi.Core.Dec.Impl\Tuvi.Core.Dec.Impl.csproj", "{B34E82B2-B9CD-FCA0-9B47-F94A54300D5E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tuvi.Core.Dec.Ethereum", "..\..\gitmodules\TuviCore\Sources\Tuvi.Core.Dec.Ethereum\Tuvi.Core.Dec.Ethereum.csproj", "{4278EEF1-9839-CDB1-AC69-5E45FD1263D3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -905,6 +907,26 @@ Global
 		{B34E82B2-B9CD-FCA0-9B47-F94A54300D5E}.Release|x64.Build.0 = Release|Any CPU
 		{B34E82B2-B9CD-FCA0-9B47-F94A54300D5E}.Release|x86.ActiveCfg = Release|Any CPU
 		{B34E82B2-B9CD-FCA0-9B47-F94A54300D5E}.Release|x86.Build.0 = Release|Any CPU
+		{4278EEF1-9839-CDB1-AC69-5E45FD1263D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4278EEF1-9839-CDB1-AC69-5E45FD1263D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4278EEF1-9839-CDB1-AC69-5E45FD1263D3}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{4278EEF1-9839-CDB1-AC69-5E45FD1263D3}.Debug|ARM.Build.0 = Debug|Any CPU
+		{4278EEF1-9839-CDB1-AC69-5E45FD1263D3}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{4278EEF1-9839-CDB1-AC69-5E45FD1263D3}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{4278EEF1-9839-CDB1-AC69-5E45FD1263D3}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4278EEF1-9839-CDB1-AC69-5E45FD1263D3}.Debug|x64.Build.0 = Debug|Any CPU
+		{4278EEF1-9839-CDB1-AC69-5E45FD1263D3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4278EEF1-9839-CDB1-AC69-5E45FD1263D3}.Debug|x86.Build.0 = Debug|Any CPU
+		{4278EEF1-9839-CDB1-AC69-5E45FD1263D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4278EEF1-9839-CDB1-AC69-5E45FD1263D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4278EEF1-9839-CDB1-AC69-5E45FD1263D3}.Release|ARM.ActiveCfg = Release|Any CPU
+		{4278EEF1-9839-CDB1-AC69-5E45FD1263D3}.Release|ARM.Build.0 = Release|Any CPU
+		{4278EEF1-9839-CDB1-AC69-5E45FD1263D3}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{4278EEF1-9839-CDB1-AC69-5E45FD1263D3}.Release|ARM64.Build.0 = Release|Any CPU
+		{4278EEF1-9839-CDB1-AC69-5E45FD1263D3}.Release|x64.ActiveCfg = Release|Any CPU
+		{4278EEF1-9839-CDB1-AC69-5E45FD1263D3}.Release|x64.Build.0 = Release|Any CPU
+		{4278EEF1-9839-CDB1-AC69-5E45FD1263D3}.Release|x86.ActiveCfg = Release|Any CPU
+		{4278EEF1-9839-CDB1-AC69-5E45FD1263D3}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -954,6 +976,7 @@ Global
 		{60575CC5-1BDF-48C5-AF2C-6CFA3989F5FA} = {4F76C0E7-9764-4BC0-B8B6-99D8258B6990}
 		{F2B0DFEF-98F4-D9C0-575C-966221CA4F12} = {C07EDDD9-4188-477E-8B0B-9E5C44A1DAE1}
 		{B34E82B2-B9CD-FCA0-9B47-F94A54300D5E} = {C07EDDD9-4188-477E-8B0B-9E5C44A1DAE1}
+		{4278EEF1-9839-CDB1-AC69-5E45FD1263D3} = {C07EDDD9-4188-477E-8B0B-9E5C44A1DAE1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1BCAC5D9-CEF8-4D64-8F16-3A0FEE49CF42}
