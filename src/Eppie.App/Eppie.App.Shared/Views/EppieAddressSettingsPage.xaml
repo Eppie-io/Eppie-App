@@ -11,6 +11,24 @@
                                     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
                                     mc:Ignorable="d">
 
+    <local:EppieAddressSettingsPageBase.Resources>
+        <x:Double x:Key="TextBoxWidth">276</x:Double>
+
+        <x:Double x:Key="HugeOptionGapHeight">60</x:Double>
+        <x:Double x:Key="NormalOptionGapHeight">36</x:Double>
+
+        <Thickness x:Key="LineThickness">0,1</Thickness>
+        <Thickness x:Key="LineMargin">0,16,0,32</Thickness>
+
+        <Style x:Key="AddressTextBlockStyle"
+               BasedOn="{StaticResource BodyTextBlockStyle}"
+               TargetType="TextBlock">
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="FontWeight" Value="Medium" />
+            <Setter Property="IsTextSelectionEnabled" Value="True" />
+        </Style>
+    </local:EppieAddressSettingsPageBase.Resources>
+
     <local:EppieAddressSettingsPageBase.DataContext>
         <viewmodels:EppieAddressSettingsPageViewModel />
     </local:EppieAddressSettingsPageBase.DataContext>
@@ -28,7 +46,70 @@
                                   IsRemoveButtonVisible="{x:Bind ViewModel.IsCreatingAccountMode, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
                                   RemoveCommand="{x:Bind ViewModel.RemoveAccountCommand}">
         <controls:AddressSettingsView.SettingsContent>
-            <Grid />
+            <StackPanel>
+                <Border Padding="12,6"
+                        Background="{ThemeResource SystemFillColorCautionBackgroundBrush}"
+                        CornerRadius="4">
+
+                    <!--  ToDo: Issue #861 - Move text to resources  -->
+                    <TextBlock VerticalAlignment="Center"
+                               Text="Decentralized addresses created in Testnet are for testing only. Feel free to explore, but don’t use them for important communication."
+                               TextWrapping="WrapWholeWords" />
+                </Border>
+
+                <!--  ToDo: Issue #861 - Add logic  -->
+                <TextBlock Margin="0,24,0,0"
+                           Style="{StaticResource AddressTextBlockStyle}"
+                           Text="ahz2t8tcubgvh8rxjt87rerbauy7txrucnzgvfkb9fubkz6ujijry@eppie [hardcode]" />
+
+                <Border Margin="{StaticResource LineMargin}"
+                        BorderBrush="{ThemeResource ControlStrokeColorSecondary}"
+                        BorderThickness="{StaticResource LineThickness}" />
+
+                <!--  ToDo: Issue #861 - Move Caption and Note text to resources  -->
+                <controls:OptionControl Caption="Alias (for Testnet)"
+                                        GapHeight="{StaticResource HugeOptionGapHeight}"
+                                        TextNote="Claim a readable name for your decentralized address instead of a long public key.">
+                    <controls:OptionControl.OptionContent>
+                        <StackPanel Orientation="Horizontal">
+                            <!--  ToDo: Issue #861 - Move Placeholder text to resources  -->
+                            <TextBox Width="{StaticResource TextBoxWidth}"
+                                     HorizontalAlignment="Left"
+                                     VerticalAlignment="Top"
+                                     IsSpellCheckEnabled="False"
+                                     PlaceholderText="name.test@eppie" />
+                            <!--  ToDo: Issue #861 - Add logic  -->
+                            <!--  ToDo: Issue #861 - Move Content text to resources  -->
+                            <Button MinWidth="64"
+                                    Margin="4,0,0,0"
+                                    Content="Verify" />
+
+                        </StackPanel>
+                    </controls:OptionControl.OptionContent>
+                </controls:OptionControl>
+
+                <!--  ToDo: Issue #861 - The layout is broken if there is an error  -->
+                <!--  ToDo: Issue #861 - Move Caption text to resources  -->
+                <controls:OptionControl Caption="Synchronization interval"
+                                        GapHeight="{StaticResource NormalOptionGapHeight}"
+                                        HideNote="True">
+                    <controls:OptionControl.OptionContent>
+                        <StackPanel Orientation="Horizontal">
+                            <controls:ErrorControl HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                                <controls:ErrorControl.InnerContent>
+                                    <TextBox IsSpellCheckEnabled="False" />
+                                </controls:ErrorControl.InnerContent>
+                            </controls:ErrorControl>
+                            <!--  ToDo: Issue #861 - Move text to resources  -->
+                            <TextBlock Margin="12,0"
+                                       VerticalAlignment="Center"
+                                       Text="minutes" />
+                        </StackPanel>
+                    </controls:OptionControl.OptionContent>
+                </controls:OptionControl>
+
+            </StackPanel>
+
         </controls:AddressSettingsView.SettingsContent>
     </controls:AddressSettingsView>
 
