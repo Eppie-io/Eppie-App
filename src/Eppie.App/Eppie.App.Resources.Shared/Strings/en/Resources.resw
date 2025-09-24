@@ -1102,9 +1102,9 @@ Subject: {3}
     <value>Invalid name.</value>
     <comment>Error shown when name does not pass validation rules</comment>
   </data>
-  <data name="AddressSettingsTitle.Text" xml:space="preserve">
+  <data name="AddressSettingsView.Header" xml:space="preserve">
     <value>ADDRESS SETTINGS</value>
-    <comment>Address settings page title.</comment>
+    <comment>Address settings view title.</comment>
   </data>
   <data name="DefaultSignatureText" xml:space="preserve">
     <value>Sent from an Eppie (https://eppie.io) hybrid address.</value>
