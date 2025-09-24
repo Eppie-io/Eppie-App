@@ -439,4 +439,16 @@
     <value>Connected</value>
     <comment>Server connection status.</comment>
   </data>
+  <data name="ApplyButtonContent.Text" xml:space="preserve">
+    <value>Apply</value>
+    <comment>Apply button text</comment>
+  </data>
+  <data name="Cancel.Content" xml:space="preserve">
+    <value>Cancel</value>
+    <comment>Cancel button text</comment>
+  </data>
+  <data name="RemoveAddressButton.Content" xml:space="preserve">
+    <value>Remove address</value>
+    <comment>Remove address button text in address settings</comment>
+  </data>
 </root>
