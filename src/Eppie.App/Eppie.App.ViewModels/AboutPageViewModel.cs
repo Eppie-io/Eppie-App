@@ -22,28 +22,12 @@ namespace Tuvi.App.ViewModels
 {
     public class AboutPageViewModel : BaseViewModel
     {
-        public string AppVersion => BrandService.GetAppVersion();
-
-        public string AppHomepage => BrandService.GetHomepage();
-
-        public string PublisherDisplayName => BrandService.GetPublisherDisplayName();
-
-        public string ApplicationName => BrandService.GetName();
-
-        public string GithubLink => BrandService.GetGitHubUrl();
-
-        public string SupportEmail => BrandService.GetSupport();
-
-        public string SupportEmailLink => $"mailto:{SupportEmail}";
-
-        public string TwitterLink => $"https://twitter.com/{BrandService.GetTwitterHandle()}";
-
         public string TwitterPostLink
         {
             get
             {
                 var twitterHandle = BrandService.GetTwitterHandle();
-                var githubUrl = BrandService.GetGitHubUrl();
+                var githubUrl = BrandService.GetGitHub();
                 var text = GetLocalizedString("WhatsNewTwitPostText");
                 text = string.Format(text, twitterHandle);
 
@@ -59,7 +43,7 @@ namespace Tuvi.App.ViewModels
             }
             catch (NotImplementedException)
             {
-                await LauncherService.LaunchAsync(new Uri(GithubLink)).ConfigureAwait(true);
+                await LauncherService.LaunchAsync(new Uri(BrandService.GetGitHub())).ConfigureAwait(true);
             }
             catch (Exception ex)
             {

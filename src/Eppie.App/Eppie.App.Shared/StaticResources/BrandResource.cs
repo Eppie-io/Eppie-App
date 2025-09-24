@@ -29,11 +29,18 @@ namespace Tuvi.App.Shared.Models
             _brand = new BrandLoader();
         }
 
-        public string Name => _brand.GetName();
+        public string AppName => _brand.GetName();
         public string Homepage => _brand.GetHomepage();
         public string Support => _brand.GetSupport();
-        public string GitHubUrl => _brand.GetGitHubUrl();
+        public string GitHub => _brand.GetGitHub();
         public string DevelopmentSupport => _brand.GetDevelopmentSupport();
         public string TwitterHandle => _brand.GetTwitterHandle();
+        public string Translation => _brand.GetTranslation();
+        public string License => _brand.GetLicense();
+        public string AppVersion => _brand.GetAppVersion();
+        public string PublisherDisplayName => _brand.GetPublisherDisplayName();
+
+        public string TwitterUrl => $"https://twitter.com/{TwitterHandle}";
+        public string SupportMailto => $"mailto:{Support}";
     }
 }

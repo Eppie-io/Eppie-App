@@ -24,7 +24,7 @@
 
             <TextBlock Margin="0,50"
                        Style="{StaticResource PageTitleTextStyle}"
-                       Text="{x:Bind AppName}" />
+                       Text="{Binding Source={StaticResource Brand}, Path=AppName}" />
 
             <TextBlock x:Uid="WelcomePageHeader"
                        Margin="0,18"
@@ -66,7 +66,7 @@
             <TextBlock x:Uid="WelcomePageLicenseExplanationLabel"
                        Margin="0,8"
                        Style="{StaticResource NormalTextStyle}" />
-            <HyperlinkButton x:Uid="WelcomePageLicenseButton" extensions:HyperlinkExtension.Link="{x:Bind LicenseLink}" />
+            <HyperlinkButton x:Uid="WelcomePageLicenseButton" extensions:HyperlinkExtension.Link="{Binding Source={StaticResource Brand}, Path=License}" />
         </StackPanel>
 
     </Grid>
