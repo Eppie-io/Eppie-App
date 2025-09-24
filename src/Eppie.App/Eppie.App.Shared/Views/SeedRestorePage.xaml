@@ -34,7 +34,7 @@
 
             <TextBlock Margin="0,50,0,20"
                        Style="{StaticResource PageTitleTextStyle}"
-                       Text="{x:Bind AppName}" />
+                       Text="{Binding Source={StaticResource Brand}, Path=AppName}" />
 
             <Button x:Uid="/App.Resources/BackButton"
                     VerticalAlignment="Center"

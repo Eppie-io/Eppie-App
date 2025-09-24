@@ -45,7 +45,7 @@
                                                   Price="{x:Bind ViewModel.SupportDevelopmentPrice, Mode=OneWay}"
                                                   SupportDevelopmentCommand="{x:Bind ViewModel.SupportDevelopmentCommand}"
                                                   TwitterUrl="{x:Bind ViewModel.TwitterPostLink, Mode=OneTime}"
-                                                  Version="{x:Bind ViewModel.AppVersion, Mode=OneTime}" />
+                                                  Version="{Binding Source={StaticResource Brand}, Path=AppVersion}" />
                     </Flyout>
                 </Button.Flyout>
             </Button>
@@ -65,9 +65,9 @@
                 <StackPanel Spacing="16">
 
                     <TextBlock>
-                        <Run Text="{x:Bind ViewModel.ApplicationName, Mode=OneTime}" />
+                        <Run Text="{Binding Source={StaticResource Brand}, Path=Name}" />
                         <Run x:Uid="Version" />
-                        <Run Text="{x:Bind ViewModel.AppVersion, Mode=OneTime}" />
+                        <Run Text="{Binding Source={StaticResource Brand}, Path=AppVersion}" />
                     </TextBlock>
 
                     <TextBlock x:Uid="AboutDescription"
@@ -77,8 +77,8 @@
 
                     <TextBlock TextWrapping="Wrap">
                         <Run x:Uid="AboutNetworkInfo" />
-                        <Hyperlink NavigateUri="{x:Bind ViewModel.AppHomepage, Mode=OneTime}">
-                            <Run Text="{x:Bind ViewModel.AppHomepage, Mode=OneTime}" />
+                        <Hyperlink NavigateUri="{Binding Source={StaticResource Brand}, Path=Homepage}">
+                            <Run Text="{Binding Source={StaticResource Brand}, Path=Homepage}" />
                         </Hyperlink>
                     </TextBlock>
                 </StackPanel>
@@ -99,7 +99,7 @@
                     <StackPanel Margin="0,4,0,0"
                                 Orientation="Horizontal"
                                 Spacing="4">
-                        <HyperlinkButton Padding="4" NavigateUri="{x:Bind ViewModel.TwitterLink, Mode=OneTime}">
+                        <HyperlinkButton Padding="4" NavigateUri="{Binding Source={StaticResource Brand}, Path=TwitterUrl}">
                             <HyperlinkButton.Content>
                                 <Image Width="32"
                                        Height="32"
@@ -107,7 +107,7 @@
                                        Stretch="Uniform" />
                             </HyperlinkButton.Content>
                         </HyperlinkButton>
-                        <HyperlinkButton Padding="4" NavigateUri="{x:Bind ViewModel.GithubLink, Mode=OneTime}">
+                        <HyperlinkButton Padding="4" NavigateUri="{Binding Source={StaticResource Brand}, Path=GitHub}">
                             <HyperlinkButton.Content>
                                 <Image Width="32"
                                        Height="32"
@@ -149,8 +149,8 @@
                     <TextBlock Grid.Row="0"
                                Grid.Column="1"
                                VerticalAlignment="Center">
-                        <Hyperlink NavigateUri="{x:Bind ViewModel.SupportEmailLink, Mode=OneWay}">
-                            <Run Text="{x:Bind ViewModel.SupportEmail, Mode=OneWay}" />
+                        <Hyperlink NavigateUri="{Binding Source={StaticResource Brand}, Path=SupportMailto}">
+                            <Run Text="{Binding Source={StaticResource Brand}, Path=Support}" />
                         </Hyperlink>
                     </TextBlock>
 
@@ -162,7 +162,7 @@
                     <TextBlock Grid.Row="1"
                                Grid.Column="1"
                                VerticalAlignment="Center"
-                               Text="{x:Bind ViewModel.PublisherDisplayName, Mode=OneTime}" />
+                               Text="{Binding Source={StaticResource Brand}, Path=PublisherDisplayName}" />
 
                     <!--  Developer  -->
                     <TextBlock x:Uid="Developer"

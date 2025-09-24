@@ -46,15 +46,6 @@ namespace Tuvi.App.Shared.Views
                  where TViewModel : TViewModelBase
                  where TViewModelBase : BaseViewModel
     {
-        public string AppName
-        {
-            get
-            {
-                var brand = new BrandLoader();
-                return brand.GetName();
-            }
-        }
-
         public TViewModel ViewModel { get; private set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
