@@ -79,9 +79,13 @@ namespace Tuvi.App.ViewModels
 
         public bool IsSecretKeyVisible
         {
-            get => SelectedNetwork.NetworkType == NetworkType.Bitcoin || SelectedNetwork.NetworkType == NetworkType.Ethereum;
+            get => IsSecretKeySupported(SelectedNetwork.NetworkType);
         }
 
+        private bool IsSecretKeySupported(NetworkType networkType)
+        {
+            return networkType == NetworkType.Bitcoin || networkType == NetworkType.Ethereum;
+        }
         public bool IsSenderNameVisible
         {
             get => SelectedNetwork.NetworkType == NetworkType.Eppie && !CurrentAccount.Email.IsHybrid;
