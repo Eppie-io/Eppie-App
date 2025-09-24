@@ -85,7 +85,6 @@ namespace Tuvi.App.Shared.Views
         {
             if (args.IsSettingsInvoked)
             {
-                //ToggleSettingsPane(); can be deleted
                 ShowAppSettings();
             }
             else if (args.InvokedItemContainer is DependencyObject dependencyObject)
@@ -106,25 +105,6 @@ namespace Tuvi.App.Shared.Views
                 splitView.IsPaneOpen = true;
                 paneFrame.Navigate(typeof(AboutPage));
                 _isAboutOpen = true;
-                _isSettingsOpen = false;
-                _isIdentityManagerOpen = false;
-            }
-        }
-
-        // ToDo: _isSettingsOpen and ToggleSettingsPane can be deleted
-        private bool _isSettingsOpen;
-        private void ToggleSettingsPane()
-        {
-            if (splitView.IsPaneOpen && _isSettingsOpen)
-            {
-                ClosePane();
-            }
-            else
-            {
-                splitView.IsPaneOpen = true;
-                paneFrame.Navigate(typeof(SettingsPage));
-                _isSettingsOpen = true;
-                _isAboutOpen = false;
                 _isIdentityManagerOpen = false;
             }
         }
@@ -147,7 +127,6 @@ namespace Tuvi.App.Shared.Views
             splitView.IsPaneOpen = true;
             paneFrame.Navigate(typeof(IdentityManagerPage));
             _isIdentityManagerOpen = true;
-            _isSettingsOpen = false;
             _isAboutOpen = false;
         }
 
@@ -171,7 +150,6 @@ namespace Tuvi.App.Shared.Views
             splitView.IsPaneOpen = false;
             NavigationMenu.SelectedItem = null;
             _isAboutOpen = false;
-            _isSettingsOpen = false;
             _isIdentityManagerOpen = false;
         }
 

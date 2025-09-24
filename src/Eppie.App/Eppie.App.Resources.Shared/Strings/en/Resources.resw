@@ -1018,11 +1018,6 @@ Subject: {3}
     <value>Please complete the authentication in your browser.</value>
     <comment>Message shown to user to complete authentication in browser</comment>
   </data>
-  <!--  Todo: Issue #840 - It can be deleted along with the SettingsPage.xaml page-->
-  <data name="LoggingOptionOld.Header" xml:space="preserve">
-    <value>Logging level</value>
-    <comment>Header for the logging level option.</comment>
-  </data>
   <data name="OpenLogFolderButton.Content" xml:space="preserve">
     <value>Open log folder</value>
     <comment>Button for the opening log folder.</comment>
