@@ -239,7 +239,7 @@ namespace Tuvi.App.ViewModels
 
                 if (accountData.Email.Network == NetworkType.Bitcoin || accountData.Email.Network == NetworkType.Ethereum)
                 {
-                    AddressSettingsModel.SecretKeyWIF = await Core.GetSecurityManager().GetSecretKeyWIFAsync(accountData, default).ConfigureAwait(true);
+                    AddressSettingsModel.SecretKeyWIF = await Core.GetSecurityManager().GetSecretKeyWIFAsync(accountData, CancellationToken.None).ConfigureAwait(true);
                 }
             }
             else
