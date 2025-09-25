@@ -14,17 +14,6 @@
 
     <local:BitcoinAddressSettingsPageBase.Resources>
         <x:Double x:Key="NormalOptionGapHeight">36</x:Double>
-
-        <Thickness x:Key="LineThickness">0,1</Thickness>
-        <Thickness x:Key="LineMargin">0,16,0,32</Thickness>
-
-        <Style x:Key="AddressTextBlockStyle"
-               BasedOn="{StaticResource BodyTextBlockStyle}"
-               TargetType="TextBlock">
-            <Setter Property="FontSize" Value="18" />
-            <Setter Property="FontWeight" Value="Medium" />
-            <Setter Property="IsTextSelectionEnabled" Value="True" />
-        </Style>
     </local:BitcoinAddressSettingsPageBase.Resources>
 
     <local:BitcoinAddressSettingsPageBase.DataContext>
@@ -45,24 +34,12 @@
                                   RemoveCommand="{x:Bind ViewModel.RemoveAccountCommand}">
         <controls:AddressSettingsView.SettingsContent>
             <StackPanel>
-                <Border Padding="12,6"
-                        Background="{ThemeResource SystemFillColorCautionBackgroundBrush}"
-                        CornerRadius="4">
-
-                    <!--  ToDo: Issue #861 - Move text to resources  -->
-                    <TextBlock VerticalAlignment="Center"
-                               Text="Decentralized addresses created in Testnet are for testing only. Feel free to explore, but don’t use them for important communication."
-                               TextWrapping="WrapWholeWords" />
-                </Border>
 
                 <!--  ToDo: Issue #861 - Add logic  -->
-                <TextBlock Margin="0,24,0,0"
-                           Style="{StaticResource AddressTextBlockStyle}"
-                           Text="mydsbvVx5sTpf7h2WD5KxjVKzUAXZtC77i@bitcoin [hardcode]" />
-
-                <Border Margin="{StaticResource LineMargin}"
-                        BorderBrush="{ThemeResource ControlStrokeColorSecondary}"
-                        BorderThickness="{StaticResource LineThickness}" />
+                <!--  ToDo: Issue #861 - Move Warning text to resources  -->
+                <controls:AddressControl Address="mydsbvVx5sTpf7h2WD5KxjVKzUAXZtC77i@bitcoin [hardcode]"
+                                         HideWarning="False"
+                                         Warning="Decentralized addresses created in Testnet are for testing only. Feel free to explore, but don’t use them for important communication." />
 
                 <!--  ToDo: Issue #861 - Move Caption and Note text to resources  -->
                 <controls:OptionControl Caption="Secret key"
