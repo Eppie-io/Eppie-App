@@ -242,11 +242,10 @@ namespace Tuvi.App.ViewModels
                 {
                     NavigationService?.Navigate(nameof(BitcoinAddressSettingsPageViewModel), account);
                 }
-                // Todo: Issue #861: Add opening Ethereum decentralized email address settings
-                // if (account.Email.Network == NetworkType.Ethereum)
-                // {
-                //    NavigationService?.Navigate(nameof(EthereumAddressSettingsPageViewModel), account);
-                // }
+                if (account.Email.Network == NetworkType.Ethereum)
+                {
+                    NavigationService?.Navigate(nameof(EthereumAddressSettingsPageViewModel), account);
+                }
                 else
                 {
                     NavigationService?.Navigate(nameof(DecentralizedAddressSettingsPageViewModel), account);
