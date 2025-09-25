@@ -20,10 +20,12 @@ using Tuvi.App.ViewModels;
 
 namespace Tuvi.App.Shared.Views
 {
+    // ToDo: Issue #861 - Remove it
     public partial class DecentralizedAddressSettingsPageBase : BasePage<DecentralizedAddressSettingsPageViewModel, BaseViewModel>
     {
     }
 
+    // ToDo: Issue #861 - Remove it
     public sealed partial class DecentralizedAddressSettingsPage : DecentralizedAddressSettingsPageBase
     {
         public DecentralizedAddressSettingsPage()

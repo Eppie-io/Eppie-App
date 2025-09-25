@@ -41,6 +41,7 @@ namespace Tuvi.App.ViewModels
         public override string ToString() => Name;
     }
 
+    // ToDo: Issue #861 - Remove it
     public class DecentralizedAddressSettingsModel : BaseAddressSettingsModel
     {
         private ObservableCollection<Network> _networkOptions;
