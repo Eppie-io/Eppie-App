@@ -24,51 +24,25 @@
         <x:Double x:Key="NormalOptionGapHeight">36</x:Double>
         <x:Double x:Key="ErrorOptionGapHeight">0</x:Double>
         <x:Double x:Key="RelatedOptionGapHeight">24</x:Double>
-
-        <Thickness x:Key="LineThickness">0,1</Thickness>
-        <Thickness x:Key="HeaderControlMargin">0,0,0,32</Thickness>
-
-        <Style x:Key="AddressTextBlockStyle"
-               BasedOn="{StaticResource BodyTextBlockStyle}"
-               TargetType="TextBlock">
-            <Setter Property="FontSize" Value="18" />
-            <Setter Property="FontWeight" Value="Medium" />
-            <Setter Property="IsTextSelectionEnabled" Value="True" />
-        </Style>
     </UserControl.Resources>
 
     <StackPanel>
         <StackPanel>
 
-            <Grid Margin="{StaticResource HeaderControlMargin}" Visibility="{x:Bind IsEmailReadOnly, Mode=OneWay}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
 
-                <TextBlock Style="{StaticResource AddressTextBlockStyle}" Text="{x:Bind EmailAddressSettingsModel.Email.Value, Mode=OneWay}" />
-
-                <!--
-                    ToDo: Issue #839 - Perhaps some logic needs to be added.
-                    `Connecting...` - if the `AccountSettingsPageViewModel.IsWaitingResponse` is ture
-                    `Disconnected` - if the connection is not established
-                -->
-                <TextBlock x:Uid="/Eppie.App.UI/Controls/ConnectionStatus"
-                           Grid.Column="1"
-                           HorizontalAlignment="Right"
-                           VerticalAlignment="Center"
-                           TextAlignment="Right" />
-
-                <Border Grid.Row="1"
-                        Grid.ColumnSpan="2"
-                        Margin="0,16,0,0"
-                        BorderBrush="{ThemeResource ControlStrokeColorSecondary}"
-                        BorderThickness="{StaticResource LineThickness}" />
-            </Grid>
+            <controls:AddressControl Address="{x:Bind EmailAddressSettingsModel.Email.Value, Mode=OneWay}" Visibility="{x:Bind IsEmailReadOnly, Mode=OneWay}">
+                <controls:AddressControl.ExtraContent>
+                    <!--
+                        ToDo: Issue #839 - Perhaps some logic needs to be added.
+                        `Connecting...` - if the `AccountSettingsPageViewModel.IsWaitingResponse` is ture
+                        `Disconnected` - if the connection is not established
+                    -->
+                    <TextBlock x:Uid="/Eppie.App.UI/Controls/ConnectionStatus"
+                               HorizontalAlignment="Right"
+                               VerticalAlignment="Center"
+                               TextAlignment="Right" />
+                </controls:AddressControl.ExtraContent>
+            </controls:AddressControl>
 
             <controls:OptionControl x:Uid="/Eppie.App.UI/Controls/EmailAddressOption"
                                     GapHeight="{StaticResource ErrorOptionGapHeight}"
