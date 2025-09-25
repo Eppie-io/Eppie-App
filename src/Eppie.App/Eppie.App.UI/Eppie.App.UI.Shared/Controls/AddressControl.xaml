@@ -22,8 +22,8 @@
     </UserControl.Resources>
 
     <StackPanel>
-        <Border Padding="12,6"
-                Margin="0,0,0,24"
+        <Border Margin="0,0,0,24"
+                Padding="12,6"
                 Background="{ThemeResource SystemFillColorCautionBackgroundBrush}"
                 CornerRadius="4"
                 Visibility="{x:Bind HideWarning, Converter={StaticResource InverseBoolToVisibilityConverter}, Mode=OneWay}">
