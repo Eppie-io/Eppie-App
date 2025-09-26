@@ -95,7 +95,7 @@ namespace Tuvi.App.Shared.Controls
             set { SetValue(IsAdvancedSettingsModeActiveProperty, value); }
         }
         public static readonly DependencyProperty IsAdvancedSettingsModeActiveProperty =
-            DependencyProperty.Register(nameof(IsAdvancedSettingsModeActive), typeof(int), typeof(EmailSettingsControl), new PropertyMetadata(false));
+            DependencyProperty.Register(nameof(IsAdvancedSettingsModeActive), typeof(bool), typeof(EmailSettingsControl), new PropertyMetadata(false));
 
         public bool ShouldAutoExpandOutgoingServer
         {
