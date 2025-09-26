@@ -21,13 +21,16 @@ using System.Windows.Input;
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Markup;
 #else
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Markup;
 #endif
 
 namespace Tuvi.App.Shared.Controls
 {
+    [ContentProperty(Name = nameof(SettingsContent))]
     public sealed partial class AdvancedSettingsControl : UserControl
     {
         private const int DefaultModeIndex = 0;
