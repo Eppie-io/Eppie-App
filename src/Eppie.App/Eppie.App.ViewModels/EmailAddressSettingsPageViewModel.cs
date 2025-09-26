@@ -28,39 +28,8 @@ using Tuvi.OAuth2;
 
 namespace Tuvi.App.ViewModels
 {
-    public enum AdvancedSettingsMode
-    {
-        Default = 0,
-        Custom = 1
-    }
-
     public class EmailAddressSettingsPageViewModel : BaseAddressSettingsPageViewModel
     {
-        public int SettingsModeIndex
-        {
-            get => (int)SettingsMode;
-            set
-            {
-                if ((int)SettingsMode != value)
-                {
-                    SettingsMode = (AdvancedSettingsMode)value;
-                }
-            }
-        }
-
-        private AdvancedSettingsMode _settingsMode = AdvancedSettingsMode.Default;
-        public AdvancedSettingsMode SettingsMode
-        {
-            get => _settingsMode;
-            set
-            {
-                if (SetProperty(ref _settingsMode, value))
-                {
-                    OnPropertyChanged(nameof(SettingsModeIndex));
-                }
-            }
-        }
-
         public class NeedReloginData
         {
             public Account Account { get; set; }
@@ -71,6 +40,13 @@ namespace Tuvi.App.ViewModels
             public string Name { get; set; }
             public string Email { get; set; }
             public bool IsFilled => !string.IsNullOrEmpty(Email);
+        }
+
+        private bool _isAdvancedSettingsModeActive;
+        public bool IsAdvancedSettingsModeActive
+        {
+            get => _isAdvancedSettingsModeActive;
+            set => SetProperty(ref _isAdvancedSettingsModeActive, value);
         }
 
         private bool _shouldAutoExpandOutgoingServer;
@@ -180,13 +156,8 @@ namespace Tuvi.App.ViewModels
 
             await AddressSettingsModel.InitModelAsync(CoreProvider, NavigationService).ConfigureAwait(true);
 
-            SettingsMode = (isCreatingMode && addressSettingsModel is BasicEmailAddressSettingsModel)
-                ? AdvancedSettingsMode.Custom
-                : AdvancedSettingsMode.Default;
-
-            ShouldAutoExpandOutgoingServer
-                = ShouldAutoExpandIncomingServer
-                = SettingsMode == AdvancedSettingsMode.Custom;
+            IsAdvancedSettingsModeActive = (isCreatingMode && addressSettingsModel is BasicEmailAddressSettingsModel);
+            ShouldAutoExpandOutgoingServer = ShouldAutoExpandIncomingServer = IsAdvancedSettingsModeActive;
         }
 
         protected override bool IsValid()
@@ -254,9 +225,9 @@ namespace Tuvi.App.ViewModels
                     var error = viewModel.GetLocalizedString("FieldIsEmptyNotification");
                     addressSettingsModel.IncomingServerAddress.Errors.Add(error);
 
-                    if (viewModel.SettingsMode == AdvancedSettingsMode.Default)
+                    if (!viewModel.IsAdvancedSettingsModeActive)
                     {
-                        viewModel.SettingsMode = AdvancedSettingsMode.Custom;
+                        viewModel.IsAdvancedSettingsModeActive = true;
                     }
                     viewModel.ShouldAutoExpandIncomingServer = true;
 
@@ -278,9 +249,9 @@ namespace Tuvi.App.ViewModels
                     var error = viewModel.GetLocalizedString("FieldIsEmptyNotification");
                     addressSettingsModel.OutgoingServerAddress.Errors.Add(error);
 
-                    if (viewModel.SettingsMode == AdvancedSettingsMode.Default)
+                    if (!viewModel.IsAdvancedSettingsModeActive)
                     {
-                        viewModel.SettingsMode = AdvancedSettingsMode.Custom;
+                        viewModel.IsAdvancedSettingsModeActive = true;
                     }
                     viewModel.ShouldAutoExpandOutgoingServer = true;
 
