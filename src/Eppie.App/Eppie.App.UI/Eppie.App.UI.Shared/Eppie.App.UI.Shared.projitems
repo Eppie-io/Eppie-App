@@ -17,6 +17,8 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\AddressSettingsView.xaml.cs">
       <DependentUpon>AddressSettingsView.xaml</DependentUpon>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\AdvancedSettingsControl.xaml.cs">
+      <DependentUpon>AdvancedSettingsControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\OptionControl.xaml.cs">
       <DependentUpon>OptionControl.xaml</DependentUpon>
@@ -100,6 +102,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Controls\AddressSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Controls\AdvancedSettingsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

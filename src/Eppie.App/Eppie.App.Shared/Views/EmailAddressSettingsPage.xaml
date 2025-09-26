@@ -34,8 +34,8 @@
                                            EmailAddressSettingsModel="{x:Bind ViewModel.AddressSettingsModel, Mode=OneWay}"
                                            FileProvider="{StaticResource FileOperationProvider}"
                                            IncomingProtocolTypes="{x:Bind ViewModel.IncomingProtocolTypes, Mode=OneWay}"
+                                           IsAdvancedSettingsModeActive="{x:Bind ViewModel.IsAdvancedSettingsModeActive, Mode=TwoWay}"
                                            IsEmailReadOnly="{x:Bind ViewModel.IsEmailReadonly, Mode=OneWay}"
-                                           SelectedSettingsModeIndex="{x:Bind ViewModel.SettingsModeIndex, Mode=TwoWay}"
                                            ShouldAutoExpandIncomingServer="{x:Bind ViewModel.ShouldAutoExpandIncomingServer, Mode=TwoWay}"
                                            ShouldAutoExpandOutgoingServer="{x:Bind ViewModel.ShouldAutoExpandOutgoingServer, Mode=TwoWay}"
                                            ShowHybridAddressButton="{x:Bind ViewModel.ShowHybridAddressButton, Mode=OneWay}" />

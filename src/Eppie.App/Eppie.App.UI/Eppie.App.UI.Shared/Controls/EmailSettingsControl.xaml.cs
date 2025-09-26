@@ -89,13 +89,13 @@ namespace Tuvi.App.Shared.Controls
         public static readonly DependencyProperty FileProviderProperty =
             DependencyProperty.Register(nameof(FileProvider), typeof(IFileOperationProvider), typeof(EmailSettingsControl), new PropertyMetadata(null));
 
-        public int SelectedSettingsModeIndex
+        public bool IsAdvancedSettingsModeActive
         {
-            get { return (int)GetValue(SelectedSettingsModeIndexProperty); }
-            set { SetValue(SelectedSettingsModeIndexProperty, value); }
+            get { return (bool)GetValue(IsAdvancedSettingsModeActiveProperty); }
+            set { SetValue(IsAdvancedSettingsModeActiveProperty, value); }
         }
-        public static readonly DependencyProperty SelectedSettingsModeIndexProperty =
-            DependencyProperty.Register(nameof(SelectedSettingsModeIndex), typeof(int), typeof(EmailSettingsControl), new PropertyMetadata(0));
+        public static readonly DependencyProperty IsAdvancedSettingsModeActiveProperty =
+            DependencyProperty.Register(nameof(IsAdvancedSettingsModeActive), typeof(bool), typeof(EmailSettingsControl), new PropertyMetadata(false));
 
         public bool ShouldAutoExpandOutgoingServer
         {
