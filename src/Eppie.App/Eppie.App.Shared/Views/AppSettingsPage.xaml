@@ -66,46 +66,41 @@
                 <TextBlock x:Uid="AppearanceSettingsSectionSubtitle" Style="{StaticResource SettingsSectionSubtitleTextBlockStyle}" />
 
                 <controls:OptionControl x:Uid="LanguageOption" GapHeight="{StaticResource NormalOptionGapHeight}">
-                    <controls:OptionControl.OptionContent>
-                        <Grid>
-                            <!--  ToDo: Issue #840 - In the old code there is a TextBlock about restarting here.  -->
-                            <!--
-                                ToDo: Issue #840 - Now Use InfoBar Message: You need to restart the app for the language change to take effect.
-                                Action: Restart app button if possible
-                            -->
+                    <Grid>
+                        <!--  ToDo: Issue #840 - In the old code there is a TextBlock about restarting here.  -->
+                        <!--
+                            ToDo: Issue #840 - Now Use InfoBar Message: You need to restart the app for the language change to take effect.
+                            Action: Restart app button if possible
+                        -->
 
-                            <!--  ToDo: Issue #840 - Check logic  -->
-                            <controls:LanguageSelectionControl x:Name="LanguageSelector"
-                                                               Width="{StaticResource NormalOptionControlWidth}"
-                                                               HorizontalAlignment="Left"
-                                                               LanguageChangedHandler="OnLanguageChanged"
-                                                               ManifestLanguages="{x:Bind ViewModel.ManifestLanguages, Mode=OneTime}" />
-                            <TextBlock HorizontalAlignment="Right"
-                                       Foreground="{ThemeResource TextFillColorSecondary}"
-                                       Style="{StaticResource BodyTextBlockStyle}">
-                                <Span>
-                                    <Run x:Uid="HelpTranslateFirstPart" />
-                                    <Hyperlink NavigateUri="{Binding Source={StaticResource Brand}, Path=Translation}">
-                                        <Run x:Uid="HelpTranslateSecondPart" />
-                                    </Hyperlink>
-                                </Span>
-                            </TextBlock>
-                        </Grid>
-                    </controls:OptionControl.OptionContent>
+                        <!--  ToDo: Issue #840 - Check logic  -->
+                        <controls:LanguageSelectionControl x:Name="LanguageSelector"
+                                                           Width="{StaticResource NormalOptionControlWidth}"
+                                                           HorizontalAlignment="Left"
+                                                           LanguageChangedHandler="OnLanguageChanged"
+                                                           ManifestLanguages="{x:Bind ViewModel.ManifestLanguages, Mode=OneTime}" />
+                        <TextBlock HorizontalAlignment="Right"
+                                   Foreground="{ThemeResource TextFillColorSecondary}"
+                                   Style="{StaticResource BodyTextBlockStyle}">
+                            <Span>
+                                <Run x:Uid="HelpTranslateFirstPart" />
+                                <Hyperlink NavigateUri="{Binding Source={StaticResource Brand}, Path=Translation}">
+                                    <Run x:Uid="HelpTranslateSecondPart" />
+                                </Hyperlink>
+                            </Span>
+                        </TextBlock>
+                    </Grid>
                 </controls:OptionControl>
 
                 <!--  ToDo: Issue #840 - Add logic  -->
                 <controls:OptionControl x:Uid="ThemesOption" GapHeight="{StaticResource EndSectionOptionGapHeight}">
-
-                    <controls:OptionControl.OptionContent>
-                        <ComboBox x:Name="ThemeCombobox"
-                                  Width="{StaticResource NormalOptionControlWidth}"
-                                  HorizontalAlignment="Left">
-                            <x:String>(System mode) [hardcode]</x:String>
-                            <x:String>Light mode [hardcode]</x:String>
-                            <x:String>Dark mode [hardcode]</x:String>
-                        </ComboBox>
-                    </controls:OptionControl.OptionContent>
+                    <ComboBox x:Name="ThemeCombobox"
+                              Width="{StaticResource NormalOptionControlWidth}"
+                              HorizontalAlignment="Left">
+                        <x:String>(System mode) [hardcode]</x:String>
+                        <x:String>Light mode [hardcode]</x:String>
+                        <x:String>Dark mode [hardcode]</x:String>
+                    </ComboBox>
                 </controls:OptionControl>
 
                 <TextBlock x:Uid="SecuritySettingsSectionSubtitle" Style="{StaticResource SettingsSectionSubtitleTextBlockStyle}" />
@@ -113,146 +108,132 @@
                 <controls:OptionControl x:Uid="LaunchPasswordOption"
                                         GapHeight="{StaticResource NormalOptionGapHeight}"
                                         HideNote="True">
-                    <controls:OptionControl.OptionContent>
-                        <Grid>
-                            <!--  ToDo: Issue #840 - Add logic  -->
-                            <ToggleSwitch HorizontalAlignment="Left" VerticalAlignment="Center" />
-                            <!--  ToDo: Issue #840 - Check logic  -->
-                            <Button x:Uid="ChangeMasterPasswordButton"
-                                    HorizontalAlignment="Right"
-                                    VerticalAlignment="Center"
-                                    Command="{x:Bind ViewModel.ChangeMasterPasswordCommand}" />
-                        </Grid>
-                    </controls:OptionControl.OptionContent>
+                    <Grid>
+                        <!--  ToDo: Issue #840 - Add logic  -->
+                        <ToggleSwitch HorizontalAlignment="Left" VerticalAlignment="Center" />
+                        <!--  ToDo: Issue #840 - Check logic  -->
+                        <Button x:Uid="ChangeMasterPasswordButton"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Command="{x:Bind ViewModel.ChangeMasterPasswordCommand}" />
+                    </Grid>
                 </controls:OptionControl>
 
                 <controls:OptionControl x:Uid="SeedPhraseOption" GapHeight="{StaticResource GroupOptionGapHeight}">
-                    <controls:OptionControl.OptionContent>
-                        <muxc:Expander x:Uid="SeedPhraseExpander"
-                                       HorizontalAlignment="Stretch"
-                                       HorizontalContentAlignment="Stretch">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <!--  ToDo: Issue #840 - Add logic  -->
-                                <TextBlock Grid.Column="0"
-                                           HorizontalAlignment="Left"
-                                           VerticalAlignment="Center"
-                                           IsTextSelectionEnabled="True"
-                                           Text="one two three four five six seven eight nine ten eleven twelve [hardcode]"
-                                           TextWrapping="WrapWholeWords" />
-                                <!--  ToDo: Issue #840 - Add copy command  -->
-                                <Button Grid.Column="1"
-                                        Margin="8,0,0,0"
-                                        HorizontalAlignment="Right"
-                                        VerticalAlignment="Center">
-                                    <StackPanel Orientation="Horizontal">
-                                        <SymbolIcon Symbol="Copy" />
-                                        <TextBlock x:Uid="CopySeedPhraseButtonContent" Margin="4,0,0,0" />
-                                    </StackPanel>
-                                </Button>
-                            </Grid>
-                        </muxc:Expander>
-                    </controls:OptionControl.OptionContent>
+                    <muxc:Expander x:Uid="SeedPhraseExpander"
+                                   HorizontalAlignment="Stretch"
+                                   HorizontalContentAlignment="Stretch">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <!--  ToDo: Issue #840 - Add logic  -->
+                            <TextBlock Grid.Column="0"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Center"
+                                       IsTextSelectionEnabled="True"
+                                       Text="one two three four five six seven eight nine ten eleven twelve [hardcode]"
+                                       TextWrapping="WrapWholeWords" />
+                            <!--  ToDo: Issue #840 - Add copy command  -->
+                            <Button Grid.Column="1"
+                                    Margin="8,0,0,0"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center">
+                                <StackPanel Orientation="Horizontal">
+                                    <SymbolIcon Symbol="Copy" />
+                                    <TextBlock x:Uid="CopySeedPhraseButtonContent" Margin="4,0,0,0" />
+                                </StackPanel>
+                            </Button>
+                        </Grid>
+                    </muxc:Expander>
                 </controls:OptionControl>
 
                 <controls:OptionControl x:Uid="ConfirmSeedPhraseOption"
                                         GapHeight="{StaticResource NormalOptionGapHeight}"
                                         HideNote="True">
-                    <controls:OptionControl.OptionContent>
-                        <Grid>
-                            <!--  ToDo: Issue #840 - Check logic  -->
-                            <Button x:Uid="ConfirmSeedPhraseButton"
-                                    MinWidth="{StaticResource ButtonMinWidth}"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    Command="{x:Bind ViewModel.ConfirmSeedPhraseCommand}" />
-                            <TextBlock x:Uid="ConfirmSeedPhraseNote"
-                                       HorizontalAlignment="Right"
-                                       VerticalAlignment="Center"
-                                       Foreground="{ThemeResource SystemFillColorCriticalBrush}" />
-                        </Grid>
-                    </controls:OptionControl.OptionContent>
+                    <Grid>
+                        <!--  ToDo: Issue #840 - Check logic  -->
+                        <Button x:Uid="ConfirmSeedPhraseButton"
+                                MinWidth="{StaticResource ButtonMinWidth}"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Command="{x:Bind ViewModel.ConfirmSeedPhraseCommand}" />
+                        <TextBlock x:Uid="ConfirmSeedPhraseNote"
+                                   HorizontalAlignment="Right"
+                                   VerticalAlignment="Center"
+                                   Foreground="{ThemeResource SystemFillColorCriticalBrush}" />
+                    </Grid>
                 </controls:OptionControl>
 
                 <controls:OptionControl x:Uid="ExportToFileOption" GapHeight="{StaticResource GroupOptionGapHeight}">
-                    <controls:OptionControl.OptionContent>
-                        <!--  ToDo: Issue #840 - Check logic  -->
-                        <Button MinWidth="{StaticResource ButtonMinWidth}"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Top"
-                                Command="{x:Bind ViewModel.ExportBackupCommand}"
-                                CommandParameter="{StaticResource FileOperationProvider}"
-                                Content="Export" />
-                    </controls:OptionControl.OptionContent>
+                    <!--  ToDo: Issue #840 - Check logic  -->
+                    <Button MinWidth="{StaticResource ButtonMinWidth}"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Command="{x:Bind ViewModel.ExportBackupCommand}"
+                            CommandParameter="{StaticResource FileOperationProvider}"
+                            Content="Export" />
                 </controls:OptionControl>
 
                 <controls:OptionControl x:Uid="RestoreFromFileOption"
                                         GapHeight="{StaticResource NormalOptionGapHeight}"
                                         HideNote="True">
-                    <controls:OptionControl.OptionContent>
-                        <!--  ToDo: Issue #840 - Check logic  -->
-                        <Button x:Uid="RestoreFromFileButton"
-                                MinWidth="{StaticResource ButtonMinWidth}"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                Command="{x:Bind ViewModel.ImportBackupCommand}"
-                                CommandParameter="{StaticResource FileOperationProvider}" />
-                    </controls:OptionControl.OptionContent>
+                    <!--  ToDo: Issue #840 - Check logic  -->
+                    <Button x:Uid="RestoreFromFileButton"
+                            MinWidth="{StaticResource ButtonMinWidth}"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Command="{x:Bind ViewModel.ImportBackupCommand}"
+                            CommandParameter="{StaticResource FileOperationProvider}" />
                 </controls:OptionControl>
 
                 <controls:OptionControl x:Uid="EncryptionKeyOption" GapHeight="{StaticResource EndSectionOptionGapHeight}">
-                    <controls:OptionControl.OptionContent>
-                        <Grid>
-                            <!--  ToDo: Issue #840 - Add logic  -->
-                            <Button x:Uid="EncryptionKeyImportButton"
-                                    MinWidth="{StaticResource ButtonMinWidth}"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Top" />
+                    <Grid>
+                        <!--  ToDo: Issue #840 - Add logic  -->
+                        <Button x:Uid="EncryptionKeyImportButton"
+                                MinWidth="{StaticResource ButtonMinWidth}"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top" />
 
-                            <!--  ToDo: Issue #840 - Check logic  -->
-                            <!--  ToDo: Issue #840 - Rename PgpKeysCommand  -->
-                            <HyperlinkButton MinWidth="{StaticResource ButtonMinWidth}"
-                                             HorizontalAlignment="Right"
-                                             VerticalAlignment="Top"
-                                             Command="{x:Bind ViewModel.PgpKeysCommand}">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock x:Uid="ViewAllEncryptionKeyButtonContent" />
-                                    <FontIcon Margin="4,0,0,0"
-                                              FontSize="16"
-                                              Glyph="&#xE76C;" />
-                                </StackPanel>
-                            </HyperlinkButton>
-                        </Grid>
-                    </controls:OptionControl.OptionContent>
+                        <!--  ToDo: Issue #840 - Check logic  -->
+                        <!--  ToDo: Issue #840 - Rename PgpKeysCommand  -->
+                        <HyperlinkButton MinWidth="{StaticResource ButtonMinWidth}"
+                                         HorizontalAlignment="Right"
+                                         VerticalAlignment="Top"
+                                         Command="{x:Bind ViewModel.PgpKeysCommand}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock x:Uid="ViewAllEncryptionKeyButtonContent" />
+                                <FontIcon Margin="4,0,0,0"
+                                          FontSize="16"
+                                          Glyph="&#xE76C;" />
+                            </StackPanel>
+                        </HyperlinkButton>
+                    </Grid>
                 </controls:OptionControl>
 
 
                 <TextBlock x:Uid="DevelopmentSettingsSectionSubtitle" Style="{StaticResource SettingsSectionSubtitleTextBlockStyle}" />
 
                 <controls:OptionControl x:Uid="LoggingOption" GapHeight="{StaticResource EndSectionOptionGapHeight}">
-                    <controls:OptionControl.OptionContent>
-                        <Grid>
-                            <!--  ToDo: Issue #840 - Check logic  -->
-                            <ComboBox Width="{StaticResource NormalOptionControlWidth}"
-                                      HorizontalAlignment="Left"
-                                      VerticalAlignment="Top"
-                                      ItemsSource="{x:Bind ViewModel.LogLevels, Mode=OneWay}"
-                                      SelectedItem="{x:Bind ViewModel.SelectedLogLevel, Mode=TwoWay}" />
+                    <Grid>
+                        <!--  ToDo: Issue #840 - Check logic  -->
+                        <ComboBox Width="{StaticResource NormalOptionControlWidth}"
+                                  HorizontalAlignment="Left"
+                                  VerticalAlignment="Top"
+                                  ItemsSource="{x:Bind ViewModel.LogLevels, Mode=OneWay}"
+                                  SelectedItem="{x:Bind ViewModel.SelectedLogLevel, Mode=TwoWay}" />
 
-                            <!--  ToDo: Issue #840 - Check logic  -->
-                            <Button x:Uid="OpenLogFolderButton"
-                                    HorizontalAlignment="Right"
-                                    VerticalAlignment="Top"
-                                    Command="{x:Bind ViewModel.OpenLogFolderCommand}">
-                                <ToolTipService.ToolTip>
-                                    <TextBlock Text="{x:Bind ViewModel.LogFolder, Mode=OneTime}" TextWrapping="Wrap" />
-                                </ToolTipService.ToolTip>
-                            </Button>
-                        </Grid>
-                    </controls:OptionControl.OptionContent>
+                        <!--  ToDo: Issue #840 - Check logic  -->
+                        <Button x:Uid="OpenLogFolderButton"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Top"
+                                Command="{x:Bind ViewModel.OpenLogFolderCommand}">
+                            <ToolTipService.ToolTip>
+                                <TextBlock Text="{x:Bind ViewModel.LogFolder, Mode=OneTime}" TextWrapping="Wrap" />
+                            </ToolTipService.ToolTip>
+                        </Button>
+                    </Grid>
                 </controls:OptionControl>
             </StackPanel>
         </ScrollViewer>

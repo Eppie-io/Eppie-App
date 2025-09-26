@@ -27,19 +27,17 @@
                                   IsApplying="{x:Bind ViewModel.IsWaitingResponse, Mode=OneWay}"
                                   IsRemoveButtonVisible="{x:Bind ViewModel.IsCreatingAccountMode, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
                                   RemoveCommand="{x:Bind ViewModel.RemoveAccountCommand}">
-        <controls:AddressSettingsView.SettingsContent>
-            <controls:EmailSettingsControl Margin="0,12,0,0"
-                                           ClipboardProvider="{StaticResource ClipboardProvider}"
-                                           CreateHybridAddressCommand="{x:Bind ViewModel.CreateHybridAddressCommand, Mode=OneWay}"
-                                           EmailAddressSettingsModel="{x:Bind ViewModel.AddressSettingsModel, Mode=OneWay}"
-                                           FileProvider="{StaticResource FileOperationProvider}"
-                                           IncomingProtocolTypes="{x:Bind ViewModel.IncomingProtocolTypes, Mode=OneWay}"
-                                           IsAdvancedSettingsModeActive="{x:Bind ViewModel.IsAdvancedSettingsModeActive, Mode=TwoWay}"
-                                           IsEmailReadOnly="{x:Bind ViewModel.IsEmailReadonly, Mode=OneWay}"
-                                           ShouldAutoExpandIncomingServer="{x:Bind ViewModel.ShouldAutoExpandIncomingServer, Mode=TwoWay}"
-                                           ShouldAutoExpandOutgoingServer="{x:Bind ViewModel.ShouldAutoExpandOutgoingServer, Mode=TwoWay}"
-                                           ShowHybridAddressButton="{x:Bind ViewModel.ShowHybridAddressButton, Mode=OneWay}" />
-        </controls:AddressSettingsView.SettingsContent>
+        <controls:EmailSettingsControl Margin="0,12,0,0"
+                                       ClipboardProvider="{StaticResource ClipboardProvider}"
+                                       CreateHybridAddressCommand="{x:Bind ViewModel.CreateHybridAddressCommand, Mode=OneWay}"
+                                       EmailAddressSettingsModel="{x:Bind ViewModel.AddressSettingsModel, Mode=OneWay}"
+                                       FileProvider="{StaticResource FileOperationProvider}"
+                                       IncomingProtocolTypes="{x:Bind ViewModel.IncomingProtocolTypes, Mode=OneWay}"
+                                       IsAdvancedSettingsModeActive="{x:Bind ViewModel.IsAdvancedSettingsModeActive, Mode=TwoWay}"
+                                       IsEmailReadOnly="{x:Bind ViewModel.IsEmailReadonly, Mode=OneWay}"
+                                       ShouldAutoExpandIncomingServer="{x:Bind ViewModel.ShouldAutoExpandIncomingServer, Mode=TwoWay}"
+                                       ShouldAutoExpandOutgoingServer="{x:Bind ViewModel.ShouldAutoExpandOutgoingServer, Mode=TwoWay}"
+                                       ShowHybridAddressButton="{x:Bind ViewModel.ShowHybridAddressButton, Mode=OneWay}" />
     </controls:AddressSettingsView>
 
 </local:EmailAddressSettingsPageBase>
