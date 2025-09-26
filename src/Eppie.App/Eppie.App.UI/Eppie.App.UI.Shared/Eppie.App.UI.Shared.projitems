@@ -17,6 +17,7 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\AddressSettingsView.xaml.cs">
       <DependentUpon>AddressSettingsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\AdvancedSettingsControl.xaml.cs">
       <DependentUpon>AdvancedSettingsControl.xaml</DependentUpon>
     </Compile>
