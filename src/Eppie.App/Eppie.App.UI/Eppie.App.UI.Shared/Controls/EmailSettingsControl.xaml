@@ -31,17 +31,15 @@
 
 
             <controls:AddressControl Address="{x:Bind EmailAddressSettingsModel.Email.Value, Mode=OneWay}" Visibility="{x:Bind IsEmailReadOnly, Mode=OneWay}">
-                <controls:AddressControl.ExtraContent>
-                    <!--
-                        ToDo: Issue #839 - Perhaps some logic needs to be added.
-                        `Connecting...` - if the `AccountSettingsPageViewModel.IsWaitingResponse` is ture
-                        `Disconnected` - if the connection is not established
-                    -->
-                    <TextBlock x:Uid="/Eppie.App.UI/Controls/ConnectionStatus"
-                               HorizontalAlignment="Right"
-                               VerticalAlignment="Center"
-                               TextAlignment="Right" />
-                </controls:AddressControl.ExtraContent>
+                <!--
+                    ToDo: Issue #839 - Perhaps some logic needs to be added.
+                    `Connecting...` - if the `AccountSettingsPageViewModel.IsWaitingResponse` is ture
+                    `Disconnected` - if the connection is not established
+                -->
+                <TextBlock x:Uid="/Eppie.App.UI/Controls/ConnectionStatus"
+                           HorizontalAlignment="Right"
+                           VerticalAlignment="Center"
+                           TextAlignment="Right" />
             </controls:AddressControl>
 
             <controls:OptionControl x:Uid="/Eppie.App.UI/Controls/EmailAddressOption"
