@@ -29,6 +29,7 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace Tuvi.App.Shared.Controls
 {
+    // ToDo: Issue #861 - Remove it
     public sealed partial class DecentralizedAccountSettingsControl : UserControl
     {
         public DecentralizedAddressSettingsModel DecentralizedAddressSettingsModel

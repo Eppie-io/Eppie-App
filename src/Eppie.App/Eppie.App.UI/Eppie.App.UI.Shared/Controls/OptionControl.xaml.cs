@@ -22,15 +22,18 @@ using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Documents;
+using Windows.UI.Xaml.Markup;
 #else
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Documents;
+using Microsoft.UI.Xaml.Markup;
 #endif
 
 // ToDo: Change namespace
 namespace Tuvi.App.Shared.Controls
 {
+    [ContentProperty(Name = nameof(OptionContent))]
     public sealed partial class OptionControl : UserControl
     {
         public string Caption

@@ -18,17 +18,21 @@
 
 using Tuvi.App.ViewModels;
 
+#if WINDOWS_UWP
+using Windows.UI.Xaml;
+#else
+using Microsoft.UI.Xaml;
+#endif
+
 namespace Tuvi.App.Shared.Views
 {
-    // ToDo: Issue #861 - Remove it
-    public partial class DecentralizedAddressSettingsPageBase : BasePage<DecentralizedAddressSettingsPageViewModel, BaseViewModel>
+    public partial class EthereumAddressSettingsPageBase : BasePage<EthereumAddressSettingsPageViewModel, BaseViewModel>
     {
     }
 
-    // ToDo: Issue #861 - Remove it
-    public sealed partial class DecentralizedAddressSettingsPage : DecentralizedAddressSettingsPageBase
+    public sealed partial class EthereumAddressSettingsPage : EthereumAddressSettingsPageBase
     {
-        public DecentralizedAddressSettingsPage()
+        public EthereumAddressSettingsPage()
         {
             this.InitializeComponent();
         }

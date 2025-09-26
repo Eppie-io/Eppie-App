@@ -1,4 +1,5 @@
-﻿<UserControl x:Class="Tuvi.App.Shared.Controls.DecentralizedAccountSettingsControl"
+﻿<!--  ToDo: Issue #861 - Remove it  -->
+<UserControl x:Class="Tuvi.App.Shared.Controls.DecentralizedAccountSettingsControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:controls="using:Tuvi.App.Shared.Controls"

@@ -16,21 +16,9 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-using Tuvi.App.ViewModels;
-
-namespace Tuvi.App.Shared.Views
+namespace Tuvi.App.ViewModels
 {
-    // ToDo: Issue #861 - Remove it
-    public partial class DecentralizedAddressSettingsPageBase : BasePage<DecentralizedAddressSettingsPageViewModel, BaseViewModel>
+    public class BitcoinAddressSettingsPageViewModel : BaseAddressSettingsPageViewModel
     {
-    }
-
-    // ToDo: Issue #861 - Remove it
-    public sealed partial class DecentralizedAddressSettingsPage : DecentralizedAddressSettingsPageBase
-    {
-        public DecentralizedAddressSettingsPage()
-        {
-            this.InitializeComponent();
-        }
     }
 }

@@ -1,4 +1,5 @@
-﻿<local:DecentralizedAddressSettingsPageBase x:Class="Tuvi.App.Shared.Views.DecentralizedAddressSettingsPage"
+﻿<!--  ToDo: Issue #861 - Remove it  -->
+<local:DecentralizedAddressSettingsPageBase x:Class="Tuvi.App.Shared.Views.DecentralizedAddressSettingsPage"
                                             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                                             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                                             xmlns:behaviors="using:Eppie.App.UI.Behaviors"
