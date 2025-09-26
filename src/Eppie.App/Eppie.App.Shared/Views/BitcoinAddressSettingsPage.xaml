@@ -40,53 +40,49 @@
                                      HideWarning="False" />
 
             <controls:OptionControl x:Uid="BitcoinKeyOption" GapHeight="{StaticResource NormalOptionGapHeight}">
-                <controls:OptionControl.OptionContent>
-                    <muxc:Expander HorizontalAlignment="Stretch"
-                                   VerticalAlignment="Top"
-                                   HorizontalContentAlignment="Stretch">
-                        <muxc:Expander.Header>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock x:Uid="ViewKeyHeader"
-                                           VerticalAlignment="Center"
-                                           Text="View your key"
-                                           TextTrimming="CharacterEllipsis" />
-                                <!--  ToDo: Issue #861 - Add logic  -->
-                                <Button x:Uid="CopyButton"
-                                        Grid.Column="1"
-                                        Margin="8,0,0,0"
-                                        HorizontalAlignment="Right" />
-                            </Grid>
-                        </muxc:Expander.Header>
-                        <!--  ToDo: Issue #861 - Add logic  -->
-                        <TextBlock HorizontalAlignment="Left"
-                                   VerticalAlignment="Center"
-                                   IsTextSelectionEnabled="True"
-                                   Text="z2oLcuitoGLzzDX4QbWY9hrBnRziAZoJgqrdgqJKrRqVbDKjrP66 [hardcode]"
-                                   TextWrapping="Wrap" />
-                    </muxc:Expander>
-                </controls:OptionControl.OptionContent>
+                <muxc:Expander HorizontalAlignment="Stretch"
+                               VerticalAlignment="Top"
+                               HorizontalContentAlignment="Stretch">
+                    <muxc:Expander.Header>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock x:Uid="ViewKeyHeader"
+                                       VerticalAlignment="Center"
+                                       Text="View your key"
+                                       TextTrimming="CharacterEllipsis" />
+                            <!--  ToDo: Issue #861 - Add logic  -->
+                            <Button x:Uid="CopyButton"
+                                    Grid.Column="1"
+                                    Margin="8,0,0,0"
+                                    HorizontalAlignment="Right" />
+                        </Grid>
+                    </muxc:Expander.Header>
+                    <!--  ToDo: Issue #861 - Add logic  -->
+                    <TextBlock HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               IsTextSelectionEnabled="True"
+                               Text="z2oLcuitoGLzzDX4QbWY9hrBnRziAZoJgqrdgqJKrRqVbDKjrP66 [hardcode]"
+                               TextWrapping="Wrap" />
+                </muxc:Expander>
             </controls:OptionControl>
 
             <!--  ToDo: Issue #861 - The layout is broken if there is an error  -->
             <controls:OptionControl x:Uid="SynchronizationIntervalOption"
                                     GapHeight="{StaticResource NormalOptionGapHeight}"
                                     HideNote="True">
-                <controls:OptionControl.OptionContent>
-                    <StackPanel Orientation="Horizontal">
-                        <controls:ErrorControl HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                            <controls:ErrorControl.InnerContent>
-                                <TextBox IsSpellCheckEnabled="False" />
-                            </controls:ErrorControl.InnerContent>
-                        </controls:ErrorControl>
-                        <TextBlock x:Uid="SynchronizationIntervalUnits"
-                                   Margin="12,0"
-                                   VerticalAlignment="Center" />
-                    </StackPanel>
-                </controls:OptionControl.OptionContent>
+                <StackPanel Orientation="Horizontal">
+                    <controls:ErrorControl HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                        <controls:ErrorControl.InnerContent>
+                            <TextBox IsSpellCheckEnabled="False" />
+                        </controls:ErrorControl.InnerContent>
+                    </controls:ErrorControl>
+                    <TextBlock x:Uid="SynchronizationIntervalUnits"
+                               Margin="12,0"
+                               VerticalAlignment="Center" />
+                </StackPanel>
             </controls:OptionControl>
 
         </StackPanel>

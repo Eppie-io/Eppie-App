@@ -45,38 +45,34 @@
                                      HideWarning="False" />
 
             <controls:OptionControl x:Uid="EppieAliasOption" GapHeight="{StaticResource HugeOptionGapHeight}">
-                <controls:OptionControl.OptionContent>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBox Width="{StaticResource TextBoxWidth}"
-                                 HorizontalAlignment="Left"
-                                 VerticalAlignment="Top"
-                                 IsSpellCheckEnabled="False"
-                                 PlaceholderText="{StaticResource AliasPlaceholderText}" />
-                        <!--  ToDo: Issue #861 - Add logic  -->
-                        <Button x:Uid="VerifyButton"
-                                MinWidth="64"
-                                Margin="4,0,0,0" />
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Width="{StaticResource TextBoxWidth}"
+                             HorizontalAlignment="Left"
+                             VerticalAlignment="Top"
+                             IsSpellCheckEnabled="False"
+                             PlaceholderText="{StaticResource AliasPlaceholderText}" />
+                    <!--  ToDo: Issue #861 - Add logic  -->
+                    <Button x:Uid="VerifyButton"
+                            MinWidth="64"
+                            Margin="4,0,0,0" />
 
-                    </StackPanel>
-                </controls:OptionControl.OptionContent>
+                </StackPanel>
             </controls:OptionControl>
 
             <!--  ToDo: Issue #861 - The layout is broken if there is an error  -->
             <controls:OptionControl x:Uid="SynchronizationIntervalOption"
                                     GapHeight="{StaticResource NormalOptionGapHeight}"
                                     HideNote="True">
-                <controls:OptionControl.OptionContent>
-                    <StackPanel Orientation="Horizontal">
-                        <controls:ErrorControl HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                            <controls:ErrorControl.InnerContent>
-                                <TextBox IsSpellCheckEnabled="False" />
-                            </controls:ErrorControl.InnerContent>
-                        </controls:ErrorControl>
-                        <TextBlock x:Uid="SynchronizationIntervalUnits"
-                                   Margin="12,0"
-                                   VerticalAlignment="Center" />
-                    </StackPanel>
-                </controls:OptionControl.OptionContent>
+                <StackPanel Orientation="Horizontal">
+                    <controls:ErrorControl HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                        <controls:ErrorControl.InnerContent>
+                            <TextBox IsSpellCheckEnabled="False" />
+                        </controls:ErrorControl.InnerContent>
+                    </controls:ErrorControl>
+                    <TextBlock x:Uid="SynchronizationIntervalUnits"
+                               Margin="12,0"
+                               VerticalAlignment="Center" />
+                </StackPanel>
             </controls:OptionControl>
 
         </StackPanel>
