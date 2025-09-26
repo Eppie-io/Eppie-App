@@ -40,7 +40,7 @@ namespace Tuvi.App.Shared.Models
                 {"License", "https://eppie.io"},
                 {"DevelopmentSupport", "https://github.com/sponsors/Eppie-io"},
                 {"TwitterHandle", "@EppieApp"},
-                {"GitHubUrl", "https://github.com/Eppie-io/Eppie-App"},
+                {"GitHub", "https://github.com/Eppie-io/Eppie-App"},
                 {"Translation", "https://eppie.crowdin.com/eppie"}
             };
         }
@@ -59,7 +59,7 @@ namespace Tuvi.App.Shared.Models
                 {"License", "https://eppie.io"},
                 {"DevelopmentSupport", "https://github.com/sponsors/Eppie-io"},
                 {"TwitterHandle", "@EppieApp"},
-                {"GitHubUrl", "https://github.com/Eppie-io/Eppie-App"},
+                {"GitHub", "https://github.com/Eppie-io/Eppie-App"},
                 {"Translation", "https://eppie.crowdin.com/eppie"}
             };
         }
