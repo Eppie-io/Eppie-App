@@ -51,7 +51,6 @@
                             </Grid.ColumnDefinitions>
                             <TextBlock x:Uid="ViewKeyHeader"
                                        VerticalAlignment="Center"
-                                       Text="View your key"
                                        TextTrimming="CharacterEllipsis" />
                             <!--  ToDo: Issue #861 - Add logic  -->
                             <Button x:Uid="CopyButton"
