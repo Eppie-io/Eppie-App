@@ -36,15 +36,11 @@
             <StackPanel>
 
                 <!--  ToDo: Issue #861 - Add logic  -->
-                <!--  ToDo: Issue #861 - Move Warning text to resources  -->
-                <controls:AddressControl Address="0xdbF03B407c01E7cD3CBea99509d93f8DDDC8C6FB@ethereum [hardcode]"
-                                         HideWarning="False"
-                                         Warning="Decentralized addresses created in Testnet are for testing only. Feel free to explore, but don’t use them for important communication." />
+                <controls:AddressControl x:Uid="AddressControl"
+                                         Address="0xdbF03B407c01E7cD3CBea99509d93f8DDDC8C6FB@ethereum [hardcode]"
+                                         HideWarning="False" />
 
-                <!--  ToDo: Issue #861 - Move Caption and Note text to resources  -->
-                <controls:OptionControl Caption="Secret key"
-                                        GapHeight="{StaticResource NormalOptionGapHeight}"
-                                        TextNote="Import this key into your Ethereum wallet to make your address active.">
+                <controls:OptionControl x:Uid="EthereumKeyOption" GapHeight="{StaticResource NormalOptionGapHeight}">
                     <controls:OptionControl.OptionContent>
                         <muxc:Expander HorizontalAlignment="Stretch"
                                        VerticalAlignment="Top"
@@ -55,16 +51,14 @@
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
-                                    <!--  ToDo: Issue #861 - Move text to resources  -->
-                                    <TextBlock VerticalAlignment="Center"
-                                               Text="View your key"
+                                    <TextBlock x:Uid="ViewKeyHeader"
+                                               VerticalAlignment="Center"
                                                TextTrimming="CharacterEllipsis" />
                                     <!--  ToDo: Issue #861 - Add logic  -->
-                                    <!--  ToDo: Issue #861 - Move Content text to resources  -->
-                                    <Button Grid.Column="1"
+                                    <Button x:Uid="CopyButton"
+                                            Grid.Column="1"
                                             Margin="8,0,0,0"
-                                            HorizontalAlignment="Right"
-                                            Content="Copy" />
+                                            HorizontalAlignment="Right" />
                                 </Grid>
                             </muxc:Expander.Header>
                             <!--  ToDo: Issue #861 - Add logic  -->
@@ -78,8 +72,7 @@
                 </controls:OptionControl>
 
                 <!--  ToDo: Issue #861 - The layout is broken if there is an error  -->
-                <!--  ToDo: Issue #861 - Move Caption text to resources  -->
-                <controls:OptionControl Caption="Synchronization interval"
+                <controls:OptionControl x:Uid="SynchronizationIntervalOption"
                                         GapHeight="{StaticResource NormalOptionGapHeight}"
                                         HideNote="True">
                     <controls:OptionControl.OptionContent>
@@ -89,10 +82,9 @@
                                     <TextBox IsSpellCheckEnabled="False" />
                                 </controls:ErrorControl.InnerContent>
                             </controls:ErrorControl>
-                            <!--  ToDo: Issue #861 - Move text to resources  -->
-                            <TextBlock Margin="12,0"
-                                       VerticalAlignment="Center"
-                                       Text="minutes" />
+                            <TextBlock x:Uid="SynchronizationIntervalUnits"
+                                       Margin="12,0"
+                                       VerticalAlignment="Center" />
                         </StackPanel>
                     </controls:OptionControl.OptionContent>
                 </controls:OptionControl>

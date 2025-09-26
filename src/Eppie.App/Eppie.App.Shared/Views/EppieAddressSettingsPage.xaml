@@ -17,6 +17,8 @@
         <x:Double x:Key="HugeOptionGapHeight">60</x:Double>
         <x:Double x:Key="NormalOptionGapHeight">36</x:Double>
 
+        <x:String x:Key="AliasPlaceholderText">name.test@eppie</x:String>
+
     </local:EppieAddressSettingsPageBase.Resources>
 
     <local:EppieAddressSettingsPageBase.DataContext>
@@ -39,36 +41,29 @@
             <StackPanel>
 
                 <!--  ToDo: Issue #861 - Add logic  -->
-                <!--  ToDo: Issue #861 - Move Warning text to resources  -->
-                <controls:AddressControl Address="ahz2t8tcubgvh8rxjt87rerbauy7txrucnzgvfkb9fubkz6ujijry@eppie [hardcode]"
-                                         HideWarning="False"
-                                         Warning="Decentralized addresses created in Testnet are for testing only. Feel free to explore, but don’t use them for important communication." />
+                <controls:AddressControl x:Uid="AddressControl"
+                                         Address="ahz2t8tcubgvh8rxjt87rerbauy7txrucnzgvfkb9fubkz6ujijry@eppie [hardcode]"
+                                         HideWarning="False" />
 
-                <!--  ToDo: Issue #861 - Move Caption and Note text to resources  -->
-                <controls:OptionControl Caption="Alias (for Testnet)"
-                                        GapHeight="{StaticResource HugeOptionGapHeight}"
-                                        TextNote="Claim a readable name for your decentralized address instead of a long public key.">
+                <controls:OptionControl x:Uid="EppieAliasOption" GapHeight="{StaticResource HugeOptionGapHeight}">
                     <controls:OptionControl.OptionContent>
                         <StackPanel Orientation="Horizontal">
-                            <!--  ToDo: Issue #861 - Move Placeholder text to resources  -->
                             <TextBox Width="{StaticResource TextBoxWidth}"
                                      HorizontalAlignment="Left"
                                      VerticalAlignment="Top"
                                      IsSpellCheckEnabled="False"
-                                     PlaceholderText="name.test@eppie" />
+                                     PlaceholderText="{StaticResource AliasPlaceholderText}" />
                             <!--  ToDo: Issue #861 - Add logic  -->
-                            <!--  ToDo: Issue #861 - Move Content text to resources  -->
-                            <Button MinWidth="64"
-                                    Margin="4,0,0,0"
-                                    Content="Verify" />
+                            <Button x:Uid="VerifyButton"
+                                    MinWidth="64"
+                                    Margin="4,0,0,0" />
 
                         </StackPanel>
                     </controls:OptionControl.OptionContent>
                 </controls:OptionControl>
 
                 <!--  ToDo: Issue #861 - The layout is broken if there is an error  -->
-                <!--  ToDo: Issue #861 - Move Caption text to resources  -->
-                <controls:OptionControl Caption="Synchronization interval"
+                <controls:OptionControl x:Uid="SynchronizationIntervalOption"
                                         GapHeight="{StaticResource NormalOptionGapHeight}"
                                         HideNote="True">
                     <controls:OptionControl.OptionContent>
@@ -78,10 +73,9 @@
                                     <TextBox IsSpellCheckEnabled="False" />
                                 </controls:ErrorControl.InnerContent>
                             </controls:ErrorControl>
-                            <!--  ToDo: Issue #861 - Move text to resources  -->
-                            <TextBlock Margin="12,0"
-                                       VerticalAlignment="Center"
-                                       Text="minutes" />
+                            <TextBlock x:Uid="SynchronizationIntervalUnits"
+                                       Margin="12,0"
+                                       VerticalAlignment="Center" />
                         </StackPanel>
                     </controls:OptionControl.OptionContent>
                 </controls:OptionControl>
