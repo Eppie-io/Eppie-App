@@ -74,6 +74,7 @@
                 </StackPanel>
             </controls:OptionControl>
 
+            <!--  ToDo: Issue #861 - The layout is broken if there is an error  -->
             <controls:OptionControl x:Uid="SynchronizationIntervalOption"
                                     GapHeight="{StaticResource NormalOptionGapHeight}"
                                     HideNote="True">

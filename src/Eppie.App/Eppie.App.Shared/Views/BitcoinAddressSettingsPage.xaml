@@ -67,11 +67,14 @@
                 </muxc:Expander>
             </controls:OptionControl>
 
+            <!--  ToDo: Issue #861 - The layout is broken if there is an error  -->
             <controls:OptionControl x:Uid="SynchronizationIntervalOption"
                                     GapHeight="{StaticResource NormalOptionGapHeight}"
                                     HideNote="True">
                 <StackPanel Orientation="Horizontal">
-                    <controls:ErrorControl HorizontalAlignment="Stretch" VerticalAlignment="Center" Property="{x:Bind ViewModel.AddressSettingsModel.SynchronizationInterval, Mode=OneWay}">
+                    <controls:ErrorControl HorizontalAlignment="Stretch"
+                                           VerticalAlignment="Center"
+                                           Property="{x:Bind ViewModel.AddressSettingsModel.SynchronizationInterval, Mode=OneWay}">
                         <controls:ErrorControl.InnerContent>
                             <TextBox IsSpellCheckEnabled="False" Text="{x:Bind ViewModel.AddressSettingsModel.SynchronizationInterval.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </controls:ErrorControl.InnerContent>
