@@ -158,7 +158,7 @@
         "prerequisites": {
             "msbuild": "false",
             "uno-platform": "true",
-            "xcode": "/Applications/Xcode_16.3.app"
+            "xcode": "/Applications/Xcode_16.4.app"
         },
         "build": {
             "tool": "dotnet",
