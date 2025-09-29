@@ -36,9 +36,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ContactsListControl.xaml.cs">
       <DependentUpon>ContactsListControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\DecentralizedAccountSettingsControl.xaml.cs">
-      <DependentUpon>DecentralizedAccountSettingsControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\EditMessageControl.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ServicesListControl.xaml.cs">
       <DependentUpon>ServicesListControl.xaml</DependentUpon>
@@ -123,10 +120,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Controls\ContactsListControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Controls\DecentralizedAccountSettingsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

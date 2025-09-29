@@ -34,9 +34,8 @@
                                   RemoveCommand="{x:Bind ViewModel.RemoveAccountCommand}">
         <StackPanel>
 
-            <!--  ToDo: Issue #861 - Add logic  -->
             <controls:AddressControl x:Uid="AddressControl"
-                                     Address="mydsbvVx5sTpf7h2WD5KxjVKzUAXZtC77i@bitcoin [hardcode]"
+                                     Address="{x:Bind ViewModel.AddressSettingsModel.Email.Value, Mode=OneWay}"
                                      HideWarning="False" />
 
             <controls:OptionControl x:Uid="BitcoinKeyOption" GapHeight="{StaticResource NormalOptionGapHeight}">
@@ -52,30 +51,29 @@
                             <TextBlock x:Uid="ViewKeyHeader"
                                        VerticalAlignment="Center"
                                        TextTrimming="CharacterEllipsis" />
-                            <!--  ToDo: Issue #861 - Add logic  -->
                             <Button x:Uid="CopyButton"
                                     Grid.Column="1"
                                     Margin="8,0,0,0"
-                                    HorizontalAlignment="Right" />
+                                    HorizontalAlignment="Right"
+                                    Command="{x:Bind ViewModel.CopySecretKeyCommand}"
+                                    CommandParameter="{StaticResource ClipboardProvider}" />
                         </Grid>
                     </muxc:Expander.Header>
-                    <!--  ToDo: Issue #861 - Add logic  -->
                     <TextBlock HorizontalAlignment="Left"
                                VerticalAlignment="Center"
                                IsTextSelectionEnabled="True"
-                               Text="z2oLcuitoGLzzDX4QbWY9hrBnRziAZoJgqrdgqJKrRqVbDKjrP66 [hardcode]"
+                               Text="{x:Bind ViewModel.AddressSettingsModel.SecretKeyWIF, Mode=OneWay}"
                                TextWrapping="Wrap" />
                 </muxc:Expander>
             </controls:OptionControl>
 
-            <!--  ToDo: Issue #861 - The layout is broken if there is an error  -->
             <controls:OptionControl x:Uid="SynchronizationIntervalOption"
                                     GapHeight="{StaticResource NormalOptionGapHeight}"
                                     HideNote="True">
                 <StackPanel Orientation="Horizontal">
-                    <controls:ErrorControl HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                    <controls:ErrorControl HorizontalAlignment="Stretch" VerticalAlignment="Center" Property="{x:Bind ViewModel.AddressSettingsModel.SynchronizationInterval, Mode=OneWay}">
                         <controls:ErrorControl.InnerContent>
-                            <TextBox IsSpellCheckEnabled="False" />
+                            <TextBox IsSpellCheckEnabled="False" Text="{x:Bind ViewModel.AddressSettingsModel.SynchronizationInterval.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </controls:ErrorControl.InnerContent>
                     </controls:ErrorControl>
                     <TextBlock x:Uid="SynchronizationIntervalUnits"
