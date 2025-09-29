@@ -26,26 +26,6 @@ namespace Tuvi.App.ViewModels
 {
     public class BitcoinAddressSettingsPageViewModel : DecentralizedAddressSettingsPageViewModel
     {
-        public IRelayCommand CopySecretKeyCommand { get; }
-
-        public BitcoinAddressSettingsPageViewModel()
-        {
-            CopySecretKeyCommand = new RelayCommand<IClipboardProvider>(CopySecretKey, CanCopySecretKey);
-        }
-
-        private bool CanCopySecretKey(IClipboardProvider provider)
-        {
-            return AddressSettingsModel != null && !string.IsNullOrEmpty(AddressSettingsModel.SecretKeyWIF);
-        }
-
-        private void CopySecretKey(IClipboardProvider clipboard)
-        {
-            if (clipboard != null && AddressSettingsModel?.SecretKeyWIF != null)
-            {
-                clipboard.SetClipboardContent(AddressSettingsModel.SecretKeyWIF);
-            }
-        }
-
         public override async void OnNavigatedTo(object data)
         {
             try

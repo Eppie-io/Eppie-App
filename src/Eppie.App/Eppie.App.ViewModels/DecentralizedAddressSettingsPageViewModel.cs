@@ -23,6 +23,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using EmailValidation;
+using Tuvi.App.ViewModels.Services;
 using Tuvi.Core.Entities;
 
 namespace Tuvi.App.ViewModels
@@ -143,10 +144,26 @@ namespace Tuvi.App.ViewModels
             }
         }
 
+        public IRelayCommand CopySecretKeyCommand { get; }
+
+        private bool CanCopySecretKey(IClipboardProvider clipboard)
+        {
+            return clipboard != null && AddressSettingsModel != null && !string.IsNullOrEmpty(AddressSettingsModel.SecretKeyWIF);
+        }
+
+        private void CopySecretKey(IClipboardProvider clipboard)
+        {
+            if (clipboard != null && AddressSettingsModel?.SecretKeyWIF != null)
+            {
+                clipboard.SetClipboardContent(AddressSettingsModel.SecretKeyWIF);
+            }
+        }
 
         public DecentralizedAddressSettingsPageViewModel()
         {
             ClaimNameCommand = new AsyncRelayCommand(ClaimNameAsync, CanClaimExecute);
+            CopySecretKeyCommand = new RelayCommand<IClipboardProvider>(CopySecretKey, CanCopySecretKey);
+
             ErrorsChanged += (sender, e) => ApplySettingsCommand.NotifyCanExecuteChanged();
         }
 
