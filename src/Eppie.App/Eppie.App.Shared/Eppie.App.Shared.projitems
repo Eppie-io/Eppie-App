@@ -64,9 +64,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\ContactMessagesPage.xaml.cs">
       <DependentUpon>ContactMessagesPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Views\DecentralizedAddressSettingsPage.xaml.cs">
-      <DependentUpon>DecentralizedAddressSettingsPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\EmailAddressSettingsPage.xaml.cs">
       <DependentUpon>EmailAddressSettingsPage.xaml</DependentUpon>
     </Compile>
@@ -149,10 +146,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Views\ContactMessagesPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Views\DecentralizedAddressSettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

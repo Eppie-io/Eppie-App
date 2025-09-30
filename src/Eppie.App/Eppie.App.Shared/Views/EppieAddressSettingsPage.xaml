@@ -39,23 +39,38 @@
                                   RemoveCommand="{x:Bind ViewModel.RemoveAccountCommand}">
         <StackPanel>
 
-            <!--  ToDo: Issue #861 - Add logic  -->
             <controls:AddressControl x:Uid="AddressControl"
-                                     Address="ahz2t8tcubgvh8rxjt87rerbauy7txrucnzgvfkb9fubkz6ujijry@eppie [hardcode]"
+                                     Address="{x:Bind ViewModel.AddressSettingsModel.Email.Value, Mode=OneWay}"
                                      HideWarning="False" />
 
-            <controls:OptionControl x:Uid="EppieAliasOption" GapHeight="{StaticResource HugeOptionGapHeight}">
-                <StackPanel Orientation="Horizontal">
-                    <TextBox Width="{StaticResource TextBoxWidth}"
-                             HorizontalAlignment="Left"
-                             VerticalAlignment="Top"
-                             IsSpellCheckEnabled="False"
-                             PlaceholderText="{StaticResource AliasPlaceholderText}" />
-                    <!--  ToDo: Issue #861 - Add logic  -->
+            <controls:OptionControl x:Uid="EppieAliasOption"
+                                    GapHeight="{StaticResource HugeOptionGapHeight}"
+                                    Visibility="{x:Bind ViewModel.AddressSettingsModel.IsSenderNameVisible}">
+                <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                    <controls:ErrorControl HorizontalAlignment="Left"
+                                           VerticalAlignment="Top"
+                                           Property="{x:Bind ViewModel.AddressSettingsModel.SenderName, Mode=OneWay}">
+                        <controls:ErrorControl.InnerContent>
+                            <TextBox Width="{StaticResource TextBoxWidth}"
+                                     HorizontalAlignment="Left"
+                                     VerticalAlignment="Top"
+                                     IsEnabled="{x:Bind ViewModel.IsClaimingName, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
+                                     IsSpellCheckEnabled="False"
+                                     PlaceholderText="{StaticResource AliasPlaceholderText}"
+                                     Text="{x:Bind ViewModel.AddressSettingsModel.SenderName.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </controls:ErrorControl.InnerContent>
+                    </controls:ErrorControl>
                     <Button x:Uid="VerifyButton"
                             MinWidth="64"
-                            Margin="4,0,0,0" />
-
+                            Margin="4,0,0,0"
+                            Command="{x:Bind ViewModel.ClaimNameCommand}"
+                            IsEnabled="{x:Bind ViewModel.IsClaimingName, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}" />
+                    <ProgressRing x:Name="ClaimingProgressRing"
+                                  Width="20"
+                                  Height="20"
+                                  Margin="8,0,0,0"
+                                  x:Load="{x:Bind ViewModel.IsClaimingName, Mode=OneWay}"
+                                  IsActive="True" />
                 </StackPanel>
             </controls:OptionControl>
 
@@ -64,9 +79,11 @@
                                     GapHeight="{StaticResource NormalOptionGapHeight}"
                                     HideNote="True">
                 <StackPanel Orientation="Horizontal">
-                    <controls:ErrorControl HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                    <controls:ErrorControl HorizontalAlignment="Stretch"
+                                           VerticalAlignment="Center"
+                                           Property="{x:Bind ViewModel.AddressSettingsModel.SynchronizationInterval, Mode=OneWay}">
                         <controls:ErrorControl.InnerContent>
-                            <TextBox IsSpellCheckEnabled="False" />
+                            <TextBox IsSpellCheckEnabled="False" Text="{x:Bind ViewModel.AddressSettingsModel.SynchronizationInterval.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </controls:ErrorControl.InnerContent>
                     </controls:ErrorControl>
                     <TextBlock x:Uid="SynchronizationIntervalUnits"

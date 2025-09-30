@@ -16,9 +16,47 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
+using System;
+using System.Threading;
+using CommunityToolkit.Mvvm.Input;
+using Tuvi.App.ViewModels.Services;
+using Tuvi.Core.Entities;
+
 namespace Tuvi.App.ViewModels
 {
-    public class EthereumAddressSettingsPageViewModel : BaseAddressSettingsPageViewModel
+    public class EthereumAddressSettingsPageViewModel : DecentralizedAddressSettingsPageViewModel
     {
+        public override async void OnNavigatedTo(object data)
+        {
+            try
+            {
+                if (data is Account existing)
+                {
+                    if (existing.Email.Network != NetworkType.Ethereum)
+                    {
+                        throw new ArgumentException("The provided account is not a Ethereum account.");
+                    }
+
+                    IsCreatingAccountMode = false;
+                    AddressSettingsModel = DecentralizedAddressSettingsModel.Create(existing);
+                    AddressSettingsModel.SecretKeyWIF = await Core.GetSecurityManager().GetSecretKeyWIFAsync(existing, CancellationToken.None).ConfigureAwait(true);
+                }
+                else
+                {
+                    IsCreatingAccountMode = true;
+                    var account = await CreateDecentralizedAccountAsync(NetworkType.Ethereum, CancellationToken.None).ConfigureAwait(true);
+                    AddressSettingsModel = DecentralizedAddressSettingsModel.Create(account);
+                    AddressSettingsModel.SecretKeyWIF = await Core.GetSecurityManager().GetSecretKeyWIFAsync(account, CancellationToken.None).ConfigureAwait(true);
+                }
+            }
+            catch (Exception e)
+            {
+                OnError(e);
+            }
+            finally
+            {
+                CopySecretKeyCommand.NotifyCanExecuteChanged();
+            }
+        }
     }
 }

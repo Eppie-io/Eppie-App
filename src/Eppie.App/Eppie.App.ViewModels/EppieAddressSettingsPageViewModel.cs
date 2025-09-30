@@ -18,7 +18,7 @@
 
 namespace Tuvi.App.ViewModels
 {
-    public class EppieAddressSettingsPageViewModel : BaseAddressSettingsPageViewModel
+    public class EppieAddressSettingsPageViewModel : DecentralizedAddressSettingsPageViewModel
     {
     }
 }

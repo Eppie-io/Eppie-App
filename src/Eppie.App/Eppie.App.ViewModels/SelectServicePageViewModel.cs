@@ -30,7 +30,6 @@ namespace Tuvi.App.ViewModels
         Other,
         Google,
         Outlook,
-        Decentralized,
         Proton,
         Eppie,
         BitcoinMail,
@@ -84,59 +83,36 @@ namespace Tuvi.App.ViewModels
             {
                 return;
             }
-            if (SelectedService.Key == ServiceKey.Decentralized)
-            {
-                NavigationService?.Navigate(nameof(DecentralizedAddressSettingsPageViewModel));
-                return;
-            }
-            if (SelectedService.Key == ServiceKey.Proton)
-            {
-                NavigationService?.Navigate(nameof(ProtonAddressSettingsPageViewModel));
-                return;
-            }
-            if (SelectedService.Key == ServiceKey.LocalAIAgent)
-            {
-                NavigationService?.Navigate(nameof(LocalAIAgentSettingsPageViewModel));
-                return;
-            }
-
-            if (SelectedService.Key == ServiceKey.Eppie)
-            {
-                NavigationService?.Navigate(nameof(EppieAddressSettingsPageViewModel));
-                return;
-            }
-            if (SelectedService.Key == ServiceKey.BitcoinMail)
-            {
-                NavigationService?.Navigate(nameof(BitcoinAddressSettingsPageViewModel));
-                return;
-            }
-            if (SelectedService.Key == ServiceKey.EthereumMail)
-            {
-                NavigationService?.Navigate(nameof(EthereumAddressSettingsPageViewModel));
-                return;
-            }
-
-            var mailServerId = MailService.Unknown;
 
             switch (SelectedService.Key)
             {
+                case ServiceKey.Proton:
+                    NavigationService?.Navigate(nameof(ProtonAddressSettingsPageViewModel));
+                    return;
+                case ServiceKey.LocalAIAgent:
+                    NavigationService?.Navigate(nameof(LocalAIAgentSettingsPageViewModel));
+                    return;
+                case ServiceKey.Eppie:
+                    NavigationService?.Navigate(nameof(EppieAddressSettingsPageViewModel));
+                    return;
+                case ServiceKey.BitcoinMail:
+                    NavigationService?.Navigate(nameof(BitcoinAddressSettingsPageViewModel));
+                    return;
+                case ServiceKey.EthereumMail:
+                    NavigationService?.Navigate(nameof(EthereumAddressSettingsPageViewModel));
+                    return;
                 case ServiceKey.Google:
-                    mailServerId = MailService.Gmail;
-                    break;
+                    NavigationService?.Navigate(nameof(EmailAddressSettingsPageViewModel), MailService.Gmail);
+                    return;
                 case ServiceKey.Outlook:
-                    mailServerId = MailService.Outlook;
-                    break;
+                    NavigationService?.Navigate(nameof(EmailAddressSettingsPageViewModel), MailService.Outlook);
+                    return;
                 case ServiceKey.Other:
-                    mailServerId = MailService.Unknown;
-                    break;
                 default:
-                    mailServerId = MailService.Unknown;
-                    break;
+                    NavigationService?.Navigate(nameof(EmailAddressSettingsPageViewModel), MailService.Unknown);
+                    return;
             }
-
-            NavigationService?.Navigate(nameof(EmailAddressSettingsPageViewModel), mailServerId);
         }
-
 
         private void FillServicesList()
         {
@@ -144,10 +120,7 @@ namespace Tuvi.App.ViewModels
             Services.Add(new ServiceInfo(ServiceKey.Outlook, "Outlook", "outlook.com hotmail.com"));
             Services.Add(new ServiceInfo(ServiceKey.Proton, "Proton Mail (Beta)", "proton.me protonmail.com proton.local"));
             Services.Add(new ServiceInfo(ServiceKey.Other, GetLocalizedString("OtherEmailAccountServiceTitle"), GetLocalizedString("OtherEmailAccountServiceDescription")));
-            Services.Add(new ServiceInfo(ServiceKey.Decentralized, GetLocalizedString("DecentralizedAccountServiceTitle"), GetLocalizedString("DecentralizedAccountServiceDescription")));
-
-            // ToDo: Issue #861 - Temporary solution to open Eppie, Bitcoin, Ethereum decentralized email address settings
-            Services.Add(new ServiceInfo(ServiceKey.Eppie, "Eppie mail (coming soon)", "Testnet"));
+            Services.Add(new ServiceInfo(ServiceKey.Eppie, GetLocalizedString("DecentralizedAccountServiceTitle"), GetLocalizedString("DecentralizedAccountServiceDescription")));
             Services.Add(new ServiceInfo(ServiceKey.BitcoinMail, "Bitcoin mail (coming soon)", "Testnet"));
             Services.Add(new ServiceInfo(ServiceKey.EthereumMail, "Ethereum mail (coming soon)", "Testnet"));
 
