@@ -1248,7 +1248,7 @@ Subject: {3}
   </data>
     <data name="EthereumKeyOption.TextNote" xml:space="preserve">
     <value>Import this key into your Ethereum wallet to make your address active.</value>
-    <comment>Note for the option with Ethereum keys. Ethereum is a brand that doesn't translate</comment>
+    <comment>Note for the option with Ethereum keys. Ethereum is a brand that doesn't translate.</comment>
   </data>
   <data name="EppieAliasOption.Caption" xml:space="preserve">
     <value>Alias (for Testnet)</value>
