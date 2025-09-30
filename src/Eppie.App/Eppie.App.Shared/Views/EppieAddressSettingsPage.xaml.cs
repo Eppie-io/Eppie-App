@@ -18,15 +18,21 @@
 
 using Tuvi.App.ViewModels;
 
+#if WINDOWS_UWP
+using Windows.UI.Xaml;
+#else
+using Microsoft.UI.Xaml;
+#endif
+
 namespace Tuvi.App.Shared.Views
 {
-    public partial class DecentralizedAddressSettingsPageBase : BasePage<DecentralizedAddressSettingsPageViewModel, BaseViewModel>
+    public partial class EppieAddressSettingsPageBase : BasePage<EppieAddressSettingsPageViewModel, BaseViewModel>
     {
     }
 
-    public sealed partial class DecentralizedAddressSettingsPage : DecentralizedAddressSettingsPageBase
+    public sealed partial class EppieAddressSettingsPage : EppieAddressSettingsPageBase
     {
-        public DecentralizedAddressSettingsPage()
+        public EppieAddressSettingsPage()
         {
             this.InitializeComponent();
         }

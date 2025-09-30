@@ -12,6 +12,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\DialogBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\ListViewItemClickBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\TreeViewItemInvokeBehavior.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\AddressControl.xaml.cs">
+      <DependentUpon>AddressControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\AddressSettingsView.xaml.cs">
+      <DependentUpon>AddressSettingsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\AdvancedSettingsControl.xaml.cs">
       <DependentUpon>AdvancedSettingsControl.xaml</DependentUpon>
     </Compile>
@@ -29,9 +35,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\BaseUserControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ContactsListControl.xaml.cs">
       <DependentUpon>ContactsListControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\DecentralizedAccountSettingsControl.xaml.cs">
-      <DependentUpon>DecentralizedAccountSettingsControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\EditMessageControl.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ServicesListControl.xaml.cs">
@@ -92,6 +95,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)Tools\UITools.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)Controls\AddressControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Controls\AddressSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="$(MSBuildThisFileDirectory)Controls\AdvancedSettingsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -109,10 +120,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Controls\ContactsListControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Controls\DecentralizedAccountSettingsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

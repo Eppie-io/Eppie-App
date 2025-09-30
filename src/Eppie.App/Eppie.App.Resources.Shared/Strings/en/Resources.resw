@@ -1102,9 +1102,9 @@ Subject: {3}
     <value>Invalid name.</value>
     <comment>Error shown when name does not pass validation rules</comment>
   </data>
-  <data name="AddressSettingsTitle.Text" xml:space="preserve">
+  <data name="AddressSettingsView.Header" xml:space="preserve">
     <value>ADDRESS SETTINGS</value>
-    <comment>Address settings page title.</comment>
+    <comment>Address settings view title.</comment>
   </data>
   <data name="DefaultSignatureText" xml:space="preserve">
     <value>Sent from an Eppie (https://eppie.io) hybrid address.</value>
@@ -1229,6 +1229,54 @@ Subject: {3}
   <data name="CopySeedPhraseButtonContent.Text" xml:space="preserve">
     <value>Copy</value>
     <comment>Copy seed phrase button text</comment>
+  </data>
+  <data name="AddressControl.Warning" xml:space="preserve">
+    <value>Decentralized addresses created in Testnet are for testing only. Feel free to explore, but don’t use them for important communication.</value>
+    <comment>Warning for testnet addresses</comment>
+  </data>
+  <data name="BitcoinKeyOption.Caption" xml:space="preserve">
+    <value>Secret key</value>
+    <comment>Caption for the option with Bitcoin keys</comment>
+  </data>
+  <data name="BitcoinKeyOption.TextNote" xml:space="preserve">
+    <value>Import this key into your Bitcoin wallet to make your address active.</value>
+    <comment>Note for the option with Bitcoin keys. Bitcoin is a brand that doesn't translate</comment>
+  </data>
+  <data name="EthereumKeyOption.Caption" xml:space="preserve">
+    <value>Secret key</value>
+    <comment>Caption for the option with Ethereum keys</comment>
+  </data>
+    <data name="EthereumKeyOption.TextNote" xml:space="preserve">
+    <value>Import this key into your Ethereum wallet to make your address active.</value>
+    <comment>Note for the option with Ethereum keys. Ethereum is a brand that doesn't translate.</comment>
+  </data>
+  <data name="EppieAliasOption.Caption" xml:space="preserve">
+    <value>Alias (for Testnet)</value>
+    <comment>Caption for the option with a decentralized address alias</comment>
+  </data>
+  <data name="EppieAliasOption.TextNote" xml:space="preserve">
+    <value>Claim a readable name for your decentralized address instead of a long public key.</value>
+    <comment>Note for the option with a decentralized address alias</comment>
+  </data>
+  <data name="ViewKeyHeader.Text" xml:space="preserve">
+    <value>View your key</value>
+    <comment>Header text for viewing key</comment>
+  </data>
+  <data name="CopyButton.Content" xml:space="preserve">
+    <value>Copy</value>
+    <comment>Copy to clipboard button text</comment>
+  </data>
+  <data name="SynchronizationIntervalOption.Caption" xml:space="preserve">
+    <value>Synchronization interval</value>
+    <comment>Caption of input field to enter check messages interval value in minutes</comment>
+  </data>
+  <data name="SynchronizationIntervalUnits.Text" xml:space="preserve">
+    <value>minutes</value>
+    <comment>Minutes - units of time measurement</comment>
+  </data>
+  <data name="VerifyButton.Content" xml:space="preserve">
+    <value>Verify</value>
+    <comment>text for the button that verifies the entered information</comment>
   </data>
   <data name="FeatureNotImplementedErrorTitle" xml:space="preserve">
     <value>Feature Not Available</value>

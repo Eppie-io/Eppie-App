@@ -55,23 +55,32 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Views\EmailAddressSettingsPage.xaml.cs">
-      <DependentUpon>EmailAddressSettingsPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\AllMessagesPage.xaml.cs">
       <DependentUpon>AllMessagesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\BitcoinAddressSettingsPage.xaml.cs">
+      <DependentUpon>BitcoinAddressSettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\ContactMessagesPage.xaml.cs">
       <DependentUpon>ContactMessagesPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Views\DecentralizedAddressSettingsPage.xaml.cs">
-      <DependentUpon>DecentralizedAddressSettingsPage.xaml</DependentUpon>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\EmailAddressSettingsPage.xaml.cs">
+      <DependentUpon>EmailAddressSettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\EppieAddressSettingsPage.xaml.cs">
+      <DependentUpon>EppieAddressSettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\EthereumAddressSettingsPage.xaml.cs">
+      <DependentUpon>EthereumAddressSettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\FolderMessagesPage.xaml.cs">
       <DependentUpon>FolderMessagesPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\IdentityManagerPage.xaml.cs">
       <DependentUpon>IdentityManagerPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\LocalAIAgentSettingsPage.xaml.cs">
+      <DependentUpon>LocalAIAgentSettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -106,9 +115,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\WelcomePage.xaml.cs">
       <DependentUpon>WelcomePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Views\LocalAIAgentSettingsPage.xaml.cs">
-      <DependentUpon>LocalAIAgentSettingsPage.xaml</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="$(MSBuildThisFileDirectory)App.xaml">
@@ -127,11 +133,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Views\EmailAddressSettingsPage.xaml">
+    <Page Include="$(MSBuildThisFileDirectory)Views\AllMessagesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Views\AllMessagesPage.xaml">
+    <Page Include="$(MSBuildThisFileDirectory)Views\BitcoinAddressSettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -143,11 +149,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Views\LocalAIAgentSettingsPage.xaml">
+    <Page Include="$(MSBuildThisFileDirectory)Views\EmailAddressSettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Views\DecentralizedAddressSettingsPage.xaml">
+    <Page Include="$(MSBuildThisFileDirectory)Views\EppieAddressSettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\EthereumAddressSettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -156,6 +166,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Views\IdentityManagerPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\LocalAIAgentSettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

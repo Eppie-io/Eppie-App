@@ -18,33 +18,31 @@
         <local:OptionControl x:Uid="/Eppie.App.UI/Controls/AdvancedOption"
                              GapHeight="{StaticResource NormalOptionGapHeight}"
                              HideNote="True">
-            <local:OptionControl.OptionContent>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <ComboBox x:Name="SettingsModeSelector"
-                              Grid.Column="0"
-                              MinWidth="{StaticResource AdvancedSettingsSelectorMinWidth}"
-                              HorizontalAlignment="Left"
-                              VerticalAlignment="Top"
-                              SelectionChanged="OnSelectionChanged">
-                        <ComboBox.Items>
-                            <ComboBoxItem x:Uid="/Eppie.App.UI/Controls/AdvancedSettingsDefaultMode" />
-                            <ComboBoxItem x:Uid="/Eppie.App.UI/Controls/AdvancedSettingsCustomMode" />
-                        </ComboBox.Items>
-                    </ComboBox>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <ComboBox x:Name="SettingsModeSelector"
+                          Grid.Column="0"
+                          MinWidth="{StaticResource AdvancedSettingsSelectorMinWidth}"
+                          HorizontalAlignment="Left"
+                          VerticalAlignment="Top"
+                          SelectionChanged="OnSelectionChanged">
+                    <ComboBox.Items>
+                        <ComboBoxItem x:Uid="/Eppie.App.UI/Controls/AdvancedSettingsDefaultMode" />
+                        <ComboBoxItem x:Uid="/Eppie.App.UI/Controls/AdvancedSettingsCustomMode" />
+                    </ComboBox.Items>
+                </ComboBox>
 
-                    <Button x:Uid="/Eppie.App.UI/Controls/AdvancedSettingsResetButton"
-                            Grid.Column="1"
-                            MinWidth="{StaticResource ButtonMinWidth}"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Top"
-                            Command="{x:Bind ResetCommand}"
-                            Visibility="{x:Bind HideResetButton, Converter={StaticResource InverseBoolToVisibilityConverter}, Mode=OneWay}" />
-                </Grid>
-            </local:OptionControl.OptionContent>
+                <Button x:Uid="/Eppie.App.UI/Controls/AdvancedSettingsResetButton"
+                        Grid.Column="1"
+                        MinWidth="{StaticResource ButtonMinWidth}"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Command="{x:Bind ResetCommand}"
+                        Visibility="{x:Bind HideResetButton, Converter={StaticResource InverseBoolToVisibilityConverter}, Mode=OneWay}" />
+            </Grid>
         </local:OptionControl>
 
         <ContentPresenter Content="{x:Bind SettingsContent}" Visibility="{x:Bind IsAdvancedModeActive, Mode=OneWay}" />

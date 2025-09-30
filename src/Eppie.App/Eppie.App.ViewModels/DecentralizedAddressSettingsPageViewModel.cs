@@ -23,51 +23,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using EmailValidation;
+using Tuvi.App.ViewModels.Services;
 using Tuvi.Core.Entities;
 
 namespace Tuvi.App.ViewModels
 {
-    public class Network
-    {
-        public string Name { get; }
-        public NetworkType NetworkType { get; }
-
-        public Network(string name, NetworkType networkType)
-        {
-            Name = name ?? throw new ArgumentNullException(nameof(name));
-            NetworkType = networkType;
-        }
-
-        public override string ToString() => Name;
-    }
-
     public class DecentralizedAddressSettingsModel : BaseAddressSettingsModel
     {
-        private ObservableCollection<Network> _networkOptions;
-        public ObservableCollection<Network> NetworkOptions
-        {
-            get => _networkOptions;
-            private set => SetProperty(ref _networkOptions, value);
-        }
-
-        private Network _selectedNetwork;
-        public Network SelectedNetwork
-        {
-            get => _selectedNetwork;
-            set
-            {
-                SetProperty(ref _selectedNetwork, value);
-                OnPropertyChanged(nameof(IsSecretKeyVisible));
-                OnPropertyChanged(nameof(IsSenderNameVisible));
-            }
-        }
-
-        private bool _isNetworkLocked;
-        public bool IsNetworkLocked
-        {
-            get => _isNetworkLocked;
-            set => SetProperty(ref _isNetworkLocked, value);
-        }
+        private NetworkType _selectedNetwork = NetworkType.Eppie;
 
         // TODO: Zeroize WIF key after using it
         private string _secretKeyWIF;
@@ -79,16 +42,16 @@ namespace Tuvi.App.ViewModels
 
         public bool IsSecretKeyVisible
         {
-            get => IsSecretKeySupported(SelectedNetwork.NetworkType);
+            get => IsSecretKeySupported(_selectedNetwork);
         }
 
-        private bool IsSecretKeySupported(NetworkType networkType)
+        private static bool IsSecretKeySupported(NetworkType networkType)
         {
             return networkType == NetworkType.Bitcoin || networkType == NetworkType.Ethereum;
         }
         public bool IsSenderNameVisible
         {
-            get => SelectedNetwork.NetworkType == NetworkType.Eppie && !CurrentAccount.Email.IsHybrid;
+            get => _selectedNetwork == NetworkType.Eppie && !CurrentAccount.Email.IsHybrid;
         }
 
         private string _claimedName;
@@ -100,16 +63,18 @@ namespace Tuvi.App.ViewModels
 
         protected DecentralizedAddressSettingsModel(Account account) : base(account)
         {
-            _networkOptions = new ObservableCollection<Network>
+            if (account is null)
             {
-                new Network("Eppie Testnet", NetworkType.Eppie),
-                new Network("Bitcoin Testnet", NetworkType.Bitcoin),
-                new Network("Ethereum Testnet", NetworkType.Ethereum)
-            };
+                throw new ArgumentNullException(nameof(account));
+            }
 
-            _selectedNetwork = _networkOptions[0];
+            _selectedNetwork = account.Email.Network;
 
-            UpdateAccount(account);
+            CurrentAccount = account;
+
+            Email.Value = account.Email.DisplayAddress;
+            SenderName.Value = account.Email.Name;
+            ClaimedName = account.Email.Name;
         }
 
         public virtual Account ToAccount()
@@ -137,21 +102,6 @@ namespace Tuvi.App.ViewModels
         public static DecentralizedAddressSettingsModel Create(Account account)
         {
             return new DecentralizedAddressSettingsModel(account);
-        }
-
-        public void UpdateAccount(Account account)
-        {
-            if (account is null)
-            {
-                throw new ArgumentNullException(nameof(account));
-            }
-
-            CurrentAccount = account;
-
-            Email.Value = account.Email.DisplayAddress;
-            SenderName.Value = account.Email.Name;
-            ClaimedName = account.Email.Name;
-            SelectedNetwork = NetworkOptions.FirstOrDefault(x => x.NetworkType == account.Email.Network) ?? NetworkOptions.First();
         }
     }
 
@@ -194,10 +144,26 @@ namespace Tuvi.App.ViewModels
             }
         }
 
+        public IRelayCommand CopySecretKeyCommand { get; }
+
+        private bool CanCopySecretKey(IClipboardProvider clipboard)
+        {
+            return clipboard != null && AddressSettingsModel != null && !string.IsNullOrEmpty(AddressSettingsModel.SecretKeyWIF);
+        }
+
+        private void CopySecretKey(IClipboardProvider clipboard)
+        {
+            if (clipboard != null && AddressSettingsModel?.SecretKeyWIF != null)
+            {
+                clipboard.SetClipboardContent(AddressSettingsModel.SecretKeyWIF);
+            }
+        }
 
         public DecentralizedAddressSettingsPageViewModel()
         {
             ClaimNameCommand = new AsyncRelayCommand(ClaimNameAsync, CanClaimExecute);
+            CopySecretKeyCommand = new RelayCommand<IClipboardProvider>(CopySecretKey, CanCopySecretKey);
+
             ErrorsChanged += (sender, e) => ApplySettingsCommand.NotifyCanExecuteChanged();
         }
 
@@ -221,33 +187,26 @@ namespace Tuvi.App.ViewModels
         {
             try
             {
-                await InitModel(data).ConfigureAwait(true);
+                if (data is Account existing)
+                {
+                    if (existing.Email.Network != NetworkType.Eppie)
+                    {
+                        throw new ArgumentException("The provided account is not a Eppie account.");
+                    }
+
+                    IsCreatingAccountMode = false;
+                    AddressSettingsModel = DecentralizedAddressSettingsModel.Create(existing);
+                }
+                else
+                {
+                    IsCreatingAccountMode = true;
+                    var account = await CreateDecentralizedAccountAsync(NetworkType.Eppie, CancellationToken.None).ConfigureAwait(true);
+                    AddressSettingsModel = DecentralizedAddressSettingsModel.Create(account);
+                }
             }
             catch (Exception e)
             {
                 OnError(e);
-            }
-        }
-
-        private async Task InitModel(object data)
-        {
-            if (data is Account accountData)
-            {
-                IsCreatingAccountMode = false;
-                AddressSettingsModel = DecentralizedAddressSettingsModel.Create(accountData);
-                AddressSettingsModel.IsNetworkLocked = !IsCreatingAccountMode;
-
-                if (accountData.Email.Network == NetworkType.Bitcoin || accountData.Email.Network == NetworkType.Ethereum)
-                {
-                    AddressSettingsModel.SecretKeyWIF = await Core.GetSecurityManager().GetSecretKeyWIFAsync(accountData, CancellationToken.None).ConfigureAwait(true);
-                }
-            }
-            else
-            {
-                IsCreatingAccountMode = true;
-                accountData = await CreateDecentralizedAccountAsync(NetworkType.Eppie, default).ConfigureAwait(true);
-                AddressSettingsModel = DecentralizedAddressSettingsModel.Create(accountData);
-                AddressSettingsModel.IsNetworkLocked = !IsCreatingAccountMode;
             }
         }
 
@@ -285,33 +244,11 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        private async void OnAddressSettingsModelPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void OnAddressSettingsModelPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(DecentralizedAddressSettingsModel.SenderName))
             {
                 ClaimNameCommand?.NotifyCanExecuteChanged();
-            }
-            else if (e.PropertyName == nameof(DecentralizedAddressSettingsModel.SelectedNetwork) && !_addressSettingsModel.IsNetworkLocked)
-            {
-                try
-                {
-                    _addressSettingsModel.IsNetworkLocked = true;
-                    var accountData = await CreateDecentralizedAccountAsync(AddressSettingsModel.SelectedNetwork.NetworkType, default).ConfigureAwait(true);
-                    AddressSettingsModel.UpdateAccount(accountData);
-                    if (AddressSettingsModel.SelectedNetwork.NetworkType == NetworkType.Bitcoin || AddressSettingsModel.SelectedNetwork.NetworkType == NetworkType.Ethereum)
-                    {
-                        AddressSettingsModel.SecretKeyWIF = await Core.GetSecurityManager().GetSecretKeyWIFAsync(accountData, default).ConfigureAwait(true);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    OnError(ex);
-                }
-                finally
-                {
-                    _addressSettingsModel.IsNetworkLocked = false;
-                    ClaimNameCommand?.NotifyCanExecuteChanged();
-                }
             }
         }
 

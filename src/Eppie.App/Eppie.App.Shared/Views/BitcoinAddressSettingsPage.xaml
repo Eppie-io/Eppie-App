@@ -1,0 +1,90 @@
+﻿<local:BitcoinAddressSettingsPageBase x:Class="Tuvi.App.Shared.Views.BitcoinAddressSettingsPage"
+                                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                                      xmlns:behaviors="using:Eppie.App.UI.Behaviors"
+                                      xmlns:controls="using:Tuvi.App.Shared.Controls"
+                                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                                      xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+                                      xmlns:local="using:Tuvi.App.Shared.Views"
+                                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                                      xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+                                      xmlns:viewmodels="using:Tuvi.App.ViewModels"
+                                      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                                      mc:Ignorable="d">
+
+    <local:BitcoinAddressSettingsPageBase.Resources>
+        <x:Double x:Key="NormalOptionGapHeight">36</x:Double>
+    </local:BitcoinAddressSettingsPageBase.Resources>
+
+    <local:BitcoinAddressSettingsPageBase.DataContext>
+        <viewmodels:BitcoinAddressSettingsPageViewModel />
+    </local:BitcoinAddressSettingsPageBase.DataContext>
+
+    <interactivity:Interaction.Behaviors>
+        <behaviors:DialogBehavior ApplyCommand="{x:Bind ViewModel.ApplySettingsCommand}"
+                                  CancelCommand="{x:Bind ViewModel.CancelSettingsCommand}"
+                                  HandleErrorCommand="{x:Bind ViewModel.HandleErrorCommand}" />
+    </interactivity:Interaction.Behaviors>
+
+    <controls:AddressSettingsView x:Uid="AddressSettingsView"
+                                  ApplyCommand="{x:Bind ViewModel.ApplySettingsCommand}"
+                                  CancelCommand="{x:Bind ViewModel.CancelSettingsCommand}"
+                                  IsApplying="{x:Bind ViewModel.IsWaitingResponse, Mode=OneWay}"
+                                  IsRemoveButtonVisible="{x:Bind ViewModel.IsCreatingAccountMode, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
+                                  RemoveCommand="{x:Bind ViewModel.RemoveAccountCommand}">
+        <StackPanel>
+
+            <controls:AddressControl x:Uid="AddressControl"
+                                     Address="{x:Bind ViewModel.AddressSettingsModel.Email.Value, Mode=OneWay}"
+                                     HideWarning="False" />
+
+            <controls:OptionControl x:Uid="BitcoinKeyOption" GapHeight="{StaticResource NormalOptionGapHeight}">
+                <muxc:Expander HorizontalAlignment="Stretch"
+                               VerticalAlignment="Top"
+                               HorizontalContentAlignment="Stretch">
+                    <muxc:Expander.Header>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock x:Uid="ViewKeyHeader"
+                                       VerticalAlignment="Center"
+                                       TextTrimming="CharacterEllipsis" />
+                            <Button x:Uid="CopyButton"
+                                    Grid.Column="1"
+                                    Margin="8,0,0,0"
+                                    HorizontalAlignment="Right"
+                                    Command="{x:Bind ViewModel.CopySecretKeyCommand}"
+                                    CommandParameter="{StaticResource ClipboardProvider}" />
+                        </Grid>
+                    </muxc:Expander.Header>
+                    <TextBlock HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               IsTextSelectionEnabled="True"
+                               Text="{x:Bind ViewModel.AddressSettingsModel.SecretKeyWIF, Mode=OneWay}"
+                               TextWrapping="Wrap" />
+                </muxc:Expander>
+            </controls:OptionControl>
+
+            <!--  ToDo: Issue #861 - The layout is broken if there is an error  -->
+            <controls:OptionControl x:Uid="SynchronizationIntervalOption"
+                                    GapHeight="{StaticResource NormalOptionGapHeight}"
+                                    HideNote="True">
+                <StackPanel Orientation="Horizontal">
+                    <controls:ErrorControl HorizontalAlignment="Stretch"
+                                           VerticalAlignment="Center"
+                                           Property="{x:Bind ViewModel.AddressSettingsModel.SynchronizationInterval, Mode=OneWay}">
+                        <controls:ErrorControl.InnerContent>
+                            <TextBox IsSpellCheckEnabled="False" Text="{x:Bind ViewModel.AddressSettingsModel.SynchronizationInterval.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </controls:ErrorControl.InnerContent>
+                    </controls:ErrorControl>
+                    <TextBlock x:Uid="SynchronizationIntervalUnits"
+                               Margin="12,0"
+                               VerticalAlignment="Center" />
+                </StackPanel>
+            </controls:OptionControl>
+
+        </StackPanel>
+    </controls:AddressSettingsView>
+</local:BitcoinAddressSettingsPageBase>
