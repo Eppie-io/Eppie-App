@@ -242,15 +242,10 @@ namespace Tuvi.App.ViewModels
                 {
                     NavigationService?.Navigate(nameof(BitcoinAddressSettingsPageViewModel), account);
                 }
-                if (account.Email.Network == NetworkType.Ethereum)
+                else if (account.Email.Network == NetworkType.Ethereum)
                 {
                     NavigationService?.Navigate(nameof(EthereumAddressSettingsPageViewModel), account);
                 }
-                else
-                {
-                    NavigationService?.Navigate(nameof(DecentralizedAddressSettingsPageViewModel), account);
-                }
-
             }
             else if (Proton.Extensions.IsProton(account.Email))
             {
