@@ -1278,4 +1278,12 @@ Subject: {3}
     <value>Verify</value>
     <comment>text for the button that verifies the entered information</comment>
   </data>
+  <data name="FeatureNotImplementedErrorTitle" xml:space="preserve">
+    <value>Feature Not Available</value>
+    <comment>Title for error message when a feature is not implemented</comment>
+  </data>
+  <data name="FeatureNotImplementedErrorMessage" xml:space="preserve">
+    <value>This feature is not yet available on your current platform. It may be available in a future update.</value>
+    <comment>Error message shown when a feature is not implemented</comment>
+  </data>
 </root>

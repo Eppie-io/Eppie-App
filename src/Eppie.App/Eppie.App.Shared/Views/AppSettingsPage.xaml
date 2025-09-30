@@ -133,7 +133,7 @@
                                        HorizontalAlignment="Left"
                                        VerticalAlignment="Center"
                                        IsTextSelectionEnabled="True"
-                                       Text="one two three four five six seven eight nine ten eleven twelve [hardcode]"
+                                       Text="Not implemented"
                                        TextWrapping="WrapWholeWords" />
                             <!--  ToDo: Issue #840 - Add copy command  -->
                             <Button Grid.Column="1"

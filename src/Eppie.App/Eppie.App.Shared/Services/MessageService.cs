@@ -72,7 +72,11 @@ namespace Tuvi.App.Shared.Services
 
         public Task ShowErrorMessageAsync(Exception exception)
         {
-            if (exception is CryptoContextException cryptoContextException)
+            if (exception is NotImplementedException notImplementedException)
+            {
+                return ShowNotImplementedErrorMessageAsync();
+            }
+            else if (exception is CryptoContextException cryptoContextException)
             {
                 return ShowCryptoContextErrorMessageAsync(cryptoContextException);
             }
@@ -516,6 +520,14 @@ namespace Tuvi.App.Shared.Services
             return ShowInfoMessageAsync(
                 StringProvider.GetString("SeedPhraseNotInitializedTitle"),
                 StringProvider.GetString("SeedPhraseNotInitializedMessage"),
+                StringProvider.GetString("MsgBtnOk"));
+        }
+
+        private Task ShowNotImplementedErrorMessageAsync()
+        {
+            return ShowInfoMessageAsync(
+                StringProvider.GetString("FeatureNotImplementedErrorTitle"),
+                StringProvider.GetString("FeatureNotImplementedErrorMessage"),
                 StringProvider.GetString("MsgBtnOk"));
         }
     }
