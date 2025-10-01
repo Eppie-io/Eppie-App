@@ -118,7 +118,7 @@
                         <Span>
                             <Run x:Uid="/Eppie.App.UI/Controls/DefaultSignatureFirstPart" />
                             <Hyperlink NavigateUri="{Binding Homepage, Source={StaticResource Brand}}">
-                                <Run Text="{Binding Name, Source={StaticResource Brand}}" />
+                                <Run Text="{Binding AppName, Source={StaticResource Brand}}" />
                             </Hyperlink>
                             <Run x:Uid="/Eppie.App.UI/Controls/DefaultSignatureSecondPart" />
                         </Span>

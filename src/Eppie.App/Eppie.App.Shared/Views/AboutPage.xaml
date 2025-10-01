@@ -65,7 +65,7 @@
                 <StackPanel Spacing="16">
 
                     <TextBlock>
-                        <Run Text="{Binding Source={StaticResource Brand}, Path=Name}" />
+                        <Run Text="{Binding Source={StaticResource Brand}, Path=AppName}" />
                         <Run x:Uid="Version" />
                         <Run Text="{Binding Source={StaticResource Brand}, Path=AppVersion}" />
                     </TextBlock>
