@@ -82,7 +82,7 @@
                         <TextBlock HorizontalAlignment="Right"
                                    Foreground="{ThemeResource TextFillColorSecondary}"
                                    Style="{StaticResource BodyTextBlockStyle}">
-                            <Span>                                
+                            <Span>
                                 <Hyperlink NavigateUri="{Binding Source={StaticResource Brand}, Path=Translation}">
                                     <Run x:Uid="HelpTranslate" />
                                 </Hyperlink>
