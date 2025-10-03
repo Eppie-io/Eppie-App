@@ -83,9 +83,8 @@
                                    Foreground="{ThemeResource TextFillColorSecondary}"
                                    Style="{StaticResource BodyTextBlockStyle}">
                             <Span>
-                                <Run x:Uid="HelpTranslateFirstPart" />
                                 <Hyperlink NavigateUri="{Binding Source={StaticResource Brand}, Path=Translation}">
-                                    <Run x:Uid="HelpTranslateSecondPart" />
+                                    <Run x:Uid="HelpTranslate" />
                                 </Hyperlink>
                             </Span>
                         </TextBlock>

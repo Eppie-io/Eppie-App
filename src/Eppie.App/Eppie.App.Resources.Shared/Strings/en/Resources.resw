@@ -142,7 +142,7 @@
     <comment>Dialog text when user wants to send new message without any email account connected</comment>
   </data>
   <data name="Address.Text" xml:space="preserve">
-    <value>Address</value>
+    <value>Server address</value>
     <comment>Input field caption for server address</comment>
   </data>
   <data name="MessageFilter.PlaceholderText" xml:space="preserve">
@@ -331,7 +331,7 @@ You need to enable IMAP for this account first and try again.</value>
     <comment>Button Ok</comment>
   </data>
   <data name="OutgoingServer.Text" xml:space="preserve">
-    <value>Outgoing email server</value>
+    <value>Outgoing email server (SMTP)</value>
     <comment>Caption for outgoing email server settings</comment>
   </data>
   <data name="Password.Text" xml:space="preserve">
@@ -1143,15 +1143,15 @@ Subject: {3}
     <comment>Note for the option with theme lists</comment>
   </data>
   <data name="LaunchPasswordOption.Caption" xml:space="preserve">
-    <value>Ask for password on every launch</value>
-    <comment>Caption for the option ???</comment>
+    <value>Require password on launch</value>
+    <comment>Caption for the option to enable password on launch</comment>
   </data>
   <data name="SeedPhraseOption.Caption" xml:space="preserve">
     <value>Seed phrase</value>
     <comment>Caption for the option with the seed phrase</comment>
   </data>
   <data name="SeedPhraseOption.TextNote" xml:space="preserve">
-    <value>Your seed phrase is the key to your account. Keep it safe and never share.</value>
+    <value>Your seed phrase is the key to your account. Keep it safe and never share it.</value>
     <comment>Note for the option with the seed phrase</comment>
   </data>
   <data name="ConfirmSeedPhraseOption.Caption" xml:space="preserve">
@@ -1167,7 +1167,7 @@ Subject: {3}
     <comment>Note for the option to export data to a file</comment>
   </data>
   <data name="RestoreFromFileOption.Caption" xml:space="preserve">
-    <value>Restore your data from file</value>
+    <value>Restore your data from a file</value>
     <comment>Caption for the option to restore from a file</comment>
   </data>
   <data name="EncryptionKeyOption.Caption" xml:space="preserve">
@@ -1191,7 +1191,7 @@ Subject: {3}
     <comment>Sign out button text</comment>
   </data>
   <data name="ViewAllEncryptionKeyButtonContent.Text" xml:space="preserve">
-    <value>View All</value>
+    <value>View all</value>
     <comment>View all encryption keys button text</comment>
   </data>
   <data name="RestoreFromFileButton.Content" xml:space="preserve">
@@ -1203,7 +1203,7 @@ Subject: {3}
     <comment>Import encryption key from file button text</comment>
   </data>
   <data name="ChangeMasterPasswordButton.Content" xml:space="preserve">
-    <value>Change password</value>
+    <value>Change master password</value>
     <comment>Change master password button text</comment>
   </data>
   <data name="ConfirmSeedPhraseButton.Content" xml:space="preserve">
@@ -1218,13 +1218,9 @@ Subject: {3}
     <value>Waiting for your confirmation</value>
     <comment>Text of the note that the seed phrase is not confirmed</comment>
   </data>
-  <data name="HelpTranslateFirstPart.Text" xml:space="preserve">
-    <value>Help us with</value>
-    <comment>The first part (Help us with) of the sentence: "Help us with translation"</comment>
-  </data>
-  <data name="HelpTranslateSecondPart.Text" xml:space="preserve">
-    <value>translation</value>
-    <comment>The second part (translation) of the sentence: "Help us with translation"</comment>
+  <data name="HelpTranslate.Text" xml:space="preserve">
+    <value>Help us with translation</value>
+    <comment>"Help us with translation" link</comment>
   </data>
   <data name="CopySeedPhraseButtonContent.Text" xml:space="preserve">
     <value>Copy</value>
@@ -1239,7 +1235,7 @@ Subject: {3}
     <comment>Caption for the option with Bitcoin keys</comment>
   </data>
   <data name="BitcoinKeyOption.TextNote" xml:space="preserve">
-    <value>Import this key into your Bitcoin wallet to make your address active.</value>
+    <value>Import this key into your Bitcoin wallet to activate your address. Keep it safe and never share it.</value>
     <comment>Note for the option with Bitcoin keys. Bitcoin is a brand that doesn't translate</comment>
   </data>
   <data name="EthereumKeyOption.Caption" xml:space="preserve">
@@ -1247,7 +1243,7 @@ Subject: {3}
     <comment>Caption for the option with Ethereum keys</comment>
   </data>
     <data name="EthereumKeyOption.TextNote" xml:space="preserve">
-    <value>Import this key into your Ethereum wallet to make your address active.</value>
+    <value>Import this key into your Ethereum wallet to activate your address. Keep it safe and never share it.</value>
     <comment>Note for the option with Ethereum keys. Ethereum is a brand that doesn't translate.</comment>
   </data>
   <data name="EppieAliasOption.Caption" xml:space="preserve">
@@ -1255,7 +1251,7 @@ Subject: {3}
     <comment>Caption for the option with a decentralized address alias</comment>
   </data>
   <data name="EppieAliasOption.TextNote" xml:space="preserve">
-    <value>Claim a readable name for your decentralized address instead of a long public key.</value>
+    <value>Claim an alias for your decentralized address to replace its long public key.</value>
     <comment>Note for the option with a decentralized address alias</comment>
   </data>
   <data name="ViewKeyHeader.Text" xml:space="preserve">

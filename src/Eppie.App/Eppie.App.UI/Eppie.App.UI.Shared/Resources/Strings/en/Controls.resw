@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Address.Text" xml:space="preserve">
-    <value>Address</value>
+    <value>Server address</value>
     <comment>Input field caption for server address</comment>
   </data>
   <data name="MessageFilter.PlaceholderText" xml:space="preserve">
@@ -158,7 +158,7 @@
     <comment>Caption for incoming email server settings</comment>
   </data>
   <data name="OutgoingServer.Text" xml:space="preserve">
-    <value>Outgoing email server</value>
+    <value>Outgoing email server (SMTP)</value>
     <comment>Caption for outgoing email server settings</comment>
   </data>
   <data name="Password.Text" xml:space="preserve">
@@ -331,11 +331,11 @@
   </data>
   <data name="DefaultSignatureFirstPart.Text" xml:space="preserve">
     <value>Sent from an</value>
-    <comment>The first part (Sent from an) of the sentence: "Sent from an Eppie hybrid address"</comment>
+    <comment>The first part (Sent from an) of the sentence: "Sent from an Eppie hybrid address."</comment>
   </data>
   <data name="DefaultSignatureSecondPart.Text" xml:space="preserve">
-    <value>hybrid address</value>
-    <comment>The second part (hybrid address) of the sentence: "Sent from an Eppie hybrid address"</comment>
+    <value>hybrid address.</value>
+    <comment>The second part (hybrid address) of the sentence: "Sent from an Eppie hybrid address."</comment>
   </data>
   <data name="AdvancedOption.Caption" xml:space="preserve">
     <value>Advanced settings</value>
@@ -392,7 +392,7 @@
   </data>
   <data name="EncryptionOption.TextNote" xml:space="preserve">
     <!-- Todo: Try not using PGP, Eppie-->
-    <value>Eppie generates a PGP key for each address to enable secure end-to-end communication.</value>
+    <value>Eppie generates a PGP key pair for each address to enable secure end-to-end encryption.</value>
     <comment>Note for the encryption settings section in account settings. Eppie is a brand that doesn't translate</comment>
   </data>
   <data name="CopyEncryptionKeyButton.Content" xml:space="preserve">
@@ -404,7 +404,7 @@
     <comment>Text for the button to export the encryption key to a file</comment>
   </data>
   <data name="SendEncryptionKeyButton.Content" xml:space="preserve">
-    <value>Send by email</value>
+    <value>Send via email</value>
     <comment>Text for the button to send encryption key by email</comment>
   </data>
   <data name="EncryptionKeyIdLabel.Text" xml:space="preserve">
@@ -432,7 +432,7 @@
     <comment>Hybrid address caption text in account settings</comment>
   </data>
   <data name="HybridAddressOption.TextNote" xml:space="preserve">
-    <value>Create hybrid email address</value>
+    <value>Create hybrid email address.</value>
     <comment>Hybrid address note text in account settings.</comment>
   </data>
   <data name="ConnectionStatus.Text" xml:space="preserve">
