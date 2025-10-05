@@ -114,8 +114,8 @@ At launch Eppie will store the data using [IPFS](https://github.com/ipfs/ipfs) i
 
 ## Contribution
 
-First of all this is a pretty ambitiois project and we are greateful beyond measure for every bit of help from our community. If you decide to contribute, please create an issue first, or find an existing one, unless it's a very minor fix, like a typo.
+First of all this is a pretty ambitious project and we are grateful beyond measure for every bit of help from our community. If you decide to contribute, please create an issue first, or find an existing one, unless it's a very minor fix, like a typo.
 
 [Here](https://eppie.crowdin.com/eppie) you can help Eppie with localization.
 
-Also, feel free to [subscripe](https://eppie.io) to our waiting list. We might invite you for an interview or beta testing.
+Also, feel free to [subscribe](https://eppie.io) to our waiting list. We might invite you for an interview or beta testing.
