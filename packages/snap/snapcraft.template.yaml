@@ -1,0 +1,40 @@
+name: eppie
+# note: The version is added by the GitHub action script.
+version: '$EPPIE_VERSION'
+summary: Encrypted peer-to-peer independent email
+description: Encrypted peer-to-peer independent email client.
+icon: snap/gui/icon.png
+
+base: core24
+confinement: strict
+grade: stable
+
+apps:
+  eppie:
+    command: Eppie
+     # Error on launch - Unable to load shared library 'libX11.so.6' or one of its dependencies.
+    extensions: [gnome]
+    environment:
+      DISABLE_WAYLAND: 1
+      # Error on launch - libpxbackend-1.0.so: cannot open shared object file: No such file or directory
+      # bug https://forum.snapcraft.io/t/libpxbackend-1-0-so-cannot-open-shared-object-file-no-such-file-or-directory/44263
+      LD_LIBRARY_PATH: $LD_LIBRARY_PATH:$SNAP/gnome-platform/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/libproxy
+    plugs:
+      - x11
+      - network
+      - network-status
+
+parts:
+  eppie:
+    plugin: dump
+    source: ./
+    stage-packages:
+      - ca-certificates
+      - libc6
+      - libgcc-s1
+      - libicu74
+      - liblttng-ust1
+      - libssl3
+      - libstdc++6
+      - libunwind8
+      - zlib1g

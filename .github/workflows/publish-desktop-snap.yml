@@ -111,14 +111,21 @@ jobs:
             snap_core_version='core20'
           fi
 
-          sudo apt-get update
+          sudo apt-get update -y
+
+          # WebView2 requirements for Linux - https://platform.uno/docs/articles/controls/WebView.html#x11-specifics
+          sudo apt-get install -y libgtk-3-0 libwebkit2gtk-4.1-dev
+
+          # Snap package requirements for Ubuntu - https://platform.uno/docs/articles/uno-publishing-desktop.linux.html
           sudo apt-get install -y snapd
           sudo snap install $snap_core_version
           sudo snap install multipass
-          sudo snap install lxd
           sudo snap install snapcraft --classic
-          sudo lxd init --minimal
-          sudo usermod --append --groups lxd $USER
+
+      - name: Setup LXD
+        uses: canonical/setup-lxd@a3c85fc6fb7fff43fcfeae87659e41a8f635b7dd #0.1.3
+        with:
+          channel: latest/stable
 
       - name: Install Prerequisites
         uses: ./.github/actions/install-prerequisites
@@ -178,10 +185,25 @@ jobs:
 
           IFS=$IFS_CACHE
 
+      - name: Prepare Snapcraft
+        shell: bash
+        run: |
+          workspace="${{ github.workspace }}"
+          app_display_version='${{ steps.assign-version.outputs.app-display-version }}'
+
+          template=$(cat $workspace/packages/snap/snapcraft.template.yaml)
+          echo "${template//'$EPPIE_VERSION'/$app_display_version}" > $workspace/packages/snap/snapcraft.yaml
+
+          cat $workspace/packages/snap/snapcraft.yaml
+
       - name: Publish
         if: matrix.publish.tool == 'dotnet'
         shell: bash
         run: |
+          workspace="${{ github.workspace }}"
+          # default dotnet path - https://github.com/finebits/github-actions/blob/main/devhub/uno-platform/setup/action.yml#L67
+          dotnet_path="$workspace/.dotnet"
+
           semantic_version='${{ steps.assign-version.outputs.semantic-version }}'
           numeric_version='${{ steps.assign-version.outputs.numeric-version }}'
           app_version='${{ steps.assign-version.outputs.app-version }}'
@@ -197,7 +219,11 @@ jobs:
           options="--output=$publish_path --configuration=$configuration --framework=$framework --runtime=$runtime"
           version_options="--property:Version=\"$semantic_version\" --property:AssemblyVersion=\"$numeric_version\" --property:PackageVersion=\"$numeric_version\" --property:ApplicationVersion=\"$app_version\" --property:ApplicationDisplayVersion=\"$app_display_version\""
           verbosity_option="--verbosity=${{ inputs.dotnet-verbosity }}"
-          echo "$options $extra_options $version_options $verbosity_option" | xargs dotnet publish $project 
+          snapcraft_option="--property:SnapManifest=$workspace/packages/snap/snapcraft.yaml"
+
+          # LXD cannot be used without sudo 
+          # Add dotnet path to root user && run dotnet publish as root
+          sudo su -c "export PATH=$PATH:$dotnet_path && export DOTNET_ROOT=$dotnet_path && echo '$options $extra_options $version_options $verbosity_option $snapcraft_option' | xargs dotnet publish $project"
 
       - name: Prepare Artifacts
         shell: bash
