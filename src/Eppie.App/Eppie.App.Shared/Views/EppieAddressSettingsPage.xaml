@@ -36,6 +36,7 @@
                                   CancelCommand="{x:Bind ViewModel.CancelSettingsCommand}"
                                   IsApplying="{x:Bind ViewModel.IsWaitingResponse, Mode=OneWay}"
                                   IsRemoveButtonVisible="{x:Bind ViewModel.IsCreatingAccountMode, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
+                                  JoinWaitingListCommand="{x:Bind ViewModel.JoinWaitingListCommand, Mode=OneWay}"
                                   RemoveCommand="{x:Bind ViewModel.RemoveAccountCommand}">
         <StackPanel>
 

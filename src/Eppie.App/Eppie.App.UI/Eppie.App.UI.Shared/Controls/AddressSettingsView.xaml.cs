@@ -116,6 +116,17 @@ namespace Tuvi.App.Shared.Controls
 
 
 
+        public ICommand JoinWaitingListCommand
+        {
+            get { return (ICommand)GetValue(JoinWaitingListCommandProperty); }
+            set { SetValue(JoinWaitingListCommandProperty, value); }
+        }
+
+        public static readonly DependencyProperty JoinWaitingListCommandProperty =
+            DependencyProperty.Register(nameof(JoinWaitingListCommand), typeof(ICommand), typeof(AddressSettingsView), new PropertyMetadata(null));
+
+
+
         public AddressSettingsView()
         {
             this.InitializeComponent();
