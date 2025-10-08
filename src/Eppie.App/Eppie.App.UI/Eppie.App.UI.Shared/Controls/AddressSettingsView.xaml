@@ -59,7 +59,8 @@
             <Button MinWidth="{StaticResource ButtonMinWidth}"
                     Command="{x:Bind ApplyCommand}"
                     IsEnabled="{x:Bind IsApplyButtonEnabled, Mode=OneWay}"
-                    Style="{StaticResource AccentButtonStyle}">
+                    Style="{StaticResource AccentButtonStyle}"
+                    Visibility="{x:Bind JoinWaitingListCommand, Converter={StaticResource InverseObjectToVisibilityConverter}, Mode=OneWay}">
                 <Grid>
                     <ProgressRing Width="18"
                                   Height="18"
@@ -68,6 +69,12 @@
                     <TextBlock x:Uid="/Eppie.App.UI/Controls/ApplyButtonContent" Visibility="{x:Bind IsApplying, Converter={StaticResource InverseBoolToVisibilityConverter}, Mode=OneWay}" />
                 </Grid>
             </Button>
+
+            <Button x:Uid="/Eppie.App.UI/Controls/JoinWaitingList"
+                    MinWidth="{StaticResource ButtonMinWidth}"
+                    Command="{x:Bind JoinWaitingListCommand, Mode=OneWay}"
+                    Style="{StaticResource AccentButtonStyle}"
+                    Visibility="{x:Bind JoinWaitingListCommand, Converter={StaticResource ObjectToVisibilityConverter}, Mode=OneWay}" />
 
             <Button x:Uid="/Eppie.App.UI/Controls/Cancel"
                     Grid.Column="1"

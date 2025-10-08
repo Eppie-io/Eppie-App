@@ -121,8 +121,8 @@ namespace Tuvi.App.ViewModels
             Services.Add(new ServiceInfo(ServiceKey.Proton, "Proton Mail (Beta)", "proton.me protonmail.com proton.local"));
             Services.Add(new ServiceInfo(ServiceKey.Other, GetLocalizedString("OtherEmailAccountServiceTitle"), GetLocalizedString("OtherEmailAccountServiceDescription")));
             Services.Add(new ServiceInfo(ServiceKey.Eppie, GetLocalizedString("DecentralizedAccountServiceTitle"), GetLocalizedString("DecentralizedAccountServiceDescription")));
-            Services.Add(new ServiceInfo(ServiceKey.BitcoinMail, "Bitcoin mail (coming soon)", "Testnet"));
-            Services.Add(new ServiceInfo(ServiceKey.EthereumMail, "Ethereum mail (coming soon)", "Testnet"));
+            Services.Add(new ServiceInfo(ServiceKey.BitcoinMail, "Bitcoin mail (coming soon)", GetLocalizedString("DecentralizedAccountServiceDescription")));
+            Services.Add(new ServiceInfo(ServiceKey.EthereumMail, "Ethereum mail (coming soon)", GetLocalizedString("DecentralizedAccountServiceDescription")));
 
             if (AIService.IsAvailable())
             {

@@ -451,4 +451,8 @@
     <value>Remove address</value>
     <comment>Remove address button text in address settings</comment>
   </data>
+  <data name="JoinWaitingList.Content" xml:space="preserve">
+    <value>Join the waiting list</value>
+    <comment>JoinWaitingList button content</comment>
+  </data>
 </root>
