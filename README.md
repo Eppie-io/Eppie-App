@@ -3,8 +3,10 @@
 [![LicenseBadge](https://img.shields.io/github/license/Eppie-io/Eppie-App.svg)](https://raw.githubusercontent.com/Eppie-io/Eppie-App/main/LICENSE)
 [![Build and Test](https://img.shields.io/github/actions/workflow/status/Eppie-io/Eppie-App/build.yml?logo=github&branch=main&event=push)](https://github.com/Eppie-io/Eppie-App/actions/workflows/build.yml?query=branch%3Amain+event%3Apush)
 [![Crowdin](https://badges.crowdin.net/e/8fee200a40ee70ffd3fa6b7d8d23deee/localized.svg)](https://eppie.crowdin.com/eppie)
-[![Release](https://img.shields.io/github/v/release/Eppie-io/Eppie-App)](https://github.com/Eppie-io/Eppie-App/releases/latest)
 [![GitHub release downloads](https://img.shields.io/github/downloads/Eppie-io/Eppie-App/total)](https://github.com/Eppie-io/Eppie-App/releases)
+
+[![Release](https://img.shields.io/github/v/release/Eppie-io/Eppie-App)](https://github.com/Eppie-io/Eppie-App/releases/latest)
+[![eppie](https://snapcraft.io/eppie/badge.svg)](https://snapcraft.io/eppie)
 
 ## Intro
 ![Eppie](/screenshots/Eppie.png)
@@ -40,14 +42,16 @@ Eppie is early in development. The p2p part is not publicly available at the mom
   <img src="/screenshots/Settings.png" alt="Settings Page"/>
 </details>
 
-## Install from Microsoft Store, App Store or Google Play
+## Install from Microsoft Store, Snap Store, App Store and Google Play
 
-There's a preview version currently available at Microsoft Store.
+There's a preview version currently available at:
 <p align="left">
   <a href="https://apps.microsoft.com/detail/Eppie%20Mail%20Preview/9n3r8xkz16c5?mode=direct&cid=github">
     <img src="https://get.microsoft.com/images/en-us%20light.svg" width="200" alt="Download" />
   </a>
 </p>
+
+[![Get it from the Snap Store](https://snapcraft.io/en/light/install.svg)](https://snapcraft.io/eppie)
 
 App Store and Google Play: WIP
 
