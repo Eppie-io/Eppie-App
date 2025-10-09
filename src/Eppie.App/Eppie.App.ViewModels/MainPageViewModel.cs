@@ -887,6 +887,38 @@ namespace Tuvi.App.ViewModels
             }
         }
 
+        private void ShowLanguageChangeWarning()
+        {
+            var title = GetLocalizedString("WarningProblemTitle");
+            var solution = GetLocalizedString("RestartApp");
+
+            var messageTemplate = GetLocalizedString("RestartApplication");
+            var brandName = BrandService.GetName();
+            var message = string.Format(messageTemplate, brandName);
+
+            var existing = Problems.FirstOrDefault(x => x.Title == title && x.SolutionText == solution && x.Email is null);
+            if (existing is null)
+            {
+                Problems.Add(new Problem()
+                {
+                    ViewModel = this,
+                    Title = title,
+                    SolutionText = solution,
+                    Email = null,
+                    Message = message,
+                    ActionCommand = new RelayCommand<Problem>((p) =>
+                    {
+                        CloseProblem(p);
+                        NavigationService.ExitApplication();
+                    })
+                });
+            }
+            else
+            {
+                existing.Message = message;
+            }
+        }
+
         private void LocalSettingsService_SettingChanged(object sender, SettingChangedEventArgs args)
         {
             try
@@ -896,10 +928,10 @@ namespace Tuvi.App.ViewModels
                     LogEnabledWarning();
                 }
 
-                // ToDo: Issue #840 - In case of LocalSettingsService.Language change
-                // Show InfoBar
-                // Message: Message: You need to restart the app for the language change to take effect.
-                // Action: Restart app button if possible
+                if (args.Name == nameof(LocalSettingsService.Language))
+                {
+                    ShowLanguageChangeWarning();
+                }
             }
             catch (Exception ex)
             {

@@ -1282,4 +1282,20 @@ Subject: {3}
     <value>This feature is not yet available on your current platform. It may be available in a future update.</value>
     <comment>Error message shown when a feature is not implemented</comment>
   </data>
+  <data name="ThemeOptionSystem.Content" xml:space="preserve">
+    <value>(System mode)</value>
+    <comment>Theme option item: use system theme</comment>
+  </data>
+  <data name="ThemeOptionLight.Content" xml:space="preserve">
+    <value>Light mode</value>
+    <comment>Theme option item: light theme</comment>
+  </data>
+  <data name="ThemeOptionDark.Content" xml:space="preserve">
+    <value>Dark mode</value>
+    <comment>Theme option item: dark theme</comment>
+  </data>
+  <data name="RestartApp" xml:space="preserve">
+    <value>Restart app</value>
+    <comment>Action button text to restart application after language change</comment>
+  </data>
 </root>

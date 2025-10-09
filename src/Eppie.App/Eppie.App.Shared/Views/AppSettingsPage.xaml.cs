@@ -43,7 +43,6 @@ namespace Tuvi.App.Shared.Views
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            ThemeCombobox.SelectedIndex = 0;
             InitLanguage();
         }
 
