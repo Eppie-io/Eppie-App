@@ -48,8 +48,6 @@ namespace Tuvi.App.ViewModels
 
         public ICommand ChangeMasterPasswordCommand => new RelayCommand(() => NavigationService?.Navigate(nameof(PasswordPageViewModel), PasswordActions.ChangePassword));
 
-        public ICommand ConfirmSeedPhraseCommand => new RelayCommand(() => throw new NotImplementedException());
-
         public ICommand ExportBackupCommand => new AsyncRelayCommand<IFileOperationProvider>(ExportBackupToFileAsync);
 
         public ICommand ImportBackupCommand => new AsyncRelayCommand<IFileOperationProvider>(ImportBackupFromFileAsync);
@@ -57,6 +55,42 @@ namespace Tuvi.App.ViewModels
         public ICommand WipeApplicationDataCommand => new AsyncRelayCommand(WipeApplicationDataAsync);
 
         public ICommand OpenLogFolderCommand => new AsyncRelayCommand(OpenLogFolderAsync);
+
+        //TODO: Issue #840 - Add logic
+        public ICommand ConfirmSeedPhraseCommand => new RelayCommand(() => OnError(new NotImplementedException()));
+
+        //TODO: Issue #840 - Add logic
+        public ICommand ImportEncryptionKeyCommand => new RelayCommand(() => OnError(new NotImplementedException()));
+
+        private bool _isLaunchPasswordEnabled = true;
+        //TODO: Issue #840 - Add logic
+        public bool IsLaunchPasswordEnabled
+        {
+            get => _isLaunchPasswordEnabled;
+            set
+            {
+                if (value != _isLaunchPasswordEnabled)
+                {
+                    OnError(new NotImplementedException());
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private int _themeSelectedIndex;
+        //TODO: Issue #840 - Add logic
+        public int ThemeSelectedIndex
+        {
+            get => _themeSelectedIndex;
+            set
+            {
+                if (value != _themeSelectedIndex)
+                {
+                    OnError(new NotImplementedException());
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         override public void OnNavigatedTo(object data)
         {

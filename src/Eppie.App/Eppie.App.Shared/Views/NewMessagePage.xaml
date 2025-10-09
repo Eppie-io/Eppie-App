@@ -222,7 +222,7 @@
 
                         <Button x:Uid="PgpKeysButton"
                                 HorizontalAlignment="Stretch"
-                                Command="{x:Bind ViewModel.PgpKeysCommand}" />
+                                Command="{x:Bind ViewModel.OpenAllPgpKeysCommand}" />
 
                     </StackPanel>
                 </muxc:Expander.Content>

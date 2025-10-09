@@ -86,7 +86,7 @@ namespace Tuvi.App.ViewModels
         }
 
         public ICommand SupportDevelopmentCommand => new AsyncRelayCommand(SupportDevelopmentAsync);
-        public ICommand PgpKeysCommand => new RelayCommand(() => NavigationService?.Navigate(nameof(PgpKeysPageViewModel)));
+        public ICommand OpenAllPgpKeysCommand => new RelayCommand(() => NavigationService?.Navigate(nameof(PgpKeysPageViewModel)));
 
         private bool _isStorePaymentProcessor = true;
         public bool IsStorePaymentProcessor
