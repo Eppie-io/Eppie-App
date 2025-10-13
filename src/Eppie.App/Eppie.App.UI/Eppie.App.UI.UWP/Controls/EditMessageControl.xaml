@@ -15,7 +15,7 @@
             <ColumnDefinition x:Name="SecondColumn" Width="0" />
         </Grid.ColumnDefinitions>
 
-        <local:RichTextEditor Html="{x:Bind Html, Mode=TwoWay}" Text="{x:Bind Text, Mode=TwoWay}" />
+        <local:RichTextEditor Html="{x:Bind Html, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Text="{x:Bind Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
         <ScrollViewer Grid.Column="1"
                       Padding="4"
