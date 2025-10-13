@@ -70,6 +70,7 @@ You may download the latest release for your system:
 - [eppie.desktop-linux-x64.tar.gz](https://github.com/Eppie-io/Eppie-App/releases/latest/download/eppie.desktop-linux-x64.tar.gz) (x64 binaries)
 - [eppie.desktop-linux-arm64.tar.gz](https://github.com/Eppie-io/Eppie-App/releases/latest/download/eppie.desktop-linux-arm64.tar.gz) (arm64 binaries)
 - [eppie.desktop-snap-linux-x64.tar.gz](https://github.com/Eppie-io/Eppie-App/releases/latest/download/eppie.desktop-snap-linux-x64.tar.gz) (x64 snap package)
+- [eppie.desktop-snap-linux-arm64.tar.gz](https://github.com/Eppie-io/Eppie-App/releases/latest/download/eppie.desktop-snap-linux-arm64.tar.gz) (arm64 snap package)
 
 ### macOS
 
