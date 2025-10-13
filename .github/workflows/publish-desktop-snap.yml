@@ -131,7 +131,7 @@ jobs:
         uses: ./.github/actions/install-prerequisites
         with:
           uno-platform: true
-          uno-check-skip: 'xcode vswin vsmac windowshyperv edgewebview2 androidemulator dotnetnewunotemplates androidsdk'
+          uno-check-skip: 'git xcode vswin vsmac windowshyperv edgewebview2 dotnetnewunotemplates androidsdk androidemulator'
 
       - name: Assign version
         id: assign-version
