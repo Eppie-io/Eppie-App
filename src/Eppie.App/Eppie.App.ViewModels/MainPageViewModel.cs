@@ -470,7 +470,14 @@ namespace Tuvi.App.ViewModels
             {
                 if (await MessageService.ShowRequestReviewMessageAsync().ConfigureAwait(true))
                 {
-                    await AppStoreService.RequestReviewAsync().ConfigureAwait(true);
+                    try
+                    {
+                        await AppStoreService.RequestReviewAsync().ConfigureAwait(true);
+                    }
+                    catch (NotImplementedException)
+                    {
+                        await LauncherService.LaunchAsync(new Uri(BrandService.GetGitHub())).ConfigureAwait(true);
+                    }
                 }
 
                 LocalSettingsService.RequestReviewCount = ReviewRequestsDisabled;
