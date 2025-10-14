@@ -22,63 +22,18 @@
                                   HandleErrorCommand="{x:Bind ViewModel.HandleErrorCommand}" />
     </interactivity:Interaction.Behaviors>
 
-    <Grid Padding="16">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
+    <controls:AddressSettingsView x:Uid="AddressSettingsView"
+                                  ApplyCommand="{x:Bind ViewModel.ApplySettingsCommand}"
+                                  CancelCommand="{x:Bind ViewModel.CancelSettingsCommand}"
+                                  IsApplying="{x:Bind ViewModel.IsWaitingResponse, Mode=OneWay}"
+                                  IsRemoveButtonVisible="{x:Bind ViewModel.IsCreatingAccountMode, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
+                                  RemoveCommand="{x:Bind ViewModel.RemoveAccountCommand}">
+        <controls:ProtonSettingsControl Margin="0,12,0,0"
+                                        CreateHybridAddressCommand="{x:Bind ViewModel.CreateHybridAddressCommand, Mode=OneWay}"
+                                        IsAdvancedSettingsModeActive="{x:Bind ViewModel.IsAdvancedSettingsModeActive, Mode=TwoWay}"
+                                        IsEmailReadOnly="{x:Bind ViewModel.IsEmailReadonly, Mode=OneWay}"
+                                        ProtonAddressSettingsModel="{x:Bind ViewModel.AddressSettingsModel, Mode=OneWay}"
+                                        ShowHybridAddressButton="{x:Bind ViewModel.ShowHybridAddressButton, Mode=OneWay}" />
+    </controls:AddressSettingsView>
 
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-
-            <Button x:Uid="HybridAddressButton"
-                    Grid.Column="1"
-                    Margin="4"
-                    Command="{x:Bind ViewModel.CreateHybridAddressCommand}"
-                    Visibility="{x:Bind ViewModel.ShowHybridAddressButton, Mode=OneWay}" />
-
-            <Button x:Uid="RemoveAccountButton"
-                    Grid.Column="2"
-                    Margin="4"
-                    HorizontalAlignment="Right"
-                    Command="{x:Bind ViewModel.RemoveAccountCommand}"
-                    Visibility="{x:Bind ViewModel.IsCreatingAccountMode, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
-        </Grid>
-
-        <controls:ProtonAccountSettingsControl Grid.Row="1"
-                                               IsEmailReadOnly="{x:Bind ViewModel.IsEmailReadonly, Mode=OneWay}"
-                                               IsLocked="{x:Bind ViewModel.IsWaitingResponse, Mode=OneWay}"
-                                               ProtonAddressSettingsModel="{x:Bind ViewModel.AddressSettingsModel, Mode=OneWay}" />
-
-        <ProgressBar Grid.Row="2"
-                     Margin="4"
-                     IsIndeterminate="True"
-                     Visibility="{x:Bind ViewModel.IsWaitingResponse, Mode=OneWay}" />
-
-        <Grid Grid.Row="3" Margin="0,16,0,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="1*" />
-            </Grid.ColumnDefinitions>
-
-            <Button x:Uid="Apply"
-                    Margin="0,4,4,4"
-                    HorizontalAlignment="Stretch"
-                    Command="{x:Bind ViewModel.ApplySettingsCommand, Mode=OneWay}" />
-
-            <Button x:Uid="Cancel"
-                    Grid.Column="1"
-                    Margin="4,4,0,4"
-                    HorizontalAlignment="Stretch"
-                    Command="{x:Bind ViewModel.CancelSettingsCommand}" />
-
-        </Grid>
-
-    </Grid>
 </local:ProtonAddressSettingsPageBase>

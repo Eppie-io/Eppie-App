@@ -60,20 +60,6 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        private string _messageFooter;
-        public string MessageFooter
-        {
-            get { return _messageFooter; }
-            set { SetProperty(ref _messageFooter, value); }
-        }
-
-        private bool _isMessageFooterEnabled;
-        public bool IsMessageFooterEnabled
-        {
-            get { return _isMessageFooterEnabled; }
-            set { SetProperty(ref _isMessageFooterEnabled, value); }
-        }
-
         public EmailAddressSettingsModel() : base()
         {
             OutgoingServerAddress.SetInitialValue(string.Empty);

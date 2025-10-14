@@ -76,9 +76,7 @@
                     <controls:ErrorControl HorizontalAlignment="Stretch"
                                            VerticalAlignment="Center"
                                            Property="{x:Bind ViewModel.AddressSettingsModel.SynchronizationInterval, Mode=OneWay}">
-                        <controls:ErrorControl.InnerContent>
-                            <TextBox IsSpellCheckEnabled="False" Text="{x:Bind ViewModel.AddressSettingsModel.SynchronizationInterval.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        </controls:ErrorControl.InnerContent>
+                        <TextBox IsSpellCheckEnabled="False" Text="{x:Bind ViewModel.AddressSettingsModel.SynchronizationInterval.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </controls:ErrorControl>
                     <TextBlock x:Uid="SynchronizationIntervalUnits"
                                Margin="12,0"

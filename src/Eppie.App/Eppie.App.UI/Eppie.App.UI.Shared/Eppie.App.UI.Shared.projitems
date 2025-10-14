@@ -24,6 +24,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\OptionControl.xaml.cs">
       <DependentUpon>OptionControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\ProtonSettingsControl.xaml.cs">
+      <DependentUpon>ProtonSettingsControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Converters\EmailValidityToStyleConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\SupportDevelopmentControl.xaml.cs">
       <DependentUpon>SupportDevelopmentControl.xaml</DependentUpon>
@@ -66,9 +69,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\PromptTextInputControl.xaml.cs">
       <DependentUpon>PromptTextInputControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\ProtonAccountSettingsControl.xaml.cs">
-      <DependentUpon>ProtonAccountSettingsControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\RichTextEditor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\WhatsNewControl.xaml.cs">
       <DependentUpon>WhatsNewControl.xaml</DependentUpon>
@@ -108,6 +108,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Controls\OptionControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Controls\ProtonSettingsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -156,10 +160,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Controls\PromptTextInputControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Controls\ProtonAccountSettingsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

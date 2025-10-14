@@ -51,15 +51,13 @@
                     <controls:ErrorControl HorizontalAlignment="Left"
                                            VerticalAlignment="Top"
                                            Property="{x:Bind ViewModel.AddressSettingsModel.SenderName, Mode=OneWay}">
-                        <controls:ErrorControl.InnerContent>
-                            <TextBox Width="{StaticResource TextBoxWidth}"
-                                     HorizontalAlignment="Left"
-                                     VerticalAlignment="Top"
-                                     IsEnabled="{x:Bind ViewModel.IsClaimingName, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
-                                     IsSpellCheckEnabled="False"
-                                     PlaceholderText="{StaticResource AliasPlaceholderText}"
-                                     Text="{x:Bind ViewModel.AddressSettingsModel.SenderName.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        </controls:ErrorControl.InnerContent>
+                        <TextBox Width="{StaticResource TextBoxWidth}"
+                                 HorizontalAlignment="Left"
+                                 VerticalAlignment="Top"
+                                 IsEnabled="{x:Bind ViewModel.IsClaimingName, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
+                                 IsSpellCheckEnabled="False"
+                                 PlaceholderText="{StaticResource AliasPlaceholderText}"
+                                 Text="{x:Bind ViewModel.AddressSettingsModel.SenderName.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </controls:ErrorControl>
                     <Button x:Uid="VerifyButton"
                             MinWidth="64"
@@ -83,9 +81,7 @@
                     <controls:ErrorControl HorizontalAlignment="Stretch"
                                            VerticalAlignment="Center"
                                            Property="{x:Bind ViewModel.AddressSettingsModel.SynchronizationInterval, Mode=OneWay}">
-                        <controls:ErrorControl.InnerContent>
-                            <TextBox IsSpellCheckEnabled="False" Text="{x:Bind ViewModel.AddressSettingsModel.SynchronizationInterval.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        </controls:ErrorControl.InnerContent>
+                        <TextBox IsSpellCheckEnabled="False" Text="{x:Bind ViewModel.AddressSettingsModel.SynchronizationInterval.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </controls:ErrorControl>
                     <TextBlock x:Uid="SynchronizationIntervalUnits"
                                Margin="12,0"

@@ -32,6 +32,13 @@ namespace Tuvi.App.ViewModels
             public Account Account { get; set; }
         }
 
+        private bool _isAdvancedSettingsModeActive;
+        public bool IsAdvancedSettingsModeActive
+        {
+            get => _isAdvancedSettingsModeActive;
+            set => SetProperty(ref _isAdvancedSettingsModeActive, value);
+        }
+
         private ProtonAddressSettingsModel _addressSettingsModel;
         [CustomValidation(typeof(ProtonAddressSettingsPageViewModel), nameof(ClearValidationErrors))]
         [CustomValidation(typeof(ProtonAddressSettingsPageViewModel), nameof(ValidatePasswordIsNotEmpty))]
@@ -97,6 +104,7 @@ namespace Tuvi.App.ViewModels
         private void InitModel(ProtonAddressSettingsModel addressSettingsModel, bool isCreatingMode)
         {
             IsCreatingAccountMode = isCreatingMode;
+            IsAdvancedSettingsModeActive = isCreatingMode;
             AddressSettingsModel = addressSettingsModel;
         }
 

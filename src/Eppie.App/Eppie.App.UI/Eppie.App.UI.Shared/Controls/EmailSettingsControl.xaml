@@ -13,8 +13,6 @@
 
     <UserControl.Resources>
         <x:Double x:Key="TextBoxWidth">276</x:Double>
-        <x:Double x:Key="AdvancedSettingsSelectorWidth">108</x:Double>
-        <x:Double x:Key="ButtonMinWidth">148</x:Double>
         <x:Double x:Key="PortBoxMinWidth">64</x:Double>
         <x:Double x:Key="ProtocolSelectorMinWidth">88</x:Double>
 
@@ -49,15 +47,13 @@
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Top"
                                     Property="{x:Bind EmailAddressSettingsModel.Email, Mode=OneWay}">
-                    <local:ErrorControl.InnerContent>
-                        <TextBox x:Uid="/Eppie.App.UI/Controls/EmailAddressBox"
-                                 Width="{StaticResource TextBoxWidth}"
-                                 HorizontalAlignment="Left"
-                                 VerticalAlignment="Top"
-                                 IsReadOnly="{x:Bind IsEmailReadOnly, Mode=OneWay}"
-                                 IsSpellCheckEnabled="False"
-                                 Text="{x:Bind EmailAddressSettingsModel.Email.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    </local:ErrorControl.InnerContent>
+                    <TextBox x:Uid="/Eppie.App.UI/Controls/EmailAddressBox"
+                             Width="{StaticResource TextBoxWidth}"
+                             HorizontalAlignment="Left"
+                             VerticalAlignment="Top"
+                             IsReadOnly="{x:Bind IsEmailReadOnly, Mode=OneWay}"
+                             IsSpellCheckEnabled="False"
+                             Text="{x:Bind EmailAddressSettingsModel.Email.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </local:ErrorControl>
             </controls:OptionControl>
 
@@ -69,13 +65,11 @@
                                     VerticalAlignment="Top"
                                     Visibility="{x:Bind BasicEmailAddressSettingsModel, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}"
                                     Property="{x:Bind BasicEmailAddressSettingsModel.Password, Mode=OneWay}">
-                    <local:ErrorControl.InnerContent>
-                        <PasswordBox x:Uid="/Eppie.App.UI/Controls/PasswordBox"
-                                     Width="{StaticResource TextBoxWidth}"
-                                     HorizontalAlignment="Left"
-                                     VerticalAlignment="Top"
-                                     Password="{x:Bind BasicEmailAddressSettingsModel.Password.Value, Mode=TwoWay}" />
-                    </local:ErrorControl.InnerContent>
+                    <PasswordBox x:Uid="/Eppie.App.UI/Controls/PasswordBox"
+                                 Width="{StaticResource TextBoxWidth}"
+                                 HorizontalAlignment="Left"
+                                 VerticalAlignment="Top"
+                                 Password="{x:Bind BasicEmailAddressSettingsModel.Password.Value, Mode=TwoWay}" />
                 </local:ErrorControl>
             </controls:OptionControl>
 
@@ -177,9 +171,7 @@
                                             Orientation="Vertical">
                                     <TextBlock x:Uid="/Eppie.App.UI/Controls/Address" Margin="0,0,0,8" />
                                     <local:ErrorControl Property="{x:Bind EmailAddressSettingsModel.OutgoingServerAddress, Mode=OneWay}">
-                                        <local:ErrorControl.InnerContent>
-                                            <TextBox IsSpellCheckEnabled="False" Text="{x:Bind EmailAddressSettingsModel.OutgoingServerAddress.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                        </local:ErrorControl.InnerContent>
+                                        <TextBox IsSpellCheckEnabled="False" Text="{x:Bind EmailAddressSettingsModel.OutgoingServerAddress.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                     </local:ErrorControl>
                                 </StackPanel>
 
@@ -213,17 +205,13 @@
 
                                     <TextBlock x:Uid="/Eppie.App.UI/Controls/ServerLogin" Margin="0,16,0,8" />
                                     <local:ErrorControl Property="{x:Bind BasicEmailAddressSettingsModel.OutgoingLogin, Mode=OneWay}">
-                                        <local:ErrorControl.InnerContent>
-                                            <TextBox MinWidth="0"
-                                                     IsSpellCheckEnabled="False"
-                                                     Text="{x:Bind BasicEmailAddressSettingsModel.OutgoingLogin.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                        </local:ErrorControl.InnerContent>
+                                        <TextBox MinWidth="0"
+                                                 IsSpellCheckEnabled="False"
+                                                 Text="{x:Bind BasicEmailAddressSettingsModel.OutgoingLogin.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                     </local:ErrorControl>
                                     <TextBlock x:Uid="/Eppie.App.UI/Controls/ServerPassword" Margin="0,16,0,8" />
                                     <local:ErrorControl Property="{x:Bind BasicEmailAddressSettingsModel.OutgoingPassword, Mode=OneWay}">
-                                        <local:ErrorControl.InnerContent>
-                                            <PasswordBox MinWidth="0" Password="{x:Bind BasicEmailAddressSettingsModel.OutgoingPassword.Value, Mode=TwoWay}" />
-                                        </local:ErrorControl.InnerContent>
+                                        <PasswordBox MinWidth="0" Password="{x:Bind BasicEmailAddressSettingsModel.OutgoingPassword.Value, Mode=TwoWay}" />
                                     </local:ErrorControl>
 
                                 </StackPanel>
@@ -268,9 +256,7 @@
                                             Orientation="Vertical">
                                     <TextBlock x:Uid="/Eppie.App.UI/Controls/Address" Margin="0,0,0,8" />
                                     <local:ErrorControl Property="{x:Bind EmailAddressSettingsModel.IncomingServerAddress, Mode=OneWay}">
-                                        <local:ErrorControl.InnerContent>
-                                            <TextBox IsSpellCheckEnabled="False" Text="{x:Bind EmailAddressSettingsModel.IncomingServerAddress.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                        </local:ErrorControl.InnerContent>
+                                        <TextBox IsSpellCheckEnabled="False" Text="{x:Bind EmailAddressSettingsModel.IncomingServerAddress.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                     </local:ErrorControl>
                                 </StackPanel>
 
@@ -304,17 +290,13 @@
                                             Visibility="{x:Bind SeparateImapCredentialsCheckBoxNew.IsChecked, Mode=OneWay}">
                                     <TextBlock x:Uid="/Eppie.App.UI/Controls/ServerLogin" Margin="0,16,0,8" />
                                     <local:ErrorControl Property="{x:Bind BasicEmailAddressSettingsModel.IncomingLogin, Mode=OneWay}">
-                                        <local:ErrorControl.InnerContent>
-                                            <TextBox MinWidth="0"
-                                                     IsSpellCheckEnabled="False"
-                                                     Text="{x:Bind BasicEmailAddressSettingsModel.IncomingLogin.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                        </local:ErrorControl.InnerContent>
+                                        <TextBox MinWidth="0"
+                                                 IsSpellCheckEnabled="False"
+                                                 Text="{x:Bind BasicEmailAddressSettingsModel.IncomingLogin.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                     </local:ErrorControl>
                                     <TextBlock x:Uid="/Eppie.App.UI/Controls/ServerPassword" Margin="0,16,0,8" />
                                     <local:ErrorControl Property="{x:Bind BasicEmailAddressSettingsModel.IncomingPassword, Mode=OneWay}">
-                                        <local:ErrorControl.InnerContent>
-                                            <PasswordBox MinWidth="0" Password="{x:Bind BasicEmailAddressSettingsModel.IncomingPassword.Value, Mode=TwoWay}" />
-                                        </local:ErrorControl.InnerContent>
+                                        <PasswordBox MinWidth="0" Password="{x:Bind BasicEmailAddressSettingsModel.IncomingPassword.Value, Mode=TwoWay}" />
                                     </local:ErrorControl>
                                 </StackPanel>
 
@@ -331,9 +313,7 @@
                         <local:ErrorControl HorizontalAlignment="Stretch"
                                             VerticalAlignment="Center"
                                             Property="{x:Bind EmailAddressSettingsModel.SynchronizationInterval, Mode=OneWay}">
-                            <local:ErrorControl.InnerContent>
-                                <TextBox IsSpellCheckEnabled="False" Text="{x:Bind EmailAddressSettingsModel.SynchronizationInterval.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                            </local:ErrorControl.InnerContent>
+                            <TextBox IsSpellCheckEnabled="False" Text="{x:Bind EmailAddressSettingsModel.SynchronizationInterval.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </local:ErrorControl>
                         <TextBlock x:Uid="/Eppie.App.UI/Controls/SynchronizationIntervalUnits"
                                    Margin="12,0"

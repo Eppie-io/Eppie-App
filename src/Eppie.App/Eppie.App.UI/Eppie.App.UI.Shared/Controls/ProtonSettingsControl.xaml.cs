@@ -16,7 +16,10 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
+using System;
 using Tuvi.App.ViewModels;
+using Tuvi.App.ViewModels.Services;
+using System.Windows.Input;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -28,7 +31,7 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace Tuvi.App.Shared.Controls
 {
-    public sealed partial class ProtonAccountSettingsControl : UserControl
+    public sealed partial class ProtonSettingsControl : UserControl
     {
         public ProtonAddressSettingsModel ProtonAddressSettingsModel
         {
@@ -36,15 +39,7 @@ namespace Tuvi.App.Shared.Controls
             set { SetValue(ProtonAddressSettingsModelProperty, value); }
         }
         public static readonly DependencyProperty ProtonAddressSettingsModelProperty =
-            DependencyProperty.Register(nameof(ProtonAddressSettingsModel), typeof(ProtonAddressSettingsModel), typeof(ProtonAccountSettingsControl), new PropertyMetadata(null));
-
-        public bool IsLocked
-        {
-            get { return (bool)GetValue(IsLockedProperty); }
-            set { SetValue(IsLockedProperty, value); }
-        }
-        public static readonly DependencyProperty IsLockedProperty =
-            DependencyProperty.Register(nameof(IsLocked), typeof(bool), typeof(ProtonAccountSettingsControl), new PropertyMetadata(false));
+            DependencyProperty.Register(nameof(ProtonAddressSettingsModel), typeof(ProtonAddressSettingsModel), typeof(ProtonSettingsControl), new PropertyMetadata(null));
 
         public bool IsEmailReadOnly
         {
@@ -52,10 +47,37 @@ namespace Tuvi.App.Shared.Controls
             set { SetValue(IsEmailReadOnlyProperty, value); }
         }
         public static readonly DependencyProperty IsEmailReadOnlyProperty =
-            DependencyProperty.Register(nameof(IsEmailReadOnly), typeof(bool), typeof(ProtonAccountSettingsControl), new PropertyMetadata(false));
+            DependencyProperty.Register(nameof(IsEmailReadOnly), typeof(bool), typeof(ProtonSettingsControl), new PropertyMetadata(false));
 
 
-        public ProtonAccountSettingsControl()
+        public bool IsAdvancedSettingsModeActive
+        {
+            get { return (bool)GetValue(IsAdvancedSettingsModeActiveProperty); }
+            set { SetValue(IsAdvancedSettingsModeActiveProperty, value); }
+        }
+        public static readonly DependencyProperty IsAdvancedSettingsModeActiveProperty =
+            DependencyProperty.Register(nameof(IsAdvancedSettingsModeActive), typeof(bool), typeof(ProtonSettingsControl), new PropertyMetadata(false));
+
+
+        public ICommand CreateHybridAddressCommand
+        {
+            get { return (ICommand)GetValue(CreateHybridAddressProperty); }
+            set { SetValue(CreateHybridAddressProperty, value); }
+        }
+        public static readonly DependencyProperty CreateHybridAddressProperty =
+            DependencyProperty.Register(nameof(CreateHybridAddressCommand), typeof(ICommand), typeof(ProtonSettingsControl), new PropertyMetadata(null));
+
+
+        public bool ShowHybridAddressButton
+        {
+            get { return (bool)GetValue(ShowHybridAddressButtonProperty); }
+            set { SetValue(ShowHybridAddressButtonProperty, value); }
+        }
+        public static readonly DependencyProperty ShowHybridAddressButtonProperty =
+            DependencyProperty.Register(nameof(ShowHybridAddressButton), typeof(bool), typeof(ProtonSettingsControl), new PropertyMetadata(false));
+
+
+        public ProtonSettingsControl()
         {
             this.InitializeComponent();
         }
