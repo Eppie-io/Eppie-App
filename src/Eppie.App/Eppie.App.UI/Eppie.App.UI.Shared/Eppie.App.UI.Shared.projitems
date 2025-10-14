@@ -69,9 +69,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\PromptTextInputControl.xaml.cs">
       <DependentUpon>PromptTextInputControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\ProtonAccountSettingsControl.xaml.cs">
-      <DependentUpon>ProtonAccountSettingsControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\RichTextEditor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\WhatsNewControl.xaml.cs">
       <DependentUpon>WhatsNewControl.xaml</DependentUpon>
@@ -163,10 +160,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Controls\PromptTextInputControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Controls\ProtonAccountSettingsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
