@@ -54,6 +54,11 @@ namespace Eppie.App.Shared.Services
         public async Task<bool> RequestReviewAsync()
         {
             var context = GetStoreContext();
+            if (context is null)
+            {
+                throw new NotImplementedException("Rate and review is not implemented for this platform.");
+            }
+
             var result = await context.RequestRateAndReviewAppAsync();
 
             return result.Status == StoreRateAndReviewStatus.Succeeded;
@@ -62,7 +67,7 @@ namespace Eppie.App.Shared.Services
         private StoreContext _StoreContext = null;
         protected StoreContext GetStoreContext()
         {
-            if (_StoreContext == null)
+            if (_StoreContext is null)
             {
 
 #if WINDOWS10_0_19041_0_OR_GREATER || WINDOWS_UWP
@@ -104,7 +109,7 @@ namespace Eppie.App.Shared.Services
         private string _price;
         public virtual async Task<string> GetPriceAsync(StoreContext context)
         {
-            if (_price == null)
+            if (_price is null)
             {
                 StoreProduct product = await GetProductAsync(context, ProductId);
 
