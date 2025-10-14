@@ -13,8 +13,6 @@
 
     <UserControl.Resources>
         <x:Double x:Key="TextBoxWidth">276</x:Double>
-        <x:Double x:Key="AdvancedSettingsSelectorWidth">108</x:Double>
-        <x:Double x:Key="ButtonMinWidth">148</x:Double>
         <x:Double x:Key="PortBoxMinWidth">64</x:Double>
         <x:Double x:Key="ProtocolSelectorMinWidth">88</x:Double>
 

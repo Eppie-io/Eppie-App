@@ -72,6 +72,20 @@ namespace Tuvi.App.ViewModels
             set { SetProperty(ref _pgpKeyModel, value); }
         }
 
+        private string _messageFooter;
+        public string MessageFooter
+        {
+            get { return _messageFooter; }
+            set { SetProperty(ref _messageFooter, value); }
+        }
+
+        private bool _isMessageFooterEnabled;
+        public bool IsMessageFooterEnabled
+        {
+            get { return _isMessageFooterEnabled; }
+            set { SetProperty(ref _isMessageFooterEnabled, value); }
+        }
+
         protected BaseAddressSettingsModel()
         {
             Email.SetInitialValue(string.Empty);
