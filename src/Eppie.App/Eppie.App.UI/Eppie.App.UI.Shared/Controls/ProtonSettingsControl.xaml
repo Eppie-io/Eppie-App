@@ -42,15 +42,13 @@
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Top"
                                     Property="{x:Bind ProtonAddressSettingsModel.Email, Mode=OneWay}">
-                    <local:ErrorControl.InnerContent>
-                        <TextBox x:Uid="/Eppie.App.UI/Controls/EmailAddressBox"
-                                 Width="{StaticResource TextBoxWidth}"
-                                 HorizontalAlignment="Left"
-                                 VerticalAlignment="Top"
-                                 IsReadOnly="{x:Bind IsEmailReadOnly, Mode=OneWay}"
-                                 IsSpellCheckEnabled="False"
-                                 Text="{x:Bind ProtonAddressSettingsModel.Email.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    </local:ErrorControl.InnerContent>
+                    <TextBox x:Uid="/Eppie.App.UI/Controls/EmailAddressBox"
+                             Width="{StaticResource TextBoxWidth}"
+                             HorizontalAlignment="Left"
+                             VerticalAlignment="Top"
+                             IsReadOnly="{x:Bind IsEmailReadOnly, Mode=OneWay}"
+                             IsSpellCheckEnabled="False"
+                             Text="{x:Bind ProtonAddressSettingsModel.Email.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </local:ErrorControl>
             </controls:OptionControl>
 
@@ -66,13 +64,11 @@
                                     VerticalAlignment="Top"
                                     Visibility="{x:Bind ProtonAddressSettingsModel, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}"
                                     Property="{x:Bind ProtonAddressSettingsModel.Password, Mode=OneWay}">
-                    <local:ErrorControl.InnerContent>
-                        <PasswordBox x:Uid="/Eppie.App.UI/Controls/PasswordBox"
-                                     Width="{StaticResource TextBoxWidth}"
-                                     HorizontalAlignment="Left"
-                                     VerticalAlignment="Top"
-                                     Password="{x:Bind ProtonAddressSettingsModel.Password.Value, Mode=TwoWay}" />
-                    </local:ErrorControl.InnerContent>
+                    <PasswordBox x:Uid="/Eppie.App.UI/Controls/PasswordBox"
+                                 Width="{StaticResource TextBoxWidth}"
+                                 HorizontalAlignment="Left"
+                                 VerticalAlignment="Top"
+                                 Password="{x:Bind ProtonAddressSettingsModel.Password.Value, Mode=TwoWay}" />
                 </local:ErrorControl>
             </controls:OptionControl>
 
@@ -153,9 +149,7 @@
                         <local:ErrorControl HorizontalAlignment="Stretch"
                                             VerticalAlignment="Center"
                                             Property="{x:Bind ProtonAddressSettingsModel.SynchronizationInterval, Mode=OneWay}">
-                            <local:ErrorControl.InnerContent>
-                                <TextBox IsSpellCheckEnabled="False" Text="{x:Bind ProtonAddressSettingsModel.SynchronizationInterval.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                            </local:ErrorControl.InnerContent>
+                            <TextBox IsSpellCheckEnabled="False" Text="{x:Bind ProtonAddressSettingsModel.SynchronizationInterval.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </local:ErrorControl>
                         <TextBlock x:Uid="/Eppie.App.UI/Controls/SynchronizationIntervalUnits"
                                    Margin="12,0"
@@ -179,14 +173,12 @@
                     <local:ErrorControl HorizontalAlignment="Left"
                                         VerticalAlignment="Top"
                                         Property="{x:Bind ProtonAddressSettingsModel.TwoFactorCode, Mode=OneWay}">
-                        <local:ErrorControl.InnerContent>
-                            <TextBox Width="{StaticResource TextBoxWidth}"
-                                     HorizontalAlignment="Left"
-                                     VerticalAlignment="Top"
-                                     IsSpellCheckEnabled="False"
-                                     PlaceholderText="Enter code"
-                                     Text="{x:Bind ProtonAddressSettingsModel.TwoFactorCode.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        </local:ErrorControl.InnerContent>
+                        <TextBox Width="{StaticResource TextBoxWidth}"
+                                 HorizontalAlignment="Left"
+                                 VerticalAlignment="Top"
+                                 IsSpellCheckEnabled="False"
+                                 PlaceholderText="Enter code"
+                                 Text="{x:Bind ProtonAddressSettingsModel.TwoFactorCode.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </local:ErrorControl>
                 </controls:OptionControl>
 
@@ -200,13 +192,11 @@
                     <local:ErrorControl HorizontalAlignment="Left"
                                         VerticalAlignment="Top"
                                         Property="{x:Bind ProtonAddressSettingsModel.MailboxPassword, Mode=OneWay}">
-                        <local:ErrorControl.InnerContent>
-                            <PasswordBox x:Uid="/Eppie.App.UI/Controls/PasswordBox"
-                                         Width="{StaticResource TextBoxWidth}"
-                                         HorizontalAlignment="Left"
-                                         VerticalAlignment="Top"
-                                         Password="{x:Bind ProtonAddressSettingsModel.MailboxPassword.Value, Mode=TwoWay}" />
-                        </local:ErrorControl.InnerContent>
+                        <PasswordBox x:Uid="/Eppie.App.UI/Controls/PasswordBox"
+                                     Width="{StaticResource TextBoxWidth}"
+                                     HorizontalAlignment="Left"
+                                     VerticalAlignment="Top"
+                                     Password="{x:Bind ProtonAddressSettingsModel.MailboxPassword.Value, Mode=TwoWay}" />
                     </local:ErrorControl>
                 </controls:OptionControl>
             </StackPanel>
