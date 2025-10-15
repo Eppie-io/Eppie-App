@@ -7,6 +7,8 @@
                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                      xmlns:viewmodels="using:Tuvi.App.ViewModels"
                      xmlns:xamarin="http://uno.ui/xamarin"
+                     MaxWidth="480"
+                     HorizontalAlignment="Left"
                      mc:Ignorable="d xamarin">
 
     <local:AboutPageBase.DataContext>
