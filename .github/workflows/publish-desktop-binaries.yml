@@ -189,7 +189,7 @@ jobs:
           echo "$options $extra_options $version_options $verbosity_option" | xargs dotnet publish $project 
 
       - name: Check AZURE secrets
-        if: ${{ runner.os == 'Windows' }}
+        if: ${{ runner.os == 'Windows' && matrix.os != 'windows-11-arm' }}
         id: check-azure-secrets
         shell: bash
         run: |
@@ -218,8 +218,9 @@ jobs:
 
           echo "secrets-exist=$exist" >> $GITHUB_OUTPUT
 
+      # It currently does not support ARM64 yet. (Azure/trusted-signing-action#92)
       - name: Sign files with Trusted Signing
-        if: ${{ runner.os == 'Windows' && steps.check-azure-secrets.outputs.secrets-exist == 'true' }}
+        if: ${{ runner.os == 'Windows' && matrix.os != 'windows-11-arm' && steps.check-azure-secrets.outputs.secrets-exist == 'true' }}
         uses: azure/trusted-signing-action@fc390cf8ed0f14e248a542af1d838388a47c7a7c # v0.5.10
         with:
           azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
