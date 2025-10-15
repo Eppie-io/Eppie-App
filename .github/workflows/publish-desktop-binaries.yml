@@ -183,7 +183,7 @@ jobs:
           publish_path='${{ env.publish-path }}'
           extra_options='${{ matrix.publish.extra }}'
 
-          options="--output=$publish_path --configuration=$configuration --framework=$framework --runtime=$runtime"
+          options="--output=\"$publish_path\" --configuration=$configuration --framework=$framework --runtime=$runtime"
           version_options="--property:Version=\"$semantic_version\" --property:AssemblyVersion=\"$numeric_version\" --property:PackageVersion=\"$numeric_version\" --property:ApplicationVersion=\"$app_version\" --property:ApplicationDisplayVersion=\"$app_display_version\""
           verbosity_option="--verbosity=${{ inputs.dotnet-verbosity }}"
           echo "$options $extra_options $version_options $verbosity_option" | xargs dotnet publish $project 
@@ -229,7 +229,7 @@ jobs:
           trusted-signing-account-name: ${{ secrets.TRUSTED_SIGNING_ACCOUNT_NAME }}
           certificate-profile-name: ${{ secrets.CERTIFICATE_PROFILE_NAME }}
           files-folder: ${{ env.publish-path }}
-          files-folder-filter: exe,dll
+          files-folder-filter: Eppie*.exe,Eppie*.dll,Tuvi*.dll
           file-digest: SHA256
           timestamp-rfc3161: http://timestamp.acs.microsoft.com
           timestamp-digest: SHA256
