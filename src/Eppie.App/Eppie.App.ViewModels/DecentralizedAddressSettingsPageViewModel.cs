@@ -17,8 +17,6 @@
 // ---------------------------------------------------------------------------- //
 
 using System;
-using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
@@ -77,26 +75,26 @@ namespace Tuvi.App.ViewModels
             ClaimedName = account.Email.Name;
         }
 
-        public virtual Account ToAccount()
+        public override Account ToAccount()
         {
-            if (Email.Value is null)
+            var account = base.ToAccount();
+            if (account is null)
             {
                 return null;
             }
 
             if (IsSenderNameVisible && !string.IsNullOrEmpty(ClaimedName))
             {
-                CurrentAccount.Email = new EmailAddress(CurrentAccount.Email.Address, ClaimedName);
+                account.Email = new EmailAddress(account.Email.Address, ClaimedName);
+            }
+            else
+            {
+                account.Email = new EmailAddress(account.Email.Address, string.Empty);
             }
 
-            CurrentAccount.IsBackupAccountSettingsEnabled = true;
-            CurrentAccount.IsBackupAccountMessagesEnabled = true;
-            CurrentAccount.SynchronizationInterval = int.TryParse(SynchronizationInterval.Value, out int interval)
-                ? interval
-                : DefaultSynchronizationInterval;
-            CurrentAccount.Type = MailBoxType.Dec;
+            account.Type = MailBoxType.Dec;
 
-            return CurrentAccount;
+            return account;
         }
 
         public static DecentralizedAddressSettingsModel Create(Account account)
@@ -107,6 +105,8 @@ namespace Tuvi.App.ViewModels
 
     public class DecentralizedAddressSettingsPageViewModel : BaseAddressSettingsPageViewModel
     {
+        protected override BaseAddressSettingsModel AddressSettingsModelBase => AddressSettingsModel;
+
         private DecentralizedAddressSettingsModel _addressSettingsModel;
         public DecentralizedAddressSettingsModel AddressSettingsModel
         {
@@ -222,11 +222,12 @@ namespace Tuvi.App.ViewModels
                 IsBackupAccountSettingsEnabled = true,
                 IsBackupAccountMessagesEnabled = true,
                 Type = MailBoxType.Dec,
-                DecentralizedAccountIndex = accountIndex
+                DecentralizedAccountIndex = accountIndex,
+                IsMessageFooterEnabled = false
             };
         }
 
-        protected override Account AddressSettingsModelToAccount()
+        protected override Account ApplySettingsToAccount()
         {
             return AddressSettingsModel.ToAccount();
         }
