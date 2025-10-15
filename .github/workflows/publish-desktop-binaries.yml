@@ -95,8 +95,8 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     env:
-      publish-path: './.publish/${{ matrix.publish.configuration }}/${{ matrix.publish.framework }}/${{ matrix.publish.runtime }}'
-      artifacts-path: './.artifacts/${{ matrix.publish.configuration }}/${{ matrix.publish.framework }}/${{ matrix.publish.runtime }}'
+      publish-path: '${{ github.workspace }}/.publish/${{ matrix.publish.configuration }}/${{ matrix.publish.framework }}/${{ matrix.publish.runtime }}'
+      artifacts-path: '${{ github.workspace }}/.artifacts/${{ matrix.publish.configuration }}/${{ matrix.publish.framework }}/${{ matrix.publish.runtime }}'
 
     steps:
       - name: Support longpaths
@@ -187,6 +187,52 @@ jobs:
           version_options="--property:Version=\"$semantic_version\" --property:AssemblyVersion=\"$numeric_version\" --property:PackageVersion=\"$numeric_version\" --property:ApplicationVersion=\"$app_version\" --property:ApplicationDisplayVersion=\"$app_display_version\""
           verbosity_option="--verbosity=${{ inputs.dotnet-verbosity }}"
           echo "$options $extra_options $version_options $verbosity_option" | xargs dotnet publish $project 
+
+      - name: Check AZURE secrets
+        if: ${{ runner.os == 'Windows' }}
+        id: check-azure-secrets
+        shell: bash
+        run: |
+          exist=true
+
+          if [ "${{ secrets.AZURE_TENANT_ID }}" == "" ]; then
+            echo "::warning::'secrets.AZURE_TENANT_ID' is empty"
+            exist=false
+          fi
+          if [ "${{ secrets.AZURE_CLIENT_ID }}" == "" ]; then
+            echo "::warning::'secrets.AZURE_CLIENT_ID' is empty"
+            exist=false
+          fi
+          if [ "${{ secrets.AZURE_CLIENT_SECRET }}" == "" ]; then
+            echo "::warning::'secrets.AZURE_CLIENT_SECRET' is empty"
+            exist=false
+          fi
+          if [ "${{ secrets.TRUSTED_SIGNING_ACCOUNT_NAME }}" == "" ]; then
+            echo "::warning::'secrets.TRUSTED_SIGNING_ACCOUNT_NAME' is empty"
+            exist=false
+          fi
+          if [ "${{ secrets.CERTIFICATE_PROFILE_NAME }}" == "" ]; then
+            echo "::warning::'secrets.CERTIFICATE_PROFILE_NAME' is empty"
+            exist=false
+          fi
+
+          echo "secrets-exist=$exist" >> $GITHUB_OUTPUT
+
+      - name: Sign files with Trusted Signing
+        if: ${{ runner.os == 'Windows' && steps.check-azure-secrets.outputs.secrets-exist == 'true' }}
+        uses: azure/trusted-signing-action@fc390cf8ed0f14e248a542af1d838388a47c7a7c # v0.5.10
+        with:
+          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          azure-client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+          endpoint: https://neu.codesigning.azure.net/
+          trusted-signing-account-name: ${{ secrets.TRUSTED_SIGNING_ACCOUNT_NAME }}
+          certificate-profile-name: ${{ secrets.CERTIFICATE_PROFILE_NAME }}
+          files-folder: ${{ env.publish-path }}
+          files-folder-filter: exe,dll
+          file-digest: SHA256
+          timestamp-rfc3161: http://timestamp.acs.microsoft.com
+          timestamp-digest: SHA256
 
       - name: Prepare Artifacts
         shell: bash
