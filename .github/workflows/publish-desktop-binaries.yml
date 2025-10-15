@@ -229,7 +229,7 @@ jobs:
           trusted-signing-account-name: ${{ secrets.TRUSTED_SIGNING_ACCOUNT_NAME }}
           certificate-profile-name: ${{ secrets.CERTIFICATE_PROFILE_NAME }}
           files-folder: ${{ env.publish-path }}
-          files-folder-filter: exe,dll
+          files-folder-filter: Eppie*.exe,Eppie*.dll,Tuvi*.dll
           file-digest: SHA256
           timestamp-rfc3161: http://timestamp.acs.microsoft.com
           timestamp-digest: SHA256
