@@ -99,6 +99,8 @@ namespace Tuvi.App.ViewModels
             }
         }
 
+        protected override BaseAddressSettingsModel AddressSettingsModelBase => AddressSettingsModel;
+
         private void OnAddressSettingsModelPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             ValidateProperty(AddressSettingsModel, nameof(AddressSettingsModel));
@@ -156,7 +158,7 @@ namespace Tuvi.App.ViewModels
 
             await AddressSettingsModel.InitModelAsync(CoreProvider, NavigationService).ConfigureAwait(true);
 
-            IsAdvancedSettingsModeActive = (isCreatingMode && addressSettingsModel is BasicEmailAddressSettingsModel);
+            IsAdvancedSettingsModeActive = isCreatingMode && addressSettingsModel is BasicEmailAddressSettingsModel;
             ShouldAutoExpandOutgoingServer = ShouldAutoExpandIncomingServer = IsAdvancedSettingsModeActive;
         }
 
@@ -187,7 +189,7 @@ namespace Tuvi.App.ViewModels
             return true;
         }
 
-        protected override Account AddressSettingsModelToAccount()
+        protected override Account ApplySettingsToAccount()
         {
             return AddressSettingsModel.ToAccount();
         }

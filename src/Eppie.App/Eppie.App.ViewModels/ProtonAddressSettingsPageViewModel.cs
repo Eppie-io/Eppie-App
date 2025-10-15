@@ -20,6 +20,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
+using Tuvi.App.ViewModels.Validation;
 using Tuvi.Core.Entities;
 using Tuvi.Proton.Client.Exceptions;
 
@@ -64,6 +65,8 @@ namespace Tuvi.App.ViewModels
             }
         }
 
+        protected override BaseAddressSettingsModel AddressSettingsModelBase => AddressSettingsModel;
+
         private void OnAddressSettingsModelPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             ValidateProperty(AddressSettingsModel, nameof(AddressSettingsModel));
@@ -101,6 +104,16 @@ namespace Tuvi.App.ViewModels
             }
         }
 
+        private void ActivateAdvancedSettingsAndSetError(ValidatableProperty<string> field, string errorResourceKey)
+        {
+            if (field != null)
+            {
+                field.Errors.Clear();
+                field.Errors.Add(GetLocalizedString(errorResourceKey));
+            }
+            IsAdvancedSettingsModeActive = true;
+        }
+
         private void InitModel(ProtonAddressSettingsModel addressSettingsModel, bool isCreatingMode)
         {
             IsCreatingAccountMode = isCreatingMode;
@@ -125,7 +138,7 @@ namespace Tuvi.App.ViewModels
             return true;
         }
 
-        protected override Account AddressSettingsModelToAccount()
+        protected override Account ApplySettingsToAccount()
         {
             return AddressSettingsModel.ToAccount();
         }
@@ -180,13 +193,11 @@ namespace Tuvi.App.ViewModels
             }
             catch (ProtonSessionRequestException)
             {
-                AddressSettingsModel.TwoFactorCode.Errors.Clear();
-                AddressSettingsModel.TwoFactorCode.Errors.Add(GetLocalizedString("AuthenticationError"));
+                ActivateAdvancedSettingsAndSetError(AddressSettingsModel.TwoFactorCode, "AuthenticationError");
             }
             catch (NeedAdditionalAuthInfo)
             {
-                AddressSettingsModel.TwoFactorCode.Errors.Clear();
-                AddressSettingsModel.TwoFactorCode.Errors.Add(GetLocalizedString("AuthenticationError"));
+                ActivateAdvancedSettingsAndSetError(AddressSettingsModel.TwoFactorCode, "AuthenticationError");
             }
 
             throw new NeedAdditionalAuthInfo();
@@ -204,9 +215,7 @@ namespace Tuvi.App.ViewModels
                         {
                             if (string.IsNullOrEmpty(AddressSettingsModel.TwoFactorCode.Value))
                             {
-                                AddressSettingsModel.TwoFactorCode.Errors.Clear();
-                                AddressSettingsModel.TwoFactorCode.Errors.Add(GetLocalizedString("NeedTwofactorCode"));
-
+                                ActivateAdvancedSettingsAndSetError(AddressSettingsModel.TwoFactorCode, "NeedTwofactorCode");
                                 throw new NeedAdditionalAuthInfo();
                             }
                         }).ConfigureAwait(true);
@@ -218,9 +227,7 @@ namespace Tuvi.App.ViewModels
                         {
                             if (string.IsNullOrEmpty(AddressSettingsModel.MailboxPassword.Value))
                             {
-                                AddressSettingsModel.MailboxPassword.Errors.Clear();
-                                AddressSettingsModel.MailboxPassword.Errors.Add(GetLocalizedString("NeedMailboxPassword"));
-
+                                ActivateAdvancedSettingsAndSetError(AddressSettingsModel.MailboxPassword, "NeedMailboxPassword");
                                 throw new NeedAdditionalAuthInfo();
                             }
                         }).ConfigureAwait(true);
@@ -247,8 +254,7 @@ namespace Tuvi.App.ViewModels
             }
             catch (NeedAdditionalAuthInfo)
             {
-                AddressSettingsModel.MailboxPassword.Errors.Clear();
-                AddressSettingsModel.MailboxPassword.Errors.Add(GetLocalizedString("NeedMailboxPassword"));
+                ActivateAdvancedSettingsAndSetError(AddressSettingsModel.MailboxPassword, "NeedMailboxPassword");
             }
         }
     }

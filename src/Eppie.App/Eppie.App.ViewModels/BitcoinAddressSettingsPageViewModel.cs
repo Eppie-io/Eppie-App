@@ -18,8 +18,6 @@
 
 using System;
 using System.Threading;
-using CommunityToolkit.Mvvm.Input;
-using Tuvi.App.ViewModels.Services;
 using Tuvi.Core.Entities;
 
 namespace Tuvi.App.ViewModels

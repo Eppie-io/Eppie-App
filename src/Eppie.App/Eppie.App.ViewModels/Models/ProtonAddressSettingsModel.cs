@@ -51,24 +51,18 @@ namespace Tuvi.App.ViewModels
             };
         }
 
-        public Account ToAccount()
+        public override Account ToAccount()
         {
-            if (Email.Value is null)
+            var account = base.ToAccount();
+            if (account is null)
             {
                 return null;
             }
 
-            CurrentAccount.Email = new EmailAddress(Email.Value, SenderName.Value);
+            account.AuthData = new BasicAuthData() { Password = Password.Value };
+            account.Type = MailBoxType.Proton;
 
-            CurrentAccount.AuthData = new BasicAuthData() { Password = Password.Value };
-            CurrentAccount.IsBackupAccountSettingsEnabled = IsBackupAccountSettingsEnabled;
-            CurrentAccount.IsBackupAccountMessagesEnabled = IsBackupAccountMessagesEnabled;
-            CurrentAccount.SynchronizationInterval = int.TryParse(SynchronizationInterval.Value, out int interval)
-                ? interval
-                : DefaultSynchronizationInterval;
-            CurrentAccount.Type = MailBoxType.Proton;
-
-            return CurrentAccount;
+            return account;
         }
 
         public static ProtonAddressSettingsModel Create(Account account)

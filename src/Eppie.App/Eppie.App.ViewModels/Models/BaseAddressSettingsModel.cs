@@ -43,6 +43,11 @@ namespace Tuvi.App.ViewModels
         public ValidatableProperty<string> SynchronizationInterval { get; } = new ValidatableProperty<string>();
         public ValidatableProperty<string> SenderName { get; } = new ValidatableProperty<string>();
 
+        /// <summary>
+        /// Returns the original account email bound to the model (ignores any edited values).
+        /// </summary>
+        public EmailAddress OriginalEmail => CurrentAccount?.Email;
+
         private bool _isBackupAccountSettingsEnabled = true;
         public bool IsBackupAccountSettingsEnabled
         {
@@ -125,6 +130,9 @@ namespace Tuvi.App.ViewModels
             IsBackupAccountMessagesEnabled = account.IsBackupAccountMessagesEnabled;
             SynchronizationInterval.SetInitialValue(account.SynchronizationInterval.ToString());
 
+            MessageFooter = account.MessageFooter;
+            IsMessageFooterEnabled = account.IsMessageFooterEnabled;
+
             Email.PropertyChanged += (sender, args) =>
             {
                 OnValidatablePropertyChanged<string>(nameof(Email), args.PropertyName);
@@ -144,6 +152,25 @@ namespace Tuvi.App.ViewModels
             CoreProvider = provider;
             NavigationService = navigationService;
             await InitializePgpKeyInfoAsync(CurrentAccount).ConfigureAwait(true);
+        }
+
+        public virtual Account ToAccount()
+        {
+            if (Email.Value is null)
+            {
+                return null;
+            }
+
+            CurrentAccount.Email = new EmailAddress(Email.Value, SenderName.Value);
+            CurrentAccount.IsBackupAccountSettingsEnabled = IsBackupAccountSettingsEnabled;
+            CurrentAccount.IsBackupAccountMessagesEnabled = IsBackupAccountMessagesEnabled;
+            CurrentAccount.MessageFooter = MessageFooter;
+            CurrentAccount.IsMessageFooterEnabled = IsMessageFooterEnabled;
+            CurrentAccount.SynchronizationInterval = int.TryParse(SynchronizationInterval.Value, out int interval)
+                ? interval
+                : DefaultSynchronizationInterval;
+
+            return CurrentAccount;
         }
 
         private async Task InitializePgpKeyInfoAsync(Account account)

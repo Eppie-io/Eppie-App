@@ -130,39 +130,6 @@
 
         <controls:AdvancedSettingsControl HideResetButton="True" IsAdvancedModeActive="{x:Bind IsAdvancedSettingsModeActive, Mode=TwoWay}">
             <StackPanel>
-                <controls:OptionControl x:Uid="/Eppie.App.UI/Controls/BackupOption" GapHeight="{StaticResource NormalOptionGapHeight}">
-                    <StackPanel Orientation="Vertical">
-                        <CheckBox x:Name="BackupAccountSettingsCheckBoxNew"
-                                  x:Uid="/Eppie.App.UI/Controls/BackupSettingsCheckBox"
-                                  IsChecked="{x:Bind ProtonAddressSettingsModel.IsBackupAccountSettingsEnabled, Mode=TwoWay}" />
-                        <CheckBox x:Uid="/Eppie.App.UI/Controls/BackupMessagesCheckBox"
-                                  IsChecked="{x:Bind ProtonAddressSettingsModel.IsBackupAccountMessagesEnabled, Mode=TwoWay}"
-                                  IsEnabled="{x:Bind BackupAccountSettingsCheckBoxNew.IsChecked, Mode=OneWay, Converter={StaticResource NullableBoolToBoolConverter}}" />
-                    </StackPanel>
-                </controls:OptionControl>
-
-                <!--  ToDo: Issue #931 - The layout is broken if there is an error  -->
-                <controls:OptionControl x:Uid="/Eppie.App.UI/Controls/SynchronizationIntervalOption"
-                                        GapHeight="{StaticResource NormalOptionGapHeight}"
-                                        HideNote="True">
-                    <StackPanel Orientation="Horizontal">
-                        <local:ErrorControl HorizontalAlignment="Stretch"
-                                            VerticalAlignment="Center"
-                                            Property="{x:Bind ProtonAddressSettingsModel.SynchronizationInterval, Mode=OneWay}">
-                            <TextBox IsSpellCheckEnabled="False" Text="{x:Bind ProtonAddressSettingsModel.SynchronizationInterval.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        </local:ErrorControl>
-                        <TextBlock x:Uid="/Eppie.App.UI/Controls/SynchronizationIntervalUnits"
-                                   Margin="12,0"
-                                   VerticalAlignment="Center" />
-                    </StackPanel>
-                </controls:OptionControl>
-
-                <controls:OptionControl x:Uid="/Eppie.App.UI/Controls/HybridAddressOption"
-                                        GapHeight="{StaticResource NormalOptionGapHeight}"
-                                        Visibility="{x:Bind ShowHybridAddressButton, Mode=OneWay}">
-                    <Button x:Uid="/Eppie.App.UI/Controls/HybridAddressButton" Command="{x:Bind CreateHybridAddressCommand}" />
-                </controls:OptionControl>
-
                 <!--
                     ToDo: Issue #931 - The application does not store this option.
                     It is a temporary solution for adding and changing a Proton account. UX should be changed.
@@ -198,6 +165,39 @@
                                      VerticalAlignment="Top"
                                      Password="{x:Bind ProtonAddressSettingsModel.MailboxPassword.Value, Mode=TwoWay}" />
                     </local:ErrorControl>
+                </controls:OptionControl>
+
+                <controls:OptionControl x:Uid="/Eppie.App.UI/Controls/BackupOption" GapHeight="{StaticResource NormalOptionGapHeight}">
+                    <StackPanel Orientation="Vertical">
+                        <CheckBox x:Name="BackupAccountSettingsCheckBoxNew"
+                                  x:Uid="/Eppie.App.UI/Controls/BackupSettingsCheckBox"
+                                  IsChecked="{x:Bind ProtonAddressSettingsModel.IsBackupAccountSettingsEnabled, Mode=TwoWay}" />
+                        <CheckBox x:Uid="/Eppie.App.UI/Controls/BackupMessagesCheckBox"
+                                  IsChecked="{x:Bind ProtonAddressSettingsModel.IsBackupAccountMessagesEnabled, Mode=TwoWay}"
+                                  IsEnabled="{x:Bind BackupAccountSettingsCheckBoxNew.IsChecked, Mode=OneWay, Converter={StaticResource NullableBoolToBoolConverter}}" />
+                    </StackPanel>
+                </controls:OptionControl>
+
+                <!--  ToDo: Issue #931 - The layout is broken if there is an error  -->
+                <controls:OptionControl x:Uid="/Eppie.App.UI/Controls/SynchronizationIntervalOption"
+                                        GapHeight="{StaticResource NormalOptionGapHeight}"
+                                        HideNote="True">
+                    <StackPanel Orientation="Horizontal">
+                        <local:ErrorControl HorizontalAlignment="Stretch"
+                                            VerticalAlignment="Center"
+                                            Property="{x:Bind ProtonAddressSettingsModel.SynchronizationInterval, Mode=OneWay}">
+                            <TextBox IsSpellCheckEnabled="False" Text="{x:Bind ProtonAddressSettingsModel.SynchronizationInterval.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </local:ErrorControl>
+                        <TextBlock x:Uid="/Eppie.App.UI/Controls/SynchronizationIntervalUnits"
+                                   Margin="12,0"
+                                   VerticalAlignment="Center" />
+                    </StackPanel>
+                </controls:OptionControl>
+
+                <controls:OptionControl x:Uid="/Eppie.App.UI/Controls/HybridAddressOption"
+                                        GapHeight="{StaticResource NormalOptionGapHeight}"
+                                        Visibility="{x:Bind ShowHybridAddressButton, Mode=OneWay}">
+                    <Button x:Uid="/Eppie.App.UI/Controls/HybridAddressButton" Command="{x:Bind CreateHybridAddressCommand}" />
                 </controls:OptionControl>
             </StackPanel>
         </controls:AdvancedSettingsControl>

@@ -61,7 +61,7 @@ namespace Tuvi.App.ViewModels
 
         public bool IsEmailReadonly
         {
-            get { return !(_isCreatingAccountMode); }
+            get { return !_isCreatingAccountMode; }
         }
 
         public bool IsApplyButtonEnabled
@@ -90,7 +90,7 @@ namespace Tuvi.App.ViewModels
         {
             try
             {
-                var email = AddressSettingsModelToAccount()?.Email;
+                var email = AddressSettingsModelBase?.OriginalEmail;
                 if (email != null)
                 {
                     var deckey = await Core.GetSecurityManager().GetEmailPublicKeyStringAsync(email).ConfigureAwait(true);
@@ -111,6 +111,8 @@ namespace Tuvi.App.ViewModels
                 return;
             }
         }
+
+        protected abstract BaseAddressSettingsModel AddressSettingsModelBase { get; }
 
         public bool ShowHybridAddressButton
         {
@@ -186,7 +188,7 @@ namespace Tuvi.App.ViewModels
             IsWaitingResponse = true;
             try
             {
-                var accountData = AddressSettingsModelToAccount();
+                var accountData = ApplySettingsToAccount();
                 var result = await ApplySettingsAsync(accountData).ConfigureAwait(true);
                 if (result)
                 {
@@ -273,7 +275,7 @@ namespace Tuvi.App.ViewModels
 
                 if (isConfirmed)
                 {
-                    var account = AddressSettingsModelToAccount();
+                    var account = ApplySettingsToAccount();
                     await Core.DeleteAccountAsync(account).ConfigureAwait(true);
 
                     await BackupIfNeededAsync().ConfigureAwait(true);
@@ -293,12 +295,22 @@ namespace Tuvi.App.ViewModels
 
         private async Task CreateHybridAddressAsync()
         {
-            await Core.CreateHybridAccountAsync(AddressSettingsModelToAccount()).ConfigureAwait(true);
+            await Core.CreateHybridAccountAsync(ApplySettingsToAccount()).ConfigureAwait(true);
 
             GoBack();
         }
 
-        protected virtual Account AddressSettingsModelToAccount()
+        /// <summary>
+        /// Applies the current page settings to an <see cref="Account"/> instance.
+        /// </summary>
+        /// <remarks>
+        /// This method mutates the underlying account data. Invoke it only from <c>ApplySettings*</c> methods.
+        /// Calling it from elsewhere may lead to unintended side effects.
+        /// </remarks>
+        /// <returns>
+        /// The account with the applied settings. The base implementation returns <see langword="null"/>.
+        /// </returns>
+        protected virtual Account ApplySettingsToAccount()
         {
             return null;
         }

@@ -72,8 +72,6 @@ namespace Tuvi.App.ViewModels
             OutgoingServerPort = account.OutgoingServerPort;
             IncomingServerPort = account.IncomingServerPort;
             IncomingMailProtocol = account.IncomingMailProtocol;
-            MessageFooter = account.MessageFooter;
-            IsMessageFooterEnabled = account.IsMessageFooterEnabled;
 
             OutgoingServerAddress.PropertyChanged += (sender, args) =>
             {
@@ -85,32 +83,24 @@ namespace Tuvi.App.ViewModels
             };
         }
 
-        public virtual Account ToAccount()
+        public override Account ToAccount()
         {
-            if (Email.Value is null)
+            var account = base.ToAccount();
+            if (account is null)
             {
                 return null;
             }
 
-            CurrentAccount.Email = new EmailAddress(Email.Value, SenderName.Value);
+            account.Type = MailBoxType.Email;
 
-            CurrentAccount.IsBackupAccountSettingsEnabled = IsBackupAccountSettingsEnabled;
-            CurrentAccount.IsBackupAccountMessagesEnabled = IsBackupAccountMessagesEnabled;
-            CurrentAccount.SynchronizationInterval = int.TryParse(SynchronizationInterval.Value, out int interval)
-                ? interval
-                : DefaultSynchronizationInterval;
-            CurrentAccount.Type = MailBoxType.Email;
+            account.OutgoingMailProtocol = MailProtocol.SMTP;
+            account.OutgoingServerAddress = OutgoingServerAddress.Value;
+            account.OutgoingServerPort = OutgoingServerPort;
+            account.IncomingMailProtocol = IncomingMailProtocol;
+            account.IncomingServerAddress = IncomingServerAddress.Value;
+            account.IncomingServerPort = IncomingServerPort;
 
-            CurrentAccount.OutgoingMailProtocol = MailProtocol.SMTP;
-            CurrentAccount.OutgoingServerAddress = OutgoingServerAddress.Value;
-            CurrentAccount.OutgoingServerPort = OutgoingServerPort;
-            CurrentAccount.IncomingMailProtocol = IncomingMailProtocol;
-            CurrentAccount.IncomingServerAddress = IncomingServerAddress.Value;
-            CurrentAccount.IncomingServerPort = IncomingServerPort;
-            CurrentAccount.MessageFooter = MessageFooter;
-            CurrentAccount.IsMessageFooterEnabled = IsMessageFooterEnabled;
-
-            return CurrentAccount;
+            return account;
         }
 
         public static EmailAddressSettingsModel Create(Account account)
@@ -228,12 +218,12 @@ namespace Tuvi.App.ViewModels
 
         public override Account ToAccount()
         {
-            if (Email.Value is null)
+            var account = base.ToAccount();
+            if (account is null)
             {
                 return null;
             }
 
-            CurrentAccount = base.ToAccount();
             var basicAuth = new BasicAuthData() { Password = Password.Value };
 
             if (UseSeparateOutgoingCredentials)
@@ -248,9 +238,9 @@ namespace Tuvi.App.ViewModels
                 basicAuth.IncomingPassword = IncomingPassword.Value;
             }
 
-            CurrentAccount.AuthData = basicAuth;
+            account.AuthData = basicAuth;
 
-            return CurrentAccount;
+            return account;
         }
     }
 
@@ -276,19 +266,19 @@ namespace Tuvi.App.ViewModels
 
         public override Account ToAccount()
         {
-            if (Email.Value is null)
+            var account = base.ToAccount();
+            if (account is null)
             {
                 return null;
             }
 
-            CurrentAccount = base.ToAccount();
-            CurrentAccount.AuthData = new OAuth2Data()
+            account.AuthData = new OAuth2Data()
             {
                 RefreshToken = RefreshToken,
                 AuthAssistantId = AuthAssistantId
             };
 
-            return CurrentAccount;
+            return account;
         }
     }
 }
