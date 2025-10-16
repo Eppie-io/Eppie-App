@@ -33,13 +33,21 @@ Eppie is early in development. The p2p part is not publicly available at the mom
 ## Screenshots
 
 <details>
-  <summary>Main Screen</summary>
-  <img src="/screenshots/MainPage.png" alt="Main Screen"/>
+  <summary>Linux</summary>
+  <img src="/screenshots/Linux/Eppie1.png" alt="Main Page"/>
+  <img src="/screenshots/Linux/Eppie2.png" alt="Services"/>
+  <img src="/screenshots/Linux/Eppie3.png" alt="Mailbox Settings Page"/>
 </details>
 
 <details>
-  <summary>Settings Page</summary>
-  <img src="/screenshots/Settings.png" alt="Settings Page"/>
+  <summary>macOS</summary>
+  <img src="/screenshots/macOS/Eppie.png" alt="Main Page"/>
+</details>
+
+<details>
+  <summary>Windows</summary>
+  <img src="/screenshots/Windows/MainPage.png" alt="Main Page"/>
+  <img src="/screenshots/Windows/Settings.png" alt="Settings Page"/>
 </details>
 
 ## Install from Microsoft Store, Snap Store, App Store and Google Play
