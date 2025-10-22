@@ -91,6 +91,7 @@ namespace Eppie.App.Shared
                 LogLaunchInformation();
 
                 BuildHost();
+
                 InitializeComponent();
 
                 SubscribeToEvents();
@@ -107,6 +108,8 @@ namespace Eppie.App.Shared
         {
             LocalSettingsService = new LocalSettingsService();
             ApplicationLanguages.PrimaryLanguageOverride = LocalSettingsService.Language;
+
+            LocalSettingsService.SettingChanged += LocalSettingsService_ThemeSettingChanged;
         }
 
         private void InitializeLogger()
@@ -204,6 +207,8 @@ namespace Eppie.App.Shared
             _errorHandler = new ErrorHandler();
             _errorHandler.SetMessageService(new MessageService(() => XamlRoot));
 
+            frame.RequestedTheme = ToElementTheme(LocalSettingsService.Theme);
+
             ConfigurePreferredMinimumSize();
 
             return frame;
@@ -280,6 +285,35 @@ namespace Eppie.App.Shared
                                    brand.GetAppVersion(),
                                    ApplicationLanguages.PrimaryLanguageOverride,
                                    RuntimeInformation.OSDescription);
+        }
+
+        private void LocalSettingsService_ThemeSettingChanged(object sender, SettingChangedEventArgs args)
+        {
+            if (args.Name == nameof(LocalSettingsService.Theme))
+            {
+                ApplyTheme();
+            }
+        }
+
+        private void ApplyTheme()
+        {
+            if (MainWindow?.Content is FrameworkElement rootElement)
+            {
+                rootElement.RequestedTheme = ToElementTheme(LocalSettingsService.Theme);
+            }
+        }
+
+        private static ElementTheme ToElementTheme(Tuvi.App.ViewModels.Services.AppTheme theme)
+        {
+            switch (theme)
+            {
+                case Tuvi.App.ViewModels.Services.AppTheme.Light:
+                    return ElementTheme.Light;
+                case Tuvi.App.ViewModels.Services.AppTheme.Dark:
+                    return ElementTheme.Dark;
+                default:
+                    return ElementTheme.Default;
+            }
         }
     }
 }

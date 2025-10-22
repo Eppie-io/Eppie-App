@@ -54,6 +54,21 @@ namespace Tuvi.App.Shared.Services
         }
 
         /// <summary>
+        /// Property to store the UI theme
+        /// </summary>
+        public Tuvi.App.ViewModels.Services.AppTheme Theme
+        {
+            get
+            {
+                return GetEnumOption(Tuvi.App.ViewModels.Services.AppTheme.Default);
+            }
+            set
+            {
+                SetEnumOption(value);
+            }
+        }
+
+        /// <summary>
         /// Property to store the selected mail filter on all messages page
         /// </summary>
         public string SelectedMailFilterForAllMessagesPage

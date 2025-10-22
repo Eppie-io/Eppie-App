@@ -22,6 +22,27 @@ using Microsoft.Extensions.Logging;
 namespace Tuvi.App.ViewModels.Services
 {
     /// <summary>
+    /// Application theme options
+    /// </summary>
+    public enum AppTheme
+    {
+        /// <summary>
+        /// Use system default theme
+        /// </summary>
+        Default = 0,
+
+        /// <summary>
+        /// Use light theme
+        /// </summary>
+        Light = 1,
+
+        /// <summary>
+        /// Use dark theme
+        /// </summary>
+        Dark = 2
+    }
+
+    /// <summary>
     /// Service interface to store and retrieve local settings
     /// WARNING: Settings are not encrypted!
     /// </summary>
@@ -30,6 +51,7 @@ namespace Tuvi.App.ViewModels.Services
         event EventHandler<SettingChangedEventArgs> SettingChanged;
 
         string Language { get; set; }
+        AppTheme Theme { get; set; }
         string SelectedMailFilterForAllMessagesPage { get; set; }
         string SelectedMailFilterForFolderMessagesPage { get; set; }
         string SelectedMailFilterForContactMessagesPage { get; set; }
