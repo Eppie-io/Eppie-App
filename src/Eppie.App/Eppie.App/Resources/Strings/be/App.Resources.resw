@@ -234,19 +234,19 @@
     <comment>The tooltip for Selection mode button</comment>
   </data>
   <data name="ClearFlagButton.Label" xml:space="preserve">
-    <value>Скасаваць выбар</value>
+    <value>Прыбраць сцяжок</value>
     <comment>Text on Clear flag button</comment>
   </data>
   <data name="ClearFlagButton.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Скасаваць выбар</value>
+    <value>Прыбраць сцяжок</value>
     <comment>The tooltip for Clear flag button</comment>
   </data>
   <data name="SetFlagButton.Label" xml:space="preserve">
-    <value>Выбраць</value>
+    <value>Паставіць сцяжок</value>
     <comment>Text on Set flag button</comment>
   </data>
   <data name="SetFlagButton.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Выбраць</value>
+    <value>Паставіць сцяжок</value>
     <comment>The tooltip for Set flag button</comment>
   </data>
   <data name="SelectAllButton.Label" xml:space="preserve">

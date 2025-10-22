@@ -11,6 +11,7 @@
   <ItemGroup>
     <PRIResource Include="$(MSBuildThisFileDirectory)Strings\be\Resources.resw" />
     <PRIResource Include="$(MSBuildThisFileDirectory)Strings\en\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\fr\Resources.resw" />
     <PRIResource Include="$(MSBuildThisFileDirectory)Strings\ja\Resources.resw" />
     <PRIResource Include="$(MSBuildThisFileDirectory)Strings\nl\Resources.resw" />
     <PRIResource Include="$(MSBuildThisFileDirectory)Strings\pl\Resources.resw" />

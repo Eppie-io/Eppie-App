@@ -242,7 +242,7 @@
     <comment>The tooltip for Clear flag button</comment>
   </data>
   <data name="SetFlagButton.Label" xml:space="preserve">
-    <value>Выбраць</value>
+    <value>Паставіць сцяжок</value>
     <comment>Text on Set flag button</comment>
   </data>
   <data name="SetFlagButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">

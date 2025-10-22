@@ -118,200 +118,199 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AboutApp.Text" xml:space="preserve">
-    <value>このアプリについて</value>
+    <value>À propos</value>
     <comment>About application page title</comment>
   </data>
   <data name="AboutAppNavigationItem.Content" xml:space="preserve">
-    <value>このアプリについて</value>
+    <value>À propos</value>
     <comment>Navigation item to open 'About' page</comment>
   </data>
   <data name="SupportDevelopmentNavigationItem.Content" xml:space="preserve">
-    <value>開発サポート</value>
+    <value>Soutenir le développement</value>
     <comment>Navigation item to open 'Support Development' page</comment>
   </data>
   <data name="SupportDevelopmentButton.Text" xml:space="preserve">
-    <value>開発サポート</value>
+    <value>Soutenir le développement</value>
     <comment>Button to open 'Support Development' page</comment>
   </data>
   <data name="IdentityManagerNavigationItem.Content" xml:space="preserve">
-    <value>アイデンティティ管理</value>
+    <value>Gestionnaire d'identités</value>
     <comment>Navigation item for open Identity Manager page</comment>
   </data>
   <data name="AddEmailAccountFirst" xml:space="preserve">
-    <value>メールアカウントを接続しましょう。</value>
+    <value>Vous devez d'abord connecter au moins un compte e-mail.</value>
     <comment>Dialog text when user wants to send new message without any email account connected</comment>
   </data>
   <data name="Address.Text" xml:space="preserve">
-    <value>アドレス</value>
+    <value>Adresse</value>
     <comment>Input field caption for server address</comment>
   </data>
   <data name="MessageFilter.PlaceholderText" xml:space="preserve">
-    <value>検索</value>
+    <value>Rechercher</value>
     <comment>Text displayed in Search Messages control when no search text is entered</comment>
   </data>
   <data name="AllMessages.Text" xml:space="preserve">
-    <value>すべてのメッセージ</value>
+    <value>Tous les messages</value>
     <comment>The header for the list with messages from all email boxes</comment>
   </data>
   <data name="AllMessagesNavigationItem.Content" xml:space="preserve">
-    <value>すべてのメッセージ</value>
+    <value>Tous les messages</value>
     <comment>Navigation item for display all mail messages</comment>
   </data>
   <data name="NewMessageNavigationItem.Content" xml:space="preserve">
-    <value>メールを作成</value>
+    <value>Écrire un e-mail</value>
     <comment>Navigation item for create new mail message</comment>
   </data>
   <data name="Apply.Content" xml:space="preserve">
-    <value>適用する</value>
+    <value>Appliquer</value>
     <comment>Apply button content</comment>
   </data>
   <data name="ApplyButtonContent.Text" xml:space="preserve">
-    <value>適用する</value>
+    <value>Appliquer</value>
     <comment>Apply button content</comment>
   </data>
   <data name="JoinWaitingList.Content" xml:space="preserve">
-    <value>待機リストに参加する</value>
+    <value>Rejoindre la liste d'attente</value>
     <comment>JoinWaitingList button content</comment>
   </data>
   <data name="AppSettings.Text" xml:space="preserve">
-    <value>設定</value>
+    <value>Paramètres</value>
     <comment>The title for application settings</comment>
   </data>
   <data name="IdentityManagerTitle.Text" xml:space="preserve">
-    <value>アイデンティティ管理</value>
+    <value>Gestionnaire d'identités</value>
     <comment>The title for Identity Manager page</comment>
   </data>
   <data name="AttachedFiles.Title" xml:space="preserve">
-    <value>添付ファイル:</value>
+    <value>Fichiers joints :</value>
     <comment>Title for list of attached files</comment>
   </data>
   <data name="AuthenticationError" xml:space="preserve">
-    <value>認証エラー</value>
+    <value>Erreur d'authentification</value>
     <comment>Notification text when authentification failed</comment>
   </data>
   <data name="NeedTwofactorCode" xml:space="preserve">
-    <value>二要素認証コードが必要です</value>
+    <value>Code d'authentification à deux facteurs requis</value>
     <comment>Notification text when two factor authentication code required</comment>
   </data>
   <data name="NeedMailboxPassword" xml:space="preserve">
-    <value>2番目のパスワードが必要です</value>
+    <value>Second mot de passe requis</value>
     <comment>Notification text when second password required</comment>
   </data>
   <data name="Cancel.Content" xml:space="preserve">
-    <value>キャンセル</value>
+    <value>Annuler</value>
     <comment>Cancel button content</comment>
   </data>
   <data name="CantSendMessages" xml:space="preserve">
-    <value>メッセージを送信できません</value>
+    <value>Vous ne pouvez pas envoyer de messages</value>
     <comment>Dialog title when user wants to send new message without any email account connected</comment>
   </data>
   <data name="ChangePasswordPageText" xml:space="preserve">
-    <value>マスターパスワードを変更</value>
+    <value>Modifier le mot de passe principal.</value>
     <comment>Text on "Change password" page</comment>
   </data>
   <data name="CheckEmailNotification" xml:space="preserve">
-    <value>メールを確認</value>
+    <value>Vérifiez vos e-mails</value>
     <comment>Notification message that is shown when user needs to check entered email</comment>
   </data>
   <data name="CheckPasswordNotification" xml:space="preserve">
-    <value>パスワードを確認</value>
+    <value>Vérifiez votre mot de passe</value>
     <comment>Notification message that is shown when user needs to check entered password</comment>
   </data>
   <data name="ConfirmPassword.Text" xml:space="preserve">
-    <value>パスワードを認証</value>
+    <value>Confirmer le mot de passe</value>
     <comment>Input field caption for confirm password</comment>
   </data>
   <data name="ConnectionError" xml:space="preserve">
-    <value>接続エラー</value>
+    <value>Erreur de connexion</value>
     <comment>Notification text when connection to server failed</comment>
   </data>
   <data name="Copyright.Text" xml:space="preserve">
-    <value>© All rights reserved.</value>
+    <value>© Tous droits réservés.</value>
     <comment>Copyright label</comment>
   </data>
   <data name="CurrentPassword.Text" xml:space="preserve">
-    <value>現在のパスワード</value>
+    <value>Mot de passe actuel</value>
     <comment>Input field caption for current password</comment>
   </data>
   <data name="Developer.Text" xml:space="preserve">
-    <value>開発者:</value>
+    <value>Développeur :</value>
     <comment>A label for the application developer</comment>
   </data>
   <data name="ConnectedServicesSettings.Header" xml:space="preserve">
-    <value>あなたのサービス</value>
+    <value>Vos services</value>
     <comment>Title for a connected email accounts</comment>
   </data>
   <data name="EmailAddress.Text" xml:space="preserve">
-    <value>メールアドレス</value>
+    <value>Adresse e-mail</value>
     <comment>Input field caption for email address</comment>
   </data>
   <data name="TwoFactorCode.Text" xml:space="preserve">
-    <value>二要素認証コード</value>
+    <value>Code d'authentification à deux facteurs</value>
     <comment>Input field caption for two factor authentication code</comment>
   </data>
   <data name="EnableImapMessage" xml:space="preserve">
-    <value>'{0}' では IMAP が無効になっています。
-まずこのアカウントで IMAP を有効にして、もう一度お試しください。</value>
+    <value>L'IMAP est désactivé pour '{0}'. Vous devez d'abord activer l'IMAP pour ce compte et réessayer.</value>
     <comment>Message text when failed to add account because IMAP is disabled in email account settings</comment>
   </data>
   <data name="EnterPasswordPageText" xml:space="preserve">
-    <value>おかえり！</value>
+    <value>Content de vous revoir !</value>
     <comment>Text on "Enter password" page</comment>
   </data>
   <data name="Error" xml:space="preserve">
-    <value>エラー</value>
+    <value>Erreur</value>
     <comment>ContentDialog title for error message</comment>
   </data>
   <data name="FailedToAddAccountTitle" xml:space="preserve">
-    <value>アカウントの追加に失敗しました</value>
+    <value>Échec de l'ajout du compte</value>
     <comment>Message title when failed to add account</comment>
   </data>
   <data name="FieldIsEmptyNotification" xml:space="preserve">
-    <value>空欄にできません</value>
+    <value>Ne peut pas être vide</value>
     <comment>Notification message that is shown when input field is empty</comment>
   </data>
   <data name="AuthorizationProblem" xml:space="preserve">
-    <value>認証の問題</value>
+    <value>Problème d'autorisation</value>
     <comment>The title of the service authorization problem</comment>
   </data>
   <data name="AuthenticationProblem" xml:space="preserve">
-    <value>認証の問題</value>
+    <value>Problème d'authentification</value>
     <comment>The title of the service authentication problem</comment>
   </data>
   <data name="GoToSettings" xml:space="preserve">
-    <value>設定に移動</value>
+    <value>Accéder aux paramètres</value>
     <comment>The button whicth leads to the service's settings</comment>
   </data>
   <data name="AccessDenied" xml:space="preserve">
-    <value>アクセスが拒否されました</value>
+    <value>Accès refusé</value>
     <comment>Notification message shown when access to email server is denied</comment>
   </data>
   <data name="IncomingServer.Text" xml:space="preserve">
-    <value>受信メールサーバー</value>
+    <value>Serveur de courrier entrant</value>
     <comment>Caption for incoming email server settings</comment>
   </data>
   <data name="IncorrectPassword" xml:space="preserve">
-    <value>パスワードが間違っています</value>
+    <value>Mot de passe incorrect</value>
     <comment>Message shown when password is incorrect</comment>
   </data>
   <data name="MessageFrom.Text" xml:space="preserve">
-    <value>送信元:</value>
+    <value>De :</value>
     <comment>Caption for sender of the message</comment>
   </data>
   <data name="MessageSubject.Text" xml:space="preserve">
-    <value>件名:</value>
+    <value>Objet :</value>
     <comment>Caption for the subject of the message</comment>
   </data>
   <data name="MessageTo.Text" xml:space="preserve">
-    <value>宛先:</value>
+    <value>À :</value>
     <comment>Caption for the receiver of the message</comment>
   </data>
   <data name="CopyTo.Text" xml:space="preserve">
-    <value>CC:</value>
+    <value>Copie :</value>
     <comment>Caption for the copy receiver of the message</comment>
   </data>
   <data name="HiddenCopyTo.Text" xml:space="preserve">
-    <value>BCC:</value>
+    <value>Copie Cachée :</value>
     <comment>Caption for the copy receiver of the message</comment>
   </data>
   <data name="MsgBtnOk" xml:space="preserve">
@@ -319,11 +318,11 @@
     <comment>ContentDialog button Ok content</comment>
   </data>
   <data name="MessageButtonCancel" xml:space="preserve">
-    <value>キャンセル</value>
+    <value>Annuler</value>
     <comment>Messsage ContentDialog Cancel button content</comment>
   </data>
   <data name="NewMessage.Text" xml:space="preserve">
-    <value>新しいメッセージ</value>
+    <value>Nouveau message</value>
     <comment>New message page header</comment>
   </data>
   <data name="OkButton.Content" xml:space="preserve">
@@ -331,75 +330,75 @@
     <comment>Button Ok</comment>
   </data>
   <data name="OutgoingServer.Text" xml:space="preserve">
-    <value>送信メールサーバー</value>
+    <value>Serveur de courrier sortant</value>
     <comment>Caption for outgoing email server settings</comment>
   </data>
   <data name="Password.Text" xml:space="preserve">
-    <value>パスワードを入力</value>
+    <value>Mot de passe</value>
     <comment>Input field caption for password</comment>
   </data>
   <data name="MailboxPassword.Text" xml:space="preserve">
-    <value>2つ目のパスワードを入力</value>
+    <value>Second mot de passe</value>
     <comment>Input field caption for second password</comment>
   </data>
   <data name="PasswordIsTheSameNotification" xml:space="preserve">
-    <value>現在と同じパスワードです</value>
+    <value>Est identique au mot de passe actuel</value>
     <comment>Notification message shown when new password is the same as current</comment>
   </data>
   <data name="PasswordsDontMatchNotification" xml:space="preserve">
-    <value>パスワードが異なります</value>
+    <value>Les mots de passe ne correspondent pas</value>
     <comment>Notification message shown when passwords do not match</comment>
   </data>
   <data name="Port.Text" xml:space="preserve">
-    <value>ポート</value>
+    <value>Port</value>
     <comment>Input field caption for server port</comment>
   </data>
   <data name="Protocol.Text" xml:space="preserve">
-    <value>プロトコル</value>
+    <value>Protocole</value>
     <comment>Caption for select network protocol</comment>
   </data>
   <data name="Publisher.Text" xml:space="preserve">
-    <value>パブリッシャー:</value>
+    <value>Éditeur :</value>
     <comment>A label for the application publisher</comment>
   </data>
   <data name="RememberPassword.Content" xml:space="preserve">
-    <value>パスワードを記憶</value>
+    <value>Se souvenir de mon mot de passe</value>
     <comment>Checkbox text for option to remeber pasword</comment>
   </data>
   <data name="RemoveAccountButton.Content" xml:space="preserve">
-    <value>アカウントを削除</value>
+    <value>Supprimer le compte</value>
     <comment>Remove account button text in account settings</comment>
   </data>
   <data name="HybridAddressButton.Content" xml:space="preserve">
-    <value>ハイブリッドアドレスを作成</value>
+    <value>Créer une adresse hybride</value>
     <comment>Create hybrid address button text in account settings</comment>
   </data>
   <data name="RemoveAccountDialogAcceptText" xml:space="preserve">
-    <value>削除する</value>
+    <value>Supprimer</value>
     <comment>Accept button text for dialog shown when user wants to remove e-mail account from the list</comment>
   </data>
   <data name="RemoveAccountDialogMessage" xml:space="preserve">
-    <value>この操作によりアカウントがリストから削除されます</value>
+    <value>Cette action supprimera le compte de la liste</value>
     <comment>Dialog message shown when user wants to remove e-mail account from the list</comment>
   </data>
   <data name="RemoveAccountDialogRejectText" xml:space="preserve">
-    <value>キャンセル</value>
+    <value>Annuler</value>
     <comment>Cancel button text for dialog shown when user wants to remove e-mail account from the list</comment>
   </data>
   <data name="RemoveAccountDialogTitle" xml:space="preserve">
-    <value>注意</value>
+    <value>Attention</value>
     <comment>The title of the dialog shown when user wants to remove e-mail account from the list</comment>
   </data>
   <data name="SeedGenerateAcceptButton.Content" xml:space="preserve">
-    <value>このシードフレーズは安全に保管されています</value>
+    <value>Je confirme que cette phrase de récupération est stockée en sécurité</value>
     <comment>Accept seed phrase button content</comment>
   </data>
   <data name="SeedGenerateHeader.Text" xml:space="preserve">
-    <value>新しいシードフレーズ:</value>
+    <value>Votre nouvelle phrase de récupération :</value>
     <comment>Header text on new seed phrase screen</comment>
   </data>
   <data name="SeedGenerateOtherButton.Content" xml:space="preserve">
-    <value>他のシードフレーズを生成</value>
+    <value>Générer une autre phrase</value>
     <comment>Generate new seed phrase button</comment>
   </data>
   <data name="SeedPhraseNotValidAction" xml:space="preserve">
@@ -407,107 +406,107 @@
     <comment>Close button text of the message shown when user entered incorrect seed phrase</comment>
   </data>
   <data name="SeedPhraseNotValidMessage" xml:space="preserve">
-    <value>シードフレーズが無効です</value>
+    <value>La phrase de récupération n'est pas valide</value>
     <comment>Message text shown when user entered incorrect seed phrase</comment>
   </data>
   <data name="SeedPhraseNotValidTitle" xml:space="preserve">
-    <value>エラー</value>
+    <value>Erreur</value>
     <comment>Message title shown when user entered incorrect seed phrase</comment>
   </data>
   <data name="SeedRestoreAcceptButton.Content" xml:space="preserve">
-    <value>承認</value>
+    <value>Accepter</value>
     <comment>Restore seed page accept button</comment>
   </data>
   <data name="SeedRestoreSyncWithQRButton.Content" xml:space="preserve">
-    <value>QRコードで同期</value>
+    <value>Synchroniser avec QR code</value>
     <comment>Restore seed page Sync with QR button</comment>
   </data>
   <data name="SeedRestoreHeader.Text" xml:space="preserve">
-    <value>分散型ネットワークに接続するための秘密のフレーズを入力</value>
+    <value>Saisissez une phrase secrète pour vous connecter à un réseau décentralisé</value>
     <comment>Restore seed page header</comment>
   </data>
   <data name="SeedRestoreEnterSeedphraseExplanationLabel.Text" xml:space="preserve">
-    <value>接続すると、アプリケーションは分散ネットワークからメールと設定をインポートします</value>
+    <value>Une fois connecté, l'application importera vos paramètres depuis le réseau décentralisé</value>
     <comment>Enter seed-phrase explanation label</comment>
   </data>
   <data name="SeedWordDoesNotMatch" xml:space="preserve">
-    <value>シードフレーズと一致しません</value>
+    <value>Ne correspond pas à la phrase originale</value>
     <comment>Notification message shown when entered word does not match</comment>
   </data>
   <data name="SeedWordIsEmpty" xml:space="preserve">
-    <value>シードフレーズを入力</value>
+    <value>Veuillez saisir le mot</value>
     <comment>Notification message shown when user left word filed empty</comment>
   </data>
   <data name="SeedWordNoInDictionary" xml:space="preserve">
-    <value>単語がMnemonic Dictionaryに存在しません</value>
+    <value>Le mot n'existe pas dans le dictionnaire mnémonique</value>
     <comment>Validation error for seed phrase word</comment>
   </data>
   <data name="SenderName.Text" xml:space="preserve">
-    <value>この名前を使用してメッセージを送信</value>
+    <value>Envoyer vos messages en utilisant ce nom</value>
     <comment>Input field caption for sender name</comment>
   </data>
   <data name="SetPasswordPageText" xml:space="preserve">
-    <value>データベースのパスワードを設定</value>
+    <value>Définir le mot de passe de la base de données.</value>
     <comment>Text on "Set password" page</comment>
   </data>
   <data name="SettingsNavigationItem.Content" xml:space="preserve">
-    <value>設定</value>
+    <value>Paramètres</value>
     <comment>Navigation item for open Settings page</comment>
   </data>
   <data name="SettingsPageHeader.Text" xml:space="preserve">
-    <value>設定ページ</value>
+    <value>Page des paramètres</value>
     <comment>Settings page header</comment>
   </data>
   <data name="Thanks.Text" xml:space="preserve">
-    <value>ありがとう:</value>
+    <value>Remerciements :</value>
     <comment>A label for the list of used open source libraries</comment>
   </data>
   <data name="SupportLabel.Text" xml:space="preserve">
-    <value>サポート:</value>
+    <value>Support :</value>
     <comment>A label for the support email</comment>
   </data>
   <data name="Version.Text" xml:space="preserve">
-    <value>バージョン</value>
+    <value>version</value>
     <comment>A label for the application version</comment>
   </data>
   <data name="WelcomePageCreateAccountButton.Text" xml:space="preserve">
-    <value>新しいアカウント</value>
+    <value>Nouveau compte</value>
     <comment>Create account button text on WelcomePage</comment>
   </data>
   <data name="WelcomePageCreateAccountButtonSubtext.Text" xml:space="preserve">
-    <value>シードフレーズで新しいアカウントを作成</value>
+    <value>Créer un nouveau compte via une phrase de récupération</value>
     <comment>Create account button subtext on WelcomePage</comment>
   </data>
   <data name="WelcomePageHeader.Text" xml:space="preserve">
-    <value>デバイスに分散型アカウントを作成する</value>
+    <value>Créer un compte décentralisé sur votre appareil</value>
     <comment>New user welcome page text</comment>
   </data>
   <data name="WelcomePageRestoreAccountButton.Text" xml:space="preserve">
-    <value>アカウントを接続</value>
+    <value>Connecter un compte</value>
     <comment>Restore account button text on WelcomePage</comment>
   </data>
   <data name="WelcomePageRestoreAccountButtonSubtext.Text" xml:space="preserve">
-    <value>シードフレーズで既存のアカウントを接続</value>
+    <value>Connecter votre compte existant via une phrase de récupération</value>
     <comment>Restore account button subtext on WelcomePage</comment>
   </data>
   <data name="LocalLogoutButton.Content" xml:space="preserve">
-    <value>ログアウト</value>
+    <value>Déconnexion</value>
     <comment>Logout and wipe all local application data button text in settings</comment>
   </data>
   <data name="WipeAllDataDialogAcceptText" xml:space="preserve">
-    <value>ワイプ</value>
+    <value>Tout effacer</value>
     <comment>Accept button text for dialog shown when user wants to wipe all application data</comment>
   </data>
   <data name="WipeAllDataDialogMessage" xml:space="preserve">
-    <value>この変更により、すべてのローカルアプリケーションデータが完全に消去されます。</value>
+    <value>Cette action effacera complètement toutes les données locales de l'application.</value>
     <comment>Dialog message shown when user wants to wipe all application data</comment>
   </data>
   <data name="WipeAllDataDialogRejectText" xml:space="preserve">
-    <value>キャンセル</value>
+    <value>Annuler</value>
     <comment>Cancel button text for dialog shown when user wants to wipe all application data</comment>
   </data>
   <data name="WipeAllDataDialogTitle" xml:space="preserve">
-    <value>注意</value>
+    <value>Attention</value>
     <comment>The title of the dialog shown when user wants to wipe all application data</comment>
   </data>
   <data name="NewMessageAdvancedSettings.Header" xml:space="preserve">
@@ -515,31 +514,31 @@
     <comment>Section header in the new message window for Advanced Settings.</comment>
   </data>
   <data name="MessageEncrypted.Content" xml:space="preserve">
-    <value>暗号化されたメッセージ</value>
+    <value>Chiffré</value>
     <comment>Encryption enable checkbox text on NewMessage view</comment>
   </data>
   <data name="MessageSigned.Content" xml:space="preserve">
-    <value>署名済み</value>
+    <value>Signé</value>
     <comment>Signature enable checkbox text on NewMessage view</comment>
   </data>
   <data name="PgpKeysButton.Content" xml:space="preserve">
-    <value>PGP鍵</value>
+    <value>Clés PGP</value>
     <comment>Go to PGP keys management page button content</comment>
   </data>
   <data name="PgpKeyImportButton.Content" xml:space="preserve">
-    <value>ファイルから鍵をインポート</value>
+    <value>Importer la clé depuis un fichier</value>
     <comment>Import PGP key from file button content</comment>
   </data>
   <data name="PgpKeyCopyButton.Content" xml:space="preserve">
-    <value>鍵をクリップボードにコピー</value>
+    <value>Copier la clé dans le presse-papiers</value>
     <comment>Copy PGP key to clipboard button content</comment>
   </data>
   <data name="PgpKeyExportButton.Content" xml:space="preserve">
-    <value>鍵をファイルにエクスポート</value>
+    <value>Exporter la clé vers un fichier</value>
     <comment>Export PGP key to file button content</comment>
   </data>
   <data name="PgpKeySendButton.Content" xml:space="preserve">
-    <value>鍵をメールで送信</value>
+    <value>Envoyer la clé par e-mail</value>
     <comment>Send PGP key by email button content</comment>
   </data>
   <data name="PgpKeyDeleteButton.Content" xml:space="preserve">
@@ -547,7 +546,7 @@
     <comment>Delete PGP key button content</comment>
   </data>
   <data name="RemovePgpKeyDialogTitle" xml:space="preserve">
-    <value>注意</value>
+    <value>Attention</value>
     <comment>The title of the dialog shown when user wants to remove PGP key</comment>
   </data>
   <data name="RemovePgpKeyDialogMessage" xml:space="preserve">
@@ -555,287 +554,287 @@
     <comment>Dialog message shown when user wants to remove PGP key</comment>
   </data>
   <data name="RemovePgpKeyDialogAcceptText" xml:space="preserve">
-    <value>削除</value>
+    <value>Supprimer</value>
     <comment>Accept button text for dialog shown when user wants to remove PGP key</comment>
   </data>
   <data name="RemovePgpKeyDialogRejectText" xml:space="preserve">
-    <value>キャンセル</value>
+    <value>Annuler</value>
     <comment>Cancel button text for dialog shown when user wants to remove PGP key</comment>
   </data>
   <data name="PgpKeyAlgorithm.Text" xml:space="preserve">
-    <value>アルゴリズム</value>
+    <value>Algorithme</value>
     <comment>Pgp key details cipher algorithm text label</comment>
   </data>
   <data name="PgpKeyCreationTime.Text" xml:space="preserve">
-    <value>作成完了</value>
+    <value>Créée le</value>
     <comment>Pgp key details creation time text label</comment>
   </data>
   <data name="PgpKeyExpires.Text" xml:space="preserve">
-    <value>有効期限</value>
+    <value>Expire le</value>
     <comment>Pgp key details expiration time text label</comment>
   </data>
   <data name="PgpKeyFingerprint.Text" xml:space="preserve">
-    <value>フィンガープリント</value>
+    <value>Empreinte</value>
     <comment>Pgp key details fingerprint text label</comment>
   </data>
   <data name="PgpKeyId.Text" xml:space="preserve">
-    <value>鍵ID</value>
+    <value>ID de la clé</value>
     <comment>Pgp key details ID text label</comment>
   </data>
   <data name="PgpKeyUserIdentity.Text" xml:space="preserve">
-    <value>ユーザーID</value>
+    <value>Identité de l'utilisateur</value>
     <comment>Pgp key details user identity text label</comment>
   </data>
   <data name="PgpKeyExpiresNever" xml:space="preserve">
-    <value>なし</value>
+    <value>Jamais</value>
     <comment>Text meaning that PGP key never expires</comment>
   </data>
   <data name="PgpPublicKeyShareMessageSubject" xml:space="preserve">
-    <value>公開PGP鍵を共有</value>
+    <value>Partage de clé PGP publique</value>
     <comment>Default subject of email message with shared public PGP key</comment>
   </data>
   <data name="PgpKeyImportErrorMessageTitle" xml:space="preserve">
-    <value>公開鍵のインポートに失敗しました。</value>
+    <value>Échec de l'importation de la clé publique.</value>
     <comment>Title of message about public key import fail</comment>
   </data>
   <data name="PgpKeyAlgorithmUnknownMessage" xml:space="preserve">
-    <value>公開鍵アルゴリズムが不明です。鍵をインポートできません。</value>
+    <value>Algorithme de clé publique inconnu. La clé ne peut pas être importée.</value>
     <comment>Can't import public key. Public key with unknown algorithm</comment>
   </data>
   <data name="PgpKeyAlreadyExistMessage" xml:space="preserve">
-    <value>同じ識別子を持つ公開鍵がすでに存在します。鍵をインポートできません。</value>
+    <value>Une clé publique avec le même identifiant existe déjà. La clé ne peut pas être importée.</value>
     <comment>Can't import public key. Key with same identifier already exist message</comment>
   </data>
   <data name="PgpKeyImportErrorMessage" xml:space="preserve">
-    <value>公開鍵をインポートできません。</value>
+    <value>Impossible d'importer la clé publique.</value>
     <comment>Can't import public key common error message</comment>
   </data>
   <data name="PgpKeyExportErrorMessage" xml:space="preserve">
-    <value>公開鍵のエクスポート中にエラーが発生しました。</value>
+    <value>Une erreur est survenue lors de l'exportation de la clé publique.</value>
     <comment>Message about public key export fail</comment>
   </data>
   <data name="PgpKeyExportErrorMessageTitle" xml:space="preserve">
-    <value>公開鍵のエクスポートに失敗しました。</value>
+    <value>Échec de l'exportation de la clé publique</value>
     <comment>Title of message about public key export fail</comment>
   </data>
   <data name="CryptoContextErrorMessageTitle" xml:space="preserve">
-    <value>暗号化アクションを実行できません。</value>
+    <value>L'action cryptographique ne peut pas être effectuée.</value>
     <comment>Title of message saying that cryptographic action can't be performed.</comment>
   </data>
   <data name="BackupErrorMessageTitle" xml:space="preserve">
-    <value>バックアップ処理に失敗しました。</value>
+    <value>Échec du traitement de la sauvegarde.</value>
     <comment>Title of message saying that backup action failed.</comment>
   </data>
   <data name="DecryptionErrorMessage" xml:space="preserve">
-    <value>メッセージを復号化できません。</value>
+    <value>Impossible de déchiffrer le message.</value>
     <comment>Message saying that error happened during decryption.</comment>
   </data>
   <data name="EncryptionErrorMessage" xml:space="preserve">
-    <value>メッセージを暗号化できません。</value>
+    <value>Impossible de chiffrer le message.</value>
     <comment>Message saying that encryption error happened.</comment>
   </data>
   <data name="NoPublicKeyMessage" xml:space="preserve">
-    <value>公開鍵がありません。</value>
+    <value>Aucune clé publique.</value>
     <comment>Message saying that no public key for action.</comment>
   </data>
   <data name="NoSecretKeyMessage" xml:space="preserve">
-    <value>秘密鍵がありません。</value>
+    <value>Aucune clé secrète.</value>
     <comment>Message saying that no secret key for action.</comment>
   </data>
   <data name="SignatureVerificationErrorMessage" xml:space="preserve">
-    <value>メッセージの署名を検証できません。</value>
+    <value>Impossible de vérifier la signature du message.</value>
     <comment>Message saying that message signature can't be verified.</comment>
   </data>
   <data name="SigningErrorMessage" xml:space="preserve">
-    <value>メッセージに署名できません。</value>
+    <value>Impossible de signer le message.</value>
     <comment>Message saying that signing error happened.</comment>
   </data>
   <data name="PgpKeyImportFromFileMessage" xml:space="preserve">
-    <value>ファイルから</value>
+    <value>Depuis un fichier</value>
     <comment>Which file key import failed from message</comment>
   </data>
   <data name="FailedToReceiveNewMessagesErrorMessage" xml:space="preserve">
-    <value>新しいメッセージを受信できませんでした。</value>
+    <value>Échec de la réception des nouveaux messages.</value>
     <comment>Message text shown when failed to receive new messages</comment>
   </data>
   <data name="NewMessagesCheckFailedErrorTitle" xml:space="preserve">
-    <value>新しいメッセージを確認する</value>
+    <value>Vérification des nouveaux messages</value>
     <comment>Message title shown when failed to check for new email messages</comment>
   </data>
   <data name="FailedToReceiveNewMessagesFromErrorMessage" xml:space="preserve">
-    <value>次の者からの新しいメッセージを受信できませんでした:</value>
+    <value>Échec de la réception de nouveaux messages de :</value>
     <comment>Message text shown when failed to receive new messages from list of emails below</comment>
   </data>
   <data name="ExportBackupButton.Text" xml:space="preserve">
-    <value>ファイルへのバックアップ</value>
+    <value>Sauvegarder vers un fichier</value>
     <comment>Backup export to file button text in settings</comment>
   </data>
   <data name="ExportBackupButtonSubtext.Text" xml:space="preserve">
-    <value>すべてのデータと設定をバックアップにエクスポートします。</value>
+    <value>Exporter toutes les données et les paramètres dans la sauvegarde.</value>
     <comment>Backup export to file button subtext in settings</comment>
   </data>
   <data name="ImportBackupButton.Text" xml:space="preserve">
-    <value>ファイルから復元</value>
+    <value>Restaurer depuis un fichier</value>
     <comment>Backup import from file button text in settings</comment>
   </data>
   <data name="ImportBackupButtonSubtext.Text" xml:space="preserve">
-    <value>バックアップからすべてのデータと設定をインポートする</value>
+    <value>Importer toutes les données et les paramètres depuis la sauvegarde.</value>
     <comment>Backup import from file button subext in settings</comment>
   </data>
   <data name="BackupBuildErrorMessageTitle" xml:space="preserve">
-    <value>バックアップの作成に失敗しました</value>
+    <value>Échec de la création de la sauvegarde</value>
     <comment>Title of message saying that backup building failed.</comment>
   </data>
   <data name="BackupParsingErrorMessageTitle" xml:space="preserve">
-    <value>バックアップの復元に失敗しました</value>
+    <value>Échec de la restauration de la sauvegarde</value>
     <comment>Title of message saying that backup parsing failed.</comment>
   </data>
   <data name="BackupProtectionErrorMessage" xml:space="preserve">
-    <value>バックアップデータ保護エラー</value>
+    <value>Erreur de protection des données de la sauvegarde</value>
     <comment>Message saying that action with backup data protection failed.</comment>
   </data>
   <data name="BackupProtectionErrorMessageTitle" xml:space="preserve">
-    <value>バックアップ保護アクションに失敗しました</value>
+    <value>Échec de l'action de protection de la sauvegarde</value>
     <comment>Title of message saying that action with backup data protection failed.</comment>
   </data>
   <data name="BackupSerializationErrorMessage" xml:space="preserve">
-    <value>バックアップデータのシリアライズに失敗しました。</value>
+    <value>Échec de la sérialisation des données de la sauvegarde</value>
     <comment>Message saying that backup data serialization failed.</comment>
   </data>
   <data name="BackupVerificationErrorMessage" xml:space="preserve">
-    <value>バックアップデータの検証に失敗しました</value>
+    <value>Échec de la vérification des données de la sauvegarde</value>
     <comment>Message saying that action with backup data verification failed.</comment>
   </data>
   <data name="NotBackupPackageErrorMessage" xml:space="preserve">
-    <value>これはバックアップパッケージではありません</value>
+    <value>Ceci n'est pas un paquet de sauvegarde</value>
     <comment>Message saying that package is not a backup data.</comment>
   </data>
   <data name="UnknownBackupProtectionErrorMessage" xml:space="preserve">
-    <value>不明なバックアップデータ保護形式</value>
+    <value>Format de protection des données de sauvegarde inconnu</value>
     <comment>Message saying that backup data protection format is unknown.</comment>
   </data>
   <data name="ContactsTab.Header" xml:space="preserve">
-    <value>連絡先</value>
+    <value>Contacts</value>
     <comment>The header for Tab with list of contacts</comment>
   </data>
   <data name="MailboxesTab.Header" xml:space="preserve">
-    <value>メールボックス</value>
+    <value>Boîtes mail</value>
     <comment>The header for Tab with list of mailboxes (user connected e-mail accounts)</comment>
   </data>
   <data name="ContactMessagesPageHeader.Text" xml:space="preserve">
-    <value>通信先</value>
+    <value>Correspondance avec</value>
     <comment>The header of the page with list of messages from or sent to selected contact</comment>
   </data>
   <data name="MessageHeadLines" xml:space="preserve">
     <value>
 
-________________________________________________________________________
-送信元: {0}
-送信時刻: {1}
-宛先: {2}
-件名: {3}
+________________________________________________________________________________
+De : {0}
+Envoyé : {1}
+À : {2}
+Objet : {3}
 
 {4}</value>
     <comment>Title for forwarded message. {0} - from email. {1} - sent time. {2} - to email. {3} - email subject. {4} - original email text.</comment>
   </data>
   <data name="ChangeContactAvatarMenuItem.Text" xml:space="preserve">
-    <value>アバターを変更</value>
+    <value>Modifier l'avatar</value>
     <comment>Text of the context menu item that changes contact's avatar</comment>
   </data>
   <data name="RemoveContactMenuItem.Text" xml:space="preserve">
-    <value>削除する</value>
+    <value>Supprimer</value>
     <comment>The text of context menu item that removes contact from address book</comment>
   </data>
   <data name="SeedPhraseNotInitializedMessage" xml:space="preserve">
-    <value>シードフレーズを初期化してください。</value>
+    <value>Veuillez initialiser la phrase de récupération.</value>
     <comment>Message text shown when user not initialized seed phrase</comment>
   </data>
   <data name="SeedPhraseNotInitializedTitle" xml:space="preserve">
-    <value>シードフレーズが初期化されていません。</value>
+    <value>La phrase de récupération n'est pas initialisée.</value>
     <comment>Message title shown when user not initialized seed phrase</comment>
   </data>
   <data name="EmailDoesntMatchNotification" xml:space="preserve">
-    <value>入力したメールアドレス({0})は設定と一致しません</value>
+    <value>L'adresse e-mail saisie {0} ne correspond pas aux paramètres</value>
     <comment>Notification message is shown when emails do not match</comment>
   </data>
   <data name="AccountAccessDeniedNotification" xml:space="preserve">
-    <value>メールアカウントにアクセスできません</value>
+    <value>Impossible d'accéder au compte e-mail</value>
     <comment>Notification message is shown when access to account is denied</comment>
   </data>
   <data name="SignInButton.Content" xml:space="preserve">
-    <value>サインイン</value>
+    <value>Se connecter</value>
     <comment>'Sign in' button content</comment>
   </data>
   <data name="OrderByNameContactComparerLabel" xml:space="preserve">
-    <value>名前順</value>
+    <value>Trier par nom</value>
     <comment>Label of contact comparer displayed in sorting variants for contacts that sorts contacts by name ascending</comment>
   </data>
   <data name="OrderByTimeContactComparerLabel" xml:space="preserve">
-    <value>時間順</value>
+    <value>Trier par date</value>
     <comment>Label of contact comparer displayed in sorting variants for contacts that sorts contacts by last message time</comment>
   </data>
   <data name="ContactFilter.PlaceholderText" xml:space="preserve">
-    <value>検索</value>
+    <value>Rechercher</value>
     <comment>Text displayed in Search Contacts control when no search text is entered</comment>
   </data>
   <data name="AllMessagesFilterLabel" xml:space="preserve">
-    <value>すべてのメッセージ</value>
+    <value>Tous les messages</value>
     <comment>The label for option (in dropdown list with filters) which means that no filter is applied for messages (all messages must be shown)</comment>
   </data>
   <data name="FlaggedMessagesFilterLabel" xml:space="preserve">
-    <value>フラグ付き</value>
+    <value>Marqués</value>
     <comment>The label for option (in dropdown list with filters) which means that only flagged messages are shown</comment>
   </data>
   <data name="MessagesWithAttachmentFilterLabel" xml:space="preserve">
-    <value>添付ファイル付き</value>
+    <value>Avec pièces jointes</value>
     <comment>The label for option (in dropdown list with filters) which means that only messages with attachments are shown</comment>
   </data>
   <data name="UnreadMessagesFilterLabel" xml:space="preserve">
-    <value>未読</value>
+    <value>Non lus</value>
     <comment>The label for option (in dropdown list with filters) which means that only unread messages are shown</comment>
   </data>
   <data name="SendErrorReportTitle" xml:space="preserve">
-    <value>エラーレポートを送信しますか？</value>
+    <value>Voulez-vous envoyer un rapport d'erreur ?</value>
     <comment>Title in the error message dialog</comment>
   </data>
   <data name="ErrorReportEmailTitle" xml:space="preserve">
-    <value>エラーレポート</value>
+    <value>Un rapport d'erreur</value>
     <comment>Title in the email message with error report</comment>
   </data>
   <data name="BackupAccountSettingsCheckBox.Content" xml:space="preserve">
-    <value>アカウントのデータバックアップを有効にする</value>
+    <value>Activer la sauvegarde des données pour ce compte</value>
     <comment>The label for option Enable backup for Account settings</comment>
   </data>
   <data name="BackupAccountMessagesCheckBox.Content" xml:space="preserve">
-    <value>アカウントのダウンロードしたメールのバックアップを有効にする</value>
+    <value>Activer la sauvegarde des e-mails téléchargés pour ce compte</value>
     <comment>The label for option Enable backup for downloaded emails</comment>
   </data>
   <data name="CancelMessagesDeleteButton.Content" xml:space="preserve">
-    <value>元に戻す</value>
+    <value>Annuler</value>
     <comment>Text of the button which cancels deleting messages</comment>
   </data>
   <data name="MessageWasDeleted" xml:space="preserve">
-    <value>メッセージは削除されました</value>
+    <value>Le message a été supprimé</value>
     <comment>The title of InfoBar shown after message was deleted</comment>
   </data>
   <data name="NumberOfMessagesWereDeleted" xml:space="preserve">
-    <value>{0} 件のメッセージが削除されました</value>
+    <value>{0} messages ont été supprimés</value>
     <comment>The title of InfoBar shown after number={0} messages were deleted</comment>
   </data>
   <data name="ValueCantBeNegativeNotification" xml:space="preserve">
-    <value>値は負にはできません</value>
+    <value>La valeur ne peut pas être négative</value>
     <comment>Notification message shown when user enters negative integer number</comment>
   </data>
   <data name="ValueIsNotNumberNotification" xml:space="preserve">
-    <value>値が数値ではありません</value>
+    <value>La valeur n'est pas un nombre</value>
     <comment>Notification message shown when user enters text that can't be converted to integer number</comment>
   </data>
   <data name="BackupLabel.Text" xml:space="preserve">
-    <value>バックアップ</value>
+    <value>Sauvegarde</value>
     <comment>The label of section with backup options on settings page</comment>
   </data>
   <data name="CheckNewMessagesIntervalLabel.Text" xml:space="preserve">
-    <value>新しいメッセージを確認する間隔（分）</value>
+    <value>Intervalle de vérification des nouveaux messages (en minutes)</value>
     <comment>The label of input field to enter check messages interval value in minutes</comment>
   </data>
   <data name="P2PLabel.Text" xml:space="preserve">
@@ -843,107 +842,107 @@ ________________________________________________________________________
     <comment>The label shown for decentarilzed messages</comment>
   </data>
   <data name="OrderByUnreadContactComparerLabel" xml:space="preserve">
-    <value>未読</value>
+    <value>Trier par non lus</value>
     <comment>Label of contact comparer displayed in sorting variants for contacts that displays contacts with unread messages first then contacts without unread messages. Each of these two groups with contacts are sorted by last message time.</comment>
   </data>
   <data name="NewEmailsReceivedMessage" xml:space="preserve">
-    <value>新しいメールを受信しました。</value>
+    <value>Nouveaux e-mails reçus.</value>
     <comment>Text for a toast notification when new emails are received</comment>
   </data>
   <data name="WelcomePageLicenseButton.Content" xml:space="preserve">
-    <value>エンドユーザーライセンス</value>
+    <value>Contrat de licence utilisateur final</value>
     <comment>Text for a license agreement button</comment>
   </data>
   <data name="SeedGenerateWelcomeToWeb3.Text" xml:space="preserve">
-    <value>Web3へようこそ！</value>
+    <value>Bienvenue sur le Web3 !</value>
     <comment>A label with Welcoming to Web3</comment>
   </data>
   <data name="WelcomePageLicenseExplanationLabel.Text" xml:space="preserve">
-    <value>アプリケーションを使用することにより、以下の規約に同意したことになります:</value>
+    <value>En utilisant l'application, vous acceptez les conditions suivantes :</value>
     <comment>License explanation text</comment>
   </data>
   <data name="SeedRestoreEnterSeedphraseLabel.Text" xml:space="preserve">
-    <value>回復フレーズを入力してください(12語):</value>
+    <value>Saisissez votre phrase de récupération (12 mots) :</value>
     <comment>Label welcoming enter revovery phrase</comment>
   </data>
   <data name="ForgotPassword.Content" xml:space="preserve">
-    <value>パスワードを忘れた？</value>
+    <value>Mot de passe oublié ?</value>
     <comment>Password reset button</comment>
   </data>
   <data name="SupportedServices.Text" xml:space="preserve">
-    <value>サポートされているサービス</value>
+    <value>Services pris en charge</value>
     <comment>Supported services page title </comment>
   </data>
   <data name="ConnectServiceButton.Content" xml:space="preserve">
-    <value>接続サービス</value>
+    <value>Connecter un service</value>
     <comment>Connect service button text</comment>
   </data>
   <data name="SystemDefaultLanguage" xml:space="preserve">
-    <value>(システムのデフォルト)</value>
+    <value>(Par défaut)</value>
     <comment>This captions appears as an item in the select language combobox. Selecting this item will change the language of the application to the system default language</comment>
   </data>
   <data name="RestartApplication" xml:space="preserve">
-    <value>変更を有効にするには、{0} を再起動する必要があります。</value>
+    <value>Vous devez redémarrer {0} pour que les modifications soient prises en compte.</value>
     <comment>This message appears after user select language. We need to restart {app name} for apply new language.</comment>
   </data>
   <data name="ImportLocalAIModelButton.Content" xml:space="preserve">
-    <value>ローカルAIモデルをインポート</value>
+    <value>Importer un modèle d'IA local</value>
     <comment>Import local AI model button text in local AI agent settings</comment>
   </data>
   <data name="DeleteLocalAIModelButton.Content" xml:space="preserve">
-    <value>ローカルAIモデルを削除</value>
+    <value>Supprimer le modèle d'IA local</value>
     <comment>Delete local AI model button text in local AI agent settings</comment>
   </data>
   <data name="RemoveLocalAIAgentButton.Content" xml:space="preserve">
-    <value>ローカルAIエージェントを削除</value>
+    <value>Supprimer l'agent d'IA local</value>
     <comment>Remove local AI agent button text in local AI agent settings</comment>
   </data>
   <data name="RemoveAIAgentDialogAcceptText" xml:space="preserve">
-    <value>削除</value>
+    <value>Supprimer</value>
     <comment>Accept button text for dialog shown when user wants to remove AI agent from the list</comment>
   </data>
   <data name="RemoveAIAgentDialogMessage" xml:space="preserve">
-    <value>このアクションはリストからAIエージェントを削除します。</value>
+    <value>Cette action supprimera l'agent d'IA de la liste</value>
     <comment>Dialog message shown when user wants to remove AI agent from the list</comment>
   </data>
   <data name="RemoveAIAgentDialogRejectText" xml:space="preserve">
-    <value>キャンセル</value>
+    <value>Annuler</value>
     <comment>Cancel button text for dialog shown when user wants to remove AI agent from the list</comment>
   </data>
   <data name="RemoveAIAgentDialogTitle" xml:space="preserve">
-    <value>注意</value>
+    <value>Attention</value>
     <comment>The title of the dialog shown when user wants to remove AI agent from the list</comment>
   </data>
   <data name="AgentSpecialtyCombobox.Header" xml:space="preserve">
-    <value>AIエージェント専門</value>
+    <value>Spécialité de l'agent d'IA</value>
     <comment>The title for AI agent specialty combobox</comment>
   </data>
   <data name="SystemPromptInputTextBox.Header" xml:space="preserve">
-    <value>システムプロンプト</value>
+    <value>Prompt système</value>
     <comment>The title for AI agent system prompt edit box</comment>
   </data>
   <data name="SystemPromptInputTextBox.PlaceholderText" xml:space="preserve">
-    <value>AI エージェントのシステム プロンプトを入力します...</value>
+    <value>Saisissez un prompt système pour l'agent d'IA...</value>
     <comment>The placeholder text for AI agent system prompt edit box</comment>
   </data>
   <data name="AIAgentLinkedAccount.Header" xml:space="preserve">
-    <value>リンクされたアカウント</value>
+    <value>Compte lié</value>
     <comment>The title for AI agent linked email account combobox</comment>
   </data>
   <data name="AllowSendEmailsCheckBox.Content" xml:space="preserve">
-    <value>メールの送信を許可する</value>
+    <value>Autoriser l'envoi d'e-mails</value>
     <comment>Text for the checkbox that allows an AI agent to send emails</comment>
   </data>
   <data name="ConnectedAIAgentsSettings.Header" xml:space="preserve">
-    <value>あなたのAIエージェント</value>
+    <value>Vos agents d'IA</value>
     <comment>Title for a conected AI agents</comment>
   </data>
   <data name="AIAgentNameTextBox.Header" xml:space="preserve">
-    <value>AIエージェント名</value>
+    <value>Nom de l'agent d'IA</value>
     <comment>The title for AI agent name edit box</comment>
   </data>
   <data name="AIAgentNameTextBox.PlaceholderText" xml:space="preserve">
-    <value>AI エージェントの名前を入力...</value>
+    <value>Saisissez un nom pour l'agent d'IA...</value>
     <comment>The placeholder text for AI agent name edit box</comment>
   </data>
   <data name="LocalAIAgentServiceTitle" xml:space="preserve">
@@ -951,19 +950,19 @@ ________________________________________________________________________
     <comment>A type of service listed when adding a new service, referring to local AI agents (e.g., translator, writer, corrector, etc.).</comment>
   </data>
   <data name="LocalAIAgentServiceDescription" xml:space="preserve">
-    <value>作文、翻訳、校正ほかにも...</value>
+    <value>traducteur, rédacteur, correcteur et autres...</value>
     <comment>A description of service listed when adding a new service, referring to local AI agents (e.g., translator, writer, corrector, etc.).</comment>
   </data>
   <data name="DecentralizedAccountServiceTitle" xml:space="preserve">
-    <value>分散型アカウント（近日公開）</value>
+    <value>Compte décentralisé (bientôt disponible)</value>
     <comment>Decentralized account type, shown in the service list with 'coming soon.'</comment>
   </data>
   <data name="DecentralizedAccountServiceDescription" xml:space="preserve">
-    <value>待機リストにご参加ください</value>
+    <value>veuillez rejoindre la liste d'attente</value>
     <comment>Invitation to join the waiting list for access to Decentralized account type</comment>
   </data>
   <data name="OtherEmailAccountServiceTitle" xml:space="preserve">
-    <value>他のメールアカウント</value>
+    <value>Autre compte e-mail</value>
     <comment>Generic email account option. Shown in the service list.</comment>
   </data>
   <data name="OtherEmailAccountServiceDescription" xml:space="preserve">
@@ -971,23 +970,23 @@ ________________________________________________________________________
     <comment>Supported protocols for other email accounts (IMAP, SMTP).</comment>
   </data>
   <data name="PreprocessWithAIAgent.Header" xml:space="preserve">
-    <value>AIエージェントによる前処理</value>
+    <value>Pré-traitement avec l'agent d'IA</value>
     <comment>Title for combobox with AI agents for preprocessing.</comment>
   </data>
   <data name="PostprocessWithAIAgent.Header" xml:space="preserve">
-    <value>AIエージェントによる後処理</value>
+    <value>Post-traitement avec l'agent d'IA</value>
     <comment>Title for combobox with AI agents for postprocessing.</comment>
   </data>
   <data name="ThinkingMessage" xml:space="preserve">
-    <value>考え中...</value>
+    <value>Réflexion...</value>
     <comment>Message from local AI agent during text processing</comment>
   </data>
   <data name="TargetLanguageCombobox.Header" xml:space="preserve">
-    <value>対象言語</value>
+    <value>Langue cible</value>
     <comment>The title for AI agent target language combobox</comment>
   </data>
   <data name="NoneText" xml:space="preserve">
-    <value>なし</value>
+    <value>Aucune</value>
     <comment>Indicates the absence of a selection in a combobox.</comment>
   </data>
   <data name="RequestReviewDialogTitle" xml:space="preserve">
@@ -1079,7 +1078,7 @@ ________________________________________________________________________
     <comment>Text for the rename button in the dialog</comment>
   </data>
   <data name="RenameContactDialogCloseButtonText" xml:space="preserve">
-    <value>キャンセル</value>
+    <value>Annuler</value>
     <comment>Text for the cancel button in the dialog</comment>
   </data>
   <data name="RenameContactDialogTextBoxHeader" xml:space="preserve">
@@ -1171,7 +1170,7 @@ ________________________________________________________________________
     <comment>Caption for the option to restore from a file</comment>
   </data>
   <data name="EncryptionKeyOption.Caption" xml:space="preserve">
-    <value>PGP鍵</value>
+    <value>Clés PGP</value>
     <comment>Caption for the option with encryption keys</comment>
   </data>
   <data name="EncryptionKeyOption.TextNote" xml:space="preserve">
@@ -1203,11 +1202,11 @@ ________________________________________________________________________
     <comment>Import encryption key from file button text</comment>
   </data>
   <data name="ChangeMasterPasswordButton.Content" xml:space="preserve">
-    <value>マスターパスワードを変更</value>
+    <value>Modifier le mot de passe principal</value>
     <comment>Change master password button text</comment>
   </data>
   <data name="ConfirmSeedPhraseButton.Content" xml:space="preserve">
-    <value>回復フレーズを認証</value>
+    <value>Confirmer la phrase de récupération</value>
     <comment>Confirm seed phrase button text</comment>
   </data>
   <data name="SeedPhraseExpander.Header" xml:space="preserve">

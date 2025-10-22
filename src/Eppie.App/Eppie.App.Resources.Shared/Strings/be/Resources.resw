@@ -129,6 +129,10 @@
     <value>Падтрымаць распрацоўку</value>
     <comment>Navigation item to open 'Support Development' page</comment>
   </data>
+  <data name="SupportDevelopmentButton.Text" xml:space="preserve">
+    <value>Падтрымаць распрацоўку</value>
+    <comment>Button to open 'Support Development' page</comment>
+  </data>
   <data name="IdentityManagerNavigationItem.Content" xml:space="preserve">
     <value>Identity manager</value>
     <comment>Navigation item for open Identity Manager page</comment>
@@ -161,6 +165,10 @@
     <value>Ужыць</value>
     <comment>Apply button content</comment>
   </data>
+  <data name="ApplyButtonContent.Text" xml:space="preserve">
+    <value>Ужыць</value>
+    <comment>Apply button content</comment>
+  </data>
   <data name="JoinWaitingList.Content" xml:space="preserve">
     <value>Далучыцца да спісу чакання</value>
     <comment>JoinWaitingList button content</comment>
@@ -186,7 +194,7 @@
     <comment>Notification text when two factor authentication code required</comment>
   </data>
   <data name="NeedMailboxPassword" xml:space="preserve">
-    <value>Second password required</value>
+    <value>Патрабуецца другі пароль</value>
     <comment>Notification text when second password required</comment>
   </data>
   <data name="Cancel.Content" xml:space="preserve">
@@ -194,20 +202,12 @@
     <comment>Cancel button content</comment>
   </data>
   <data name="CantSendMessages" xml:space="preserve">
-    <value>You can't send messages</value>
+    <value>Вы не можаце адпраўляць паведамленні</value>
     <comment>Dialog title when user wants to send new message without any email account connected</comment>
   </data>
   <data name="ChangePasswordPageText" xml:space="preserve">
     <value>Змяніць асноўны пароль.</value>
     <comment>Text on "Change password" page</comment>
-  </data>
-  <data name="ChangeMasterPasswordButton.Content" xml:space="preserve">
-    <value>Змяніць асноўны пароль</value>
-    <comment>Text on "Change master password" button</comment>
-  </data>
-  <data name="ConfirmSeedPhraseButton.Content" xml:space="preserve">
-    <value>Confirm recovery phrase</value>
-    <comment>Text on "Confirm recovery phrase" button</comment>
   </data>
   <data name="CheckEmailNotification" xml:space="preserve">
     <value>Спраўдзіце эл.пошту</value>
@@ -238,7 +238,7 @@
     <comment>A label for the application developer</comment>
   </data>
   <data name="ConnectedServicesSettings.Header" xml:space="preserve">
-    <value>Your services</value>
+    <value>Вашыя сэрвісы</value>
     <comment>Title for a connected email accounts</comment>
   </data>
   <data name="EmailAddress.Text" xml:space="preserve">
@@ -343,7 +343,7 @@
     <comment>Input field caption for second password</comment>
   </data>
   <data name="PasswordIsTheSameNotification" xml:space="preserve">
-    <value>Is the same as current</value>
+    <value>Такі ж самы, як і цяперашні</value>
     <comment>Notification message shown when new password is the same as current</comment>
   </data>
   <data name="PasswordsDontMatchNotification" xml:space="preserve">
@@ -415,7 +415,7 @@
     <comment>Message title shown when user entered incorrect seed phrase</comment>
   </data>
   <data name="SeedRestoreAcceptButton.Content" xml:space="preserve">
-    <value>Accept</value>
+    <value>Прыняць</value>
     <comment>Restore seed page accept button</comment>
   </data>
   <data name="SeedRestoreSyncWithQRButton.Content" xml:space="preserve">
@@ -423,11 +423,11 @@
     <comment>Restore seed page Sync with QR button</comment>
   </data>
   <data name="SeedRestoreHeader.Text" xml:space="preserve">
-    <value>Enter a secret phrase to connect to a decentralized network</value>
+    <value>Увядзіце сакрэтную фразу для падлучэння да дэцэнтралізаванай сеткі</value>
     <comment>Restore seed page header</comment>
   </data>
   <data name="SeedRestoreEnterSeedphraseExplanationLabel.Text" xml:space="preserve">
-    <value>Once connected, the application will import your mail and settings from the decentralized network</value>
+    <value>Пасля падлучэння прыкладанне імпартуе вашу пошту і налады з дэцэнтралізаванай сеткі</value>
     <comment>Enter seed-phrase explanation label</comment>
   </data>
   <data name="SeedWordDoesNotMatch" xml:space="preserve">
@@ -439,7 +439,7 @@
     <comment>Notification message shown when user left word filed empty</comment>
   </data>
   <data name="SeedWordNoInDictionary" xml:space="preserve">
-    <value>Word doesn't exist in mnemonic dictionary</value>
+    <value>Гэтага слова няма ў мнеманічным слоўніку</value>
     <comment>Validation error for seed phrase word</comment>
   </data>
   <data name="SenderName.Text" xml:space="preserve">
@@ -447,7 +447,7 @@
     <comment>Input field caption for sender name</comment>
   </data>
   <data name="SetPasswordPageText" xml:space="preserve">
-    <value>Set database password.</value>
+    <value>Ўсталяваць пароль для базы дадзеных.</value>
     <comment>Text on "Set password" page</comment>
   </data>
   <data name="SettingsNavigationItem.Content" xml:space="preserve">
@@ -455,7 +455,7 @@
     <comment>Navigation item for open Settings page</comment>
   </data>
   <data name="SettingsPageHeader.Text" xml:space="preserve">
-    <value>Settings Page</value>
+    <value>Старонка наладаў</value>
     <comment>Settings page header</comment>
   </data>
   <data name="Thanks.Text" xml:space="preserve">
@@ -475,11 +475,11 @@
     <comment>Create account button text on WelcomePage</comment>
   </data>
   <data name="WelcomePageCreateAccountButtonSubtext.Text" xml:space="preserve">
-    <value>Create new account via seed-phrase</value>
+    <value>Стварыце новы ўліковы запіс з дапамогай seed-phrase</value>
     <comment>Create account button subtext on WelcomePage</comment>
   </data>
   <data name="WelcomePageHeader.Text" xml:space="preserve">
-    <value>Create decentralized account on your device</value>
+    <value>Стварыць дэцэнтралізаваны ўліковы запіс на сваёй прыладзе</value>
     <comment>New user welcome page text</comment>
   </data>
   <data name="WelcomePageRestoreAccountButton.Text" xml:space="preserve">
@@ -487,7 +487,7 @@
     <comment>Restore account button text on WelcomePage</comment>
   </data>
   <data name="WelcomePageRestoreAccountButtonSubtext.Text" xml:space="preserve">
-    <value>Connect your existing account via seed-phrase</value>
+    <value>Падключыць існуючы акаўнт з дапамогай seed-phrase</value>
     <comment>Restore account button subtext on WelcomePage</comment>
   </data>
   <data name="LocalLogoutButton.Content" xml:space="preserve">
@@ -495,11 +495,11 @@
     <comment>Logout and wipe all local application data button text in settings</comment>
   </data>
   <data name="WipeAllDataDialogAcceptText" xml:space="preserve">
-    <value>Wipe</value>
+    <value>Сцерці</value>
     <comment>Accept button text for dialog shown when user wants to wipe all application data</comment>
   </data>
   <data name="WipeAllDataDialogMessage" xml:space="preserve">
-    <value>This action will completely wipe all local application data.</value>
+    <value>Гэтае дзеянне прывядзе да поўнага выдалення ўсіх дадзеных лакальнага прыкладання.</value>
     <comment>Dialog message shown when user wants to wipe all application data</comment>
   </data>
   <data name="WipeAllDataDialogRejectText" xml:space="preserve">
@@ -509,6 +509,10 @@
   <data name="WipeAllDataDialogTitle" xml:space="preserve">
     <value>Увага</value>
     <comment>The title of the dialog shown when user wants to wipe all application data</comment>
+  </data>
+  <data name="NewMessageAdvancedSettings.Header" xml:space="preserve">
+    <value>Advanced Settings</value>
+    <comment>Section header in the new message window for Advanced Settings.</comment>
   </data>
   <data name="MessageEncrypted.Content" xml:space="preserve">
     <value>Шыфраваць</value>
@@ -523,31 +527,51 @@
     <comment>Go to PGP keys management page button content</comment>
   </data>
   <data name="PgpKeyImportButton.Content" xml:space="preserve">
-    <value>Import key from file</value>
+    <value>Імпарт ключа з файла</value>
     <comment>Import PGP key from file button content</comment>
   </data>
   <data name="PgpKeyCopyButton.Content" xml:space="preserve">
-    <value>Copy key to clipboard</value>
+    <value>Скапіраваць ключ у буфер абмену</value>
     <comment>Copy PGP key to clipboard button content</comment>
   </data>
   <data name="PgpKeyExportButton.Content" xml:space="preserve">
-    <value>Export key to file</value>
+    <value>Экспарт ключа ў файл</value>
     <comment>Export PGP key to file button content</comment>
   </data>
   <data name="PgpKeySendButton.Content" xml:space="preserve">
-    <value>Send key by email</value>
+    <value>Адправіць ключ па эл.пошце</value>
     <comment>Send PGP key by email button content</comment>
+  </data>
+  <data name="PgpKeyDeleteButton.Content" xml:space="preserve">
+    <value>Delete key</value>
+    <comment>Delete PGP key button content</comment>
+  </data>
+  <data name="RemovePgpKeyDialogTitle" xml:space="preserve">
+    <value>Увага</value>
+    <comment>The title of the dialog shown when user wants to remove PGP key</comment>
+  </data>
+  <data name="RemovePgpKeyDialogMessage" xml:space="preserve">
+    <value>This action will permanently delete the PGP key from your keychain</value>
+    <comment>Dialog message shown when user wants to remove PGP key</comment>
+  </data>
+  <data name="RemovePgpKeyDialogAcceptText" xml:space="preserve">
+    <value>Выдаліць</value>
+    <comment>Accept button text for dialog shown when user wants to remove PGP key</comment>
+  </data>
+  <data name="RemovePgpKeyDialogRejectText" xml:space="preserve">
+    <value>Скасаваць</value>
+    <comment>Cancel button text for dialog shown when user wants to remove PGP key</comment>
   </data>
   <data name="PgpKeyAlgorithm.Text" xml:space="preserve">
     <value>Алгарытм</value>
     <comment>Pgp key details cipher algorithm text label</comment>
   </data>
   <data name="PgpKeyCreationTime.Text" xml:space="preserve">
-    <value>Created</value>
+    <value>Створана</value>
     <comment>Pgp key details creation time text label</comment>
   </data>
   <data name="PgpKeyExpires.Text" xml:space="preserve">
-    <value>Expires</value>
+    <value>Сканчаецца</value>
     <comment>Pgp key details expiration time text label</comment>
   </data>
   <data name="PgpKeyFingerprint.Text" xml:space="preserve">
@@ -571,7 +595,7 @@
     <comment>Default subject of email message with shared public PGP key</comment>
   </data>
   <data name="PgpKeyImportErrorMessageTitle" xml:space="preserve">
-    <value>Public key import failed.</value>
+    <value>Памылка імпарту адкрытага ключа.</value>
     <comment>Title of message about public key import fail</comment>
   </data>
   <data name="PgpKeyAlgorithmUnknownMessage" xml:space="preserve">
@@ -635,11 +659,11 @@
     <comment>Message text shown when failed to receive new messages</comment>
   </data>
   <data name="NewMessagesCheckFailedErrorTitle" xml:space="preserve">
-    <value>Check for new messages</value>
+    <value>Праверыць новыя паведамленні</value>
     <comment>Message title shown when failed to check for new email messages</comment>
   </data>
   <data name="FailedToReceiveNewMessagesFromErrorMessage" xml:space="preserve">
-    <value>Failed to receive new messages from:</value>
+    <value>Не ўдалося атрымаць новыя паведамленні ад:</value>
     <comment>Message text shown when failed to receive new messages from list of emails below</comment>
   </data>
   <data name="ExportBackupButton.Text" xml:space="preserve">
@@ -651,15 +675,15 @@
     <comment>Backup export to file button subtext in settings</comment>
   </data>
   <data name="ImportBackupButton.Text" xml:space="preserve">
-    <value>Restore from file</value>
+    <value>Аднавіць з файла</value>
     <comment>Backup import from file button text in settings</comment>
   </data>
   <data name="ImportBackupButtonSubtext.Text" xml:space="preserve">
-    <value>Import all data and settings from the backup.</value>
+    <value>Імпартаваць ўсе дадзеныя і налады з рэзервовай копіі.</value>
     <comment>Backup import from file button subext in settings</comment>
   </data>
   <data name="BackupBuildErrorMessageTitle" xml:space="preserve">
-    <value>Backup creation failed</value>
+    <value>Не ўдалося стварыць рэзервовую копію</value>
     <comment>Title of message saying that backup building failed.</comment>
   </data>
   <data name="BackupParsingErrorMessageTitle" xml:space="preserve">
@@ -691,7 +715,7 @@
     <comment>Message saying that backup data protection format is unknown.</comment>
   </data>
   <data name="ContactsTab.Header" xml:space="preserve">
-    <value>Contacts</value>
+    <value>Кантакты</value>
     <comment>The header for Tab with list of contacts</comment>
   </data>
   <data name="MailboxesTab.Header" xml:space="preserve">
@@ -699,7 +723,7 @@
     <comment>The header for Tab with list of mailboxes (user connected e-mail accounts)</comment>
   </data>
   <data name="ContactMessagesPageHeader.Text" xml:space="preserve">
-    <value>Correspondence with</value>
+    <value>Перапіска з</value>
     <comment>The header of the page with list of messages from or sent to selected contact</comment>
   </data>
   <data name="MessageHeadLines" xml:space="preserve">
@@ -739,7 +763,7 @@ Subject: {3}
     <comment>Notification message is shown when access to account is denied</comment>
   </data>
   <data name="SignInButton.Content" xml:space="preserve">
-    <value>Sign in</value>
+    <value>Уваход</value>
     <comment>'Sign in' button content</comment>
   </data>
   <data name="OrderByNameContactComparerLabel" xml:space="preserve">
@@ -751,7 +775,7 @@ Subject: {3}
     <comment>Label of contact comparer displayed in sorting variants for contacts that sorts contacts by last message time</comment>
   </data>
   <data name="ContactFilter.PlaceholderText" xml:space="preserve">
-    <value>Search</value>
+    <value>Пошук</value>
     <comment>Text displayed in Search Contacts control when no search text is entered</comment>
   </data>
   <data name="AllMessagesFilterLabel" xml:space="preserve">
@@ -771,16 +795,12 @@ Subject: {3}
     <comment>The label for option (in dropdown list with filters) which means that only unread messages are shown</comment>
   </data>
   <data name="SendErrorReportTitle" xml:space="preserve">
-    <value>Would you like to send an error report?</value>
+    <value>Хочаце паведаміць пра памылку?</value>
     <comment>Title in the error message dialog</comment>
   </data>
   <data name="ErrorReportEmailTitle" xml:space="preserve">
     <value>An error report</value>
     <comment>Title in the email message with error report</comment>
-  </data>
-  <data name="MessageDecentralized.Content" xml:space="preserve">
-    <value>Send decentralized</value>
-    <comment>Send message using decentralized simulation</comment>
   </data>
   <data name="BackupAccountSettingsCheckBox.Content" xml:space="preserve">
     <value>Enable data backup for this account</value>
@@ -791,19 +811,19 @@ Subject: {3}
     <comment>The label for option Enable backup for downloaded emails</comment>
   </data>
   <data name="CancelMessagesDeleteButton.Content" xml:space="preserve">
-    <value>Undo</value>
+    <value>Адрабіць</value>
     <comment>Text of the button which cancels deleting messages</comment>
   </data>
   <data name="MessageWasDeleted" xml:space="preserve">
-    <value>Message was deleted</value>
+    <value>Паведамленне было выдалена</value>
     <comment>The title of InfoBar shown after message was deleted</comment>
   </data>
   <data name="NumberOfMessagesWereDeleted" xml:space="preserve">
-    <value>{0} messages were deleted</value>
+    <value>{0} паведамленняў былі выдаленыя</value>
     <comment>The title of InfoBar shown after number={0} messages were deleted</comment>
   </data>
   <data name="ValueCantBeNegativeNotification" xml:space="preserve">
-    <value>Value can't be negative</value>
+    <value>Значэнне не можа быць адмоўным</value>
     <comment>Notification message shown when user enters negative integer number</comment>
   </data>
   <data name="ValueIsNotNumberNotification" xml:space="preserve">
@@ -811,11 +831,11 @@ Subject: {3}
     <comment>Notification message shown when user enters text that can't be converted to integer number</comment>
   </data>
   <data name="BackupLabel.Text" xml:space="preserve">
-    <value>Backup</value>
+    <value>Рэзервовая копія</value>
     <comment>The label of section with backup options on settings page</comment>
   </data>
   <data name="CheckNewMessagesIntervalLabel.Text" xml:space="preserve">
-    <value>Check new messages interval (in minutes)</value>
+    <value>Інтэрвал праверкі новых паведамленняў (у хвілінах)</value>
     <comment>The label of input field to enter check messages interval value in minutes</comment>
   </data>
   <data name="P2PLabel.Text" xml:space="preserve">
@@ -827,7 +847,7 @@ Subject: {3}
     <comment>Label of contact comparer displayed in sorting variants for contacts that displays contacts with unread messages first then contacts without unread messages. Each of these two groups with contacts are sorted by last message time.</comment>
   </data>
   <data name="NewEmailsReceivedMessage" xml:space="preserve">
-    <value>New emails received.</value>
+    <value>Атрыманы новыя паведамленні.</value>
     <comment>Text for a toast notification when new emails are received</comment>
   </data>
   <data name="WelcomePageLicenseButton.Content" xml:space="preserve">
@@ -835,11 +855,11 @@ Subject: {3}
     <comment>Text for a license agreement button</comment>
   </data>
   <data name="SeedGenerateWelcomeToWeb3.Text" xml:space="preserve">
-    <value>Welcome to Web3!</value>
+    <value>Вітаем у Web3!</value>
     <comment>A label with Welcoming to Web3</comment>
   </data>
   <data name="WelcomePageLicenseExplanationLabel.Text" xml:space="preserve">
-    <value>By using the application, you agree to the terms:</value>
+    <value>Выкарыстоўваючы прыкладанне, вы згаджаецеся з умовамі:</value>
     <comment>License explanation text</comment>
   </data>
   <data name="SeedRestoreEnterSeedphraseLabel.Text" xml:space="preserve">
@@ -873,13 +893,13 @@ Subject: {3}
   <data name="DeleteLocalAIModelButton.Content" xml:space="preserve">
     <value>Delete local AI model</value>
     <comment>Delete local AI model button text in local AI agent settings</comment>
-  </data>  
+  </data>
   <data name="RemoveLocalAIAgentButton.Content" xml:space="preserve">
     <value>Remove local AI agent</value>
     <comment>Remove local AI agent button text in local AI agent settings</comment>
   </data>
   <data name="RemoveAIAgentDialogAcceptText" xml:space="preserve">
-    <value>Remove</value>
+    <value>Выдаліць</value>
     <comment>Accept button text for dialog shown when user wants to remove AI agent from the list</comment>
   </data>
   <data name="RemoveAIAgentDialogMessage" xml:space="preserve">
@@ -891,7 +911,7 @@ Subject: {3}
     <comment>Cancel button text for dialog shown when user wants to remove AI agent from the list</comment>
   </data>
   <data name="RemoveAIAgentDialogTitle" xml:space="preserve">
-    <value>Attention</value>
+    <value>Увага</value>
     <comment>The title of the dialog shown when user wants to remove AI agent from the list</comment>
   </data>
   <data name="AgentSpecialtyCombobox.Header" xml:space="preserve">
@@ -969,5 +989,313 @@ Subject: {3}
   <data name="NoneText" xml:space="preserve">
     <value>None</value>
     <comment>Indicates the absence of a selection in a combobox.</comment>
+  </data>
+  <data name="RequestReviewDialogTitle" xml:space="preserve">
+    <value>Rate the app!</value>
+    <comment>Dialog title asking the user to rate the application</comment>
+  </data>
+  <data name="ReviewAppTitle.Text" xml:space="preserve">
+    <value>Rate the app</value>
+    <comment>Dialog title asking the user to rate the application</comment>
+  </data>
+  <data name="RequestReviewDialogMessage" xml:space="preserve">
+    <value>Did you like the app?</value>
+    <comment>Dialog message asking the user if they liked the application</comment>
+  </data>
+  <data name="MsgBtnYes" xml:space="preserve">
+    <value>Yes</value>
+    <comment>Button text for confirming a positive response</comment>
+  </data>
+  <data name="MsgBtnNo" xml:space="preserve">
+    <value>No</value>
+    <comment>Button text for confirming a negative response</comment>
+  </data>
+  <data name="AuthenticationTitle" xml:space="preserve">
+    <value>Authentication</value>
+    <comment>Title for authentication dialog</comment>
+  </data>
+  <data name="AuthenticationContenet" xml:space="preserve">
+    <value>Please complete the authentication in your browser.</value>
+    <comment>Message shown to user to complete authentication in browser</comment>
+  </data>
+  <data name="OpenLogFolderButton.Content" xml:space="preserve">
+    <value>Open log folder</value>
+    <comment>Button for the opening log folder.</comment>
+  </data>
+  <data name="LogEnabledWarningMessage" xml:space="preserve">
+    <value>Logging is enabled.</value>
+    <comment>The message of the logging enabled warning.</comment>
+  </data>
+  <data name="WarningProblemTitle" xml:space="preserve">
+    <value>Warning!</value>
+    <comment>The title of the warning.</comment>
+  </data>
+  <data name="DisableLogging" xml:space="preserve">
+    <value>Disable logging</value>
+    <comment>The title of the disable logging solution button.</comment>
+  </data>
+  <data name="WhatsNewButton.Content" xml:space="preserve">
+    <value>What's new</value>
+    <comment>A text for the What's new button.</comment>
+  </data>
+  <data name="WhatsNewTwitPostText" xml:space="preserve">
+    <value>New version of {0} available now. Check out what's new.</value>
+    <comment>A text for the twitter post about new app version.</comment>
+  </data>
+  <data name="MissionTitle.Text" xml:space="preserve">
+    <value>Mission</value>
+    <comment>A text for the title of Mission text.</comment>
+  </data>
+  <data name="MissionText.Text" xml:space="preserve">
+    <value>To reinvent email as a peer-to-peer experience — providerless, intelligent, and user-owned — to open new ways for people to interact beyond the limits of traditional email.</value>
+    <comment>A text for the Mission.</comment>
+  </data>
+  <data name="JoinMission.Text" xml:space="preserve">
+    <value>Join our mission</value>
+    <comment>Header text for the application's social media list.</comment>
+  </data>
+  <data name="AboutDescription.Text" xml:space="preserve">
+    <value>Eppie is a peer-to-peer email with local AI, built for independent minds as an alternative to centralized platforms.</value>
+    <comment>A text for the Description on the About page.</comment>
+  </data>
+  <data name="AboutNetworkInfo.Text" xml:space="preserve">
+    <value>At 100,000 people, the decentralized network goes live. Every new user brings it closer. Learn more at</value>
+    <comment>A text for the Network Info on the About page.</comment>
+  </data>
+  <data name="AllLibs.Text" xml:space="preserve">
+    <value>All libs</value>
+    <comment>Text for other libs in the thaks list.</comment>
+  </data>
+  <data name="Translators.Text" xml:space="preserve">
+    <value>Translators</value>
+    <comment>Text for the translators in the thaks list.</comment>
+  </data>
+  <data name="RenameContactDialogTitle" xml:space="preserve">
+    <value>Rename Contact</value>
+    <comment>Title of the rename contact dialog</comment>
+  </data>
+  <data name="RenameContactDialogPrimaryButtonText" xml:space="preserve">
+    <value>Rename</value>
+    <comment>Text for the rename button in the dialog</comment>
+  </data>
+  <data name="RenameContactDialogCloseButtonText" xml:space="preserve">
+    <value>Скасаваць</value>
+    <comment>Text for the cancel button in the dialog</comment>
+  </data>
+  <data name="RenameContactDialogTextBoxHeader" xml:space="preserve">
+    <value>Enter a new name for the contact</value>
+    <comment>Header for the textbox in the rename contact dialog</comment>
+  </data>
+  <data name="NameAlreadyTakenError" xml:space="preserve">
+    <value>Name already taken.</value>
+    <comment>Error shown when desired decentralized name is already claimed</comment>
+  </data>
+  <data name="ClaimNameFailedError" xml:space="preserve">
+    <value>Claim failed.</value>
+    <comment>Error shown when name claim request fails</comment>
+  </data>
+  <data name="NameIsEmptyError" xml:space="preserve">
+    <value>Name is empty.</value>
+    <comment>Error shown when user tries to claim empty name</comment>
+  </data>
+  <data name="InvalidNameError" xml:space="preserve">
+    <value>Invalid name.</value>
+    <comment>Error shown when name does not pass validation rules</comment>
+  </data>
+  <data name="AddressSettingsView.Header" xml:space="preserve">
+    <value>ADDRESS SETTINGS</value>
+    <comment>Address settings view title.</comment>
+  </data>
+  <data name="DefaultSignatureText" xml:space="preserve">
+    <value>Sent from an Eppie (https://eppie.io) hybrid address.</value>
+    <comment>Default message footer signature.</comment>
+  </data>
+  <data name="ApplicationSettingsTitle.Text" xml:space="preserve">
+    <value>SETTINGS</value>
+    <comment>Title of the application settings page</comment>
+  </data>
+  <data name="AppearanceSettingsSectionSubtitle.Text" xml:space="preserve">
+    <value>Appearance</value>
+    <comment>Subtitle for the appearance settings section</comment>
+  </data>
+  <data name="SecuritySettingsSectionSubtitle.Text" xml:space="preserve">
+    <value>Security</value>
+    <comment>Subtitle for the security settings section</comment>
+  </data>
+  <data name="DevelopmentSettingsSectionSubtitle.Text" xml:space="preserve">
+    <value>Development</value>
+    <comment>Subtitle for the development settings section</comment>
+  </data>
+  <data name="LanguageOption.Caption" xml:space="preserve">
+    <value>Language</value>
+    <comment>Caption for the option with language lists</comment>
+  </data>
+    <data name="LanguageOption.TextNote" xml:space="preserve">
+    <value>Choose the app language.</value>
+    <comment>Note for the option with language lists</comment>
+  </data>
+  <data name="ThemesOption.Caption" xml:space="preserve">
+    <value>Themes</value>
+    <comment>Caption for the option with theme lists</comment>
+  </data>
+  <data name="ThemesOption.TextNote" xml:space="preserve">
+    <value>Select your preferred color scheme.</value>
+    <comment>Note for the option with theme lists</comment>
+  </data>
+  <data name="LaunchPasswordOption.Caption" xml:space="preserve">
+    <value>Require password on launch</value>
+    <comment>Caption for the option to enable password on launch</comment>
+  </data>
+  <data name="SeedPhraseOption.Caption" xml:space="preserve">
+    <value>Seed phrase</value>
+    <comment>Caption for the option with the seed phrase</comment>
+  </data>
+  <data name="SeedPhraseOption.TextNote" xml:space="preserve">
+    <value>Your seed phrase is the key to your account. Keep it safe and never share it.</value>
+    <comment>Note for the option with the seed phrase</comment>
+  </data>
+  <data name="ConfirmSeedPhraseOption.Caption" xml:space="preserve">
+    <value>Confirm your seed phrase</value>
+    <comment>Caption for the option to confirm the seed phrase</comment>
+  </data>
+  <data name="ExportToFileOption.Caption" xml:space="preserve">
+    <value>Local backup</value>
+    <comment>Caption for the option to export data to a file</comment>
+  </data>
+  <data name="ExportToFileOption.TextNote" xml:space="preserve">
+    <value>Save a full copy of all your data to a file.</value>
+    <comment>Note for the option to export data to a file</comment>
+  </data>
+  <data name="RestoreFromFileOption.Caption" xml:space="preserve">
+    <value>Restore your data from a file</value>
+    <comment>Caption for the option to restore from a file</comment>
+  </data>
+  <data name="EncryptionKeyOption.Caption" xml:space="preserve">
+    <value>PGP ключы</value>
+    <comment>Caption for the option with encryption keys</comment>
+  </data>
+  <data name="EncryptionKeyOption.TextNote" xml:space="preserve">
+    <value>View and configure your PGP keys.</value>
+    <comment>Note for the option with encryption keys</comment>
+  </data>
+  <data name="LoggingOption.Caption" xml:space="preserve">
+    <value>Logging level</value>
+    <comment>Caption for the logging option</comment>
+  </data>
+  <data name="LoggingOption.TextNote" xml:space="preserve">
+    <value>Set the detail level for app logs.</value>
+    <comment>Note for the logging option</comment>
+  </data>
+  <data name="SignOutButtonContent.Text" xml:space="preserve">
+    <value>Sign out</value>
+    <comment>Sign out button text</comment>
+  </data>
+  <data name="ViewAllEncryptionKeyButtonContent.Text" xml:space="preserve">
+    <value>View all</value>
+    <comment>View all encryption keys button text</comment>
+  </data>
+  <data name="RestoreFromFileButton.Content" xml:space="preserve">
+    <value>Restore</value>
+    <comment>Restore your data from file button text</comment>
+  </data>
+  <data name="EncryptionKeyImportButton.Content" xml:space="preserve">
+    <value>Import</value>
+    <comment>Import encryption key from file button text</comment>
+  </data>
+  <data name="ChangeMasterPasswordButton.Content" xml:space="preserve">
+    <value>Змяніць асноўны пароль</value>
+    <comment>Change master password button text</comment>
+  </data>
+  <data name="ConfirmSeedPhraseButton.Content" xml:space="preserve">
+    <value>Пацвердзіць фразу аднаўлення</value>
+    <comment>Confirm seed phrase button text</comment>
+  </data>
+  <data name="SeedPhraseExpander.Header" xml:space="preserve">
+    <value>View your phrase</value>
+    <comment>Header for the control with the seed phrase</comment>
+  </data>
+  <data name="ConfirmSeedPhraseNote.Text" xml:space="preserve">
+    <value>Waiting for your confirmation</value>
+    <comment>Text of the note that the seed phrase is not confirmed</comment>
+  </data>
+  <data name="HelpTranslate.Text" xml:space="preserve">
+    <value>Help us with translation</value>
+    <comment>"Help us with translation" link</comment>
+  </data>
+  <data name="CopySeedPhraseButtonContent.Text" xml:space="preserve">
+    <value>Copy</value>
+    <comment>Copy seed phrase button text</comment>
+  </data>
+  <data name="AddressControl.Warning" xml:space="preserve">
+    <value>Decentralized addresses created in Testnet are for testing only. Feel free to explore, but don’t use them for important communication.</value>
+    <comment>Warning for testnet addresses</comment>
+  </data>
+  <data name="BitcoinKeyOption.Caption" xml:space="preserve">
+    <value>Secret key</value>
+    <comment>Caption for the option with Bitcoin keys</comment>
+  </data>
+  <data name="BitcoinKeyOption.TextNote" xml:space="preserve">
+    <value>Import this key into your Bitcoin wallet to activate your address. Keep it safe and never share it.</value>
+    <comment>Note for the option with Bitcoin keys. Bitcoin is a brand that doesn't translate</comment>
+  </data>
+  <data name="EthereumKeyOption.Caption" xml:space="preserve">
+    <value>Secret key</value>
+    <comment>Caption for the option with Ethereum keys</comment>
+  </data>
+    <data name="EthereumKeyOption.TextNote" xml:space="preserve">
+    <value>Import this key into your Ethereum wallet to activate your address. Keep it safe and never share it.</value>
+    <comment>Note for the option with Ethereum keys. Ethereum is a brand that doesn't translate.</comment>
+  </data>
+  <data name="EppieAliasOption.Caption" xml:space="preserve">
+    <value>Alias (for Testnet)</value>
+    <comment>Caption for the option with a decentralized address alias</comment>
+  </data>
+  <data name="EppieAliasOption.TextNote" xml:space="preserve">
+    <value>Claim an alias for your decentralized address to replace its long public key.</value>
+    <comment>Note for the option with a decentralized address alias</comment>
+  </data>
+  <data name="ViewKeyHeader.Text" xml:space="preserve">
+    <value>View your key</value>
+    <comment>Header text for viewing key</comment>
+  </data>
+  <data name="CopyButton.Content" xml:space="preserve">
+    <value>Copy</value>
+    <comment>Copy to clipboard button text</comment>
+  </data>
+  <data name="SynchronizationIntervalOption.Caption" xml:space="preserve">
+    <value>Synchronization interval</value>
+    <comment>Caption of input field to enter check messages interval value in minutes</comment>
+  </data>
+  <data name="SynchronizationIntervalUnits.Text" xml:space="preserve">
+    <value>minutes</value>
+    <comment>Minutes - units of time measurement</comment>
+  </data>
+  <data name="VerifyButton.Content" xml:space="preserve">
+    <value>Verify</value>
+    <comment>text for the button that verifies the entered information</comment>
+  </data>
+  <data name="FeatureNotImplementedErrorTitle" xml:space="preserve">
+    <value>Feature Not Available</value>
+    <comment>Title for error message when a feature is not implemented</comment>
+  </data>
+  <data name="FeatureNotImplementedErrorMessage" xml:space="preserve">
+    <value>This feature is not yet available on your current platform. It may be available in a future update.</value>
+    <comment>Error message shown when a feature is not implemented</comment>
+  </data>
+  <data name="ThemeOptionSystem.Content" xml:space="preserve">
+    <value>(System mode)</value>
+    <comment>Theme option item: use system theme</comment>
+  </data>
+  <data name="ThemeOptionLight.Content" xml:space="preserve">
+    <value>Light mode</value>
+    <comment>Theme option item: light theme</comment>
+  </data>
+  <data name="ThemeOptionDark.Content" xml:space="preserve">
+    <value>Dark mode</value>
+    <comment>Theme option item: dark theme</comment>
+  </data>
+  <data name="RestartApp" xml:space="preserve">
+    <value>Restart app</value>
+    <comment>Action button text to restart application after language change</comment>
   </data>
 </root>

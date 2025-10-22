@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -137,6 +137,18 @@
     <value>E-mail adres</value>
     <comment>Input field caption for email address</comment>
   </data>
+  <data name="EmailAddressOption.Caption" xml:space="preserve">
+    <value>E-mail adres</value>
+    <comment>Input field caption for email address</comment>
+  </data>
+  <data name="EmailAddressOption.TextNote" xml:space="preserve">
+    <value>Enter your email address for this mail service.</value>
+    <comment>Description for email address input field</comment>
+  </data>
+  <data name="EmailAddressBox.PlaceholderText" xml:space="preserve">
+    <value>Enter email address</value>
+    <comment>Placeholder text for email address input field</comment>
+  </data>
   <data name="TwoFactorCode.Text" xml:space="preserve">
     <value>Tweestapsverificatiecode</value>
     <comment>Input field caption for two factor authentication code</comment>
@@ -181,6 +193,10 @@
     <value>Postvakken</value>
     <comment>The header for Tab with list of mailboxes (user connected e-mail accounts)</comment>
   </data>
+  <data name="RenameContactMenuItem.Text" xml:space="preserve">
+    <value>Rename contact</value>
+    <comment>Text of the context menu item that renames contact</comment>
+  </data>
   <data name="ChangeContactAvatarMenuItem.Text" xml:space="preserve">
     <value>Wijzig avatar</value>
     <comment>Text of the context menu item that changes contact's avatar</comment>
@@ -212,5 +228,231 @@
   <data name="CheckNewMessagesIntervalLabel.Text" xml:space="preserve">
     <value>Controleer nieuwe berichten interval (in minuten)</value>
     <comment>The label of input field to enter check messages interval value in minutes</comment>
+  </data>
+  <data name="SupportDevelopmentShortButton.Content" xml:space="preserve">
+    <value>Subscribe</value>
+    <comment>Button to open 'Support Development' page</comment>
+  </data>
+  <data name="SupportDevelopmentCaption.Text" xml:space="preserve">
+    <value>Support development</value>
+    <comment>Caption on the 'Support Development' page</comment>
+  </data>
+  <data name="SupportDevelopmentText.Text" xml:space="preserve">
+    <value>Your subscribtion helps us keep development open, independent, and moving forward faster.</value>
+    <comment>Text on the 'Support Development' page</comment>
+  </data>
+  <data name="SupportDevelopmentStoreProvider.Text" xml:space="preserve">
+    <value>Payments are processed through the Microsoft Store.</value>
+    <comment>Text on the 'Support Development' page</comment>
+  </data>
+  <data name="SupportDevelopmentGitHubProvider.Text" xml:space="preserve">
+    <value>Payments are processed through GitHub Sponsors.</value>
+    <comment>Text on the 'Support Development' page</comment>
+  </data>
+  <data name="PricePerMonthText.Text" xml:space="preserve">
+    <value>per month</value>
+    <comment>Text after price on the 'Support Development' page</comment>
+  </data>
+  <data name="UseSeparateCredentials.Content" xml:space="preserve">
+    <value>Use separate login and password</value>
+    <comment>Checkbox text for enabling separate login and password fields</comment>
+  </data>
+  <data name="ServerLogin.Text" xml:space="preserve">
+    <value>Login</value>
+    <comment>Input field caption for server login</comment>
+  </data>
+  <data name="ServerPassword.Text" xml:space="preserve">
+    <value>Password</value>
+    <comment>Input field caption for server password</comment>
+  </data>
+  <data name="Version.Text" xml:space="preserve">
+    <value>Version</value>
+    <comment>A label for the application version</comment>
+  </data>
+  <data name="WhatsNew.Text" xml:space="preserve">
+    <value>WHAT'S NEW</value>
+    <comment>A title for the What's new window.</comment>
+  </data>
+  <data name="NetworkName.Header" xml:space="preserve">
+    <value>Network</value>
+    <comment>A title for the Network combobox</comment>
+  </data>
+  <data name="SecretKeyWIF.Text" xml:space="preserve">
+    <value>Secret key (WIF)</value>
+    <comment>Title for the Wallet Import Format (WIF) private key display field.</comment>
+  </data>
+  <data name="WarningTestnet.Text" xml:space="preserve">
+    <value>Warning: Testnet addresses are for testing only. Not for real-world use. Use at your own risk.</value>
+    <comment>Warning for testnet addresses.</comment>
+  </data>
+  <data name="ClaimNameButton.Text" xml:space="preserve">
+    <value>Claim</value>
+    <comment>Button text to claim decentralized name</comment>
+  </data>
+  <data name="PasswordOption.Caption" xml:space="preserve">
+    <value>Login password</value>
+    <comment>Input field caption for password</comment>
+  </data>
+  <data name="PasswordOption.TextNote" xml:space="preserve">
+    <value>Enter the password for this address.</value>
+    <comment>Note on the password input field</comment>
+  </data>
+  <data name="PasswordBox.PlaceholderText" xml:space="preserve">
+    <value>Wachtwoord invoeren</value>
+    <comment>Text displayed in Password TextBox when no search text is entered</comment>
+  </data>
+  <data name="SenderNameOption.Caption" xml:space="preserve">
+    <value>Display name</value>
+    <comment>Input field caption for sender name</comment>
+  </data>
+  <data name="SenderNameOption.TextNote" xml:space="preserve">
+    <value>Name shown in the "From" field of your emails.</value>
+    <comment>Note on the sender name input field</comment>
+  </data>
+  <data name="SenderNameBox.PlaceholderText" xml:space="preserve">
+    <value>Name</value>
+    <comment>Text displayed in Sender TextBox when no search text is entered</comment>
+  </data>
+  <data name="SignatureOption.Caption" xml:space="preserve">
+    <value>Signature</value>
+    <comment>Input field caption for signature</comment>
+  </data>
+  <data name="SignatureNote.Text" xml:space="preserve">
+    <value>Each signature brings peer-to-peer communication closer for everyone.</value>
+    <comment>Note on the signature input field</comment>
+  </data>
+  <data name="SignatureLink.Text" xml:space="preserve">
+    <value>Learn more</value>
+    <comment>Display text of the link to additional information</comment>
+  </data>
+  <data name="SignatureBox.PlaceholderText" xml:space="preserve">
+    <value>Enter your signature</value>
+    <comment>Text displayed in Signature TextBox when no search text is entered</comment>
+  </data>
+  <data name="DefaultSignatureFirstPart.Text" xml:space="preserve">
+    <value>Sent from an</value>
+    <comment>The first part (Sent from an) of the sentence: "Sent from an Eppie hybrid address."</comment>
+  </data>
+  <data name="DefaultSignatureSecondPart.Text" xml:space="preserve">
+    <value>hybrid address.</value>
+    <comment>The second part (hybrid address) of the sentence: "Sent from an Eppie hybrid address."</comment>
+  </data>
+  <data name="AdvancedOption.Caption" xml:space="preserve">
+    <value>Advanced settings</value>
+    <comment>Combo box caption for advanced settings</comment>
+  </data>
+  <data name="AdvancedSettingsDefaultMode.Content" xml:space="preserve">
+    <value>Default</value>
+    <comment>Text of combo box item for default settings mode</comment>
+  </data>
+  <data name="AdvancedSettingsCustomMode.Content" xml:space="preserve">
+    <value>Custom</value>
+    <comment>Text of combo box item for custom settings mode</comment>
+  </data>
+  <data name="AdvancedSettingsResetButton.Content" xml:space="preserve">
+    <value>Restore defaults</value>
+    <comment>Text for the button to reset advanced settings</comment>
+  </data>
+  <data name="BackupOption.Caption" xml:space="preserve">
+    <value>Back-up</value>
+    <comment>Caption of the backup options section in account settings</comment>
+  </data>
+  <data name="BackupOption.TextNote" xml:space="preserve">
+    <value>Select options for this address.</value>
+    <comment>Note of section with backup options on account settings</comment>
+  </data>
+  <data name="BackupSettingsCheckBox.Content" xml:space="preserve">
+    <value>Backup settings</value>
+    <comment>The label for option Enable backup for account settings</comment>
+  </data>
+  <data name="BackupMessagesCheckBox.Content" xml:space="preserve">
+    <value>Backup emails</value>
+    <comment>The label for option Enable backup for downloaded emails</comment>
+  </data>
+  <data name="ServerOption.Caption" xml:space="preserve">
+    <value>IMAP/SMTP settings</value>
+    <comment>Caption of the server options section in account settings</comment>
+  </data>
+  <data name="ServerOption.TextNote" xml:space="preserve">
+    <value>Default settings are automatically configured, but you can manually adjust them anytime.</value>
+    <comment>Note of section with server options on account settings</comment>
+  </data>
+  <data name="SynchronizationIntervalOption.Caption" xml:space="preserve">
+    <value>Synchronization interval</value>
+    <comment>Caption of input field to enter check messages interval value in minutes</comment>
+  </data>
+  <data name="SynchronizationIntervalUnits.Text" xml:space="preserve">
+    <value>minutes</value>
+    <comment>Minutes - units of time measurement</comment>
+  </data>
+  <data name="EncryptionOption.Caption" xml:space="preserve">
+    <!-- Todo: Try not using PGP : Encryption Keys -->
+    <value>PGP sleutels</value>
+    <comment>Caption for the encryption settings section in account settings</comment>
+  </data>
+  <data name="EncryptionOption.TextNote" xml:space="preserve">
+    <!-- Todo: Try not using PGP, Eppie-->
+    <value>Eppie generates a PGP key pair for each address to enable secure end-to-end encryption.</value>
+    <comment>Note for the encryption settings section in account settings. Eppie is a brand that doesn't translate</comment>
+  </data>
+  <data name="CopyEncryptionKeyButton.Content" xml:space="preserve">
+    <value>Copy</value>
+    <comment>Text for the button to copy encryption key</comment>
+  </data>
+  <data name="ExportEncryptionKeyButton.Content" xml:space="preserve">
+    <value>Export to file</value>
+    <comment>Text for the button to export the encryption key to a file</comment>
+  </data>
+  <data name="SendEncryptionKeyButton.Content" xml:space="preserve">
+    <value>Send via email</value>
+    <comment>Text for the button to send encryption key by email</comment>
+  </data>
+  <data name="EncryptionKeyIdLabel.Text" xml:space="preserve">
+    <value>Key ID</value>
+    <comment>Label of the field containing the encryption key identifier</comment>
+  </data>
+  <data name="EncryptionKeyAlgorithmLabel.Text" xml:space="preserve">
+    <value>Algoritme</value>
+    <comment>Label of the field containing the name of the encryption key algorithm</comment>
+  </data>
+  <data name="EncryptionKeyCreationTimeLabel.Text" xml:space="preserve">
+    <value>Aangemaakt</value>
+    <comment>Label of the field containing the creation time of the encryption key</comment>
+  </data>
+  <data name="EncryptionKeyExpirationDateLabel.Text" xml:space="preserve">
+    <value>Verloopt</value>
+    <comment>Label of the field containing the expiration date of the encryption key</comment>
+  </data>
+  <data name="HybridAddressButton.Content" xml:space="preserve">
+    <value>Hybride adres maken</value>
+    <comment>Create hybrid address button text in account settings</comment>
+  </data>
+  <data name="HybridAddressOption.Caption" xml:space="preserve">
+    <value>Hybrid address</value>
+    <comment>Hybrid address caption text in account settings</comment>
+  </data>
+  <data name="HybridAddressOption.TextNote" xml:space="preserve">
+    <value>Create hybrid email address.</value>
+    <comment>Hybrid address note text in account settings.</comment>
+  </data>
+  <data name="ConnectionStatus.Text" xml:space="preserve">
+    <value>Connected</value>
+    <comment>Server connection status.</comment>
+  </data>
+  <data name="ApplyButtonContent.Text" xml:space="preserve">
+    <value>Toepassen</value>
+    <comment>Apply button text</comment>
+  </data>
+  <data name="Cancel.Content" xml:space="preserve">
+    <value>Annuleren</value>
+    <comment>Cancel button text</comment>
+  </data>
+  <data name="RemoveAddressButton.Content" xml:space="preserve">
+    <value>Remove address</value>
+    <comment>Remove address button text in address settings</comment>
+  </data>
+  <data name="JoinWaitingList.Content" xml:space="preserve">
+    <value>Aan de wachtlijst toevoegen</value>
+    <comment>JoinWaitingList button content</comment>
   </data>
 </root>

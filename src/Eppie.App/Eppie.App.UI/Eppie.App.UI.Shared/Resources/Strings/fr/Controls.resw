@@ -118,27 +118,27 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Address.Text" xml:space="preserve">
-    <value>地址</value>
+    <value>Adresse</value>
     <comment>Input field caption for server address</comment>
   </data>
   <data name="MessageFilter.PlaceholderText" xml:space="preserve">
-    <value>搜索</value>
+    <value>Rechercher</value>
     <comment>Text displayed in Search Messages control when no search text is entered</comment>
   </data>
   <data name="ConfirmPassword.Text" xml:space="preserve">
-    <value>确认密码</value>
+    <value>Confirmer le mot de passe</value>
     <comment>Input field caption for confirm password</comment>
   </data>
   <data name="CurrentPassword.Text" xml:space="preserve">
-    <value>当前密码</value>
+    <value>Mot de passe actuel</value>
     <comment>Input field caption for current password</comment>
   </data>
   <data name="EmailAddress.Text" xml:space="preserve">
-    <value>邮箱地址</value>
+    <value>Adresse e-mail</value>
     <comment>Input field caption for email address</comment>
   </data>
   <data name="EmailAddressOption.Caption" xml:space="preserve">
-    <value>邮箱地址</value>
+    <value>Adresse e-mail</value>
     <comment>Input field caption for email address</comment>
   </data>
   <data name="EmailAddressOption.TextNote" xml:space="preserve">
@@ -150,47 +150,47 @@
     <comment>Placeholder text for email address input field</comment>
   </data>
   <data name="TwoFactorCode.Text" xml:space="preserve">
-    <value>双重身份验证码</value>
+    <value>Code d'authentification à deux facteurs</value>
     <comment>Input field caption for two factor authentication code</comment>
   </data>
   <data name="IncomingServer.Text" xml:space="preserve">
-    <value>收信服务器</value>
+    <value>Serveur de courrier entrant</value>
     <comment>Caption for incoming email server settings</comment>
   </data>
   <data name="OutgoingServer.Text" xml:space="preserve">
-    <value>发信服务器</value>
+    <value>Serveur de courrier sortant</value>
     <comment>Caption for outgoing email server settings</comment>
   </data>
   <data name="Password.Text" xml:space="preserve">
-    <value>输入密码</value>
+    <value>Mot de passe</value>
     <comment>Input field caption for password</comment>
   </data>
   <data name="MailboxPassword.Text" xml:space="preserve">
-    <value>Enter second password</value>
+    <value>Second mot de passe</value>
     <comment>Input field caption for second password</comment>
   </data>
   <data name="Port.Text" xml:space="preserve">
-    <value>端口</value>
+    <value>Port</value>
     <comment>Input field caption for server port</comment>
   </data>
   <data name="Protocol.Text" xml:space="preserve">
-    <value>协议</value>
+    <value>Protocole</value>
     <comment>Caption for select network protocol</comment>
   </data>
   <data name="RememberPassword.Content" xml:space="preserve">
-    <value>记住密码</value>
+    <value>Se souvenir de mon mot de passe</value>
     <comment>Checkbox text for option to remeber pasword</comment>
   </data>
   <data name="SenderName.Text" xml:space="preserve">
-    <value>使用该名称发送消息</value>
+    <value>Envoyer vos messages en utilisant ce nom</value>
     <comment>Input field caption for sender name</comment>
   </data>
   <data name="ContactsTab.Header" xml:space="preserve">
-    <value>联系人</value>
+    <value>Contacts</value>
     <comment>The header for Tab with list of contacts</comment>
   </data>
   <data name="MailboxesTab.Header" xml:space="preserve">
-    <value>邮箱</value>
+    <value>Boîtes mail</value>
     <comment>The header for Tab with list of mailboxes (user connected e-mail accounts)</comment>
   </data>
   <data name="RenameContactMenuItem.Text" xml:space="preserve">
@@ -198,35 +198,35 @@
     <comment>Text of the context menu item that renames contact</comment>
   </data>
   <data name="ChangeContactAvatarMenuItem.Text" xml:space="preserve">
-    <value>修改头像</value>
+    <value>Modifier l'avatar</value>
     <comment>Text of the context menu item that changes contact's avatar</comment>
   </data>
   <data name="RemoveContactMenuItem.Text" xml:space="preserve">
-    <value>移除</value>
+    <value>Supprimer</value>
     <comment>The text of context menu item that removes contact from address book</comment>
   </data>
   <data name="ContactFilter.PlaceholderText" xml:space="preserve">
-    <value>搜索</value>
+    <value>Rechercher</value>
     <comment>Text displayed in Search Contacts control when no search text is entered</comment>
   </data>
   <data name="BackupAccountSettingsCheckBox.Content" xml:space="preserve">
-    <value>为此帐户启用数据备份</value>
+    <value>Activer la sauvegarde des données pour ce compte</value>
     <comment>The label for option Enable backup for Account settings</comment>
   </data>
   <data name="BackupAccountMessagesCheckBox.Content" xml:space="preserve">
-    <value>为此帐户启用已下载邮件备份</value>
+    <value>Activer la sauvegarde des e-mails téléchargés pour ce compte</value>
     <comment>The label for option Enable backup for downloaded emails</comment>
   </data>
   <data name="CancelMessagesDeleteButton.Content" xml:space="preserve">
-    <value>撤销</value>
+    <value>Annuler</value>
     <comment>Text of the button which cancels deleting messages</comment>
   </data>
   <data name="BackupLabel.Text" xml:space="preserve">
-    <value>备份</value>
+    <value>Sauvegarde</value>
     <comment>The label of section with backup options on settings page</comment>
   </data>
   <data name="CheckNewMessagesIntervalLabel.Text" xml:space="preserve">
-    <value>检查新消息间隔（分钟）</value>
+    <value>Intervalle de vérification des nouveaux messages (en minutes)</value>
     <comment>The label of input field to enter check messages interval value in minutes</comment>
   </data>
   <data name="SupportDevelopmentShortButton.Content" xml:space="preserve">
@@ -298,7 +298,7 @@
     <comment>Note on the password input field</comment>
   </data>
   <data name="PasswordBox.PlaceholderText" xml:space="preserve">
-    <value>输入密码</value>
+    <value>Mot de passe</value>
     <comment>Text displayed in Password TextBox when no search text is entered</comment>
   </data>
   <data name="SenderNameOption.Caption" xml:space="preserve">
@@ -354,7 +354,7 @@
     <comment>Text for the button to reset advanced settings</comment>
   </data>
   <data name="BackupOption.Caption" xml:space="preserve">
-    <value>备份</value>
+    <value>Sauvegarde</value>
     <comment>Caption of the backup options section in account settings</comment>
   </data>
   <data name="BackupOption.TextNote" xml:space="preserve">
@@ -387,7 +387,7 @@
   </data>
   <data name="EncryptionOption.Caption" xml:space="preserve">
     <!-- Todo: Try not using PGP : Encryption Keys -->
-    <value>PGP 密钥</value>
+    <value>Clés PGP</value>
     <comment>Caption for the encryption settings section in account settings</comment>
   </data>
   <data name="EncryptionOption.TextNote" xml:space="preserve">
@@ -412,19 +412,19 @@
     <comment>Label of the field containing the encryption key identifier</comment>
   </data>
   <data name="EncryptionKeyAlgorithmLabel.Text" xml:space="preserve">
-    <value>算法</value>
+    <value>Algorithme</value>
     <comment>Label of the field containing the name of the encryption key algorithm</comment>
   </data>
   <data name="EncryptionKeyCreationTimeLabel.Text" xml:space="preserve">
-    <value>创建时间</value>
+    <value>Créée le</value>
     <comment>Label of the field containing the creation time of the encryption key</comment>
   </data>
   <data name="EncryptionKeyExpirationDateLabel.Text" xml:space="preserve">
-    <value>过期时间</value>
+    <value>Expire le</value>
     <comment>Label of the field containing the expiration date of the encryption key</comment>
   </data>
   <data name="HybridAddressButton.Content" xml:space="preserve">
-    <value>创建混合地址</value>
+    <value>Créer une adresse hybride</value>
     <comment>Create hybrid address button text in account settings</comment>
   </data>
   <data name="HybridAddressOption.Caption" xml:space="preserve">
@@ -440,11 +440,11 @@
     <comment>Server connection status.</comment>
   </data>
   <data name="ApplyButtonContent.Text" xml:space="preserve">
-    <value>应用</value>
+    <value>Appliquer</value>
     <comment>Apply button text</comment>
   </data>
   <data name="Cancel.Content" xml:space="preserve">
-    <value>取消</value>
+    <value>Annuler</value>
     <comment>Cancel button text</comment>
   </data>
   <data name="RemoveAddressButton.Content" xml:space="preserve">
@@ -452,7 +452,7 @@
     <comment>Remove address button text in address settings</comment>
   </data>
   <data name="JoinWaitingList.Content" xml:space="preserve">
-    <value>加入等候清单</value>
+    <value>Rejoindre la liste d'attente</value>
     <comment>JoinWaitingList button content</comment>
   </data>
 </root>
