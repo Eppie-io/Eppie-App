@@ -282,8 +282,6 @@
     <PRIResource Include="Resources\Strings\nl\App.Resources.resw" />
     <PRIResource Include="Resources\Strings\be\App.Resources.resw" />
     <PRIResource Include="Resources\Strings\ja\App.Resources.resw" />
-  </ItemGroup>
-  <ItemGroup>
     <PRIResource Include="Resources\Strings\fr\App.Resources.resw" />
   </ItemGroup>
   <Import Project="..\Eppie.App.Shared\Eppie.App.Shared.projitems" Label="Shared" />
