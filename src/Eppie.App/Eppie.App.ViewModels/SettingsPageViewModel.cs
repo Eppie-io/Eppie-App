@@ -243,7 +243,7 @@ namespace Tuvi.App.ViewModels
         {
             if (LocalSettingsService != null)
             {
-                if (selectedIndex < 0 || selectedIndex > 2)
+                if (!Enum.IsDefined(typeof(AppTheme), selectedIndex))
                 {
                     return;
                 }
