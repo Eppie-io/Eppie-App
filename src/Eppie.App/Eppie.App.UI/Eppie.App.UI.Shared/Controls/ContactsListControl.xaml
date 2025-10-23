@@ -15,14 +15,14 @@
     <UserControl.Resources>
 
         <DataTemplate x:Key="ContactItemTemplate" x:DataType="viewmodels:ContactItem">
-            <Grid>
+            <Grid Margin="0,6">
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="8" />
+                    <ColumnDefinition Width="12" />
                     <ColumnDefinition />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
@@ -41,8 +41,8 @@
                 </Grid.ContextFlyout>
 
                 <PersonPicture Grid.RowSpan="2"
-                               Width="48"
-                               Height="48"
+                               Width="32"
+                               Height="32"
                                DisplayName="{x:Bind DisplayName, Mode=OneWay}"
                                ProfilePicture="{x:Bind AvatarInfo, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}" />
 
@@ -50,23 +50,21 @@
 
                 <TextBlock Grid.Row="1"
                            Grid.Column="2"
-                           Opacity="0.6"
+                           Foreground="{ThemeResource TextFillColorSecondary}"
                            Text="{x:Bind Email.Address, Mode=OneWay}" />
 
                 <winui:InfoBadge Grid.RowSpan="2"
                                  Grid.Column="3"
-                                 Margin="8,0,4,0"
+                                 Margin="8,0"
                                  Visibility="{x:Bind UnreadMessagesCount, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}"
                                  Value="{x:Bind UnreadMessagesCount, Mode=OneWay}" />
-
             </Grid>
         </DataTemplate>
 
     </UserControl.Resources>
 
     <Grid>
-        <ListView Padding="0,0,20,0"
-                  IsItemClickEnabled="True"
+        <ListView IsItemClickEnabled="True"
                   ItemTemplate="{StaticResource ContactItemTemplate}"
                   ItemsSource="{x:Bind ContactsModel.Contacts, Mode=OneWay}"
                   SelectedItem="{x:Bind ContactsModel.SelectedContact, Mode=TwoWay}"
