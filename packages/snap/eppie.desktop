@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Eppie
+Comment=Eppie
+Exec=eppie
+Icon=${SNAP}/meta/gui/icon.png
+Terminal=false
+Categories=Network;Email;
