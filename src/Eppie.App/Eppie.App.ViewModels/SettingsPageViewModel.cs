@@ -78,7 +78,6 @@ namespace Tuvi.App.ViewModels
         }
 
         private int _themeSelectedIndex;
-        //TODO: Issue #840 - Add logic
         public int ThemeSelectedIndex
         {
             get => _themeSelectedIndex;
@@ -86,8 +85,8 @@ namespace Tuvi.App.ViewModels
             {
                 if (value != _themeSelectedIndex)
                 {
-                    OnError(new NotImplementedException());
-                    OnPropertyChanged();
+                    SetProperty(ref _themeSelectedIndex, value);
+                    ApplyTheme(value);
                 }
             }
         }
@@ -96,14 +95,22 @@ namespace Tuvi.App.ViewModels
         {
             base.OnNavigatedTo(data);
 
-            LocalSettingsService.SettingChanged += LocalSettingsService_SettingChanged;
+            InitializeTheme();
+
+            if (LocalSettingsService != null)
+            {
+                LocalSettingsService.SettingChanged += LocalSettingsService_SettingChanged;
+            }
         }
 
         override public void OnNavigatedFrom()
         {
             base.OnNavigatedFrom();
 
-            LocalSettingsService.SettingChanged -= LocalSettingsService_SettingChanged;
+            if (LocalSettingsService != null)
+            {
+                LocalSettingsService.SettingChanged -= LocalSettingsService_SettingChanged;
+            }
         }
 
         private async Task WipeApplicationDataAsync()
@@ -220,6 +227,33 @@ namespace Tuvi.App.ViewModels
             if (args.Name == nameof(LocalSettingsService.LogLevel))
             {
                 OnPropertyChanged(nameof(SelectedLogLevel));
+            }
+        }
+
+        private void InitializeTheme()
+        {
+            if (LocalSettingsService != null)
+            {
+                _themeSelectedIndex = (int)LocalSettingsService.Theme;
+                OnPropertyChanged(nameof(ThemeSelectedIndex));
+            }
+        }
+
+        private void ApplyTheme(int selectedIndex)
+        {
+            if (LocalSettingsService != null)
+            {
+                if (!Enum.IsDefined(typeof(AppTheme), selectedIndex))
+                {
+                    return;
+                }
+
+                AppTheme theme = (AppTheme)selectedIndex;
+
+                if (LocalSettingsService.Theme != theme)
+                {
+                    LocalSettingsService.Theme = theme;
+                }
             }
         }
 
