@@ -116,6 +116,9 @@ jobs:
           # WebView2 requirements for Linux - https://platform.uno/docs/articles/controls/WebView.html#x11-specifics
           sudo apt-get install -y libgtk-3-0 libwebkit2gtk-4.1-dev
 
+          # Utility to convert icon
+          sudo apt-get install -y inkscape
+
           # Snap package requirements for Ubuntu - https://platform.uno/docs/articles/uno-publishing-desktop.linux.html
           sudo apt-get install -y snapd
           sudo snap install $snap_core_version
@@ -185,16 +188,29 @@ jobs:
 
           IFS=$IFS_CACHE
 
-      - name: Prepare Snapcraft
+      - name: Prepare Publish
         shell: bash
         run: |
-          workspace="${{ github.workspace }}"
+          workspace='${{ github.workspace }}'
+          project='${{ matrix.publish.project }}'
+          project_dir="$(dirname "$project")"
           app_display_version='${{ steps.assign-version.outputs.app-display-version }}'
 
           template=$(cat $workspace/packages/snap/snapcraft.template.yaml)
           echo "${template//'$EPPIE_VERSION'/$app_display_version}" > $workspace/packages/snap/snapcraft.yaml
 
           cat $workspace/packages/snap/snapcraft.yaml
+
+          icon_svg="$workspace/$project_dir/Assets/Icons/icon.svg"
+          icon_png="$workspace/$project_dir/snap/gui/icon.png"
+          icon_png_dir="$(dirname "$icon_png")"
+          mkdir -p "$icon_png_dir"
+
+          inkscape "$icon_svg" \
+                   --export-type=png \
+                   --export-filename="$icon_png" \
+                   --export-width=256 \
+                   --export-height=256
 
       - name: Publish
         if: matrix.publish.tool == 'dotnet'
@@ -220,10 +236,11 @@ jobs:
           version_options="--property:Version=\"$semantic_version\" --property:AssemblyVersion=\"$numeric_version\" --property:PackageVersion=\"$numeric_version\" --property:ApplicationVersion=\"$app_version\" --property:ApplicationDisplayVersion=\"$app_display_version\""
           verbosity_option="--verbosity=${{ inputs.dotnet-verbosity }}"
           snapcraft_option="--property:SnapManifest=$workspace/packages/snap/snapcraft.yaml"
+          desktop_option="--property:DesktopFile=$workspace/packages/snap/eppie.desktop"
 
           # LXD cannot be used without sudo 
           # Add dotnet path to root user && run dotnet publish as root
-          sudo su -c "export PATH=$PATH:$dotnet_path && export DOTNET_ROOT=$dotnet_path && echo '$options $extra_options $version_options $verbosity_option $snapcraft_option' | xargs dotnet publish $project"
+          sudo su -c "export PATH=$PATH:$dotnet_path && export DOTNET_ROOT=$dotnet_path && echo '$options $extra_options $version_options $verbosity_option $snapcraft_option $desktop_option' | xargs dotnet publish $project"
 
       - name: Prepare Artifacts
         shell: bash
