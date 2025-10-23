@@ -118,167 +118,167 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AttachButton.Label" xml:space="preserve">
-    <value>插入附件</value>
+    <value>Joindre des fichiers</value>
     <comment>Text for attach button</comment>
   </data>
   <data name="AttachButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>插入附件</value>
+    <value>Joindre des fichiers</value>
     <comment>The tooltip for attach button</comment>
   </data>
   <data name="BackButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>返回</value>
+    <value>Retour</value>
     <comment>The tooltip for back button</comment>
   </data>
   <data name="DeleteButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>删除</value>
+    <value>Supprimer</value>
     <comment>The tooltip for delete button</comment>
   </data>
   <data name="DeleteButton.Label" xml:space="preserve">
-    <value>删除</value>
+    <value>Supprimer</value>
     <comment>Text on Delete button</comment>
   </data>
   <data name="MarkAsReadButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>标为已读</value>
+    <value>Marquer comme lu</value>
     <comment>The tooltip for Mark as read button</comment>
   </data>
   <data name="MarkAsReadButton.Label" xml:space="preserve">
-    <value>标为已读</value>
+    <value>Marquer comme lu</value>
     <comment>Text on Mark as read button</comment>
   </data>
   <data name="MarkAsUnreadButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>标为未读</value>
+    <value>Marquer comme non lu</value>
     <comment>The tooltip for Mark as unread button</comment>
   </data>
   <data name="MarkAsUnreadButton.Label" xml:space="preserve">
-    <value>标为未读</value>
+    <value>Marquer comme non lu</value>
     <comment>Text on Mark as unread button</comment>
   </data>
   <data name="ReplyButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>回复</value>
+    <value>Répondre</value>
     <comment>The tooltip for reply button</comment>
   </data>
   <data name="ReplyButton.Label" xml:space="preserve">
-    <value>回复</value>
+    <value>Répondre</value>
     <comment>Text on Reply button</comment>
   </data>
   <data name="ReplyAllButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>回复全部</value>
+    <value>Répondre à tous</value>
     <comment>The tooltip for Reply All button</comment>
   </data>
   <data name="ReplyAllButton.Label" xml:space="preserve">
-    <value>回复全部</value>
+    <value>Répondre à tous</value>
     <comment>Text on Reply All button</comment>
   </data>
   <data name="ForwardButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>转发</value>
+    <value>Transférer</value>
     <comment>The tooltip for Forward email button</comment>
   </data>
   <data name="ForwardButton.Label" xml:space="preserve">
-    <value>转发</value>
+    <value>Transférer</value>
     <comment>Text on Forward email button</comment>
   </data>
   <data name="SendButton.Label" xml:space="preserve">
-    <value>发送</value>
+    <value>Envoyer</value>
     <comment>Text for send button</comment>
   </data>
   <data name="SendButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>发送</value>
+    <value>Envoyer</value>
     <comment>The tooltip for send button</comment>
   </data>
   <data name="SeedGenerateCopyButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>复制种子短语 (Ctrl+C)</value>
+    <value>Copier la phrase de récupération (Ctrl+C)</value>
     <comment>Tooltip for Copy seed phrase button</comment>
   </data>
   <data name="SeedRestorePasteButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>粘贴种子短语 (Ctrl+V)</value>
+    <value>Coller la phrase de récupération (Ctrl+V)</value>
     <comment>Restore seed page paste phrase button</comment>
   </data>
   <data name="SaveAttachmentButton.Label" xml:space="preserve">
-    <value>保存</value>
+    <value>Enregistrer</value>
     <comment>Text for save attached file button</comment>
   </data>
   <data name="SaveAttachmentButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>保存</value>
+    <value>Enregistrer</value>
     <comment>The tooltip for save attached file button</comment>
   </data>
   <data name="OpenAttachmentButton.Label" xml:space="preserve">
-    <value>打开</value>
+    <value>Ouvrir</value>
     <comment>Text for save attached file button</comment>
   </data>
   <data name="OpenAttachmentButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>打开</value>
+    <value>Ouvrir</value>
     <comment>The tooltip for save attached file button</comment>
   </data>
   <data name="DeleteAttachmentButton.Label" xml:space="preserve">
-    <value>删除</value>
+    <value>Supprimer</value>
     <comment>Text for Delete attached file button</comment>
   </data>
   <data name="DeleteAttachmentButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>删除</value>
+    <value>Supprimer</value>
     <comment>The tooltip for Delete attached file button</comment>
   </data>
   <data name="UpdateButton.Label" xml:space="preserve">
-    <value>更新</value>
+    <value>Actualiser</value>
     <comment>Text for Update emails list button</comment>
   </data>
   <data name="UpdateButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>更新</value>
+    <value>Actualiser</value>
     <comment>The tooltip for Update emails list button</comment>
   </data>
   <data name="SelectionModeButton.Label" xml:space="preserve">
-    <value>选择模式</value>
+    <value>Mode sélection</value>
     <comment>Text for Selection mode button</comment>
   </data>
   <data name="SelectionModeButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>选择模式</value>
+    <value>Mode sélection</value>
     <comment>The tooltip for Selection mode button</comment>
   </data>
   <data name="ClearFlagButton.Label" xml:space="preserve">
-    <value>清除标记</value>
+    <value>Retirer le marqueur</value>
     <comment>Text on Clear flag button</comment>
   </data>
   <data name="ClearFlagButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>清除标记</value>
+    <value>Retirer le marqueur</value>
     <comment>The tooltip for Clear flag button</comment>
   </data>
   <data name="SetFlagButton.Label" xml:space="preserve">
-    <value>设置标记</value>
+    <value>Marquer</value>
     <comment>Text on Set flag button</comment>
   </data>
   <data name="SetFlagButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>设置标记</value>
+    <value>Marquer</value>
     <comment>The tooltip for Set flag button</comment>
   </data>
   <data name="SelectAllButton.Label" xml:space="preserve">
-    <value>Select All</value>
+    <value>Tout sélectionner</value>
     <comment>Text on Select All button.</comment>
   </data>
   <data name="SelectAllButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Select All</value>
+    <value>Tout sélectionner</value>
     <comment>The tooltip for Select All button</comment>
   </data>
   <data name="AIAgentProcessMessageButton.Label" xml:space="preserve">
-    <value>AI Agent</value>
+    <value>Agent d'IA</value>
     <comment>Text on AI Agent process button.</comment>
   </data>
   <data name="AIAgentProcessMessageButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>AI Agent</value>
+    <value>Agent d'IA</value>
     <comment>The tooltip for AI Agent process button</comment>
   </data>
   <data name="AIOptionTopPSlider.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>The top P parameter tells the model to only consider tokens up until a cumulative probability of P. Lower this value for more predictable, focused generation and increase it for more random response.</value>
+    <value>Le paramètre Top P indique au modèle de ne considérer que les tokens jusqu'à atteindre une probabilité cumulative de P. Diminuez cette valeur pour une génération plus prévisible et ciblée, et augmentez-la pour une réponse plus aléatoire.</value>
     <comment>The tooltip for TopP AI option slider.</comment>
   </data>
   <data name="AIOptionTopKSlider.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>The top K parameter tells the model to only consider the K most probable tokens at each generation step. Lower this value for more predictable, focused generation and increase it for more random response.</value>
+    <value>Le paramètre Top K indique au modèle de ne considérer que les K tokens les plus probables à chaque étape de génération. Diminuez cette valeur pour une génération plus prévisible et ciblée, et augmentez-la pour une réponse plus aléatoire.</value>
     <comment>The tooltip for TopK AI option slider.</comment>
   </data>
   <data name="AIOptionTemperatureSlider.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>The temperature parameter is a scaling factor for the probability distribution of tokens during generation. Values lower than 1 will produce more deterministic response while values higher than 1 will increase ramdomness.</value>
+    <value>Le paramètre de température est un facteur d'échelle pour la distribution de probabilité des tokens durant la génération. Les valeurs inférieures à 1 produiront une réponse plus déterministe, tandis que les valeurs supérieures à 1 augmenteront le caractère aléatoire.</value>
     <comment>The tooltip for Temperature AI option slider.</comment>
   </data>
   <data name="DoSampleToggle.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>If Sampling is disabled, a greedy approach will be used and the model will select the most likely token every time. If enabled,tokens will be selected based on the token probability distribution. The Top K, Top P, and Temperature parameters only apply if sampling is enabled.</value>
+    <value>Si l'échantillonnage est désactivé, une approche gourmande sera utilisée et le modèle sélectionnera le token le plus probable à chaque fois. S'il est activé, les tokens seront sélectionnés en fonction de leur distribution de probabilité. Les paramètres Top K, Top P et Température ne s'appliquent que si l'échantillonnage est activé.</value>
     <comment>The tooltip for Sampling toggle.</comment>
   </data>
 </root>
