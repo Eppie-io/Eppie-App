@@ -233,6 +233,7 @@ namespace Tuvi.App.ViewModels
                         }).ConfigureAwait(true);
                         return AddressSettingsModel.MailboxPassword.Value;
                     },
+                    null, // Todo: Issue #479 add human verification page
                     default
                 ).ConfigureAwait(true);
 
