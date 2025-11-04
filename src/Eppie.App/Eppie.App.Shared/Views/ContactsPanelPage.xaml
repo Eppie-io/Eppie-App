@@ -11,7 +11,7 @@
     <local:ContactsPanelPageBase.DataContext>
         <viewmodels:BaseViewModel />
     </local:ContactsPanelPageBase.DataContext>
-    
+
     <Grid Padding="12,0,-32,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -29,9 +29,11 @@
                        Style="{StaticResource PageSubtitleTextStyle}" />
         </StackPanel>
 
-        <StackPanel Grid.Row="1" Spacing="4" Margin="4,0,0,0">
-            <ComboBox HorizontalAlignment="Stretch"
-                      Margin="4,0,0,0"
+        <StackPanel Grid.Row="1"
+                    Margin="4,0,0,0"
+                    Spacing="4">
+            <ComboBox Margin="4,0,0,0"
+                      HorizontalAlignment="Stretch"
                       ItemsSource="{x:Bind ContactsModel.Contacts.SortingVariants, Mode=OneWay}"
                       SelectedItem="{x:Bind ContactsModel.Contacts.ItemsComparer, Mode=TwoWay}" />
 
