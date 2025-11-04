@@ -155,6 +155,20 @@
                         <SymbolIcon Symbol="ContactInfo" />
                     </winui:NavigationViewItem.Icon>
                 </winui:NavigationViewItem>
+                <winui:NavigationViewItem x:Uid="ContactsPanelNavigationItem"
+                                          extensions:AttachedCommands.ClickCommand="{x:Bind OpenContactsPanelCommand}"
+                                          SelectsOnInvoked="False">
+                    <winui:NavigationViewItem.Icon>
+                        <SymbolIcon Symbol="Contact" />
+                    </winui:NavigationViewItem.Icon>
+                </winui:NavigationViewItem>
+                <winui:NavigationViewItem x:Uid="MailboxesPanelNavigationItem"
+                                          extensions:AttachedCommands.ClickCommand="{x:Bind OpenMailboxesPanelCommand}"
+                                          SelectsOnInvoked="False">
+                    <winui:NavigationViewItem.Icon>
+                        <SymbolIcon Symbol="Account" />
+                    </winui:NavigationViewItem.Icon>
+                </winui:NavigationViewItem>
             </winui:NavigationView.MenuItems>
 
             <winui:NavigationView.PaneFooter>
@@ -163,9 +177,6 @@
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <controls:NavPanelTabControl Grid.Row="0"
-                                                 TabModel="{x:Bind ViewModel.NavPanelTabModel, Mode=OneWay}"
-                                                 Visibility="{x:Bind NavigationMenu.IsPaneOpen, Mode=OneWay}" />
                     <Button Grid.Row="1"
                             Height="36"
                             Margin="4,8,4,0"

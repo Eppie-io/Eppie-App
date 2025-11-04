@@ -62,7 +62,7 @@ namespace Tuvi.App.Shared.Controls
 
                 var hoveredNode = GetTreeViewNodeAtPoint(treeView, pointerPosition);
 
-                var hoveredMailBoxItem = hoveredNode.Content as MailBoxItem;
+                var hoveredMailBoxItem = hoveredNode?.Content as MailBoxItem;
                 if (hoveredMailBoxItem != null)
                 {
                     if (MailBoxesModel.IsDropAllowed(hoveredMailBoxItem))

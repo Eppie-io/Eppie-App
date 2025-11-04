@@ -358,11 +358,8 @@ namespace Tuvi.App.ViewModels
 
     public class MainPageViewModel : BaseViewModel
     {
-        public NavPanelTabModel NavPanelTabModel { get; private set; }
-
-        private ContactsModel ContactsModel => NavPanelTabModel.ContactsModel;
-
-        private MailBoxesModel MailBoxesModel => NavPanelTabModel.MailBoxesModel;
+        public ContactsModel ContactsModel { get; private set; }
+        public MailBoxesModel MailBoxesModel { get; private set; }
 
         public ICommand WriteNewMessageCommand
         {
@@ -395,18 +392,18 @@ namespace Tuvi.App.ViewModels
                 if (MailBoxesModel.AccountList.Count > 0)
                 {
                     NewMessageData messageData = null;
-                    if (NavPanelTabModel.SelectedItemModel is ContactsModel contactsModel
-                        && contactsModel.SelectedContact != null)
+
+                    if (ContactsModel?.SelectedContact != null)
                     {
                         messageData = new SelectedContactNewMessageData(
-                            contactsModel.SelectedContact.LastMessageData.AccountEmail,
-                            contactsModel.SelectedContact.Email);
+                            ContactsModel.SelectedContact.LastMessageData.AccountEmail,
+                            ContactsModel.SelectedContact.Email);
                     }
-                    else if (NavPanelTabModel.SelectedItemModel is MailBoxesModel mailBoxesModel
-                        && mailBoxesModel.SelectedItem != null)
+                    else if (MailBoxesModel?.SelectedItem != null)
                     {
-                        messageData = new SelectedAccountNewMessageData(mailBoxesModel.SelectedItem.Email);
+                        messageData = new SelectedAccountNewMessageData(MailBoxesModel.SelectedItem.Email);
                     }
+
                     NavigationService?.Navigate(nameof(NewMessagePageViewModel), messageData);
                 }
                 else
@@ -640,7 +637,7 @@ namespace Tuvi.App.ViewModels
             UpdateAccountsList();
         }
 
-        private async void UpdateAccountsList()
+        public async void UpdateAccountsList()
         {
             try
             {
@@ -788,12 +785,13 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        public void InitializeNavPanelTabModel(ICommand contactClickCommand, ICommand renameContactCommand, ICommand changeContactAvatarCommand, ICommand mailBoxItemClick, ICommand mailBoxItemDrop)
+        public void InitializeModels(ICommand contactClickCommand, ICommand renameContactCommand, ICommand changeContactAvatarCommand, ICommand mailBoxItemClick, ICommand mailBoxItemDrop)
         {
             ContactsModel contactsModel = CreateContactsModel(contactClickCommand, renameContactCommand, changeContactAvatarCommand);
             MailBoxesModel mailBoxesModel = new MailBoxesModel(mailBoxItemClick, mailBoxItemDrop);
 
-            NavPanelTabModel = new NavPanelTabModel(contactsModel, mailBoxesModel);
+            ContactsModel = contactsModel;
+            MailBoxesModel = mailBoxesModel;
         }
 
         private ContactsModel CreateContactsModel(ICommand contactClickCommand, ICommand renameContactCommand, ICommand changeContactAvatarCommand)
