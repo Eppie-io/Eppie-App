@@ -48,7 +48,9 @@
                             QueryIcon="Find"
                             Text="{x:Bind ContactsModel.Contacts.SearchFilter.SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-            <sharedControls:ContactsListControl Grid.Row="2" ContactsModel="{x:Bind ContactsModel, Mode=OneWay}" />
+            <sharedControls:ContactsListControl Grid.Row="2"
+                                                Margin="0,4,0,0"
+                                                ContactsModel="{x:Bind ContactsModel, Mode=OneWay}" />
         </Grid>
     </Grid>
 </local:ContactsPanelPageBase>
