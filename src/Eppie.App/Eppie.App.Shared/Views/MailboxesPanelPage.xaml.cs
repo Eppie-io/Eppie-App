@@ -20,44 +20,41 @@ using Tuvi.App.ViewModels;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 #else
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Navigation;
 #endif
 
-namespace Eppie.App.UI.Controls
+namespace Tuvi.App.Shared.Views
 {
-    public class ControlModelTemplateSelector : DataTemplateSelector
+    public partial class MailboxesPanelPageBase : BasePage<BaseViewModel, BaseViewModel>
     {
-        public DataTemplate ContactsModelTemplate { get; set; }
-        public DataTemplate MailBoxesModelTemplate { get; set; }
-
-        protected override DataTemplate SelectTemplateCore(object item)
-        {
-            switch (item)
-            {
-                case ContactsModel _: return ContactsModelTemplate;
-                case MailBoxesModel _: return MailBoxesModelTemplate;
-                default: return base.SelectTemplateCore(item);
-            }
-        }
     }
 
-    public sealed partial class NavPanelTabControl : UserControl
+    public sealed partial class MailboxesPanelPage : MailboxesPanelPageBase
     {
-        public NavPanelTabModel TabModel
-        {
-            get { return (NavPanelTabModel)GetValue(TabModelProperty); }
-            set { SetValue(TabModelProperty, value); }
-        }
-        public static readonly DependencyProperty TabModelProperty =
-            DependencyProperty.Register(nameof(TabModel), typeof(NavPanelTabModel), typeof(NavPanelTabControl), new PropertyMetadata(null));
-
-
-        public NavPanelTabControl()
+        public MailboxesPanelPage()
         {
             this.InitializeComponent();
+        }
+
+        public MailBoxesModel MailBoxesModel
+        {
+            get { return (MailBoxesModel)GetValue(MailBoxesModelProperty); }
+            set { SetValue(MailBoxesModelProperty, value); }
+        }
+
+        public static readonly DependencyProperty MailBoxesModelProperty =
+            DependencyProperty.Register(nameof(MailBoxesModel), typeof(MailBoxesModel), typeof(MailboxesPanelPage), new PropertyMetadata(null));
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            if (e?.Parameter is MailBoxesModel model)
+            {
+                MailBoxesModel = model;
+            }
         }
     }
 }

@@ -1,0 +1,34 @@
+﻿<local:MailboxesPanelPageBase x:Class="Tuvi.App.Shared.Views.MailboxesPanelPage"
+                              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                              xmlns:local="using:Tuvi.App.Shared.Views"
+                              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                              xmlns:sharedControls="using:Tuvi.App.Shared.Controls"
+                              xmlns:viewmodels="using:Tuvi.App.ViewModels"
+                              mc:Ignorable="d">
+
+    <local:MailboxesPanelPageBase.DataContext>
+        <viewmodels:BaseViewModel />
+    </local:MailboxesPanelPageBase.DataContext>
+
+    <Grid Padding="12,0,-32,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Height="40"
+                    Margin="4,4,4,16"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal">
+            <SymbolIcon Margin="12,0,12,0" Symbol="Account" />
+            <TextBlock x:Uid="MailboxesPanelTitle"
+                       Margin="0,0,4,0"
+                       VerticalAlignment="Center"
+                       Style="{StaticResource PageSubtitleTextStyle}" />
+        </StackPanel>
+
+        <sharedControls:MailBoxesListControl Grid.Row="1" MailBoxesModel="{x:Bind MailBoxesModel, Mode=OneWay}" />
+    </Grid>
+</local:MailboxesPanelPageBase>

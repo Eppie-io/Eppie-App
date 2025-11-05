@@ -137,6 +137,14 @@
     <value>Identity manager</value>
     <comment>Navigation item for open Identity Manager page</comment>
   </data>
+  <data name="ContactsPanelNavigationItem.Content" xml:space="preserve">
+    <value>Contacts</value>
+    <comment>Navigation item for open Contacts page</comment>
+  </data>
+  <data name="MailboxesPanelNavigationItem.Content" xml:space="preserve">
+    <value>Mailboxes</value>
+    <comment>Navigation item for open Mailboxes page</comment>
+  </data>
   <data name="AddEmailAccountFirst" xml:space="preserve">
     <value>You need to connect at least one email account first.</value>
     <comment>Dialog text when user wants to send new message without any email account connected</comment>
@@ -1298,4 +1306,12 @@ Subject: {3}
     <value>Restart app</value>
     <comment>Action button text to restart application after language change</comment>
   </data>
+  <data name="ContactsPanelTitle.Text" xml:space="preserve">
+    <value>Contacts</value>
+    <comment>Title for Contacts pane</comment>
+  </data>
+  <data name="MailboxesPanelTitle.Text" xml:space="preserve">
+    <value>Mailboxes</value>
+    <comment>Title for Mailboxes pane</comment>
+  </data>  
 </root>

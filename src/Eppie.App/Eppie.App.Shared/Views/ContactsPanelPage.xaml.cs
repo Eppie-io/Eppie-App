@@ -16,54 +16,45 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-using System.Collections.Generic;
-using CommunityToolkit.Mvvm.ComponentModel;
+using Tuvi.App.ViewModels;
 
-namespace Tuvi.App.ViewModels
+#if WINDOWS_UWP
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Navigation;
+#else
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Navigation;
+#endif
+
+namespace Tuvi.App.Shared.Views
 {
-    public class NavPanelTabModel : ObservableObject
+    public partial class ContactsPanelPageBase : BasePage<BaseViewModel, BaseViewModel>
     {
-        private ContactsModel _contactsModel;
+    }
+
+    public sealed partial class ContactsPanelPage : ContactsPanelPageBase
+    {
+        public ContactsPanelPage()
+        {
+            this.InitializeComponent();
+        }
+
         public ContactsModel ContactsModel
         {
-            get => _contactsModel;
-            set
+            get { return (ContactsModel)GetValue(ContactsModelProperty); }
+            set { SetValue(ContactsModelProperty, value); }
+        }
+
+        public static readonly DependencyProperty ContactsModelProperty =
+            DependencyProperty.Register(nameof(ContactsModel), typeof(ContactsModel), typeof(ContactsPanelPage), new PropertyMetadata(null));
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            if (e?.Parameter is ContactsModel model)
             {
-                SetProperty(ref _contactsModel, value);
-                OnPropertyChanged(nameof(ItemModels));
+                ContactsModel = model;
             }
-        }
-
-        private MailBoxesModel _mailBoxesModel;
-        public MailBoxesModel MailBoxesModel
-        {
-            get => _mailBoxesModel;
-            set
-            {
-                SetProperty(ref _mailBoxesModel, value);
-                OnPropertyChanged(nameof(ItemModels));
-            }
-        }
-
-        private IControlModel _selectedItemModel;
-        public IControlModel SelectedItemModel
-        {
-            get => _selectedItemModel;
-            set => SetProperty(ref _selectedItemModel, value);
-        }
-
-        public List<IControlModel> ItemModels
-        {
-            get => new List<IControlModel>() { ContactsModel, MailBoxesModel };
-        }
-
-
-        public NavPanelTabModel(ContactsModel contactsModel, MailBoxesModel mailBoxesModel)
-        {
-            ContactsModel = contactsModel;
-            MailBoxesModel = mailBoxesModel;
-
-            SelectedItemModel = ContactsModel;
         }
     }
 }

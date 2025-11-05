@@ -68,10 +68,21 @@ namespace Tuvi.App.ViewModels
 
         public void SetAccounts(IReadOnlyList<CompositeAccount> accounts)
         {
+            EmailAddress prevSelectedRootEmail = null;
+            if (SelectedItem != null)
+            {
+                prevSelectedRootEmail = SelectedItem.Email;
+            }
+
             AccountList.Clear();
             AccountList.AddRange(accounts);
 
             RefreshFolderStructure();
+
+            if (prevSelectedRootEmail != null)
+            {
+                SelectedItem = GetRootItemByEmail(prevSelectedRootEmail);
+            }
         }
 
         private void RefreshFolderStructure()

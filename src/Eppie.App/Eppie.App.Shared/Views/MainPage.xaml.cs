@@ -46,11 +46,11 @@ namespace Tuvi.App.Shared.Views
     {
         public ICommand ShowAllMessagesCommand => new RelayCommand(ShowAllMessages);
 
-        public ICommand MailBoxItemClickCommand => new RelayCommand<MailBoxItem>((mailBoxItem) => contentFrame.Navigate(typeof(FolderMessagesPage), new FolderMessagesPageViewModel.NavigationData() { MailBoxItem = mailBoxItem, ErrorHandler = this }));
+        public ICommand MailBoxItemClickCommand => new RelayCommand<MailBoxItem>(MailBoxItemClick);
 
         public ICommand MailBoxItemDropCommand => new RelayCommand<MailBoxItem>(MailBoxItemDropMessages, IsDropMessagesAllowed);
 
-        public ICommand ContactItemClickCommand => new RelayCommand<ContactItem>((contactItem) => contentFrame.Navigate(typeof(ContactMessagesPage), new ContactMessagesPageViewModel.NavigationData() { ContactItem = contactItem, ErrorHandler = this }));
+        public ICommand ContactItemClickCommand => new RelayCommand<ContactItem>(ContactItemClick);
 
         public ICommand RenameContactCommand => new AsyncRelayCommand<ContactItem>(RenameContactAsync);
 
@@ -60,13 +60,17 @@ namespace Tuvi.App.Shared.Views
 
         public ICommand OpenIdentityManagerCommand => new RelayCommand(ToggleIdentityManagerPane);
 
+        public ICommand OpenContactsPanelCommand => new RelayCommand(ToggleContactsPanelPane);
+
+        public ICommand OpenMailboxesPanelCommand => new RelayCommand(ToggleMailboxesPanelPane);
+
         public ICommand ClosePaneCommand => new RelayCommand(ClosePane);
 
         public MainPage()
         {
             this.InitializeComponent();
 
-            ViewModel.InitializeNavPanelTabModel(ContactItemClickCommand, RenameContactCommand, ChangeContactPictureCommand, MailBoxItemClickCommand, MailBoxItemDropCommand);
+            ViewModel.InitializeModels(ContactItemClickCommand, RenameContactCommand, ChangeContactPictureCommand, MailBoxItemClickCommand, MailBoxItemDropCommand);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -98,10 +102,19 @@ namespace Tuvi.App.Shared.Views
             contentFrame.Navigate(typeof(AboutPage));
         }
 
-        private bool _isIdentityManagerOpen;
+        private enum PaneKind
+        {
+            None,
+            IdentityManager,
+            ContactsPanel,
+            MailboxesPanel
+        }
+
+        private PaneKind _openedPane = PaneKind.None;
+
         private void ToggleIdentityManagerPane()
         {
-            if (splitView.IsPaneOpen && _isIdentityManagerOpen)
+            if (splitView.IsPaneOpen && _openedPane == PaneKind.IdentityManager)
             {
                 ClosePane();
             }
@@ -111,11 +124,50 @@ namespace Tuvi.App.Shared.Views
             }
         }
 
+        private void ToggleContactsPanelPane()
+        {
+            if (splitView.IsPaneOpen && _openedPane == PaneKind.ContactsPanel)
+            {
+                ClosePane();
+            }
+            else
+            {
+                OpenContactsPanelPane();
+            }
+        }
+
+        private void ToggleMailboxesPanelPane()
+        {
+            if (splitView.IsPaneOpen && _openedPane == PaneKind.MailboxesPanel)
+            {
+                ClosePane();
+            }
+            else
+            {
+                OpenMailboxesPanelPane();
+            }
+        }
+
         private void OpenIdentityManagerPane()
         {
             splitView.IsPaneOpen = true;
             paneFrame.Navigate(typeof(IdentityManagerPage));
-            _isIdentityManagerOpen = true;
+            _openedPane = PaneKind.IdentityManager;
+        }
+
+        private void OpenContactsPanelPane()
+        {
+            splitView.IsPaneOpen = true;
+            paneFrame.Navigate(typeof(ContactsPanelPage), ViewModel.ContactsModel);
+            _openedPane = PaneKind.ContactsPanel;
+        }
+
+        private void OpenMailboxesPanelPane()
+        {
+            splitView.IsPaneOpen = true;
+            paneFrame.Navigate(typeof(MailboxesPanelPage), ViewModel.MailBoxesModel);
+            ViewModel.UpdateAccountsList();
+            _openedPane = PaneKind.MailboxesPanel;
         }
 
         private async void OpenIdentityManagerPaneIfNeeded()
@@ -137,7 +189,7 @@ namespace Tuvi.App.Shared.Views
         {
             splitView.IsPaneOpen = false;
             NavigationMenu.SelectedItem = null;
-            _isIdentityManagerOpen = false;
+            _openedPane = PaneKind.None;
         }
 
         private void ShowAllMessages()
@@ -219,5 +271,18 @@ namespace Tuvi.App.Shared.Views
                 ViewModel.OnError(ex);
             }
         }
+
+        private void MailBoxItemClick(MailBoxItem mailBoxItem)
+        {
+            ViewModel.ContactsModel.SelectedContact = null;
+            contentFrame.Navigate(typeof(FolderMessagesPage), new FolderMessagesPageViewModel.NavigationData() { MailBoxItem = mailBoxItem, ErrorHandler = this });
+        }
+
+        private void ContactItemClick(ContactItem contactItem)
+        {
+            ViewModel.MailBoxesModel.SelectedItem = null;
+            contentFrame.Navigate(typeof(ContactMessagesPage), new ContactMessagesPageViewModel.NavigationData() { ContactItem = contactItem, ErrorHandler = this });
+        }
+
     }
 }
