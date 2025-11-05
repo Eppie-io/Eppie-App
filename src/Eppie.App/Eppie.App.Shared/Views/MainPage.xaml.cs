@@ -219,7 +219,6 @@ namespace Tuvi.App.Shared.Views
             if (settings != null)
             {
                 settings.LastSidePane = _openedPane;
-                settings.IsNavigationPaneOpen = NavigationMenu.IsPaneOpen;
             }
         }
 
