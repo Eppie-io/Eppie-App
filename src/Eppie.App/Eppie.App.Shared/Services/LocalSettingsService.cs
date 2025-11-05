@@ -148,6 +148,24 @@ namespace Tuvi.App.Shared.Services
         /// </summary>
         public string LogFolderPath => LogConfiguration.LogFolderPath;
 
+        /// <summary>
+        /// Persists which pane was opened last (None, IdentityManager, ContactsPanel, MailboxesPanel)
+        /// </summary>
+        public SidePaneKind LastSidePane
+        {
+            get => GetEnumOption(SidePaneKind.None);
+            set => SetEnumOption(value);
+        }
+
+        /// <summary>
+        /// Persists NavigationView (hamburger) pane open/closed state
+        /// </summary>
+        public bool IsNavigationPaneOpen
+        {
+            get => GetOption(false);
+            set => SetOption(value);
+        }
+
         #region Set/Get option
 
         private ApplicationDataContainer AppLocalSettings { get { return ApplicationData.Current.LocalSettings; } }

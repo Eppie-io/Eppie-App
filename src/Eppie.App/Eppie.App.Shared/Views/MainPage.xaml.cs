@@ -71,6 +71,9 @@ namespace Tuvi.App.Shared.Views
             this.InitializeComponent();
 
             ViewModel.InitializeModels(ContactItemClickCommand, RenameContactCommand, ChangeContactPictureCommand, MailBoxItemClickCommand, MailBoxItemDropCommand);
+
+            NavigationMenu.PaneOpened += OnNavigationPaneToggled;
+            NavigationMenu.PaneClosed += OnNavigationPaneToggled;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -80,6 +83,19 @@ namespace Tuvi.App.Shared.Views
             if (e.NavigationMode != NavigationMode.Back)
             {
                 ShowAllMessagesCommand.Execute(this);
+
+                var app = Eppie.App.Shared.App.Current as Eppie.App.Shared.App;
+                var settings = app?.LocalSettingsService;
+
+                if (settings != null)
+                {
+                    NavigationMenu.IsPaneOpen = settings.IsNavigationPaneOpen;
+                }
+
+                if (settings != null && settings.LastSidePane != SidePaneKind.None)
+                {
+                    OpenPane(settings.LastSidePane);
+                }
 
                 OpenIdentityManagerPaneIfNeeded();
             }
@@ -97,77 +113,81 @@ namespace Tuvi.App.Shared.Views
             }
         }
 
+        private void OnNavigationPaneToggled(NavigationView sender, object args)
+        {
+            var app = Eppie.App.Shared.App.Current as Eppie.App.Shared.App;
+            var settings = app?.LocalSettingsService;
+            if (settings != null)
+            {
+                settings.IsNavigationPaneOpen = sender.IsPaneOpen;
+            }
+        }
+
         private void ShowAboutPage()
         {
             contentFrame.Navigate(typeof(AboutPage));
         }
 
-        private enum PaneKind
-        {
-            None,
-            IdentityManager,
-            ContactsPanel,
-            MailboxesPanel
-        }
-
-        private PaneKind _openedPane = PaneKind.None;
+        private SidePaneKind _openedPane = SidePaneKind.None;
 
         private void ToggleIdentityManagerPane()
         {
-            if (splitView.IsPaneOpen && _openedPane == PaneKind.IdentityManager)
+            if (splitView.IsPaneOpen && _openedPane == SidePaneKind.IdentityManager)
             {
                 ClosePane();
             }
             else
             {
-                OpenIdentityManagerPane();
+                OpenPane(SidePaneKind.IdentityManager);
             }
         }
 
         private void ToggleContactsPanelPane()
         {
-            if (splitView.IsPaneOpen && _openedPane == PaneKind.ContactsPanel)
+            if (splitView.IsPaneOpen && _openedPane == SidePaneKind.ContactsPanel)
             {
                 ClosePane();
             }
             else
             {
-                OpenContactsPanelPane();
+                OpenPane(SidePaneKind.ContactsPanel);
             }
         }
 
         private void ToggleMailboxesPanelPane()
         {
-            if (splitView.IsPaneOpen && _openedPane == PaneKind.MailboxesPanel)
+            if (splitView.IsPaneOpen && _openedPane == SidePaneKind.MailboxesPanel)
             {
                 ClosePane();
             }
             else
             {
-                OpenMailboxesPanelPane();
+                OpenPane(SidePaneKind.MailboxesPanel);
             }
         }
 
-        private void OpenIdentityManagerPane()
+        private void OpenPane(SidePaneKind kind)
         {
             splitView.IsPaneOpen = true;
-            paneFrame.Navigate(typeof(IdentityManagerPage));
-            _openedPane = PaneKind.IdentityManager;
-        }
+            _openedPane = kind;
 
-        private void OpenContactsPanelPane()
-        {
-            splitView.IsPaneOpen = true;
-            paneFrame.Navigate(typeof(ContactsPanelPage), ViewModel.ContactsModel);
-            _openedPane = PaneKind.ContactsPanel;
-        }
+            switch (kind)
+            {
+                case SidePaneKind.IdentityManager:
+                    paneFrame.Navigate(typeof(IdentityManagerPage));
+                    break;
+                case SidePaneKind.ContactsPanel:
+                    paneFrame.Navigate(typeof(ContactsPanelPage), ViewModel.ContactsModel);
+                    break;
+                case SidePaneKind.MailboxesPanel:
+                    paneFrame.Navigate(typeof(MailboxesPanelPage), ViewModel.MailBoxesModel);
+                    ViewModel.UpdateAccountsList();
+                    break;
+                default:
+                    break;
+            }
 
-        private void OpenMailboxesPanelPane()
-        {
-            splitView.IsPaneOpen = true;
-            paneFrame.Navigate(typeof(MailboxesPanelPage), ViewModel.MailBoxesModel);
-            ViewModel.UpdateAccountsList();
-            _openedPane = PaneKind.MailboxesPanel;
+            SavePaneState();
         }
 
         private async void OpenIdentityManagerPaneIfNeeded()
@@ -176,7 +196,7 @@ namespace Tuvi.App.Shared.Views
             {
                 if (await ViewModel.IsAccountListEmptyAsync())
                 {
-                    OpenIdentityManagerPane();
+                    OpenPane(SidePaneKind.IdentityManager);
                 }
             }
             catch (Exception ex)
@@ -188,8 +208,18 @@ namespace Tuvi.App.Shared.Views
         private void ClosePane()
         {
             splitView.IsPaneOpen = false;
-            NavigationMenu.SelectedItem = null;
-            _openedPane = PaneKind.None;
+            _openedPane = SidePaneKind.None;
+            SavePaneState();
+        }
+
+        private void SavePaneState()
+        {
+            var app = Eppie.App.Shared.App.Current as Eppie.App.Shared.App;
+            var settings = app?.LocalSettingsService;
+            if (settings != null)
+            {
+                settings.LastSidePane = _openedPane;
+            }
         }
 
         private void ShowAllMessages()

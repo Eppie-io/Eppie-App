@@ -141,30 +141,22 @@
                                           extensions:AttachedCommands.ClickCommand="{x:Bind ViewModel.WriteNewMessageCommand}"
                                           Icon="Edit"
                                           SelectsOnInvoked="False" />
-                <winui:NavigationViewItem x:Uid="AllMessagesNavigationItem"
-                                          extensions:AttachedCommands.ClickCommand="{x:Bind ShowAllMessagesCommand}"
-                                          SelectsOnInvoked="False">
+                <winui:NavigationViewItem x:Uid="AllMessagesNavigationItem" extensions:AttachedCommands.ClickCommand="{x:Bind ShowAllMessagesCommand}">
                     <winui:NavigationViewItem.Icon>
                         <FontIcon Glyph="&#xE119;" />
                     </winui:NavigationViewItem.Icon>
                 </winui:NavigationViewItem>
-                <winui:NavigationViewItem x:Uid="IdentityManagerNavigationItem"
-                                          extensions:AttachedCommands.ClickCommand="{x:Bind OpenIdentityManagerCommand}"
-                                          SelectsOnInvoked="False">
+                <winui:NavigationViewItem x:Uid="IdentityManagerNavigationItem" extensions:AttachedCommands.ClickCommand="{x:Bind OpenIdentityManagerCommand}">
                     <winui:NavigationViewItem.Icon>
                         <SymbolIcon Symbol="ContactInfo" />
                     </winui:NavigationViewItem.Icon>
                 </winui:NavigationViewItem>
-                <winui:NavigationViewItem x:Uid="ContactsPanelNavigationItem"
-                                          extensions:AttachedCommands.ClickCommand="{x:Bind OpenContactsPanelCommand}"
-                                          SelectsOnInvoked="False">
+                <winui:NavigationViewItem x:Uid="ContactsPanelNavigationItem" extensions:AttachedCommands.ClickCommand="{x:Bind OpenContactsPanelCommand}">
                     <winui:NavigationViewItem.Icon>
                         <SymbolIcon Symbol="Contact" />
                     </winui:NavigationViewItem.Icon>
                 </winui:NavigationViewItem>
-                <winui:NavigationViewItem x:Uid="MailboxesPanelNavigationItem"
-                                          extensions:AttachedCommands.ClickCommand="{x:Bind OpenMailboxesPanelCommand}"
-                                          SelectsOnInvoked="False">
+                <winui:NavigationViewItem x:Uid="MailboxesPanelNavigationItem" extensions:AttachedCommands.ClickCommand="{x:Bind OpenMailboxesPanelCommand}">
                     <winui:NavigationViewItem.Icon>
                         <SymbolIcon Symbol="Account" />
                     </winui:NavigationViewItem.Icon>
@@ -209,9 +201,7 @@
 
             <winui:NavigationView.FooterMenuItems>
 
-                <winui:NavigationViewItem x:Uid="AboutAppNavigationItem"
-                                          extensions:AttachedCommands.ClickCommand="{x:Bind ShowAboutPageCommand}"
-                                          SelectsOnInvoked="False">
+                <winui:NavigationViewItem x:Uid="AboutAppNavigationItem" extensions:AttachedCommands.ClickCommand="{x:Bind ShowAboutPageCommand}">
                     <winui:NavigationViewItem.Icon>
                         <FontIcon xamarin:FontFamily="/Assets/Fonts/segmdl2.ttf#" Glyph="&#xE946;" />
                     </winui:NavigationViewItem.Icon>
