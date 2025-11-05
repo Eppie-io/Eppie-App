@@ -43,25 +43,101 @@ namespace Tuvi.App.ViewModels.Services
     }
 
     /// <summary>
+    /// Identifies which side pane content is/was opened in the main page SplitView.
+    /// Used to persist and restore the user's last opened pane between app runs.
+    /// </summary>
+    public enum SidePaneKind
+    {
+        /// <summary>
+        /// No pane is selected. The app must not restore any pane explicitly.
+        /// </summary>
+        None,
+        /// <summary>
+        /// Identity Manager pane (accounts onboarding/settings).
+        /// </summary>
+        IdentityManager,
+        /// <summary>
+        /// Contacts panel (contacts list).
+        /// </summary>
+        ContactsPanel,
+        /// <summary>
+        /// Mailboxes panel (accounts and folders tree).
+        /// </summary>
+        MailboxesPanel
+    }
+
+    /// <summary>
     /// Service interface to store and retrieve local settings
     /// WARNING: Settings are not encrypted!
     /// </summary>
     public interface ILocalSettingsService
     {
+        /// <summary>
+        /// Occurs when any setting value changes.
+        /// </summary>
         event EventHandler<SettingChangedEventArgs> SettingChanged;
 
+        /// <summary>
+        /// Current application UI language.
+        /// </summary>
         string Language { get; set; }
+
+        /// <summary>
+        /// Current application theme.
+        /// </summary>
         AppTheme Theme { get; set; }
+
+        /// <summary>
+        /// Selected mail filter on the All Messages page.
+        /// </summary>
         string SelectedMailFilterForAllMessagesPage { get; set; }
+
+        /// <summary>
+        /// Selected mail filter on the Folder Messages page.
+        /// </summary>
         string SelectedMailFilterForFolderMessagesPage { get; set; }
+
+        /// <summary>
+        /// Selected mail filter on the Contact Messages page.
+        /// </summary>
         string SelectedMailFilterForContactMessagesPage { get; set; }
+
+        /// <summary>
+        /// Counter used to decide when to ask the user to review the app.
+        /// </summary>
         int RequestReviewCount { get; set; }
+
+        /// <summary>
+        /// Current logging level used by the app.
+        /// </summary>
         LogLevel LogLevel { get; set; }
+
+        /// <summary>
+        /// Absolute path to the folder where logs are written.
+        /// </summary>
         string LogFolderPath { get; }
+
+        /// <summary>
+        /// The last opened side pane in the main page SplitView.
+        /// Set to <see cref="SidePaneKind.None"/> to indicate that no pane should be restored.
+        /// </summary>
+        SidePaneKind LastSidePane { get; set; }
+
+        /// <summary>
+        /// Whether the left NavigationView (hamburger) pane is open.
+        /// Used to persist and restore the user's preference across app runs.
+        /// </summary>
+        bool IsNavigationPaneOpen { get; set; }
     }
 
+    /// <summary>
+    /// Event args that carries the name of the changed setting.
+    /// </summary>
     public class SettingChangedEventArgs : EventArgs
     {
+        /// <summary>
+        /// Name of the setting that changed.
+        /// </summary>
         public string Name { get; }
 
         public SettingChangedEventArgs(string name)

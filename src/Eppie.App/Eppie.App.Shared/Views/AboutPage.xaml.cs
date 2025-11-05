@@ -18,7 +18,6 @@
 
 using System;
 using Tuvi.App.ViewModels;
-using Windows.UI.Input;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml.Input;

@@ -29,20 +29,26 @@
                        Style="{StaticResource PageSubtitleTextStyle}" />
         </StackPanel>
 
-        <StackPanel Grid.Row="1"
-                    Margin="4,0,0,0"
-                    Spacing="4">
-            <ComboBox Margin="4,0,0,0"
+        <Grid Grid.Row="1" Margin="4,0,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <ComboBox Grid.Row="0"
+                      Margin="4,0,0,0"
                       HorizontalAlignment="Stretch"
                       ItemsSource="{x:Bind ContactsModel.Contacts.SortingVariants, Mode=OneWay}"
                       SelectedItem="{x:Bind ContactsModel.Contacts.ItemsComparer, Mode=TwoWay}" />
 
             <AutoSuggestBox x:Uid="/Eppie.App.UI/Controls/ContactFilter"
-                            Margin="4,0,0,0"
+                            Grid.Row="1"
+                            Margin="4,4,0,0"
                             QueryIcon="Find"
                             Text="{x:Bind ContactsModel.Contacts.SearchFilter.SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-            <sharedControls:ContactsListControl ContactsModel="{x:Bind ContactsModel, Mode=OneWay}" />
-        </StackPanel>
+            <sharedControls:ContactsListControl Grid.Row="2" ContactsModel="{x:Bind ContactsModel, Mode=OneWay}" />
+        </Grid>
     </Grid>
 </local:ContactsPanelPageBase>
