@@ -57,7 +57,7 @@ namespace Tuvi.App.ViewModels
                     return;
                 }
                 _itemsComparer = value;
-                ReFilterItems();
+                RequestRefilter();
                 OnPropertyChanged(new PropertyChangedEventArgs(nameof(ItemsComparer)));
             }
         }
@@ -75,7 +75,7 @@ namespace Tuvi.App.ViewModels
                     return;
                 }
                 _itemsFilter = value;
-                ReFilterItems();
+                RequestRefilter();
                 OnPropertyChanged(new PropertyChangedEventArgs(nameof(ItemsFilter)));
             }
         }
@@ -102,17 +102,38 @@ namespace Tuvi.App.ViewModels
                     _searchFilter.PropertyChanged += OnSearchFilterPropertyChanged;
                 }
 
-                ReFilterItems();
+                RequestRefilter();
                 OnPropertyChanged(new PropertyChangedEventArgs(nameof(SearchFilter)));
             }
         }
         private void OnSearchFilterPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            ReFilterItems();
+            RequestRefilter();
+        }
+
+        private bool _pendingRefilter;
+        private bool _isRefiltering;
+
+        private void RequestRefilter()
+        {
+            if (!IsChanging && !_isRefiltering)
+            {
+                ReFilterItems();
+            }
+            else
+            {
+                _pendingRefilter = true;
+            }
         }
 
         private void ReFilterItems()
         {
+            if (_isRefiltering)
+            {
+                return;
+            }
+
+            _isRefiltering = true;
             StartChanging();
 
             try
@@ -131,6 +152,7 @@ namespace Tuvi.App.ViewModels
             }
             finally
             {
+                _isRefiltering = false;
                 EndChanging();
             }
         }
@@ -327,6 +349,12 @@ namespace Tuvi.App.ViewModels
             if (Interlocked.Decrement(ref _changingRequestsCount) == 0)
             {
                 IsChanging = false;
+
+                if (_pendingRefilter)
+                {
+                    _pendingRefilter = false;
+                    ReFilterItems();
+                }
             }
         }
     }
