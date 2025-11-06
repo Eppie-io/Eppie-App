@@ -87,43 +87,22 @@ namespace Tuvi.App.ViewModels
 
         private void RefreshFolderStructure()
         {
-            Items.Clear();
+            var newItems = new ObservableCollection<MailBoxItem>();
 
             foreach (var accountData in AccountList)
             {
-                var rootItem = GetRootItemByEmail(accountData.Email);
-                if (rootItem == null)
-                {
-                    AddRootItem(accountData);
-                }
-                else
-                {
-                    foreach (var folder in accountData.FoldersStructure)
-                    {
-                        var folderItem = rootItem.Children.FirstOrDefault(item => item.Folder.HasSameName(folder));
-                        if (folderItem == null)
-                        {
-                            AddFolderItem(rootItem, accountData.Email, folder);
-                        }
-                    }
-                }
-            }
-        }
+                var rootItem = new MailBoxItem(accountData.Email, accountData.DefaultInboxFolder, accountData.Email.DisplayAddress, true);
 
-        private void AddRootItem(CompositeAccount account)
-        {
-            var rootItem = new MailBoxItem(account.Email, account.DefaultInboxFolder, account.Email.DisplayAddress, true);
-            foreach (var folder in account.FoldersStructure)
-            {
-                AddFolderItem(rootItem, account.Email, folder);
-            }
-            Items.Add(rootItem);
-        }
+                foreach (var folder in accountData.FoldersStructure)
+                {
+                    var folderItem = new MailBoxItem(accountData.Email, folder, folder.FullName, false);
+                    rootItem.Children.Add(folderItem);
+                }
 
-        private void AddFolderItem(MailBoxItem rootItem, EmailAddress accountEmail, CompositeFolder folder)
-        {
-            var folderItem = new MailBoxItem(accountEmail, folder, folder.FullName, false);
-            rootItem.Children.Add(folderItem);
+                newItems.Add(rootItem);
+            }
+
+            Items = newItems;
         }
 
         public MailBoxItem GetRootItemByEmail(EmailAddress email)

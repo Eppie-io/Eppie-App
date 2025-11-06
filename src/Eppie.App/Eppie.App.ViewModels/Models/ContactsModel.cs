@@ -77,8 +77,16 @@ namespace Tuvi.App.ViewModels
         {
             EmailAddress selectedContactEmail = SelectedContact?.Email;
 
-            Contacts.Clear();
-            Contacts.AddRange(contacts);
+            Contacts.StartChanging();
+            try
+            {
+                Contacts.Clear();
+                Contacts.AddRange(contacts);
+            }
+            finally
+            {
+                Contacts.EndChanging();
+            }
 
             SelectedContact = preserveSelection
                             ? GetContactByEmail(selectedContactEmail)
