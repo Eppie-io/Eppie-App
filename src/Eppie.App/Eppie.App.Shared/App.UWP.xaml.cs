@@ -174,7 +174,10 @@ namespace Eppie.App.Shared
                     return new Size(vb.Width, vb.Height);
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                OnError(ex);
+            }
 
             var b = Window.Current.Bounds;
             return new Size(b.Width, b.Height);
@@ -188,7 +191,11 @@ namespace Eppie.App.Shared
                 var scale = di.RawPixelsPerViewPixel;
                 return scale > 0 ? scale : DefaultScale;
             }
-            catch { }
+            catch (Exception ex)
+            {
+                OnError(ex);
+            }
+
             return DefaultScale;
         }
 

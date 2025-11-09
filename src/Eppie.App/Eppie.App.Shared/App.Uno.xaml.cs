@@ -151,7 +151,10 @@ namespace Eppie.App.Shared
                     return new Size(s.Width, s.Height);
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                OnError(ex);
+            }
 
             return new Size(MinWidth, MinHeight);
         }
@@ -166,7 +169,11 @@ namespace Eppie.App.Shared
                     return xr.RasterizationScale;
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                OnError(ex);
+            }
+
             return DefaultScale;
         }
 
