@@ -19,9 +19,6 @@
 using Tuvi.App.ViewModels;
 
 #if WINDOWS_UWP
-using Windows.Devices.Input;
-using Windows.System.Profile;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 #else

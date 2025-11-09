@@ -89,9 +89,9 @@
                 <controls:OptionControl x:Uid="UiScaleOption" GapHeight="{StaticResource NormalOptionGapHeight}">
                     <ComboBox Width="{StaticResource NormalOptionControlWidth}"
                               HorizontalAlignment="Left"
+                              ItemTemplate="{StaticResource UiScaleItemTemplate}"
                               ItemsSource="{x:Bind ViewModel.UiScaleOptions, Mode=OneWay}"
-                              SelectedItem="{x:Bind ViewModel.SelectedUiScale, Mode=TwoWay}"
-                              ItemTemplate="{StaticResource UiScaleItemTemplate}" />
+                              SelectedItem="{x:Bind ViewModel.SelectedUiScale, Mode=TwoWay}" />
                 </controls:OptionControl>
 
                 <controls:OptionControl x:Uid="ThemesOption" GapHeight="{StaticResource EndSectionOptionGapHeight}">
