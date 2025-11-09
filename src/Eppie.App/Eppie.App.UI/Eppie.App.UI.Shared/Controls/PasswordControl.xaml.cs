@@ -19,6 +19,9 @@
 using Tuvi.App.ViewModels;
 
 #if WINDOWS_UWP
+using Windows.Devices.Input;
+using Windows.System.Profile;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 #else
@@ -91,7 +94,13 @@ namespace Tuvi.App.Shared.Controls
         {
             this.InitializeComponent();
         }
+
+        private void OnPasswordControlLoaded(object sender, RoutedEventArgs e)
+        {
+            if (!IsCurrentPasswordVisible)
+            {
+                MainPasswordBox?.Focus(FocusState.Programmatic);
+            }
+        }
     }
-
-
 }

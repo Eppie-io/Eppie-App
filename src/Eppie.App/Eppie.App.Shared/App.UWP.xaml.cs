@@ -19,32 +19,18 @@
 #if WINDOWS_UWP
 
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
 using Microsoft.Services.Store.Engagement;
-using Tuvi.App.Shared.Models;
-using Tuvi.App.Shared.Services;
 using Tuvi.App.Shared.Views;
 using Tuvi.App.ViewModels;
 using Tuvi.App.ViewModels.Services;
-using Tuvi.OAuth2;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Data.Json;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Globalization;
-using Windows.Storage;
+using Windows.System.Profile;
+using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
@@ -175,6 +161,40 @@ namespace Eppie.App.Shared
             // https://learn.microsoft.com/en-us/uwp/api/windows.ui.viewmanagement.applicationview.setpreferredminsize?view=winrt-26100#remarks
             // The largest allowed minimum size is 500 x 500 effective pixels.
             ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(MinWidth, MinHeight));
+        }
+
+        protected Size GetClientSize()
+        {
+            try
+            {
+                var view = ApplicationView.GetForCurrentView();
+                var vb = view.VisibleBounds;
+                if (vb.Width > 0 && vb.Height > 0)
+                {
+                    return new Size(vb.Width, vb.Height);
+                }
+            }
+            catch { }
+
+            var b = Window.Current.Bounds;
+            return new Size(b.Width, b.Height);
+        }
+
+        protected double GetSystemScale()
+        {
+            try
+            {
+                var di = Windows.Graphics.Display.DisplayInformation.GetForCurrentView();
+                var scale = di.RawPixelsPerViewPixel;
+                return scale > 0 ? scale : DefaultScale;
+            }
+            catch { }
+            return DefaultScale;
+        }
+
+        private void EnsurePageReady(Page page, Action whenReady)
+        {
+            whenReady?.Invoke();
         }
     }
 }

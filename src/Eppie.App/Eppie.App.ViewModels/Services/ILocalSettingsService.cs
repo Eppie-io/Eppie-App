@@ -43,6 +43,43 @@ namespace Tuvi.App.ViewModels.Services
     }
 
     /// <summary>
+    /// UI scale options (percentage) or system default.
+    /// SystemDefault keeps OS provided scaling (DPI). Other values apply manual scaling.
+    /// </summary>
+    public enum AppScale
+    {
+        /// <summary>
+        /// Use system default UI scale
+        /// </summary>
+        SystemDefault = 0,
+
+        /// <summary>
+        /// 100% scale
+        /// </summary>
+        Scale100 = 100,
+
+        /// <summary>
+        /// 150% scale
+        /// </summary>
+        Scale150 = 150,
+
+        /// <summary>
+        /// 200% scale
+        /// </summary>
+        Scale200 = 200,
+
+        /// <summary>
+        /// 250% scale
+        /// </summary>
+        Scale250 = 250,
+
+        /// <summary>
+        /// 300% scale
+        /// </summary>
+        Scale300 = 300
+    }
+
+    /// <summary>
     /// Identifies which side pane content is/was opened in the main page SplitView.
     /// Used to persist and restore the user's last opened pane between app runs.
     /// </summary>
@@ -86,6 +123,11 @@ namespace Tuvi.App.ViewModels.Services
         /// Current application theme.
         /// </summary>
         AppTheme Theme { get; set; }
+
+        /// <summary>
+        /// Current UI scale.
+        /// </summary>
+        AppScale UiScale { get; set; }
 
         /// <summary>
         /// Selected mail filter on the All Messages page.
