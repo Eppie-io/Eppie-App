@@ -246,7 +246,7 @@
     <comment>Text on the 'Support Development' page</comment>
   </data>
   <data name="SupportDevelopmentGitHubProvider.Text" xml:space="preserve">
-    <value>Payments are processed securely via the GitHub Sponsors.</value>
+    <value>Payments are processed securely via GitHub Sponsors.</value>
     <comment>Text on the 'Support Development' page</comment>
   </data>
   <data name="PricePerMonthText.Text" xml:space="preserve">
