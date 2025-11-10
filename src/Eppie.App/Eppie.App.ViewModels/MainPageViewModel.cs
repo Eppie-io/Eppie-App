@@ -469,7 +469,7 @@ namespace Tuvi.App.ViewModels
 
             //1) WhatsNew has priority
             const string WhatsNewCurrentId = "2025-11-10"; // Update when WhatsNew content changes
-            //if (!string.Equals(LocalSettingsService.LastShownWhatsNewId, WhatsNewCurrentId, StringComparison.Ordinal))
+            if (!string.Equals(LocalSettingsService.LastShownWhatsNewId, WhatsNewCurrentId, StringComparison.Ordinal))
             {
                 await MessageService.ShowWhatsNewDialogAsync(
                     version: BrandService.GetAppVersion(),
