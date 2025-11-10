@@ -17,6 +17,8 @@
 // ---------------------------------------------------------------------------- //
 
 using System;
+using Tuvi.App.ViewModels.Services;
+using Eppie.App.UI.Resources;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml.Data;
@@ -70,4 +72,38 @@ namespace Tuvi.App.Converters
         }
     }
 
+    public sealed class AppScaleToStringConverter : IValueConverter
+    {
+        private static readonly StringProvider _loader = StringProvider.GetInstance();
+
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            if (value is AppScale scale)
+            {
+                switch (scale)
+                {
+                    case AppScale.SystemDefault:
+                        return _loader.GetString("UIScaleOptionSystemDefault");
+                    case AppScale.Scale100:
+                        return "100%";
+                    case AppScale.Scale150:
+                        return "150%";
+                    case AppScale.Scale200:
+                        return "200%";
+                    case AppScale.Scale250:
+                        return "250%";
+                    case AppScale.Scale300:
+                        return "300%";
+                    default:
+                        return string.Empty;
+                }
+            }
+            return string.Empty;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

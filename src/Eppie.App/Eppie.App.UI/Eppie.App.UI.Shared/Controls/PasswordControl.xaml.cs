@@ -91,7 +91,13 @@ namespace Tuvi.App.Shared.Controls
         {
             this.InitializeComponent();
         }
+
+        private void OnPasswordControlLoaded(object sender, RoutedEventArgs e)
+        {
+            if (!IsCurrentPasswordVisible)
+            {
+                MainPasswordBox?.Focus(FocusState.Programmatic);
+            }
+        }
     }
-
-
 }

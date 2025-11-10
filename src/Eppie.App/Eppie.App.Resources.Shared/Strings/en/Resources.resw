@@ -887,7 +887,7 @@ Subject: {3}
     <comment>Connect service button text</comment>
   </data>
   <data name="SystemDefaultLanguage" xml:space="preserve">
-    <value>(System default)</value>
+    <value>System default</value>
     <comment>This captions appears as an item in the select language combobox. Selecting this item will change the language of the application to the system default language</comment>
   </data>
   <data name="RestartApplication" xml:space="preserve">
@@ -1149,6 +1149,14 @@ Subject: {3}
   <data name="ThemesOption.TextNote" xml:space="preserve">
     <value>Select your preferred color scheme.</value>
     <comment>Note for the option with theme lists</comment>
+  </data>  
+  <data name="UIScaleOption.Caption" xml:space="preserve">
+    <value>Interface scale</value>
+    <comment>Caption for the option with scale list</comment>
+  </data>
+  <data name="UIScaleOption.TextNote" xml:space="preserve">
+    <value>Adjust the size of interface elements.</value>
+    <comment>Note for the option with scale list</comment>
   </data>
   <data name="LaunchPasswordOption.Caption" xml:space="preserve">
     <value>Require password on launch</value>
@@ -1291,7 +1299,7 @@ Subject: {3}
     <comment>Error message shown when a feature is not implemented</comment>
   </data>
   <data name="ThemeOptionSystem.Content" xml:space="preserve">
-    <value>(System mode)</value>
+    <value>System mode</value>
     <comment>Theme option item: use system theme</comment>
   </data>
   <data name="ThemeOptionLight.Content" xml:space="preserve">
@@ -1314,4 +1322,8 @@ Subject: {3}
     <value>Mailboxes</value>
     <comment>Title for Mailboxes pane</comment>
   </data>  
+  <data name="UIScaleOptionSystemDefault" xml:space="preserve">
+    <value>System default</value>
+    <comment>Scale option item: use system default UI scale</comment>
+  </data>
 </root>

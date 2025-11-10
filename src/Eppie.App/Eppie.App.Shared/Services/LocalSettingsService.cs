@@ -69,6 +69,21 @@ namespace Tuvi.App.Shared.Services
         }
 
         /// <summary>
+        /// UI scale setting
+        /// </summary>
+        public AppScale UIScale
+        {
+            get
+            {
+                return GetEnumOption(AppScale.SystemDefault);
+            }
+            set
+            {
+                SetEnumOption(value);
+            }
+        }
+
+        /// <summary>
         /// Property to store the selected mail filter on all messages page
         /// </summary>
         public string SelectedMailFilterForAllMessagesPage

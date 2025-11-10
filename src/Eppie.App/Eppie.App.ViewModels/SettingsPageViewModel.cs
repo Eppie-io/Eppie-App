@@ -91,6 +91,29 @@ namespace Tuvi.App.ViewModels
             }
         }
 
+        public IReadOnlyList<AppScale> UIScaleOptions { get; } = new List<AppScale>
+        {
+            AppScale.SystemDefault,
+            AppScale.Scale100,
+            AppScale.Scale150,
+            AppScale.Scale200,
+            AppScale.Scale250,
+            AppScale.Scale300,
+        };
+
+        public AppScale SelectedUIScale
+        {
+            get => LocalSettingsService?.UIScale ?? AppScale.SystemDefault;
+            set
+            {
+                if (LocalSettingsService != null && LocalSettingsService.UIScale != value)
+                {
+                    LocalSettingsService.UIScale = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         override public void OnNavigatedTo(object data)
         {
             base.OnNavigatedTo(data);

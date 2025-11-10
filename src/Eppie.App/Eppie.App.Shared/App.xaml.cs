@@ -38,10 +38,16 @@ using Windows.Globalization;
 using Windows.Storage;
 
 #if WINDOWS_UWP
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
+using Windows.Foundation;
+using Windows.UI.ViewManagement;
 #else
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Media;
+using Windows.Foundation;
 #endif
 
 namespace Eppie.App.Shared
@@ -60,6 +66,10 @@ namespace Eppie.App.Shared
         // (1920 x 1080 pixels) in 200% scale excluding (48px,27px,48px,27px) area
         private const int MinWidth = 864;       // 1920 / 2 - 48 - 48 = 864
         private const int MinHeight = 486;      // 1080 / 2 - 27 - 27 = 486
+
+        private const double DefaultScale = 1.0;
+        private double? _manualScale;
+        private bool _sizeHandlerAttached;
 
         public static ILoggerFactory LoggerFactory { get; private set; }
         private ILogger<App> Logger { get; set; }
@@ -200,6 +210,7 @@ namespace Eppie.App.Shared
         {
             var frame = new Frame();
             frame.NavigationFailed += OnNavigationFailed;
+            frame.Navigated += OnFrameNavigated;
 
             // ToDo: use nameof(Tuvi.App.Shared.Views) and add dot(.) inside NavigationService
             NavigationService = new NavigationService(frame, "Tuvi.App.Shared.Views.");
@@ -293,6 +304,10 @@ namespace Eppie.App.Shared
             {
                 ApplyTheme();
             }
+            else if (args.Name == nameof(LocalSettingsService.UIScale))
+            {
+                ApplyScale();
+            }
         }
 
         private void ApplyTheme()
@@ -315,5 +330,182 @@ namespace Eppie.App.Shared
                     return ElementTheme.Default;
             }
         }
+
+        #region Scale support
+        protected static double ToDesiredScale(AppScale scale)
+        {
+            switch (scale)
+            {
+                case AppScale.Scale150:
+                    return 1.5;
+                case AppScale.Scale200:
+                    return 2.0;
+                case AppScale.Scale250:
+                    return 2.5;
+                case AppScale.Scale300:
+                    return 3.0;
+                case AppScale.Scale100:
+                case AppScale.SystemDefault:
+                default:
+                    return DefaultScale;
+            }
+        }
+
+        protected static double ComputeEffectiveScale(double desiredScale, double systemScale)
+        {
+            if (desiredScale <= 0)
+            {
+                desiredScale = DefaultScale;
+            }
+
+            if (systemScale <= 0)
+            {
+                systemScale = DefaultScale;
+            }
+
+            var s = desiredScale / systemScale;
+            return s <= 0 ? DefaultScale : s;
+        }
+
+        protected static void ApplyContentScale(FrameworkElement content, double scale, Size clientSize)
+        {
+            if (content is null)
+            {
+                return;
+            }
+
+            if (scale <= 0)
+            {
+                scale = DefaultScale;
+            }
+
+            content.HorizontalAlignment = HorizontalAlignment.Left;
+            content.VerticalAlignment = VerticalAlignment.Top;
+            content.RenderTransformOrigin = new Point(0, 0);
+            var st = content.RenderTransform as ScaleTransform ?? new ScaleTransform();
+            st.ScaleX = scale;
+            st.ScaleY = scale;
+            content.RenderTransform = st;
+            content.Width = clientSize.Width / scale;
+            content.Height = clientSize.Height / scale;
+            content.UpdateLayout();
+        }
+
+        protected static void ResetContentScale(FrameworkElement content)
+        {
+            if (content is null)
+            {
+                return;
+            }
+
+            content.RenderTransform = null;
+            content.Width = double.NaN;
+            content.Height = double.NaN;
+            content.HorizontalAlignment = HorizontalAlignment.Stretch;
+            content.VerticalAlignment = VerticalAlignment.Stretch;
+        }
+
+        private Page GetCurrentPage()
+        {
+            var frame = MainWindow?.Content as Frame;
+            return frame?.Content as Page;
+        }
+
+        private void OnFrameNavigated(object sender, object e)
+        {
+            ApplyScale();
+        }
+
+        private void ApplyScale()
+        {
+            try
+            {
+                var page = GetCurrentPage();
+                var scaleSetting = LocalSettingsService?.UIScale ?? AppScale.SystemDefault;
+
+                if (scaleSetting == AppScale.SystemDefault)
+                {
+                    _manualScale = null;
+                    var content = page?.Content as FrameworkElement;
+                    if (content != null)
+                    {
+                        ResetContentScale(content);
+                    }
+
+                    DetachSizeChanged();
+                    return;
+                }
+
+                EnsurePageReady(page, () =>
+                {
+                    var systemScale = GetSystemScale();
+                    var desiredScale = ToDesiredScale(scaleSetting);
+                    var effectiveScale = ComputeEffectiveScale(desiredScale, systemScale);
+                    _manualScale = effectiveScale;
+
+                    var content = page?.Content as FrameworkElement;
+                    if (content != null)
+                    {
+                        var client = GetClientSize();
+                        ApplyContentScale(content, effectiveScale, client);
+                    }
+
+                    AttachSizeChanged();
+                });
+            }
+            catch (Exception ex)
+            {
+                OnError(ex);
+            }
+        }
+
+        private void UpdateScaledContentSize()
+        {
+            if (!_manualScale.HasValue)
+            {
+                return;
+            }
+
+            var page = GetCurrentPage();
+            var content = page?.Content as FrameworkElement;
+            if (content is null)
+            {
+                return;
+            }
+
+            var client = GetClientSize();
+            var scale = _manualScale.Value <= 0 ? DefaultScale : _manualScale.Value;
+            content.Width = client.Width / scale;
+            content.Height = client.Height / scale;
+            content.UpdateLayout();
+        }
+
+        private void AttachSizeChanged()
+        {
+            if (_sizeHandlerAttached)
+            {
+                return;
+            }
+
+            MainWindow.SizeChanged += OnWindowSizeChanged;
+            _sizeHandlerAttached = true;
+        }
+
+        private void DetachSizeChanged()
+        {
+            if (!_sizeHandlerAttached)
+            {
+                return;
+            }
+
+            MainWindow.SizeChanged -= OnWindowSizeChanged;
+            _sizeHandlerAttached = false;
+        }
+
+        private void OnWindowSizeChanged(object sender, WindowSizeChangedEventArgs e)
+        {
+            UpdateScaledContentSize();
+        }
+        #endregion
     }
 }

@@ -20,10 +20,8 @@
 
 using Microsoft.UI.Windowing;
 using Tuvi.App.Shared.Models;
-using Tuvi.App.Shared.Services;
 using Tuvi.App.Shared.Views;
 using Tuvi.App.ViewModels;
-using Uno.Resizetizer;
 using Windows.Foundation;
 using Windows.Graphics;
 using Windows.UI.ViewManagement;
@@ -135,6 +133,69 @@ namespace Eppie.App.Shared
             MainWindow?.AppWindow.SetPresenter(presenter);
 
 #endif
+        }
+
+        protected Size GetClientSize()
+        {
+            try
+            {
+                var xr = MainWindow?.Content?.XamlRoot;
+                if (xr != null)
+                {
+                    return xr.Size;
+                }
+
+                if (MainWindow?.AppWindow != null)
+                {
+                    var s = MainWindow.AppWindow.Size;
+                    return new Size(s.Width, s.Height);
+                }
+            }
+            catch (Exception ex)
+            {
+                OnError(ex);
+            }
+
+            return new Size(MinWidth, MinHeight);
+        }
+
+        protected double GetSystemScale()
+        {
+            try
+            {
+                var xr = MainWindow?.Content?.XamlRoot;
+                if (xr != null && xr.RasterizationScale > 0)
+                {
+                    return xr.RasterizationScale;
+                }
+            }
+            catch (Exception ex)
+            {
+                OnError(ex);
+            }
+
+            return DefaultScale;
+        }
+
+        private void EnsurePageReady(Page page, Action whenReady)
+        {
+            if (page?.XamlRoot is null || page.XamlRoot.RasterizationScale <= 0)
+            {
+                if (page != null)
+                {
+                    RoutedEventHandler loaded = null;
+                    loaded = (s, e) =>
+                    {
+                        page.Loaded -= loaded;
+                        whenReady?.Invoke();
+                    };
+                    page.Loaded += loaded;
+                }
+            }
+            else
+            {
+                whenReady?.Invoke();
+            }
         }
     }
 }
