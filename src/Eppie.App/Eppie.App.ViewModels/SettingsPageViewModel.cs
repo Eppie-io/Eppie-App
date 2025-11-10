@@ -91,7 +91,7 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        public IReadOnlyList<AppScale> UiScaleOptions { get; } = new List<AppScale>
+        public IReadOnlyList<AppScale> UIScaleOptions { get; } = new List<AppScale>
         {
             AppScale.SystemDefault,
             AppScale.Scale100,
@@ -101,7 +101,7 @@ namespace Tuvi.App.ViewModels
             AppScale.Scale300,
         };
 
-        public AppScale SelectedUiScale
+        public AppScale SelectedUIScale
         {
             get => LocalSettingsService?.UIScale ?? AppScale.SystemDefault;
             set

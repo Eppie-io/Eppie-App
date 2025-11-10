@@ -69,6 +69,6 @@
 
     <converters:DoubleToGridLengthConverter x:Key="DoubleToGridLengthConverter" />
 
-    <converters:AppScaleToStringConverter x:Key="UiScaleToStringConverter" />
+    <converters:AppScaleToStringConverter x:Key="UIScaleToStringConverter" />
 
 </ResourceDictionary>

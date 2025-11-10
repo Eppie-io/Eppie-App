@@ -83,7 +83,7 @@ namespace Tuvi.App.Converters
                 switch (scale)
                 {
                     case AppScale.SystemDefault:
-                        return _loader.GetString("UiScaleOptionSystemDefault");
+                        return _loader.GetString("UIScaleOptionSystemDefault");
                     case AppScale.Scale100:
                         return "100%";
                     case AppScale.Scale150:

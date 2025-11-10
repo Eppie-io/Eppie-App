@@ -34,8 +34,8 @@
 
         <Thickness x:Key="PageHorizontalContentPadding">44,0,48,0</Thickness>
 
-        <DataTemplate x:Key="UiScaleItemTemplate">
-            <TextBlock Text="{Binding Converter={StaticResource UiScaleToStringConverter}}" />
+        <DataTemplate x:Key="UIScaleItemTemplate">
+            <TextBlock Text="{Binding Converter={StaticResource UIScaleToStringConverter}}" />
         </DataTemplate>
     </local:AppSettingsPageBase.Resources>
 
@@ -86,12 +86,12 @@
                     </Grid>
                 </controls:OptionControl>
 
-                <controls:OptionControl x:Uid="UiScaleOption" GapHeight="{StaticResource NormalOptionGapHeight}">
+                <controls:OptionControl x:Uid="UIScaleOption" GapHeight="{StaticResource NormalOptionGapHeight}">
                     <ComboBox Width="{StaticResource NormalOptionControlWidth}"
                               HorizontalAlignment="Left"
-                              ItemTemplate="{StaticResource UiScaleItemTemplate}"
-                              ItemsSource="{x:Bind ViewModel.UiScaleOptions, Mode=OneWay}"
-                              SelectedItem="{x:Bind ViewModel.SelectedUiScale, Mode=TwoWay}" />
+                              ItemTemplate="{StaticResource UIScaleItemTemplate}"
+                              ItemsSource="{x:Bind ViewModel.UIScaleOptions, Mode=OneWay}"
+                              SelectedItem="{x:Bind ViewModel.SelectedUIScale, Mode=TwoWay}" />
                 </controls:OptionControl>
 
                 <controls:OptionControl x:Uid="ThemesOption" GapHeight="{StaticResource EndSectionOptionGapHeight}">

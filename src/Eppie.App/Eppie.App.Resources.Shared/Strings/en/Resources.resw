@@ -1150,11 +1150,11 @@ Subject: {3}
     <value>Select your preferred color scheme.</value>
     <comment>Note for the option with theme lists</comment>
   </data>  
-  <data name="UiScaleOption.Caption" xml:space="preserve">
+  <data name="UIScaleOption.Caption" xml:space="preserve">
     <value>Interface scale</value>
     <comment>Caption for the option with scale list</comment>
   </data>
-  <data name="UiScaleOption.TextNote" xml:space="preserve">
+  <data name="UIScaleOption.TextNote" xml:space="preserve">
     <value>Adjust the size of interface elements.</value>
     <comment>Note for the option with scale list</comment>
   </data>
@@ -1322,7 +1322,7 @@ Subject: {3}
     <value>Mailboxes</value>
     <comment>Title for Mailboxes pane</comment>
   </data>  
-  <data name="UiScaleOptionSystemDefault" xml:space="preserve">
+  <data name="UIScaleOptionSystemDefault" xml:space="preserve">
     <value>System default</value>
     <comment>Scale option item: use system default UI scale</comment>
   </data>
