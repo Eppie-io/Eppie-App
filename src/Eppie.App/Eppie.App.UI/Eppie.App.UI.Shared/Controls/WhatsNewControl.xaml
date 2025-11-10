@@ -5,12 +5,21 @@
              xmlns:local="using:Eppie.App.UI.Controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              MaxWidth="360"
-             MaxHeight="620"
+             MaxHeight="480"
              d:DesignHeight="300"
              d:DesignWidth="400"
              mc:Ignorable="d">
 
-    <Grid Padding="4,0,4,8">
+    <UserControl.Resources>
+        <Style x:Key="WhatsNewSubtitleTextBlockStyle"
+               BasedOn="{StaticResource SubtitleTextBlockStyle}"
+               TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Padding="0,-8,4,8">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -27,7 +36,7 @@
 
             <!--  Share Button  -->
             <HyperlinkButton Grid.Column="0"
-                             Margin="-12,0,0,0"
+                             Margin="-4,0,0,0"
                              NavigateUri="{x:Bind TwitterUrl, Mode=OneTime}">
                 <SymbolIcon Symbol="Share" />
             </HyperlinkButton>
@@ -50,8 +59,8 @@
         </Grid>
 
         <ScrollViewer Grid.Row="1"
-                      Margin="0,12,0,0"
-                      Padding="2,0,8,0">
+                      Margin="12,12,-23,0"
+                      Padding="0,0,23,0">
             <StackPanel Spacing="20">
 
                 <!--  Version  -->
@@ -65,10 +74,24 @@
 
                 <!--  News 1 is in English only for now  -->
                 <StackPanel Spacing="12">
-                    <TextBlock Style="{StaticResource SubtitleTextBlockStyle}"
-                               Text="Eppie is now in Japanese and Belarusian"
-                               TextWrapping="Wrap" />
-                    <TextBlock Text="Thanks to our community, Eppie is now available in two more languages. Want your language next? Go Crowdin. To change language, open Settings." TextWrapping="Wrap" />
+                    <TextBlock Style="{StaticResource WhatsNewSubtitleTextBlockStyle}" Text="Eppie is now on Snap Store" />
+                    <TextBlock Text="The full functionality app is now available for Linux users through Snap. You can install it with a single command on any Snap-enabled system. Other packages and app stores will be available soon." TextWrapping="Wrap" />
+                    <HyperlinkButton Margin="-12,0,0,0"
+                                     HorizontalAlignment="Left"
+                                     NavigateUri="https://snapcraft.io/eppie">
+                        <HyperlinkButton.Content>
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <FontIcon Glyph="&#xE8A7;" />
+                                <TextBlock Text="Open Snap Store" />
+                            </StackPanel>
+                        </HyperlinkButton.Content>
+                    </HyperlinkButton>
+                </StackPanel>
+
+                <!--  News 2 is in English only for now  -->
+                <StackPanel Spacing="12">
+                    <TextBlock Style="{StaticResource WhatsNewSubtitleTextBlockStyle}" Text="Le français est arrivé" />
+                    <TextBlock Text="Thanks to our community, French is now available. Feel free to switch to it anytime in Settings. If you spot a mistake or want to help translate Eppie into your language, follow the link below." TextWrapping="Wrap" />
                     <HyperlinkButton Margin="-12,0,0,0"
                                      HorizontalAlignment="Left"
                                      NavigateUri="https://eppie.crowdin.com/eppie">
@@ -81,25 +104,14 @@
                     </HyperlinkButton>
                 </StackPanel>
 
-                <!--  News 2 is in English only for now  -->
+                <!--  News 3 is in English only for now  -->
                 <StackPanel Spacing="12">
-                    <TextBlock Style="{StaticResource SubtitleTextBlockStyle}"
-                               Text="Join the open-source build on GitHub"
-                               TextWrapping="Wrap" />
-                    <TextBlock Text="Shape the future of intelligent peer-to-peer communication and open new ways for people to interact. Contribute, send pull requests, or just follow the progress in real time." TextWrapping="Wrap" />
-                    <HyperlinkButton Margin="-12,0,0,0"
-                                     HorizontalAlignment="Left"
-                                     NavigateUri="https://github.com/Eppie-io/Eppie-App">
-                        <HyperlinkButton.Content>
-                            <StackPanel Orientation="Horizontal" Spacing="8">
-                                <FontIcon Glyph="&#xE8A7;" />
-                                <TextBlock Text="Open GitHub" />
-                            </StackPanel>
-                        </HyperlinkButton.Content>
-                    </HyperlinkButton>
+                    <TextBlock Style="{StaticResource WhatsNewSubtitleTextBlockStyle}" Text="Settings got a fresh new look" />
+                    <TextBlock Text="We’ve redesigned and reorganized the settings to make them clearer and easier to navigate. You’ll also find new options in address settings and main app preferences." TextWrapping="Wrap" />
                 </StackPanel>
 
-                <local:SupportDevelopmentControl IsIconVisible="False"
+                <local:SupportDevelopmentControl Margin="-13,0,0,0"
+                                                 IsIconVisible="False"
                                                  IsStorePaymentProcessor="{x:Bind IsStorePaymentProcessor, Mode=OneWay}"
                                                  Price="{x:Bind Price, Mode=OneWay}"
                                                  SupportDevelopmentCommand="{x:Bind SupportDevelopmentCommand}"

@@ -166,6 +166,15 @@ namespace Tuvi.App.Shared.Services
             set => SetOption(value);
         }
 
+        /// <summary>
+        /// Identifier of the last displayed WhatsNew popup. Empty means never shown.
+        /// </summary>
+        public string LastShownWhatsNewId
+        {
+            get => GetOption(string.Empty);
+            set => SetOption(value);
+        }
+
         #region Set/Get option
 
         private ApplicationDataContainer AppLocalSettings { get { return ApplicationData.Current.LocalSettings; } }

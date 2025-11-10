@@ -446,7 +446,8 @@ namespace Tuvi.App.ViewModels
 
                 await Core.RestoreFromBackupIfNeededAsync(new Uri(downloadUrl)).ConfigureAwait(true);
 
-                await RequestReviewAsync().ConfigureAwait(true);
+                // Startup auto-popups: show at most one per run
+                await TryShowStartupPopupOnceAsync().ConfigureAwait(true);
 
                 LogEnabledWarning();
             }
@@ -456,7 +457,38 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        private async Task RequestReviewAsync()
+        private static bool _startupPopupAttempted;
+        private async Task TryShowStartupPopupOnceAsync()
+        {
+            if (_startupPopupAttempted)
+            {
+                return;
+            }
+
+            _startupPopupAttempted = true;
+
+            //1) WhatsNew has priority
+            const string WhatsNewCurrentId = "2025-11-10"; // Update when WhatsNew content changes
+            //if (!string.Equals(LocalSettingsService.LastShownWhatsNewId, WhatsNewCurrentId, StringComparison.Ordinal))
+            {
+                await MessageService.ShowWhatsNewDialogAsync(
+                    version: BrandService.GetAppVersion(),
+                    isStorePaymentProcessor: IsStorePaymentProcessor,
+                    isSupportDevelopmentButtonVisible: IsSupportDevelopmentButtonVisible,
+                    price: SupportDevelopmentPrice,
+                    supportDevelopmentCommand: SupportDevelopmentCommand,
+                    twitterUrl: BrandService.GetGitHub()
+                ).ConfigureAwait(true);
+
+                LocalSettingsService.LastShownWhatsNewId = WhatsNewCurrentId;
+                return;
+            }
+
+            //2) Otherwise, show rate-app prompt if eligible
+            await ShowRateAppIfEligibleAsync().ConfigureAwait(true);
+        }
+
+        private async Task ShowRateAppIfEligibleAsync()
         {
             const int ReviewRequestsThreshold = 10;
             const int ReviewRequestsDisabled = -1;

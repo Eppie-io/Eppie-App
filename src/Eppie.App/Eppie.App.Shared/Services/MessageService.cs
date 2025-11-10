@@ -29,7 +29,6 @@ using Tuvi.App.ViewModels;
 using Tuvi.App.ViewModels.Common;
 using Tuvi.App.ViewModels.Services;
 using TuviPgpLib.Entities;
-using Windows.ApplicationModel;
 using Tuvi.App.Shared.Models;
 using System.Runtime.InteropServices;
 
@@ -529,6 +528,24 @@ namespace Tuvi.App.Shared.Services
                 StringProvider.GetString("FeatureNotImplementedErrorTitle"),
                 StringProvider.GetString("FeatureNotImplementedErrorMessage"),
                 StringProvider.GetString("MsgBtnOk"));
+        }
+
+        public async Task ShowWhatsNewDialogAsync(
+            string version,
+            bool isStorePaymentProcessor,
+            bool isSupportDevelopmentButtonVisible,
+            string price,
+            System.Windows.Input.ICommand supportDevelopmentCommand,
+            string twitterUrl)
+        {
+            await Common.UITools.ShowWhatsNewDialogAsync(
+                version,
+                isStorePaymentProcessor,
+                isSupportDevelopmentButtonVisible,
+                price,
+                supportDevelopmentCommand,
+                twitterUrl,
+                _xamlRootProvider()).ConfigureAwait(true);
         }
     }
 }
