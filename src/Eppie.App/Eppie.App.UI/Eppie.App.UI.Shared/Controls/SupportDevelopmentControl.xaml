@@ -15,7 +15,7 @@
             <Setter Property="TextWrapping" Value="Wrap" />
         </Style>
     </UserControl.Resources>
-    
+
     <Border HorizontalAlignment="Center" VerticalAlignment="Center">
 
         <Grid>
