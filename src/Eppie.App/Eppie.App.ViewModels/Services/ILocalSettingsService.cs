@@ -127,7 +127,7 @@ namespace Tuvi.App.ViewModels.Services
         /// <summary>
         /// Current UI scale.
         /// </summary>
-        AppScale UiScale { get; set; }
+        AppScale UIScale { get; set; }
 
         /// <summary>
         /// Selected mail filter on the All Messages page.

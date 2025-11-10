@@ -71,7 +71,7 @@ namespace Tuvi.App.Shared.Services
         /// <summary>
         /// UI scale setting
         /// </summary>
-        public AppScale UiScale
+        public AppScale UIScale
         {
             get
             {

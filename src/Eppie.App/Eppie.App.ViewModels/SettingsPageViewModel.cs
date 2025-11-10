@@ -103,12 +103,12 @@ namespace Tuvi.App.ViewModels
 
         public AppScale SelectedUiScale
         {
-            get => LocalSettingsService?.UiScale ?? AppScale.SystemDefault;
+            get => LocalSettingsService?.UIScale ?? AppScale.SystemDefault;
             set
             {
-                if (LocalSettingsService != null && LocalSettingsService.UiScale != value)
+                if (LocalSettingsService != null && LocalSettingsService.UIScale != value)
                 {
-                    LocalSettingsService.UiScale = value;
+                    LocalSettingsService.UIScale = value;
                     OnPropertyChanged();
                 }
             }

@@ -304,7 +304,7 @@ namespace Eppie.App.Shared
             {
                 ApplyTheme();
             }
-            else if (args.Name == nameof(LocalSettingsService.UiScale))
+            else if (args.Name == nameof(LocalSettingsService.UIScale))
             {
                 ApplyScale();
             }
@@ -421,7 +421,7 @@ namespace Eppie.App.Shared
             try
             {
                 var page = GetCurrentPage();
-                var scaleSetting = LocalSettingsService?.UiScale ?? AppScale.SystemDefault;
+                var scaleSetting = LocalSettingsService?.UIScale ?? AppScale.SystemDefault;
 
                 if (scaleSetting == AppScale.SystemDefault)
                 {
