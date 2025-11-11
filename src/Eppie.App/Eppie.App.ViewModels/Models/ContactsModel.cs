@@ -98,7 +98,7 @@ namespace Tuvi.App.ViewModels
             var variants = Contacts.SortingVariants;
             if (!string.IsNullOrEmpty(name) && variants != null)
             {
-                var idx = variants.Select((v, i) => new { v, i }).FirstOrDefault(x => x.v?.GetType().Name == name)?.i ?? -1;
+                var idx = Array.FindIndex(variants, v => v?.GetType().Name == name);
                 if (idx >= 0)
                 {
                     Contacts.SelectedSortingIndex = idx;
