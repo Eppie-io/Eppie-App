@@ -18,52 +18,45 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Tuvi.App.ViewModels.Services;
 using Tuvi.Core.Entities;
 
 namespace Tuvi.App.ViewModels
 {
     public class ContactsModel : ObservableObject, IControlModel
     {
-        private ManagedCollection<ContactItem> _contacts = new ManagedCollection<ContactItem>();
-
-        public ManagedCollection<ContactItem> Contacts
-        {
-            get { return _contacts; }
-            set
-            {
-                SetProperty(ref _contacts, value);
-            }
-        }
+        public ManagedCollection<ContactItem> Contacts { get; private set; }
 
         private ICommand _contactClickCommand;
         public ICommand ContactClickCommand
         {
             get { return _contactClickCommand; }
-            set { SetProperty(ref _contactClickCommand, value); }
+            private set { SetProperty(ref _contactClickCommand, value); }
         }
 
         private ICommand _renameContactCommand;
         public ICommand RenameContactCommand
         {
             get { return _renameContactCommand; }
-            set { SetProperty(ref _renameContactCommand, value); }
+            private set { SetProperty(ref _renameContactCommand, value); }
         }
 
         private ICommand _changeContactAvatarCommand;
         public ICommand ChangeContactAvatarCommand
         {
             get { return _changeContactAvatarCommand; }
-            set { SetProperty(ref _changeContactAvatarCommand, value); }
+            private set { SetProperty(ref _changeContactAvatarCommand, value); }
         }
 
         private ICommand _removeContactCommand;
         public ICommand RemoveContactCommand
         {
             get { return _removeContactCommand; }
-            set { SetProperty(ref _removeContactCommand, value); }
+            private set { SetProperty(ref _removeContactCommand, value); }
         }
 
         private ContactItem _selectedContact;
@@ -71,6 +64,46 @@ namespace Tuvi.App.ViewModels
         {
             get { return _selectedContact; }
             set { SetProperty(ref _selectedContact, value); }
+        }
+
+        private ILocalSettingsService LocalSettingsService { get; set; }
+
+        public ContactsModel(
+            ILocalSettingsService localSettingsService,
+            IExtendedComparer<ContactItem>[] sortingVariants,
+            IExtendedComparer<ContactItem> defaultComparer,
+            ISearchFilter<ContactItem> searchFilter,
+            ICommand contactClickCommand,
+            ICommand removeContactCommand,
+            ICommand changeContactAvatarCommand,
+            ICommand renameContactCommand)
+        {
+            LocalSettingsService = localSettingsService;
+            ContactClickCommand = contactClickCommand;
+            RemoveContactCommand = removeContactCommand;
+            ChangeContactAvatarCommand = changeContactAvatarCommand;
+            RenameContactCommand = renameContactCommand;
+
+            Contacts = new ManagedCollection<ContactItem>
+            {
+                FilterVariants = Array.Empty<IFilter<ContactItem>>(),
+                SortingVariants = sortingVariants,
+                ItemsFilter = null,
+                ItemsComparer = defaultComparer,
+                SearchFilter = searchFilter
+            };
+            (Contacts as INotifyPropertyChanged).PropertyChanged += OnContactsPropertyChanged;
+
+            var name = LocalSettingsService?.SelectedContactsSortingComparer;
+            var variants = Contacts.SortingVariants;
+            if (!string.IsNullOrEmpty(name) && variants != null)
+            {
+                var idx = variants.Select((v, i) => new { v, i }).FirstOrDefault(x => x.v?.GetType().Name == name)?.i ?? -1;
+                if (idx >= 0)
+                {
+                    Contacts.SelectedSortingIndex = idx;
+                }
+            }
         }
 
         public void SetContacts(IEnumerable<ContactItem> contacts, bool preserveSelection = true)
@@ -141,6 +174,21 @@ namespace Tuvi.App.ViewModels
             foreach (var contact in Contacts)
             {
                 contact.UnreadMessagesCount = counts.TryGetValue(contact.Email, out int unreadCount) ? unreadCount : 0;
+            }
+        }
+
+        private void OnContactsPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(ManagedCollection<ContactItem>.SelectedSortingIndex))
+            {
+                if (LocalSettingsService != null)
+                {
+                    var comparer = Contacts.SortingVariants.ElementAtOrDefault(Contacts.SelectedSortingIndex);
+                    if (comparer != null)
+                    {
+                        LocalSettingsService.SelectedContactsSortingComparer = comparer.GetType().Name;
+                    }
+                }
             }
         }
     }

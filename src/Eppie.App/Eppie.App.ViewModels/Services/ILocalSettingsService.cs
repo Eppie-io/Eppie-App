@@ -176,6 +176,11 @@ namespace Tuvi.App.ViewModels.Services
         /// Used to ensure the popup appears only once per new content.
         /// </summary>
         string LastShownWhatsNewId { get; set; }
+
+        /// <summary>
+        /// Selected contacts comparer type used to persist sorting across runs
+        /// </summary>
+        string SelectedContactsSortingComparer { get; set; }
     }
 
     /// <summary>
