@@ -62,10 +62,9 @@ namespace Tuvi.App.ViewModels
                     if (!object.ReferenceEquals(ItemsComparer, comparer))
                     {
                         ItemsComparer = comparer;
+                        OnPropertyChanged(new PropertyChangedEventArgs(nameof(SelectedSortingIndex)));
                     }
                 }
-
-                OnPropertyChanged(new PropertyChangedEventArgs(nameof(SelectedSortingIndex)));
             }
         }
 
