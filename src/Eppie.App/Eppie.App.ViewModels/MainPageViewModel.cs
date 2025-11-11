@@ -447,7 +447,7 @@ namespace Tuvi.App.ViewModels
                 await Core.RestoreFromBackupIfNeededAsync(new Uri(downloadUrl)).ConfigureAwait(true);
 
                 // Startup auto-popups: show at most one per run
-                await TryShowStartupPopupOnceAsync().ConfigureAwait(true);
+                await ShowOneStartupPopupIfNeededAsync().ConfigureAwait(true);
 
                 LogEnabledWarning();
             }
@@ -458,7 +458,7 @@ namespace Tuvi.App.ViewModels
         }
 
         private static bool _startupPopupAttempted;
-        private async Task TryShowStartupPopupOnceAsync()
+        private async Task ShowOneStartupPopupIfNeededAsync()
         {
             if (_startupPopupAttempted)
             {
@@ -485,10 +485,10 @@ namespace Tuvi.App.ViewModels
             }
 
             //2) Otherwise, show rate-app prompt if eligible
-            await ShowRateAppIfEligibleAsync().ConfigureAwait(true);
+            await ShowRateAppIfNeededAsync().ConfigureAwait(true);
         }
 
-        private async Task ShowRateAppIfEligibleAsync()
+        private async Task ShowRateAppIfNeededAsync()
         {
             const int ReviewRequestsThreshold = 10;
             const int ReviewRequestsDisabled = -1;
