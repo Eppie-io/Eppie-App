@@ -170,6 +170,12 @@ namespace Tuvi.App.ViewModels.Services
         /// Used to persist and restore the user's preference across app runs.
         /// </summary>
         bool IsNavigationPaneOpen { get; set; }
+
+        /// <summary>
+        /// Identifier of the last displayed WhatsNew popup. Empty means never shown.
+        /// Used to ensure the popup appears only once per new content.
+        /// </summary>
+        string LastShownWhatsNewId { get; set; }
     }
 
     /// <summary>

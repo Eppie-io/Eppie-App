@@ -234,7 +234,7 @@
     <comment>Button to open 'Support Development' page</comment>
   </data>
   <data name="SupportDevelopmentCaption.Text" xml:space="preserve">
-    <value>Support development</value>
+    <value>Support the Eppie Team</value>
     <comment>Caption on the 'Support Development' page</comment>
   </data>
   <data name="SupportDevelopmentText.Text" xml:space="preserve">
@@ -242,11 +242,11 @@
     <comment>Text on the 'Support Development' page</comment>
   </data>
   <data name="SupportDevelopmentStoreProvider.Text" xml:space="preserve">
-    <value>Payments are processed through the Microsoft Store.</value>
+    <value>Payments are processed securely via the Microsoft Store.</value>
     <comment>Text on the 'Support Development' page</comment>
   </data>
   <data name="SupportDevelopmentGitHubProvider.Text" xml:space="preserve">
-    <value>Payments are processed through GitHub Sponsors.</value>
+    <value>Payments are processed securely via GitHub Sponsors.</value>
     <comment>Text on the 'Support Development' page</comment>
   </data>
   <data name="PricePerMonthText.Text" xml:space="preserve">

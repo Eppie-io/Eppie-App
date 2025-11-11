@@ -17,6 +17,7 @@
 // ---------------------------------------------------------------------------- //
 
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Tuvi.App.ViewModels.Services
 {
@@ -38,5 +39,12 @@ namespace Tuvi.App.ViewModels.Services
         Task<bool> ShowRequestReviewMessageAsync();
 
         Task ShowNeedToCreateSeedPhraseMessageAsync();
+
+        Task ShowWhatsNewDialogAsync(string version,
+            bool isStorePaymentProcessor,
+            bool isSupportDevelopmentButtonVisible,
+            string price,
+            ICommand supportDevelopmentCommand,
+            string twitterUrl);
     }
 }
