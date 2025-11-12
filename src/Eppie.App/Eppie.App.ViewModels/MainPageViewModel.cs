@@ -835,23 +835,18 @@ namespace Tuvi.App.ViewModels
                 new ByUnreadContactComparer(GetLocalizedString("OrderByUnreadContactComparerLabel")),
             };
 
-            return new ContactsModel()
-            {
-                ContactClickCommand = contactClickCommand,
-                RemoveContactCommand = RemoveContactCommand,
-                ChangeContactAvatarCommand = changeContactAvatarCommand,
-                RenameContactCommand = renameContactCommand,
+            var defaultComparer = contactSortingVariants.FirstOrDefault(variant => variant is ByTimeContactComparer);
+            var searchFilter = new SearchContactFilter();
 
-                Contacts = new ManagedCollection<ContactItem>()
-                {
-                    FilterVariants = Array.Empty<IFilter<ContactItem>>(),
-                    SortingVariants = contactSortingVariants,
-                    ItemsFilter = null,
-                    // TODO: TVM-363                     
-                    ItemsComparer = contactSortingVariants.FirstOrDefault(variant => variant is ByTimeContactComparer),
-                    SearchFilter = new SearchContactFilter()
-                }
-            };
+            return new ContactsModel(
+                LocalSettingsService,
+                contactSortingVariants,
+                defaultComparer,
+                searchFilter,
+                contactClickCommand,
+                RemoveContactCommand,
+                changeContactAvatarCommand,
+                renameContactCommand);
         }
 
         public void OnShowAllMessages()

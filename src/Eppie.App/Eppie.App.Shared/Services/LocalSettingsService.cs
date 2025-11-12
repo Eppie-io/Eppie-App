@@ -190,6 +190,15 @@ namespace Tuvi.App.Shared.Services
             set => SetOption(value);
         }
 
+        /// <summary>
+        /// Stores selected contacts sorter type.
+        /// </summary>
+        public string SelectedContactsSortingComparer
+        {
+            get => GetOption(string.Empty);
+            set => SetOption(value);
+        }
+
         #region Set/Get option
 
         private ApplicationDataContainer AppLocalSettings { get { return ApplicationData.Current.LocalSettings; } }

@@ -40,7 +40,7 @@
                       Margin="4,0,0,0"
                       HorizontalAlignment="Stretch"
                       ItemsSource="{x:Bind ContactsModel.Contacts.SortingVariants, Mode=OneWay}"
-                      SelectedItem="{x:Bind ContactsModel.Contacts.ItemsComparer, Mode=TwoWay}" />
+                      SelectedIndex="{x:Bind ContactsModel.Contacts.SelectedSortingIndex, Mode=TwoWay}" />
 
             <AutoSuggestBox x:Uid="/Eppie.App.UI/Controls/ContactFilter"
                             Grid.Row="1"

@@ -46,6 +46,28 @@ namespace Tuvi.App.ViewModels
 
         public IExtendedComparer<T>[] SortingVariants = Array.Empty<IExtendedComparer<T>>();
 
+        public int SelectedSortingIndex
+        {
+            get { return SortingVariants is null ? -1 : Array.IndexOf(SortingVariants, ItemsComparer); }
+            set
+            {
+                if (SortingVariants is null)
+                {
+                    return;
+                }
+
+                if (value >= 0 && value < SortingVariants.Length)
+                {
+                    var comparer = SortingVariants[value];
+                    if (!object.ReferenceEquals(ItemsComparer, comparer))
+                    {
+                        ItemsComparer = comparer;
+                        OnPropertyChanged(new PropertyChangedEventArgs(nameof(SelectedSortingIndex)));
+                    }
+                }
+            }
+        }
+
         private IExtendedComparer<T> _itemsComparer;
         public IExtendedComparer<T> ItemsComparer
         {
@@ -59,6 +81,7 @@ namespace Tuvi.App.ViewModels
                 _itemsComparer = value;
                 RequestRefilter();
                 OnPropertyChanged(new PropertyChangedEventArgs(nameof(ItemsComparer)));
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(SelectedSortingIndex)));
             }
         }
 
