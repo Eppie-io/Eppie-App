@@ -48,7 +48,7 @@ namespace Tuvi.App.ViewModels
 
         public int SelectedSortingIndex
         {
-            get { return SortingVariants == null ? -1 : Array.IndexOf(SortingVariants, ItemsComparer); }
+            get { return SortingVariants is null ? -1 : Array.IndexOf(SortingVariants, ItemsComparer); }
             set
             {
                 if (SortingVariants is null)
