@@ -117,6 +117,11 @@ namespace Tuvi.App.Shared.Views
             return Frame.CanGoBack;
         }
 
+        public virtual void HandleBack()
+        {
+            GoBack(null, null);
+        }
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             ViewModel?.OnNavigatedTo(e?.Parameter);
