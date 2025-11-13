@@ -63,6 +63,7 @@ namespace Eppie.App.Shared
 
                     // Place the frame in the current Window
                     Window.Current.Content = rootFrame;
+                    Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
                 }
 
                 if (e.PrelaunchActivated == false)
@@ -81,7 +82,6 @@ namespace Eppie.App.Shared
                     }
                     // Ensure the current window is active
                     Window.Current.Activate();
-                    Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
                 }
             }
             catch (Exception exception)
