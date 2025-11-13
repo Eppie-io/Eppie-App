@@ -35,7 +35,7 @@ inputs:
 
   xcode-app:
     type: string
-    default: '/Applications/Xcode_16.4.app' # https://github.com/actions/runner-images/blob/main/images/macos/macos-15-Readme.md#xcode
+    default: '/Applications/Xcode_26.0.1.app' # https://github.com/actions/runner-images/blob/main/images/macos/macos-15-Readme.md#xcode
 
 runs:
   using: "composite"
@@ -56,3 +56,6 @@ runs:
       uses: finebits/github-actions/devhub/uno-platform/setup@39ec051fda4f00ab2ac5ffb6336ab0ea1ad9ad0f # v3.0.0
       with:
         uno-check-skip: ${{ inputs.uno-check-skip }}
+        uno-sdk-version: 6.3.28 # todo: remove it after using dotnet v10
+        uno-check-manifest: https://raw.githubusercontent.com/unoplatform/uno.check/1c494ebb42c34eaf74965170e5553ef4792be2c2/manifests/uno.ui.manifest.json # dotnet v9.0.305; todo: remove it after using dotnet v10
+        
