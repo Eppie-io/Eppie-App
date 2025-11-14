@@ -447,7 +447,7 @@ namespace Tuvi.App.ViewModels
                 await Core.RestoreFromBackupIfNeededAsync(new Uri(downloadUrl)).ConfigureAwait(true);
 
                 // Startup auto-popups: show at most one per run
-                await ShowOneStartupPopupIfNeededAsync().ConfigureAwait(true);
+                _ = ShowOneStartupPopupIfNeededAsync();
 
                 LogEnabledWarning();
             }
@@ -467,7 +467,29 @@ namespace Tuvi.App.ViewModels
 
             _startupPopupAttempted = true;
 
+            await UpdateSupportDevelopmentButtonAsync().ConfigureAwait(true);
+
             //1) WhatsNew has priority
+            if (await ShowWhatsNewIfNeededAsync().ConfigureAwait(true))
+            {
+                return;
+            }
+
+            //2) Show rate-app prompt if eligible
+            if (await ShowRateAppIfNeededAsync().ConfigureAwait(true))
+            {
+                return;
+            }
+
+            //3) Show Support Development if eligible
+            if (await ShowSupportDevelopmentIfNeededAsync().ConfigureAwait(true))
+            {
+                return;
+            }
+        }
+
+        private async Task<bool> ShowWhatsNewIfNeededAsync()
+        {
             const string WhatsNewCurrentId = "2025-11-10"; // Update when WhatsNew content changes
             if (!string.Equals(LocalSettingsService.LastShownWhatsNewId, WhatsNewCurrentId, StringComparison.Ordinal))
             {
@@ -481,22 +503,24 @@ namespace Tuvi.App.ViewModels
                 ).ConfigureAwait(true);
 
                 LocalSettingsService.LastShownWhatsNewId = WhatsNewCurrentId;
-                return;
+
+                return true;
             }
 
-            //2) Otherwise, show rate-app prompt if eligible
-            await ShowRateAppIfNeededAsync().ConfigureAwait(true);
+            return false;
         }
 
-        private async Task ShowRateAppIfNeededAsync()
+        private async Task<bool> ShowRateAppIfNeededAsync()
         {
-            const int ReviewRequestsThreshold = 10;
+            const int ReviewRequestsThreshold = 5;
             const int ReviewRequestsDisabled = -1;
 
             var count = LocalSettingsService.RequestReviewCount;
 
             if (count > ReviewRequestsThreshold)
             {
+                LocalSettingsService.RequestReviewCount = ReviewRequestsDisabled;
+
                 if (await MessageService.ShowRequestReviewMessageAsync().ConfigureAwait(true))
                 {
                     try
@@ -509,12 +533,40 @@ namespace Tuvi.App.ViewModels
                     }
                 }
 
-                LocalSettingsService.RequestReviewCount = ReviewRequestsDisabled;
+                return true;
             }
             else if (count != ReviewRequestsDisabled)
             {
                 LocalSettingsService.RequestReviewCount++;
             }
+
+            return false;
+        }
+
+        private async Task<bool> ShowSupportDevelopmentIfNeededAsync()
+        {
+            const int DevelopmentSupportThreshold = 5;
+
+            var count = LocalSettingsService.DevelopmentSupportRequestCount;
+
+            if (count >= DevelopmentSupportThreshold && IsSupportDevelopmentButtonVisible)
+            {
+                LocalSettingsService.DevelopmentSupportRequestCount = 0;
+
+                await MessageService.ShowSupportDevelopmentDialogAsync(
+                    isStorePaymentProcessor: IsStorePaymentProcessor,
+                    price: SupportDevelopmentPrice,
+                    supportDevelopmentCommand: SupportDevelopmentCommand
+                ).ConfigureAwait(true);
+
+                return true;
+            }
+            else
+            {
+                LocalSettingsService.DevelopmentSupportRequestCount++;
+            }
+
+            return false;
         }
 
         private async void UpdateUnreadCounts()
