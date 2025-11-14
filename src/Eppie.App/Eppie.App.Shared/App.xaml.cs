@@ -30,12 +30,15 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Tuvi.App.Shared.Models;
 using Tuvi.App.Shared.Services;
+using Tuvi.App.Shared.Views;
+using Tuvi.App.ViewModels;
 using Tuvi.App.ViewModels.Services;
 using Tuvi.Core;
 using Tuvi.Core.Entities;
 using Tuvi.OAuth2;
 using Windows.Globalization;
 using Windows.Storage;
+using Windows.System;
 
 #if WINDOWS_UWP
 using Windows.UI.Core;
@@ -43,10 +46,10 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.Foundation;
-using Windows.UI.ViewManagement;
 #else
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Input;
 using Windows.Foundation;
 #endif
 
@@ -328,6 +331,31 @@ namespace Eppie.App.Shared
                     return ElementTheme.Dark;
                 default:
                     return ElementTheme.Default;
+            }
+        }
+
+#if WINDOWS_UWP
+        private void CoreWindow_KeyDown(CoreWindow sender, KeyEventArgs args)
+        {
+            var key = args.VirtualKey;
+#else
+        private void CoreWindow_KeyDown(object sender, KeyRoutedEventArgs args)
+        {
+            var key = args.Key;
+#endif
+            if (key == VirtualKey.Escape || key == VirtualKey.GoBack || key == VirtualKey.GamepadB)
+            {
+                var frame = MainWindow.Content as Frame;
+                if (frame != null)
+                {
+                    var page = frame.Content as BasePage<MainPageViewModel, BaseViewModel>;
+                    if (page != null)
+                    {
+                        page.HandleBack();
+                    }
+                }
+
+                args.Handled = true;
             }
         }
 

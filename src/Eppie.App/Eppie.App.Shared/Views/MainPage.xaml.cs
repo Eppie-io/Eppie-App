@@ -314,5 +314,13 @@ namespace Tuvi.App.Shared.Views
             contentFrame.Navigate(typeof(ContactMessagesPage), new ContactMessagesPageViewModel.NavigationData() { ContactItem = contactItem, ErrorHandler = this });
         }
 
+        public override void HandleBack()
+        {
+            if (splitView.IsPaneOpen)
+            {
+                ClosePane();
+            }
+        }
+
     }
 }

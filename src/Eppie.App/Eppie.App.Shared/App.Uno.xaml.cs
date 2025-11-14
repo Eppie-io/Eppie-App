@@ -53,6 +53,7 @@ namespace Eppie.App.Shared
 
                     // Place the frame in the current Window
                     MainWindow.Content = rootFrame;
+                    rootFrame.KeyDown += CoreWindow_KeyDown;
                 }
 
                 if (rootFrame.Content == null)

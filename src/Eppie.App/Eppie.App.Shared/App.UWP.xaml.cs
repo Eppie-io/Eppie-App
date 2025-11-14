@@ -22,16 +22,12 @@ using System;
 using Microsoft.Services.Store.Engagement;
 using Tuvi.App.Shared.Views;
 using Tuvi.App.ViewModels;
-using Tuvi.App.ViewModels.Services;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
-using Windows.System.Profile;
-using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 namespace Eppie.App.Shared
@@ -67,6 +63,7 @@ namespace Eppie.App.Shared
 
                     // Place the frame in the current Window
                     Window.Current.Content = rootFrame;
+                    Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
                 }
 
                 if (e.PrelaunchActivated == false)
