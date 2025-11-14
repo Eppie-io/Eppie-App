@@ -67,9 +67,24 @@ namespace Eppie.App.UI.Controls
         public static readonly DependencyProperty IsIconVisibleProperty =
             DependencyProperty.Register(nameof(IsIconVisible), typeof(bool), typeof(SupportDevelopmentControl), new PropertyMetadata(null));
 
+        public bool IsCloseButtonVisible
+        {
+            get { return (bool)GetValue(IsCloseButtonVisibleProperty); }
+            set { SetValue(IsCloseButtonVisibleProperty, value); }
+        }
+        public static readonly DependencyProperty IsCloseButtonVisibleProperty =
+            DependencyProperty.Register(nameof(IsCloseButtonVisible), typeof(bool), typeof(SupportDevelopmentControl), new PropertyMetadata(false));
+
         public SupportDevelopmentControl()
         {
             this.InitializeComponent();
+        }
+
+        public event EventHandler CloseRequested;
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            CloseRequested?.Invoke(this, EventArgs.Empty);
         }
     }
 }

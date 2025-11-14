@@ -150,6 +150,11 @@ namespace Tuvi.App.ViewModels.Services
         int RequestReviewCount { get; set; }
 
         /// <summary>
+        /// Counter used to decide when to ask the user to support development.
+        /// </summary>
+        int DevelopmentSupportRequestCount { get; set; }
+
+        /// <summary>
         /// Current logging level used by the app.
         /// </summary>
         LogLevel LogLevel { get; set; }

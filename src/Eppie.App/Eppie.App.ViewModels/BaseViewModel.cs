@@ -125,6 +125,18 @@ namespace Tuvi.App.ViewModels
         {
             try
             {
+                await UpdateSupportDevelopmentButtonAsync().ConfigureAwait(true);
+            }
+            catch (Exception e)
+            {
+                OnError(e);
+            }
+        }
+
+        protected async Task UpdateSupportDevelopmentButtonAsync()
+        {
+            try
+            {
                 IsSupportDevelopmentButtonVisible = !await AppStoreService.IsSubscriptionEnabledAsync().ConfigureAwait(true);
 
                 if (IsSupportDevelopmentButtonVisible)
@@ -137,10 +149,6 @@ namespace Tuvi.App.ViewModels
                 IsSupportDevelopmentButtonVisible = true;
                 IsStorePaymentProcessor = false;
                 SupportDevelopmentPrice = "$3";
-            }
-            catch (Exception e)
-            {
-                OnError(e);
             }
         }
 

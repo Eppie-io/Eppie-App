@@ -46,5 +46,9 @@ namespace Tuvi.App.ViewModels.Services
             string price,
             ICommand supportDevelopmentCommand,
             string twitterUrl);
+
+        Task ShowSupportDevelopmentDialogAsync(bool isStorePaymentProcessor,
+            string price,
+            ICommand supportDevelopmentCommand);
     }
 }

@@ -547,5 +547,17 @@ namespace Tuvi.App.Shared.Services
                 twitterUrl,
                 _xamlRootProvider()).ConfigureAwait(true);
         }
+
+        public async Task ShowSupportDevelopmentDialogAsync(
+            bool isStorePaymentProcessor,
+            string price,
+            System.Windows.Input.ICommand supportDevelopmentCommand)
+        {
+            await Common.UITools.ShowSupportDevelopmentDialogAsync(
+                isStorePaymentProcessor,
+                price,
+                supportDevelopmentCommand,
+                _xamlRootProvider()).ConfigureAwait(true);
+        }
     }
 }

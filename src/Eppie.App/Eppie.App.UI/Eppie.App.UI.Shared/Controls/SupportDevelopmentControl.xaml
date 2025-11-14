@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             MaxWidth="360"
              d:DesignHeight="300"
              d:DesignWidth="400"
              mc:Ignorable="d">
@@ -26,15 +27,33 @@
 
             <StackPanel Spacing="12">
 
-                <Grid HorizontalAlignment="Left" Visibility="{x:Bind IsIconVisible, Mode=OneTime}">
-                    <Ellipse Width="92"
-                             Height="92"
-                             Fill="#F0F0F0" />
-                    <FontIcon HorizontalAlignment="Center"
-                              VerticalAlignment="Center"
-                              FontSize="48"
-                              Foreground="Black"
-                              Glyph="&#xEB52;" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Column="0"
+                          HorizontalAlignment="Left"
+                          Visibility="{x:Bind IsIconVisible, Mode=OneTime}">
+                        <Ellipse Width="92"
+                                 Height="92"
+                                 Fill="#F0F0F0" />
+                        <FontIcon HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  FontSize="48"
+                                  Foreground="Black"
+                                  Glyph="&#xEB52;" />
+                    </Grid>
+
+                    <AppBarButton Grid.Column="1"
+                                  Width="48"
+                                  Height="48"
+                                  VerticalAlignment="Top"
+                                  Click="CloseButton_Click"
+                                  Visibility="{x:Bind IsCloseButtonVisible, Mode=OneWay}">
+                        <SymbolIcon Symbol="Cancel" />
+                    </AppBarButton>
                 </Grid>
 
                 <TextBlock x:Uid="/Eppie.App.UI/Controls/SupportDevelopmentCaption" Style="{StaticResource SupportDevelopmentSubtitleTextBlockStyle}" />

@@ -144,6 +144,21 @@ namespace Tuvi.App.Shared.Services
         }
 
         /// <summary>
+        /// Stores the number of times the main page has been opened before showing the request to support development.
+        /// </summary>
+        public int DevelopmentSupportRequestCount
+        {
+            get
+            {
+                return GetOption(0);
+            }
+            set
+            {
+                SetOption(value);
+            }
+        }
+
+        /// <summary>
         /// Property to store logging severity levels.
         /// </summary>
         public LogLevel LogLevel

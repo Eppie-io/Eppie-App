@@ -159,5 +159,39 @@ namespace Tuvi.App.Shared.Common
                 _mutex.Release();
             }
         }
+
+        public static async Task ShowSupportDevelopmentDialogAsync(bool isStorePaymentProcessor,
+                                                                   string price,
+                                                                   System.Windows.Input.ICommand supportDevelopmentCommand,
+                                                                   XamlRoot root)
+        {
+            await _mutex.WaitAsync().ConfigureAwait(true);
+            try
+            {
+                var dialog = new ContentDialog()
+                {
+                    XamlRoot = root
+                };
+
+                var supportDevelopment = new Eppie.App.UI.Controls.SupportDevelopmentControl
+                {
+                    IsStorePaymentProcessor = isStorePaymentProcessor,
+                    Price = price,
+                    SupportDevelopmentCommand = supportDevelopmentCommand,
+                    IsIconVisible = true,
+                    IsCloseButtonVisible = true,
+                    Margin = new Thickness(-8)
+                };
+
+                supportDevelopment.CloseRequested += (s, e) => dialog.Hide();
+                dialog.Content = supportDevelopment;
+
+                await dialog.ShowAsync();
+            }
+            finally
+            {
+                _mutex.Release();
+            }
+        }
     }
 }
