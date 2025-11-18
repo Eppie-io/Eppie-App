@@ -22,9 +22,6 @@ using System.Threading.Tasks;
 using Microsoft.Web.WebView2.Core;
 using Windows.System;
 
-
-
-
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
 #else
@@ -35,6 +32,8 @@ namespace Eppie.App.UI.Controls
 {
     public sealed partial class MessageControl : AIAgentUserControl
     {
+        private bool _webResourceBlockingRegistered = false;
+
         public bool HasHtmlBody
         {
             get { return (bool)GetValue(HasHtmlBodyProperty); }
@@ -83,6 +82,13 @@ namespace Eppie.App.UI.Controls
                 HtmlView.CoreWebView2.NewWindowRequested += CoreWebView2_NewWindowRequested;
                 HtmlView.CoreWebView2.NavigationStarting += CoreWebView2_NavigationStarting;
 
+                if (!_webResourceBlockingRegistered)
+                {
+                    HtmlView.CoreWebView2.AddWebResourceRequestedFilter("*", CoreWebView2WebResourceContext.All); // ToDo: Uno0001
+                    HtmlView.CoreWebView2.WebResourceRequested += CoreWebView2_WebResourceRequested; // ToDo: Uno0001
+                    _webResourceBlockingRegistered = true;
+                }
+
                 OnUpdate();
             }
             catch (Exception ex)
@@ -93,10 +99,24 @@ namespace Eppie.App.UI.Controls
 
         private void OnUnloaded(object sender, RoutedEventArgs e)
         {
-            if (HtmlView.CoreWebView2 != null)
+            try
             {
-                HtmlView.CoreWebView2.NewWindowRequested -= CoreWebView2_NewWindowRequested;
-                HtmlView.CoreWebView2.NavigationStarting -= CoreWebView2_NavigationStarting;
+                if (HtmlView.CoreWebView2 != null)
+                {
+                    if (_webResourceBlockingRegistered)
+                    {
+                        HtmlView.CoreWebView2.WebResourceRequested -= CoreWebView2_WebResourceRequested; // ToDo: Uno0001
+                        HtmlView.CoreWebView2.RemoveWebResourceRequestedFilter("*", CoreWebView2WebResourceContext.All); // ToDo: Uno0001
+                        _webResourceBlockingRegistered = false;
+                    }
+
+                    HtmlView.CoreWebView2.NewWindowRequested -= CoreWebView2_NewWindowRequested;
+                    HtmlView.CoreWebView2.NavigationStarting -= CoreWebView2_NavigationStarting;
+                }
+            }
+            catch (Exception ex)
+            {
+                OnError(ex);
             }
         }
 
@@ -120,6 +140,33 @@ namespace Eppie.App.UI.Controls
             if (args.IsUserInitiated)
             {
                 LaunchDefaultBrowser(args.Uri);
+            }
+        }
+
+        // TODO: add option to settings to allow external requests if desired
+        // WebResourceRequested handler: block external network requests
+        private void CoreWebView2_WebResourceRequested(CoreWebView2 sender, CoreWebView2WebResourceRequestedEventArgs args)
+        {
+            try
+            {
+                var uri = args.Request?.Uri ?? string.Empty;
+
+                // allow schemes
+                if (uri.StartsWith("blob:", StringComparison.OrdinalIgnoreCase) ||
+                    uri.StartsWith("cid:", StringComparison.OrdinalIgnoreCase) ||
+                    uri.StartsWith("data:", StringComparison.OrdinalIgnoreCase) ||
+                    uri.StartsWith("about:", StringComparison.OrdinalIgnoreCase))
+                {
+                    return; // allow
+                }
+
+                // block everything else to prevent external network access
+                var env = sender.Environment; // ToDo: Uno0001
+                args.Response = env.CreateWebResourceResponse(null, 204, "No Content", "Content-Type: text/plain"); // ToDo: Uno0001
+            }
+            catch (Exception ex)
+            {
+                OnError(ex);
             }
         }
 
