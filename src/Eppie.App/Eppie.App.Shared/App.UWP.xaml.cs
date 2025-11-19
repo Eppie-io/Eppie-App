@@ -181,18 +181,6 @@ namespace Eppie.App.Shared
             if (args.Uri.Scheme == AuthConfig.UriScheme)
             {
                 ProtocolAuthenticationBroker.CompleteAuthentication(args.Uri);
-
-                EnsureWindowActivated();
-            }
-        }
-
-        private void EnsureWindowActivated()
-        {
-            Frame rootFrame = Window.Current.Content as Frame;
-
-            if (rootFrame != null)
-            {
-                Window.Current.Activate();
             }
         }
 
