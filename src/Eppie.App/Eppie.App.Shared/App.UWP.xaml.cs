@@ -20,6 +20,7 @@
 
 using System;
 using Microsoft.Services.Store.Engagement;
+using Tuvi.App.Shared.Authorization;
 using Tuvi.App.Shared.Views;
 using Tuvi.App.ViewModels;
 using Windows.ApplicationModel;
@@ -46,39 +47,13 @@ namespace Eppie.App.Shared
         {
             try
             {
-                Frame rootFrame = Window.Current.Content as Frame;
-
-                MainWindow = Window.Current;
-
-                // Do not repeat app initialization when the Window already has content,
-                // just ensure that the window is active
-                if (rootFrame == null)
-                {
-                    rootFrame = CreateRootFrame();
-
-                    if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
-                    {
-                        //TODO: Load state from previously suspended application
-                    }
-
-                    // Place the frame in the current Window
-                    Window.Current.Content = rootFrame;
-                    Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
-                }
+                Frame rootFrame = EnsureRootFrame();
 
                 if (e.PrelaunchActivated == false)
                 {
-                    if (rootFrame.Content == null)
+                    if (rootFrame.Content is null)
                     {
-                        // does database exist
-                        if (await Core.IsFirstApplicationStartAsync().ConfigureAwait(true))
-                        {
-                            rootFrame.Navigate(typeof(WelcomePage));
-                        }
-                        else
-                        {
-                            rootFrame.Navigate(typeof(PasswordPage), PasswordActions.EnterPassword);
-                        }
+                        await NavigateToStartPage(rootFrame).ConfigureAwait(true);
                     }
                     // Ensure the current window is active
                     Window.Current.Activate();
@@ -132,10 +107,12 @@ namespace Eppie.App.Shared
             }
         }
 
-        protected override void OnActivated(IActivatedEventArgs args)
+        protected override async void OnActivated(IActivatedEventArgs args)
         {
             try
             {
+                Frame rootFrame = EnsureRootFrame();
+
                 if (args is ToastNotificationActivatedEventArgs)
                 {
                     var toastActivationArgs = args as ToastNotificationActivatedEventArgs;
@@ -145,11 +122,77 @@ namespace Eppie.App.Shared
                         toastActivationArgs.Argument);
                 }
 
+                if (args is ProtocolActivatedEventArgs protocolArgs)
+                {
+                    HandleProtocolActivation(protocolArgs);
+                }
+
+                if (rootFrame.Content is null)
+                {
+                    await NavigateToStartPage(rootFrame).ConfigureAwait(true);
+                }
+
+                // Ensure the current window is active
+                Window.Current.Activate();
+
                 base.OnActivated(args);
             }
             catch (Exception e)
             {
                 OnError(e);
+            }
+        }
+
+        private Frame EnsureRootFrame()
+        {
+            Frame rootFrame = Window.Current.Content as Frame;
+
+            MainWindow = Window.Current;
+
+            // Do not repeat app initialization when the Window already has content,
+            // just ensure that the window is active
+            if (rootFrame is null)
+            {
+                rootFrame = CreateRootFrame();
+
+                // Place the frame in the current Window
+                Window.Current.Content = rootFrame;
+                Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
+            }
+
+            return rootFrame;
+        }
+
+        private async System.Threading.Tasks.Task NavigateToStartPage(Frame rootFrame)
+        {
+            // does database exist
+            if (await Core.IsFirstApplicationStartAsync().ConfigureAwait(true))
+            {
+                rootFrame.Navigate(typeof(WelcomePage));
+            }
+            else
+            {
+                rootFrame.Navigate(typeof(PasswordPage), PasswordActions.EnterPassword);
+            }
+        }
+
+        private void HandleProtocolActivation(ProtocolActivatedEventArgs args)
+        {
+            if (args.Uri.Scheme == AuthConfig.UriScheme)
+            {
+                ProtocolAuthenticationBroker.CompleteAuthentication(args.Uri);
+
+                EnsureWindowActivated();
+            }
+        }
+
+        private void EnsureWindowActivated()
+        {
+            Frame rootFrame = Window.Current.Content as Frame;
+
+            if (rootFrame != null)
+            {
+                Window.Current.Activate();
             }
         }
 
