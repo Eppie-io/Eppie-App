@@ -28,6 +28,8 @@ namespace Tuvi.App.Shared.Authorization
 {
     internal static partial class AuthConfig
     {
+        public static readonly string UriScheme = "<UriScheme>";
+
         public static AuthorizationConfiguration GetAuthorizationConfiguration()
         {
             return new AuthorizationConfiguration
@@ -50,7 +52,7 @@ namespace Tuvi.App.Shared.Authorization
 
         private static IAuthenticationBroker GetAuthenticationBroker()
         {
-            return new AuthenticationBroker();
+            return new ProtocolAuthenticationBroker();
         }
     }
 }

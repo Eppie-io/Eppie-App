@@ -13,6 +13,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Authorization\AuthConfig.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Authorization\AuthenticationBroker.Uno.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Authorization\AuthenticationBroker.UWP.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Authorization\ProtocolAuthenticationBroker.UWP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\AttachmentConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\BitmapTools.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\EppieHost.UWP.cs" />
