@@ -58,7 +58,7 @@ namespace Tuvi.App.Shared.Views
 
         public ICommand ShowAboutPageCommand => new RelayCommand(ShowAboutPage);
 
-        public ICommand OpenIdentityManagerCommand => new RelayCommand(ToggleIdentityManagerPane);
+        public ICommand OpenAddressManagerCommand => new RelayCommand(ShowAddressManagerPane);
 
         public ICommand OpenContactsPanelCommand => new RelayCommand(ToggleContactsPanelPane);
 
@@ -140,6 +140,11 @@ namespace Tuvi.App.Shared.Views
             {
                 OpenPane(SidePaneKind.IdentityManager);
             }
+        }
+
+        private void ShowAddressManagerPane()
+        {
+            contentFrame.Navigate(typeof(AddressManagerPage));
         }
 
         private void ToggleContactsPanelPane()

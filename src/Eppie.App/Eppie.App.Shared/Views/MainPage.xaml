@@ -145,7 +145,7 @@
                         <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE715;" />
                     </winui:NavigationViewItem.Icon>
                 </winui:NavigationViewItem>
-                <winui:NavigationViewItem x:Uid="IdentityManagerNavigationItem" extensions:AttachedCommands.ClickCommand="{x:Bind OpenIdentityManagerCommand}">
+                <winui:NavigationViewItem x:Uid="AddressManagerNavigationItem" extensions:AttachedCommands.ClickCommand="{x:Bind OpenAddressManagerCommand}">
                     <winui:NavigationViewItem.Icon>
                         <SymbolIcon Symbol="ContactInfo" />
                     </winui:NavigationViewItem.Icon>
