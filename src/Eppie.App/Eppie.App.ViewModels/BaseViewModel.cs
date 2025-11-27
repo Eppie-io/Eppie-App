@@ -121,6 +121,8 @@ namespace Tuvi.App.ViewModels
             }
         }
 
+        public bool IsLocalAIAvailable => AIService.IsAvailable();
+
         private async void UpdateSupportDevelopmentButton()
         {
             try

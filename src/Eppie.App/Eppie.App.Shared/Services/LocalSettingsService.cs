@@ -179,7 +179,7 @@ namespace Tuvi.App.Shared.Services
         public string LogFolderPath => LogConfiguration.LogFolderPath;
 
         /// <summary>
-        /// Persists which pane was opened last (None, IdentityManager, ContactsPanel, MailboxesPanel)
+        /// Persists which pane was opened last (None, AIAgentsPanel, ContactsPanel, MailboxesPanel)
         /// </summary>
         public SidePaneKind LastSidePane
         {

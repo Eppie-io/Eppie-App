@@ -64,6 +64,8 @@ namespace Tuvi.App.Shared.Views
 
         public ICommand OpenMailboxesPanelCommand => new RelayCommand(ToggleMailboxesPanelPane);
 
+        public ICommand OpenAIAgentsPanelCommand => new RelayCommand(ToggleAIAgentsPane);
+
         public ICommand ClosePaneCommand => new RelayCommand(ClosePane);
 
         public MainPage()
@@ -97,7 +99,7 @@ namespace Tuvi.App.Shared.Views
                     OpenPane(settings.LastSidePane);
                 }
 
-                OpenIdentityManagerPaneIfNeeded();
+                OpenAddressManagerPaneIfNeeded();
             }
         }
 
@@ -130,15 +132,15 @@ namespace Tuvi.App.Shared.Views
 
         private SidePaneKind _openedPane = SidePaneKind.None;
 
-        private void ToggleIdentityManagerPane()
+        private void ToggleAIAgentsPane()
         {
-            if (splitView.IsPaneOpen && _openedPane == SidePaneKind.IdentityManager)
+            if (splitView.IsPaneOpen && _openedPane == SidePaneKind.AIAgentsPanel)
             {
                 ClosePane();
             }
             else
             {
-                OpenPane(SidePaneKind.IdentityManager);
+                OpenPane(SidePaneKind.AIAgentsPanel);
             }
         }
 
@@ -178,8 +180,8 @@ namespace Tuvi.App.Shared.Views
 
             switch (kind)
             {
-                case SidePaneKind.IdentityManager:
-                    paneFrame.Navigate(typeof(IdentityManagerPage));
+                case SidePaneKind.AIAgentsPanel:
+                    paneFrame.Navigate(typeof(AIAgentsManagerPage));
                     break;
                 case SidePaneKind.ContactsPanel:
                     paneFrame.Navigate(typeof(ContactsPanelPage), ViewModel.ContactsModel);
@@ -195,13 +197,13 @@ namespace Tuvi.App.Shared.Views
             SavePaneState();
         }
 
-        private async void OpenIdentityManagerPaneIfNeeded()
+        private async void OpenAddressManagerPaneIfNeeded()
         {
             try
             {
                 if (await ViewModel.IsAccountListEmptyAsync())
                 {
-                    OpenPane(SidePaneKind.IdentityManager);
+                    ShowAddressManagerPane();
                 }
             }
             catch (Exception ex)
