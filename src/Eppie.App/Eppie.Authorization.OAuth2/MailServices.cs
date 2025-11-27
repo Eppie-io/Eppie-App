@@ -16,6 +16,9 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
+using System;
+using Tuvi.Core.Entities;
+
 namespace Tuvi.OAuth2
 {
     public enum MailService
@@ -23,5 +26,26 @@ namespace Tuvi.OAuth2
         Unknown,
         Gmail,
         Outlook
+    }
+
+    public static class Extensions
+    {
+        public static bool IsMailService(this Account account, MailService mailService)
+        {
+            return account.Type == MailBoxType.Email
+                && account.AuthData.Type == AuthenticationType.OAuth2
+                && account.AuthData is OAuth2Data data
+                && data.AuthAssistantId == Enum.GetName(typeof(MailService), mailService);
+        }
+
+        public static bool IsGmail(this Account account)
+        {
+            return account.IsMailService(MailService.Gmail);
+        }
+
+        public static bool IsOutlook(this Account account)
+        {
+            return account.IsMailService(MailService.Outlook);
+        }
     }
 }
