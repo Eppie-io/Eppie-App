@@ -42,7 +42,7 @@
     },
     "Eppie.App (Desktop WSL2)": {
       "commandName": "WSL2",
-      "commandLineArgs": "{ProjectDir}/bin/Debug/net9.0-desktop/Eppie.App.dll",
+      "commandLineArgs": "{ProjectDir}/bin/Debug/net9.0-desktop/Eppie.dll",
       "distributionName": "",
       "compatibleTargetFramework": "desktop"
     }
