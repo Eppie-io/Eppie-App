@@ -15,6 +15,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\AddressControl.xaml.cs">
       <DependentUpon>AddressControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\AddressItemControl.xaml.cs">
+      <DependentUpon>AddressItemControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\AddressSettingsView.xaml.cs">
       <DependentUpon>AddressSettingsView.xaml</DependentUpon>
     </Compile>
@@ -95,6 +98,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)Controls\AddressControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Controls\AddressItemControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
