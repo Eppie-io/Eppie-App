@@ -35,9 +35,9 @@
                                   RemoveCommand="{x:Bind ViewModel.RemoveAccountCommand}">
         <StackPanel>
 
-            <controls:AddressControl x:Uid="AddressControl"
-                                     Address="{x:Bind ViewModel.AddressSettingsModel.Email.Value, Mode=OneWay}"
-                                     HideWarning="False" />
+            <controls:AddressHeaderControl x:Uid="AddressControl"
+                                           Address="{x:Bind ViewModel.AddressSettingsModel.Email.Value, Mode=OneWay}"
+                                           HideWarning="False" />
 
             <controls:OptionControl x:Uid="BitcoinKeyOption" GapHeight="{StaticResource NormalOptionGapHeight}">
                 <muxc:Expander HorizontalAlignment="Stretch"

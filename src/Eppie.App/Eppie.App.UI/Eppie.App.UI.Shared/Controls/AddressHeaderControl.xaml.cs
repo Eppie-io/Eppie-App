@@ -29,7 +29,7 @@ using Microsoft.UI.Xaml.Markup;
 namespace Tuvi.App.Shared.Controls
 {
     [ContentProperty(Name = nameof(ExtraContent))]
-    public sealed partial class AddressControl : UserControl
+    public sealed partial class AddressHeaderControl : UserControl
     {
         public string Address
         {
@@ -38,7 +38,7 @@ namespace Tuvi.App.Shared.Controls
         }
 
         public static readonly DependencyProperty AddressProperty =
-            DependencyProperty.Register(nameof(Address), typeof(string), typeof(AddressControl), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(Address), typeof(string), typeof(AddressHeaderControl), new PropertyMetadata(null));
 
 
         public string Warning
@@ -48,7 +48,7 @@ namespace Tuvi.App.Shared.Controls
         }
 
         public static readonly DependencyProperty WarningProperty =
-            DependencyProperty.Register(nameof(Warning), typeof(string), typeof(AddressControl), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(Warning), typeof(string), typeof(AddressHeaderControl), new PropertyMetadata(null));
 
 
         public bool HideWarning
@@ -58,7 +58,7 @@ namespace Tuvi.App.Shared.Controls
         }
 
         public static readonly DependencyProperty HideWarningProperty =
-            DependencyProperty.Register(nameof(HideWarning), typeof(bool), typeof(AddressControl), new PropertyMetadata(true));
+            DependencyProperty.Register(nameof(HideWarning), typeof(bool), typeof(AddressHeaderControl), new PropertyMetadata(true));
 
 
         public UIElement ExtraContent
@@ -68,10 +68,10 @@ namespace Tuvi.App.Shared.Controls
         }
 
         public static readonly DependencyProperty ExtraContentProperty =
-            DependencyProperty.Register(nameof(ExtraContent), typeof(UIElement), typeof(AddressControl), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(ExtraContent), typeof(UIElement), typeof(AddressHeaderControl), new PropertyMetadata(null));
 
 
-        public AddressControl()
+        public AddressHeaderControl()
         {
             this.InitializeComponent();
         }
