@@ -92,11 +92,11 @@
                     </muxc:ItemsRepeater.Layout>
                 </muxc:ItemsRepeater>
 
-                <Button Grid.Row="1"
+                <Button x:Uid="AddAddressButton"
+                        Grid.Row="1"
                         Grid.Column="1"
                         Margin="0,16,12,16"
                         Click="OnAddAddressButtonClick"
-                        Content="Add Address"
                         Tag="{x:Bind}" />
 
                 <Border Grid.Row="1"

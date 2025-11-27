@@ -1342,4 +1342,8 @@ Subject: {3}
     <value>Testnet</value>
     <comment>Label text for addresses from the test network</comment>
   </data>
+  <data name="AddAddressButton.Content" xml:space="preserve">
+    <value>Add Address</value>
+    <comment>Button text on AddressManager page. It adds email address to application</comment>
+  </data>
 </root>
