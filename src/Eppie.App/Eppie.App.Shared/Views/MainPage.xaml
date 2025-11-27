@@ -10,10 +10,9 @@
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:viewmodels="using:Tuvi.App.ViewModels"
                     xmlns:winui="using:Microsoft.UI.Xaml.Controls"
-                    xmlns:xamarin="http://uno.ui/xamarin"
                     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
                     NavigationCacheMode="Enabled"
-                    mc:Ignorable="d xamarin">
+                    mc:Ignorable="d">
 
     <Page.Resources>
         <LinearGradientBrush x:Key="ButtonGradientBrush" StartPoint="0,0" EndPoint="1,0">
@@ -143,7 +142,7 @@
                                           SelectsOnInvoked="False" />
                 <winui:NavigationViewItem x:Uid="AllMessagesNavigationItem" extensions:AttachedCommands.ClickCommand="{x:Bind ShowAllMessagesCommand}">
                     <winui:NavigationViewItem.Icon>
-                        <FontIcon Glyph="&#xE119;" />
+                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE715;" />
                     </winui:NavigationViewItem.Icon>
                 </winui:NavigationViewItem>
                 <winui:NavigationViewItem x:Uid="IdentityManagerNavigationItem" extensions:AttachedCommands.ClickCommand="{x:Bind OpenIdentityManagerCommand}">
@@ -203,7 +202,7 @@
 
                 <winui:NavigationViewItem x:Uid="AboutAppNavigationItem" extensions:AttachedCommands.ClickCommand="{x:Bind ShowAboutPageCommand}">
                     <winui:NavigationViewItem.Icon>
-                        <FontIcon xamarin:FontFamily="/Assets/Fonts/segmdl2.ttf#" Glyph="&#xE946;" />
+                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE946;" />
                     </winui:NavigationViewItem.Icon>
                 </winui:NavigationViewItem>
 
