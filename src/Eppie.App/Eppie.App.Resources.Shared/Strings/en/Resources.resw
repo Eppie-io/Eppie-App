@@ -133,9 +133,9 @@
     <value>Support Development</value>
     <comment>Button to open 'Support Development' page</comment>
   </data>
-  <data name="IdentityManagerNavigationItem.Content" xml:space="preserve">
-    <value>Identity manager</value>
-    <comment>Navigation item for open Identity Manager page</comment>
+  <data name="AddressManagerNavigationItem.Content" xml:space="preserve">
+    <value>Address manager</value>
+    <comment>Navigation item for open Adddress Manager page</comment>
   </data>
   <data name="ContactsPanelNavigationItem.Content" xml:space="preserve">
     <value>Contacts</value>
@@ -1321,9 +1321,25 @@ Subject: {3}
   <data name="MailboxesPanelTitle.Text" xml:space="preserve">
     <value>Mailboxes</value>
     <comment>Title for Mailboxes pane</comment>
-  </data>  
+  </data>
   <data name="UIScaleOptionSystemDefault" xml:space="preserve">
     <value>System default</value>
     <comment>Scale option item: use system default UI scale</comment>
+  </data>
+   <data name="AddressManagerTitle.Text" xml:space="preserve">
+    <value>ADDRESS MANAGER</value>
+    <comment>Title for Address Manager page</comment>
+  </data>
+  <data name="AddressListHeader.Text" xml:space="preserve">
+    <value>Your addresses</value>
+    <comment>Address list header</comment>
+  </data>
+  <data name="AddressListNote.Text" xml:space="preserve">
+    <value>Connect your existed accounts or create a new address</value>
+    <comment>Note to the address list</comment>
+  </data>
+  <data name="TestnetLabel.Text" xml:space="preserve">
+    <value>Testnet</value>
+    <comment>Label text for addresses from the test network</comment>
   </data>
 </root>

@@ -98,6 +98,18 @@
     <None Include="..\Eppie.App.Shared\Views\*.xaml" Visible="false" />
   </ItemGroup>
 
+  <!-- ToDo: Try include assets from the gitmodule -->
+  <!--
+  <ItemGroup>
+    <Content Include="..\..\..\gitmodules\Assets\**\*.*">
+      <Link>Assets\%(RecursiveDir)%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Pack>true</Pack>
+      <PackagePath>Assets\%(RecursiveDir)</PackagePath>
+    </Content>
+  </ItemGroup>
+  -->
+
   <!-- https://github.com/unoplatform/Uno.XamlBehaviors?tab=readme-ov-file#uno-platform-port-of-xaml-behaviors -->
   <ItemGroup Condition="$(TargetFramework.Contains('windows10'))">
     <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" />
