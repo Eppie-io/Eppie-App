@@ -28,7 +28,7 @@
         <StackPanel>
 
 
-            <controls:AddressControl Address="{x:Bind EmailAddressSettingsModel.Email.Value, Mode=OneWay}" Visibility="{x:Bind IsEmailReadOnly, Mode=OneWay}">
+            <controls:AddressHeaderControl Address="{x:Bind EmailAddressSettingsModel.Email.Value, Mode=OneWay}" Visibility="{x:Bind IsEmailReadOnly, Mode=OneWay}">
                 <!--
                     ToDo: Issue #839 - Perhaps some logic needs to be added.
                     `Connecting...` - if the `AccountSettingsPageViewModel.IsWaitingResponse` is ture
@@ -38,7 +38,7 @@
                            HorizontalAlignment="Right"
                            VerticalAlignment="Center"
                            TextAlignment="Right" />
-            </controls:AddressControl>
+            </controls:AddressHeaderControl>
 
             <controls:OptionControl x:Uid="/Eppie.App.UI/Controls/EmailAddressOption"
                                     GapHeight="{StaticResource ErrorOptionGapHeight}"

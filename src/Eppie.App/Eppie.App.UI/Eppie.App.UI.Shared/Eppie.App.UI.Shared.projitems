@@ -12,8 +12,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\DialogBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\ListViewItemClickBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\TreeViewItemInvokeBehavior.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\AddressControl.xaml.cs">
-      <DependentUpon>AddressControl.xaml</DependentUpon>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\AddressHeaderControl.xaml.cs">
+      <DependentUpon>AddressHeaderControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\AddressSettingsView.xaml.cs">
       <DependentUpon>AddressSettingsView.xaml</DependentUpon>
@@ -94,7 +94,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Tools\UITools.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="$(MSBuildThisFileDirectory)Controls\AddressControl.xaml">
+    <Page Include="$(MSBuildThisFileDirectory)Controls\AddressHeaderControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -40,9 +40,9 @@
                                   RemoveCommand="{x:Bind ViewModel.RemoveAccountCommand}">
         <StackPanel>
 
-            <controls:AddressControl x:Uid="AddressControl"
-                                     Address="{x:Bind ViewModel.AddressSettingsModel.Email.Value, Mode=OneWay}"
-                                     HideWarning="False" />
+            <controls:AddressHeaderControl x:Uid="AddressControl"
+                                           Address="{x:Bind ViewModel.AddressSettingsModel.Email.Value, Mode=OneWay}"
+                                           HideWarning="False" />
 
             <controls:OptionControl x:Uid="EppieAliasOption"
                                     GapHeight="{StaticResource HugeOptionGapHeight}"
