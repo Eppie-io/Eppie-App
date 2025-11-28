@@ -455,4 +455,16 @@
     <value>Join the waiting list</value>
     <comment>JoinWaitingList button content</comment>
   </data>
+  <data name="BlockedContentBanner.Title" xml:space="preserve">
+    <value>External content blocked</value>
+    <comment>InfoBar title shown when external content in message was blocked</comment>
+  </data>
+  <data name="BlockedContentBanner.Message" xml:space="preserve">
+    <value>External images and resources were blocked in this message. You can load them if you trust the sender.</value>
+    <comment>InfoBar message shown when external content in message was blocked</comment>
+  </data>
+  <data name="BlockedContentBannerActionButton.Content" xml:space="preserve">
+    <value>Load anyway</value>
+    <comment>Legacy key: InfoBar action button text to allow loading blocked external content once</comment>
+  </data>
 </root>
