@@ -243,19 +243,22 @@ namespace Eppie.App.UI.Controls
 
         private void SetExternalContentBlocked(bool value)
         {
+            if (ExternalContentBlocked != value)
+            {
 #if WINDOWS_UWP
             _ = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => ExternalContentBlocked = value);
 #else
-            var dq = Windows.System.DispatcherQueue.GetForCurrentThread();
-            if (dq != null)
-            {
-                dq.TryEnqueue(() => ExternalContentBlocked = value);
-            }
-            else
-            {
-                ExternalContentBlocked = value;
-            }
+                var dq = Windows.System.DispatcherQueue.GetForCurrentThread();
+                if (dq != null)
+                {
+                    dq.TryEnqueue(() => ExternalContentBlocked = value);
+                }
+                else
+                {
+                    ExternalContentBlocked = value;
+                }
 #endif
+            }
         }
 
         override protected void ShowAIAgentProcessedText()
