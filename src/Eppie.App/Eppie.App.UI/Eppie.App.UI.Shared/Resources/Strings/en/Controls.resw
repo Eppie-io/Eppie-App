@@ -465,6 +465,6 @@
   </data>
   <data name="BlockedContentBannerActionButton.Content" xml:space="preserve">
     <value>Load anyway</value>
-    <comment>Legacy key: InfoBar action button text to allow loading blocked external content once</comment>
+    <comment>InfoBar action button text to allow loading blocked external content once</comment>
   </data>
 </root>
