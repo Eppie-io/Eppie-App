@@ -11,4 +11,7 @@
     -->
     <NoWarn>$(NoWarn);NU1507;NETSDK1201;PRI257</NoWarn>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(RuntimeIdentifier)' == 'osx-x64'">
+    <SupportedOSPlatformVersion>13.0</SupportedOSPlatformVersion>
+  </PropertyGroup>
 </Project>
