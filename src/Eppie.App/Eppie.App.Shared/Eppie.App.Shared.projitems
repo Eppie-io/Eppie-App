@@ -86,8 +86,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\FolderMessagesPage.xaml.cs">
       <DependentUpon>FolderMessagesPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Views\IdentityManagerPage.xaml.cs">
-      <DependentUpon>IdentityManagerPage.xaml</DependentUpon>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\AIAgentsManagerPage.xaml.cs">
+      <DependentUpon>AIAgentsManagerPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\LocalAIAgentSettingsPage.xaml.cs">
       <DependentUpon>LocalAIAgentSettingsPage.xaml</DependentUpon>
@@ -118,9 +118,6 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\SeedRestorePage.xaml.cs">
       <DependentUpon>SeedRestorePage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Views\SelectServicePage.xaml.cs">
-      <DependentUpon>SelectServicePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\WelcomePage.xaml.cs">
       <DependentUpon>WelcomePage.xaml</DependentUpon>
@@ -180,7 +177,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Views\IdentityManagerPage.xaml">
+    <Page Include="$(MSBuildThisFileDirectory)Views\AIAgentsManagerPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -222,10 +219,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Views\SeedRestorePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Views\SelectServicePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

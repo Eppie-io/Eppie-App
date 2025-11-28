@@ -90,9 +90,9 @@ namespace Tuvi.App.ViewModels.Services
         /// </summary>
         None,
         /// <summary>
-        /// Identity Manager pane (accounts onboarding/settings).
+        /// AI agents pane (AI agents settings).
         /// </summary>
-        IdentityManager,
+        AIAgentsPanel,
         /// <summary>
         /// Contacts panel (contacts list).
         /// </summary>

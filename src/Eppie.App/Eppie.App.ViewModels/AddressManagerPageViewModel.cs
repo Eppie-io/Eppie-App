@@ -239,7 +239,7 @@ namespace Tuvi.App.ViewModels
                            account.Email.Network == NetworkType.Ethereum ? AddressGroupType.Ethereum :
                            throw new NotSupportedException();
                 case MailBoxType.Hybrid:
-                    throw new NotImplementedException();
+                    return AddressGroupType.Eppie;
                 case MailBoxType.Proton:
                     return AddressGroupType.Proton;
             }

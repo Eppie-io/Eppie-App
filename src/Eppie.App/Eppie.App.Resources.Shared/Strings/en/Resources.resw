@@ -145,6 +145,10 @@
     <value>Mailboxes</value>
     <comment>Navigation item for open Mailboxes page</comment>
   </data>
+  <data name="AIAgentsPanelNavigationItem.Content" xml:space="preserve">
+    <value>AI agents</value>
+    <comment>Navigation item for open AI agents page</comment>
+  </data>
   <data name="AddEmailAccountFirst" xml:space="preserve">
     <value>You need to connect at least one email account first.</value>
     <comment>Dialog text when user wants to send new message without any email account connected</comment>
@@ -185,9 +189,9 @@
     <value>Settings</value>
     <comment>The title for application settings</comment>
   </data>
-  <data name="IdentityManagerTitle.Text" xml:space="preserve">
-    <value>Identity Manager</value>
-    <comment>The title for Identity Manager page</comment>
+  <data name="AIAgentsManagerTitle.Text" xml:space="preserve">
+    <value>AI Agents</value>
+    <comment>The title for AI Agents Manager page</comment>
   </data>
   <data name="AttachedFiles.Title" xml:space="preserve">
     <value>Attached files:</value>
@@ -882,9 +886,9 @@ Subject: {3}
     <value>Supported services</value>
     <comment>Supported services page title </comment>
   </data>
-  <data name="ConnectServiceButton.Content" xml:space="preserve">
-    <value>Connect service</value>
-    <comment>Connect service button text</comment>
+  <data name="CreateAIAgentButton.Content" xml:space="preserve">
+    <value>Create AI agent</value>
+    <comment>Create AI agent button text</comment>
   </data>
   <data name="SystemDefaultLanguage" xml:space="preserve">
     <value>System default</value>

@@ -17,7 +17,6 @@
 // ---------------------------------------------------------------------------- //
 
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -27,26 +26,17 @@ using Tuvi.Core.Entities;
 
 namespace Tuvi.App.ViewModels
 {
-    public class IdentityManagerPageViewModel : BaseViewModel
+    public class AIAgentsManagerPageViewModel : BaseViewModel
     {
-        public ObservableCollection<Account> EmailAccounts { get; } = new ObservableCollection<Account>();
         public ObservableCollection<LocalAIAgent> AIAgents { get; } = new ObservableCollection<LocalAIAgent>();
-
-        public bool IsLocalAIAvailable => AIService.IsAvailable();
-
-        public ICommand EditAccountCommand => new RelayCommand<object>(EditAccountInfo);
         public ICommand EditAIAgentCommand => new RelayCommand<object>(EditAIAgentInfo);
+        public ICommand CreateAIAgentCommand => new RelayCommand(() => NavigationService?.Navigate(nameof(LocalAIAgentSettingsPageViewModel)));
 
         public override async void OnNavigatedTo(object data)
         {
             try
             {
-                await UpdateAccountsAsync().ConfigureAwait(true);
                 await UpdateAIAgentsAsync().ConfigureAwait(true);
-
-                Core.AccountAdded += Core_AccountAdded;
-                Core.AccountDeleted += Core_AccountDeleted;
-                Core.AccountUpdated += Core_AccountUpdated;
 
                 AIService.AgentAdded += AIService_AgentAdded;
                 AIService.AgentDeleted += AIService_AgentDeleted;
@@ -63,72 +53,7 @@ namespace Tuvi.App.ViewModels
             AIService.AgentAdded -= AIService_AgentAdded;
             AIService.AgentDeleted -= AIService_AgentDeleted;
             AIService.AgentUpdated -= AIService_AgentUpdated;
-
-            Core.AccountAdded -= Core_AccountAdded;
-            Core.AccountDeleted -= Core_AccountDeleted;
-            Core.AccountUpdated -= Core_AccountUpdated;
         }
-
-        private async Task UpdateAccountsAsync()
-        {
-            List<Account> accounts = await Core.GetAccountsAsync().ConfigureAwait(true);
-
-            EmailAccounts.Clear();
-            foreach (Account account in accounts)
-            {
-                EmailAccounts.Add(account);
-            }
-        }
-
-        private void Core_AccountAdded(object sender, AccountEventArgs e)
-        {
-            DispatcherService.RunAsync(() =>
-            {
-                try
-                {
-                    EmailAccounts.Add(e.Account);
-                }
-                catch (Exception ex)
-                {
-                    OnError(ex);
-                }
-            });
-        }
-
-        private void Core_AccountDeleted(object sender, AccountEventArgs e)
-        {
-            DispatcherService.RunAsync(() =>
-            {
-                try
-                {
-                    EmailAccounts.Remove(EmailAccounts.FirstOrDefault(account => account.Id == e.Account.Id));
-                }
-                catch (Exception ex)
-                {
-                    OnError(ex);
-                }
-            });
-        }
-
-        private void Core_AccountUpdated(object sender, AccountEventArgs e)
-        {
-            DispatcherService.RunAsync(() =>
-            {
-                try
-                {
-                    var index = EmailAccounts.IndexOf(EmailAccounts.FirstOrDefault(account => account.Id == e.Account.Id));
-                    if (index >= 0)
-                    {
-                        EmailAccounts[index] = e.Account;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    OnError(ex);
-                }
-            });
-        }
-
         private void AIService_AgentAdded(object sender, LocalAIAgentEventArgs e)
         {
             DispatcherService.RunAsync(() =>
@@ -176,14 +101,6 @@ namespace Tuvi.App.ViewModels
                     OnError(ex);
                 }
             });
-        }
-
-        private void EditAccountInfo(object item)
-        {
-            if (item is Account account)
-            {
-                NavigateToMailboxSettingsPage(account, isReloginNeeded: false);
-            }
         }
 
         private async Task UpdateAIAgentsAsync()

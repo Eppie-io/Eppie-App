@@ -160,6 +160,13 @@
                         <SymbolIcon Symbol="Account" />
                     </winui:NavigationViewItem.Icon>
                 </winui:NavigationViewItem>
+                <winui:NavigationViewItem x:Uid="AIAgentsPanelNavigationItem"
+                                          extensions:AttachedCommands.ClickCommand="{x:Bind OpenAIAgentsPanelCommand}"
+                                          Visibility="{x:Bind ViewModel.IsLocalAIAvailable}">
+                    <winui:NavigationViewItem.Icon>
+                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE99A;" />
+                    </winui:NavigationViewItem.Icon>
+                </winui:NavigationViewItem>
             </winui:NavigationView.MenuItems>
 
             <winui:NavigationView.PaneFooter>
