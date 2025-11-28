@@ -21,6 +21,7 @@ using Tuvi.App.Shared.Controls;
 using System.Threading.Tasks;
 using Microsoft.Web.WebView2.Core;
 using Windows.System;
+using CommunityToolkit.Mvvm.Input;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -33,6 +34,19 @@ namespace Eppie.App.UI.Controls
     public sealed partial class MessageControl : AIAgentUserControl
     {
         private bool _webResourceBlockingRegistered = false;
+
+        public bool ExternalContentBlocked
+        {
+            get => (bool)GetValue(ExternalContentBlockedProperty);
+            set => SetValue(ExternalContentBlockedProperty, value);
+        }
+
+        public static readonly DependencyProperty ExternalContentBlockedProperty =
+            DependencyProperty.Register(nameof(ExternalContentBlocked), typeof(bool), typeof(MessageControl), new PropertyMetadata(false));
+
+        private bool _allowExternalOnce = false;
+
+        public RelayCommand AllowExternalCommand { get; }
 
         public bool HasHtmlBody
         {
@@ -72,6 +86,12 @@ namespace Eppie.App.UI.Controls
         public MessageControl()
         {
             this.InitializeComponent();
+
+            AllowExternalCommand = new RelayCommand(() =>
+            {
+                _allowExternalOnce = true;
+                OnUpdate();
+            });
         }
 
         private async void OnLoaded(object sender, RoutedEventArgs e)
@@ -81,6 +101,7 @@ namespace Eppie.App.UI.Controls
                 await HtmlView.EnsureCoreWebView2Async();
                 HtmlView.CoreWebView2.NewWindowRequested += CoreWebView2_NewWindowRequested;
                 HtmlView.CoreWebView2.NavigationStarting += CoreWebView2_NavigationStarting;
+                HtmlView.CoreWebView2.NavigationCompleted += CoreWebView2_NavigationCompleted;
 
                 if (!_webResourceBlockingRegistered)
                 {
@@ -112,6 +133,7 @@ namespace Eppie.App.UI.Controls
 
                     HtmlView.CoreWebView2.NewWindowRequested -= CoreWebView2_NewWindowRequested;
                     HtmlView.CoreWebView2.NavigationStarting -= CoreWebView2_NavigationStarting;
+                    HtmlView.CoreWebView2.NavigationCompleted -= CoreWebView2_NavigationCompleted;
                 }
             }
             catch (Exception ex)
@@ -143,6 +165,11 @@ namespace Eppie.App.UI.Controls
             }
         }
 
+        private void CoreWebView2_NavigationCompleted(CoreWebView2 sender, CoreWebView2NavigationCompletedEventArgs args)
+        {
+            _allowExternalOnce = false;
+        }
+
         // TODO: add option to settings to allow external requests if desired
         // WebResourceRequested handler: block external network requests
         private void CoreWebView2_WebResourceRequested(CoreWebView2 sender, CoreWebView2WebResourceRequestedEventArgs args)
@@ -150,6 +177,12 @@ namespace Eppie.App.UI.Controls
             try
             {
                 var uri = args.Request?.Uri ?? string.Empty;
+
+                // allow one-time override
+                if (_allowExternalOnce)
+                {
+                    return; // allow during this navigation
+                }
 
                 // allow schemes
                 if (uri.StartsWith("blob:", StringComparison.OrdinalIgnoreCase) ||
@@ -163,6 +196,8 @@ namespace Eppie.App.UI.Controls
                 // block everything else to prevent external network access
                 var env = sender.Environment; // ToDo: Uno0001
                 args.Response = env.CreateWebResourceResponse(null, 204, "No Content", "Content-Type: text/plain"); // ToDo: Uno0001
+
+                SetExternalContentBlocked(true);
             }
             catch (Exception ex)
             {
@@ -199,10 +234,31 @@ namespace Eppie.App.UI.Controls
 
         private async Task UpdateHtmlView()
         {
-            await HtmlView.EnsureCoreWebView2Async();
+            SetExternalContentBlocked(false);
 
+            await HtmlView.EnsureCoreWebView2Async();
             HtmlView.CoreWebView2.Settings.IsScriptEnabled = false; // ToDo: Uno0001
             HtmlView.NavigateToString(HtmlBody);
+        }
+
+        private void SetExternalContentBlocked(bool value)
+        {
+            if (ExternalContentBlocked != value)
+            {
+#if WINDOWS_UWP
+            _ = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => ExternalContentBlocked = value);
+#else
+                var dq = Windows.System.DispatcherQueue.GetForCurrentThread();
+                if (dq != null)
+                {
+                    dq.TryEnqueue(() => ExternalContentBlocked = value);
+                }
+                else
+                {
+                    ExternalContentBlocked = value;
+                }
+#endif
+            }
         }
 
         override protected void ShowAIAgentProcessedText()

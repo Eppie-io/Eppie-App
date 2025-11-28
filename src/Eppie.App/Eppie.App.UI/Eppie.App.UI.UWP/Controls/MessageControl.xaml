@@ -13,28 +13,49 @@
                            mc:Ignorable="d">
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition x:Name="SecondColumn" Width="0" />
-        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-        <Grid Grid.Column="0">
-            <controls:WebView2 x:Name="HtmlView" Visibility="{x:Bind HasHtmlBody, Mode=OneWay}" />
+        <!--  Blocked content info bar  -->
+        <controls:InfoBar x:Name="BlockedContentBanner"
+                          x:Uid="/Eppie.App.UI/Controls/BlockedContentBanner"
+                          Grid.Row="0"
+                          IsIconVisible="True"
+                          IsOpen="{x:Bind ExternalContentBlocked, Mode=OneWay}"
+                          Severity="Warning">
+            <controls:InfoBar.ActionButton>
+                <Button x:Uid="/Eppie.App.UI/Controls/BlockedContentBannerActionButton"
+                        Margin="8,0,0,0"
+                        Command="{x:Bind AllowExternalCommand}" />
+            </controls:InfoBar.ActionButton>
+        </controls:InfoBar>
 
-            <ScrollViewer Padding="4" Visibility="{x:Bind HasHtmlBody, Converter={StaticResource InverseBoolToVisibilityConverter}, Mode=OneWay}">
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition x:Name="SecondColumn" Width="0" />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <controls:WebView2 x:Name="HtmlView" Visibility="{x:Bind HasHtmlBody, Mode=OneWay}" />
+
+                <ScrollViewer Padding="4" Visibility="{x:Bind HasHtmlBody, Converter={StaticResource InverseBoolToVisibilityConverter}, Mode=OneWay}">
+                    <TextBlock IsTextSelectionEnabled="True"
+                               Style="{StaticResource MessageTextStyle}"
+                               Text="{x:Bind TextBody, Mode=OneWay}" />
+                </ScrollViewer>
+            </Grid>
+
+            <ScrollViewer Grid.Column="1"
+                          Padding="4"
+                          Visibility="{x:Bind HasAIAgentProcessedBody, Mode=OneWay}">
                 <TextBlock IsTextSelectionEnabled="True"
                            Style="{StaticResource MessageTextStyle}"
-                           Text="{x:Bind TextBody, Mode=OneWay}" />
+                           Text="{x:Bind AIAgentProcessedBody, Mode=OneWay}" />
             </ScrollViewer>
+
         </Grid>
-
-        <ScrollViewer Grid.Column="1"
-                      Padding="4"
-                      Visibility="{x:Bind HasAIAgentProcessedBody, Mode=OneWay}">
-            <TextBlock IsTextSelectionEnabled="True"
-                       Style="{StaticResource MessageTextStyle}"
-                       Text="{x:Bind AIAgentProcessedBody, Mode=OneWay}" />
-        </ScrollViewer>
-
     </Grid>
 </shared:AIAgentUserControl>
