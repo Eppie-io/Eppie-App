@@ -18,6 +18,7 @@
 
 using System.Collections.ObjectModel;
 using System.Linq;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Tuvi.App.ViewModels
 {
@@ -32,14 +33,14 @@ namespace Tuvi.App.ViewModels
         Ethereum,
     }
 
-    public class AddressGroupItem
+    public class AddressGroupItem : ObservableObject
     {
+
         public AddressGroupType Type { get; }
         public string GroupTitle { get; }
-
         public bool IsTestnet { get; }
 
-        public ObservableCollection<AddressItem> Items { get; private set; } = new ObservableCollection<AddressItem>();
+        public ObservableCollection<AddressItem> Items { get; } = new ObservableCollection<AddressItem>();
         public bool IsAnyAddress => Items != null && Items.Count > 0;
 
         public bool IsLastGroup { get; internal set; }
@@ -49,6 +50,8 @@ namespace Tuvi.App.ViewModels
             GroupTitle = groupTitle;
             IsTestnet = isTestnet;
             Type = type;
+
+            Items.CollectionChanged += (s, e) => OnPropertyChanged(nameof(IsAnyAddress));
         }
 
         internal void AddItem(AddressItem item)
@@ -58,7 +61,12 @@ namespace Tuvi.App.ViewModels
 
         internal void SortItems()
         {
-            Items = new ObservableCollection<AddressItem>(Items.OrderBy(item => item.DisplayName).ThenBy(item => item.Address).ToList());
+            var sortedList = Items.OrderBy(item => item.DisplayName).ThenBy(item => item.Address).ToList();
+            Items.Clear();
+            foreach (var sortedItem in sortedList)
+            {
+                AddItem(sortedItem);
+            }
         }
     }
 }

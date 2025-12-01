@@ -175,7 +175,14 @@
     <Content Include="Assets\StoreLogo.scale-150.png" />
     <Content Include="Assets\StoreLogo.scale-200.png" />
     <Content Include="Assets\StoreLogo.scale-400.png" />
+    <Content Include="Assets\Svg\Address.svg" />
+    <Content Include="Assets\Svg\Bitcoin.svg" />
+    <Content Include="Assets\Svg\Eppie.svg" />
+    <Content Include="Assets\Svg\Ethereum.svg" />
     <Content Include="Assets\Svg\github.svg" />
+    <Content Include="Assets\Svg\Gmail.svg" />
+    <Content Include="Assets\Svg\Outlook.svg" />
+    <Content Include="Assets\Svg\Proton.svg" />
     <Content Include="Assets\Svg\twitter.svg" />
     <Content Include="Assets\Wide310x150Logo.scale-100.png" />
     <Content Include="Assets\Wide310x150Logo.scale-125.png" />

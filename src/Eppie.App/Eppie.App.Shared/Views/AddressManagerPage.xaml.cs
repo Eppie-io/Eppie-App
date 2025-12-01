@@ -21,10 +21,7 @@ using Tuvi.App.ViewModels;
 using Tuvi.Core.Entities;
 
 #if WINDOWS_UWP
-using Windows.Devices.Input;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 #else
@@ -70,26 +67,20 @@ namespace Tuvi.App.Shared.Views
             switch (type)
             {
                 case AddressGroupType.Eppie:
-                // Todo: Add Eppie SVG asset
-                // return new SvgImageSource(new Uri("ms-appx:///Assets/Svg/Eppie.svg"));
+                    return new SvgImageSource(new Uri("ms-appx:///Assets/Svg/Eppie.svg"));
                 case AddressGroupType.Gmail:
-                // Todo: Add Gmail SVG asset
-                // return new SvgImageSource(new Uri("ms-appx:///Assets/Svg/Gmail.svg"));
+                    return new SvgImageSource(new Uri("ms-appx:///Assets/Svg/Gmail.svg"));
                 case AddressGroupType.Outlook:
-                // Todo: Add Outlook SVG asset
-                // return new SvgImageSource(new Uri("ms-appx:///Assets/Svg/Outlook.svg"));
+                    return new SvgImageSource(new Uri("ms-appx:///Assets/Svg/Outlook.svg"));
                 case AddressGroupType.Proton:
-                // Todo: Add Proton SVG asset
-                // return new SvgImageSource(new Uri("ms-appx:///Assets/Svg/Proton.svg"));
+                    return new SvgImageSource(new Uri("ms-appx:///Assets/Svg/Proton.svg"));
                 case AddressGroupType.Bitcoin:
-                // Todo: Add Bitcoin SVG asset
-                // return new SvgImageSource(new Uri("ms-appx:///Assets/Svg/Bitcoin.svg"));
+                    return new SvgImageSource(new Uri("ms-appx:///Assets/Svg/Bitcoin.svg"));
                 case AddressGroupType.Ethereum:
-                // Todo: Add Ethereum SVG asset
-                // return new SvgImageSource(new Uri("ms-appx:///Assets/Svg/Ethereum.svg"));
+                    return new SvgImageSource(new Uri("ms-appx:///Assets/Svg/Ethereum.svg"));
                 case AddressGroupType.OtherEmail:
                 default:
-                    return null;
+                    return new SvgImageSource(new Uri("ms-appx:///Assets/Svg/Address.svg"));
             }
         }
 

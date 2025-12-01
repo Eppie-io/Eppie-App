@@ -48,7 +48,7 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <Grid Grid.Row="{x:Bind IsAnyAddress, Mode=OneTime, Converter={StaticResource BoolToGridRowConverter}}"
+                <Grid Grid.Row="{x:Bind IsAnyAddress, Mode=OneWay, Converter={StaticResource BoolToGridRowConverter}}"
                       Width="{StaticResource FirstColumnWidth}"
                       Margin="0,16,0,0"
                       HorizontalAlignment="Left"
@@ -85,8 +85,8 @@
                                     Grid.ColumnSpan="2"
                                     Margin="0,16,0,0"
                                     ItemTemplate="{StaticResource AddressTemplate}"
-                                    ItemsSource="{x:Bind Items}"
-                                    Visibility="{x:Bind IsAnyAddress, Mode=OneTime}">
+                                    ItemsSource="{x:Bind Items, Mode=OneWay}"
+                                    Visibility="{x:Bind IsAnyAddress, Mode=OneWay}">
                     <muxc:ItemsRepeater.Layout>
                         <muxc:StackLayout Orientation="Vertical" Spacing="4" />
                     </muxc:ItemsRepeater.Layout>
