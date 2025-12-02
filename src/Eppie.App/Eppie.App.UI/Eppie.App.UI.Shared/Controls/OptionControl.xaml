@@ -42,7 +42,6 @@
 
         <StackPanel x:Name="HeaderArea"
                     Grid.Row="0"
-                    Grid.RowSpan="2"
                     Grid.Column="0"
                     Margin="{StaticResource OptionNameColumnMargin}"
                     VerticalAlignment="Top">
@@ -73,7 +72,6 @@
                         <Setter Target="NoteTextBlock.Visibility" Value="Collapsed" />
                         <Setter Target="CaptionTextBlock.VerticalAlignment" Value="Center" />
                         <Setter Target="HeaderArea.VerticalAlignment" Value="Center" />
-                        <Setter Target="HeaderArea.(Grid.RowSpan)" Value="1" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>

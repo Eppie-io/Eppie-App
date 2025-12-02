@@ -6,21 +6,29 @@
     <converters:BoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter"
                                           FalseValue="Visible"
                                           TrueValue="Collapsed" />
+
     <converters:BoolConverter x:Key="InverseBoolConverter"
                               FalseValue="True"
                               TrueValue="False" />
+
     <converters:IntToStringConverter x:Key="IntToStringConverter" />
+
     <converters:NullableBoolToBoolConverter x:Key="NullableBoolToBoolConverter" />
+
     <converters:BoolToFontWeightConverter x:Key="BoolToFontWeightConverter"
                                           FalseValue="Normal"
                                           TrueValue="Bold" />
+
     <converters:BoolToHorizontalAlignConverter x:Key="BoolToRightAlignConverter"
                                                FalseValue="Left"
                                                TrueValue="Right" />
+
     <converters:IntToVisibilityConverter x:Key="IntToVisibilityConverter" />
+
     <converters:BoolToSelectionModeConverter x:Key="BoolToSelectionModeConverter"
                                              FalseValue="None"
                                              TrueValue="Multiple" />
+
     <converters:BoolToDoubleConverter x:Key="BoolToOpacityConverter"
                                       FalseValue="0"
                                       TrueValue="1" />
@@ -70,5 +78,7 @@
     <converters:DoubleToGridLengthConverter x:Key="DoubleToGridLengthConverter" />
 
     <converters:AppScaleToStringConverter x:Key="UIScaleToStringConverter" />
+
+    <converters:ExternalContentPolicyToStringConverter x:Key="ExternalContentPolicyToStringConverter" />
 
 </ResourceDictionary>

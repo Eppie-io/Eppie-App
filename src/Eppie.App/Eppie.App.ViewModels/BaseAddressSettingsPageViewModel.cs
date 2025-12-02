@@ -32,6 +32,11 @@ namespace Tuvi.App.ViewModels
         {
         }
 
+        /// <summary>
+        /// All available external content policy values for UI binding
+        /// </summary>
+        public ExternalContentPolicy[] ExternalContentPolicyValues { get; } = (ExternalContentPolicy[])Enum.GetValues(typeof(ExternalContentPolicy));
+
         private bool _isWaitingResponse;
         public bool IsWaitingResponse
         {

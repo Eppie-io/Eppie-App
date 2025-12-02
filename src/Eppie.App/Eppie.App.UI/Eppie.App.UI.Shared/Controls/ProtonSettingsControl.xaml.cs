@@ -16,9 +16,7 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-using System;
 using Tuvi.App.ViewModels;
-using Tuvi.App.ViewModels.Services;
 using System.Windows.Input;
 
 #if WINDOWS_UWP

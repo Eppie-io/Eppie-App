@@ -22,6 +22,7 @@ using System.Threading.Tasks;
 using Microsoft.Web.WebView2.Core;
 using Windows.System;
 using CommunityToolkit.Mvvm.Input;
+using Tuvi.Core.Entities;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -43,6 +44,15 @@ namespace Eppie.App.UI.Controls
 
         public static readonly DependencyProperty ExternalContentBlockedProperty =
             DependencyProperty.Register(nameof(ExternalContentBlocked), typeof(bool), typeof(MessageControl), new PropertyMetadata(false));
+
+        public ExternalContentPolicy ExternalContentPolicy
+        {
+            get => (ExternalContentPolicy)GetValue(ExternalContentPolicyProperty);
+            set => SetValue(ExternalContentPolicyProperty, value);
+        }
+
+        public static readonly DependencyProperty ExternalContentPolicyProperty =
+            DependencyProperty.Register(nameof(ExternalContentPolicy), typeof(ExternalContentPolicy), typeof(MessageControl), new PropertyMetadata(ExternalContentPolicy.AlwaysAllow));
 
         private bool _allowExternalOnce = false;
 
@@ -170,15 +180,23 @@ namespace Eppie.App.UI.Controls
             _allowExternalOnce = false;
         }
 
-        // TODO: add option to settings to allow external requests if desired
-        // WebResourceRequested handler: block external network requests
+        // WebResourceRequested handler: block external network requests based on policy
         private void CoreWebView2_WebResourceRequested(CoreWebView2 sender, CoreWebView2WebResourceRequestedEventArgs args)
         {
             try
             {
                 var uri = args.Request?.Uri ?? string.Empty;
 
-                // allow one-time override
+                // Check policy
+                var policy = ExternalContentPolicy;
+
+                // AlwaysAllow policy - allow everything
+                if (policy == ExternalContentPolicy.AlwaysAllow)
+                {
+                    return;
+                }
+
+                // Allow one-time override (for AskEachTime policy)
                 if (_allowExternalOnce)
                 {
                     return; // allow during this navigation
@@ -197,7 +215,11 @@ namespace Eppie.App.UI.Controls
                 var env = sender.Environment; // ToDo: Uno0001
                 args.Response = env.CreateWebResourceResponse(null, 204, "No Content", "Content-Type: text/plain"); // ToDo: Uno0001
 
-                SetExternalContentBlocked(true);
+                // Only show blocked content banner if policy is AskEachTime
+                if (policy == ExternalContentPolicy.AskEachTime)
+                {
+                    SetExternalContentBlocked(true);
+                }
             }
             catch (Exception ex)
             {

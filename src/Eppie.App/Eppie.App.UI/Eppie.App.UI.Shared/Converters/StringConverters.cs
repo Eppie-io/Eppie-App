@@ -19,6 +19,7 @@
 using System;
 using Tuvi.App.ViewModels.Services;
 using Eppie.App.UI.Resources;
+using Tuvi.Core.Entities;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml.Data;
@@ -69,6 +70,36 @@ namespace Tuvi.App.Converters
             }
 
             return result;
+        }
+    }
+
+
+    public sealed class ExternalContentPolicyToStringConverter : IValueConverter
+    {
+        private static readonly StringProvider _loader = StringProvider.GetInstance();
+
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            if (value is ExternalContentPolicy policy)
+            {
+                switch (policy)
+                {
+                    case ExternalContentPolicy.AlwaysAllow:
+                        return _loader.GetString("ExternalContentAlwaysAllowText");
+                    case ExternalContentPolicy.AskEachTime:
+                        return _loader.GetString("ExternalContentAskEachTimeText");
+                    case ExternalContentPolicy.Block:
+                        return _loader.GetString("ExternalContentBlockText");
+                    default:
+                        return string.Empty;
+                }
+            }
+            return string.Empty;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            throw new NotImplementedException();
         }
     }
 
