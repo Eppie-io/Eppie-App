@@ -45,18 +45,18 @@ namespace Eppie.App.UI.Controls
         public static readonly DependencyProperty ExternalContentBlockedProperty =
             DependencyProperty.Register(nameof(ExternalContentBlocked), typeof(bool), typeof(MessageControl), new PropertyMetadata(false));
 
-        public ExternalContentPolicy ExternalContentPolicy
-        {
-            get => (ExternalContentPolicy)GetValue(ExternalContentPolicyProperty);
-            set => SetValue(ExternalContentPolicyProperty, value);
-        }
-
-        public static readonly DependencyProperty ExternalContentPolicyProperty =
-            DependencyProperty.Register(nameof(ExternalContentPolicy), typeof(ExternalContentPolicy), typeof(MessageControl), new PropertyMetadata(ExternalContentPolicy.AlwaysAllow));
-
         private bool _allowExternalOnce = false;
 
         public RelayCommand AllowExternalCommand { get; }
+
+        public Tuvi.App.ViewModels.ExternalContentDecider ExternalContentDecider
+        {
+            get => (Tuvi.App.ViewModels.ExternalContentDecider)GetValue(ExternalContentDeciderProperty);
+            set => SetValue(ExternalContentDeciderProperty, value);
+        }
+
+        public static readonly DependencyProperty ExternalContentDeciderProperty =
+            DependencyProperty.Register(nameof(ExternalContentDecider), typeof(Tuvi.App.ViewModels.ExternalContentDecider), typeof(MessageControl), new PropertyMetadata(null));
 
         public bool HasHtmlBody
         {
@@ -187,36 +187,16 @@ namespace Eppie.App.UI.Controls
             {
                 var uri = args.Request?.Uri ?? string.Empty;
 
-                // Check policy
-                var policy = ExternalContentPolicy;
+                var decision = ExternalContentDecider.Decide(uri, _allowExternalOnce);
 
-                // AlwaysAllow policy - allow everything
-                if (policy == ExternalContentPolicy.AlwaysAllow)
-                {
-                    return;
-                }
-
-                // Allow one-time override (for AskEachTime policy)
-                if (_allowExternalOnce)
-                {
-                    return; // allow during this navigation
-                }
-
-                // allow schemes
-                if (uri.StartsWith("blob:", StringComparison.OrdinalIgnoreCase) ||
-                    uri.StartsWith("cid:", StringComparison.OrdinalIgnoreCase) ||
-                    uri.StartsWith("data:", StringComparison.OrdinalIgnoreCase) ||
-                    uri.StartsWith("about:", StringComparison.OrdinalIgnoreCase))
+                if (!decision.ShouldBlock)
                 {
                     return; // allow
                 }
 
-                // block everything else to prevent external network access
-                var env = sender.Environment; // ToDo: Uno0001
-                args.Response = env.CreateWebResourceResponse(null, 204, "No Content", "Content-Type: text/plain"); // ToDo: Uno0001
+                args.Response = CreateNoContentResponse(sender.Environment);
 
-                // Only show blocked content banner if policy is AskEachTime
-                if (policy == ExternalContentPolicy.AskEachTime)
+                if (decision.ShowBanner)
                 {
                     SetExternalContentBlocked(true);
                 }
@@ -225,6 +205,11 @@ namespace Eppie.App.UI.Controls
             {
                 OnError(ex);
             }
+        }
+
+        private CoreWebView2WebResourceResponse CreateNoContentResponse(CoreWebView2Environment env)
+        {
+            return env.CreateWebResourceResponse(null, 204, "No Content", "Content-Type: text/plain"); // ToDo: Uno0001
         }
 
         private async void LaunchDefaultBrowser(string url)

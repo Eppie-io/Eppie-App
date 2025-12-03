@@ -72,12 +72,7 @@ namespace Tuvi.App.ViewModels
             set { SetProperty(ref _loadingContent, value); }
         }
 
-        private ExternalContentPolicy _externalContentPolicy;
-        public ExternalContentPolicy ExternalContentPolicy
-        {
-            get { return _externalContentPolicy; }
-            set { SetProperty(ref _externalContentPolicy, value); }
-        }
+        public ExternalContentDecider ExternalContentDecider { get; } = new ExternalContentDecider();
 
         private Task<MessageInfo> _messageLoadTask;
 
@@ -113,7 +108,7 @@ namespace Tuvi.App.ViewModels
             if (MessageInfo?.Email != null)
             {
                 var account = await Core.GetAccountAsync(MessageInfo.Email).ConfigureAwait(true);
-                ExternalContentPolicy = account.ExternalContentPolicy;
+                ExternalContentDecider.Policy = account.ExternalContentPolicy;
             }
         }
 

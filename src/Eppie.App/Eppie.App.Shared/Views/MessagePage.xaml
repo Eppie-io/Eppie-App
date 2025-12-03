@@ -232,7 +232,7 @@
               BorderThickness="1">
 
             <eppie_controls:MessageControl AIAgentProcessedBody="{x:Bind ViewModel.MessageInfo.AIAgentProcessedBody, Mode=OneWay}"
-                                           ExternalContentPolicy="{x:Bind ViewModel.ExternalContentPolicy, Mode=OneWay}"
+                                           ExternalContentDecider="{x:Bind ViewModel.ExternalContentDecider, Mode=OneWay}"
                                            HasHtmlBody="{x:Bind ViewModel.MessageInfo.HasHtmlBody, Mode=OneWay}"
                                            HtmlBody="{x:Bind ViewModel.MessageInfo.MessageHtmlBody, Mode=OneWay}"
                                            TextBody="{x:Bind ViewModel.MessageInfo.MessageTextBody, Mode=OneWay}" />
