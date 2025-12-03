@@ -50,7 +50,7 @@ jobs:
         run: git config --system core.longpaths true
 
       - name: Checkout repository
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
         with:
           fetch-depth: 0
           submodules: recursive
@@ -63,7 +63,7 @@ jobs:
 
       # Initializes the CodeQL tools for scanning.
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@3599b3baa15b485a2e49ef411a7a4bb2452e7f93 # v3.29.5
+        uses: github/codeql-action/init@fe4161a26a8629af62121b670040955b330f9af2 # v3.29.5
         with:
           languages: ${{ matrix.language }}
           # If you wish to specify custom queries, you can do so here or in a config file.
@@ -80,6 +80,6 @@ jobs:
           msbuild -target:Rebuild -restore:True -verbosity:minimal -consoleLoggerParameters:Summary -maxCpuCount ./src/Eppie.App/Eppie.App.sln
 
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@3599b3baa15b485a2e49ef411a7a4bb2452e7f93 # v3.29.5
+        uses: github/codeql-action/analyze@fe4161a26a8629af62121b670040955b330f9af2 # v3.29.5
         with:
           category: "/language:${{matrix.language}}"
