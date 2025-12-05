@@ -15,7 +15,6 @@
     <local:EppieAddressSettingsPageBase.Resources>
         <x:Double x:Key="TextBoxWidth">276</x:Double>
 
-        <x:Double x:Key="HugeOptionGapHeight">60</x:Double>
         <x:Double x:Key="NormalOptionGapHeight">36</x:Double>
 
         <x:String x:Key="AddressTemplateText">.test@eppie</x:String>
@@ -46,7 +45,7 @@
                                            HideWarning="False" />
 
             <controls:OptionControl x:Uid="EppieAliasOption"
-                                    GapHeight="{StaticResource HugeOptionGapHeight}"
+                                    GapHeight="{StaticResource NormalOptionGapHeight}"
                                     Visibility="{x:Bind ViewModel.IsCreatingAccountMode, Mode=OneWay}">
                 <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
                     <controls:ErrorControl HorizontalAlignment="Left"
@@ -99,6 +98,18 @@
                                     SpinButtonPlacementMode="Compact"
                                     Value="{x:Bind ViewModel.AddressSettingsModel.DerivationIndex, Mode=OneWay}" />
                 </StackPanel>
+            </controls:OptionControl>
+
+            <controls:OptionControl x:Uid="/Eppie.App.UI/Controls/ExternalContentOption" GapHeight="{StaticResource NormalOptionGapHeight}">
+                <ComboBox HorizontalAlignment="Left"
+                          ItemsSource="{x:Bind ViewModel.ExternalContentPolicyValues, Mode=OneTime}"
+                          SelectedItem="{x:Bind ViewModel.AddressSettingsModel.ExternalContentPolicy, Mode=TwoWay}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource ExternalContentPolicyToStringConverter}}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
             </controls:OptionControl>
 
         </StackPanel>

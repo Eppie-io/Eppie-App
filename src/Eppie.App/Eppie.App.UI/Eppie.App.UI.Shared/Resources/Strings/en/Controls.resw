@@ -467,4 +467,12 @@
     <value>Load anyway</value>
     <comment>InfoBar action button text to allow loading blocked external content once</comment>
   </data>
+  <data name="ExternalContentOption.Caption" xml:space="preserve">
+    <value>External content</value>
+    <comment>Caption for the external content policy setting in account settings</comment>
+  </data>
+  <data name="ExternalContentOption.TextNote" xml:space="preserve">
+    <value>Choose how to handle external content (images, stylesheets) in email messages.</value>
+    <comment>Note for the external content policy setting in account settings</comment>
+  </data>
 </root>

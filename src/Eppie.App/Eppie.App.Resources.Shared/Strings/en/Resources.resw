@@ -1370,4 +1370,16 @@ Subject: {3}
     <value>Add address</value>
     <comment>Button text on AddressManager page. It adds email address to application</comment>
   </data>
+  <data name="ExternalContentAlwaysAllowText" xml:space="preserve">
+    <value>Always allow</value>
+    <comment>Display text for always allowing external content policy</comment>
+  </data>
+  <data name="ExternalContentAskEachTimeText" xml:space="preserve">
+    <value>Ask each time</value>
+    <comment>Display text for asking permission each time before loading external content</comment>
+  </data>
+  <data name="ExternalContentBlockText" xml:space="preserve">
+    <value>Block</value>
+    <comment>Display text for blocking external content</comment>
+  </data>
 </root>
