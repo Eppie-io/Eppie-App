@@ -23,6 +23,7 @@ using CommunityToolkit.Mvvm.Input;
 using EmailValidation;
 using Tuvi.App.ViewModels.Services;
 using Tuvi.Core.Entities;
+using Tuvi.Core.Utils;
 
 namespace Tuvi.App.ViewModels
 {
@@ -47,6 +48,19 @@ namespace Tuvi.App.ViewModels
         {
             return networkType == NetworkType.Bitcoin || networkType == NetworkType.Ethereum;
         }
+
+        private int _derivationIndex = 0;
+        public int DerivationIndex
+        {
+            get => _derivationIndex;
+            set => SetProperty(ref _derivationIndex, value);
+        }
+
+        public bool IsDerivationIndexVisible
+        {
+            get => CurrentAccount != null && !CurrentAccount.Email.IsHybrid;
+        }
+
         public bool IsSenderNameVisible
         {
             get => _selectedNetwork == NetworkType.Eppie && !CurrentAccount.Email.IsHybrid;
@@ -57,6 +71,13 @@ namespace Tuvi.App.ViewModels
         {
             get => _claimedName;
             set => SetProperty(ref _claimedName, value);
+        }
+
+        private string _originalAddress;
+        public string OriginalAddress
+        {
+            get => _originalAddress;
+            private set => SetProperty(ref _originalAddress, value);
         }
 
         protected DecentralizedAddressSettingsModel(Account account) : base(account)
@@ -73,6 +94,38 @@ namespace Tuvi.App.ViewModels
             Email.Value = account.Email.DisplayAddress;
             SenderName.Value = account.Email.Name;
             ClaimedName = account.Email.Name;
+
+            if (account.DecentralizedAccountIndex >= 0)
+            {
+                _derivationIndex = account.DecentralizedAccountIndex;
+            }
+        }
+
+        public async Task InitializeOriginalAddressAsync(Func<Tuvi.Core.ITuviMail> coreProvider)
+        {
+            if (CurrentAccount?.Email is null)
+            {
+                return;
+            }
+
+            if (coreProvider is null)
+            {
+                return;
+            }
+
+            var core = coreProvider();
+            if (core is null)
+            {
+                return;
+            }
+
+            var publicKey = await core.GetSecurityManager().GetEmailPublicKeyStringAsync(CurrentAccount.Email).ConfigureAwait(true);
+            if (!string.IsNullOrEmpty(publicKey))
+            {
+                // Recreate the address from the public key to get the true original address
+                var originalEmail = EmailAddress.CreateDecentralizedAddress(_selectedNetwork, publicKey);
+                OriginalAddress = originalEmail.Address;
+            }
         }
 
         public override Account ToAccount()
@@ -113,36 +166,11 @@ namespace Tuvi.App.ViewModels
             get => _addressSettingsModel;
             set
             {
-                if (_addressSettingsModel != null)
-                {
-                    _addressSettingsModel.PropertyChanged -= OnAddressSettingsModelPropertyChanged;
-                }
-
                 SetProperty(ref _addressSettingsModel, value, true);
-
-                if (_addressSettingsModel != null)
-                {
-                    _addressSettingsModel.PropertyChanged += OnAddressSettingsModelPropertyChanged;
-                }
-
-                ClaimNameCommand?.NotifyCanExecuteChanged();
             }
         }
 
         public IRelayCommand JoinWaitingListCommand => new RelayCommand(DoJoinWaitingList);
-
-        public IRelayCommand ClaimNameCommand { get; }
-
-        private bool _isClaimingName;
-        public bool IsClaimingName
-        {
-            get => _isClaimingName;
-            private set
-            {
-                SetProperty(ref _isClaimingName, value);
-                ClaimNameCommand.NotifyCanExecuteChanged();
-            }
-        }
 
         public IRelayCommand CopySecretKeyCommand { get; }
 
@@ -161,26 +189,9 @@ namespace Tuvi.App.ViewModels
 
         public DecentralizedAddressSettingsPageViewModel()
         {
-            ClaimNameCommand = new AsyncRelayCommand(ClaimNameAsync, CanClaimExecute);
             CopySecretKeyCommand = new RelayCommand<IClipboardProvider>(CopySecretKey, CanCopySecretKey);
 
             ErrorsChanged += (sender, e) => ApplySettingsCommand.NotifyCanExecuteChanged();
-        }
-
-        private bool CanClaimExecute()
-        {
-            if (_addressSettingsModel is null || _isClaimingName || IsWaitingResponse || !_addressSettingsModel.IsSenderNameVisible)
-            {
-                return false;
-            }
-
-            var desired = _addressSettingsModel.SenderName.Value;
-            if (string.IsNullOrWhiteSpace(desired))
-            {
-                return false;
-            }
-
-            return true;
         }
 
         public override async void OnNavigatedTo(object data)
@@ -203,6 +214,8 @@ namespace Tuvi.App.ViewModels
                     var account = await CreateDecentralizedAccountAsync(NetworkType.Eppie, CancellationToken.None).ConfigureAwait(true);
                     AddressSettingsModel = DecentralizedAddressSettingsModel.Create(account);
                 }
+
+                await AddressSettingsModel.InitializeOriginalAddressAsync(() => Core).ConfigureAwait(true);
             }
             catch (Exception e)
             {
@@ -245,58 +258,66 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        private void OnAddressSettingsModelPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private async Task<bool> ClaimNameAsync()
         {
-            if (e.PropertyName == nameof(DecentralizedAddressSettingsModel.SenderName))
+            if (AddressSettingsModel is null || !AddressSettingsModel.IsSenderNameVisible || !IsCreatingAccountMode)
             {
-                ClaimNameCommand?.NotifyCanExecuteChanged();
-            }
-        }
-
-        private async Task ClaimNameAsync()
-        {
-            if (AddressSettingsModel is null || !AddressSettingsModel.IsSenderNameVisible)
-            {
-                return;
+                return true;
             }
 
             var nameRaw = AddressSettingsModel.SenderName.Value?.Trim();
+
+            if (string.IsNullOrWhiteSpace(nameRaw))
+            {
+                return true;
+            }
+
             AddressSettingsModel.SenderName.Errors.Clear();
 
             if (!ValidateName(nameRaw, out var normalized, out var errorKey))
             {
                 AddressSettingsModel.SenderName.Errors.Add(GetLocalizedString(errorKey));
-                return;
+                return false;
             }
 
             try
             {
-                IsClaimingName = true;
                 var account = AddressSettingsModel.ToAccount();
                 var result = await Core.ClaimDecentralizedNameAsync(normalized, account.Email).ConfigureAwait(true);
                 if (result)
                 {
-                    OnNameClaimSucceededAsync(normalized, account);
+                    OnNameClaimSucceeded(normalized, account);
+                    return true;
                 }
                 else
                 {
                     AddressSettingsModel.SenderName.Errors.Add(GetLocalizedString("NameAlreadyTakenError"));
+                    return false;
                 }
             }
             catch (Exception ex)
             {
                 AddressSettingsModel.SenderName.Errors.Add(GetLocalizedString("ClaimNameFailedError"));
                 OnError(ex);
-            }
-            finally
-            {
-                IsClaimingName = false;
-                ClaimNameCommand.NotifyCanExecuteChanged();
+                return false;
             }
         }
 
-        private void OnNameClaimSucceededAsync(string normalized, Account account)
+        protected override async Task ApplySettingsAndGoBackAsync()
         {
+            if (!await ClaimNameAsync().ConfigureAwait(true))
+            {
+                return;
+            }
+
+            await base.ApplySettingsAndGoBackAsync().ConfigureAwait(true);
+        }
+
+        private void OnNameClaimSucceeded(string normalized, Account account)
+        {
+            // TODO: Remove hardcoded ".test" suffix after Testnet phase is over
+            normalized += ".test";
+
             AddressSettingsModel.ClaimedName = normalized;
             AddressSettingsModel.SenderName.Value = normalized;
             AddressSettingsModel.Email.Value = EmailAddress.CreateDecentralizedAddress(account.Email.Network, normalized).DisplayAddress;
