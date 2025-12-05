@@ -11,4 +11,6 @@
 
     <models:BrandResource x:Key="Brand" />
 
+    <x:Double x:Key="Int32MaxValue">2147483647</x:Double>
+
 </ResourceDictionary>

@@ -94,7 +94,7 @@
                                     Visibility="{x:Bind ViewModel.AddressSettingsModel.IsDerivationIndexVisible, Mode=OneWay}">
                 <StackPanel Orientation="Horizontal">
                     <muxc:NumberBox IsEnabled="False"
-                                    Maximum="2147483647"
+                                    Maximum="{StaticResource Int32MaxValue}"
                                     Minimum="0"
                                     SpinButtonPlacementMode="Compact"
                                     Value="{x:Bind ViewModel.AddressSettingsModel.DerivationIndex, Mode=OneWay}" />
