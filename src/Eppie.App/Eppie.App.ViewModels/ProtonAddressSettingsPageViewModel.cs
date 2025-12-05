@@ -209,7 +209,7 @@ namespace Tuvi.App.ViewModels
                 (
                     AddressSettingsModel.Email.Value,
                     AddressSettingsModel.Password.Value,
-                    async (ct) =>
+                    async (ex, ct) =>
                     {
                         await DispatcherService.RunAsync(() =>
                         {
@@ -219,9 +219,9 @@ namespace Tuvi.App.ViewModels
                                 throw new NeedAdditionalAuthInfo();
                             }
                         }).ConfigureAwait(true);
-                        return AddressSettingsModel.TwoFactorCode.Value;
+                        return (true, AddressSettingsModel.TwoFactorCode.Value);
                     },
-                    async (ct) =>
+                    async (ex, ct) =>
                     {
                         await DispatcherService.RunAsync(() =>
                         {
@@ -231,7 +231,7 @@ namespace Tuvi.App.ViewModels
                                 throw new NeedAdditionalAuthInfo();
                             }
                         }).ConfigureAwait(true);
-                        return AddressSettingsModel.MailboxPassword.Value;
+                        return (true, AddressSettingsModel.MailboxPassword.Value);
                     },
                     null, // Todo: Issue #479 add human verification page
                     default
