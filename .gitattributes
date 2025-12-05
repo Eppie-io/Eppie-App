@@ -41,6 +41,7 @@
 
 *.bash                  text eol=lf
 *.sh                    text eol=lf
+*.plist                 text eol=lf
 
 
 # Set file behavior to: treat as binary
