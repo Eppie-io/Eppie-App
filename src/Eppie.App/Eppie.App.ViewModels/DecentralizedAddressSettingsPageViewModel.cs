@@ -103,18 +103,18 @@ namespace Tuvi.App.ViewModels
 
         public async Task InitializeOriginalAddressAsync(Func<Tuvi.Core.ITuviMail> coreProvider)
         {
-            if (CurrentAccount?.Email == null)
+            if (CurrentAccount?.Email is null)
             {
                 return;
             }
 
-            if (coreProvider == null)
+            if (coreProvider is null)
             {
                 return;
             }
 
             var core = coreProvider();
-            if (core == null)
+            if (core is null)
             {
                 return;
             }
