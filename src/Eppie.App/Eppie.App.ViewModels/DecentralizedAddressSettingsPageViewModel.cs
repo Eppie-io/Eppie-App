@@ -315,6 +315,9 @@ namespace Tuvi.App.ViewModels
 
         private void OnNameClaimSucceeded(string normalized, Account account)
         {
+            // TODO: Remove hardcoded ".test" suffix after Testnet phase is over
+            normalized += ".test";
+
             AddressSettingsModel.ClaimedName = normalized;
             AddressSettingsModel.SenderName.Value = normalized;
             AddressSettingsModel.Email.Value = EmailAddress.CreateDecentralizedAddress(account.Email.Network, normalized).DisplayAddress;
