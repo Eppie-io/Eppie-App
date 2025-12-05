@@ -417,6 +417,18 @@
                     </muxc:Expander>
                 </controls:OptionControl>
 
+                <controls:OptionControl x:Uid="/Eppie.App.UI/Controls/ExternalContentOption" GapHeight="{StaticResource NormalOptionGapHeight}">
+                    <ComboBox HorizontalAlignment="Left"
+                              ItemsSource="{x:Bind EmailAddressSettingsModel.ExternalContentPolicyValues, Mode=OneTime}"
+                              SelectedItem="{x:Bind EmailAddressSettingsModel.ExternalContentPolicy, Mode=TwoWay}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Converter={StaticResource ExternalContentPolicyToStringConverter}}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </controls:OptionControl>
+
                 <controls:OptionControl x:Uid="/Eppie.App.UI/Controls/HybridAddressOption"
                                         GapHeight="{StaticResource NormalOptionGapHeight}"
                                         Visibility="{x:Bind ShowHybridAddressButton, Mode=OneWay}">

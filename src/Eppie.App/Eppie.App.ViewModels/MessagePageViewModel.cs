@@ -72,6 +72,8 @@ namespace Tuvi.App.ViewModels
             set { SetProperty(ref _loadingContent, value); }
         }
 
+        public ExternalContentDecider ExternalContentDecider { get; } = new ExternalContentDecider();
+
         private Task<MessageInfo> _messageLoadTask;
 
         public ICommand ReplyCommand => new RelayCommand(Reply);
@@ -99,6 +101,15 @@ namespace Tuvi.App.ViewModels
             }
 
             base.OnNavigatedTo(data);
+        }
+
+        private async Task LoadExternalContentPolicyAsync()
+        {
+            if (MessageInfo?.Email != null)
+            {
+                var account = await Core.GetAccountAsync(MessageInfo.Email).ConfigureAwait(true);
+                ExternalContentDecider.Policy = account.ExternalContentPolicy;
+            }
         }
 
         private async Task SetupMessageAsync()
@@ -178,6 +189,7 @@ namespace Tuvi.App.ViewModels
             {
                 MessageInfo.MessageData = await Core.GetMessageBodyHighPriorityAsync(MessageInfo.MessageData).ConfigureAwait(true);
 
+                await LoadExternalContentPolicyAsync().ConfigureAwait(true);
                 await SetupMessageAsync().ConfigureAwait(true);
             }
             catch (Exception ex)

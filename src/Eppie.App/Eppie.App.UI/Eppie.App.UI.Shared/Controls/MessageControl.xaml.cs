@@ -22,6 +22,7 @@ using System.Threading.Tasks;
 using Microsoft.Web.WebView2.Core;
 using Windows.System;
 using CommunityToolkit.Mvvm.Input;
+using Tuvi.Core.Entities;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -47,6 +48,15 @@ namespace Eppie.App.UI.Controls
         private bool _allowExternalOnce = false;
 
         public RelayCommand AllowExternalCommand { get; }
+
+        public Tuvi.App.ViewModels.ExternalContentDecider ExternalContentDecider
+        {
+            get => (Tuvi.App.ViewModels.ExternalContentDecider)GetValue(ExternalContentDeciderProperty);
+            set => SetValue(ExternalContentDeciderProperty, value);
+        }
+
+        public static readonly DependencyProperty ExternalContentDeciderProperty =
+            DependencyProperty.Register(nameof(ExternalContentDecider), typeof(Tuvi.App.ViewModels.ExternalContentDecider), typeof(MessageControl), new PropertyMetadata(null));
 
         public bool HasHtmlBody
         {
@@ -170,39 +180,36 @@ namespace Eppie.App.UI.Controls
             _allowExternalOnce = false;
         }
 
-        // TODO: add option to settings to allow external requests if desired
-        // WebResourceRequested handler: block external network requests
+        // WebResourceRequested handler: block external network requests based on policy
         private void CoreWebView2_WebResourceRequested(CoreWebView2 sender, CoreWebView2WebResourceRequestedEventArgs args)
         {
             try
             {
                 var uri = args.Request?.Uri ?? string.Empty;
 
-                // allow one-time override
-                if (_allowExternalOnce)
-                {
-                    return; // allow during this navigation
-                }
+                var decision = ExternalContentDecider.Decide(uri, _allowExternalOnce);
 
-                // allow schemes
-                if (uri.StartsWith("blob:", StringComparison.OrdinalIgnoreCase) ||
-                    uri.StartsWith("cid:", StringComparison.OrdinalIgnoreCase) ||
-                    uri.StartsWith("data:", StringComparison.OrdinalIgnoreCase) ||
-                    uri.StartsWith("about:", StringComparison.OrdinalIgnoreCase))
+                if (!decision.ShouldBlock)
                 {
                     return; // allow
                 }
 
-                // block everything else to prevent external network access
-                var env = sender.Environment; // ToDo: Uno0001
-                args.Response = env.CreateWebResourceResponse(null, 204, "No Content", "Content-Type: text/plain"); // ToDo: Uno0001
+                args.Response = CreateNoContentResponse(sender.Environment);
 
-                SetExternalContentBlocked(true);
+                if (decision.ShowBanner)
+                {
+                    SetExternalContentBlocked(true);
+                }
             }
             catch (Exception ex)
             {
                 OnError(ex);
             }
+        }
+
+        private CoreWebView2WebResourceResponse CreateNoContentResponse(CoreWebView2Environment env)
+        {
+            return env.CreateWebResourceResponse(null, 204, "No Content", "Content-Type: text/plain"); // ToDo: Uno0001
         }
 
         private async void LaunchDefaultBrowser(string url)

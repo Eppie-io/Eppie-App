@@ -33,6 +33,11 @@ namespace Tuvi.App.ViewModels
         /// </summary>
         protected const int DefaultSynchronizationInterval = 10;
 
+        /// <summary>
+        /// All available external content policy values for UI binding
+        /// </summary>
+        public ExternalContentPolicy[] ExternalContentPolicyValues { get; } = (ExternalContentPolicy[])Enum.GetValues(typeof(ExternalContentPolicy));
+
         private Func<Tuvi.Core.ITuviMail> CoreProvider { get; set; }
         private Tuvi.Core.ITuviMail Core => CoreProvider != null ? CoreProvider() : null;
 
@@ -91,11 +96,19 @@ namespace Tuvi.App.ViewModels
             set { SetProperty(ref _isMessageFooterEnabled, value); }
         }
 
+        private ExternalContentPolicy _externalContentPolicy;
+        public ExternalContentPolicy ExternalContentPolicy
+        {
+            get { return _externalContentPolicy; }
+            set { SetProperty(ref _externalContentPolicy, value); }
+        }
+
         protected BaseAddressSettingsModel()
         {
             Email.SetInitialValue(string.Empty);
             SenderName.SetInitialValue(string.Empty);
             SynchronizationInterval.SetInitialValue(DefaultSynchronizationInterval.ToString());
+            ExternalContentPolicy = ExternalContentPolicy.AlwaysAllow;
 
             Email.PropertyChanged += (sender, args) =>
             {
@@ -132,6 +145,7 @@ namespace Tuvi.App.ViewModels
 
             MessageFooter = account.MessageFooter;
             IsMessageFooterEnabled = account.IsMessageFooterEnabled;
+            ExternalContentPolicy = account.ExternalContentPolicy;
 
             Email.PropertyChanged += (sender, args) =>
             {
@@ -166,6 +180,7 @@ namespace Tuvi.App.ViewModels
             CurrentAccount.IsBackupAccountMessagesEnabled = IsBackupAccountMessagesEnabled;
             CurrentAccount.MessageFooter = MessageFooter;
             CurrentAccount.IsMessageFooterEnabled = IsMessageFooterEnabled;
+            CurrentAccount.ExternalContentPolicy = ExternalContentPolicy;
             CurrentAccount.SynchronizationInterval = int.TryParse(SynchronizationInterval.Value, out int interval)
                 ? interval
                 : DefaultSynchronizationInterval;
