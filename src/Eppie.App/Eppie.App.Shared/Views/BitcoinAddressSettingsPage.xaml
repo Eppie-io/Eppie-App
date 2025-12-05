@@ -84,6 +84,18 @@
                 </StackPanel>
             </controls:OptionControl>
 
+            <controls:OptionControl x:Uid="DerivationIndexOption"
+                                    GapHeight="{StaticResource NormalOptionGapHeight}"
+                                    Visibility="{x:Bind ViewModel.AddressSettingsModel.IsDerivationIndexVisible, Mode=OneWay}">
+                <StackPanel Orientation="Horizontal">
+                    <muxc:NumberBox IsEnabled="False"
+                                    Maximum="2147483647"
+                                    Minimum="0"
+                                    SpinButtonPlacementMode="Compact"
+                                    Value="{x:Bind ViewModel.AddressSettingsModel.DerivationIndex, Mode=OneWay}" />
+                </StackPanel>
+            </controls:OptionControl>
+
         </StackPanel>
     </controls:AddressSettingsView>
 </local:BitcoinAddressSettingsPageBase>

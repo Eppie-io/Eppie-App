@@ -1267,12 +1267,24 @@ Subject: {3}
     <comment>Note for the option with Ethereum keys. Ethereum is a brand that doesn't translate.</comment>
   </data>
   <data name="EppieAliasOption.Caption" xml:space="preserve">
-    <value>Alias (for Testnet)</value>
+    <value>Public name</value>
     <comment>Caption for the option with a decentralized address alias</comment>
   </data>
   <data name="EppieAliasOption.TextNote" xml:space="preserve">
-    <value>Claim an alias for your decentralized address to replace its long public key.</value>
+    <value>Claim a unique name linked to your decentralized address for simple sending and sharing.</value>
     <comment>Note for the option with a decentralized address alias</comment>
+  </data>
+  <data name="AliasTextBox.PlaceholderText" xml:space="preserve">
+    <value>Enter public name</value>
+    <comment>Placeholder text for the alias input box</comment>
+  </data>
+  <data name="FullAddressOption.Caption" xml:space="preserve">
+    <value>Decentralized address</value>
+    <comment>Caption for the option with full address based on public key</comment>
+  </data>
+  <data name="FullAddressOption.TextNote" xml:space="preserve">
+    <value>Your full address on the Eppie network.</value>
+    <comment>Note for the option with full address based on public key</comment>
   </data>
   <data name="ViewKeyHeader.Text" xml:space="preserve">
     <value>View your key</value>
@@ -1285,6 +1297,14 @@ Subject: {3}
   <data name="SynchronizationIntervalOption.Caption" xml:space="preserve">
     <value>Synchronization interval</value>
     <comment>Caption of input field to enter check messages interval value in minutes</comment>
+  </data>
+  <data name="DerivationIndexOption.Caption" xml:space="preserve">
+    <value>Key derivation index</value>
+    <comment>Caption for the option with key derivation index</comment>
+  </data>
+  <data name="DerivationIndexOption.TextNote" xml:space="preserve">
+    <value>The index used to derive this address from your master key.</value>
+    <comment>Note for the option with key derivation index</comment>
   </data>
   <data name="SynchronizationIntervalUnits.Text" xml:space="preserve">
     <value>minutes</value>

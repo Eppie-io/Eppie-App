@@ -7,6 +7,7 @@
                                     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
                                     xmlns:local="using:Tuvi.App.Shared.Views"
                                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                                    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
                                     xmlns:viewmodels="using:Tuvi.App.ViewModels"
                                     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
                                     mc:Ignorable="d">
@@ -17,7 +18,7 @@
         <x:Double x:Key="HugeOptionGapHeight">60</x:Double>
         <x:Double x:Key="NormalOptionGapHeight">36</x:Double>
 
-        <x:String x:Key="AliasPlaceholderText">name.test@eppie</x:String>
+        <x:String x:Key="AddressTemplateText">.test@eppie</x:String>
 
     </local:EppieAddressSettingsPageBase.Resources>
 
@@ -46,30 +47,29 @@
 
             <controls:OptionControl x:Uid="EppieAliasOption"
                                     GapHeight="{StaticResource HugeOptionGapHeight}"
-                                    Visibility="{x:Bind ViewModel.AddressSettingsModel.IsSenderNameVisible}">
+                                    Visibility="{x:Bind ViewModel.IsCreatingAccountMode, Mode=OneWay}">
                 <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
                     <controls:ErrorControl HorizontalAlignment="Left"
                                            VerticalAlignment="Top"
                                            Property="{x:Bind ViewModel.AddressSettingsModel.SenderName, Mode=OneWay}">
-                        <TextBox Width="{StaticResource TextBoxWidth}"
+                        <TextBox x:Uid="AliasTextBox"
+                                 Width="{StaticResource TextBoxWidth}"
                                  HorizontalAlignment="Left"
                                  VerticalAlignment="Top"
-                                 IsEnabled="{x:Bind ViewModel.IsClaimingName, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
                                  IsSpellCheckEnabled="False"
-                                 PlaceholderText="{StaticResource AliasPlaceholderText}"
                                  Text="{x:Bind ViewModel.AddressSettingsModel.SenderName.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </controls:ErrorControl>
-                    <Button x:Uid="VerifyButton"
-                            MinWidth="64"
-                            Margin="4,0,0,0"
-                            Command="{x:Bind ViewModel.ClaimNameCommand}"
-                            IsEnabled="{x:Bind ViewModel.IsClaimingName, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}" />
-                    <ProgressRing x:Name="ClaimingProgressRing"
-                                  Width="20"
-                                  Height="20"
-                                  Margin="8,0,0,0"
-                                  x:Load="{x:Bind ViewModel.IsClaimingName, Mode=OneWay}"
-                                  IsActive="True" />
+                    <TextBlock VerticalAlignment="Center" Text="{StaticResource AddressTemplateText}" />
+                </StackPanel>
+            </controls:OptionControl>
+
+            <controls:OptionControl x:Uid="FullAddressOption"
+                                    GapHeight="{StaticResource NormalOptionGapHeight}"
+                                    Visibility="{x:Bind ViewModel.AddressSettingsModel.IsSenderNameVisible}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock IsTextSelectionEnabled="True"
+                               Text="{x:Bind ViewModel.AddressSettingsModel.OriginalAddress, Mode=OneWay}"
+                               TextWrapping="Wrap" />
                 </StackPanel>
             </controls:OptionControl>
 
@@ -86,6 +86,18 @@
                     <TextBlock x:Uid="SynchronizationIntervalUnits"
                                Margin="12,0"
                                VerticalAlignment="Center" />
+                </StackPanel>
+            </controls:OptionControl>
+
+            <controls:OptionControl x:Uid="DerivationIndexOption"
+                                    GapHeight="{StaticResource NormalOptionGapHeight}"
+                                    Visibility="{x:Bind ViewModel.AddressSettingsModel.IsDerivationIndexVisible, Mode=OneWay}">
+                <StackPanel Orientation="Horizontal">
+                    <muxc:NumberBox IsEnabled="False"
+                                    Maximum="2147483647"
+                                    Minimum="0"
+                                    SpinButtonPlacementMode="Compact"
+                                    Value="{x:Bind ViewModel.AddressSettingsModel.DerivationIndex, Mode=OneWay}" />
                 </StackPanel>
             </controls:OptionControl>
 
