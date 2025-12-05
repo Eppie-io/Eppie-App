@@ -91,7 +91,7 @@
             <controls:OptionControl x:Uid="DerivationIndexOption"
                                     GapHeight="{StaticResource NormalOptionGapHeight}"
                                     Visibility="{x:Bind ViewModel.AddressSettingsModel.IsDerivationIndexVisible, Mode=OneWay}">
-                <StackPanel Orientation="Horizontal">
+                <StackPanel VerticalAlignment="Top" Orientation="Horizontal">
                     <muxc:NumberBox IsEnabled="False"
                                     Maximum="{StaticResource Int32MaxValue}"
                                     Minimum="0"
