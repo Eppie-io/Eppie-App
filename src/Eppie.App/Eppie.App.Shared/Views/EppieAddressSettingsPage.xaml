@@ -41,7 +41,7 @@
         <StackPanel>
 
             <controls:AddressHeaderControl x:Uid="AddressControl"
-                                           Address="{x:Bind ViewModel.AddressSettingsModel.Email.Value, Mode=OneWay}"
+                                           Address="{x:Bind ViewModel.AddressSettingsModel.DisplayAddress, Mode=OneWay}"
                                            HideWarning="False" />
 
             <controls:OptionControl x:Uid="EppieAliasOption"
@@ -67,7 +67,7 @@
                                     Visibility="{x:Bind ViewModel.AddressSettingsModel.IsSenderNameVisible}">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock IsTextSelectionEnabled="True"
-                               Text="{x:Bind ViewModel.AddressSettingsModel.OriginalAddress, Mode=OneWay}"
+                               Text="{x:Bind ViewModel.AddressSettingsModel.Email.Value, Mode=OneWay}"
                                TextWrapping="Wrap" />
                 </StackPanel>
             </controls:OptionControl>
