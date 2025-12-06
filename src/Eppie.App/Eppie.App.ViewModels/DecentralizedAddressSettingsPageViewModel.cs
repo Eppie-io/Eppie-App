@@ -73,12 +73,7 @@ namespace Tuvi.App.ViewModels
             set => SetProperty(ref _claimedName, value);
         }
 
-        private string _originalAddress;
-        public string OriginalAddress
-        {
-            get => _originalAddress;
-            private set => SetProperty(ref _originalAddress, value);
-        }
+        public string DisplayAddress => CurrentAccount?.Email?.DisplayAddress;
 
         protected DecentralizedAddressSettingsModel(Account account) : base(account)
         {
@@ -91,40 +86,13 @@ namespace Tuvi.App.ViewModels
 
             CurrentAccount = account;
 
-            Email.Value = account.Email.DisplayAddress;
+            Email.Value = account.Email.Address;
             SenderName.Value = account.Email.Name;
             ClaimedName = account.Email.Name;
 
             if (account.DecentralizedAccountIndex >= 0)
             {
                 _derivationIndex = account.DecentralizedAccountIndex;
-            }
-        }
-
-        public async Task InitializeOriginalAddressAsync(Func<Tuvi.Core.ITuviMail> coreProvider)
-        {
-            if (CurrentAccount?.Email is null)
-            {
-                return;
-            }
-
-            if (coreProvider is null)
-            {
-                return;
-            }
-
-            var core = coreProvider();
-            if (core is null)
-            {
-                return;
-            }
-
-            var publicKey = await core.GetSecurityManager().GetEmailPublicKeyStringAsync(CurrentAccount.Email).ConfigureAwait(true);
-            if (!string.IsNullOrEmpty(publicKey))
-            {
-                // Recreate the address from the public key to get the true original address
-                var originalEmail = EmailAddress.CreateDecentralizedAddress(_selectedNetwork, publicKey);
-                OriginalAddress = originalEmail.Address;
             }
         }
 
@@ -214,8 +182,6 @@ namespace Tuvi.App.ViewModels
                     var account = await CreateDecentralizedAccountAsync(NetworkType.Eppie, CancellationToken.None).ConfigureAwait(true);
                     AddressSettingsModel = DecentralizedAddressSettingsModel.Create(account);
                 }
-
-                await AddressSettingsModel.InitializeOriginalAddressAsync(() => Core).ConfigureAwait(true);
             }
             catch (Exception e)
             {
@@ -319,8 +285,6 @@ namespace Tuvi.App.ViewModels
             normalized += ".test";
 
             AddressSettingsModel.ClaimedName = normalized;
-            AddressSettingsModel.SenderName.Value = normalized;
-            AddressSettingsModel.Email.Value = EmailAddress.CreateDecentralizedAddress(account.Email.Network, normalized).DisplayAddress;
         }
 
         private static bool ValidateName(string name, out string normalized, out string errorKey)

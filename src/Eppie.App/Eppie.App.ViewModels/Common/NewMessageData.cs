@@ -197,7 +197,7 @@ namespace Tuvi.App.ViewModels.Common
             {
                 CreateToAdress(messageInfo)
             };
-            toEmails.AddRange(messageInfo.MessageData.To.Where(email => !messageInfo.Email.HasSameAddress(email)).Select(email => email.Address));
+            toEmails.AddRange(messageInfo.MessageData.To.Where(email => !HasSameAddress(messageInfo, email)).Select(email => email.Address));
 
             var to = string.Join(", ", toEmails.Distinct()).Trim();
 
@@ -207,7 +207,7 @@ namespace Tuvi.App.ViewModels.Common
         private static string CreateCopyAdresses(MessageInfo messageInfo)
         {
             var ccEmails = new List<string>();
-            ccEmails.AddRange(messageInfo.MessageData.Cc.Where(email => !messageInfo.Email.HasSameAddress(email)).Select(email => email.Address));
+            ccEmails.AddRange(messageInfo.MessageData.Cc.Where(email => !HasSameAddress(messageInfo, email)).Select(email => email.Address));
 
             var copy = string.Join(", ", ccEmails.Distinct());
 
@@ -217,6 +217,10 @@ namespace Tuvi.App.ViewModels.Common
         private static string CreateSubject(MessageInfo messageInfo)
         {
             return CreateReSubject(messageInfo);
+        }
+        private static bool HasSameAddress(MessageInfo messageInfo, EmailAddress email)
+        {
+            return messageInfo.Email.HasSameAddress(email) || email.HasSameAddress(messageInfo.Email.DisplayAddress);
         }
     }
 

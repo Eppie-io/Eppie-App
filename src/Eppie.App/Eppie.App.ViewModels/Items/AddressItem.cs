@@ -25,7 +25,7 @@ namespace Tuvi.App.ViewModels
     {
         internal Account Account { get; }
 
-        public string Address => Account?.Email?.Address;
+        public string Address => Account?.Email?.DisplayAddress;
         public string DisplayName => GetDisplayName(Account?.Email);
 
         public ImageInfo AvatarInfo { get; internal set; }
