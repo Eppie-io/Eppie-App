@@ -45,6 +45,7 @@
     },
     {
         "keywords": [
+            "macos",
             "x64-v13"
         ],
         "os": "self-hosted-macos-13",
