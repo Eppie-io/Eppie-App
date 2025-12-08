@@ -30,6 +30,7 @@ on: # yamllint disable-line rule:truthy
           - all
           - arm64
           - x64
+          - x64-v13
       dotnet-verbosity:
         type: choice
         default: minimal
@@ -92,6 +93,15 @@ jobs:
         if: ${{ runner.os == 'Windows'}}
         run: git config --system core.longpaths true
 
+      - name: Clean Workspace
+        if: ${{ matrix.os == 'self-hosted-macos-13' }}
+        shell: bash
+        run: |
+          echo $( security delete-keychain publish.keychain )
+          ls -al ${{ github.workspace }}
+          find ${{ github.workspace }} -mindepth 1 -maxdepth 1 -exec sudo rm -rf {} +
+          ls -al ${{ github.workspace }}
+
       - name: Checkout
         uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
         with:
@@ -116,7 +126,6 @@ jobs:
           security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "${{ secrets.KEYCHAIN_PASSWORD }}" publish.keychain
   
           xcrun notarytool store-credentials "NOTARYTOOL_PROFILE" --apple-id "${{ secrets.APPLE_ID }}" --team-id ${{ secrets.TEAM_ID }} --password "${{ secrets.NOTARYTOOL_SPECIFIC_PASSWORD }}"
-
 
       - name: Assign version
         id: assign-version
@@ -186,7 +195,7 @@ jobs:
           publish_path='${{ env.publish-path }}'
           extra_options='${{ matrix.publish.extra }}'
 
-          options="--output=$publish_path --configuration=$configuration --framework=$framework --runtime=$runtime -property:CodesignKey=\"${{ secrets.DEVELOPER_ID_APPLICATION }}\""
+          options="--output=$publish_path --configuration=$configuration --framework=$framework --runtime=$runtime --property:CodesignKey=\"${{ secrets.DEVELOPER_ID_APPLICATION }}\""
           version_options="--property:Version=\"$semantic_version\" --property:AssemblyVersion=\"$numeric_version\" --property:PackageVersion=\"$numeric_version\" --property:ApplicationVersion=\"$app_version\" --property:ApplicationDisplayVersion=\"$app_display_version\""
           verbosity_option="--verbosity=${{ inputs.dotnet-verbosity }}"
           echo "$options $extra_options $version_options $verbosity_option" | xargs dotnet publish $project 

@@ -42,5 +42,25 @@
         "artifact": {
             "tool": "cp"
         }
+    },
+    {
+        "keywords": [
+            "x64-v13"
+        ],
+        "os": "self-hosted-macos-13",
+        "publish": {
+            "tool": "dotnet",
+            "project": "./src/Eppie.App/Eppie.App/Eppie.App.csproj",
+            "configuration": "release",
+            "framework": "net9.0-desktop",
+            "runtime": "osx-x64",
+            "extra": "--property:SelfContained=true --property:PackageFormat=app --property:UnoMacOSIncludeDebugSymbols=false --property:OverrideTargetFrameworks=net9.0-desktop",
+            "prepare": [
+                "--target:PackageVersioning --no-restore"
+            ]
+        },
+        "artifact": {
+            "tool": "cp"
+        }
     }
 ]
