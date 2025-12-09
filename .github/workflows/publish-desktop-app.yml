@@ -19,6 +19,12 @@
 ---
 
 name: Publish Desktop [app]
+run-name: >-
+   ${{ 
+       github.event.inputs.architecture == 'all' && 'Publish Desktop [app]' ||
+       github.event.inputs.architecture == 'x64-v13' && 'Publish Desktop [app] (macOS v13)' ||
+       format('Publish Desktop [app] ({0})', github.event.inputs.architecture) || ''
+    }}
 
 on: # yamllint disable-line rule:truthy
   workflow_dispatch:
