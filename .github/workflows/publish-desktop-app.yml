@@ -222,11 +222,13 @@ jobs:
           xcrun stapler staple "$app_path"
 
       - name: Prepare Artifacts
+        id: prepare-artifacts
         shell: bash
         run: |
           artifact_path="${{ env.artifacts-path }}"
           publish_path="${{ env.publish-path }}"
           tool='${{ matrix.artifact.tool }}'
+          arch="${{ inputs.architecture }}"
 
           mkdir -p "$artifact_path"
 
@@ -236,8 +238,13 @@ jobs:
             echo "::warning::Unknown artifact tool: '$tool'"
           fi
 
+          postfix_name=$([ "$arch" = "x64-v13" ] && echo "_macos13" || echo "")
+
+          artifact_name="Eppie.Desktop-${{ matrix.publish.runtime }}$postfix_name [${{ steps.assign-version.outputs.artifact-version }}]"
+          echo "artifact-name=$artifact_name" >> $GITHUB_OUTPUT
+
       - name: Upload Artifacts
         uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
         with:
-          name: Eppie.Desktop-${{ matrix.publish.runtime }} [${{ steps.assign-version.outputs.artifact-version }}]
+          name: ${{ steps.prepare-artifacts.outputs.artifact-name }}
           path: ${{ env.artifacts-path }}
