@@ -97,7 +97,9 @@ jobs:
         if: ${{ matrix.os == 'self-hosted-macos-13' }}
         shell: bash
         run: |
+          # delete publish keychain if it exists
           echo $( security delete-keychain publish.keychain )
+
           ls -al ${{ github.workspace }}
           find ${{ github.workspace }} -mindepth 1 -maxdepth 1 -exec sudo rm -rf {} +
           ls -al ${{ github.workspace }}
@@ -116,7 +118,12 @@ jobs:
 
       - name: Import certificate
         run: |
+          # create publish keychain
           security create-keychain -p "${{ secrets.KEYCHAIN_PASSWORD }}" publish.keychain
+          
+          # append publish keychain to the user domain
+          security list-keychains -d user -s login.keychain $(security list-keychains -d user | sed s/\"//g)
+
           security default-keychain -s publish.keychain
           security unlock-keychain -p "${{ secrets.KEYCHAIN_PASSWORD }}" publish.keychain
 
