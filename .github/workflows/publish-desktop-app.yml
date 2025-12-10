@@ -19,6 +19,12 @@
 ---
 
 name: Publish Desktop [app]
+run-name: >-
+   ${{ 
+       github.event.inputs.architecture == 'all' && 'Publish Desktop [app]' ||
+       github.event.inputs.architecture == 'x64-v13' && 'Publish Desktop [app] (macOS v13)' ||
+       format('Publish Desktop [app] ({0})', github.event.inputs.architecture) || ''
+    }}
 
 on: # yamllint disable-line rule:truthy
   workflow_dispatch:
@@ -30,6 +36,7 @@ on: # yamllint disable-line rule:truthy
           - all
           - arm64
           - x64
+          - x64-v13
       dotnet-verbosity:
         type: choice
         default: minimal
@@ -86,11 +93,23 @@ jobs:
     env:
       publish-path: './.publish/${{ matrix.publish.configuration }}/${{ matrix.publish.framework }}/${{ matrix.publish.runtime }}'
       artifacts-path: './.artifacts/${{ matrix.publish.configuration }}/${{ matrix.publish.framework }}/${{ matrix.publish.runtime }}'
+      publish-keychain: 'publish.keychain'
 
     steps:
       - name: Support longpaths
         if: ${{ runner.os == 'Windows'}}
         run: git config --system core.longpaths true
+
+      - name: Clean Workspace
+        if: ${{ matrix.os == 'self-hosted-macos-13' }}
+        shell: bash
+        run: |
+          # delete publish keychain if it exists
+          echo $( security delete-keychain ${{ env.publish-keychain }} )
+
+          ls -al ${{ github.workspace }}
+          find ${{ github.workspace }} -mindepth 1 -maxdepth 1 -exec sudo rm -rf {} +
+          ls -al ${{ github.workspace }}
 
       - name: Checkout
         uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
@@ -106,17 +125,21 @@ jobs:
 
       - name: Import certificate
         run: |
-          security create-keychain -p "${{ secrets.KEYCHAIN_PASSWORD }}" publish.keychain
-          security default-keychain -s publish.keychain
-          security unlock-keychain -p "${{ secrets.KEYCHAIN_PASSWORD }}" publish.keychain
+          # create publish keychain
+          security create-keychain -p "${{ secrets.KEYCHAIN_PASSWORD }}" ${{ env.publish-keychain }}
+          
+          # append publish keychain to the user domain
+          security list-keychains -d user -s ${{ env.publish-keychain }} $(security list-keychains -d user | sed s/\"//g)
+
+          security default-keychain -s ${{ env.publish-keychain }}
+          security unlock-keychain -p "${{ secrets.KEYCHAIN_PASSWORD }}" ${{ env.publish-keychain }}
 
           echo "${{ secrets.MACOS_CERTIFICATE }}" | base64 --decode > certificate.p12
-          security import certificate.p12 -k publish.keychain -P "${{ secrets.MACOS_CERTIFICATE_PASSWORD }}" -T /usr/bin/codesign
+          security import certificate.p12 -k ${{ env.publish-keychain }} -P "${{ secrets.MACOS_CERTIFICATE_PASSWORD }}" -T /usr/bin/codesign
 
-          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "${{ secrets.KEYCHAIN_PASSWORD }}" publish.keychain
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "${{ secrets.KEYCHAIN_PASSWORD }}" ${{ env.publish-keychain }}
   
           xcrun notarytool store-credentials "NOTARYTOOL_PROFILE" --apple-id "${{ secrets.APPLE_ID }}" --team-id ${{ secrets.TEAM_ID }} --password "${{ secrets.NOTARYTOOL_SPECIFIC_PASSWORD }}"
-
 
       - name: Assign version
         id: assign-version
@@ -186,7 +209,7 @@ jobs:
           publish_path='${{ env.publish-path }}'
           extra_options='${{ matrix.publish.extra }}'
 
-          options="--output=$publish_path --configuration=$configuration --framework=$framework --runtime=$runtime -property:CodesignKey=\"${{ secrets.DEVELOPER_ID_APPLICATION }}\""
+          options="--output=$publish_path --configuration=$configuration --framework=$framework --runtime=$runtime --property:CodesignKey=\"${{ secrets.DEVELOPER_ID_APPLICATION }}\""
           version_options="--property:Version=\"$semantic_version\" --property:AssemblyVersion=\"$numeric_version\" --property:PackageVersion=\"$numeric_version\" --property:ApplicationVersion=\"$app_version\" --property:ApplicationDisplayVersion=\"$app_display_version\""
           verbosity_option="--verbosity=${{ inputs.dotnet-verbosity }}"
           echo "$options $extra_options $version_options $verbosity_option" | xargs dotnet publish $project 
@@ -205,11 +228,13 @@ jobs:
           xcrun stapler staple "$app_path"
 
       - name: Prepare Artifacts
+        id: prepare-artifacts
         shell: bash
         run: |
           artifact_path="${{ env.artifacts-path }}"
           publish_path="${{ env.publish-path }}"
           tool='${{ matrix.artifact.tool }}'
+          arch="${{ inputs.architecture }}"
 
           mkdir -p "$artifact_path"
 
@@ -219,8 +244,13 @@ jobs:
             echo "::warning::Unknown artifact tool: '$tool'"
           fi
 
+          postfix_name=$([ "$arch" = "x64-v13" ] && echo "_macos13" || echo "")
+
+          artifact_name="Eppie.Desktop-${{ matrix.publish.runtime }}$postfix_name [${{ steps.assign-version.outputs.artifact-version }}]"
+          echo "artifact-name=$artifact_name" >> $GITHUB_OUTPUT
+
       - name: Upload Artifacts
         uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
         with:
-          name: Eppie.Desktop-${{ matrix.publish.runtime }} [${{ steps.assign-version.outputs.artifact-version }}]
+          name: ${{ steps.prepare-artifacts.outputs.artifact-name }}
           path: ${{ env.artifacts-path }}
