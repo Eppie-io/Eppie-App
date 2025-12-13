@@ -53,15 +53,22 @@ namespace Eppie.App.Shared.Services
 
         public async Task<bool> RequestReviewAsync()
         {
-            var context = GetStoreContext();
-            if (context is null)
+            try
             {
-                throw new NotImplementedException("Rate and review is not implemented for this platform.");
+                var context = GetStoreContext();
+                var result = await context.RequestRateAndReviewAppAsync();
+
+                if (result.Status == StoreRateAndReviewStatus.Error || result.Status == StoreRateAndReviewStatus.NetworkError)
+                {
+                    throw new NotImplementedException("Requesting a review is not implemented for this platform.");
+                }
+
+                return result.Status == StoreRateAndReviewStatus.Succeeded;
             }
-
-            var result = await context.RequestRateAndReviewAppAsync();
-
-            return result.Status == StoreRateAndReviewStatus.Succeeded;
+            catch (Exception)
+            {
+                throw new NotImplementedException("Requesting a review is not implemented for this platform.");
+            }
         }
 
         private StoreContext _StoreContext = null;

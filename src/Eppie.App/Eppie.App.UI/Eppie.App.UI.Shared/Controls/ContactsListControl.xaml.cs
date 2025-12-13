@@ -50,47 +50,18 @@ namespace Tuvi.App.Shared.Controls
         {
             if (sender is FrameworkElement frameworkElement && frameworkElement.Tag is ContactItem contactItem)
             {
-                var dialog = new ContentDialog
-                {
-                    Title = StringProvider.GetString("RenameContactDialogTitle"),
-                    PrimaryButtonText = StringProvider.GetString("RenameContactDialogPrimaryButtonText"),
-                    CloseButtonText = StringProvider.GetString("RenameContactDialogCloseButtonText"),
-                    XamlRoot = this.XamlRoot
-                };
-
-                var stackPanel = new StackPanel { Spacing = 8 };
-                var textBox = new TextBox { Header = StringProvider.GetString("RenameContactDialogTextBoxHeader"), Text = contactItem.DisplayName, AcceptsReturn = false };
-                textBox.SelectAll();
-
-                stackPanel.Children.Add(textBox);
-                dialog.Content = stackPanel;
-
-                textBox.KeyDown += (s, e) =>
-                {
-                    if (e.Key == Windows.System.VirtualKey.Enter)
-                    {
-                        dialog.Hide();
-
-                        RenameCommand(contactItem, textBox);
-                    }
-                    else if (e.Key == Windows.System.VirtualKey.Escape)
-                    {
-                        dialog.Hide();
-                    }
-                };
-
-                dialog.PrimaryButtonClick += (s, e) =>
-                {
-                    RenameCommand(contactItem, textBox);
-                };
-
-                _ = dialog.ShowAsync();
-            }
-
-            void RenameCommand(ContactItem contact, TextBox textBox)
-            {
-                contact.FullName = textBox.Text;
-                ContactsModel?.RenameContactCommand?.Execute(contact);
+                _ = Common.UITools.ShowRenameContactDialogAsync(
+                        StringProvider.GetString("RenameContactDialogTitle"),
+                        StringProvider.GetString("RenameContactDialogPrimaryButtonText"),
+                        StringProvider.GetString("RenameContactDialogCloseButtonText"),
+                        StringProvider.GetString("RenameContactDialogTextBoxHeader"),
+                        contactItem.DisplayName,
+                        this.XamlRoot,
+                        (newName) =>
+                        {
+                            contactItem.FullName = newName;
+                            ContactsModel?.RenameContactCommand?.Execute(contactItem);
+                        });
             }
         }
 

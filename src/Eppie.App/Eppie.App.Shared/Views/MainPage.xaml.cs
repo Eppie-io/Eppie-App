@@ -323,10 +323,7 @@ namespace Tuvi.App.Shared.Views
 
         public override void HandleBack()
         {
-            if (splitView.IsPaneOpen)
-            {
-                ClosePane();
-            }
+            // Do nothing, disable back navigation on main page
         }
 
     }

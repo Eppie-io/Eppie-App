@@ -43,7 +43,7 @@ namespace Tuvi.App.Shared.Authorization
 
             using (var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, dialogCts.Token))
             {
-                ContentDialog dialog = null;
+                Action closeAction = null;
                 try
                 {
                     var app = Application.Current as Eppie.App.Shared.App;
@@ -51,17 +51,13 @@ namespace Tuvi.App.Shared.Authorization
 
                     var loader = Eppie.App.UI.Resources.StringProvider.GetInstance();
 
-                    dialog = new ContentDialog
-                    {
-                        Title = loader.GetString("AuthenticationTitle"),
-                        Content = loader.GetString("AuthenticationContenet"),
-                        CloseButtonText = loader.GetString("MessageButtonCancel"),
-                        XamlRoot = xamlRoot
-                    };
-
-                    dialog.CloseButtonClick += (s, e) => dialogCts.Cancel();
-
-                    var _ = dialog.ShowAsync();
+                    closeAction = await Common.UITools.ShowAuthenticationDialogAsync(
+                        loader.GetString("AuthenticationTitle"),
+                        loader.GetString("AuthenticationContenet"),
+                        loader.GetString("MessageButtonCancel"),
+                        xamlRoot,
+                        () => dialogCts.Cancel()
+                    ).ConfigureAwait(true);
 
                     var result = await Broker.AuthenticateAsync(requestUri, callbackUri, linkedCts.Token).ConfigureAwait(true);
 
@@ -69,10 +65,7 @@ namespace Tuvi.App.Shared.Authorization
                 }
                 finally
                 {
-                    if (dialog != null)
-                    {
-                        dialog.Hide();
-                    }
+                    closeAction?.Invoke();
                     dialogCts.Dispose();
                 }
             }

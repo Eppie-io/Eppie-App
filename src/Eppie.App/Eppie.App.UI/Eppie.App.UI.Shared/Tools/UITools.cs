@@ -103,7 +103,8 @@ namespace Tuvi.App.Shared.Common
                         {
                             Margin = new Thickness(0, 0, 20, 0),
                             TextWrapping = TextWrapping.WrapWholeWords,
-                            Text = message
+                            Text = message,
+                            IsTextSelectionEnabled = true
                         }
                     },
                     Title = title,
@@ -185,6 +186,111 @@ namespace Tuvi.App.Shared.Common
 
                 supportDevelopment.CloseRequested += (s, e) => dialog.Hide();
                 dialog.Content = supportDevelopment;
+
+                await dialog.ShowAsync();
+            }
+            finally
+            {
+                _mutex.Release();
+            }
+        }
+
+        public static async Task<Action> ShowAuthenticationDialogAsync(string title, string content, string closeButtonText, XamlRoot root, Action onClose = null)
+        {
+            if (title is null)
+            {
+                throw new ArgumentNullException(nameof(title));
+            }
+
+            if (content is null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
+
+            await _mutex.WaitAsync().ConfigureAwait(true);
+
+            var dialog = new ContentDialog()
+            {
+                Title = title,
+                Content = content,
+                CloseButtonText = closeButtonText,
+                XamlRoot = root
+            };
+
+            if (onClose != null)
+            {
+                dialog.CloseButtonClick += (s, e) => onClose();
+            }
+
+            try
+            {
+                _ = dialog.ShowAsync();
+
+                Action close = () =>
+                {
+                    dialog.Hide();
+                    _mutex.Release();
+                };
+
+                dialog.Closed += (s, e) => close();
+
+                return close;
+            }
+            catch
+            {
+                _mutex.Release();
+                throw;
+            }
+        }
+
+        public static async Task ShowRenameContactDialogAsync(
+             string title,
+             string primaryButtonText,
+             string closeButtonText,
+             string textBoxHeader,
+             string initialText,
+             XamlRoot root,
+             Action<string> onRename)
+        {
+            if (onRename is null)
+            {
+                throw new ArgumentNullException(nameof(onRename));
+            }
+
+            await _mutex.WaitAsync().ConfigureAwait(true);
+            try
+            {
+                var dialog = new ContentDialog()
+                {
+                    Title = title,
+                    PrimaryButtonText = primaryButtonText,
+                    CloseButtonText = closeButtonText,
+                    XamlRoot = root
+                };
+
+                var stackPanel = new StackPanel { Spacing = 8 };
+                var textBox = new TextBox { Header = textBoxHeader, Text = initialText ?? string.Empty, AcceptsReturn = false };
+                textBox.SelectAll();
+                stackPanel.Children.Add(textBox);
+                dialog.Content = stackPanel;
+
+                textBox.KeyDown += (s, e) =>
+                {
+                    if (e.Key == Windows.System.VirtualKey.Enter)
+                    {
+                        onRename(textBox.Text);
+                        dialog.Hide();
+                    }
+                    else if (e.Key == Windows.System.VirtualKey.Escape)
+                    {
+                        dialog.Hide();
+                    }
+                };
+
+                dialog.PrimaryButtonClick += (s, e) =>
+                {
+                    onRename(textBox.Text);
+                };
 
                 await dialog.ShowAsync();
             }

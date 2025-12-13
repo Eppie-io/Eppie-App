@@ -24,7 +24,6 @@ using System.Threading.Tasks;
 using Finebits.Authorization.OAuth2.Abstractions;
 using Finebits.Authorization.OAuth2.Types;
 using Windows.System;
-using Windows.UI.Xaml.Controls;
 
 namespace Tuvi.App.Shared.Authorization
 {
@@ -49,23 +48,20 @@ namespace Tuvi.App.Shared.Authorization
 
             using (var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, dialogCts.Token))
             {
-                ContentDialog dialog = null;
+                Action closeAction = null;
                 try
                 {
                     _authCompletionSource = new TaskCompletionSource<AuthenticationResult>();
 
                     var loader = Eppie.App.UI.Resources.StringProvider.GetInstance();
 
-                    dialog = new ContentDialog
-                    {
-                        Title = loader.GetString("AuthenticationTitle"),
-                        Content = loader.GetString("AuthenticationContenet"),
-                        CloseButtonText = loader.GetString("MessageButtonCancel"),
-                    };
-
-                    dialog.CloseButtonClick += (s, e) => dialogCts.Cancel();
-
-                    var _ = dialog.ShowAsync();
+                    closeAction = await Common.UITools.ShowAuthenticationDialogAsync(
+                        loader.GetString("AuthenticationTitle"),
+                        loader.GetString("AuthenticationContenet"),
+                        loader.GetString("MessageButtonCancel"),
+                        null,
+                        () => dialogCts.Cancel()
+                    ).ConfigureAwait(true);
 
                     bool launched = await Launcher.LaunchUriAsync(requestUri);
 
@@ -86,10 +82,7 @@ namespace Tuvi.App.Shared.Authorization
                 }
                 finally
                 {
-                    if (dialog != null)
-                    {
-                        dialog.Hide();
-                    }
+                    closeAction?.Invoke();
                     dialogCts.Dispose();
                     _authCompletionSource = null;
                 }
