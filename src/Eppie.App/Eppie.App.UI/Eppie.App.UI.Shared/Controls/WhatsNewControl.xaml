@@ -110,7 +110,8 @@
                     <TextBlock Text="We’ve redesigned and reorganized the settings to make them clearer and easier to navigate. You’ll also find new options in address settings and main app preferences." TextWrapping="Wrap" />
                 </StackPanel>
 
-                <local:SupportDevelopmentControl Margin="-3,0,0,0"
+                <local:SupportDevelopmentControl Margin="0"
+                                                 HorizontalAlignment="Left"
                                                  IsIconVisible="False"
                                                  IsStorePaymentProcessor="{x:Bind IsStorePaymentProcessor, Mode=OneWay}"
                                                  Price="{x:Bind Price, Mode=OneWay}"
