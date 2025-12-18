@@ -42,7 +42,7 @@
                       ItemsSource="{x:Bind ContactsModel.Contacts.SortingVariants, Mode=OneWay}"
                       SelectedIndex="{x:Bind ContactsModel.Contacts.SelectedSortingIndex, Mode=TwoWay}" />
 
-            <AutoSuggestBox x:Uid="/Eppie.App.UI/Controls/ContactFilter"
+            <AutoSuggestBox x:Uid="ContactFilter"
                             Grid.Row="1"
                             Margin="4,4,0,0"
                             QueryIcon="Find"

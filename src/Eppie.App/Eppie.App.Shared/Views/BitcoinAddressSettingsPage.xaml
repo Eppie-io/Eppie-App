@@ -96,7 +96,7 @@
                 </StackPanel>
             </controls:OptionControl>
 
-            <controls:OptionControl x:Uid="/Eppie.App.UI/Controls/ExternalContentOption" GapHeight="{StaticResource NormalOptionGapHeight}">
+            <controls:OptionControl x:Uid="ExternalContentOption" GapHeight="{StaticResource NormalOptionGapHeight}">
                 <ComboBox HorizontalAlignment="Left"
                           ItemsSource="{x:Bind ViewModel.ExternalContentPolicyValues, Mode=OneTime}"
                           SelectedItem="{x:Bind ViewModel.AddressSettingsModel.ExternalContentPolicy, Mode=TwoWay}">
