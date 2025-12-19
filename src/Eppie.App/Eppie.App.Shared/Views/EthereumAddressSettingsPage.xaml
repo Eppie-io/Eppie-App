@@ -21,7 +21,7 @@
     </local:EthereumAddressSettingsPageBase.DataContext>
 
     <interactivity:Interaction.Behaviors>
-        <behaviors:DialogBehavior ApplyCommand="{x:Bind ViewModel.ApplySettingsCommand}"
+        <behaviors:DialogBehavior ApplyCommand="{x:Bind ViewModel.JoinWaitingListCommand}"
                                   CancelCommand="{x:Bind ViewModel.CancelSettingsCommand}"
                                   HandleErrorCommand="{x:Bind ViewModel.HandleErrorCommand}" />
     </interactivity:Interaction.Behaviors>
