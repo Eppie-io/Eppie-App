@@ -3,7 +3,9 @@
                                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                                       xmlns:behaviors="using:Eppie.App.UI.Behaviors"
                                       xmlns:controls="using:Tuvi.App.Shared.Controls"
+                                      xmlns:converters="using:Tuvi.App.Converters"
                                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                                      xmlns:extensions="using:Tuvi.App.Shared.Extensions"
                                       xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
                                       xmlns:local="using:Tuvi.App.Shared.Views"
                                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -38,6 +40,23 @@
             <controls:AddressHeaderControl x:Uid="AddressControl"
                                            Address="{x:Bind ViewModel.AddressSettingsModel.Email.Value, Mode=OneWay}"
                                            HideWarning="False" />
+
+            <controls:OptionControl x:Uid="ActivateBitcoinAddressOption"
+                                    GapHeight="{StaticResource NormalOptionGapHeight}"
+                                    Visibility="{x:Bind ViewModel.IsCreatingAccountMode, Mode=OneWay}">
+                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                    <HyperlinkButton x:Uid="GetTestnetBtcLink"
+                                     Margin="12,0,0,0"
+                                     extensions:HyperlinkExtension.Link="{StaticResource BitcoinFaucetLink}" />
+                    <Button x:Uid="ActivateAddressButton"
+                            Command="{x:Bind ViewModel.ActivateAddressCommand}"
+                            IsEnabled="{x:Bind ViewModel.IsActivationEnabled, Mode=OneWay}" />
+                    <TextBlock Margin="12,0,0,0"
+                               VerticalAlignment="Center"
+                               Style="{x:Bind ViewModel.IsActivationError, Mode=OneWay, Converter={StaticResource ActivationErrorToStyle}}"
+                               Text="{x:Bind ViewModel.ActivationStatus, Mode=OneWay}" />
+                </StackPanel>
+            </controls:OptionControl>
 
             <controls:OptionControl x:Uid="BitcoinKeyOption" GapHeight="{StaticResource NormalOptionGapHeight}">
                 <muxc:Expander HorizontalAlignment="Stretch"
