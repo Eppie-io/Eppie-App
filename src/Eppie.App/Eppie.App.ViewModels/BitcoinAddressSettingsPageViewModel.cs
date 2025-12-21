@@ -54,12 +54,27 @@ namespace Tuvi.App.ViewModels
             private set => SetProperty(ref _isActivationError, value);
         }
 
-        public bool IsActivationCompleted { get; private set; }
+        private bool _isActivationSubmitted;
+        public bool IsActivationSubmitted
+        {
+            get => _isActivationSubmitted;
+            private set
+            {
+                SetProperty(ref _isActivationSubmitted, value);
+                ValidateActivationProperty();
+            }
+        }
+
+        private bool _isActivationStatusVisible;
+        public bool IsActivationStatusVisible
+        {
+            get => _isActivationStatusVisible;
+            private set => SetProperty(ref _isActivationStatusVisible, value);
+        }
 
         private CancellationTokenSource _activationCts;
 
         private const int ActivationPollIntervalMs = 15_000;
-        private const int ActivationMaxAttempts = 40;
 
         [CustomValidation(typeof(BitcoinAddressSettingsPageViewModel), nameof(ValidateActivation))]
         public object ActivationValidation => null;
@@ -81,22 +96,21 @@ namespace Tuvi.App.ViewModels
                     }
 
                     IsCreatingAccountMode = false;
-                    IsActivationCompleted = true;
+                    IsActivationStatusVisible = true;
                     AddressSettingsModel = DecentralizedAddressSettingsModel.Create(existing);
                     AddressSettingsModel.SecretKeyWIF = await Core.GetSecurityManager().GetSecretKeyWIFAsync(existing, CancellationToken.None).ConfigureAwait(true);
+
+                    SetActivationStatus("ActivationSent");
+                    _ = MonitoringPublicKeyAsync();
                 }
                 else
                 {
-                    ValidateActivationProperty();
-
                     IsCreatingAccountMode = true;
-                    IsActivationCompleted = false;
+                    IsActivationSubmitted = false;
                     var account = await CreateDecentralizedAccountAsync(NetworkType.Bitcoin, CancellationToken.None).ConfigureAwait(true);
                     AddressSettingsModel = DecentralizedAddressSettingsModel.Create(account);
                     AddressSettingsModel.SecretKeyWIF = await Core.GetSecurityManager().GetSecretKeyWIFAsync(account, CancellationToken.None).ConfigureAwait(true);
                 }
-
-                await UpdateActivationValidationAsync(CancellationToken.None).ConfigureAwait(true);
             }
             catch (Exception e)
             {
@@ -116,39 +130,6 @@ namespace Tuvi.App.ViewModels
             ApplySettingsCommand.NotifyCanExecuteChanged();
         }
 
-        private async Task UpdateActivationValidationAsync(CancellationToken cancellationToken)
-        {
-            try
-            {
-                if (AddressSettingsModel is null)
-                {
-                    IsActivationCompleted = false;
-                    return;
-                }
-
-                var account = AddressSettingsModel.ToAccount();
-                var email = account?.Email;
-                string pubKey = null;
-                if (email != null)
-                {
-                    pubKey = await Core.GetSecurityManager().GetEmailPublicKeyStringAsync(email, cancellationToken).ConfigureAwait(true);
-                }
-
-                if (!string.IsNullOrEmpty(pubKey))
-                {
-                    IsActivationCompleted = true;
-                    IsActivationEnabled = false;
-                    SetActivationStatus("ActivationCompleted");
-                }
-            }
-            catch
-            {
-                IsActivationCompleted = false;
-            }
-
-            ValidateActivationProperty();
-        }
-
         public static ValidationResult ValidateActivation(object _, ValidationContext context)
         {
             var vm = context?.ObjectInstance as BitcoinAddressSettingsPageViewModel;
@@ -162,7 +143,7 @@ namespace Tuvi.App.ViewModels
                 return ValidationResult.Success;
             }
 
-            if (!vm.IsActivationCompleted)
+            if (!vm.IsActivationSubmitted)
             {
                 var error = vm.GetLocalizedString("ActivationRequired");
                 return new ValidationResult(error);
@@ -201,7 +182,8 @@ namespace Tuvi.App.ViewModels
         private void EndActivation()
         {
             IsWaitingResponse = false;
-            IsActivationEnabled = true;
+            IsActivationEnabled = !IsActivationSubmitted;
+
             ActivateAddressCommand.NotifyCanExecuteChanged();
         }
 
@@ -242,25 +224,10 @@ namespace Tuvi.App.ViewModels
 
                 var account = AddressSettingsModel.ToAccount();
 
-                SetActivationStatus("ActivationInProgress");
                 await Core.GetSecurityManager().ActivateAddressAsync(account, token).ConfigureAwait(true);
 
-                var keyFound = await WaitForPublicKeyAsync(token).ConfigureAwait(true);
-                if (keyFound)
-                {
-                    SetActivationStatus("ActivationCompleted");
-                }
-                else
-                {
-                    if (token.IsCancellationRequested)
-                    {
-                        SetActivationError("ActivationCanceled");
-                    }
-                    else
-                    {
-                        SetActivationError("ActivationTimeout");
-                    }
-                }
+                IsActivationSubmitted = true;
+                SetActivationStatus("ActivationSent");
             }
             catch (OperationCanceledException)
             {
@@ -279,29 +246,60 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        private async Task<bool> WaitForPublicKeyAsync(CancellationToken cancellationToken)
+        private async Task MonitoringPublicKeyAsync()
         {
-            for (int attempt = 0; attempt < ActivationMaxAttempts; attempt++)
+            try
             {
-                await UpdateActivationValidationAsync(cancellationToken).ConfigureAwait(true);
-                if (IsActivationCompleted)
-                {
-                    return true;
-                }
-
-                SetActivationStatus("ActivationInProgress");
-
-                try
-                {
-                    await Task.Delay(ActivationPollIntervalMs, cancellationToken).ConfigureAwait(true);
-                }
-                catch (TaskCanceledException)
-                {
-                    return false;
-                }
+                _activationCts?.Cancel();
+            }
+            finally
+            {
+                _activationCts?.Dispose();
+                _activationCts = null;
             }
 
-            return false;
+            _activationCts = new CancellationTokenSource();
+            var token = _activationCts.Token;
+
+            var account = AddressSettingsModel.ToAccount();
+            var email = account?.Email;
+            string pubKey = null;
+
+            if (email is null)
+            {
+                return;
+            }
+
+            try
+            {
+                while (true)
+                {
+                    pubKey = await Core.GetSecurityManager().GetEmailPublicKeyStringAsync(email, token).ConfigureAwait(true);
+
+                    if (!string.IsNullOrEmpty(pubKey))
+                    {
+                        IsActivationStatusVisible = false;
+                        SetActivationStatus("ActivationCompleted");
+
+                        return;
+                    }
+
+                    await Task.Delay(ActivationPollIntervalMs, token).ConfigureAwait(true);
+                }
+            }
+            catch (TaskCanceledException)
+            {
+                return;
+            }
+            catch (Exception e)
+            {
+                OnError(e);
+            }
+            finally
+            {
+                _activationCts?.Dispose();
+                _activationCts = null;
+            }
         }
     }
 }
