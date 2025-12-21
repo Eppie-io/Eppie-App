@@ -19,6 +19,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Eppie.App.UI.Controls;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -28,6 +29,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 #endif
 
+// ToDo: rename namespace to Eppie.App.UI.Shared.Common
 namespace Tuvi.App.Shared.Common
 {
     public static class UITools
@@ -152,6 +154,33 @@ namespace Tuvi.App.Shared.Common
 
                 whatsNew.CloseRequested += (s, e) => dialog.Hide();
                 dialog.Content = whatsNew;
+
+                await dialog.ShowAsync();
+            }
+            finally
+            {
+                _mutex.Release();
+            }
+        }
+
+        public static async Task ShowPopupAsync<TPage>(XamlRoot root)
+            where TPage : Page, IPopupPage
+        {
+            await _mutex.WaitAsync().ConfigureAwait(true);
+            try
+            {
+                var dialog = new ContentDialog()
+                {
+                    XamlRoot = root,
+                };
+
+                var popupControl = new Eppie.App.UI.Controls.PopupHostControl
+                {
+                    PageType = typeof(TPage),
+                };
+
+                popupControl.CloseRequested += (s, e) => dialog.Hide();
+                dialog.Content = popupControl;
 
                 await dialog.ShowAsync();
             }
