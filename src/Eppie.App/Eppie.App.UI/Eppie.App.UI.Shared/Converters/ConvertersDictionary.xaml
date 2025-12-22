@@ -81,4 +81,20 @@
 
     <converters:ExternalContentPolicyToStringConverter x:Key="ExternalContentPolicyToStringConverter" />
 
+    <Style x:Key="ActivationStatusNormalTextStyle"
+           BasedOn="{StaticResource BodyTextBlockStyle}"
+           TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{ThemeResource TextFillColorPrimaryBrush}" />
+    </Style>
+
+    <Style x:Key="ActivationStatusErrorTextStyle"
+           BasedOn="{StaticResource BodyTextBlockStyle}"
+           TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{ThemeResource SystemControlErrorTextForegroundBrush}" />
+    </Style>
+
+    <converters:BoolToStyleConverter x:Key="ActivationErrorToStyle"
+                                     FalseValue="{StaticResource ActivationStatusNormalTextStyle}"
+                                     TrueValue="{StaticResource ActivationStatusErrorTextStyle}" />
+
 </ResourceDictionary>
