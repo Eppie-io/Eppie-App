@@ -250,12 +250,17 @@ namespace Tuvi.App.ViewModels
 
             if (_isWaitingResponse)
             {
-                CancelAsyncOperation();
+                OnCancel();
             }
             else
             {
                 GoBack();
             }
+        }
+
+        protected virtual void OnCancel()
+        {
+            CancelAsyncOperation();
         }
 
         protected void GoBack()

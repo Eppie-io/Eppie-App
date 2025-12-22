@@ -1390,4 +1390,55 @@ Subject: {3}
     <value>Choose how to handle external content (images, stylesheets) in email messages.</value>
     <comment>Note for the external content policy setting in account settings</comment>
   </data>
+  <data name="ActivateBitcoinAddressOption.Caption" xml:space="preserve">
+    <value>To activate your Bitcoin address follow these steps:</value>
+    <comment>Caption for the activation Bitcoin address option.</comment>
+  </data>
+  <data name="ActivateBitcoinAddressOption.TextNote" xml:space="preserve">
+    <value>1) Request testnet BTC and wait confirmations.
+2) Click 'Activate address' to broadcast.
+3) When status shows 'Activation sent', click 'Apply'.
+</value>
+    <comment>Note for the activation Bitcoin address option.</comment>
+  </data>    
+  <data name="ActivationStatus.Caption" xml:space="preserve">
+    <value>Activation status</value>
+    <comment>Caption for the activation status block shown after address creation</comment>
+  </data>
+  <data name="ActivationStatus.TextNote" xml:space="preserve">
+    <value>Waiting for the public key to become available in the blockchain.</value>
+    <comment>Note for the activation status block shown after address creation</comment>
+  </data>
+  <data name="ActivationStarting" xml:space="preserve">
+    <value>Activation starting...</value>
+    <comment>Status shown when address activation begins</comment>
+  </data>
+  <data name="ActivationCompleted" xml:space="preserve">
+    <value>Activation completed</value>
+    <comment>Status shown when address activation finished successfully</comment>
+  </data>
+  <data name="ActivationCanceled" xml:space="preserve">
+    <value>Activation canceled.</value>
+    <comment>Status shown when activation canceled</comment>
+  </data>
+  <data name="ActivationFailed" xml:space="preserve">
+    <value>Activation failed. Please follow the instructions.</value>
+    <comment>Error message when address activation fails.</comment>
+  </data>
+  <data name="ActivationRequired" xml:space="preserve">
+    <value>Activation required</value>
+    <comment>Activation required error</comment>
+  </data>
+  <data name="ActivationSent" xml:space="preserve">
+    <value>Activation transaction sent. Waiting for the public key to appear in the blockchain.</value>
+    <comment>Status shown after activation transaction was broadcast (waiting for public key)</comment>
+  </data>
+  <data name="ActivateAddressButton.Content" xml:space="preserve">
+    <value>Activate address</value>
+    <comment>Activate address button content in Bitcoin address settings</comment>
+  </data>
+  <data name="GetTestnetBtcLink.Content" xml:space="preserve">
+    <value>Request testnet4 BTC</value>
+    <comment>Text for link/button that opens a faucet site to obtain testnet bitcoins</comment>
+  </data>
 </root>
