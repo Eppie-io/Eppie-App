@@ -1473,6 +1473,7 @@ Subject: {3}
   <data name="ConnectProtonAddressDoneButton.Content" xml:space="preserve">
     <value>Done</value>
     <comment>Done button text</comment>
+  </data>
   <data name="ActivateBitcoinAddressOption.Caption" xml:space="preserve">
     <value>To activate your Bitcoin address follow these steps:</value>
     <comment>Caption for the activation Bitcoin address option.</comment>
