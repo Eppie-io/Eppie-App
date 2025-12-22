@@ -1390,6 +1390,90 @@ Subject: {3}
     <value>Choose how to handle external content (images, stylesheets) in email messages.</value>
     <comment>Note for the external content policy setting in account settings</comment>
   </data>
+  <data name="ConnectProtonAddressCredentialsStepTitle.Text" xml:space="preserve">
+    <value>Account сonnection</value>
+    <comment>Proton credentials page title</comment>
+  </data>
+  <data name="ConnectProtonAddressCredentialsStepNote.Text" xml:space="preserve">
+    <value>Sign in to your Proton account to add your email address to the app.</value>
+    <comment>Proton credentials page note</comment>
+  </data>
+  <data name="ConnectProtonAddressEmailAddress.Header" xml:space="preserve">
+    <value>Email address</value>
+    <comment>Header for the email input field</comment>
+  </data>
+  <data name="ConnectProtonAddressEmailAddress.PlaceholderText" xml:space="preserve">
+    <value>Enter your email</value>
+    <comment>Placeholder text for the email input field</comment>
+  </data>
+  <data name="ConnectProtonAddressPassword.Header" xml:space="preserve">
+    <value>Password</value>
+    <comment>Header for the password input field</comment>
+  </data>
+  <data name="ConnectProtonAddressPassword.PlaceholderText" xml:space="preserve">
+    <value>Enter your password</value>
+    <comment>Placeholder text for the password input field</comment>
+  </data>
+  <data name="ConnectProtonAddressNewAccount.Text" xml:space="preserve">
+    <value>New to Proton?</value>
+    <comment>The first part of the text (The entire text is "New to Proton? Create an account")</comment>
+  </data>
+  <data name="ConnectProtonAddressNewAccountLink.Text" xml:space="preserve">
+    <value>Create an account</value>
+    <comment>The second part of the text (The entire text is "New to Proton? Create an account")</comment>
+  </data>
+  <data name="ConnectProtonAddressTwoFactorStepTitle.Text" xml:space="preserve">
+    <value>Two-factor authentication</value>
+    <comment>Proton two-factor authentication page title</comment>
+  </data>
+  <data name="ConnectProtonAddressTwoFactorStepNote.Text" xml:space="preserve">
+    <value>Your account uses two-factor authentication for identity verification. Enter the 6-digit code you received.</value>
+    <comment>Proton two-factor authentication page note</comment>
+  </data>
+  <data name="ConnectProtonAddressEmailTwoFactorCodeBox.Header" xml:space="preserve">
+    <value>Authentication code</value>
+    <comment>Header for the code input field</comment>
+  </data>
+  <data name="ConnectProtonAddressEmailTwoFactorCodeBox.PlaceholderText" xml:space="preserve">
+    <value>Enter code</value>
+    <comment>Placeholder text for the code input field</comment>
+  </data>
+  <data name="ConnectProtonAddressUnlockStepTitle.Text" xml:space="preserve">
+    <value>Data decryption</value>
+    <comment>Proton unlock mailbox page title</comment>
+  </data>
+  <data name="ConnectProtonAddressUnlockStepNote.Text" xml:space="preserve">
+    <value>Enter your second password to decrypt your mailbox and access your encrypted data.</value>
+    <comment>Proton unlock mailbox page note</comment>
+  </data>
+  <data name="ConnectProtonAddressUnlockPassword.Header" xml:space="preserve">
+    <value>Second password</value>
+    <comment>Header for the password input field</comment>
+  </data>
+  <data name="ConnectProtonAddressUnlockPassword.PlaceholderText" xml:space="preserve">
+    <value>Enter your password</value>
+    <comment>Placeholder text for the password input field</comment>
+  </data>
+  <data name="ConnectProtonAddressDoneStepTitle.Text" xml:space="preserve">
+    <value>Account connected successfully!</value>
+    <comment>Proton successful connection page title</comment>
+  </data>
+  <data name="ConnectProtonAddressDoneStepNote.Text" xml:space="preserve">
+    <value>Your email account is now linked and ready to use. You can update mailbox preferences in address settings.</value>
+    <comment>Proton successful connection page note</comment>
+  </data>
+  <data name="ConnectProtonAddressContinueButtonContent.Text" xml:space="preserve">
+    <value>Continue</value>
+    <comment>Continue button text</comment>
+  </data>
+  <data name="ConnectProtonAddressSettingsButton.Content" xml:space="preserve">
+    <value>Open address settings</value>
+    <comment>Proton Address Settings button text</comment>
+  </data>
+  <data name="ConnectProtonAddressDoneButton.Content" xml:space="preserve">
+    <value>Done</value>
+    <comment>Done button text</comment>
+  </data>
   <data name="ActivateBitcoinAddressOption.Caption" xml:space="preserve">
     <value>To activate your Bitcoin address follow these steps:</value>
     <comment>Caption for the activation Bitcoin address option.</comment>

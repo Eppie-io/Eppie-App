@@ -64,32 +64,39 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        public void NavigateToAddAddressPage(AddressGroupType type)
+        public async void NavigateToAddAddressPage(AddressGroupType type)
         {
-            switch (type)
+            try
             {
-                case AddressGroupType.Proton:
-                    NavigationService?.Navigate(nameof(ProtonAddressSettingsPageViewModel));
-                    return;
-                case AddressGroupType.Eppie:
-                    NavigationService?.Navigate(nameof(EppieAddressSettingsPageViewModel));
-                    return;
-                case AddressGroupType.Bitcoin:
-                    NavigationService?.Navigate(nameof(BitcoinAddressSettingsPageViewModel));
-                    return;
-                case AddressGroupType.Ethereum:
-                    NavigationService?.Navigate(nameof(EthereumAddressSettingsPageViewModel));
-                    return;
-                case AddressGroupType.Gmail:
-                    NavigationService?.Navigate(nameof(EmailAddressSettingsPageViewModel), MailService.Gmail);
-                    return;
-                case AddressGroupType.Outlook:
-                    NavigationService?.Navigate(nameof(EmailAddressSettingsPageViewModel), MailService.Outlook);
-                    return;
-                case AddressGroupType.OtherEmail:
-                default:
-                    NavigationService?.Navigate(nameof(EmailAddressSettingsPageViewModel), MailService.Unknown);
-                    return;
+                switch (type)
+                {
+                    case AddressGroupType.Proton:
+                        await MessageService.ShowProtonConnectAddressDialogAsync().ConfigureAwait(true);
+                        return;
+                    case AddressGroupType.Eppie:
+                        NavigationService?.Navigate(nameof(EppieAddressSettingsPageViewModel));
+                        return;
+                    case AddressGroupType.Bitcoin:
+                        NavigationService?.Navigate(nameof(BitcoinAddressSettingsPageViewModel));
+                        return;
+                    case AddressGroupType.Ethereum:
+                        NavigationService?.Navigate(nameof(EthereumAddressSettingsPageViewModel));
+                        return;
+                    case AddressGroupType.Gmail:
+                        NavigationService?.Navigate(nameof(EmailAddressSettingsPageViewModel), MailService.Gmail);
+                        return;
+                    case AddressGroupType.Outlook:
+                        NavigationService?.Navigate(nameof(EmailAddressSettingsPageViewModel), MailService.Outlook);
+                        return;
+                    case AddressGroupType.OtherEmail:
+                    default:
+                        NavigationService?.Navigate(nameof(EmailAddressSettingsPageViewModel), MailService.Unknown);
+                        return;
+                }
+            }
+            catch (Exception ex)
+            {
+                OnError(ex);
             }
         }
 

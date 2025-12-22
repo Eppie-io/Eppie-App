@@ -1,0 +1,222 @@
+﻿<local:ConnectProtonAddressPageBase x:Class="Tuvi.App.Shared.Views.ConnectProtonAddressPage"
+                                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                                    xmlns:local="using:Tuvi.App.Shared.Views"
+                                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                                    xmlns:viewmodels="using:Tuvi.App.ViewModels"
+                                    Background="Transparent"
+                                    Loaded="OnLoaded"
+                                    mc:Ignorable="d">
+
+    <local:ConnectProtonAddressPageBase.DataContext>
+        <viewmodels:ConnectProtonAddressPageViewModel />
+    </local:ConnectProtonAddressPageBase.DataContext>
+
+    <local:ConnectProtonAddressPageBase.Resources>
+        <x:Double x:Key="PageWidth">428</x:Double>
+        <x:Double x:Key="PageMinHeight">560</x:Double>
+        <x:Double x:Key="ProgressSize">18</x:Double>
+        <x:Double x:Key="IconSize">48</x:Double>
+        <x:Double x:Key="IconBorderSize">92</x:Double>
+        <CornerRadius x:Key="IconBorderRadius">46</CornerRadius>
+        <Thickness x:Key="ControlMargin">0,12,0,12</Thickness>
+        <Thickness x:Key="DoneButtonMargin">0,12,0,0</Thickness>
+        <Thickness x:Key="PageContentPadding">24,48,24,24</Thickness>
+    </local:ConnectProtonAddressPageBase.Resources>
+
+    <Grid Width="{StaticResource PageWidth}">
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                      HorizontalScrollMode="Disabled"
+                      VerticalScrollBarVisibility="Auto"
+                      VerticalScrollMode="Auto"
+                      ZoomMode="Disabled">
+            <Grid MinHeight="{StaticResource PageMinHeight}" Padding="{StaticResource PageContentPadding}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0"
+                        Width="{StaticResource IconBorderSize}"
+                        Height="{StaticResource IconBorderSize}"
+                        Margin="0,8"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        BorderBrush="{ThemeResource SolidBackgroundFillColorBaseAltBrush}"
+                        BorderThickness="1"
+                        CornerRadius="{StaticResource IconBorderRadius}">
+                    <Image Width="{StaticResource IconSize}"
+                           Height="{StaticResource IconSize}"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Source="ms-appx:///Assets/Svg/Proton.svg" />
+                </Border>
+
+                <Grid Grid.Row="1" Margin="0,20">
+
+                    <StackPanel x:Name="CredentialsStep"
+                                Orientation="Vertical"
+                                Visibility="{x:Bind local:ConnectProtonAddressPage.ShowOnStep(viewmodels:ProtonConnectionStep.Credentials, ViewModel.Step), Mode=OneWay}">
+                        <TextBlock x:Uid="ConnectProtonAddressCredentialsStepTitle"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Top"
+                                   FontSize="20"
+                                   FontWeight="Medium" />
+                        <TextBlock x:Uid="ConnectProtonAddressCredentialsStepNote"
+                                   Margin="{StaticResource ControlMargin}"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Top"
+                                   TextTrimming="CharacterEllipsis"
+                                   TextWrapping="WrapWholeWords" />
+                        <TextBox x:Name="AddressBox"
+                                 x:Uid="ConnectProtonAddressEmailAddress"
+                                 Margin="{StaticResource ControlMargin}"
+                                 IsEnabled="{x:Bind ViewModel.IsProcess, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
+                                 IsSpellCheckEnabled="False"
+                                 Text="{x:Bind ViewModel.Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <PasswordBox x:Uid="ConnectProtonAddressPassword"
+                                     Margin="{StaticResource ControlMargin}"
+                                     IsEnabled="{x:Bind ViewModel.IsProcess, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
+                                     Password="{x:Bind ViewModel.Password, Mode=TwoWay}" />
+                        <TextBlock Margin="{StaticResource ControlMargin}" HorizontalAlignment="Left">
+                            <Run x:Uid="ConnectProtonAddressNewAccount" />
+                            <Hyperlink NavigateUri="{StaticResource NewProtonAccountLink}">
+                                <Run x:Uid="ConnectProtonAddressNewAccountLink" />
+                            </Hyperlink>
+                        </TextBlock>
+
+                    </StackPanel>
+
+                    <StackPanel x:Name="TwoFactorCodeStep"
+                                Orientation="Vertical"
+                                Visibility="{x:Bind local:ConnectProtonAddressPage.ShowOnStep(viewmodels:ProtonConnectionStep.TwoFactorCode, ViewModel.Step), Mode=OneWay}">
+                        <TextBlock x:Uid="ConnectProtonAddressTwoFactorStepTitle"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Top"
+                                   FontSize="20"
+                                   FontWeight="Medium" />
+                        <TextBlock x:Uid="ConnectProtonAddressTwoFactorStepNote"
+                                   Margin="{StaticResource ControlMargin}"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Top"
+                                   TextTrimming="CharacterEllipsis"
+                                   TextWrapping="WrapWholeWords" />
+                        <TextBox x:Uid="ConnectProtonAddressEmailAddress"
+                                 Margin="{StaticResource ControlMargin}"
+                                 IsReadOnly="True"
+                                 IsSpellCheckEnabled="False"
+                                 Text="{x:Bind ViewModel.Email, Mode=OneWay}" />
+                        <TextBox x:Name="TwoFactorCodeBox"
+                                 x:Uid="ConnectProtonAddressEmailTwoFactorCodeBox"
+                                 Margin="{StaticResource ControlMargin}"
+                                 IsEnabled="{x:Bind ViewModel.IsProcess, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
+                                 IsSpellCheckEnabled="False"
+                                 Text="{x:Bind ViewModel.TwoFactorCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+
+
+                    <StackPanel x:Name="UnlockMailboxStep"
+                                Orientation="Vertical"
+                                Visibility="{x:Bind local:ConnectProtonAddressPage.ShowOnStep(viewmodels:ProtonConnectionStep.UnlockMailbox, ViewModel.Step), Mode=OneWay}">
+                        <TextBlock x:Uid="ConnectProtonAddressUnlockStepTitle"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Top"
+                                   FontSize="20"
+                                   FontWeight="Medium"
+                                   Text="Data decryption" />
+                        <TextBlock x:Uid="ConnectProtonAddressUnlockStepNote"
+                                   Margin="{StaticResource ControlMargin}"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Top"
+                                   Text="Enter your second password to decrypt your mailbox and access your encrypted data."
+                                   TextTrimming="CharacterEllipsis"
+                                   TextWrapping="WrapWholeWords" />
+                        <TextBox x:Uid="ConnectProtonAddressEmailAddress"
+                                 Margin="{StaticResource ControlMargin}"
+                                 IsReadOnly="True"
+                                 IsSpellCheckEnabled="False"
+                                 Text="{x:Bind ViewModel.Email, Mode=OneWay}" />
+                        <PasswordBox x:Name="MailboxPasswordBox"
+                                     x:Uid="ConnectProtonAddressUnlockPassword"
+                                     Margin="{StaticResource ControlMargin}"
+                                     IsEnabled="{x:Bind ViewModel.IsProcess, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
+                                     Password="{x:Bind ViewModel.MailboxPassword, Mode=TwoWay}" />
+                    </StackPanel>
+
+
+                    <StackPanel x:Name="DoneStep"
+                                Orientation="Vertical"
+                                Visibility="{x:Bind local:ConnectProtonAddressPage.ShowOnStep(viewmodels:ProtonConnectionStep.Done, ViewModel.Step), Mode=OneWay}">
+                        <TextBlock x:Uid="ConnectProtonAddressDoneStepTitle"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Top"
+                                   FontSize="20"
+                                   FontWeight="Medium" />
+                        <TextBlock x:Uid="ConnectProtonAddressDoneStepNote"
+                                   Margin="{StaticResource ControlMargin}"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Top"
+                                   TextTrimming="CharacterEllipsis"
+                                   TextWrapping="WrapWholeWords" />
+                        <TextBox x:Uid="ConnectProtonAddressEmailAddress"
+                                 Margin="{StaticResource ControlMargin}"
+                                 IsReadOnly="True"
+                                 IsSpellCheckEnabled="False"
+                                 Text="{x:Bind ViewModel.Email, Mode=OneWay}" />
+                    </StackPanel>
+
+                </Grid>
+
+                <Button Grid.Row="2"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Bottom"
+                        Command="{x:Bind ViewModel.ContinueCommand, Mode=OneWay}"
+                        IsEnabled="{x:Bind ViewModel.IsProcess, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
+                        Style="{StaticResource AccentButtonStyle}"
+                        Visibility="{x:Bind local:ConnectProtonAddressPage.HideOnStep(viewmodels:ProtonConnectionStep.Done, ViewModel.Step), Mode=OneWay}">
+                    <Grid>
+                        <ProgressRing Width="{StaticResource ProgressSize}"
+                                      Height="{StaticResource ProgressSize}"
+                                      IsActive="True"
+                                      Visibility="{x:Bind ViewModel.IsProcess, Mode=OneWay}" />
+                        <TextBlock x:Uid="ConnectProtonAddressContinueButtonContent" Visibility="{x:Bind ViewModel.IsProcess, Converter={StaticResource InverseBoolToVisibilityConverter}, Mode=OneWay}" />
+                    </Grid>
+                    <Button.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="Enter" />
+                    </Button.KeyboardAccelerators>
+                </Button>
+
+                <StackPanel Grid.Row="2"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Bottom"
+                            Orientation="Vertical"
+                            Visibility="{x:Bind local:ConnectProtonAddressPage.ShowOnStep(viewmodels:ProtonConnectionStep.Done, ViewModel.Step), Mode=OneWay}">
+                    <Button x:Uid="ConnectProtonAddressSettingsButton"
+                            HorizontalAlignment="Stretch"
+                            Command="{x:Bind ViewModel.OpenSettingsCommand, Mode=OneWay}" />
+                    <Button x:Name="DoneButton"
+                            x:Uid="ConnectProtonAddressDoneButton"
+                            Margin="{StaticResource DoneButtonMargin}"
+                            HorizontalAlignment="Stretch"
+                            Command="{x:Bind ViewModel.DoneCommand, Mode=OneWay}"
+                            Style="{StaticResource AccentButtonStyle}">
+                        <Button.KeyboardAccelerators>
+                            <KeyboardAccelerator Key="Enter" />
+                        </Button.KeyboardAccelerators>
+                    </Button>
+                </StackPanel>
+
+            </Grid>
+        </ScrollViewer>
+
+        <Grid x:Name="HumanVerifierStep" Visibility="{x:Bind local:ConnectProtonAddressPage.ShowOnStep(viewmodels:ProtonConnectionStep.HumanVerifier, ViewModel.Step), Mode=OneWay}">
+            <!--
+                ToDo: Implement Human Verifier step. Create WebView2Control that works in all platforms.
+                xmlns:euc="using:Eppie.App.UI.Controls"
+                <euc:WebView2Control WebMessageReceived="OnWebMessageReceived" Source="{x:Bind HumanVerifierUri, Mode=OneWay}"/>
+            -->
+        </Grid>
+    </Grid>
+
+</local:ConnectProtonAddressPageBase>
