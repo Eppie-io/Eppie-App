@@ -12,4 +12,6 @@
     <x:String x:Key="AllLibsLink">https://github.com/Eppie-io/Eppie-App/network/dependencies</x:String>
 
     <x:String x:Key="TranslatorsLink">https://eppie.crowdin.com/eppie#topMember</x:String>
+
+    <x:String x:Key="NewProtonAccountLink">https://account.proton.me/signup</x:String>
 </ResourceDictionary>

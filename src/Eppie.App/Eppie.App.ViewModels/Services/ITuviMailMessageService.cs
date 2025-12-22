@@ -50,5 +50,7 @@ namespace Tuvi.App.ViewModels.Services
         Task ShowSupportDevelopmentDialogAsync(bool isStorePaymentProcessor,
             string price,
             ICommand supportDevelopmentCommand);
+
+        Task ShowProtonConnectAddressDialogAsync();
     }
 }

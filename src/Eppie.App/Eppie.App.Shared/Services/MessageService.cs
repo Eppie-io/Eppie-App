@@ -31,9 +31,7 @@ using Tuvi.App.ViewModels.Services;
 using TuviPgpLib.Entities;
 using Tuvi.App.Shared.Models;
 using System.Runtime.InteropServices;
-
-
-
+using Tuvi.App.Shared.Views;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -558,6 +556,11 @@ namespace Tuvi.App.Shared.Services
                 price,
                 supportDevelopmentCommand,
                 _xamlRootProvider()).ConfigureAwait(true);
+        }
+
+        public async Task ShowProtonConnectAddressDialogAsync()
+        {
+            await Common.UITools.ShowPopupAsync<ConnectProtonAddressPage>(_xamlRootProvider()).ConfigureAwait(true);
         }
     }
 }
