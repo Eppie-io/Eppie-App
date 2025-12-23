@@ -59,7 +59,6 @@ namespace Tuvi.App.ViewModels
                 return null;
             }
 
-            //account.AuthData = new BasicAuthData() { Password = Password.Value };
             account.Type = MailBoxType.Proton;
 
             return account;
