@@ -46,6 +46,16 @@ namespace Eppie.App.UI.Controls
             set { SetValue(ClientViewProperty, value); }
         }
 
+        private object _navigationParameter;
+        public object NavigationParameter
+        {
+            get { return _navigationParameter; }
+            set
+            {
+                _navigationParameter = value;
+            }
+        }
+
         public static readonly DependencyProperty ClientViewProperty =
             DependencyProperty.Register(nameof(PageType), typeof(Type), typeof(PopupHostControl), new PropertyMetadata(null, OnPageTypeChanged));
 
@@ -100,7 +110,7 @@ namespace Eppie.App.UI.Controls
         {
             if (PageType != null)
             {
-                PopupHostFrame.Navigate(PageType, null, new SuppressNavigationTransitionInfo());
+                PopupHostFrame.Navigate(PageType, NavigationParameter, new SuppressNavigationTransitionInfo());
 
                 if (PopupPage != null)
                 {

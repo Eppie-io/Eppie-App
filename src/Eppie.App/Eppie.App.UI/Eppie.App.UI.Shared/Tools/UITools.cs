@@ -163,7 +163,7 @@ namespace Tuvi.App.Shared.Common
             }
         }
 
-        public static async Task ShowPopupAsync<TPage>(XamlRoot root)
+        public static async Task ShowPopupAsync<TPage>(XamlRoot root, object data = null)
             where TPage : Page, IPopupPage
         {
             await _mutex.WaitAsync().ConfigureAwait(true);
@@ -177,6 +177,7 @@ namespace Tuvi.App.Shared.Common
                 var popupControl = new Eppie.App.UI.Controls.PopupHostControl
                 {
                     PageType = typeof(TPage),
+                    NavigationParameter = data,
                 };
 
                 popupControl.CloseRequested += (s, e) => dialog.Hide();

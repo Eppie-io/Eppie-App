@@ -123,13 +123,11 @@
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Top"
                                    FontSize="20"
-                                   FontWeight="Medium"
-                                   Text="Data decryption" />
+                                   FontWeight="Medium" />
                         <TextBlock x:Uid="ConnectProtonAddressUnlockStepNote"
                                    Margin="{StaticResource ControlMargin}"
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Top"
-                                   Text="Enter your second password to decrypt your mailbox and access your encrypted data."
                                    TextTrimming="CharacterEllipsis"
                                    TextWrapping="WrapWholeWords" />
                         <TextBox x:Uid="ConnectProtonAddressEmailAddress"

@@ -18,21 +18,12 @@
 
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.Threading;
-using System.Threading.Tasks;
-using Tuvi.App.ViewModels.Validation;
 using Tuvi.Core.Entities;
-using Tuvi.Proton.Client.Exceptions;
 
 namespace Tuvi.App.ViewModels
 {
     public class ProtonAddressSettingsPageViewModel : BaseAddressSettingsPageViewModel
     {
-        public class NeedReloginData
-        {
-            public Account Account { get; set; }
-        }
-
         private bool _isAdvancedSettingsModeActive;
         public bool IsAdvancedSettingsModeActive
         {
@@ -84,15 +75,6 @@ namespace Tuvi.App.ViewModels
                 {
                     InitModel(ProtonAddressSettingsModel.Create(accountData), false);
                 }
-                else if (data is NeedReloginData needReloginData)
-                {
-                    var account = needReloginData.Account;
-                    InitModel(ProtonAddressSettingsModel.Create(account), false);
-
-                    AddressSettingsModel.Password.NeedsValidation = true;
-                    AddressSettingsModel.Password.Errors.Clear();
-                    AddressSettingsModel.Password.Errors.Add(GetLocalizedString("AuthenticationError"));
-                }
                 else
                 {
                     InitModel(ProtonAddressSettingsModel.Create(Account.Default), true);
@@ -102,16 +84,6 @@ namespace Tuvi.App.ViewModels
             {
                 OnError(e);
             }
-        }
-
-        private void ActivateAdvancedSettingsAndSetError(ValidatableProperty<string> field, string errorResourceKey)
-        {
-            if (field != null)
-            {
-                field.Errors.Clear();
-                field.Errors.Add(GetLocalizedString(errorResourceKey));
-            }
-            IsAdvancedSettingsModeActive = true;
         }
 
         private void InitModel(ProtonAddressSettingsModel addressSettingsModel, bool isCreatingMode)
@@ -124,12 +96,8 @@ namespace Tuvi.App.ViewModels
         protected override bool IsValid()
         {
             AddressSettingsModel.Email.NeedsValidation = true;
-            AddressSettingsModel.Password.NeedsValidation = true;
-            AddressSettingsModel.TwoFactorCode.NeedsValidation = true;
-            AddressSettingsModel.MailboxPassword.NeedsValidation = true;
 
-            if ((!IsEmailReadonly && string.IsNullOrEmpty(AddressSettingsModel.Email.Value))
-               || string.IsNullOrEmpty(AddressSettingsModel.Password.Value))
+            if (!IsEmailReadonly && string.IsNullOrEmpty(AddressSettingsModel.Email.Value))
             {
                 ValidateProperty(AddressSettingsModel, nameof(AddressSettingsModel));
                 return false;
@@ -172,91 +140,6 @@ namespace Tuvi.App.ViewModels
             }
 
             return ValidationResult.Success;
-        }
-
-        protected override async Task<bool> CheckEmailAccountAsync(Account accountData, CancellationToken token = default)
-        {
-            try
-            {
-                accountData = await LoginAsync().ConfigureAwait(true);
-                return true;
-            }
-            catch (AuthorizationException)
-            {
-                AddressSettingsModel.Password.Errors.Clear();
-                AddressSettingsModel.Password.Errors.Add(GetLocalizedString("AuthenticationError"));
-            }
-            catch (AuthenticationException)
-            {
-                AddressSettingsModel.Password.Errors.Clear();
-                AddressSettingsModel.Password.Errors.Add(GetLocalizedString("AuthenticationError"));
-            }
-            catch (ProtonSessionRequestException)
-            {
-                ActivateAdvancedSettingsAndSetError(AddressSettingsModel.TwoFactorCode, "AuthenticationError");
-            }
-            catch (NeedAdditionalAuthInfo)
-            {
-                ActivateAdvancedSettingsAndSetError(AddressSettingsModel.TwoFactorCode, "AuthenticationError");
-            }
-
-            throw new NeedAdditionalAuthInfo();
-        }
-
-        private async Task<Account> LoginAsync()
-        {
-            var (userId, refreshToken, saltedKeyPass) = await Proton.ClientAuth.LoginFullAsync
-                (
-                    AddressSettingsModel.Email.Value,
-                    AddressSettingsModel.Password.Value,
-                    async (ex, ct) =>
-                    {
-                        await DispatcherService.RunAsync(() =>
-                        {
-                            if (string.IsNullOrEmpty(AddressSettingsModel.TwoFactorCode.Value))
-                            {
-                                ActivateAdvancedSettingsAndSetError(AddressSettingsModel.TwoFactorCode, "NeedTwofactorCode");
-                                throw new NeedAdditionalAuthInfo();
-                            }
-                        }).ConfigureAwait(true);
-                        return (true, AddressSettingsModel.TwoFactorCode.Value);
-                    },
-                    async (ex, ct) =>
-                    {
-                        await DispatcherService.RunAsync(() =>
-                        {
-                            if (string.IsNullOrEmpty(AddressSettingsModel.MailboxPassword.Value))
-                            {
-                                ActivateAdvancedSettingsAndSetError(AddressSettingsModel.MailboxPassword, "NeedMailboxPassword");
-                                throw new NeedAdditionalAuthInfo();
-                            }
-                        }).ConfigureAwait(true);
-                        return (true, AddressSettingsModel.MailboxPassword.Value);
-                    },
-                    null, // Todo: Issue #479 add human verification page
-                    default
-                ).ConfigureAwait(true);
-
-            var accountData = AddressSettingsModel.ToAccount();
-            accountData.AuthData = new ProtonAuthData()
-            {
-                UserId = userId,
-                RefreshToken = refreshToken,
-                SaltedPassword = saltedKeyPass
-            };
-            return accountData;
-        }
-
-        protected override async Task ApplySettingsAndGoBackAsync()
-        {
-            try
-            {
-                await base.ApplySettingsAndGoBackAsync().ConfigureAwait(true);
-            }
-            catch (NeedAdditionalAuthInfo)
-            {
-                ActivateAdvancedSettingsAndSetError(AddressSettingsModel.MailboxPassword, "NeedMailboxPassword");
-            }
         }
     }
 }
