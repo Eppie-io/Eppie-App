@@ -28,10 +28,6 @@ namespace Tuvi.App.ViewModels
 {
     public abstract class BaseAddressSettingsPageViewModel : BaseViewModel, IDisposable
     {
-        protected class NeedAdditionalAuthInfo : Exception
-        {
-        }
-
         /// <summary>
         /// All available external content policy values for UI binding
         /// </summary>
@@ -199,13 +195,6 @@ namespace Tuvi.App.ViewModels
                 {
                     NavigateFromCurrentPage();
                 }
-            }
-            catch (NeedAdditionalAuthInfo)
-            {
-            }
-            catch (AuthorizationException ex) when (ex.Message == "Proton: invalid mailbox password")
-            {
-                throw new NeedAdditionalAuthInfo();
             }
             catch (Exception e)
             {
