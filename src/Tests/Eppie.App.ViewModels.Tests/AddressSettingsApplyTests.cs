@@ -30,8 +30,6 @@ namespace Tuvi.App.ViewModels.Tests
         private const string OauthRefreshToken = "refTok";
         private const string OauthAssistantId = "Gmail";
 
-        private const string ProtonPassword = "secret";
-
         private const string DecClaimedName = "coolname";
 
         [Test]
@@ -155,7 +153,7 @@ namespace Tuvi.App.ViewModels.Tests
         }
 
         [Test]
-        public void ProtonModelAppliesTypeAndPassword()
+        public void ProtonModelAppliesType()
         {
             // Arrange
             var account = new Account
@@ -168,8 +166,6 @@ namespace Tuvi.App.ViewModels.Tests
                 vm.OnNavigatedTo(account);
                 var model = vm.AddressSettingsModel;
 
-                model.Password.Value = ProtonPassword;
-
                 // Act
                 vm.ApplySettingsCommand.Execute(null);
                 SpinWait.SpinUntil(() => !vm.IsWaitingResponse, TimeSpan.FromMilliseconds(200));
@@ -177,8 +173,6 @@ namespace Tuvi.App.ViewModels.Tests
 
             // Assert
             Assert.That(account.Type, Is.EqualTo(MailBoxType.Proton));
-            Assert.That(account.AuthData, Is.TypeOf<BasicAuthData>());
-            Assert.That(((BasicAuthData)account.AuthData).Password, Is.EqualTo(ProtonPassword));
         }
 
         [Test]
