@@ -63,7 +63,7 @@ namespace Tuvi.App.ViewModels.Tests
                 vm.AddressSettingsModel.SynchronizationInterval.Value = "15";
 
                 var pmodel = (ProtonAddressSettingsModel)vm.AddressSettingsModel;
-                
+
                 // Additional changes to verify no mutation
                 var isHybrid = vm.IsHybridAddress;
 
