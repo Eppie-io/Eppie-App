@@ -33,7 +33,6 @@ namespace Tuvi.App.ViewModels
 
         private ProtonAddressSettingsModel _addressSettingsModel;
         [CustomValidation(typeof(ProtonAddressSettingsPageViewModel), nameof(ClearValidationErrors))]
-        [CustomValidation(typeof(ProtonAddressSettingsPageViewModel), nameof(ValidatePasswordIsNotEmpty))]
         [CustomValidation(typeof(BaseAddressSettingsPageViewModel), nameof(ValidateEmailIsNotEmpty))]
         [CustomValidation(typeof(BaseAddressSettingsPageViewModel), nameof(ValidateSynchronizationIntervalIsCorrect))]
         public ProtonAddressSettingsModel AddressSettingsModel
@@ -117,26 +116,6 @@ namespace Tuvi.App.ViewModels
             {
                 addressSettingsModel.Email.Errors.Clear();
                 addressSettingsModel.SynchronizationInterval.Errors.Clear();
-                addressSettingsModel.Password.Errors.Clear();
-                addressSettingsModel.TwoFactorCode.Errors.Clear();
-                addressSettingsModel.MailboxPassword.Errors.Clear();
-            }
-
-            return ValidationResult.Success;
-        }
-
-        public static ValidationResult ValidatePasswordIsNotEmpty(ProtonAddressSettingsModel addressSettingsModel, ValidationContext context)
-        {
-            if (context?.ObjectInstance is ProtonAddressSettingsPageViewModel viewModel)
-            {
-                if (addressSettingsModel != null &&
-                    addressSettingsModel.Password.NeedsValidation &&
-                    string.IsNullOrEmpty(addressSettingsModel.Password.Value))
-                {
-                    var error = viewModel.GetLocalizedString("FieldIsEmptyNotification");
-                    addressSettingsModel.Password.Errors.Add(error);
-                    return new ValidationResult(error);
-                }
             }
 
             return ValidationResult.Success;

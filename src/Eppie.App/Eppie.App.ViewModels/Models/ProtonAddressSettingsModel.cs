@@ -23,32 +23,12 @@ namespace Tuvi.App.ViewModels
 {
     public class ProtonAddressSettingsModel : BaseAddressSettingsModel
     {
-        public ValidatableProperty<string> TwoFactorCode { get; } = new ValidatableProperty<string>();
-        public ValidatableProperty<string> Password { get; } = new ValidatableProperty<string>();
-        public ValidatableProperty<string> MailboxPassword { get; } = new ValidatableProperty<string>();
-
         public ProtonAddressSettingsModel() : base()
         {
         }
 
         protected ProtonAddressSettingsModel(Account account) : base(account)
         {
-            Password.SetInitialValue(string.Empty);
-            TwoFactorCode.SetInitialValue(string.Empty);
-            MailboxPassword.SetInitialValue(string.Empty);
-
-            Password.PropertyChanged += (sender, args) =>
-            {
-                OnValidatablePropertyChanged<string>(nameof(Password), args.PropertyName);
-            };
-            TwoFactorCode.PropertyChanged += (sender, args) =>
-            {
-                OnValidatablePropertyChanged<string>(nameof(TwoFactorCode), args.PropertyName);
-            };
-            MailboxPassword.PropertyChanged += (sender, args) =>
-            {
-                OnValidatablePropertyChanged<string>(nameof(MailboxPassword), args.PropertyName);
-            };
         }
 
         public override Account ToAccount()
