@@ -1427,7 +1427,7 @@ Subject: {3}
     <comment>Proton two-factor authentication page title</comment>
   </data>
   <data name="ConnectProtonAddressTwoFactorStepNote.Text" xml:space="preserve">
-    <value>Your account uses two-factor authentication for identity verification. Enter the 6-digit code you received.</value>
+    <value>Your account uses two-factor authentication for identity verification. Enter the 6-digit code from the authenticator app.</value>
     <comment>Proton two-factor authentication page note</comment>
   </data>
   <data name="ConnectProtonAddressEmailTwoFactorCodeBox.Header" xml:space="preserve">

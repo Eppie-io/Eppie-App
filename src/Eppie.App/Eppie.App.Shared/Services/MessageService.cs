@@ -558,9 +558,9 @@ namespace Tuvi.App.Shared.Services
                 _xamlRootProvider()).ConfigureAwait(true);
         }
 
-        public async Task ShowProtonConnectAddressDialogAsync()
+        public async Task ShowProtonConnectAddressDialogAsync(object data)
         {
-            await Common.UITools.ShowPopupAsync<ConnectProtonAddressPage>(_xamlRootProvider()).ConfigureAwait(true);
+            await Common.UITools.ShowPopupAsync<ConnectProtonAddressPage>(_xamlRootProvider(), data).ConfigureAwait(true);
         }
     }
 }
