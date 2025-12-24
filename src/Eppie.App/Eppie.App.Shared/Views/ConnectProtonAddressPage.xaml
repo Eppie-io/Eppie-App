@@ -1,6 +1,7 @@
 ﻿<local:ConnectProtonAddressPageBase x:Class="Tuvi.App.Shared.Views.ConnectProtonAddressPage"
                                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                                    xmlns:controls="using:Tuvi.App.Shared.Controls"
                                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                                     xmlns:local="using:Tuvi.App.Shared.Views"
                                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -69,16 +70,26 @@
                                    VerticalAlignment="Top"
                                    TextTrimming="CharacterEllipsis"
                                    TextWrapping="WrapWholeWords" />
-                        <TextBox x:Name="AddressBox"
-                                 x:Uid="ConnectProtonAddressEmailAddress"
-                                 Margin="{StaticResource ControlMargin}"
-                                 IsEnabled="{x:Bind ViewModel.IsProcess, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
-                                 IsSpellCheckEnabled="False"
-                                 Text="{x:Bind ViewModel.Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        <PasswordBox x:Uid="ConnectProtonAddressPassword"
+
+                        <controls:ErrorControl HorizontalAlignment="Stretch"
+                                               VerticalAlignment="Top"
+                                               Property="{x:Bind ViewModel.Email, Mode=OneWay}">
+                            <TextBox x:Name="AddressBox"
+                                     x:Uid="ConnectProtonAddressEmailAddress"
                                      Margin="{StaticResource ControlMargin}"
                                      IsEnabled="{x:Bind ViewModel.IsProcess, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
-                                     Password="{x:Bind ViewModel.Password, Mode=TwoWay}" />
+                                     IsSpellCheckEnabled="False"
+                                     Text="{x:Bind ViewModel.Email.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </controls:ErrorControl>
+
+                        <controls:ErrorControl HorizontalAlignment="Stretch"
+                                               VerticalAlignment="Top"
+                                               Property="{x:Bind ViewModel.Password, Mode=OneWay}">
+                            <PasswordBox x:Uid="ConnectProtonAddressPassword"
+                                         Margin="{StaticResource ControlMargin}"
+                                         IsEnabled="{x:Bind ViewModel.IsProcess, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
+                                         Password="{x:Bind ViewModel.Password.Value, Mode=TwoWay}" />
+                        </controls:ErrorControl>
                         <TextBlock Margin="{StaticResource ControlMargin}" HorizontalAlignment="Left">
                             <Run x:Uid="ConnectProtonAddressNewAccount" />
                             <Hyperlink NavigateUri="{StaticResource NewProtonAccountLink}">
@@ -106,13 +117,18 @@
                                  Margin="{StaticResource ControlMargin}"
                                  IsReadOnly="True"
                                  IsSpellCheckEnabled="False"
-                                 Text="{x:Bind ViewModel.Email, Mode=OneWay}" />
-                        <TextBox x:Name="TwoFactorCodeBox"
-                                 x:Uid="ConnectProtonAddressEmailTwoFactorCodeBox"
-                                 Margin="{StaticResource ControlMargin}"
-                                 IsEnabled="{x:Bind ViewModel.IsProcess, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
-                                 IsSpellCheckEnabled="False"
-                                 Text="{x:Bind ViewModel.TwoFactorCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                 Text="{x:Bind ViewModel.Email.Value, Mode=OneWay}" />
+
+                        <controls:ErrorControl HorizontalAlignment="Stretch"
+                                               VerticalAlignment="Top"
+                                               Property="{x:Bind ViewModel.TwoFactorCode, Mode=OneWay}">
+                            <TextBox x:Name="TwoFactorCodeBox"
+                                     x:Uid="ConnectProtonAddressEmailTwoFactorCodeBox"
+                                     Margin="{StaticResource ControlMargin}"
+                                     IsEnabled="{x:Bind ViewModel.IsProcess, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
+                                     IsSpellCheckEnabled="False"
+                                     Text="{x:Bind ViewModel.TwoFactorCode.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </controls:ErrorControl>
                     </StackPanel>
 
 
@@ -134,12 +150,17 @@
                                  Margin="{StaticResource ControlMargin}"
                                  IsReadOnly="True"
                                  IsSpellCheckEnabled="False"
-                                 Text="{x:Bind ViewModel.Email, Mode=OneWay}" />
-                        <PasswordBox x:Name="MailboxPasswordBox"
-                                     x:Uid="ConnectProtonAddressUnlockPassword"
-                                     Margin="{StaticResource ControlMargin}"
-                                     IsEnabled="{x:Bind ViewModel.IsProcess, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
-                                     Password="{x:Bind ViewModel.MailboxPassword, Mode=TwoWay}" />
+                                 Text="{x:Bind ViewModel.Email.Value, Mode=OneWay}" />
+
+                        <controls:ErrorControl HorizontalAlignment="Stretch"
+                                               VerticalAlignment="Top"
+                                               Property="{x:Bind ViewModel.MailboxPassword, Mode=OneWay}">
+                            <PasswordBox x:Name="MailboxPasswordBox"
+                                         x:Uid="ConnectProtonAddressUnlockPassword"
+                                         Margin="{StaticResource ControlMargin}"
+                                         IsEnabled="{x:Bind ViewModel.IsProcess, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
+                                         Password="{x:Bind ViewModel.MailboxPassword.Value, Mode=TwoWay}" />
+                        </controls:ErrorControl>
                     </StackPanel>
 
 
@@ -161,7 +182,7 @@
                                  Margin="{StaticResource ControlMargin}"
                                  IsReadOnly="True"
                                  IsSpellCheckEnabled="False"
-                                 Text="{x:Bind ViewModel.Email, Mode=OneWay}" />
+                                 Text="{x:Bind ViewModel.Email.Value, Mode=OneWay}" />
                     </StackPanel>
 
                 </Grid>
