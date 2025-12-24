@@ -28,11 +28,17 @@ namespace Tuvi.OAuth2
         Outlook
     }
 
-    public static class Extensions
+    public static class MailServiceExtensions
     {
         public static bool IsMailService(this Account account, MailService mailService)
         {
+            if (account is null)
+            {
+                throw new ArgumentNullException(nameof(account));
+            }
+
             return account.Type == MailBoxType.Email
+                && account.AuthData != null
                 && account.AuthData.Type == AuthenticationType.OAuth2
                 && account.AuthData is OAuth2Data data
                 && data.AuthAssistantId == Enum.GetName(typeof(MailService), mailService);

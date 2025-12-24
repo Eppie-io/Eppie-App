@@ -5,6 +5,7 @@
     <LangVersion>13.0</LangVersion>
     <EnableNETAnalyzers>True</EnableNETAnalyzers>
     <AnalysisLevel>6.0-all</AnalysisLevel>
+    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

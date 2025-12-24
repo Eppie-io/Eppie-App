@@ -8,7 +8,9 @@
 
     <EmitCompilerGeneratedFiles>false</EmitCompilerGeneratedFiles>
     <CompilerGeneratedFilesOutputPath>generated</CompilerGeneratedFilesOutputPath>
-
+    <AnalysisLevel>6.0-all</AnalysisLevel>
+    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+    
     <!-- Display name -->
     <ApplicationTitle>Eppie</ApplicationTitle>
     <!-- App Identifier -->

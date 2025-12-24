@@ -15,6 +15,7 @@
     <EmitCompilerGeneratedFiles>false</EmitCompilerGeneratedFiles>
     <CompilerGeneratedFilesOutputPath>generated</CompilerGeneratedFilesOutputPath>
     <AnalysisLevel>6.0-all</AnalysisLevel>
+    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
 
     <!--
       UnoFeatures let's you quickly add and manage implicit package references based on the features you want to use.
