@@ -69,8 +69,8 @@ namespace Tuvi.App.Shared.Controls
             DependencyProperty.Register(nameof(Avatar), typeof(ImageSource), typeof(AddressItemControl), new PropertyMetadata(null));
 
 
-        private bool _canInvoke = false;
-        private bool _isPointerOver = false;
+        private bool _canInvoke;
+        private bool _isPointerOver;
 
         public AddressItemControl()
         {

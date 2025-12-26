@@ -74,7 +74,7 @@ namespace Tuvi.App.Shared.Controls
             }
         }
 
-        private TreeViewNode GetTreeViewNodeAtPoint(TreeView treeView, Point position)
+        private static TreeViewNode GetTreeViewNodeAtPoint(TreeView treeView, Point position)
         {
             foreach (var item in treeView.RootNodes)
             {
@@ -88,7 +88,7 @@ namespace Tuvi.App.Shared.Controls
             return null;
         }
 
-        private TreeViewNode FindNodeAtPoint(TreeView treeView, TreeViewNode node, Point position)
+        private static TreeViewNode FindNodeAtPoint(TreeView treeView, TreeViewNode node, Point position)
         {
             var container = treeView.ContainerFromNode(node) as TreeViewItem;
 

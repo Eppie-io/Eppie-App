@@ -293,7 +293,7 @@ namespace Tuvi.App.Shared.Views
 
         private bool IsDropMessagesAllowed(MailBoxItem item)
         {
-            return ViewModel.MailBoxItem_IsDropMessagesAllowed(item);
+            return ViewModel.MailBoxItemIsDropMessagesAllowed(item);
         }
 
         public void SetMessageService(IMessageService messageService)

@@ -107,7 +107,7 @@ namespace Tuvi.App.ViewModels
         {
             Email.SetInitialValue(string.Empty);
             SenderName.SetInitialValue(string.Empty);
-            SynchronizationInterval.SetInitialValue(DefaultSynchronizationInterval.ToString());
+            SynchronizationInterval.SetInitialValue(DefaultSynchronizationInterval.ToString(System.Globalization.CultureInfo.InvariantCulture));
             ExternalContentPolicy = ExternalContentPolicy.AlwaysAllow;
 
             Email.PropertyChanged += (sender, args) =>
@@ -141,7 +141,7 @@ namespace Tuvi.App.ViewModels
 
             IsBackupAccountSettingsEnabled = account.IsBackupAccountSettingsEnabled;
             IsBackupAccountMessagesEnabled = account.IsBackupAccountMessagesEnabled;
-            SynchronizationInterval.SetInitialValue(account.SynchronizationInterval.ToString());
+            SynchronizationInterval.SetInitialValue(account.SynchronizationInterval.ToString(System.Globalization.CultureInfo.InvariantCulture));
 
             MessageFooter = account.MessageFooter;
             IsMessageFooterEnabled = account.IsMessageFooterEnabled;

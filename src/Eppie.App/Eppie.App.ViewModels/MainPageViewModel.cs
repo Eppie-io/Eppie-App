@@ -920,7 +920,7 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        public bool MailBoxItem_IsDropMessagesAllowed(MailBoxItem item)
+        public bool MailBoxItemIsDropMessagesAllowed(MailBoxItem item)
         {
             bool res = false;
             try
@@ -978,7 +978,7 @@ namespace Tuvi.App.ViewModels
 
             var messageTemplate = GetLocalizedString("RestartApplication");
             var brandName = BrandService.GetName();
-            var message = string.Format(messageTemplate, brandName);
+            var message = string.Format(CultureInfo.CurrentCulture, messageTemplate, brandName);
 
             var existing = Problems.FirstOrDefault(x => x.Title == title && x.SolutionText == solution && x.Email is null);
             if (existing is null)
