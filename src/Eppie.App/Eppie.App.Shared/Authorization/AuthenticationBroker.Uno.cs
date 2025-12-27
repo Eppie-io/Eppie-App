@@ -18,9 +18,9 @@
 
 #if !WINDOWS_UWP
 
+using Eppie.App.UI.Common;
 using Finebits.Authorization.OAuth2.Abstractions;
 using Finebits.Authorization.OAuth2.Types;
-using Eppie.App.UI.Common;
 
 namespace Tuvi.App.Shared.Authorization
 {
