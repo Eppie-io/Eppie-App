@@ -18,10 +18,10 @@
 
 #if WINDOWS_UWP
 
-using System;
-using Microsoft.Services.Store.Engagement;
 using Eppie.App.Authorization;
 using Eppie.App.Views;
+using Microsoft.Services.Store.Engagement;
+using System;
 using Tuvi.App.ViewModels;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
