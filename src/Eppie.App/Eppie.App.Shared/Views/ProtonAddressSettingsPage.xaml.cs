@@ -20,11 +20,11 @@ using Tuvi.App.ViewModels;
 
 namespace Tuvi.App.Shared.Views
 {
-    public partial class ProtonAddressSettingsPageBase : BasePage<ProtonAddressSettingsPageViewModel, BaseViewModel>
+    internal partial class ProtonAddressSettingsPageBase : BasePage<ProtonAddressSettingsPageViewModel, BaseViewModel>
     {
     }
 
-    public sealed partial class ProtonAddressSettingsPage : ProtonAddressSettingsPageBase
+    internal sealed partial class ProtonAddressSettingsPage : ProtonAddressSettingsPageBase
     {
         public ProtonAddressSettingsPage()
         {

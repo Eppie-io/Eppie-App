@@ -27,11 +27,11 @@ using Microsoft.UI.Xaml.Input;
 
 namespace Tuvi.App.Shared.Views
 {
-    public partial class AboutPageBase : BasePage<AboutPageViewModel, BaseViewModel>
+    internal partial class AboutPageBase : BasePage<AboutPageViewModel, BaseViewModel>
     {
     }
 
-    public sealed partial class AboutPage : AboutPageBase
+    internal sealed partial class AboutPage : AboutPageBase
     {
         public AboutPage()
         {

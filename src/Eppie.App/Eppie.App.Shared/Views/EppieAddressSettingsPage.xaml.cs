@@ -26,11 +26,11 @@ using Microsoft.UI.Xaml;
 
 namespace Tuvi.App.Shared.Views
 {
-    public partial class EppieAddressSettingsPageBase : BasePage<EppieAddressSettingsPageViewModel, BaseViewModel>
+    internal partial class EppieAddressSettingsPageBase : BasePage<EppieAddressSettingsPageViewModel, BaseViewModel>
     {
     }
 
-    public sealed partial class EppieAddressSettingsPage : EppieAddressSettingsPageBase
+    internal sealed partial class EppieAddressSettingsPage : EppieAddressSettingsPageBase
     {
         public EppieAddressSettingsPage()
         {

@@ -10,6 +10,7 @@
     <CompilerGeneratedFilesOutputPath>generated</CompilerGeneratedFilesOutputPath>
     <AnalysisLevel>6.0-all</AnalysisLevel>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+    <WarningLevel>9999</WarningLevel>
     
     <!-- Display name -->
     <ApplicationTitle>Eppie</ApplicationTitle>

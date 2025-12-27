@@ -85,7 +85,7 @@ namespace Eppie.App.Shared
         public IAIService AIService { get; private set; }
 
         public static Window MainWindow { get; private set; }
-        public XamlRoot XamlRoot => MainWindow?.Content?.XamlRoot;
+        public static XamlRoot XamlRoot => MainWindow?.Content?.XamlRoot;
 
         private ErrorHandler _errorHandler;
 
@@ -433,7 +433,7 @@ namespace Eppie.App.Shared
             content.VerticalAlignment = VerticalAlignment.Stretch;
         }
 
-        private Page GetCurrentPage()
+        private static Page GetCurrentPage()
         {
             var frame = MainWindow?.Content as Frame;
             return frame?.Content as Page;

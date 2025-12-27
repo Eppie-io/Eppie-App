@@ -20,11 +20,11 @@ using Tuvi.App.ViewModels;
 
 namespace Tuvi.App.Shared.Views
 {
-    public partial class AIAgentsManagerPageBase : BasePage<AIAgentsManagerPageViewModel, BaseViewModel>
+    internal partial class AIAgentsManagerPageBase : BasePage<AIAgentsManagerPageViewModel, BaseViewModel>
     {
     }
 
-    public sealed partial class AIAgentsManagerPage : AIAgentsManagerPageBase
+    internal sealed partial class AIAgentsManagerPage : AIAgentsManagerPageBase
     {
         public AIAgentsManagerPage()
         {

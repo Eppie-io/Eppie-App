@@ -247,7 +247,7 @@ namespace Tuvi.App.Shared.Services
         {
             return ShowInfoMessageAsync(
                 StringProvider.GetString("FailedToAddAccountTitle"),
-                string.Format(StringProvider.GetString("EnableImapMessage"), forEmail),
+                string.Format(System.Globalization.CultureInfo.CurrentCulture, StringProvider.GetString("EnableImapMessage"), forEmail),
                 StringProvider.GetString("MsgBtnOk"));
         }
         public Task ShowAddAccountMessageAsync()

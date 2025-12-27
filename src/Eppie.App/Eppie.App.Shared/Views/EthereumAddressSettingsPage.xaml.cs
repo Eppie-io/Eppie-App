@@ -26,11 +26,11 @@ using Microsoft.UI.Xaml;
 
 namespace Tuvi.App.Shared.Views
 {
-    public partial class EthereumAddressSettingsPageBase : BasePage<EthereumAddressSettingsPageViewModel, BaseViewModel>
+    internal partial class EthereumAddressSettingsPageBase : BasePage<EthereumAddressSettingsPageViewModel, BaseViewModel>
     {
     }
 
-    public sealed partial class EthereumAddressSettingsPage : EthereumAddressSettingsPageBase
+    internal sealed partial class EthereumAddressSettingsPage : EthereumAddressSettingsPageBase
     {
         public EthereumAddressSettingsPage()
         {

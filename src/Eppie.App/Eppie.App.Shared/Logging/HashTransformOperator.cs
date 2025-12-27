@@ -16,6 +16,7 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
+using System.Globalization;
 using Serilog.Enrichers.Sensitive;
 
 namespace Eppie.App.Shared.Logging
@@ -31,7 +32,7 @@ namespace Eppie.App.Shared.Logging
 
             if (result.Match)
             {
-                result.Result = string.Concat("#", input.GetHashCode().ToString());
+                result.Result = string.Concat("#", input.GetHashCode().ToString(CultureInfo.InvariantCulture));
             }
 
             return result;

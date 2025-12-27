@@ -35,11 +35,11 @@ using Microsoft.UI.Xaml.Input;
 
 namespace Tuvi.App.Shared.Views
 {
-    public partial class NewMessagePageBase : BasePage<NewMessagePageViewModel, BaseViewModel>
+    internal partial class NewMessagePageBase : BasePage<NewMessagePageViewModel, BaseViewModel>
     {
     }
 
-    public sealed partial class NewMessagePage : NewMessagePageBase
+    internal sealed partial class NewMessagePage : NewMessagePageBase
     {
         public NewMessagePage()
         {
@@ -100,7 +100,7 @@ namespace Tuvi.App.Shared.Views
         }
 
 #if __ANDROID__ || __IOS__
-        private bool _isEditingHtml = false;
+        //private bool _isEditingHtml = false;
         private async void OnEmailBodyTapped(object sender, TappedRoutedEventArgs e)
         {
 

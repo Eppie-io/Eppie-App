@@ -29,11 +29,11 @@ namespace Eppie.App.Droid
     )]
     public class MainActivity : Microsoft.UI.Xaml.ApplicationActivity
     {
-        protected override void OnCreate(Bundle savedInstanceState)
+        protected override void OnCreate(Bundle bundle)
         {
             global::AndroidX.Core.SplashScreen.SplashScreen.InstallSplashScreen(this);
 
-            base.OnCreate(savedInstanceState);
+            base.OnCreate(bundle);
         }
     }
 }

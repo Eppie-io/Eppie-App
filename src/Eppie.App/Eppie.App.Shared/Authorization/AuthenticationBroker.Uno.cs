@@ -46,8 +46,7 @@ namespace Tuvi.App.Shared.Authorization
                 Action closeAction = null;
                 try
                 {
-                    var app = Application.Current as Eppie.App.Shared.App;
-                    var xamlRoot = app.XamlRoot;
+                    var xamlRoot = Eppie.App.Shared.App.XamlRoot;
 
                     var loader = Eppie.App.UI.Resources.StringProvider.GetInstance();
 

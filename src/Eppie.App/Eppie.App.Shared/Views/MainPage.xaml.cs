@@ -38,11 +38,11 @@ using Microsoft.UI.Xaml.Navigation;
 
 namespace Tuvi.App.Shared.Views
 {
-    public partial class MainPageBase : BasePage<MainPageViewModel, BaseViewModel>
+    internal partial class MainPageBase : BasePage<MainPageViewModel, BaseViewModel>
     {
     }
 
-    public sealed partial class MainPage : MainPageBase, IErrorHandler
+    internal sealed partial class MainPage : MainPageBase, IErrorHandler
     {
         public ICommand ShowAllMessagesCommand => new RelayCommand(ShowAllMessages);
 

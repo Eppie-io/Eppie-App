@@ -28,11 +28,11 @@ using Microsoft.UI.Xaml.Navigation;
 
 namespace Tuvi.App.Shared.Views
 {
-    public partial class MailboxesPanelPageBase : BasePage<BaseViewModel, BaseViewModel>
+    internal partial class MailboxesPanelPageBase : BasePage<BaseViewModel, BaseViewModel>
     {
     }
 
-    public sealed partial class MailboxesPanelPage : MailboxesPanelPageBase
+    internal sealed partial class MailboxesPanelPage : MailboxesPanelPageBase
     {
         public MailboxesPanelPage()
         {

@@ -72,8 +72,8 @@
         </XamlUICommand>
 
         <DataTemplate x:Key="DefaultMessageItemTemplate" x:DataType="viewmodels:IMessageInfo">
-            <!--<UserControl PointerEntered="ListViewSwipeContainer_PointerEntered"
-                             PointerExited="ListViewSwipeContainer_PointerExited">-->
+            <!--<UserControl PointerEntered="ListViewSwipeContainerPointerEntered"
+                             PointerExited="ListViewSwipeContainerPointerExited">-->
             <UserControl>
                 <!--  It leaks see TVM-344  -->
                 <UserControl.ContextFlyout>

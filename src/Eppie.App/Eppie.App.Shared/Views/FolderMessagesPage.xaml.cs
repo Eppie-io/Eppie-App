@@ -28,11 +28,11 @@ using Microsoft.UI.Xaml.Navigation;
 
 namespace Tuvi.App.Shared.Views
 {
-    public partial class FolderMessagesPageBase : BasePage<FolderMessagesPageViewModel, BaseViewModel>
+    internal partial class FolderMessagesPageBase : BasePage<FolderMessagesPageViewModel, BaseViewModel>
     {
     }
 
-    public sealed partial class FolderMessagesPage : FolderMessagesPageBase
+    internal sealed partial class FolderMessagesPage : FolderMessagesPageBase
     {
         public FolderMessagesPage()
         {

@@ -19,6 +19,8 @@
 using Tuvi.App.ViewModels.Services;
 using System;
 using System.Linq;
+using System.Globalization;
+
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -136,7 +138,7 @@ namespace Tuvi.App.Shared.Services
 
             const string ending = "viewmodel";
 
-            if (pageKey.ToLower().EndsWith(ending, StringComparison.Ordinal))
+            if (pageKey.ToLower(CultureInfo.InvariantCulture).EndsWith(ending, StringComparison.Ordinal))
             {
                 int indexToRemoveFrom = pageKey.Length - ending.Length;
                 return PageTypePrefix + pageKey.Remove(indexToRemoveFrom);

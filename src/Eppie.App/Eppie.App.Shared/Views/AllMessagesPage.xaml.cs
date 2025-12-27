@@ -28,11 +28,11 @@ using Microsoft.UI.Xaml.Navigation;
 
 namespace Tuvi.App.Shared.Views
 {
-    public partial class AllMessagesPageBase : BasePage<AllMessagesPageViewModel, BaseViewModel>
+    internal partial class AllMessagesPageBase : BasePage<AllMessagesPageViewModel, BaseViewModel>
     {
     }
 
-    public sealed partial class AllMessagesPage : AllMessagesPageBase
+    internal sealed partial class AllMessagesPage : AllMessagesPageBase
     {
         public AllMessagesPage()
         {

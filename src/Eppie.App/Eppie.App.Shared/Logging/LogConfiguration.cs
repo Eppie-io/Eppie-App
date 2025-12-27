@@ -84,13 +84,13 @@ namespace Eppie.App.Shared.Logging
         private static LoggerConfiguration AddConsoleLogging(this LoggerConfiguration configuration)
         {
 #if __ANDROID__
-            configuration.WriteTo.AndroidLog();
+            configuration.WriteTo.AndroidLog(formatProvider: System.Globalization.CultureInfo.InvariantCulture);
 #elif __IOS__
-            configuration.WriteTo.NSLog();
+            configuration.WriteTo.NSLog(formatProvider: System.Globalization.CultureInfo.InvariantCulture);
 #else
-            configuration.WriteTo.Console();
+            configuration.WriteTo.Console(formatProvider: System.Globalization.CultureInfo.InvariantCulture);
 #endif
-            configuration.WriteTo.Debug();
+            configuration.WriteTo.Debug(formatProvider: System.Globalization.CultureInfo.InvariantCulture);
 
             return configuration;
         }

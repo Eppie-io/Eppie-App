@@ -17,6 +17,7 @@
 // ---------------------------------------------------------------------------- //
 
 using System;
+using System.Globalization;
 using Windows.Data.Xml.Dom;
 using Windows.UI.Notifications;
 
@@ -33,7 +34,7 @@ namespace Tuvi.App.Shared.Services
 
                 // Set the value of the badge in the XML to our number
                 var badgeElement = badgeXml.SelectSingleNode("/badge") as XmlElement;
-                badgeElement.SetAttribute("value", num.ToString());
+                badgeElement.SetAttribute("value", num.ToString(CultureInfo.InvariantCulture));
 
                 UpdateBadge(badgeXml);
             }

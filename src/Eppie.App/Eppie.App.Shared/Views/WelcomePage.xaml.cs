@@ -21,11 +21,11 @@ using Tuvi.App.ViewModels;
 
 namespace Tuvi.App.Shared.Views
 {
-    public partial class WelcomePageBase : BasePage<WelcomePageViewModel, BaseViewModel>
+    internal partial class WelcomePageBase : BasePage<WelcomePageViewModel, BaseViewModel>
     {
     }
 
-    public sealed partial class WelcomePage : WelcomePageBase
+    internal sealed partial class WelcomePage : WelcomePageBase
     {
         public WelcomePage()
         {

@@ -71,7 +71,7 @@ namespace Eppie.App.Shared.Services
             }
         }
 
-        private StoreContext _StoreContext = null;
+        private StoreContext _StoreContext;
         protected StoreContext GetStoreContext()
         {
             if (_StoreContext is null)

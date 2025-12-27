@@ -196,7 +196,7 @@ namespace Eppie.App.Shared.Services
             }
         }
 #else
-        private Task LoadModelAsync()
+        private static Task LoadModelAsync()
         {
             return Task.CompletedTask;
         }
@@ -333,7 +333,7 @@ namespace Eppie.App.Shared.Services
             ExceptionOccurred?.Invoke(this, new ExceptionEventArgs(ex));
         }
 
-        private async Task CopyFolderContentsAsync(StorageFolder sourceFolder, StorageFolder destinationFolder)
+        private async static Task CopyFolderContentsAsync(StorageFolder sourceFolder, StorageFolder destinationFolder)
         {
             IReadOnlyList<StorageFile> files = await sourceFolder.GetFilesAsync();
             var config = await sourceFolder.TryGetItemAsync("genai_config.json");
@@ -349,7 +349,7 @@ namespace Eppie.App.Shared.Services
             {
                 await destinationFolder.DeleteAsync();
 
-                throw new Exception("No AI model files found in the selected folder.");
+                throw new InvalidOperationException("No AI model files found in the selected folder.");
             }
         }
 

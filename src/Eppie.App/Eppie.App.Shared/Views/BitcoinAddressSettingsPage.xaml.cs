@@ -26,11 +26,11 @@ using Microsoft.UI.Xaml;
 
 namespace Tuvi.App.Shared.Views
 {
-    public partial class BitcoinAddressSettingsPageBase : BasePage<BitcoinAddressSettingsPageViewModel, BaseViewModel>
+    internal partial class BitcoinAddressSettingsPageBase : BasePage<BitcoinAddressSettingsPageViewModel, BaseViewModel>
     {
     }
 
-    public sealed partial class BitcoinAddressSettingsPage : BitcoinAddressSettingsPageBase
+    internal sealed partial class BitcoinAddressSettingsPage : BitcoinAddressSettingsPageBase
     {
         public BitcoinAddressSettingsPage()
         {

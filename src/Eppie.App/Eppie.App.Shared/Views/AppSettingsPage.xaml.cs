@@ -30,11 +30,11 @@ using Microsoft.UI.Xaml.Controls;
 namespace Tuvi.App.Shared.Views
 {
     // ToDo: Issue #840 - Rename SettingsPageViewModel or replace it with a new one
-    public partial class AppSettingsPageBase : BasePage<SettingsPageViewModel, BaseViewModel>
+    internal partial class AppSettingsPageBase : BasePage<SettingsPageViewModel, BaseViewModel>
     {
     }
 
-    public sealed partial class AppSettingsPage : AppSettingsPageBase
+    internal sealed partial class AppSettingsPage : AppSettingsPageBase
     {
         public AppSettingsPage()
         {
