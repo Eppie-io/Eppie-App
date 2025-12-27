@@ -26,7 +26,6 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 #endif
 
-// ToDo: change namespace
 namespace Eppie.App.Views
 {
     // ToDo: Issue #840 - Rename SettingsPageViewModel or replace it with a new one

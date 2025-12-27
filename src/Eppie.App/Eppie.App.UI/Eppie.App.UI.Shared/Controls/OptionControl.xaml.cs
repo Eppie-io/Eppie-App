@@ -31,7 +31,6 @@ using Microsoft.UI.Xaml.Documents;
 using Microsoft.UI.Xaml.Markup;
 #endif
 
-// ToDo: Change namespace
 namespace Eppie.App.UI.Controls
 {
     [SuppressMessage("Design", "CA1010:Generic collections should implement generic interface", Justification = "ContentControl implements IEnumerable for XAML infrastructure")]
