@@ -28,12 +28,12 @@ namespace Eppie.App.Helpers
     {
         public static IHostBuilder CreateBuilder(ILoggerFactory loggerFactory)
         {
-            return UnoHost.CreateDefaultBuilder<App>(Environment.GetCommandLineArgs()).ConfugureDefault().ConfugureUno().AddLoggerFactory(loggerFactory);
+            return UnoHost.CreateDefaultBuilder(Environment.GetCommandLineArgs()).ConfugureDefault().ConfugureUno().AddLoggerFactory(loggerFactory);
         }
 
         public static IHostBuilder CreateBuilder()
         {
-            return UnoHost.CreateDefaultBuilder<App>(Environment.GetCommandLineArgs()).ConfugureDefault().ConfugureUno();
+            return UnoHost.CreateDefaultBuilder(Environment.GetCommandLineArgs()).ConfugureDefault().ConfugureUno();
         }
 
         private static IHostBuilder ConfugureUno(this IHostBuilder hostBuilder)
