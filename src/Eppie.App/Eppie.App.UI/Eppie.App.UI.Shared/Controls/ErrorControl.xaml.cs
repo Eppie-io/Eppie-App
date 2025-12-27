@@ -17,6 +17,8 @@
 // ---------------------------------------------------------------------------- //
 
 using Tuvi.App.ViewModels.Validation;
+using System.Diagnostics.CodeAnalysis;
+
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -28,8 +30,9 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Markup;
 #endif
 
-namespace Tuvi.App.Shared.Controls
+namespace Eppie.App.UI.Controls
 {
+    [SuppressMessage("Design", "CA1010:Generic collections should implement generic interface", Justification = "ContentControl implements IEnumerable for XAML infrastructure")]
     [ContentProperty(Name = nameof(InnerContent))]
     public sealed partial class ErrorControl : UserControl
     {

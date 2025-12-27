@@ -16,7 +16,9 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-using Tuvi.App.Shared.Controls;
+using Eppie.App.UI.Controls;
+using System.Diagnostics.CodeAnalysis;
+
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -27,6 +29,7 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace Eppie.App.UI.Controls
 {
+    [SuppressMessage("Design", "CA1010:Generic collections should implement generic interface", Justification = "ContentControl implements IEnumerable for XAML infrastructure")]
     public sealed partial class EditMessageControl : AIAgentUserControl
     {
         public string Text

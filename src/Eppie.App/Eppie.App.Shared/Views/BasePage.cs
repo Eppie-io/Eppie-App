@@ -166,7 +166,7 @@ namespace Tuvi.App.Shared.Views
             VisualStateManager.GoToState(sender as Control, "HoverButtonsHidden", true);
         }
 
-        protected async void InitAIAgentButton(AppBarButton agentButton, Controls.MessageListControl messageListControl)
+        protected async void InitAIAgentButton(AppBarButton agentButton, Eppie.App.UI.Controls.MessageListControl messageListControl)
         {
             try
             {

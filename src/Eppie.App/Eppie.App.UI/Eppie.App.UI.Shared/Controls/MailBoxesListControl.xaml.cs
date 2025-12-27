@@ -19,21 +19,21 @@
 using Tuvi.App.ViewModels;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
-using Microsoft.UI.Xaml.Controls;
+using System.Diagnostics.CodeAnalysis;
+
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 #else
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 #endif
 
-namespace Tuvi.App.Shared.Controls
+namespace Eppie.App.UI.Controls
 {
-#if WINDOWS_UWP
-    public sealed partial class MailBoxesListControl : Windows.UI.Xaml.Controls.UserControl
-#else
+    [SuppressMessage("Design", "CA1010:Generic collections should implement generic interface", Justification = "ContentControl implements IEnumerable for XAML infrastructure")]
     public sealed partial class MailBoxesListControl : UserControl
-#endif
     {
         public MailBoxesModel MailBoxesModel
         {

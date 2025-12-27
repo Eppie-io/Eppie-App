@@ -17,12 +17,13 @@
 // ---------------------------------------------------------------------------- //
 
 using System;
-using Tuvi.App.Shared.Controls;
+using Eppie.App.UI.Controls;
 using System.Threading.Tasks;
 using Microsoft.Web.WebView2.Core;
 using Windows.System;
 using CommunityToolkit.Mvvm.Input;
-using Tuvi.Core.Entities;
+using System.Diagnostics.CodeAnalysis;
+
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -32,6 +33,7 @@ using Microsoft.UI.Xaml;
 
 namespace Eppie.App.UI.Controls
 {
+    [SuppressMessage("Design", "CA1010:Generic collections should implement generic interface", Justification = "ContentControl implements IEnumerable for XAML infrastructure")]
     public sealed partial class MessageControl : AIAgentUserControl
     {
         private bool _webResourceBlockingRegistered;

@@ -32,6 +32,7 @@ using TuviPgpLib.Entities;
 using Tuvi.App.Shared.Models;
 using System.Runtime.InteropServices;
 using Tuvi.App.Shared.Views;
+using Eppie.App.UI.Common;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -54,17 +55,17 @@ namespace Tuvi.App.Shared.Services
 
         private Task ShowInfoMessageAsync(string title, string message, string closeButtonText)
         {
-            return Common.UITools.ShowInfoMessageAsync(title, message, closeButtonText, _xamlRootProvider());
+            return UITools.ShowInfoMessageAsync(title, message, closeButtonText, _xamlRootProvider());
         }
 
         private Task<bool> ShowErrorMessageAsync(string title, string message, string acceptButtonText, string rejectButtonText)
         {
-            return Common.UITools.ShowErrorMessageAsync(title, message, acceptButtonText, rejectButtonText, _xamlRootProvider());
+            return UITools.ShowErrorMessageAsync(title, message, acceptButtonText, rejectButtonText, _xamlRootProvider());
         }
 
         private Task<bool> ShowDialogAsync(string title, string message, string acceptButtonText, string rejectButtonText)
         {
-            return Common.UITools.ShowDialogAsync(title, message, acceptButtonText, rejectButtonText, _xamlRootProvider());
+            return UITools.ShowDialogAsync(title, message, acceptButtonText, rejectButtonText, _xamlRootProvider());
         }
 
         public Task ShowErrorMessageAsync(Exception exception)
@@ -536,7 +537,7 @@ namespace Tuvi.App.Shared.Services
             System.Windows.Input.ICommand supportDevelopmentCommand,
             string twitterUrl)
         {
-            await Common.UITools.ShowWhatsNewDialogAsync(
+            await UITools.ShowWhatsNewDialogAsync(
                 version,
                 isStorePaymentProcessor,
                 isSupportDevelopmentButtonVisible,
@@ -551,7 +552,7 @@ namespace Tuvi.App.Shared.Services
             string price,
             System.Windows.Input.ICommand supportDevelopmentCommand)
         {
-            await Common.UITools.ShowSupportDevelopmentDialogAsync(
+            await UITools.ShowSupportDevelopmentDialogAsync(
                 isStorePaymentProcessor,
                 price,
                 supportDevelopmentCommand,
@@ -560,7 +561,7 @@ namespace Tuvi.App.Shared.Services
 
         public async Task ShowProtonConnectAddressDialogAsync()
         {
-            await Common.UITools.ShowPopupAsync<ConnectProtonAddressPage>(_xamlRootProvider()).ConfigureAwait(true);
+            await UITools.ShowPopupAsync<ConnectProtonAddressPage>(_xamlRootProvider()).ConfigureAwait(true);
         }
     }
 }

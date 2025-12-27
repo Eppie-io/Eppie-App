@@ -4,7 +4,7 @@
                               xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                               xmlns:local="using:Tuvi.App.Shared.Views"
                               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                              xmlns:sharedControls="using:Tuvi.App.Shared.Controls"
+                              xmlns:sharedControls="using:Eppie.App.UI.Controls"
                               xmlns:viewmodels="using:Tuvi.App.ViewModels"
                               mc:Ignorable="d">
 

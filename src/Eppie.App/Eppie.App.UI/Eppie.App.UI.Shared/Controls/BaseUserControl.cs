@@ -18,6 +18,8 @@
 
 using Tuvi.Core.Entities;
 using System;
+using System.Diagnostics.CodeAnalysis;
+
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml.Controls;
@@ -25,8 +27,9 @@ using Windows.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls;
 #endif
 
-namespace Tuvi.App.Shared.Controls
+namespace Eppie.App.UI.Controls
 {
+    [SuppressMessage("Design", "CA1010:Generic collections should implement generic interface", Justification = "ContentControl implements IEnumerable for XAML infrastructure")]
     public partial class BaseUserControl : UserControl
     {
         public event EventHandler<ExceptionEventArgs> ExceptionOccurred;

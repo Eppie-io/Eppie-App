@@ -24,6 +24,7 @@ using System.Threading.Tasks;
 using Finebits.Authorization.OAuth2.Abstractions;
 using Finebits.Authorization.OAuth2.Types;
 using Windows.System;
+using Eppie.App.UI.Common;
 
 namespace Tuvi.App.Shared.Authorization
 {
@@ -55,7 +56,7 @@ namespace Tuvi.App.Shared.Authorization
 
                     var loader = Eppie.App.UI.Resources.StringProvider.GetInstance();
 
-                    closeAction = await Common.UITools.ShowAuthenticationDialogAsync(
+                    closeAction = await UITools.ShowAuthenticationDialogAsync(
                         loader.GetString("AuthenticationTitle"),
                         loader.GetString("AuthenticationContenet"),
                         loader.GetString("MessageButtonCancel"),

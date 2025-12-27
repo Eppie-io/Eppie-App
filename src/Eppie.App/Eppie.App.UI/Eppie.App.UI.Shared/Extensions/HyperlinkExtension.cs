@@ -26,7 +26,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 #endif
 
-namespace Tuvi.App.Shared.Extensions
+namespace Eppie.App.UI.Extensions
 {
     public static class HyperlinkExtension
     {

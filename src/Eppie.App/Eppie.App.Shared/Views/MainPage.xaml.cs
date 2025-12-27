@@ -22,7 +22,7 @@ using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using Eppie.App.UI.Tools;
 using Microsoft.UI.Xaml.Controls;
-using Tuvi.App.Shared.Extensions;
+using Eppie.App.UI.Extensions;
 using Tuvi.App.Shared.Helpers;
 using Tuvi.App.ViewModels;
 using Tuvi.App.ViewModels.Services;

@@ -4,7 +4,7 @@
                     xmlns:behaviors="using:Eppie.App.UI.Behaviors"
                     xmlns:controls="using:Eppie.App.UI.Controls"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                    xmlns:extensions="using:Tuvi.App.Shared.Extensions"
+                    xmlns:extensions="using:Eppie.App.UI.Extensions"
                     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
                     xmlns:local="using:Tuvi.App.Shared.Views"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
