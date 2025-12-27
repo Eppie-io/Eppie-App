@@ -77,7 +77,7 @@ namespace Tuvi.App.ViewModels
         private const int ActivationPollIntervalMs = 15_000;
 
         [CustomValidation(typeof(BitcoinAddressSettingsPageViewModel), nameof(ValidateActivation))]
-        public object ActivationValidation => null;
+        public static object ActivationValidation => null;
 
         public BitcoinAddressSettingsPageViewModel() : base()
         {

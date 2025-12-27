@@ -17,6 +17,7 @@
 // ---------------------------------------------------------------------------- //
 
 using System;
+using System.Globalization;
 
 namespace Tuvi.App.ViewModels
 {
@@ -29,7 +30,7 @@ namespace Tuvi.App.ViewModels
                 var twitterHandle = BrandService.GetTwitterHandle();
                 var githubUrl = BrandService.GetGitHub();
                 var text = GetLocalizedString("WhatsNewTwitPostText");
-                text = string.Format(text, twitterHandle);
+                text = string.Format(CultureInfo.InvariantCulture, text, twitterHandle);
 
                 return $"https://twitter.com/intent/tweet?text={text}&url={githubUrl}";
             }

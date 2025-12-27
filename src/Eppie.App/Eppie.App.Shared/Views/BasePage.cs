@@ -18,11 +18,10 @@
 
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Tuvi.App.Shared.Models;
-using Tuvi.App.Shared.Services;
+using Eppie.App.Models;
+using Eppie.App.Services;
 using Tuvi.App.ViewModels;
 using Tuvi.Core.Entities;
-using Eppie.App.Shared.Services;
 using System;
 using System.Collections.Generic;
 
@@ -40,9 +39,9 @@ using Microsoft.UI.Xaml.Navigation;
 using Microsoft.UI.Input;
 #endif
 
-namespace Tuvi.App.Shared.Views
+namespace Eppie.App.Views
 {
-    public partial class BasePage<TViewModel, TViewModelBase> : Page, INotifyPropertyChanged
+    internal partial class BasePage<TViewModel, TViewModelBase> : Page, INotifyPropertyChanged
                  where TViewModel : TViewModelBase
                  where TViewModelBase : BaseViewModel
     {
@@ -57,12 +56,12 @@ namespace Tuvi.App.Shared.Views
             // Uno.UI.Toolkit.VisibleBoundsPadding.SetPaddingMask(this, Uno.UI.Toolkit.VisibleBoundsPadding.PaddingMask.All);
 #endif
 
-            DataContextChanged += BasePage_DataContextChanged;
+            DataContextChanged += BasePageDataContextChanged;
         }
 
         private void DataContextChangedImpl()
         {
-            var app = Application.Current as Eppie.App.Shared.App;
+            var app = Application.Current as Eppie.App.App;
 
             ViewModel = DataContext as TViewModel;
             ViewModel.SetCoreProvider(() => app.Core);
@@ -70,7 +69,7 @@ namespace Tuvi.App.Shared.Views
             ViewModel.SetNavigationService(app.NavigationService);
             ViewModel.SetLocalSettingsService(app.LocalSettingsService);
             ViewModel.SetLocalizationService(new LocalizationService(app.Host?.Services));
-            ViewModel.SetMessageService(new MessageService(() => app.XamlRoot));
+            ViewModel.SetMessageService(new MessageService(() => Eppie.App.App.XamlRoot));
             ViewModel.SetErrorHandler(new ErrorHandler());
             ViewModel.SetDispatcherService(new DispatcherService());
             ViewModel.SetBrandService(new BrandLoader());
@@ -81,13 +80,13 @@ namespace Tuvi.App.Shared.Views
         }
 
         // UWP
-        public void BasePage_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
+        public void BasePageDataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
         {
             DataContextChangedImpl();
         }
 
         // Android, iOS
-        public void BasePage_DataContextChanged(DependencyObject sender, DataContextChangedEventArgs args)
+        public void BasePageDataContextChanged(DependencyObject sender, DataContextChangedEventArgs args)
         {
             DataContextChangedImpl();
         }
@@ -153,7 +152,7 @@ namespace Tuvi.App.Shared.Views
         }
         #endregion
 
-        protected void ListViewSwipeContainer_PointerEntered(object sender, PointerRoutedEventArgs e)
+        protected void ListViewSwipeContainerPointerEntered(object sender, PointerRoutedEventArgs e)
         {
             if (e.Pointer.PointerDeviceType == PointerDeviceType.Mouse || e.Pointer.PointerDeviceType == PointerDeviceType.Pen)
             {
@@ -161,12 +160,12 @@ namespace Tuvi.App.Shared.Views
             }
         }
 
-        protected void ListViewSwipeContainer_PointerExited(object sender, PointerRoutedEventArgs e)
+        protected void ListViewSwipeContainerPointerExited(object sender, PointerRoutedEventArgs e)
         {
             VisualStateManager.GoToState(sender as Control, "HoverButtonsHidden", true);
         }
 
-        protected async void InitAIAgentButton(AppBarButton agentButton, Controls.MessageListControl messageListControl)
+        protected async void InitAIAgentButton(AppBarButton agentButton, Eppie.App.UI.Controls.MessageListControl messageListControl)
         {
             try
             {

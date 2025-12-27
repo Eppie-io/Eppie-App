@@ -20,6 +20,8 @@ using System;
 using Tuvi.App.ViewModels;
 using Tuvi.App.ViewModels.Services;
 using System.Windows.Input;
+using System.Diagnostics.CodeAnalysis;
+
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -29,8 +31,9 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 #endif
 
-namespace Tuvi.App.Shared.Controls
+namespace Eppie.App.UI.Controls
 {
+    [SuppressMessage("Design", "CA1010:Generic collections should implement generic interface", Justification = "ContentControl implements IEnumerable for XAML infrastructure")]
     public sealed partial class EmailSettingsControl : UserControl
     {
         public EmailAddressSettingsModel EmailAddressSettingsModel

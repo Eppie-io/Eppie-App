@@ -24,7 +24,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 #endif
 
-namespace Tuvi.App.Shared.Tools
+namespace Eppie.App.UI.Tools
 {
     public static class ElementHierarchyTools
     {

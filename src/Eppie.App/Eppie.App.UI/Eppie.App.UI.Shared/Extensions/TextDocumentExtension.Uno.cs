@@ -22,7 +22,7 @@ using System;
 using System.Text;
 using Microsoft.UI.Text;
 
-namespace Tuvi.App.Shared.Extensions
+namespace Eppie.App.UI.Extensions
 {
     public static partial class TextDocumentExtension
     {

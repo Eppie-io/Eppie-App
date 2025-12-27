@@ -25,13 +25,13 @@ using Windows.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Input;
 #endif
 
-namespace Tuvi.App.Shared.Views
+namespace Eppie.App.Views
 {
-    public partial class AboutPageBase : BasePage<AboutPageViewModel, BaseViewModel>
+    internal partial class AboutPageBase : BasePage<AboutPageViewModel, BaseViewModel>
     {
     }
 
-    public sealed partial class AboutPage : AboutPageBase
+    internal sealed partial class AboutPage : AboutPageBase
     {
         public AboutPage()
         {

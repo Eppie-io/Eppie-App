@@ -16,6 +16,7 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
+using System.Diagnostics.CodeAnalysis;
 using System.Windows.Input;
 
 #if WINDOWS_UWP
@@ -28,8 +29,9 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Markup;
 #endif
 
-namespace Tuvi.App.Shared.Controls
+namespace Eppie.App.UI.Controls
 {
+    [SuppressMessage("Design", "CA1010:Generic collections should implement generic interface", Justification = "ContentControl implements IEnumerable for XAML infrastructure")]
     [ContentProperty(Name = nameof(SettingsContent))]
     public sealed partial class AdvancedSettingsControl : UserControl
     {

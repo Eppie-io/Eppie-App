@@ -1,10 +1,10 @@
-﻿<local:FolderMessagesPageBase x:Class="Tuvi.App.Shared.Views.FolderMessagesPage"
+﻿<local:FolderMessagesPageBase x:Class="Eppie.App.Views.FolderMessagesPage"
                               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                              xmlns:controls="using:Tuvi.App.Shared.Controls"
+                              xmlns:controls="using:Eppie.App.UI.Controls"
                               xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                              xmlns:extensions="using:Tuvi.App.Shared.Extensions"
-                              xmlns:local="using:Tuvi.App.Shared.Views"
+                              xmlns:extensions="using:Eppie.App.UI.Extensions"
+                              xmlns:local="using:Eppie.App.Views"
                               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                               xmlns:viewmodels="using:Tuvi.App.ViewModels"
                               Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
@@ -72,8 +72,8 @@
         </XamlUICommand>
 
         <DataTemplate x:Key="DefaultMessageItemTemplate" x:DataType="viewmodels:IMessageInfo">
-            <!--<UserControl PointerEntered="ListViewSwipeContainer_PointerEntered"
-                             PointerExited="ListViewSwipeContainer_PointerExited">-->
+            <!--<UserControl PointerEntered="ListViewSwipeContainerPointerEntered"
+                             PointerExited="ListViewSwipeContainerPointerExited">-->
             <UserControl>
                 <!--  It leaks see TVM-344  -->
                 <UserControl.ContextFlyout>

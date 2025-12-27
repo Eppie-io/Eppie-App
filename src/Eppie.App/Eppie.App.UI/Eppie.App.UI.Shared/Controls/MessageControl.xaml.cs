@@ -17,12 +17,13 @@
 // ---------------------------------------------------------------------------- //
 
 using System;
-using Tuvi.App.Shared.Controls;
+using Eppie.App.UI.Controls;
 using System.Threading.Tasks;
 using Microsoft.Web.WebView2.Core;
 using Windows.System;
 using CommunityToolkit.Mvvm.Input;
-using Tuvi.Core.Entities;
+using System.Diagnostics.CodeAnalysis;
+
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -32,9 +33,10 @@ using Microsoft.UI.Xaml;
 
 namespace Eppie.App.UI.Controls
 {
+    [SuppressMessage("Design", "CA1010:Generic collections should implement generic interface", Justification = "ContentControl implements IEnumerable for XAML infrastructure")]
     public sealed partial class MessageControl : AIAgentUserControl
     {
-        private bool _webResourceBlockingRegistered = false;
+        private bool _webResourceBlockingRegistered;
 
         public bool ExternalContentBlocked
         {
@@ -45,7 +47,7 @@ namespace Eppie.App.UI.Controls
         public static readonly DependencyProperty ExternalContentBlockedProperty =
             DependencyProperty.Register(nameof(ExternalContentBlocked), typeof(bool), typeof(MessageControl), new PropertyMetadata(false));
 
-        private bool _allowExternalOnce = false;
+        private bool _allowExternalOnce;
 
         public RelayCommand AllowExternalCommand { get; }
 
@@ -164,7 +166,7 @@ namespace Eppie.App.UI.Controls
 
         private void CoreWebView2_NavigationStarting(CoreWebView2 sender, CoreWebView2NavigationStartingEventArgs args)
         {
-            if (!args.Uri.StartsWith("data:"))
+            if (!args.Uri.StartsWith("data:", StringComparison.Ordinal))
             {
                 args.Cancel = true;
             }
@@ -207,7 +209,7 @@ namespace Eppie.App.UI.Controls
             }
         }
 
-        private CoreWebView2WebResourceResponse CreateNoContentResponse(CoreWebView2Environment env)
+        private static CoreWebView2WebResourceResponse CreateNoContentResponse(CoreWebView2Environment env)
         {
             return env.CreateWebResourceResponse(null, 204, "No Content", "Content-Type: text/plain"); // ToDo: Uno0001
         }

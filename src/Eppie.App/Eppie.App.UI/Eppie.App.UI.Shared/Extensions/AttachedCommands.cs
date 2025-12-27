@@ -24,7 +24,7 @@ using Windows.UI.Xaml;
 using Microsoft.UI.Xaml;
 #endif
 
-namespace Tuvi.App.Shared.Extensions
+namespace Eppie.App.UI.Extensions
 {
     public static class AttachedCommands
     {

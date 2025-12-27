@@ -24,13 +24,13 @@ using Windows.UI.Xaml;
 using Microsoft.UI.Xaml;
 #endif
 
-namespace Tuvi.App.Shared.Views
+namespace Eppie.App.Views
 {
-    public partial class EppieAddressSettingsPageBase : BasePage<EppieAddressSettingsPageViewModel, BaseViewModel>
+    internal partial class EppieAddressSettingsPageBase : BasePage<EppieAddressSettingsPageViewModel, BaseViewModel>
     {
     }
 
-    public sealed partial class EppieAddressSettingsPage : EppieAddressSettingsPageBase
+    internal sealed partial class EppieAddressSettingsPage : EppieAddressSettingsPageBase
     {
         public EppieAddressSettingsPage()
         {

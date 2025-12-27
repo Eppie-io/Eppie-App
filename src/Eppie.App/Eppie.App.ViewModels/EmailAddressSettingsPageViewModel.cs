@@ -314,7 +314,7 @@ namespace Tuvi.App.ViewModels
                     else
                     {
                         var errorFormat = GetLocalizedString("EmailDoesntMatchNotification");
-                        var errorNotification = string.Format(errorFormat, profile.Email ?? string.Empty);
+                        var errorNotification = string.Format(System.Globalization.CultureInfo.InvariantCulture, errorFormat, profile.Email ?? string.Empty);
 
                         OnAuthorizationFailed(errorNotification);
                     }
@@ -440,7 +440,7 @@ namespace Tuvi.App.ViewModels
             }
             catch (Exception ex)
             {
-                OnError(new Exception(AddressSettingsModel.OutgoingServerAddress.Value + "\n" + ex.Message));
+                OnError(new InvalidOperationException(AddressSettingsModel.OutgoingServerAddress.Value + "\n" + ex.Message, ex));
             }
             return false;
         }
@@ -495,7 +495,7 @@ namespace Tuvi.App.ViewModels
             }
             catch (Exception ex)
             {
-                OnError(new Exception(AddressSettingsModel.IncomingServerAddress.Value + "\n" + ex.Message));
+                OnError(new InvalidOperationException(AddressSettingsModel.IncomingServerAddress.Value + "\n" + ex.Message, ex));
             }
             return false;
         }

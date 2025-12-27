@@ -145,7 +145,7 @@ namespace Tuvi.App.ViewModels.Common
             }
         }
 
-        protected virtual AsyncLoadMessageData Create(MessageInfo messageInfo, AttachmentsCollection attachments, string template, ITextUtils textUtils)
+        protected virtual AsyncLoadMessageData Create(MessageInfo messageInfo, AttachmentsCollection attachments, string bodyTemplate, ITextUtils textUtils)
         {
             throw new NotImplementedException();
         }
@@ -165,9 +165,9 @@ namespace Tuvi.App.ViewModels.Common
             : base(messageInfo?.Email, CreateToAdress(messageInfo), string.Empty, string.Empty, CreateSubject(messageInfo), CreateMessageBody(messageInfo, template, textUtils), template, null, null)
         { }
 
-        protected override AsyncLoadMessageData Create(MessageInfo messageInfo, AttachmentsCollection attachments, string template, ITextUtils textUtils)
+        protected override AsyncLoadMessageData Create(MessageInfo messageInfo, AttachmentsCollection attachments, string bodyTemplate, ITextUtils textUtils)
         {
-            return new ReplyMessageData(messageInfo, template, textUtils);
+            return new ReplyMessageData(messageInfo, bodyTemplate, textUtils);
         }
 
         private static string CreateSubject(MessageInfo messageInfo)
@@ -186,9 +186,9 @@ namespace Tuvi.App.ViewModels.Common
             : base(messageInfo?.Email, CreateToAdresses(messageInfo), CreateCopyAdresses(messageInfo), messageInfo?.MessageHiddenCopy, CreateSubject(messageInfo), CreateMessageBody(messageInfo, template, textUtils), template, null, null)
         { }
 
-        protected override AsyncLoadMessageData Create(MessageInfo messageInfo, AttachmentsCollection attachments, string template, ITextUtils textUtils)
+        protected override AsyncLoadMessageData Create(MessageInfo messageInfo, AttachmentsCollection attachments, string bodyTemplate, ITextUtils textUtils)
         {
-            return new ReplyAllMessageData(messageInfo, template, textUtils);
+            return new ReplyAllMessageData(messageInfo, bodyTemplate, textUtils);
         }
 
         private static string CreateToAdresses(MessageInfo messageInfo)
@@ -234,9 +234,9 @@ namespace Tuvi.App.ViewModels.Common
              : base(messageInfo?.Email, string.Empty, string.Empty, string.Empty, CreateSubject(messageInfo), CreateMessageBody(messageInfo, template, textUtils), template, attachments, null)
         { }
 
-        protected override AsyncLoadMessageData Create(MessageInfo messageInfo, AttachmentsCollection attachments, string template, ITextUtils textUtils)
+        protected override AsyncLoadMessageData Create(MessageInfo messageInfo, AttachmentsCollection attachments, string bodyTemplate, ITextUtils textUtils)
         {
-            return new ForwardMessageData(messageInfo, attachments, template, textUtils);
+            return new ForwardMessageData(messageInfo, attachments, bodyTemplate, textUtils);
         }
 
         private static string CreateSubject(MessageInfo messageInfo)
@@ -261,7 +261,7 @@ namespace Tuvi.App.ViewModels.Common
             MessageInfo = messageInfo;
         }
 
-        protected override AsyncLoadMessageData Create(MessageInfo messageInfo, AttachmentsCollection attachments, string template, ITextUtils textUtils)
+        protected override AsyncLoadMessageData Create(MessageInfo messageInfo, AttachmentsCollection attachments, string bodyTemplate, ITextUtils textUtils)
         {
             return new DraftMessageData(messageInfo, textUtils, attachments);
         }

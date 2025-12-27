@@ -195,12 +195,12 @@ namespace Tuvi.App.ViewModels
             {
                 ActivateAdvancedSettingsAndSetError(AddressSettingsModel.TwoFactorCode, "AuthenticationError");
             }
-            catch (NeedAdditionalAuthInfo)
+            catch (NeedAdditionalAuthInfoException)
             {
                 ActivateAdvancedSettingsAndSetError(AddressSettingsModel.TwoFactorCode, "AuthenticationError");
             }
 
-            throw new NeedAdditionalAuthInfo();
+            throw new NeedAdditionalAuthInfoException();
         }
 
         private async Task<Account> LoginAsync()
@@ -216,7 +216,7 @@ namespace Tuvi.App.ViewModels
                             if (string.IsNullOrEmpty(AddressSettingsModel.TwoFactorCode.Value))
                             {
                                 ActivateAdvancedSettingsAndSetError(AddressSettingsModel.TwoFactorCode, "NeedTwofactorCode");
-                                throw new NeedAdditionalAuthInfo();
+                                throw new NeedAdditionalAuthInfoException();
                             }
                         }).ConfigureAwait(true);
                         return (true, AddressSettingsModel.TwoFactorCode.Value);
@@ -228,7 +228,7 @@ namespace Tuvi.App.ViewModels
                             if (string.IsNullOrEmpty(AddressSettingsModel.MailboxPassword.Value))
                             {
                                 ActivateAdvancedSettingsAndSetError(AddressSettingsModel.MailboxPassword, "NeedMailboxPassword");
-                                throw new NeedAdditionalAuthInfo();
+                                throw new NeedAdditionalAuthInfoException();
                             }
                         }).ConfigureAwait(true);
                         return (true, AddressSettingsModel.MailboxPassword.Value);
@@ -253,7 +253,7 @@ namespace Tuvi.App.ViewModels
             {
                 await base.ApplySettingsAndGoBackAsync().ConfigureAwait(true);
             }
-            catch (NeedAdditionalAuthInfo)
+            catch (NeedAdditionalAuthInfoException)
             {
                 ActivateAdvancedSettingsAndSetError(AddressSettingsModel.MailboxPassword, "NeedMailboxPassword");
             }

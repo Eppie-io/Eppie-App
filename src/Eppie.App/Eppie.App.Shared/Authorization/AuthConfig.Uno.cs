@@ -25,7 +25,7 @@ using Finebits.Authorization.OAuth2.Outlook;
 using Finebits.Authorization.OAuth2.Types;
 using Tuvi.OAuth2;
 
-namespace Tuvi.App.Shared.Authorization
+namespace Eppie.App.Authorization
 {
     internal static partial class AuthConfig
     {

@@ -23,7 +23,7 @@ using System.Reflection;
 using Tuvi.App.ViewModels.Services;
 using Windows.ApplicationModel;
 
-namespace Tuvi.App.Shared.Models
+namespace Eppie.App.Models
 {
     class BrandInfo
     {

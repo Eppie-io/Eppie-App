@@ -24,7 +24,7 @@ using Windows.UI.Text;
 using Microsoft.UI.Text;
 #endif
 
-namespace Tuvi.App.Shared.Extensions
+namespace Eppie.App.UI.Extensions
 {
     public static partial class TextDocumentExtension
     {

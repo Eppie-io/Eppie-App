@@ -17,6 +17,8 @@
 // ---------------------------------------------------------------------------- //
 
 using System;
+using System.Diagnostics.CodeAnalysis;
+
 
 #if WINDOWS_UWP
 using Windows.Devices.Input;
@@ -33,8 +35,9 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 #endif
 
-namespace Tuvi.App.Shared.Controls
+namespace Eppie.App.UI.Controls
 {
+    [SuppressMessage("Design", "CA1010:Generic collections should implement generic interface", Justification = "ContentControl implements IEnumerable for XAML infrastructure")]
     public sealed partial class AddressItemControl : UserControl
     {
         public event EventHandler Invoked;
@@ -69,8 +72,8 @@ namespace Tuvi.App.Shared.Controls
             DependencyProperty.Register(nameof(Avatar), typeof(ImageSource), typeof(AddressItemControl), new PropertyMetadata(null));
 
 
-        private bool _canInvoke = false;
-        private bool _isPointerOver = false;
+        private bool _canInvoke;
+        private bool _isPointerOver;
 
         public AddressItemControl()
         {

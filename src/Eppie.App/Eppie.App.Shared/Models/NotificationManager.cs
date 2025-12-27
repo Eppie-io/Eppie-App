@@ -17,11 +17,11 @@
 // ---------------------------------------------------------------------------- //
 
 using System;
-using Tuvi.App.Shared.Services;
+using Eppie.App.Services;
 using Tuvi.Core;
 using Tuvi.Core.Entities;
 
-namespace Tuvi.App.Shared.Models
+namespace Eppie.App.Models
 {
     public class NotificationManager
     {

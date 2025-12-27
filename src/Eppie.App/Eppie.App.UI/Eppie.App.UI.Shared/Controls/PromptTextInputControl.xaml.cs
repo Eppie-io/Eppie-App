@@ -16,6 +16,8 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
+using System.Diagnostics.CodeAnalysis;
+
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -24,8 +26,9 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 #endif
 
-namespace Tuvi.App.Shared.Controls
+namespace Eppie.App.UI.Controls
 {
+    [SuppressMessage("Design", "CA1010:Generic collections should implement generic interface", Justification = "ContentControl implements IEnumerable for XAML infrastructure")]
     public sealed partial class PromptTextInputControl : UserControl
     {
         public static readonly DependencyProperty TextProperty =

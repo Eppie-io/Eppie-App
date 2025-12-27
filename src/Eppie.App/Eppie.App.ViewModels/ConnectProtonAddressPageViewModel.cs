@@ -306,7 +306,7 @@ namespace Tuvi.App.ViewModels
             return Core.ExistsAccountWithEmailAddressAsync(new EmailAddress(email), cancellationToken);
         }
 
-        private Task AddAccountAsync(Account account, CancellationToken cancellationToken = default)
+        private static Task AddAccountAsync(Account account, CancellationToken cancellationToken = default)
         {
             // ToDo: Implement
             // look at

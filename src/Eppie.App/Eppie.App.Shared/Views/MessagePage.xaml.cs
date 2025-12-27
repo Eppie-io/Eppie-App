@@ -28,13 +28,13 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 #endif
 
-namespace Tuvi.App.Shared.Views
+namespace Eppie.App.Views
 {
-    public partial class MessagePageBase : BasePage<MessagePageViewModel, BaseViewModel>
+    internal partial class MessagePageBase : BasePage<MessagePageViewModel, BaseViewModel>
     {
     }
 
-    public sealed partial class MessagePage : MessagePageBase
+    internal sealed partial class MessagePage : MessagePageBase
     {
         public MessagePage()
         {

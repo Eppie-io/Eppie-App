@@ -18,6 +18,8 @@
 
 using System.Collections.Generic;
 using Tuvi.Core.Entities;
+using System.Diagnostics.CodeAnalysis;
+
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -29,8 +31,9 @@ using Microsoft.UI.Xaml.Controls;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace Tuvi.App.Shared.Controls
+namespace Eppie.App.UI.Controls
 {
+    [SuppressMessage("Design", "CA1010:Generic collections should implement generic interface", Justification = "ContentControl implements IEnumerable for XAML infrastructure")]
     public sealed partial class AttachmentListControl : UserControl
     {
         public IList<Attachment> Items

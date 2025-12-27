@@ -20,7 +20,7 @@ using System.Collections.Generic;
 using Eppie.App.ViewModels.Services;
 using Tuvi.App.ViewModels;
 
-namespace Eppie.App.Shared.Services
+namespace Eppie.App.Services
 {
     public class DragAndDropService : IDragAndDropService
     {

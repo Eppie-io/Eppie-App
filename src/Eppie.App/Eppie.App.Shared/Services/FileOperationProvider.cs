@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+using Eppie.App;
 using Eppie.App.UI.Tools;
 using Tuvi.App.ViewModels.Services;
 using Windows.Storage;
@@ -33,7 +34,7 @@ using Windows.UI.Xaml;
 using Microsoft.UI.Xaml;
 #endif
 
-namespace Eppie.App.Shared.Services
+namespace Eppie.App.Services
 {
     public class FileOperationProvider : IFileOperationProvider
     {

@@ -17,8 +17,9 @@
 // ---------------------------------------------------------------------------- //
 
 using System;
-using Tuvi.App.ViewModels;
 using System.Windows.Input;
+using System.Diagnostics.CodeAnalysis;
+
 
 
 #if WINDOWS_UWP
@@ -33,6 +34,7 @@ using Microsoft.UI.Xaml.Controls.Primitives;
 
 namespace Eppie.App.UI.Controls
 {
+    [SuppressMessage("Design", "CA1010:Generic collections should implement generic interface", Justification = "ContentControl implements IEnumerable for XAML infrastructure")]
     public sealed partial class SupportDevelopmentControl : UserControl
     {
         public ICommand SupportDevelopmentCommand

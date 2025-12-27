@@ -23,6 +23,6 @@ namespace Tuvi.App.ViewModels.Services
 {
     public interface IMessageService
     {
-        Task ShowErrorMessageAsync(Exception ex);
+        Task ShowErrorMessageAsync(Exception exception);
     }
 }

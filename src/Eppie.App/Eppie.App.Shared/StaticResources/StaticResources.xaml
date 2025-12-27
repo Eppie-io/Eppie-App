@@ -1,8 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:converters="using:Tuvi.App.Converters"
-                    xmlns:models="using:Tuvi.App.Shared.Models"
-                    xmlns:services="using:Eppie.App.Shared.Services">
+                    xmlns:models="using:Eppie.App.Models"
+                    xmlns:services="using:Eppie.App.Services">
 
     <services:FileOperationProvider x:Key="FileOperationProvider" />
     <services:ClipboardProvider x:Key="ClipboardProvider" />

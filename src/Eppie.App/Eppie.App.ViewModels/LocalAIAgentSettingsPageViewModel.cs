@@ -98,7 +98,7 @@ namespace Tuvi.App.ViewModels
             {
                 if (AgentSpecialty == LocalAIAgentSpecialty.Translator)
                 {
-                    prompt = string.Format(prompt, Language);
+                    prompt = string.Format(System.Globalization.CultureInfo.InvariantCulture, prompt, Language);
                 }
 
                 SystemPrompt = prompt;
@@ -137,7 +137,7 @@ namespace Tuvi.App.ViewModels
              LocalAIAgentSpecialty.WhitelistManager
         };
 
-        public readonly Dictionary<LocalAIAgentSpecialty, string> Prompts = new Dictionary<LocalAIAgentSpecialty, string>
+        public Dictionary<LocalAIAgentSpecialty, string> Prompts { get; } = new Dictionary<LocalAIAgentSpecialty, string>
         {
             // Content Creation & Editing
             { LocalAIAgentSpecialty.Writer, "Write a well-structured and engaging email on the given topic." },
@@ -226,7 +226,7 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        public readonly List<string> Languages = new List<string>
+        public List<string> Languages { get; } = new List<string>
         {
             "Afrikaans",
             "Arabic",

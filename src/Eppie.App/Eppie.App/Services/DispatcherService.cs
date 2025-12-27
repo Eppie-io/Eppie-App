@@ -19,7 +19,7 @@
 using Microsoft.UI.Dispatching;
 using Tuvi.App.ViewModels.Services;
 
-namespace Tuvi.App.Shared.Services
+namespace Eppie.App.Services
 {
     public class DispatcherService : IDispatcherService
     {

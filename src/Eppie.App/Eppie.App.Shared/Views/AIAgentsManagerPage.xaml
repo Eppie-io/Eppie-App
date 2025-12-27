@@ -1,11 +1,11 @@
-﻿<local:AIAgentsManagerPageBase x:Class="Tuvi.App.Shared.Views.AIAgentsManagerPage"
+﻿<local:AIAgentsManagerPageBase x:Class="Eppie.App.Views.AIAgentsManagerPage"
                                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                                xmlns:behaviors="using:Eppie.App.UI.Behaviors"
                                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                                xmlns:entities="using:Tuvi.Core.Entities"
                                xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-                               xmlns:local="using:Tuvi.App.Shared.Views"
+                               xmlns:local="using:Eppie.App.Views"
                                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                                xmlns:viewmodels="using:Tuvi.App.ViewModels"
                                mc:Ignorable="d">

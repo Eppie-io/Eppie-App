@@ -16,6 +16,8 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
+using System.Diagnostics.CodeAnalysis;
+
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -26,8 +28,9 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Markup;
 #endif
 
-namespace Tuvi.App.Shared.Controls
+namespace Eppie.App.UI.Controls
 {
+    [SuppressMessage("Design", "CA1010:Generic collections should implement generic interface", Justification = "ContentControl implements IEnumerable for XAML infrastructure")]
     [ContentProperty(Name = nameof(ExtraContent))]
     public sealed partial class AddressHeaderControl : UserControl
     {

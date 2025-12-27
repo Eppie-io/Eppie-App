@@ -27,7 +27,7 @@ namespace Eppie.App.iOS
         public static void Main(string[] args)
         {
             var host = UnoPlatformHostBuilder.Create()
-                                             .App(() => new Eppie.App.Shared.App())
+                                             .App(() => new Eppie.App.App())
                                              .UseAppleUIKit()
                                              .Build();
 

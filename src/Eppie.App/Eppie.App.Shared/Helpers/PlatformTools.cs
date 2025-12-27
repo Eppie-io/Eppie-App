@@ -18,7 +18,7 @@
 
 using System;
 
-namespace Eppie.App.Shared.Helpers
+namespace Eppie.App.Helpers
 {
     [Flags]
     internal enum Platform : uint

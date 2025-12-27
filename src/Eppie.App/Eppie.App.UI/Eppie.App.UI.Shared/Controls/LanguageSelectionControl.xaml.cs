@@ -21,6 +21,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Globalization;
 using Eppie.App.UI.Resources;
+using System.Diagnostics.CodeAnalysis;
+
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -30,7 +32,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 #endif
 
-namespace Tuvi.App.Shared.Controls
+namespace Eppie.App.UI.Controls
 {
     public class LanguageChangedEventArgs : EventArgs
     {
@@ -43,6 +45,7 @@ namespace Tuvi.App.Shared.Controls
         public string LanguageTag { get; set; }
     }
 
+    [SuppressMessage("Design", "CA1010:Generic collections should implement generic interface", Justification = "ContentControl implements IEnumerable for XAML infrastructure")]
     public sealed partial class LanguageSelectionControl : UserControl
     {
         private static readonly StringProvider StringProvider = StringProvider.GetInstance();

@@ -16,7 +16,9 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-using Tuvi.App.Shared.Extensions;
+using Eppie.App.UI.Extensions;
+using System.Diagnostics.CodeAnalysis;
+
 
 #if WINDOWS_UWP
 using Windows.UI.Text;
@@ -30,6 +32,7 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace Eppie.App.UI.Controls
 {
+    [SuppressMessage("Design", "CA1010:Generic collections should implement generic interface", Justification = "ContentControl implements IEnumerable for XAML infrastructure")]
     public partial class RichTextEditor : RichEditBox
     {
         private string _html;

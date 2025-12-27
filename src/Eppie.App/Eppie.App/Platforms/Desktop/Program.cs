@@ -26,7 +26,7 @@ namespace Eppie.App
         public static void Main(string[] args)
         {
             var host = UnoPlatformHostBuilder.Create()
-                .App(() => new Eppie.App.Shared.App())
+                .App(() => new Eppie.App.App())
                 .UseX11()
                 .UseLinuxFrameBuffer()
                 .UseMacOS()

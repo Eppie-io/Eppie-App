@@ -18,6 +18,7 @@
 
 using System;
 using Windows.Storage.Pickers;
+using System.Diagnostics.CodeAnalysis;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -61,6 +62,7 @@ namespace Eppie.App.UI.Tools
         }
 #endif
 
+        [SuppressMessage("Design", "CA1000:Do not declare static members on generic types", Justification = "Factory method simplifies creation of builders with Window initialization; acceptable for this design.")]
         public static TBuilder CreateBuilder(Window window)
         {
             TBuilder builder = new TBuilder();

@@ -18,13 +18,13 @@
 
 using Tuvi.App.ViewModels;
 
-namespace Tuvi.App.Shared.Views
+namespace Eppie.App.Views
 {
-    public partial class PgpKeyPageBase : BasePage<PgpKeyPageViewModel, BaseViewModel>
+    internal partial class PgpKeyPageBase : BasePage<PgpKeyPageViewModel, BaseViewModel>
     {
     }
 
-    public sealed partial class PgpKeyPage : PgpKeyPageBase
+    internal sealed partial class PgpKeyPage : PgpKeyPageBase
     {
         public PgpKeyPage()
         {
