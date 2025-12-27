@@ -18,7 +18,7 @@
 
 using Tuvi.App.ViewModels;
 
-namespace Tuvi.App.Shared.Views
+namespace Eppie.App.Views
 {
     internal partial class PgpKeyPageBase : BasePage<PgpKeyPageViewModel, BaseViewModel>
     {

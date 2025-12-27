@@ -16,10 +16,10 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-using Tuvi.App.Shared.Models;
+using Eppie.App.Models;
 using Tuvi.App.ViewModels;
 
-namespace Tuvi.App.Shared.Views
+namespace Eppie.App.Views
 {
     internal partial class WelcomePageBase : BasePage<WelcomePageViewModel, BaseViewModel>
     {

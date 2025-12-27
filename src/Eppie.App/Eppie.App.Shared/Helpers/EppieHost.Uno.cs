@@ -22,18 +22,18 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Eppie.App.Shared.Helpers
+namespace Eppie.App.Helpers
 {
     internal static partial class EppieHost
     {
         public static IHostBuilder CreateBuilder(ILoggerFactory loggerFactory)
         {
-            return UnoHost.CreateDefaultBuilder(Environment.GetCommandLineArgs()).ConfugureDefault().ConfugureUno().AddLoggerFactory(loggerFactory);
+            return UnoHost.CreateDefaultBuilder<App>(Environment.GetCommandLineArgs()).ConfugureDefault().ConfugureUno().AddLoggerFactory(loggerFactory);
         }
 
         public static IHostBuilder CreateBuilder()
         {
-            return UnoHost.CreateDefaultBuilder(Environment.GetCommandLineArgs()).ConfugureDefault().ConfugureUno();
+            return UnoHost.CreateDefaultBuilder<App>(Environment.GetCommandLineArgs()).ConfugureDefault().ConfugureUno();
         }
 
         private static IHostBuilder ConfugureUno(this IHostBuilder hostBuilder)

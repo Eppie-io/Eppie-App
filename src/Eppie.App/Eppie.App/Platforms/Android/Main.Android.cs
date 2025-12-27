@@ -32,7 +32,7 @@ namespace Eppie.App.Droid
     {
 
         public Application(IntPtr javaReference, JniHandleOwnership transfer)
-            : base(() => new Eppie.App.Shared.App(), javaReference, transfer)
+            : base(() => new Eppie.App.App(), javaReference, transfer)
         {
             ConfigureUniversalImageLoader();
         }

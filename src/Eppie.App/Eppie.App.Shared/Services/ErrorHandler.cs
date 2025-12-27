@@ -19,10 +19,11 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using Serilog.Core;
 using Tuvi.App.ViewModels.Services;
 using Tuvi.Core.Logging;
 
-namespace Tuvi.App.Shared.Services
+namespace Eppie.App.Services
 {
     public class ErrorHandler : IErrorHandler
     {
@@ -40,10 +41,15 @@ namespace Tuvi.App.Shared.Services
             MessageService = messageService;
         }
 
+        private static readonly Action<ILogger, Exception> LogError =
+            LoggerMessage.Define(
+                LogLevel.Error,
+                new EventId(0, nameof(OnError)),
+                "An error has occurred");
 
         public async void OnError(Exception ex, bool silent)
         {
-            LoggingExtension.Log(this).LogError(ex, "An error has occurred");
+            LogError(LoggingExtension.Log(this), ex);
             try
             {
                 await Dispatcher.RunAsync(async () =>

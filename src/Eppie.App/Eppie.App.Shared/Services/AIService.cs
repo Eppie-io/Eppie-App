@@ -34,9 +34,9 @@ using Tuvi.Core.Entities;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 
-namespace Eppie.App.Shared.Services
+namespace Eppie.App.Services
 {
-    public class AIService : IAIService
+    public class AIService : IAIService, IDisposable
     {
 #if AI_ENABLED
         private Service Service;
@@ -47,6 +47,7 @@ namespace Eppie.App.Shared.Services
         private readonly IAIAgentsStorage Storage;
         private Task LoadingModelTask;
         private readonly SemaphoreSlim Semaphore = new SemaphoreSlim(1);
+        private bool _DisposedValue;
 
         public event EventHandler<LocalAIAgentEventArgs> AgentAdded;
         public event EventHandler<LocalAIAgentEventArgs> AgentDeleted;
@@ -357,6 +358,24 @@ namespace Eppie.App.Shared.Services
         {
             await Storage.UpdateAIAgentAsync(agent).ConfigureAwait(false);
             AgentUpdated?.Invoke(this, new LocalAIAgentEventArgs(agent));
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_DisposedValue)
+            {
+                if (disposing)
+                {
+                    Semaphore?.Dispose();
+                }
+                _DisposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }

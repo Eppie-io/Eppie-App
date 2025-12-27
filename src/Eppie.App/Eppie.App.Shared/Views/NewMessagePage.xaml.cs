@@ -17,7 +17,7 @@
 // ---------------------------------------------------------------------------- //
 
 using System;
-using Eppie.App.Shared.Services;
+using Eppie.App.Services;
 using Tuvi.App.ViewModels;
 using Windows.ApplicationModel.DataTransfer;
 
@@ -33,7 +33,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 #endif
 
-namespace Tuvi.App.Shared.Views
+namespace Eppie.App.Views
 {
     internal partial class NewMessagePageBase : BasePage<NewMessagePageViewModel, BaseViewModel>
     {

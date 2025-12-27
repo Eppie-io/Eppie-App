@@ -19,14 +19,14 @@
 #if !WINDOWS_UWP
 
 using Microsoft.UI.Windowing;
-using Tuvi.App.Shared.Models;
-using Tuvi.App.Shared.Views;
+using Eppie.App.Models;
+using Eppie.App.Views;
 using Tuvi.App.ViewModels;
 using Windows.Foundation;
 using Windows.Graphics;
 using Windows.UI.ViewManagement;
 
-namespace Eppie.App.Shared
+namespace Eppie.App
 {
     public partial class App : Application
     {

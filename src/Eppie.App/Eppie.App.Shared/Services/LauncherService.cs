@@ -21,7 +21,7 @@ using System.Threading.Tasks;
 using Tuvi.App.ViewModels.Services;
 using Windows.System;
 
-namespace Tuvi.App.Shared.Services
+namespace Eppie.App.Services
 {
     public class LauncherService : ILauncherService
     {

@@ -31,7 +31,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 #endif
 
-namespace Tuvi.App.Shared.Views
+namespace Eppie.App.Views
 {
     internal partial class ConnectProtonAddressPageBase : BasePage<ConnectProtonAddressPageViewModel, BaseViewModel>
     { }

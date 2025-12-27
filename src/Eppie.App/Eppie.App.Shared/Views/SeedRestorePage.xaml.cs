@@ -24,7 +24,7 @@ using Windows.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls;
 #endif
 
-namespace Tuvi.App.Shared.Views
+namespace Eppie.App.Views
 {
     internal partial class SeedRestorePageBase : BasePage<SeedRestorePageViewModel, BaseViewModel>
     {

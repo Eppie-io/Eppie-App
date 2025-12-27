@@ -33,7 +33,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 #endif
 
-namespace Tuvi.App.Shared.Views
+namespace Eppie.App.Views
 {
     internal partial class AddressManagerPageBase : BasePage<AddressManagerPageViewModel, BaseViewModel>
     {

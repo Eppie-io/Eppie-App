@@ -20,8 +20,8 @@
 
 using System;
 using Microsoft.Services.Store.Engagement;
-using Tuvi.App.Shared.Authorization;
-using Tuvi.App.Shared.Views;
+using Eppie.App.Authorization;
+using Eppie.App.Views;
 using Tuvi.App.ViewModels;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -31,7 +31,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-namespace Eppie.App.Shared
+namespace Eppie.App
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.

@@ -28,7 +28,7 @@ using Serilog.Extensions.Logging;
 using Serilog.Formatting.Compact;
 using Windows.Storage;
 
-namespace Eppie.App.Shared.Logging
+namespace Eppie.App.Logging
 {
     internal static class LogConfiguration
     {

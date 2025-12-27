@@ -21,7 +21,7 @@ using System.Threading.Tasks;
 using Tuvi.App.ViewModels.Services;
 using Windows.UI.Core;
 
-namespace Tuvi.App.Shared.Services
+namespace Eppie.App.Services
 {
     public class DispatcherService : IDispatcherService
     {

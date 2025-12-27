@@ -20,17 +20,17 @@ using Tuvi.App.ViewModels.Services;
 using System;
 using System.Linq;
 using System.Globalization;
-
+using System.Diagnostics.CodeAnalysis;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-#else 
+#else
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 #endif
 
-namespace Tuvi.App.Shared.Services
+namespace Eppie.App.Services
 {
     public class NavigationService : INavigationService
     {
@@ -53,6 +53,8 @@ namespace Tuvi.App.Shared.Services
             MainFrame?.GoBack();
         }
 
+        [SuppressMessage("ILLink", "IL2057:Unrecognized value passed to the parameter 'typeName' of method 'System.Type.GetType(System.String)'. It's not possible to guarantee the availability of the target type.", Justification = "Pages are located in the same assembly; resolving by name at runtime is intended and safe in this app.")]
+        // TODO: Need to change Navigation mechanism to avoid using Type.GetType
         public void Navigate(string pageKey, object parameter = null)
         {
             string pageTypeName = GetPageTypeNameFromKey(pageKey);

@@ -17,13 +17,14 @@
 // ---------------------------------------------------------------------------- //
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using Eppie.App.UI.Tools;
 using Microsoft.UI.Xaml.Controls;
 using Eppie.App.UI.Extensions;
-using Tuvi.App.Shared.Helpers;
+using Eppie.App.Helpers;
 using Tuvi.App.ViewModels;
 using Tuvi.App.ViewModels.Services;
 using Windows.Storage;
@@ -36,7 +37,7 @@ using Windows.UI.Xaml.Navigation;
 using Microsoft.UI.Xaml.Navigation;
 #endif
 
-namespace Tuvi.App.Shared.Views
+namespace Eppie.App.Views
 {
     internal partial class MainPageBase : BasePage<MainPageViewModel, BaseViewModel>
     {
@@ -86,7 +87,7 @@ namespace Tuvi.App.Shared.Views
             {
                 ShowAllMessagesCommand.Execute(this);
 
-                var app = Eppie.App.Shared.App.Current as Eppie.App.Shared.App;
+                var app = Eppie.App.App.Current as Eppie.App.App;
                 var settings = app?.LocalSettingsService;
 
                 if (settings != null)
@@ -117,7 +118,7 @@ namespace Tuvi.App.Shared.Views
 
         private void OnNavigationPaneToggled(NavigationView sender, object args)
         {
-            var app = Eppie.App.Shared.App.Current as Eppie.App.Shared.App;
+            var app = Eppie.App.App.Current as Eppie.App.App;
             var settings = app?.LocalSettingsService;
             if (settings != null)
             {
@@ -221,7 +222,7 @@ namespace Tuvi.App.Shared.Views
 
         private void SavePaneState()
         {
-            var app = Eppie.App.Shared.App.Current as Eppie.App.Shared.App;
+            var app = Eppie.App.App.Current as Eppie.App.App;
             var settings = app?.LocalSettingsService;
             if (settings != null)
             {
@@ -249,7 +250,7 @@ namespace Tuvi.App.Shared.Views
         {
             try
             {
-                FileOpenPicker fileOpenPicker = FileOpenPickerBuilder.CreateBuilder(Eppie.App.Shared.App.MainWindow)
+                FileOpenPicker fileOpenPicker = FileOpenPickerBuilder.CreateBuilder(Eppie.App.App.MainWindow)
                                                                      .Configure((picker) =>
                                                                      {
                                                                          picker.ViewMode = PickerViewMode.Thumbnail;
@@ -277,6 +278,7 @@ namespace Tuvi.App.Shared.Views
             }
         }
 
+        [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Event handler is referenced from XAML and must be an instance method.")]
         private void OnElementClearing(ItemsRepeater sender, ItemsRepeaterElementClearingEventArgs args)
         {
             var infoBar = args.Element as InfoBar;

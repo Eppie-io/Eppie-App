@@ -25,7 +25,7 @@ namespace Eppie.App
         public static async Task Main(string[] args)
         {
             var host = UnoPlatformHostBuilder.Create()
-                                             .App(() => new Eppie.App.Shared.App())
+                                             .App(() => new Eppie.App.App())
                                              .UseWebAssembly()
                                              .Build();
 

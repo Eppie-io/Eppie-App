@@ -24,7 +24,7 @@ using Windows.UI.Xaml;
 using Microsoft.UI.Xaml;
 #endif
 
-namespace Tuvi.App.Shared.Views
+namespace Eppie.App.Views
 {
     internal partial class BitcoinAddressSettingsPageBase : BasePage<BitcoinAddressSettingsPageViewModel, BaseViewModel>
     {

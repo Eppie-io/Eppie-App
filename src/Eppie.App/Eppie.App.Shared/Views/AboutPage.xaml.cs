@@ -25,7 +25,7 @@ using Windows.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Input;
 #endif
 
-namespace Tuvi.App.Shared.Views
+namespace Eppie.App.Views
 {
     internal partial class AboutPageBase : BasePage<AboutPageViewModel, BaseViewModel>
     {

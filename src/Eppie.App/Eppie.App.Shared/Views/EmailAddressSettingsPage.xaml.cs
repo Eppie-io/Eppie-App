@@ -24,7 +24,7 @@ using Windows.UI.Xaml;
 using Microsoft.UI.Xaml;
 #endif
 
-namespace Tuvi.App.Shared.Views
+namespace Eppie.App.Views
 {
     internal partial class EmailAddressSettingsPageBase : BasePage<EmailAddressSettingsPageViewModel, BaseViewModel>
     {
@@ -36,7 +36,7 @@ namespace Tuvi.App.Shared.Views
         {
             this.InitializeComponent();
 
-            ViewModel.SetAuthProvider((Application.Current as Eppie.App.Shared.App)?.AuthProvider);
+            ViewModel.SetAuthProvider((Application.Current as Eppie.App.App)?.AuthProvider);
         }
     }
 }

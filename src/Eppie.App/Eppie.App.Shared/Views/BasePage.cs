@@ -18,11 +18,10 @@
 
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Tuvi.App.Shared.Models;
-using Tuvi.App.Shared.Services;
+using Eppie.App.Models;
+using Eppie.App.Services;
 using Tuvi.App.ViewModels;
 using Tuvi.Core.Entities;
-using Eppie.App.Shared.Services;
 using System;
 using System.Collections.Generic;
 
@@ -40,7 +39,7 @@ using Microsoft.UI.Xaml.Navigation;
 using Microsoft.UI.Input;
 #endif
 
-namespace Tuvi.App.Shared.Views
+namespace Eppie.App.Views
 {
     internal partial class BasePage<TViewModel, TViewModelBase> : Page, INotifyPropertyChanged
                  where TViewModel : TViewModelBase
@@ -62,7 +61,7 @@ namespace Tuvi.App.Shared.Views
 
         private void DataContextChangedImpl()
         {
-            var app = Application.Current as Eppie.App.Shared.App;
+            var app = Application.Current as Eppie.App.App;
 
             ViewModel = DataContext as TViewModel;
             ViewModel.SetCoreProvider(() => app.Core);
@@ -70,7 +69,7 @@ namespace Tuvi.App.Shared.Views
             ViewModel.SetNavigationService(app.NavigationService);
             ViewModel.SetLocalSettingsService(app.LocalSettingsService);
             ViewModel.SetLocalizationService(new LocalizationService(app.Host?.Services));
-            ViewModel.SetMessageService(new MessageService(() => Eppie.App.Shared.App.XamlRoot));
+            ViewModel.SetMessageService(new MessageService(() => Eppie.App.App.XamlRoot));
             ViewModel.SetErrorHandler(new ErrorHandler());
             ViewModel.SetDispatcherService(new DispatcherService());
             ViewModel.SetBrandService(new BrandLoader());

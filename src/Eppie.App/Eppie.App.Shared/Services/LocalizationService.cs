@@ -21,7 +21,7 @@ using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
 using Windows.Globalization;
 
-namespace Tuvi.App.Shared.Services
+namespace Eppie.App.Services
 {
     public class LocalizationService : Tuvi.App.ViewModels.Services.ILocalizationService
     {
@@ -39,6 +39,7 @@ namespace Tuvi.App.Shared.Services
             return Eppie.App.UI.Resources.StringProvider.GetInstance().GetString(resource);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Uses instance ServiceProvider in non-Windows builds via conditional compilation.")]
         private IReadOnlyList<string> GetManifestLanguages()
         {
 #if WINDOWS10_0_19041_0_OR_GREATER || WINDOWS_UWP

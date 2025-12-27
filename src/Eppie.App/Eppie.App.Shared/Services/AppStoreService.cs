@@ -24,7 +24,7 @@ using Eppie.App.ViewModels.Services;
 using Windows.Services.Store;
 using Windows.System;
 
-namespace Eppie.App.Shared.Services
+namespace Eppie.App.Services
 {
     public class BaseAppStoreService : IAppStoreService
     {
@@ -71,7 +71,11 @@ namespace Eppie.App.Shared.Services
             }
         }
 
+        // The backing StoreContext field is assigned conditionally inside GetStoreContext under platform-specific #if blocks,
+        // so suppress the "field never assigned" warning (CS0649) intentionally to avoid spurious warnings.
+#pragma warning disable CS0649
         private StoreContext _StoreContext;
+#pragma warning restore CS0649
         protected StoreContext GetStoreContext()
         {
             if (_StoreContext is null)
@@ -82,7 +86,7 @@ namespace Eppie.App.Shared.Services
 #endif
 
 #if WINDOWS10_0_19041_0_OR_GREATER
-                var window = Eppie.App.Shared.App.MainWindow;
+                var window = Eppie.App.App.MainWindow;
                 nint hwnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
                 WinRT.Interop.InitializeWithWindow.Initialize(_StoreContext, hwnd);
 #endif

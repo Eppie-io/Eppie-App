@@ -29,9 +29,9 @@ using Tuvi.App.ViewModels;
 using Tuvi.App.ViewModels.Common;
 using Tuvi.App.ViewModels.Services;
 using TuviPgpLib.Entities;
-using Tuvi.App.Shared.Models;
+using Eppie.App.Models;
 using System.Runtime.InteropServices;
-using Tuvi.App.Shared.Views;
+using Eppie.App.Views;
 using Eppie.App.UI.Common;
 
 #if WINDOWS_UWP
@@ -40,7 +40,7 @@ using Windows.UI.Xaml;
 using Microsoft.UI.Xaml;
 #endif
 
-namespace Tuvi.App.Shared.Services
+namespace Eppie.App.Services
 {
     public partial class MessageService : ITuviMailMessageService
     {
@@ -223,11 +223,11 @@ namespace Tuvi.App.Shared.Services
             var message = $"\n________________________________________________________________________________" +
                           $"\n App version: {brand.GetAppVersion()}" +
                           $"\n OS: {RuntimeInformation.OSDescription}" +
-                          $"\n {exception.TargetSite?.Name} \n {exception}";
+                          $"\n {exception}";
 
             if (exception.InnerException != null)
             {
-                message += $"\n {exception.InnerException.TargetSite?.Name} \n {exception.InnerException}";
+                message += $"\n {exception.InnerException}";
             }
 
             if (await ShowErrorMessageAsync(title, message, StringProvider.GetString("MsgBtnOk"), StringProvider.GetString("MessageButtonCancel")).ConfigureAwait(true))
@@ -239,7 +239,7 @@ namespace Tuvi.App.Shared.Services
         private void SendErrorReport(string message)
         {
             var brand = new Models.BrandLoader();
-            var navigationService = (Application.Current as Eppie.App.Shared.App).NavigationService;
+            var navigationService = (Application.Current as Eppie.App.App).NavigationService;
             var messageData = new ErrorReportNewMessageData(brand.GetSupport(), StringProvider.GetString("ErrorReportEmailTitle"), message);
             navigationService?.Navigate(nameof(NewMessagePageViewModel), messageData);
         }

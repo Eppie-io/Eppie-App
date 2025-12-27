@@ -21,7 +21,7 @@ using System.Globalization;
 using Windows.Data.Xml.Dom;
 using Windows.UI.Notifications;
 
-namespace Tuvi.App.Shared.Services
+namespace Eppie.App.Services
 {
     public static class NotificationService
     {

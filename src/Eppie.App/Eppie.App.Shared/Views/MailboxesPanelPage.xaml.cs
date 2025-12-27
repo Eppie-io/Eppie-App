@@ -26,7 +26,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Navigation;
 #endif
 
-namespace Tuvi.App.Shared.Views
+namespace Eppie.App.Views
 {
     internal partial class MailboxesPanelPageBase : BasePage<BaseViewModel, BaseViewModel>
     {

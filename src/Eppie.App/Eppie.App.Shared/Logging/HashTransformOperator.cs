@@ -19,7 +19,7 @@
 using System.Globalization;
 using Serilog.Enrichers.Sensitive;
 
-namespace Eppie.App.Shared.Logging
+namespace Eppie.App.Logging
 {
     public class HashTransformOperator<TBaseMaskingOperator> : IMaskingOperator
         where TBaseMaskingOperator : IMaskingOperator, new()
