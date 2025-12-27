@@ -18,9 +18,9 @@
 
 #if !WINDOWS_UWP
 
-using Microsoft.UI.Windowing;
 using Eppie.App.Models;
 using Eppie.App.Views;
+using Microsoft.UI.Windowing;
 using Tuvi.App.ViewModels;
 using Windows.Foundation;
 using Windows.Graphics;
