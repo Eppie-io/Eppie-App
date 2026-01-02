@@ -32,12 +32,12 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 #endif
 
-namespace Tuvi.App.Shared.Views
+namespace Eppie.App.Views
 {
-    public partial class ConnectProtonAddressPageBase : BasePage<ConnectProtonAddressPageViewModel, BaseViewModel>
+    internal partial class ConnectProtonAddressPageBase : BasePage<ConnectProtonAddressPageViewModel, BaseViewModel>
     { }
 
-    public sealed partial class ConnectProtonAddressPage : ConnectProtonAddressPageBase, IPopupPage
+    internal sealed partial class ConnectProtonAddressPage : ConnectProtonAddressPageBase, IPopupPage
     {
         public event EventHandler ClosePopupRequested;
 

@@ -25,7 +25,7 @@ using Finebits.Authorization.OAuth2.Abstractions;
 using Finebits.Authorization.OAuth2.Types;
 using Windows.Security.Authentication.Web;
 
-namespace Tuvi.App.Shared.Authorization
+namespace Eppie.App.Authorization
 {
     internal class AuthenticationBroker : IAuthenticationBroker
     {
@@ -38,7 +38,7 @@ namespace Tuvi.App.Shared.Authorization
                 throw new OperationCanceledException();
             }
 
-            return new AuthenticationResult(OAuth2.Toolkit.ParseQueryString(result.ResponseData));
+            return new AuthenticationResult(Tuvi.OAuth2.Toolkit.ParseQueryString(result.ResponseData));
         }
     }
 }

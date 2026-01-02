@@ -120,6 +120,7 @@ namespace Tuvi.App.ViewModels
             get
             {
                 //TODO: Disabled for now
+                _ = !IsHybridAddress && !IsCreatingAccountMode;
                 //return !IsHybridAddress && !IsCreatingAccountMode;
                 return false;
             }
@@ -208,13 +209,13 @@ namespace Tuvi.App.ViewModels
 
         private async Task<bool> ApplySettingsAsync(Account accountData)
         {
-            _cts = new CancellationTokenSource();
-            bool result = await CheckEmailAccountAsync(accountData, _cts.Token).ConfigureAwait(true);
+            Cts = new CancellationTokenSource();
+            bool result = await CheckEmailAccountAsync(accountData, Cts.Token).ConfigureAwait(true);
             if (result)
             {
                 try
                 {
-                    await ProcessAccountDataAsync(accountData, _cts.Token).ConfigureAwait(true);
+                    await ProcessAccountDataAsync(accountData, Cts.Token).ConfigureAwait(true);
                     return true;
                 }
                 catch (OperationCanceledException)
@@ -257,11 +258,11 @@ namespace Tuvi.App.ViewModels
             NavigationService?.GoBack();
         }
 
-        protected CancellationTokenSource _cts;
+        protected CancellationTokenSource Cts { get; set; }
 
         private void CancelAsyncOperation()
         {
-            _cts?.Cancel();
+            Cts?.Cancel();
         }
 
         private async Task RemoveAccountAndGoBackAsync()
@@ -375,7 +376,7 @@ namespace Tuvi.App.ViewModels
 
             if (disposing)
             {
-                _cts?.Dispose();
+                Cts?.Dispose();
             }
 
             _isDisposed = true;

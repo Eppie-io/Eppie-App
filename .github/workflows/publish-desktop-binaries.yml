@@ -71,7 +71,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
           fetch-depth: 0
 
@@ -104,7 +104,7 @@ jobs:
         run: git config --system core.longpaths true
 
       - name: Checkout
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
           fetch-depth: 0
           submodules: recursive
@@ -221,7 +221,7 @@ jobs:
       # It currently does not support ARM64 yet. (Azure/trusted-signing-action#92)
       - name: Sign files with Trusted Signing
         if: ${{ runner.os == 'Windows' && matrix.os != 'windows-11-arm' && steps.check-azure-secrets.outputs.secrets-exist == 'true' }}
-        uses: azure/trusted-signing-action@fc390cf8ed0f14e248a542af1d838388a47c7a7c # v0.5.10
+        uses: azure/trusted-signing-action@1d365fec12862c4aa68fcac418143d73f0cea293 # v0.5.11
         with:
           azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
@@ -257,7 +257,7 @@ jobs:
           fi
 
       - name: Upload Artifacts
-        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
         with:
           name: Eppie.Desktop-${{ matrix.publish.runtime }} [${{ steps.assign-version.outputs.artifact-version }}]
           path: ${{ env.artifacts-path }}

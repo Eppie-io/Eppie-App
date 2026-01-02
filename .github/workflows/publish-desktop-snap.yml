@@ -61,7 +61,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
           fetch-depth: 0
 
@@ -90,7 +90,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
           fetch-depth: 0
           submodules: recursive
@@ -126,7 +126,7 @@ jobs:
           sudo snap install snapcraft --classic
 
       - name: Setup LXD
-        uses: canonical/setup-lxd@a3c85fc6fb7fff43fcfeae87659e41a8f635b7dd #0.1.3
+        uses: canonical/setup-lxd@8c6a87bfb56aa48f3fb9b830baa18562d8bfd4ee #1
         with:
           channel: latest/stable
 
@@ -264,7 +264,7 @@ jobs:
           fi
 
       - name: Upload Artifacts
-        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
         with:
           name: Eppie.Desktop-snap-${{ matrix.publish.runtime }} [${{ steps.assign-version.outputs.artifact-version }}]
           path: ${{ env.artifacts-path }}

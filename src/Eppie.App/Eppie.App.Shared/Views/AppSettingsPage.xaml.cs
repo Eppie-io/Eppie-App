@@ -26,15 +26,14 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 #endif
 
-// ToDo: change namespace
-namespace Tuvi.App.Shared.Views
+namespace Eppie.App.Views
 {
     // ToDo: Issue #840 - Rename SettingsPageViewModel or replace it with a new one
-    public partial class AppSettingsPageBase : BasePage<SettingsPageViewModel, BaseViewModel>
+    internal partial class AppSettingsPageBase : BasePage<SettingsPageViewModel, BaseViewModel>
     {
     }
 
-    public sealed partial class AppSettingsPage : AppSettingsPageBase
+    internal sealed partial class AppSettingsPage : AppSettingsPageBase
     {
         public AppSettingsPage()
         {
@@ -48,7 +47,7 @@ namespace Tuvi.App.Shared.Views
 
         private void InitLanguage()
         {
-            LanguageSelector.InitSelection((Application.Current as Eppie.App.Shared.App).LocalSettingsService.Language);
+            LanguageSelector.InitSelection((Application.Current as Eppie.App.App).LocalSettingsService.Language);
         }
 
         private void OnLanguageChanged(object sender, string language)

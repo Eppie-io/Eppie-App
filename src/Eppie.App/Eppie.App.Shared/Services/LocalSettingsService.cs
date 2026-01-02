@@ -19,13 +19,13 @@
 using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using Eppie.App.Shared.Logging;
+using Eppie.App.Logging;
 using Microsoft.Extensions.Logging;
 using Tuvi.App.ViewModels;
 using Tuvi.App.ViewModels.Services;
 using Windows.Storage;
 
-namespace Tuvi.App.Shared.Services
+namespace Eppie.App.Services
 {
     /// <summary>
     /// Service to store and retrieve local settings
@@ -216,7 +216,7 @@ namespace Tuvi.App.Shared.Services
 
         #region Set/Get option
 
-        private ApplicationDataContainer AppLocalSettings { get { return ApplicationData.Current.LocalSettings; } }
+        private static ApplicationDataContainer AppLocalSettings { get { return ApplicationData.Current.LocalSettings; } }
 
         private void SetOption<T>(T value, [CallerMemberName] string key = null)
         {
@@ -231,7 +231,7 @@ namespace Tuvi.App.Shared.Services
             }
         }
 
-        private T GetOption<T>(T defaultValue, [CallerMemberName] string key = null)
+        private static T GetOption<T>(T defaultValue, [CallerMemberName] string key = null)
         {
             try
             {
@@ -255,7 +255,7 @@ namespace Tuvi.App.Shared.Services
             SetOption<string>(value.ToString(), key);
         }
 
-        private TEnum GetEnumOption<TEnum>(TEnum defaultValue, [CallerMemberName] string key = null)
+        private static TEnum GetEnumOption<TEnum>(TEnum defaultValue, [CallerMemberName] string key = null)
             where TEnum : struct, Enum
         {
             string value = GetOption<string>(defaultValue.ToString(), key);

@@ -377,7 +377,7 @@ namespace Tuvi.App.ViewModels
             return Core.ExistsAccountWithEmailAddressAsync(new EmailAddress(email), cancellationToken);
         }
 
-        private Task ProcessAccountAsync(Account account, CancellationToken cancellationToken = default)
+        private static Task ProcessAccountAsync(Account account, CancellationToken cancellationToken = default)
         {
             return ProcessAccountDataAsync(account, cancellationToken);
         }

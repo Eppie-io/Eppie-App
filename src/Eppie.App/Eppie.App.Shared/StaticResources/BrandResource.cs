@@ -18,7 +18,7 @@
 
 using Tuvi.App.ViewModels.Services;
 
-namespace Tuvi.App.Shared.Models
+namespace Eppie.App.Models
 {
     public sealed class BrandResource
     {

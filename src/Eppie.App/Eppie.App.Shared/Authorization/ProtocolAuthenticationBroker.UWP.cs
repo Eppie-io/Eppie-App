@@ -24,8 +24,9 @@ using System.Threading.Tasks;
 using Finebits.Authorization.OAuth2.Abstractions;
 using Finebits.Authorization.OAuth2.Types;
 using Windows.System;
+using Eppie.App.UI.Common;
 
-namespace Tuvi.App.Shared.Authorization
+namespace Eppie.App.Authorization
 {
     /// <summary>
     /// Authentication broker that uses protocol activation to receive OAuth callbacks from system browser
@@ -55,7 +56,7 @@ namespace Tuvi.App.Shared.Authorization
 
                     var loader = Eppie.App.UI.Resources.StringProvider.GetInstance();
 
-                    closeAction = await Common.UITools.ShowAuthenticationDialogAsync(
+                    closeAction = await UITools.ShowAuthenticationDialogAsync(
                         loader.GetString("AuthenticationTitle"),
                         loader.GetString("AuthenticationContenet"),
                         loader.GetString("MessageButtonCancel"),
@@ -103,7 +104,7 @@ namespace Tuvi.App.Shared.Authorization
             try
             {
                 var result = new AuthenticationResult(
-                    OAuth2.Toolkit.ParseQueryString(responseUri)
+                    Tuvi.OAuth2.Toolkit.ParseQueryString(responseUri)
                 );
                 _authCompletionSource.TrySetResult(result);
             }

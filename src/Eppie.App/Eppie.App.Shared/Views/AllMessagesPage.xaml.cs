@@ -26,13 +26,13 @@ using Windows.UI.Xaml;
 using Microsoft.UI.Xaml.Navigation;
 #endif
 
-namespace Tuvi.App.Shared.Views
+namespace Eppie.App.Views
 {
-    public partial class AllMessagesPageBase : BasePage<AllMessagesPageViewModel, BaseViewModel>
+    internal partial class AllMessagesPageBase : BasePage<AllMessagesPageViewModel, BaseViewModel>
     {
     }
 
-    public sealed partial class AllMessagesPage : AllMessagesPageBase
+    internal sealed partial class AllMessagesPage : AllMessagesPageBase
     {
         public AllMessagesPage()
         {

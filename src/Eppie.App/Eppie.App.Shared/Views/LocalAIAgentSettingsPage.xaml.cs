@@ -18,13 +18,13 @@
 
 using Tuvi.App.ViewModels;
 
-namespace Tuvi.App.Shared.Views
+namespace Eppie.App.Views
 {
-    public partial class LocalAIAgentSettingsPageBase : BasePage<LocalAIAgentSettingsPageViewModel, BaseViewModel>
+    internal partial class LocalAIAgentSettingsPageBase : BasePage<LocalAIAgentSettingsPageViewModel, BaseViewModel>
     {
     }
 
-    public sealed partial class LocalAIAgentSettingsPage : LocalAIAgentSettingsPageBase
+    internal sealed partial class LocalAIAgentSettingsPage : LocalAIAgentSettingsPageBase
     {
         public LocalAIAgentSettingsPage()
         {

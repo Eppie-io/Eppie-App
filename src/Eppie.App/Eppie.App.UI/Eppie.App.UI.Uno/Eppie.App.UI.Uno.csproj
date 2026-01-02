@@ -14,7 +14,8 @@
 
     <EmitCompilerGeneratedFiles>false</EmitCompilerGeneratedFiles>
     <CompilerGeneratedFilesOutputPath>generated</CompilerGeneratedFilesOutputPath>
-    <AnalysisLevel>6.0-all</AnalysisLevel>
+    <AnalysisLevel>6.0-recommended</AnalysisLevel>
+    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
 
     <!--
       UnoFeatures let's you quickly add and manage implicit package references based on the features you want to use.
@@ -30,6 +31,78 @@
   <PropertyGroup Condition="'$(RuntimeIdentifier)'==''">
     <!-- Default values for command line builds -->
     <RuntimeIdentifier Condition="$(TargetFramework.Contains('ios'))">iossimulator-x64</RuntimeIdentifier>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0|AnyCPU'">
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+    <WarningLevel>9999</WarningLevel>
+    <WarningsNotAsErrors>Uno0001</WarningsNotAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-ios|AnyCPU'">
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+    <WarningLevel>9999</WarningLevel>
+    <WarningsNotAsErrors>Uno0001</WarningsNotAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-android|AnyCPU'">
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+    <WarningLevel>9999</WarningLevel>
+    <WarningsNotAsErrors>Uno0001</WarningsNotAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-windows10.0.19041|AnyCPU'">
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+    <WarningLevel>9999</WarningLevel>
+    <WarningsNotAsErrors>Uno0001</WarningsNotAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-browserwasm|AnyCPU'">
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+    <WarningLevel>9999</WarningLevel>
+    <WarningsNotAsErrors>Uno0001</WarningsNotAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-desktop|AnyCPU'">
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+    <WarningLevel>9999</WarningLevel>
+    <WarningsNotAsErrors>Uno0001</WarningsNotAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0|AnyCPU'">
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+    <WarningLevel>9999</WarningLevel>
+    <WarningsNotAsErrors>Uno0001</WarningsNotAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-ios|AnyCPU'">
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+    <WarningLevel>9999</WarningLevel>
+    <WarningsNotAsErrors>Uno0001</WarningsNotAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-android|AnyCPU'">
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+    <WarningLevel>9999</WarningLevel>
+    <WarningsNotAsErrors>Uno0001</WarningsNotAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-windows10.0.19041|AnyCPU'">
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+    <WarningLevel>9999</WarningLevel>
+    <WarningsNotAsErrors>Uno0001</WarningsNotAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-browserwasm|AnyCPU'">
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+    <WarningLevel>9999</WarningLevel>
+    <WarningsNotAsErrors>Uno0001</WarningsNotAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-desktop|AnyCPU'">
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+    <WarningLevel>9999</WarningLevel>
+    <WarningsNotAsErrors>Uno0001</WarningsNotAsErrors>
   </PropertyGroup>
 
   <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">
@@ -65,8 +138,6 @@
     <PackageReference Include="Uno.Microsoft.Xaml.Behaviors.WinUI.Managed" />
   </ItemGroup>
   <ItemGroup>
-    <!-- The default version of the 'System.Private.Uri' package is 4.3.0, which has a vulnerability -->
-    <PackageReference Include="System.Private.Uri" />
     <PackageReference Include="CommunityToolkit.WinUI.Controls.TokenizingTextBox" />
   </ItemGroup>
 </Project>

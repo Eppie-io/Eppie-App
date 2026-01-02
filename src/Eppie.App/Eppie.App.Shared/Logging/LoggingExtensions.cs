@@ -19,7 +19,7 @@
 using Microsoft.Extensions.Logging;
 using Serilog.Events;
 
-namespace Eppie.App.Shared.Logging
+namespace Eppie.App.Logging
 {
     public static class LoggingExtensions
     {

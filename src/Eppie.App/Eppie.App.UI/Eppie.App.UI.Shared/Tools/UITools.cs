@@ -29,8 +29,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 #endif
 
-// ToDo: rename namespace to Eppie.App.UI.Shared.Common
-namespace Tuvi.App.Shared.Common
+namespace Eppie.App.UI.Common
 {
     public static class UITools
     {

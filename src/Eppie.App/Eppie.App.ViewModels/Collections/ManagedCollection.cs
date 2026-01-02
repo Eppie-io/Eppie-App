@@ -44,7 +44,7 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        public IExtendedComparer<T>[] SortingVariants = Array.Empty<IExtendedComparer<T>>();
+        public IExtendedComparer<T>[] SortingVariants { get; set; } = Array.Empty<IExtendedComparer<T>>();
 
         public int SelectedSortingIndex
         {
@@ -85,7 +85,7 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        public IFilter<T>[] FilterVariants = Array.Empty<IFilter<T>>();
+        public IFilter<T>[] FilterVariants { get; set; } = Array.Empty<IFilter<T>>();
 
         private IFilter<T> _itemsFilter;
         public IFilter<T> ItemsFilter
