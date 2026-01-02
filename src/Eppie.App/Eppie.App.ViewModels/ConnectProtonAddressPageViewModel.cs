@@ -151,7 +151,7 @@ namespace Tuvi.App.ViewModels
             }
             catch (Exception ex)
             {
-                FroceClosePopup();
+                ForceClosePopup();
                 OnError(ex);
             }
 
@@ -315,7 +315,7 @@ namespace Tuvi.App.ViewModels
             }
             catch (Exception ex)
             {
-                FroceClosePopup();
+                ForceClosePopup();
                 OnError(ex);
             }
         }
@@ -337,7 +337,7 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        private async void FroceClosePopup()
+        private async void ForceClosePopup()
         {
             try
             {
@@ -377,7 +377,7 @@ namespace Tuvi.App.ViewModels
             return Core.ExistsAccountWithEmailAddressAsync(new EmailAddress(email), cancellationToken);
         }
 
-        private static Task ProcessAccountAsync(Account account, CancellationToken cancellationToken = default)
+        private Task ProcessAccountAsync(Account account, CancellationToken cancellationToken = default)
         {
             return ProcessAccountDataAsync(account, cancellationToken);
         }
