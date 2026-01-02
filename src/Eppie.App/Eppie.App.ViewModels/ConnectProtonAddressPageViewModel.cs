@@ -138,6 +138,9 @@ namespace Tuvi.App.ViewModels
                             IsProcess = false;
                         }
                         break;
+                    case ProtonConnectionStep.Done:
+                        OnDone();
+                        break;
                     case ProtonConnectionStep.HumanVerifier:
                         // Todo: Issue #479 add human verification page
                         throw new NotImplementedException();

@@ -1,8 +1,10 @@
 ﻿<local:ConnectProtonAddressPageBase x:Class="Eppie.App.Views.ConnectProtonAddressPage"
                                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                                    xmlns:behaviors="using:Eppie.App.UI.Behaviors"
                                     xmlns:controls="using:Eppie.App.UI.Controls"
                                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                                    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
                                     xmlns:local="using:Eppie.App.Views"
                                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                                     xmlns:viewmodels="using:Tuvi.App.ViewModels"
@@ -13,6 +15,12 @@
     <local:ConnectProtonAddressPageBase.DataContext>
         <viewmodels:ConnectProtonAddressPageViewModel />
     </local:ConnectProtonAddressPageBase.DataContext>
+
+    <interactivity:Interaction.Behaviors>
+        <behaviors:DialogBehavior ApplyCommand="{x:Bind ViewModel.ContinueCommand}"
+                                  CancelCommand="{x:Bind ViewModel.ClosedCommand}"
+                                  HandleErrorCommand="{x:Bind ViewModel.HandleErrorCommand}" />
+    </interactivity:Interaction.Behaviors>
 
     <local:ConnectProtonAddressPageBase.Resources>
         <x:Double x:Key="PageWidth">428</x:Double>
@@ -201,9 +209,6 @@
                                       Visibility="{x:Bind ViewModel.IsProcess, Mode=OneWay}" />
                         <TextBlock x:Uid="ConnectProtonAddressContinueButtonContent" Visibility="{x:Bind ViewModel.IsProcess, Converter={StaticResource InverseBoolToVisibilityConverter}, Mode=OneWay}" />
                     </Grid>
-                    <Button.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="Enter" />
-                    </Button.KeyboardAccelerators>
                 </Button>
 
                 <StackPanel Grid.Row="2"
@@ -219,11 +224,7 @@
                             Margin="{StaticResource DoneButtonMargin}"
                             HorizontalAlignment="Stretch"
                             Command="{x:Bind ViewModel.DoneCommand, Mode=OneWay}"
-                            Style="{StaticResource AccentButtonStyle}">
-                        <Button.KeyboardAccelerators>
-                            <KeyboardAccelerator Key="Enter" />
-                        </Button.KeyboardAccelerators>
-                    </Button>
+                            Style="{StaticResource AccentButtonStyle}" />
                 </StackPanel>
 
             </Grid>
