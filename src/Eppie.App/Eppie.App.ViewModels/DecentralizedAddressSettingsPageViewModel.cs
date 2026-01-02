@@ -49,7 +49,7 @@ namespace Tuvi.App.ViewModels
             return networkType == NetworkType.Bitcoin || networkType == NetworkType.Ethereum;
         }
 
-        private int _derivationIndex = 0;
+        private int _derivationIndex;
         public int DerivationIndex
         {
             get => _derivationIndex;

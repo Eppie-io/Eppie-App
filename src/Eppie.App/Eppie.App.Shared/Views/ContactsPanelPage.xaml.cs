@@ -26,13 +26,13 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Navigation;
 #endif
 
-namespace Tuvi.App.Shared.Views
+namespace Eppie.App.Views
 {
-    public partial class ContactsPanelPageBase : BasePage<BaseViewModel, BaseViewModel>
+    internal partial class ContactsPanelPageBase : BasePage<BaseViewModel, BaseViewModel>
     {
     }
 
-    public sealed partial class ContactsPanelPage : ContactsPanelPageBase
+    internal sealed partial class ContactsPanelPage : ContactsPanelPageBase
     {
         public ContactsPanelPage()
         {

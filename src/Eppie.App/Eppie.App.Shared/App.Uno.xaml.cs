@@ -18,15 +18,15 @@
 
 #if !WINDOWS_UWP
 
+using Eppie.App.Models;
+using Eppie.App.Views;
 using Microsoft.UI.Windowing;
-using Tuvi.App.Shared.Models;
-using Tuvi.App.Shared.Views;
 using Tuvi.App.ViewModels;
 using Windows.Foundation;
 using Windows.Graphics;
 using Windows.UI.ViewManagement;
 
-namespace Eppie.App.Shared
+namespace Eppie.App
 {
     public partial class App : Application
     {
@@ -84,20 +84,20 @@ namespace Eppie.App.Shared
         /// <param name="e">Details about the navigation failure</param>
         void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
-            throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
+            throw new InvalidOperationException("Failed to load Page " + e.SourcePageType.FullName, e.Exception);
         }
 
-        private void SubscribeToPlatformSpecificEvents()
+        private static void SubscribeToPlatformSpecificEvents()
         {
 
         }
 
-        private void InitializeNotifications()
+        private static void InitializeNotifications()
         {
 
         }
 
-        private void ConfigurePreferredMinimumSize()
+        private static void ConfigurePreferredMinimumSize()
         {
 #if HAS_UNO
 
@@ -178,7 +178,7 @@ namespace Eppie.App.Shared
             return DefaultScale;
         }
 
-        private void EnsurePageReady(Page page, Action whenReady)
+        private static void EnsurePageReady(Page page, Action whenReady)
         {
             if (page?.XamlRoot is null || page.XamlRoot.RasterizationScale <= 0)
             {

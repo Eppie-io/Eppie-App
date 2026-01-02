@@ -17,6 +17,7 @@
 // ---------------------------------------------------------------------------- //
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows.Input;
 
 #if WINDOWS_UWP
@@ -29,6 +30,7 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace Eppie.App.UI.Controls
 {
+    [SuppressMessage("Design", "CA1010:Generic collections should implement generic interface", Justification = "ContentControl implements IEnumerable for XAML infrastructure")]
     public sealed partial class WhatsNewControl : UserControl
     {
         public string Version

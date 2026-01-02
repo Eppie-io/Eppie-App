@@ -21,7 +21,7 @@ using System.Threading.Tasks;
 using Windows.Graphics.Imaging;
 using Windows.Storage;
 
-namespace Tuvi.App.Shared.Helpers
+namespace Eppie.App.Helpers
 {
     public static class BitmapTools
     {

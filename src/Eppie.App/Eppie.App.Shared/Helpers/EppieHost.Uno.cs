@@ -22,7 +22,7 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Eppie.App.Shared.Helpers
+namespace Eppie.App.Helpers
 {
     internal static partial class EppieHost
     {

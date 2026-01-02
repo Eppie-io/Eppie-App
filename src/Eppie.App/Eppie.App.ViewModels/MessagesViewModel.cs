@@ -32,7 +32,7 @@ using Tuvi.Core.Entities;
 
 namespace Tuvi.App.ViewModels
 {
-    public class MessagesViewModel : BaseViewModel, IIncrementalSource<MessageInfo>
+    public class MessagesViewModel : BaseViewModel, IIncrementalSource<MessageInfo>, IDisposable
     {
         public class BaseNavigationData
         {
@@ -151,7 +151,7 @@ namespace Tuvi.App.ViewModels
             private set => SetProperty(ref _isLocalAIEnabled, value);
         }
 
-        public bool IsLocalAIAvailable => IsSelectMessagesMode && AIService.IsAvailable();
+        public new bool IsLocalAIAvailable => IsSelectMessagesMode && AIService.IsAvailable();
 
         public MessageFilter[] FilterVariants { get; }
 
@@ -649,6 +649,21 @@ namespace Tuvi.App.ViewModels
             catch (Exception e)
             {
                 OnError(e);
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _cancellationTokenSource?.Dispose();
+                _lastDeletedTokenSource?.Dispose();
             }
         }
     }

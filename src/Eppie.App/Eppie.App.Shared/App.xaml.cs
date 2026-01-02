@@ -21,16 +21,15 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
-using Eppie.App.Shared.Helpers;
-using Eppie.App.Shared.Logging;
-using Eppie.App.Shared.Services;
+using Eppie.App.Helpers;
+using Eppie.App.Logging;
+using Eppie.App.Services;
 using Eppie.App.ViewModels.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Tuvi.App.Shared.Models;
-using Tuvi.App.Shared.Services;
-using Tuvi.App.Shared.Views;
+using Eppie.App.Models;
+using Eppie.App.Views;
 using Tuvi.App.ViewModels;
 using Tuvi.App.ViewModels.Services;
 using Tuvi.Core;
@@ -53,7 +52,7 @@ using Microsoft.UI.Xaml.Input;
 using Windows.Foundation;
 #endif
 
-namespace Eppie.App.Shared
+namespace Eppie.App
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
@@ -85,7 +84,7 @@ namespace Eppie.App.Shared
         public IAIService AIService { get; private set; }
 
         public static Window MainWindow { get; private set; }
-        public XamlRoot XamlRoot => MainWindow?.Content?.XamlRoot;
+        public static XamlRoot XamlRoot => MainWindow?.Content?.XamlRoot;
 
         private ErrorHandler _errorHandler;
 
@@ -186,7 +185,7 @@ namespace Eppie.App.Shared
 
         private void CreateAuth()
         {
-            AuthProvider = AuthorizationFactory.GetAuthorizationProvider(Tuvi.App.Shared.Authorization.AuthConfig.GetAuthorizationConfiguration());
+            AuthProvider = AuthorizationFactory.GetAuthorizationProvider(Eppie.App.Authorization.AuthConfig.GetAuthorizationConfiguration());
         }
 
         private void CreateCore()
@@ -215,8 +214,8 @@ namespace Eppie.App.Shared
             frame.NavigationFailed += OnNavigationFailed;
             frame.Navigated += OnFrameNavigated;
 
-            // ToDo: use nameof(Tuvi.App.Shared.Views) and add dot(.) inside NavigationService
-            NavigationService = new NavigationService(frame, "Tuvi.App.Shared.Views.");
+            // ToDo: use nameof(Eppie.App.Views) and add dot(.) inside NavigationService
+            NavigationService = new NavigationService(frame, "Eppie.App.Views.");
 
             _errorHandler = new ErrorHandler();
             _errorHandler.SetMessageService(new MessageService(() => XamlRoot));
@@ -285,20 +284,31 @@ namespace Eppie.App.Shared
             catch { }
         }
 
+        private static readonly Action<ILogger, Exception> LogError =
+            LoggerMessage.Define(
+                LogLevel.Error,
+                new EventId(0, nameof(OnError)),
+                "An error has occurred"
+            );
+
         private void OnError(Exception exception)
         {
-            Logger?.LogError(exception, "An error has occurred");
+            LogError(Logger, exception);
             _errorHandler?.OnError(exception, false);
         }
+
+
+        private static readonly Action<ILogger, string, string, string, string, Exception> LogLaunchInfo =
+            LoggerMessage.Define<string, string, string, string>(
+                LogLevel.Information,
+                new EventId(1, nameof(LogLaunchInformation)),
+                "Launching the {AppName} app (version {AppVersion}; language {Language}) on {OSDescription} OS"
+            );
 
         private void LogLaunchInformation()
         {
             BrandLoader brand = new BrandLoader();
-            Logger?.LogInformation("Launching the {AppName} app (version {AppVersion}; language {Language}) on {OSDescription} OS",
-                                   brand.GetName(),
-                                   brand.GetAppVersion(),
-                                   ApplicationLanguages.PrimaryLanguageOverride,
-                                   RuntimeInformation.OSDescription);
+            LogLaunchInfo(Logger, brand.GetName(), brand.GetAppVersion(), ApplicationLanguages.PrimaryLanguageOverride, RuntimeInformation.OSDescription, null);
         }
 
         private void LocalSettingsService_ThemeSettingChanged(object sender, SettingChangedEventArgs args)
@@ -433,7 +443,7 @@ namespace Eppie.App.Shared
             content.VerticalAlignment = VerticalAlignment.Stretch;
         }
 
-        private Page GetCurrentPage()
+        private static Page GetCurrentPage()
         {
             var frame = MainWindow?.Content as Frame;
             return frame?.Content as Page;

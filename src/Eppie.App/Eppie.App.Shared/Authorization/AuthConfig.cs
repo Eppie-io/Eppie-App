@@ -18,7 +18,7 @@
 
 using System.Collections.Generic;
 
-namespace Tuvi.App.Shared.Authorization
+namespace Eppie.App.Authorization
 {
     internal static partial class AuthConfig
     {

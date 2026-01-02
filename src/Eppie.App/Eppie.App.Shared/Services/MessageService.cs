@@ -29,9 +29,10 @@ using Tuvi.App.ViewModels;
 using Tuvi.App.ViewModels.Common;
 using Tuvi.App.ViewModels.Services;
 using TuviPgpLib.Entities;
-using Tuvi.App.Shared.Models;
+using Eppie.App.Models;
 using System.Runtime.InteropServices;
-using Tuvi.App.Shared.Views;
+using Eppie.App.Views;
+using Eppie.App.UI.Common;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -39,7 +40,7 @@ using Windows.UI.Xaml;
 using Microsoft.UI.Xaml;
 #endif
 
-namespace Tuvi.App.Shared.Services
+namespace Eppie.App.Services
 {
     public partial class MessageService : ITuviMailMessageService
     {
@@ -54,17 +55,17 @@ namespace Tuvi.App.Shared.Services
 
         private Task ShowInfoMessageAsync(string title, string message, string closeButtonText)
         {
-            return Common.UITools.ShowInfoMessageAsync(title, message, closeButtonText, _xamlRootProvider());
+            return UITools.ShowInfoMessageAsync(title, message, closeButtonText, _xamlRootProvider());
         }
 
         private Task<bool> ShowErrorMessageAsync(string title, string message, string acceptButtonText, string rejectButtonText)
         {
-            return Common.UITools.ShowErrorMessageAsync(title, message, acceptButtonText, rejectButtonText, _xamlRootProvider());
+            return UITools.ShowErrorMessageAsync(title, message, acceptButtonText, rejectButtonText, _xamlRootProvider());
         }
 
         private Task<bool> ShowDialogAsync(string title, string message, string acceptButtonText, string rejectButtonText)
         {
-            return Common.UITools.ShowDialogAsync(title, message, acceptButtonText, rejectButtonText, _xamlRootProvider());
+            return UITools.ShowDialogAsync(title, message, acceptButtonText, rejectButtonText, _xamlRootProvider());
         }
 
         public Task ShowErrorMessageAsync(Exception exception)
@@ -222,11 +223,11 @@ namespace Tuvi.App.Shared.Services
             var message = $"\n________________________________________________________________________________" +
                           $"\n App version: {brand.GetAppVersion()}" +
                           $"\n OS: {RuntimeInformation.OSDescription}" +
-                          $"\n {exception.TargetSite?.Name} \n {exception}";
+                          $"\n {exception}";
 
             if (exception.InnerException != null)
             {
-                message += $"\n {exception.InnerException.TargetSite?.Name} \n {exception.InnerException}";
+                message += $"\n {exception.InnerException}";
             }
 
             if (await ShowErrorMessageAsync(title, message, StringProvider.GetString("MsgBtnOk"), StringProvider.GetString("MessageButtonCancel")).ConfigureAwait(true))
@@ -238,7 +239,7 @@ namespace Tuvi.App.Shared.Services
         private void SendErrorReport(string message)
         {
             var brand = new Models.BrandLoader();
-            var navigationService = (Application.Current as Eppie.App.Shared.App).NavigationService;
+            var navigationService = (Application.Current as Eppie.App.App).NavigationService;
             var messageData = new ErrorReportNewMessageData(brand.GetSupport(), StringProvider.GetString("ErrorReportEmailTitle"), message);
             navigationService?.Navigate(nameof(NewMessagePageViewModel), messageData);
         }
@@ -247,7 +248,7 @@ namespace Tuvi.App.Shared.Services
         {
             return ShowInfoMessageAsync(
                 StringProvider.GetString("FailedToAddAccountTitle"),
-                string.Format(StringProvider.GetString("EnableImapMessage"), forEmail),
+                string.Format(System.Globalization.CultureInfo.CurrentCulture, StringProvider.GetString("EnableImapMessage"), forEmail),
                 StringProvider.GetString("MsgBtnOk"));
         }
         public Task ShowAddAccountMessageAsync()
@@ -536,7 +537,7 @@ namespace Tuvi.App.Shared.Services
             System.Windows.Input.ICommand supportDevelopmentCommand,
             string twitterUrl)
         {
-            await Common.UITools.ShowWhatsNewDialogAsync(
+            await UITools.ShowWhatsNewDialogAsync(
                 version,
                 isStorePaymentProcessor,
                 isSupportDevelopmentButtonVisible,
@@ -551,7 +552,7 @@ namespace Tuvi.App.Shared.Services
             string price,
             System.Windows.Input.ICommand supportDevelopmentCommand)
         {
-            await Common.UITools.ShowSupportDevelopmentDialogAsync(
+            await UITools.ShowSupportDevelopmentDialogAsync(
                 isStorePaymentProcessor,
                 price,
                 supportDevelopmentCommand,
@@ -560,7 +561,7 @@ namespace Tuvi.App.Shared.Services
 
         public async Task ShowProtonConnectAddressDialogAsync()
         {
-            await Common.UITools.ShowPopupAsync<ConnectProtonAddressPage>(_xamlRootProvider()).ConfigureAwait(true);
+            await UITools.ShowPopupAsync<ConnectProtonAddressPage>(_xamlRootProvider()).ConfigureAwait(true);
         }
     }
 }

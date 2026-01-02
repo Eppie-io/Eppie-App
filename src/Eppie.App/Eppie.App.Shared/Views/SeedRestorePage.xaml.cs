@@ -24,13 +24,13 @@ using Windows.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls;
 #endif
 
-namespace Tuvi.App.Shared.Views
+namespace Eppie.App.Views
 {
-    public partial class SeedRestorePageBase : BasePage<SeedRestorePageViewModel, BaseViewModel>
+    internal partial class SeedRestorePageBase : BasePage<SeedRestorePageViewModel, BaseViewModel>
     {
     }
 
-    public sealed partial class SeedRestorePage : SeedRestorePageBase
+    internal sealed partial class SeedRestorePage : SeedRestorePageBase
     {
         public SeedRestorePage()
         {

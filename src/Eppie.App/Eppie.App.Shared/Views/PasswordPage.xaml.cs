@@ -18,13 +18,13 @@
 
 using Tuvi.App.ViewModels;
 
-namespace Tuvi.App.Shared.Views
+namespace Eppie.App.Views
 {
-    public partial class PasswordPageBase : BasePage<PasswordPageViewModel, BaseViewModel>
+    internal partial class PasswordPageBase : BasePage<PasswordPageViewModel, BaseViewModel>
     {
     }
 
-    public sealed partial class PasswordPage : PasswordPageBase
+    internal sealed partial class PasswordPage : PasswordPageBase
     {
         public PasswordPage()
         {

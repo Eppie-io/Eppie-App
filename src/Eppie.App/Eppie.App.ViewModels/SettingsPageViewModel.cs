@@ -18,6 +18,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -218,7 +219,7 @@ namespace Tuvi.App.ViewModels
             IsRestartMessageVisible = true;
 
             var brandName = BrandService.GetName();
-            RestartMessage = string.Format(message, brandName);
+            RestartMessage = string.Format(CultureInfo.CurrentCulture, message, brandName);
         }
 
         public IReadOnlyList<LogLevel> LogLevels { get; } = Enum.GetValues(typeof(LogLevel))

@@ -26,13 +26,13 @@ using Windows.UI.Xaml;
 using Microsoft.UI.Xaml.Navigation;
 #endif
 
-namespace Tuvi.App.Shared.Views
+namespace Eppie.App.Views
 {
-    public partial class FolderMessagesPageBase : BasePage<FolderMessagesPageViewModel, BaseViewModel>
+    internal partial class FolderMessagesPageBase : BasePage<FolderMessagesPageViewModel, BaseViewModel>
     {
     }
 
-    public sealed partial class FolderMessagesPage : FolderMessagesPageBase
+    internal sealed partial class FolderMessagesPage : FolderMessagesPageBase
     {
         public FolderMessagesPage()
         {

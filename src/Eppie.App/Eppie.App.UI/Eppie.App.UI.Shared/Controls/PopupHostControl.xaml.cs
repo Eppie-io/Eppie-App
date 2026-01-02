@@ -17,6 +17,8 @@
 // ---------------------------------------------------------------------------- //
 
 using System;
+using System.Diagnostics.CodeAnalysis;
+
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -38,6 +40,7 @@ namespace Eppie.App.UI.Controls
         void OnCloseClicked();
     }
 
+    [SuppressMessage("Design", "CA1010:Generic collections should implement generic interface", Justification = "ContentControl implements IEnumerable for XAML infrastructure")]
     public sealed partial class PopupHostControl : UserControl
     {
         public Type PageType

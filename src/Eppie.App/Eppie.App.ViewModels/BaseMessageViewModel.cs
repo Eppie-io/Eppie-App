@@ -43,8 +43,6 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        public bool IsLocalAIAvailable => AIService.IsAvailable();
-
         private bool _isLocalAIEnabled;
         public bool IsLocalAIEnabled
         {

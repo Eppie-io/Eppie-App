@@ -18,10 +18,11 @@
 
 #if !WINDOWS_UWP
 
+using Eppie.App.UI.Common;
 using Finebits.Authorization.OAuth2.Abstractions;
 using Finebits.Authorization.OAuth2.Types;
 
-namespace Tuvi.App.Shared.Authorization
+namespace Eppie.App.Authorization
 {
     internal class AuthenticationBroker : IAuthenticationBroker
     {
@@ -46,12 +47,11 @@ namespace Tuvi.App.Shared.Authorization
                 Action closeAction = null;
                 try
                 {
-                    var app = Application.Current as Eppie.App.Shared.App;
-                    var xamlRoot = app.XamlRoot;
+                    var xamlRoot = Eppie.App.App.XamlRoot;
 
                     var loader = Eppie.App.UI.Resources.StringProvider.GetInstance();
 
-                    closeAction = await Common.UITools.ShowAuthenticationDialogAsync(
+                    closeAction = await UITools.ShowAuthenticationDialogAsync(
                         loader.GetString("AuthenticationTitle"),
                         loader.GetString("AuthenticationContenet"),
                         loader.GetString("MessageButtonCancel"),

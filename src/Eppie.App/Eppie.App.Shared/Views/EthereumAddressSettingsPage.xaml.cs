@@ -24,13 +24,13 @@ using Windows.UI.Xaml;
 using Microsoft.UI.Xaml;
 #endif
 
-namespace Tuvi.App.Shared.Views
+namespace Eppie.App.Views
 {
-    public partial class EthereumAddressSettingsPageBase : BasePage<EthereumAddressSettingsPageViewModel, BaseViewModel>
+    internal partial class EthereumAddressSettingsPageBase : BasePage<EthereumAddressSettingsPageViewModel, BaseViewModel>
     {
     }
 
-    public sealed partial class EthereumAddressSettingsPage : EthereumAddressSettingsPageBase
+    internal sealed partial class EthereumAddressSettingsPage : EthereumAddressSettingsPageBase
     {
         public EthereumAddressSettingsPage()
         {

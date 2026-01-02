@@ -16,7 +16,7 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-namespace Eppie.App.Shared.Services
+namespace Eppie.App.Services
 {
     public class AppStoreService : BaseAppStoreService
     {
