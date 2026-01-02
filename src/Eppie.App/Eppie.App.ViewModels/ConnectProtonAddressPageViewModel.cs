@@ -20,6 +20,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
+using Tuvi.App.ViewModels.Validation;
 using Tuvi.Auth.Proton.Exceptions;
 using Tuvi.Core.Entities;
 using Tuvi.Proton.Primitive.Messages.Errors;
@@ -34,12 +35,11 @@ namespace Tuvi.App.ViewModels
         TwoFactorCode,
         UnlockMailbox,
         Done,
+        OpenSettings,
     }
 
-    public class ConnectProtonAddressPageViewModel : BaseViewModel
+    public class ConnectProtonAddressPageViewModel : ProtonAddressSettingsPageViewModel
     {
-        private const string IncorrectEmailExceptionText = "Email is incorrect (It is empty or already exists).";
-
         private ProtonConnectionStep _step;
         public ProtonConnectionStep Step
         {
@@ -47,60 +47,57 @@ namespace Tuvi.App.ViewModels
             private set => SetProperty(ref _step, value);
         }
 
-        private string _email;
-        public string Email
-        {
-            get => _email;
-            set => SetProperty(ref _email, value);
-        }
-
-        private string _password;
-        public string Password
-        {
-            get => _password;
-            set => SetProperty(ref _password, value);
-        }
-
-        private string _twoFactorCode;
-        public string TwoFactorCode
-        {
-            get => _twoFactorCode;
-            set => SetProperty(ref _twoFactorCode, value);
-        }
-
-        private string _mailboxPassword;
-        public string MailboxPassword
-        {
-            get => _mailboxPassword;
-            set => SetProperty(ref _mailboxPassword, value);
-        }
+        public ValidatableProperty<string> Email { get; } = new ValidatableProperty<string>();
+        public ValidatableProperty<string> Password { get; } = new ValidatableProperty<string>();
+        public ValidatableProperty<string> TwoFactorCode { get; } = new ValidatableProperty<string>();
+        public ValidatableProperty<string> MailboxPassword { get; } = new ValidatableProperty<string>();
 
         private bool _isProcess;
         public bool IsProcess
         {
             get => _isProcess;
-            private set => SetProperty(ref _isProcess, value);
+            private set
+            {
+                if (SetProperty(ref _isProcess, value))
+                {
+                    ContinueCommand?.NotifyCanExecuteChanged();
+                }
+            }
         }
 
-        public IRelayCommand ContinueCommand => new RelayCommand(OnContinue);
-        public IRelayCommand OpenSettingsCommand => new RelayCommand(OnOpenSettings);
+        public IRelayCommand ContinueCommand { get; }
+        public IAsyncRelayCommand OpenSettingsCommand => new AsyncRelayCommand(OnOpenSettings);
         public IRelayCommand ClosedCommand => new RelayCommand(OnClosed);
         public IRelayCommand DoneCommand => new RelayCommand(OnDone);
 
         public Action ClosePopupAction { get; set; }
+        private Account AccountData { get; set; }
 
         private event EventHandler<TwoFactorCodeEventArgs> TwoFactorCodeProvided;
         private event EventHandler<MailboxPasswordEventArgs> MailboxPasswordProvided;
 
-        public ConnectProtonAddressPageViewModel()
+        public ConnectProtonAddressPageViewModel() : base()
         {
             IsProcess = false;
             Step = ProtonConnectionStep.Unknown;
+
+            ContinueCommand = new RelayCommand(OnContinue, CanContinue);
+
+            Email.Errors.CollectionChanged += (s, e) => ContinueCommand.NotifyCanExecuteChanged();
+            Password.Errors.CollectionChanged += (s, e) => ContinueCommand.NotifyCanExecuteChanged();
+            TwoFactorCode.Errors.CollectionChanged += (s, e) => ContinueCommand.NotifyCanExecuteChanged();
+            MailboxPassword.Errors.CollectionChanged += (s, e) => ContinueCommand.NotifyCanExecuteChanged();
         }
 
         public override void OnNavigatedTo(object data)
         {
+            if (data is Account accountData)
+            {
+                AccountData = accountData;
+                Email.SetInitialValue(accountData.Email?.Address);
+            }
             ShowStep(ProtonConnectionStep.Credentials);
+
             base.OnNavigatedTo(data);
         }
 
@@ -112,14 +109,34 @@ namespace Tuvi.App.ViewModels
                 switch (Step)
                 {
                     case ProtonConnectionStep.Credentials:
-                        await ConnectAccountAsync(false).ConfigureAwait(true);
-                        ShowStep(ProtonConnectionStep.Done);
+                        if (IsPropertyValid(Email))
+                        {
+                            await ConnectAccountAsync(AccountData != null).ConfigureAwait(true);
+                        }
+                        else
+                        {
+                            IsProcess = false;
+                        }
                         break;
                     case ProtonConnectionStep.TwoFactorCode:
-                        TwoFactorCodeProvided?.Invoke(this, new TwoFactorCodeEventArgs(false, TwoFactorCode));
+                        if (IsPropertyValid(TwoFactorCode))
+                        {
+                            TwoFactorCodeProvided?.Invoke(this, new TwoFactorCodeEventArgs(false, TwoFactorCode.Value));
+                        }
+                        else
+                        {
+                            IsProcess = false;
+                        }
                         break;
                     case ProtonConnectionStep.UnlockMailbox:
-                        MailboxPasswordProvided?.Invoke(this, new MailboxPasswordEventArgs(false, MailboxPassword));
+                        if (IsPropertyValid(MailboxPassword))
+                        {
+                            MailboxPasswordProvided?.Invoke(this, new MailboxPasswordEventArgs(false, MailboxPassword.Value));
+                        }
+                        else
+                        {
+                            IsProcess = false;
+                        }
                         break;
                     case ProtonConnectionStep.HumanVerifier:
                         // Todo: Issue #479 add human verification page
@@ -128,13 +145,13 @@ namespace Tuvi.App.ViewModels
             }
             catch (OperationCanceledException)
             { }
-            catch (Exception ex) when ((IsEmailAddressException(ex) || ex is AuthenticationException) && !IsHumanVerificationException(ex))
+            catch (Exception ex) when ((ex is AuthenticationException) && !IsHumanVerificationException(ex))
             {
                 ShowStep(ProtonConnectionStep.Credentials, true);
             }
             catch (Exception ex)
             {
-                FroceClosePopup();
+                ForceClosePopup();
                 OnError(ex);
             }
 
@@ -142,17 +159,62 @@ namespace Tuvi.App.ViewModels
             {
                 return ex.InnerException is AuthUnsuccessProtonException unsuccess && unsuccess.Response.IsHumanVerificationRequired();
             }
+        }
 
-            bool IsEmailAddressException(Exception ex)
+        private void ValidateProperty(ValidatableProperty<string> property)
+        {
+            DispatcherService?.RunAsync(() =>
             {
-                return ex is InvalidOperationException && ex.Message == IncorrectEmailExceptionText;
+                property.Errors.Clear();
+
+                if (!property.NeedsValidation)
+                {
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(property.Value))
+                {
+                    var error = GetLocalizedString("FieldIsEmptyNotification");
+                    property.Errors.Add(error);
+                    return;
+                }
+            }).ConfigureAwait(false);
+        }
+
+        private bool CanContinue()
+        {
+            if (IsProcess)
+            {
+                return false;
+            }
+
+            switch (Step)
+            {
+                case ProtonConnectionStep.Credentials:
+                    return !(Email.NeedsValidation && Email.HasErrors) && !(Password.NeedsValidation && Password.HasErrors);
+                case ProtonConnectionStep.TwoFactorCode:
+                    return !(TwoFactorCode.NeedsValidation && TwoFactorCode.HasErrors);
+                case ProtonConnectionStep.UnlockMailbox:
+                    return !(MailboxPassword.NeedsValidation && MailboxPassword.HasErrors);
+                default:
+                    return true;
             }
         }
 
-        private void OnOpenSettings()
+        private bool IsPropertyValid(ValidatableProperty<string> property)
         {
-            // ToDo: implement
-            throw new NotImplementedException();
+            property.NeedsValidation = true;
+            ValidateProperty(property);
+            ContinueCommand.NotifyCanExecuteChanged();
+
+            return !property.HasErrors;
+        }
+
+        private async Task OnOpenSettings()
+        {
+            var account = await Core.GetAccountAsync(new EmailAddress(Email.Value)).ConfigureAwait(true);
+            NavigateToMailboxSettingsPage(account, false);
+            DoneCommand.Execute(null);
         }
 
         private void OnDone()
@@ -168,30 +230,31 @@ namespace Tuvi.App.ViewModels
 
         private async Task ConnectAccountAsync(bool reconnect)
         {
-            bool incorrect = string.IsNullOrWhiteSpace(Email) || (!reconnect && await IsAccountExistAsync(Email).ConfigureAwait(false));
-            if (incorrect)
+            bool exists = await IsAccountExistAsync(Email.Value).ConfigureAwait(false);
+            if (exists && !reconnect)
             {
-                // ToDo: maybe use more specific exception
-                throw new InvalidOperationException(IncorrectEmailExceptionText);
+                ShowStep(ProtonConnectionStep.OpenSettings);
+                return;
             }
 
             var account = await LoginAsync().ConfigureAwait(false);
-            await AddAccountAsync(account).ConfigureAwait(false);
+            await ProcessAccountAsync(account).ConfigureAwait(false);
+            ShowStep(ProtonConnectionStep.Done);
         }
 
         private async Task<Account> LoginAsync()
         {
             var (userId, refreshToken, saltedKeyPass) = await Proton.ClientAuth.LoginFullAsync
-                (
-                    Email,
-                    Password,
-                    ProvideTwoFactorCode,
-                    ProvideMailboxPassword,
-                    null, // Todo: Issue #479 add human verification page
-                    default
-                ).ConfigureAwait(true);
+            (
+                Email.Value,
+                Password.Value,
+                ProvideTwoFactorCode,
+                ProvideMailboxPassword,
+                null, // Todo: Issue #479 add human verification page
+                default
+            ).ConfigureAwait(true);
 
-            return CreateProtonAccount(userId, refreshToken, saltedKeyPass);
+            return CreateOrUpdateProtonAccount(userId, refreshToken, saltedKeyPass);
         }
 
         private Task<(bool completed, string code)> ProvideTwoFactorCode(Exception previousAttemptException, CancellationToken cancellationToken)
@@ -235,24 +298,46 @@ namespace Tuvi.App.ViewModels
                 await DispatcherService.RunAsync(() =>
                 {
                     IsProcess = false;
-                    Password = string.Empty;
-                    TwoFactorCode = string.Empty;
-                    MailboxPassword = string.Empty;
+                    Password.Value = string.Empty;
+                    TwoFactorCode.Value = string.Empty;
+                    MailboxPassword.Value = string.Empty;
 
                     Step = step;
 
-                    // Todo: show wrong input note in UI
+                    if (Step == ProtonConnectionStep.OpenSettings)
+                    {
+                        OpenSettingsCommand.Execute(null);
+                    }
+
+                    UpdateAuthenticationErrors(error);
 
                 }).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
-                FroceClosePopup();
+                ForceClosePopup();
                 OnError(ex);
             }
         }
 
-        private async void FroceClosePopup()
+        private void UpdateAuthenticationErrors(bool error)
+        {
+            if (error)
+            {
+                var err = GetLocalizedString("AuthenticationError");
+                Password.Errors.Add(err);
+                TwoFactorCode.Errors.Add(err);
+                MailboxPassword.Errors.Add(err);
+            }
+            else
+            {
+                Password.Errors.Clear();
+                TwoFactorCode.Errors.Clear();
+                MailboxPassword.Errors.Clear();
+            }
+        }
+
+        private async void ForceClosePopup()
         {
             try
             {
@@ -268,52 +353,33 @@ namespace Tuvi.App.ViewModels
             { }
         }
 
-        private Account CreateProtonAccount(string userId, string refreshToken, string saltedKeyPass)
+        private Account CreateOrUpdateProtonAccount(string userId, string refreshToken, string saltedKeyPass)
         {
-            // ToDo: implement
-
-            var account = CreateBaseAccount();
-
-            if (account is null)
+            if (AccountData is null)
             {
-                return null;
+                AccountData = Account.Default;
+                AccountData.Type = MailBoxType.Proton;
+                AccountData.Email = new EmailAddress(Email.Value);
             }
 
-            account.AuthData = new BasicAuthData() { Password = Password };
-            account.Type = MailBoxType.Proton;
-            account.AuthData = new ProtonAuthData()
+            AccountData.AuthData = new ProtonAuthData()
             {
                 UserId = userId,
                 RefreshToken = refreshToken,
                 SaltedPassword = saltedKeyPass
             };
-            return account;
-        }
 
-        private Account CreateBaseAccount()
-        {
-            // ToDo: implement
-
-            Account account = Account.Default;
-            account.Email = new EmailAddress(Email);
-
-            return account;
+            return AccountData;
         }
 
         private Task<bool> IsAccountExistAsync(string email, CancellationToken cancellationToken = default)
         {
-            // ToDo: implement or check
             return Core.ExistsAccountWithEmailAddressAsync(new EmailAddress(email), cancellationToken);
         }
 
-        private static Task AddAccountAsync(Account account, CancellationToken cancellationToken = default)
+        private Task ProcessAccountAsync(Account account, CancellationToken cancellationToken = default)
         {
-            // ToDo: Implement
-            // look at
-            // file: src/Eppie.App/Eppie.App.ViewModels/BaseAddressSettingsPageViewModel.cs
-            // method: ProcessAccountDataAsync
-
-            return Task.CompletedTask;
+            return ProcessAccountDataAsync(account, cancellationToken);
         }
 
         private class TwoFactorCodeEventArgs

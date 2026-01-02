@@ -261,7 +261,7 @@ namespace Tuvi.App.ViewModels
             {
                 if (isReloginNeeded)
                 {
-                    NavigationService?.Navigate(nameof(ProtonAddressSettingsPageViewModel), new ProtonAddressSettingsPageViewModel.NeedReloginData { Account = account });
+                    _ = MessageService.ShowProtonConnectAddressDialogAsync(account);
                 }
                 else
                 {

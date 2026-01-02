@@ -559,9 +559,9 @@ namespace Eppie.App.Services
                 _xamlRootProvider()).ConfigureAwait(true);
         }
 
-        public async Task ShowProtonConnectAddressDialogAsync()
+        public Task ShowProtonConnectAddressDialogAsync(object data)
         {
-            await UITools.ShowPopupAsync<ConnectProtonAddressPage>(_xamlRootProvider()).ConfigureAwait(true);
+            return UITools.ShowPopupAsync<ConnectProtonAddressPage>(_xamlRootProvider(), data);
         }
     }
 }

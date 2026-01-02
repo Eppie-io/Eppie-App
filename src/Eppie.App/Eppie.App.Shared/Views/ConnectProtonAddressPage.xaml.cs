@@ -17,6 +17,7 @@
 // ---------------------------------------------------------------------------- //
 
 using System;
+using System.Threading.Tasks;
 using Eppie.App.UI.Controls;
 using Tuvi.App.ViewModels;
 
@@ -95,18 +96,41 @@ namespace Eppie.App.Views
             switch (ViewModel.Step)
             {
                 case ProtonConnectionStep.Credentials:
-                    AddressBox.Focus(FocusState.Programmatic);
+                    ScheduleFocus(AddressBox);
                     break;
                 case ProtonConnectionStep.HumanVerifier: break;
                 case ProtonConnectionStep.TwoFactorCode:
-                    TwoFactorCodeBox.Focus(FocusState.Programmatic);
+                    ScheduleFocus(TwoFactorCodeBox);
                     break;
                 case ProtonConnectionStep.UnlockMailbox:
-                    MailboxPasswordBox.Focus(FocusState.Programmatic);
+                    ScheduleFocus(MailboxPasswordBox);
                     break;
                 case ProtonConnectionStep.Done:
-                    DoneButton.Focus(FocusState.Programmatic);
+                    ScheduleFocus(DoneButton);
                     break;
+            }
+        }
+
+        // TODO: Need a better solution for this.
+        // HACK: This is a workaround for focus issues where setting focus immediately doesn't always work.
+        // Delay a short time to allow XAML visibility/layout/bindings to settle, then focus if control is visible and enabled.
+        private async void ScheduleFocus(Control control)
+        {
+            if (control is null)
+            {
+                return;
+            }
+
+            await Task.Delay(50).ConfigureAwait(true);
+
+            if (ViewModel.IsProcess)
+            {
+                return;
+            }
+
+            if (control.Visibility == Visibility.Visible && control.IsEnabled)
+            {
+                control.Focus(FocusState.Programmatic);
             }
         }
 

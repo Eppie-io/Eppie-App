@@ -63,9 +63,6 @@ namespace Tuvi.App.ViewModels.Tests
                 vm.AddressSettingsModel.SynchronizationInterval.Value = "15";
 
                 var pmodel = (ProtonAddressSettingsModel)vm.AddressSettingsModel;
-                pmodel.Password.Value = "newpwd";
-                pmodel.TwoFactorCode.Value = "000000";
-                pmodel.MailboxPassword.Value = "mbpwd";
 
                 // Additional changes to verify no mutation
                 var isHybrid = vm.IsHybridAddress;
