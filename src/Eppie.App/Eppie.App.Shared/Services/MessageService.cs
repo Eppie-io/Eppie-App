@@ -561,7 +561,7 @@ namespace Eppie.App.Services
 
         public async Task ShowProtonConnectAddressDialogAsync(object data)
         {
-            await UITools.ShowPopupAsync<ConnectProtonAddressPage>(_xamlRootProvider()).ConfigureAwait(true);
+            await UITools.ShowPopupAsync<ConnectProtonAddressPage>(_xamlRootProvider(), data).ConfigureAwait(true);
         }
     }
 }
