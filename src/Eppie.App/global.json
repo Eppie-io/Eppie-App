@@ -1,6 +1,6 @@
 {
   "msbuild-sdks": {
-    "Uno.Sdk": "6.3.28"
+    "Uno.Sdk": "6.4.53"
   },
   "sdk": {
     "version": "9.0.0",
