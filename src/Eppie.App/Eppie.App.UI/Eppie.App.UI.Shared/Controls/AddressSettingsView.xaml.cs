@@ -118,6 +118,15 @@ namespace Eppie.App.UI.Controls
 
 
 
+        public string RemoveButtonContent
+        {
+            get { return (string)GetValue(RemoveButtonContentProperty); }
+            set { SetValue(RemoveButtonContentProperty, value); }
+        }
+
+        public static readonly DependencyProperty RemoveButtonContentProperty =
+            DependencyProperty.Register(nameof(RemoveButtonContent), typeof(string), typeof(AddressSettingsView), new PropertyMetadata(null));
+
         public ICommand JoinWaitingListCommand
         {
             get { return (ICommand)GetValue(JoinWaitingListCommandProperty); }
@@ -126,8 +135,6 @@ namespace Eppie.App.UI.Controls
 
         public static readonly DependencyProperty JoinWaitingListCommandProperty =
             DependencyProperty.Register(nameof(JoinWaitingListCommand), typeof(ICommand), typeof(AddressSettingsView), new PropertyMetadata(null));
-
-
 
         public AddressSettingsView()
         {
