@@ -437,13 +437,32 @@ namespace Tuvi.App.ViewModels
             var accounts = await Core.GetCompositeAccountsAsync().ConfigureAwait(true);
             FromList.SetItems(accounts.SelectMany(account => account.Addresses));
 
-            var contacts = await Core.GetContactsAsync().ConfigureAwait(true);
-            var contactItems = contacts.Select(contact => new ContactItem(contact));
-            // Add email addresses from accounts as contacts too
+            // Add email addresses from accounts as contacts immediately
             var accountContactItems = accounts.SelectMany(account => account.Addresses)
-                                              .Select(address => new ContactItem(address));
+                                              .Select(address => new ContactItem(address))
+                                              .ToList();
+            Contacts.SetItems(accountContactItems);
 
-            Contacts.SetItems(accountContactItems.Concat(contactItems));
+            // Load contacts in background for autocomplete
+            _ = LoadContactsInBackgroundAsync(accountContactItems);
+        }
+
+        private async Task LoadContactsInBackgroundAsync(List<ContactItem> existingContacts)
+        {
+            var existingEmails = new HashSet<string>(
+                    existingContacts.Select(c => c.Email?.Address ?? string.Empty),
+                    StringComparer.OrdinalIgnoreCase);
+
+            var contacts = await Core.GetContactsAsync().ConfigureAwait(false);
+            var newContactItems = contacts
+                .Where(contact => !existingEmails.Contains(contact.Email?.Address ?? string.Empty))
+                .Select(contact => new ContactItem(contact))
+                .ToList();
+
+            foreach (var contact in newContactItems)
+            {
+                Contacts.Add(contact);
+            }
         }
 
         private async Task SendMessageAndGoBackAsync()
