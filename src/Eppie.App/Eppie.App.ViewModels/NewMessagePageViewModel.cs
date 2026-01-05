@@ -580,13 +580,11 @@ namespace Tuvi.App.ViewModels
 
         private async Task UpdateDraftMessageAsync()
         {
-            if (MessageInfo?.Folder == null || MessageInfo?.Email != From)
+            if (MessageInfo?.Folder is null || MessageInfo?.Email != From)
             {
                 MessageInfo = await CreateDraftMessageAsync(From, CreateMessage()).ConfigureAwait(true);
-                return;
             }
-
-            if (MessageInfo.Folder != null)
+            else
             {
                 var message = CreateMessage();
                 message.Date = DateTimeOffset.Now;
