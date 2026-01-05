@@ -453,7 +453,7 @@ namespace Tuvi.App.ViewModels
                     existingContacts.Select(c => c.Email?.Address ?? string.Empty),
                     StringComparer.OrdinalIgnoreCase);
 
-            var contacts = await Core.GetContactsAsync().ConfigureAwait(false);
+            var contacts = await Core.GetContactsAsync().ConfigureAwait(true);
             var newContactItems = contacts
                 .Where(contact => !existingEmails.Contains(contact.Email?.Address ?? string.Empty))
                 .Select(contact => new ContactItem(contact))
