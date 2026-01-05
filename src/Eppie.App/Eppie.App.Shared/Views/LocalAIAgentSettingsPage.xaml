@@ -14,7 +14,6 @@
 
     <local:LocalAIAgentSettingsPageBase.Resources>
         <x:Double x:Key="NormalOptionGapHeight">36</x:Double>
-        <x:Double x:Key="RelatedOptionGapHeight">24</x:Double>
     </local:LocalAIAgentSettingsPageBase.Resources>
 
     <local:LocalAIAgentSettingsPageBase.DataContext>
@@ -85,21 +84,36 @@
                          TextWrapping="Wrap" />
             </controls:OptionControl>
 
-            <controls:OptionControl x:Uid="LinkedAccountOption" GapHeight="{StaticResource NormalOptionGapHeight}">
-                <StackPanel Orientation="Vertical" Spacing="8">
-                    <ComboBox VerticalAlignment="Center"
-                              ItemsSource="{x:Bind ViewModel.AccountsList}"
-                              SelectedItem="{x:Bind ViewModel.LinkedAccount, Mode=TwoWay}" />
-                    <CheckBox x:Uid="AllowSendEmailsCheckBox" IsChecked="{x:Bind ViewModel.AgentSettingsModel.IsAllowedToSendingEmails, Mode=TwoWay}" />
-                </StackPanel>
-            </controls:OptionControl>
-
             <controls:AdvancedSettingsControl HideResetButton="True">
                 <StackPanel>
 
+                    <controls:OptionControl x:Uid="LinkedAccountOption" GapHeight="{StaticResource NormalOptionGapHeight}">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <ComboBox VerticalAlignment="Center"
+                                      ItemsSource="{x:Bind ViewModel.AccountsList}"
+                                      SelectedItem="{x:Bind ViewModel.LinkedAccount, Mode=TwoWay}" />
+                            <CheckBox x:Uid="AllowSendEmailsCheckBox" IsChecked="{x:Bind ViewModel.AgentSettingsModel.IsAllowedToSendingEmails, Mode=TwoWay}" />
+                        </StackPanel>
+                    </controls:OptionControl>
+
+                    <controls:OptionControl x:Uid="AIAgentProcessingOption" GapHeight="{StaticResource NormalOptionGapHeight}">
+                        <StackPanel Spacing="12">
+                            <ComboBox x:Uid="PreprocessWithAIAgent"
+                                      VerticalAlignment="Center"
+                                      ItemsSource="{x:Bind ViewModel.AIAgentsList}"
+                                      SelectedItem="{x:Bind ViewModel.PreProcessorAIAgent, Mode=TwoWay}" />
+                            <ComboBox x:Uid="PostprocessWithAIAgent"
+                                      VerticalAlignment="Center"
+                                      ItemsSource="{x:Bind ViewModel.AIAgentsList}"
+                                      SelectedItem="{x:Bind ViewModel.PostProcessorAIAgent, Mode=TwoWay}" />
+                        </StackPanel>
+                    </controls:OptionControl>
+
                     <controls:OptionControl x:Uid="AIParametersOption" GapHeight="{StaticResource NormalOptionGapHeight}">
                         <StackPanel Spacing="12">
-                            <ToggleSwitch x:Uid="/App.Resources/DoSampleToggle" IsOn="{x:Bind ViewModel.AgentSettingsModel.DoSample, Mode=TwoWay}" />
+                            <ToggleSwitch x:Uid="/App.Resources/DoSampleToggle"
+                                          Header="Sampling"
+                                          IsOn="{x:Bind ViewModel.AgentSettingsModel.DoSample, Mode=TwoWay}" />
                             <Slider x:Uid="/App.Resources/AIOptionTopPSlider"
                                     Header="Top P"
                                     IsEnabled="{x:Bind ViewModel.AgentSettingsModel.DoSample, Mode=OneWay}"
@@ -121,19 +135,6 @@
                                     Minimum="0.01"
                                     StepFrequency="0.01"
                                     Value="{x:Bind ViewModel.AgentSettingsModel.Temperature, Mode=TwoWay}" />
-                        </StackPanel>
-                    </controls:OptionControl>
-
-                    <controls:OptionControl x:Uid="AIAgentProcessingOption" GapHeight="{StaticResource NormalOptionGapHeight}">
-                        <StackPanel Spacing="12">
-                            <ComboBox x:Uid="PreprocessWithAIAgent"
-                                      VerticalAlignment="Center"
-                                      ItemsSource="{x:Bind ViewModel.AIAgentsList}"
-                                      SelectedItem="{x:Bind ViewModel.PreProcessorAIAgent, Mode=TwoWay}" />
-                            <ComboBox x:Uid="PostprocessWithAIAgent"
-                                      VerticalAlignment="Center"
-                                      ItemsSource="{x:Bind ViewModel.AIAgentsList}"
-                                      SelectedItem="{x:Bind ViewModel.PostProcessorAIAgent, Mode=TwoWay}" />
                         </StackPanel>
                     </controls:OptionControl>
 

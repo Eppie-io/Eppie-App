@@ -930,10 +930,6 @@ Subject: {3}
     <value>AI agent specialty</value>
     <comment>The title for AI agent specialty combobox</comment>
   </data>
-  <data name="SystemPromptInputTextBox.PlaceholderText" xml:space="preserve">
-    <value>Enter a system prompt for the AI agent...</value>
-    <comment>The placeholder text for AI agent system prompt edit box</comment>
-  </data>
   <data name="AllowSendEmailsCheckBox.Content" xml:space="preserve">
     <value>Allow sending emails</value>
     <comment>Text for the checkbox that allows an AI agent to send emails</comment>
@@ -941,14 +937,6 @@ Subject: {3}
   <data name="ConnectedAIAgentsSettings.Header" xml:space="preserve">
     <value>Your AI agents</value>
     <comment>Title for a conected AI agents</comment>
-  </data>
-  <data name="AIAgentNameTextBox.Header" xml:space="preserve">
-    <value>AI agent name</value>
-    <comment>The title for AI agent name edit box</comment>
-  </data>
-  <data name="AIAgentNameTextBox.PlaceholderText" xml:space="preserve">
-    <value>Enter a name for the AI agent...</value>
-    <comment>The placeholder text for AI agent name edit box</comment>
   </data>
   <data name="LocalAIAgentServiceTitle" xml:space="preserve">
     <value>Local AI agent (Beta)</value>
@@ -1109,7 +1097,7 @@ Subject: {3}
   <data name="AddressSettingsView.Header" xml:space="preserve">
     <value>ADDRESS SETTINGS</value>
     <comment>Address settings view title.</comment>
-  </data>  
+  </data>
   <data name="AddressSettingsView.RemoveButtonContent" xml:space="preserve">
     <value>Remove address</value>
     <comment>Remove address button text in address settings</comment>
