@@ -1521,10 +1521,6 @@ Subject: {3}
     <value>Request testnet4 BTC</value>
     <comment>Text for link/button that opens a faucet site to obtain testnet bitcoins</comment>
   </data>
-  <data name="RemoveAIAgentButton.Content" xml:space="preserve">
-    <value>Remove AI agent</value>
-    <comment>Remove AI agent button text in AI agent settings</comment>
-  </data>
   <data name="AIAgentSettingsView.Header" xml:space="preserve">
     <value>AI AGENT SETTINGS</value>
     <comment>AI agent settings view title.</comment>
