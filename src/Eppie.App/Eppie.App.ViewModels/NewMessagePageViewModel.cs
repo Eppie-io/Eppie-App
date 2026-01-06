@@ -503,7 +503,7 @@ namespace Tuvi.App.ViewModels
 
             message.Attachments.AddRange(Attachments.Select(attachment => attachment.ToAttachment()));
 
-            if (MessageInfo != null)
+            if (MessageInfo != null && MessageInfo.Email == From)
             {
                 message.Id = MessageInfo.MessageID;
                 message.Folder = MessageInfo.Folder;
@@ -580,16 +580,13 @@ namespace Tuvi.App.ViewModels
 
         private async Task UpdateDraftMessageAsync()
         {
-            if (MessageInfo?.Folder == null || MessageInfo?.Email != From)
+            if (MessageInfo?.Folder is null || MessageInfo?.Email != From)
             {
                 MessageInfo = await CreateDraftMessageAsync(From, CreateMessage()).ConfigureAwait(true);
             }
-
-            if (MessageInfo.Folder != null)
+            else
             {
                 var message = CreateMessage();
-                message.Id = MessageInfo.MessageID;
-                message.Folder = MessageInfo.Folder;
                 message.Date = DateTimeOffset.Now;
 
                 message = await Core.UpdateDraftMessageAsync(MessageInfo.MessageID, message).ConfigureAwait(true);
