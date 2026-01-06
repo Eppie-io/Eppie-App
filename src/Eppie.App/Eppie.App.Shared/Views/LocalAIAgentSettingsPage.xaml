@@ -111,6 +111,7 @@
 
                     <controls:OptionControl x:Uid="AIParametersOption" GapHeight="{StaticResource NormalOptionGapHeight}">
                         <StackPanel Spacing="12">
+                            <!--TODO: We will not translate the terms for now.-->
                             <ToggleSwitch x:Uid="/App.Resources/DoSampleToggle"
                                           Header="Sampling"
                                           IsOn="{x:Bind ViewModel.AgentSettingsModel.DoSample, Mode=TwoWay}" />
