@@ -1,6 +1,6 @@
 ﻿// ---------------------------------------------------------------------------- //
 //                                                                              //
-//   Copyright 2025 Eppie (https://eppie.io)                                    //
+//   Copyright 2026 Eppie (https://eppie.io)                                    //
 //                                                                              //
 //   Licensed under the Apache License, Version 2.0 (the "License"),            //
 //   you may not use this file except in compliance with the License.           //
@@ -21,7 +21,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
-using Eppie.App;
 using Eppie.App.UI.Tools;
 using Tuvi.App.ViewModels.Services;
 using Windows.Storage;
