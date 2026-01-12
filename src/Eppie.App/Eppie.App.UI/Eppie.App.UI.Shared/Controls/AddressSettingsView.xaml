@@ -82,11 +82,11 @@
                     Margin="8,0"
                     Command="{x:Bind CancelCommand}" />
 
-            <Button x:Uid="/Eppie.App.UI/Controls/RemoveAddressButton"
-                    Grid.Column="2"
+            <Button Grid.Column="2"
                     MinWidth="{StaticResource ButtonMinWidth}"
                     HorizontalAlignment="Right"
                     Command="{x:Bind RemoveCommand}"
+                    Content="{x:Bind RemoveButtonContent, Mode=OneWay}"
                     Style="{StaticResource CriticalActionButtonStyle}"
                     Visibility="{x:Bind IsRemoveButtonVisible, Mode=OneWay}" />
         </Grid>

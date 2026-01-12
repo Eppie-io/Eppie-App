@@ -930,18 +930,6 @@ Subject: {3}
     <value>AI agent specialty</value>
     <comment>The title for AI agent specialty combobox</comment>
   </data>
-  <data name="SystemPromptInputTextBox.Header" xml:space="preserve">
-    <value>System prompt</value>
-    <comment>The title for AI agent system prompt edit box</comment>
-  </data>
-  <data name="SystemPromptInputTextBox.PlaceholderText" xml:space="preserve">
-    <value>Enter a system prompt for the AI agent...</value>
-    <comment>The placeholder text for AI agent system prompt edit box</comment>
-  </data>
-  <data name="AIAgentLinkedAccount.Header" xml:space="preserve">
-    <value>Linked account</value>
-    <comment>The title for AI agent linked email account combobox</comment>
-  </data>
   <data name="AllowSendEmailsCheckBox.Content" xml:space="preserve">
     <value>Allow sending emails</value>
     <comment>Text for the checkbox that allows an AI agent to send emails</comment>
@@ -949,14 +937,6 @@ Subject: {3}
   <data name="ConnectedAIAgentsSettings.Header" xml:space="preserve">
     <value>Your AI agents</value>
     <comment>Title for a conected AI agents</comment>
-  </data>
-  <data name="AIAgentNameTextBox.Header" xml:space="preserve">
-    <value>AI agent name</value>
-    <comment>The title for AI agent name edit box</comment>
-  </data>
-  <data name="AIAgentNameTextBox.PlaceholderText" xml:space="preserve">
-    <value>Enter a name for the AI agent...</value>
-    <comment>The placeholder text for AI agent name edit box</comment>
   </data>
   <data name="LocalAIAgentServiceTitle" xml:space="preserve">
     <value>Local AI agent (Beta)</value>
@@ -1117,6 +1097,10 @@ Subject: {3}
   <data name="AddressSettingsView.Header" xml:space="preserve">
     <value>ADDRESS SETTINGS</value>
     <comment>Address settings view title.</comment>
+  </data>
+  <data name="AddressSettingsView.RemoveButtonContent" xml:space="preserve">
+    <value>Remove address</value>
+    <comment>Remove address button text in address settings</comment>
   </data>
   <data name="DefaultSignatureText" xml:space="preserve">
     <value>Sent from an Eppie (https://eppie.io) hybrid address.</value>
@@ -1524,5 +1508,69 @@ Subject: {3}
   <data name="GetTestnetBtcLink.Content" xml:space="preserve">
     <value>Request testnet4 BTC</value>
     <comment>Text for link/button that opens a faucet site to obtain testnet bitcoins</comment>
+  </data>
+  <data name="AIAgentSettingsView.Header" xml:space="preserve">
+    <value>AI AGENT SETTINGS</value>
+    <comment>AI agent settings view title.</comment>
+  </data>
+  <data name="AIAgentSettingsView.RemoveButtonContent" xml:space="preserve">
+    <value>Remove AI agent</value>
+    <comment>Remove AI agent button text in AI agent settings</comment>
+  </data>
+  <data name="AIModelOption.Caption" xml:space="preserve">
+    <value>AI model</value>
+    <comment>Caption for the AI model option</comment>
+  </data>
+  <data name="AIModelOption.TextNote" xml:space="preserve">
+    <value>Import a local AI model to enable AI features.</value>
+    <comment>Note for the AI model option</comment>
+  </data>
+  <data name="AIAgentNameOption.Caption" xml:space="preserve">
+    <value>Agent name</value>
+    <comment>Caption for the AI agent name option</comment>
+  </data>
+  <data name="AIAgentNameOption.TextNote" xml:space="preserve">
+    <value>Give your AI agent a unique name.</value>
+    <comment>Note for the AI agent name option</comment>
+  </data>
+  <data name="AgentSpecialtyOption.Caption" xml:space="preserve">
+    <value>Specialty</value>
+    <comment>Caption for the AI agent specialty option</comment>
+  </data>
+  <data name="AgentSpecialtyOption.TextNote" xml:space="preserve">
+    <value>Choose the agent's area of expertise.</value>
+    <comment>Note for the AI agent specialty option</comment>
+  </data>
+  <data name="SystemPromptOption.Caption" xml:space="preserve">
+    <value>System prompt</value>
+    <comment>Caption for the system prompt option</comment>
+  </data>
+  <data name="SystemPromptOption.TextNote" xml:space="preserve">
+    <value>Define the instructions that guide the agent's behavior.</value>
+    <comment>Note for the system prompt option</comment>
+  </data>
+  <data name="LinkedAccountOption.Caption" xml:space="preserve">
+    <value>Linked account</value>
+    <comment>Caption for the linked account option</comment>
+  </data>
+  <data name="LinkedAccountOption.TextNote" xml:space="preserve">
+    <value>Connect an email account to enable sending emails.</value>
+    <comment>Note for the linked account option</comment>
+  </data>
+  <data name="AIParametersOption.Caption" xml:space="preserve">
+    <value>Generation parameters</value>
+    <comment>Caption for the AI parameters option</comment>
+  </data>
+  <data name="AIParametersOption.TextNote" xml:space="preserve">
+    <value>Fine-tune the AI response generation settings.</value>
+    <comment>Note for the AI parameters option</comment>
+  </data>
+  <data name="AIAgentProcessingOption.Caption" xml:space="preserve">
+    <value>Processing pipeline</value>
+    <comment>Caption for the AI agent processing option</comment>
+  </data>
+  <data name="AIAgentProcessingOption.TextNote" xml:space="preserve">
+    <value>Chain agents for pre- and post-processing tasks.</value>
+    <comment>Note for the AI agent processing option</comment>
   </data>
 </root>

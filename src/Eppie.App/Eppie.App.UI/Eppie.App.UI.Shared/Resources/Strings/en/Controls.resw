@@ -447,10 +447,6 @@
     <value>Cancel</value>
     <comment>Cancel button text</comment>
   </data>
-  <data name="RemoveAddressButton.Content" xml:space="preserve">
-    <value>Remove address</value>
-    <comment>Remove address button text in address settings</comment>
-  </data>
   <data name="JoinWaitingList.Content" xml:space="preserve">
     <value>Join the waiting list</value>
     <comment>JoinWaitingList button content</comment>
