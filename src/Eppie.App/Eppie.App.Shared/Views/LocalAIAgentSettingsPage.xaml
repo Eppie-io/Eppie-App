@@ -72,6 +72,7 @@
                     <ComboBox x:Uid="AgentSpecialtyCombobox"
                               VerticalAlignment="Center"
                               ItemsSource="{x:Bind ViewModel.AgentSettingsModel.Specialties}"
+                              SelectedIndex="0"
                               SelectedItem="{x:Bind ViewModel.AgentSettingsModel.AgentSpecialty, Mode=TwoWay}" />
                     <ComboBox x:Uid="TargetLanguageCombobox"
                               Margin="12,0,0,0"
