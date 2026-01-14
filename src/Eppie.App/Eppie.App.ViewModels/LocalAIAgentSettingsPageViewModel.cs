@@ -77,7 +77,7 @@ namespace Tuvi.App.ViewModels
             set { SetProperty(ref _name, value); }
         }
 
-        private LocalAIAgentSpecialty _agentSpecialty;
+        private LocalAIAgentSpecialty _agentSpecialty = LocalAIAgentSpecialty.Writer;
         public LocalAIAgentSpecialty AgentSpecialty
         {
             get => _agentSpecialty;
@@ -303,6 +303,7 @@ namespace Tuvi.App.ViewModels
             CurrentAgent.AgentSpecialty = AgentSpecialty;
             CurrentAgent.SystemPrompt = SystemPrompt;
             CurrentAgent.Account = linkedAccount;
+            CurrentAgent.AccountId = linkedAccount?.Id ?? 0;
             CurrentAgent.IsAllowedToSendingEmail = IsAllowedToSendingEmails && linkedAccount != null;
 
             CurrentAgent.DoSample = DoSample;
