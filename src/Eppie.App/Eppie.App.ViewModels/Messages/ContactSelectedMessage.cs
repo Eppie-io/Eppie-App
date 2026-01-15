@@ -16,43 +16,14 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-using System;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 
-namespace Tuvi.App.ViewModels
+namespace Tuvi.App.ViewModels.Messages
 {
-    public class ByUnreadContactComparer : ByTimeContactComparer
+    public class ContactSelectedMessage : ValueChangedMessage<ContactItem>
     {
-        public ByUnreadContactComparer()
+        public ContactSelectedMessage(ContactItem value) : base(value)
         {
-        }
-        public ByUnreadContactComparer(string label)
-        {
-            Label = label;
-        }
-
-        public override int Compare(ContactItem x, ContactItem y)
-        {
-            if (x is null)
-            {
-                throw new ArgumentNullException(nameof(x));
-            }
-            if (y is null)
-            {
-                throw new ArgumentNullException(nameof(y));
-            }
-
-            if (x.UnreadMessagesCount == 0 && y.UnreadMessagesCount > 0)
-            {
-                return 1;
-            }
-            else if (x.UnreadMessagesCount > 0 && y.UnreadMessagesCount == 0)
-            {
-                return -1;
-            }
-            else
-            {
-                return base.Compare(x, y);
-            }
         }
     }
 }

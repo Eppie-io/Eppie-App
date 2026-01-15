@@ -9,7 +9,7 @@
                              mc:Ignorable="d">
 
     <local:ContactsPanelPageBase.DataContext>
-        <viewmodels:BaseViewModel />
+        <viewmodels:ContactsPanelPageViewModel />
     </local:ContactsPanelPageBase.DataContext>
 
     <Grid Padding="12,0,-32,0">
@@ -39,18 +39,23 @@
             <ComboBox Grid.Row="0"
                       Margin="4,0,0,0"
                       HorizontalAlignment="Stretch"
-                      ItemsSource="{x:Bind ContactsModel.Contacts.SortingVariants, Mode=OneWay}"
-                      SelectedIndex="{x:Bind ContactsModel.Contacts.SelectedSortingIndex, Mode=TwoWay}" />
+                      ItemsSource="{x:Bind ViewModel.SortingVariants, Mode=OneWay}"
+                      SelectedIndex="{x:Bind ViewModel.SelectedSortingIndex, Mode=TwoWay}" />
 
             <AutoSuggestBox x:Uid="ContactFilter"
                             Grid.Row="1"
                             Margin="4,4,0,0"
                             QueryIcon="Find"
-                            Text="{x:Bind ContactsModel.Contacts.SearchFilter.SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            Text="{x:Bind ViewModel.Contacts.SearchFilter.SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
             <sharedControls:ContactsListControl Grid.Row="2"
                                                 Margin="0,4,0,0"
-                                                ContactsModel="{x:Bind ContactsModel, Mode=OneWay}" />
+                                                ChangeContactAvatarCommand="{x:Bind ViewModel.ChangeContactAvatarCommand, Mode=OneWay}"
+                                                ContactClickCommand="{x:Bind ViewModel.ContactClickCommand, Mode=OneWay}"
+                                                Contacts="{x:Bind ViewModel.Contacts, Mode=OneWay}"
+                                                RemoveContactCommand="{x:Bind ViewModel.RemoveContactCommand, Mode=OneWay}"
+                                                RenameContactCommand="{x:Bind ViewModel.RenameContactCommand, Mode=OneWay}"
+                                                SelectedContact="{x:Bind ViewModel.SelectedContact, Mode=TwoWay}" />
         </Grid>
     </Grid>
 </local:ContactsPanelPageBase>
