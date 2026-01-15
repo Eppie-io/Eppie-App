@@ -23,6 +23,7 @@ using Eppie.App.Logging;
 using Microsoft.Extensions.Logging;
 using Tuvi.App.ViewModels;
 using Tuvi.App.ViewModels.Services;
+using Tuvi.Core.Entities;
 using Windows.Storage;
 
 namespace Eppie.App.Services
@@ -206,12 +207,12 @@ namespace Eppie.App.Services
         }
 
         /// <summary>
-        /// Stores selected contacts sorter type.
+        /// Stores selected contacts sort order.
         /// </summary>
-        public string SelectedContactsSortingComparer
+        public ContactsSortOrder ContactsSortOrder
         {
-            get => GetOption(string.Empty);
-            set => SetOption(value);
+            get => GetEnumOption(ContactsSortOrder.ByTime);
+            set => SetEnumOption(value);
         }
 
         #region Set/Get option

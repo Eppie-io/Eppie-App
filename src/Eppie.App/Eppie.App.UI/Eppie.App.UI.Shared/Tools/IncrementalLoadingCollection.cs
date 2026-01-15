@@ -46,8 +46,8 @@ namespace Tuvi.App.IncrementalLoading
     /// <seealso cref="IIncrementalSource{TSource}"/>
     /// <seealso cref="ISupportIncrementalLoading"/>
     public class IncrementalLoadingCollection<TSource, TItemType> : ManagedCollection<TItemType>,
-         ISupportIncrementalLoading
-         where TSource : class, IIncrementalSource<TItemType>, new()
+         ISupportIncrementalLoading, IIncrementalSourceState
+         where TSource : class, IIncrementalSource<TItemType>
     {
         /// <summary>
         /// Gets or sets an <see cref="Action"/> that is called when a retrieval operation begins.
@@ -60,7 +60,7 @@ namespace Tuvi.App.IncrementalLoading
         public Action OnEndLoading { get; set; }
 
         /// <summary>
-        /// Gets or sets an <see cref="Action"/> that is called if an error occours during data retrieval. The actual <see cref="Exception"/> is passed as an argument.
+        /// Gets or sets an <see cref="Action"/> that is called if an error occurs during data retrieval. The actual <see cref="Exception"/> is passed as an argument.
         /// </summary>
         public Action<Exception> OnError { get; set; }
 
@@ -74,6 +74,7 @@ namespace Tuvi.App.IncrementalLoading
         private CancellationToken _cancellationToken;
         private bool _refreshOnLoad;
         private CancellationTokenSource _cancellationTokenSource;
+        private const int DefaultCount = 30;
 
         /// <summary>
         /// Gets a value indicating whether new items are being loaded.
@@ -151,7 +152,7 @@ namespace Tuvi.App.IncrementalLoading
         /// An <see cref="Action"/> that is called when a retrieval operation ends.
         /// </param>
         /// <param name="onError">
-        /// An <see cref="Action"/> that is called if an error occours during data retrieval.
+        /// An <see cref="Action"/> that is called if an error occurs during data retrieval.
         /// </param>
         /// <seealso cref="IIncrementalSource{TSource}"/>
         public IncrementalLoadingCollection(CancellationTokenSource cts,
@@ -187,7 +188,7 @@ namespace Tuvi.App.IncrementalLoading
         /// An <see cref="Action"/> that is called when a retrieval operation ends.
         /// </param>
         /// <param name="onError">
-        /// An <see cref="Action"/> that is called if an error occours during data retrieval.
+        /// An <see cref="Action"/> that is called if an error occurs during data retrieval.
         /// </param>
         /// <seealso cref="IIncrementalSource{TSource}"/>
         public IncrementalLoadingCollection(TSource source,
@@ -200,7 +201,7 @@ namespace Tuvi.App.IncrementalLoading
                                             Action<Exception> onError = null,
                                             ISearchFilter<TItemType> searchFilter = null)
         {
-            if (source == null)
+            if (source is null)
             {
                 throw new ArgumentNullException(nameof(source));
             }
@@ -248,15 +249,11 @@ namespace Tuvi.App.IncrementalLoading
             }
             else
             {
-                var previousCount = Count;
                 Clear();
                 HasMoreItems = true;
                 GetSource()?.Reset();
-                if (previousCount == 0)
-                {
-                    // When the list was empty before clearing, the automatic reload isn't fired, so force a reload.
-                    return LoadMoreItemsAsync(0).AsTask();
-                }
+
+                return LoadMoreItemsAsync(0).AsTask();
             }
 
             return Task.CompletedTask;
@@ -295,42 +292,78 @@ namespace Tuvi.App.IncrementalLoading
             uint resultCount = 0;
             _cancellationToken = cancellationToken;
 
+            if (_isLoading)
+            {
+                return new LoadMoreItemsResult { Count = 0 };
+            }
+
             try
             {
                 if (!_cancellationToken.IsCancellationRequested)
                 {
-                    IEnumerable<TItemType> data = null;
-                    try
+                    IsLoading = true;
+
+                    var initialVisibleCountTotal = Count;
+                    var targetVisibleIncrease = count;
+
+                    // Some callers may pass 0 to mean "load initial page".
+                    // In that case we can't know the target visible increase; load at least something.
+                    if (targetVisibleIncrease == 0)
                     {
-                        IsLoading = true;
-                        data = await LoadDataAsync((int)count, _cancellationToken).ConfigureAwait(true);
-                    }
-                    catch (OperationCanceledException)
-                    {
-                        // The operation has been canceled using the Cancellation Token.
-                    }
-                    catch (ObjectDisposedException)
-                    {
-                        // It seems like we've recreated core
-                    }
-                    catch (Exception ex) when (OnError != null)
-                    {
-                        OnError.Invoke(ex);
+                        targetVisibleIncrease = 1;
+                        count = DefaultCount; // Set reasonable default count for refresh/initial load
                     }
 
-                    if (data != null && data.Any() && data.First() != null && !_cancellationToken.IsCancellationRequested)
-                    {
-                        resultCount = (uint)data.Count();
-                        AddRange(data);
-                        HasMoreItems = true;
+                    // Keep loading until we have enough visible items OR source is exhausted.
+                    // Important: check HasMoreItems to stop if the source says "I'm done".
+                    // Reset HasMoreItems to true initially so we enter the loop if needed.
+                    HasMoreItems = true;
 
-                        // TODO: It can be removed once Uno fixes the issue https://github.com/unoplatform/uno/issues/19887
-                        // HACK: Waiting for new items to be processed before the next iteration. This should apply to Desktop and WebAssembly projects.
-                        await Task.Yield();
-                    }
-                    else
+                    while ((uint)(Count - initialVisibleCountTotal) < targetVisibleIncrease
+                           && HasMoreItems
+                           && !_cancellationToken.IsCancellationRequested)
                     {
-                        HasMoreItems = false;
+                        IEnumerable<TItemType> data = null;
+                        try
+                        {
+                            data = await LoadDataAsync((int)count, _cancellationToken).ConfigureAwait(true);
+                        }
+                        catch (OperationCanceledException)
+                        {
+                            // The operation has been canceled using the Cancellation Token.
+                        }
+                        catch (ObjectDisposedException)
+                        {
+                            // It seems like we've recreated core
+                        }
+                        catch (Exception ex) when (OnError != null)
+                        {
+                            OnError.Invoke(ex);
+                        }
+
+                        if (data != null && data.Any() && data.First() != null)
+                        {
+                            resultCount += (uint)data.Count();
+                            AddRange(data);
+                            HasMoreItems = true;
+
+                            // If we fetched fewer items than requested, it usually means the source is exhausted.
+                            // To be safe, we can continue unless the source explicitly returned empty (handled in else),
+                            // but some sources might return partial pages at the end.
+                            // However, we rely on the loop condition (targetVisibleIncrease) to decide if we need more.
+
+                            // TODO: It can be removed once Uno fixes the issue https://github.com/unoplatform/uno/issues/19887
+                            // HACK: Waiting for new items to be processed before the next iteration. This should apply to Desktop and WebAssembly projects.
+                            await Task.Yield();
+                        }
+                        else
+                        {
+                            // If cancellation requested we should not change HasMoreItems otherwise we can lose the ability to load more items.
+                            if (!_cancellationToken.IsCancellationRequested)
+                            {
+                                HasMoreItems = false;
+                            }
+                        }
                     }
                 }
             }
