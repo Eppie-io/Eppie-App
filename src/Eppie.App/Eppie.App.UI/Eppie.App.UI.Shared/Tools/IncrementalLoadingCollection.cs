@@ -47,7 +47,7 @@ namespace Tuvi.App.IncrementalLoading
     /// <seealso cref="ISupportIncrementalLoading"/>
     public class IncrementalLoadingCollection<TSource, TItemType> : ManagedCollection<TItemType>,
          ISupportIncrementalLoading, IIncrementalSourceState
-         where TSource : class, IIncrementalSource<TItemType>
+         where TSource : class, IIncrementalSource<TItemType>, new()
     {
         /// <summary>
         /// Gets or sets an <see cref="Action"/> that is called when a retrieval operation begins.

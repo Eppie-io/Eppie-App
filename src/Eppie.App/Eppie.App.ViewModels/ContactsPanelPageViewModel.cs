@@ -35,7 +35,7 @@ namespace Tuvi.App.ViewModels
 
         private const int ReconcileDelayMs = 200;
 
-        private ISearchFilter<ContactItem> _searchFilter = new SearchContactFilter();
+        private readonly ISearchFilter<ContactItem> _searchFilter = new SearchContactFilter();
         private CancellationTokenSource _debounceCts;
         private Contact _lastContact;
         private Func<Task<byte[]>> _avatarProvider;
@@ -46,9 +46,8 @@ namespace Tuvi.App.ViewModels
             get => _sortOrder;
             set
             {
-                if (_sortOrder != value)
+                if (SetProperty(ref _sortOrder, value))
                 {
-                    _sortOrder = value;
                     RefreshContacts();
                 }
             }
@@ -178,7 +177,7 @@ namespace Tuvi.App.ViewModels
             Contacts.SearchFilter = _searchFilter;
         }
 
-        private void AddContact(ContactItem contactItem)
+        private void AddContact()
         {
             TriggerReconcile();
         }
@@ -246,7 +245,7 @@ namespace Tuvi.App.ViewModels
             {
                 await DispatcherService.RunAsync(() =>
                 {
-                    AddContact(new ContactItem(e.Contact));
+                    AddContact();
                 }).ConfigureAwait(true);
             }
             catch (Exception ex)
@@ -396,14 +395,7 @@ namespace Tuvi.App.ViewModels
         {
             var contacts = await Core.GetContactsAsync(count, null, SortOrder, cancellationToken).ConfigureAwait(true);
 
-            if (contacts.Count > 0)
-            {
-                _lastContact = contacts[contacts.Count - 1];
-            }
-            else
-            {
-                _lastContact = null;
-            }
+            _lastContact = contacts.Count > 0 ? contacts[contacts.Count - 1] : null;
 
             return contacts.Select(contact => new ContactItem(contact));
         }

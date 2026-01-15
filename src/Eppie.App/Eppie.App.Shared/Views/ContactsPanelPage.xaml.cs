@@ -41,7 +41,7 @@ namespace Eppie.App.Views
 
     internal sealed partial class ContactsPanelPage : ContactsPanelPageBase
     {
-        private CancellationTokenSource _contactsCancellationTokenSource;
+        private readonly CancellationTokenSource _contactsCancellationTokenSource;
 
         public ContactsPanelPage()
         {

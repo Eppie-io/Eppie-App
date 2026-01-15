@@ -396,7 +396,7 @@ namespace Tuvi.App.ViewModels
 
                     var request = new RequestSelectedContactMessage();
                     WeakReferenceMessenger.Default.Send(request);
-                    var selectedContact = request.Response;
+                    var selectedContact = request.HasReceivedResponse ? request.Response : null;
 
                     if (selectedContact?.Email != null)
                     {
