@@ -64,13 +64,16 @@
     </UserControl.Resources>
 
     <Grid>
-        <ListView IsItemClickEnabled="True"
+        <ListView DataFetchSize="20"
+                  IncrementalLoadingThreshold="5"
+                  IncrementalLoadingTrigger="Edge"
+                  IsItemClickEnabled="True"
                   ItemTemplate="{StaticResource ContactItemTemplate}"
-                  ItemsSource="{x:Bind ContactsModel.Contacts, Mode=OneWay}"
-                  SelectedItem="{x:Bind ContactsModel.SelectedContact, Mode=TwoWay}"
+                  ItemsSource="{x:Bind Contacts, Mode=OneWay}"
+                  SelectedItem="{x:Bind SelectedContact, Mode=TwoWay}"
                   SelectionMode="Single">
             <interactivity:Interaction.Behaviors>
-                <behaviors:ListViewItemClickBehavior ClickCommand="{x:Bind ContactsModel.ContactClickCommand, Mode=OneWay}" />
+                <behaviors:ListViewItemClickBehavior ClickCommand="{x:Bind ContactClickCommand, Mode=OneWay}" />
             </interactivity:Interaction.Behaviors>
         </ListView>
     </Grid>

@@ -26,8 +26,10 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.Logging;
 using Tuvi.App.ViewModels.Common;
+using Tuvi.App.ViewModels.Messages;
 using Tuvi.App.ViewModels.Services;
 using Tuvi.Core.Entities;
 
@@ -358,7 +360,6 @@ namespace Tuvi.App.ViewModels
 
     public class MainPageViewModel : BaseViewModel
     {
-        public ContactsModel ContactsModel { get; private set; }
         public MailBoxesModel MailBoxesModel { get; private set; }
 
         public ICommand WriteNewMessageCommand
@@ -393,11 +394,15 @@ namespace Tuvi.App.ViewModels
                 {
                     NewMessageData messageData = null;
 
-                    if (ContactsModel?.SelectedContact != null)
+                    var request = new RequestSelectedContactMessage();
+                    WeakReferenceMessenger.Default.Send(request);
+                    var selectedContact = request.HasReceivedResponse ? request.Response : null;
+
+                    if (selectedContact?.Email != null)
                     {
                         messageData = new SelectedContactNewMessageData(
-                            ContactsModel.SelectedContact.LastMessageData.AccountEmail,
-                            ContactsModel.SelectedContact.Email);
+                            selectedContact.LastMessageData.AccountEmail,
+                            selectedContact.Email);
                     }
                     else if (MailBoxesModel?.SelectedItem != null)
                     {
@@ -424,15 +429,12 @@ namespace Tuvi.App.ViewModels
             Problems.Remove(problem);
         }
 
-        public ICommand RemoveContactCommand => new AsyncRelayCommand<ContactItem>(RemoveContactAsync);
-
         public override async void OnNavigatedTo(object data)
         {
             try
             {
                 base.OnNavigatedTo(data);
 
-                await UpdateContactsAsync().ConfigureAwait(true);
                 await UpdateAccountListAsync().ConfigureAwait(true);
 
                 SubscribeEvents();
@@ -573,7 +575,6 @@ namespace Tuvi.App.ViewModels
         {
             try
             {
-                await UpdateContactsUnreadCountAsync().ConfigureAwait(true);
                 await UpdateMailboxItemsUnreadCountAsync().ConfigureAwait(true);
             }
             catch (Exception ex)
@@ -605,9 +606,6 @@ namespace Tuvi.App.ViewModels
             Core.MessagesIsReadChanged += OnMessagesIsReadChanged;
             Core.AccountAdded += OnAccountAdded;
             Core.AccountUpdated += OnAccountUpdated;
-            Core.ContactAdded += OnContactAdded;
-            Core.ContactChanged += OnContactChanged;
-            Core.ContactDeleted += OnContactDeleted;
 
             LocalSettingsService.SettingChanged += LocalSettingsService_SettingChanged;
         }
@@ -620,9 +618,6 @@ namespace Tuvi.App.ViewModels
             Core.MessagesIsReadChanged -= OnMessagesIsReadChanged;
             Core.AccountAdded -= OnAccountAdded;
             Core.AccountUpdated -= OnAccountUpdated;
-            Core.ContactAdded -= OnContactAdded;
-            Core.ContactChanged -= OnContactChanged;
-            Core.ContactDeleted -= OnContactDeleted;
 
             LocalSettingsService.SettingChanged -= LocalSettingsService_SettingChanged;
         }
@@ -699,7 +694,6 @@ namespace Tuvi.App.ViewModels
             try
             {
                 await UpdateMailboxItemUnreadCountAsync(email).ConfigureAwait(true);
-                await UpdateContactsUnreadCountAsync().ConfigureAwait(true);
             }
             catch (ObjectDisposedException)
             { }
@@ -744,51 +738,6 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        private async void OnContactAdded(object sender, ContactAddedEventArgs e)
-        {
-            try
-            {
-                await DispatcherService.RunAsync(() =>
-                {
-                    ContactsModel.AddContact(new ContactItem(e.Contact));
-                }).ConfigureAwait(true);
-            }
-            catch (Exception ex)
-            {
-                OnError(ex);
-            }
-        }
-
-        private async void OnContactChanged(object sender, ContactChangedEventArgs e)
-        {
-            try
-            {
-                await DispatcherService.RunAsync(() =>
-                {
-                    ContactsModel.UpdateContact(new ContactItem(e.Contact));
-                }).ConfigureAwait(true);
-            }
-            catch (Exception ex)
-            {
-                OnError(ex);
-            }
-        }
-
-        private async void OnContactDeleted(object sender, ContactDeletedEventArgs e)
-        {
-            try
-            {
-                await DispatcherService.RunAsync(() =>
-                {
-                    ContactsModel.RemoveContactByEmail(e.ContactEmail);
-                }).ConfigureAwait(true);
-            }
-            catch (Exception ex)
-            {
-                OnError(ex);
-            }
-        }
-
         private async Task UpdateMailboxItemUnreadCountAsync(EmailAddress email)
         {
             var rootItem = MailBoxesModel.GetRootItemByEmail(email);
@@ -823,87 +772,14 @@ namespace Tuvi.App.ViewModels
             MailBoxesModel.SetAccounts(accounts);
         }
 
-        private async Task UpdateContactsAsync()
+        public void InitializeMailboxModel(ICommand mailBoxItemClick, ICommand mailBoxItemDrop)
         {
-            if (ContactsModel != null)
-            {
-                var contacts = await Core.GetContactsAsync().ConfigureAwait(true);
-                ContactsModel.SetContacts(contacts.Select(contact => new ContactItem(contact)));
-            }
-        }
-
-        private async Task UpdateContactsUnreadCountAsync()
-        {
-            var counts = await Core.GetUnreadMessagesCountByContactAsync().ConfigureAwait(true);
-            await DispatcherService.RunAsync(() =>
-            {
-                ContactsModel.SetUnreadCount(counts);
-            }).ConfigureAwait(true);
-        }
-
-        public async Task RenameContactAsync(ContactItem contactItem)
-        {
-            if (contactItem != null)
-            {
-                await Core.SetContactNameAsync(contactItem.Email, contactItem.FullName).ConfigureAwait(true);
-            }
-        }
-
-        public async Task SetContactAvatarAsync(ContactItem contactItem, byte[] avatarBytes, int avatarWidth, int avatarHeight, CancellationToken cancellationToken = default)
-        {
-            if (contactItem != null)
-            {
-                await Core.SetContactAvatarAsync(contactItem.Email, avatarBytes, avatarWidth, avatarHeight, cancellationToken).ConfigureAwait(true);
-            }
-        }
-
-        private async Task RemoveContactAsync(ContactItem contactItem)
-        {
-            try
-            {
-                await Core.RemoveContactAsync(contactItem.Email).ConfigureAwait(true);
-            }
-            catch (Exception e)
-            {
-                OnError(e);
-            }
-        }
-
-        public void InitializeModels(ICommand contactClickCommand, ICommand renameContactCommand, ICommand changeContactAvatarCommand, ICommand mailBoxItemClick, ICommand mailBoxItemDrop)
-        {
-            ContactsModel contactsModel = CreateContactsModel(contactClickCommand, renameContactCommand, changeContactAvatarCommand);
-            MailBoxesModel mailBoxesModel = new MailBoxesModel(mailBoxItemClick, mailBoxItemDrop);
-
-            ContactsModel = contactsModel;
-            MailBoxesModel = mailBoxesModel;
-        }
-
-        private ContactsModel CreateContactsModel(ICommand contactClickCommand, ICommand renameContactCommand, ICommand changeContactAvatarCommand)
-        {
-            IExtendedComparer<ContactItem>[] contactSortingVariants = new IExtendedComparer<ContactItem>[]
-            {
-                new ByNameContactComparer(GetLocalizedString("OrderByNameContactComparerLabel")),
-                new ByTimeContactComparer(GetLocalizedString("OrderByTimeContactComparerLabel")),
-                new ByUnreadContactComparer(GetLocalizedString("OrderByUnreadContactComparerLabel")),
-            };
-
-            var defaultComparer = contactSortingVariants.FirstOrDefault(variant => variant is ByTimeContactComparer);
-            var searchFilter = new SearchContactFilter();
-
-            return new ContactsModel(
-                LocalSettingsService,
-                contactSortingVariants,
-                defaultComparer,
-                searchFilter,
-                contactClickCommand,
-                RemoveContactCommand,
-                changeContactAvatarCommand,
-                renameContactCommand);
+            MailBoxesModel = new MailBoxesModel(mailBoxItemClick, mailBoxItemDrop);
         }
 
         public void OnShowAllMessages()
         {
-            ContactsModel.SelectedContact = null;
+            WeakReferenceMessenger.Default.Send(new ClearSelectedContactMessage());
             MailBoxesModel.SelectedItem = null;
         }
 

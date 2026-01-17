@@ -16,10 +16,11 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
+using System.Collections;
+using System.Windows.Input;
 using Tuvi.App.ViewModels;
 using Eppie.App.UI.Resources;
 using System.Diagnostics.CodeAnalysis;
-
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -36,13 +37,59 @@ namespace Eppie.App.UI.Controls
     {
         private static readonly StringProvider StringProvider = StringProvider.GetInstance();
 
-        public ContactsModel ContactsModel
+        public IEnumerable Contacts
         {
-            get { return (ContactsModel)GetValue(ContactsModelProperty); }
-            set { SetValue(ContactsModelProperty, value); }
+            get { return (IEnumerable)GetValue(ContactsProperty); }
+            set { SetValue(ContactsProperty, value); }
         }
-        public static readonly DependencyProperty ContactsModelProperty =
-            DependencyProperty.Register(nameof(ContactsModel), typeof(ContactsModel), typeof(ContactsListControl), new PropertyMetadata(null));
+
+        public static readonly DependencyProperty ContactsProperty =
+            DependencyProperty.Register(nameof(Contacts), typeof(IEnumerable), typeof(ContactsListControl), new PropertyMetadata(null));
+
+        public ContactItem SelectedContact
+        {
+            get { return (ContactItem)GetValue(SelectedContactProperty); }
+            set { SetValue(SelectedContactProperty, value); }
+        }
+
+        public static readonly DependencyProperty SelectedContactProperty =
+            DependencyProperty.Register(nameof(SelectedContact), typeof(ContactItem), typeof(ContactsListControl), new PropertyMetadata(null));
+
+        public ICommand ContactClickCommand
+        {
+            get { return (ICommand)GetValue(ContactClickCommandProperty); }
+            set { SetValue(ContactClickCommandProperty, value); }
+        }
+
+        public static readonly DependencyProperty ContactClickCommandProperty =
+            DependencyProperty.Register(nameof(ContactClickCommand), typeof(ICommand), typeof(ContactsListControl), new PropertyMetadata(null));
+
+        public ICommand RenameContactCommand
+        {
+            get { return (ICommand)GetValue(RenameContactCommandProperty); }
+            set { SetValue(RenameContactCommandProperty, value); }
+        }
+
+        public static readonly DependencyProperty RenameContactCommandProperty =
+            DependencyProperty.Register(nameof(RenameContactCommand), typeof(ICommand), typeof(ContactsListControl), new PropertyMetadata(null));
+
+        public ICommand ChangeContactAvatarCommand
+        {
+            get { return (ICommand)GetValue(ChangeContactAvatarCommandProperty); }
+            set { SetValue(ChangeContactAvatarCommandProperty, value); }
+        }
+
+        public static readonly DependencyProperty ChangeContactAvatarCommandProperty =
+            DependencyProperty.Register(nameof(ChangeContactAvatarCommand), typeof(ICommand), typeof(ContactsListControl), new PropertyMetadata(null));
+
+        public ICommand RemoveContactCommand
+        {
+            get { return (ICommand)GetValue(RemoveContactCommandProperty); }
+            set { SetValue(RemoveContactCommandProperty, value); }
+        }
+
+        public static readonly DependencyProperty RemoveContactCommandProperty =
+            DependencyProperty.Register(nameof(RemoveContactCommand), typeof(ICommand), typeof(ContactsListControl), new PropertyMetadata(null));
 
         public ContactsListControl()
         {
@@ -63,7 +110,7 @@ namespace Eppie.App.UI.Controls
                         (newName) =>
                         {
                             contactItem.FullName = newName;
-                            ContactsModel?.RenameContactCommand?.Execute(contactItem);
+                            RenameContactCommand?.Execute(contactItem);
                         });
             }
         }
@@ -72,7 +119,7 @@ namespace Eppie.App.UI.Controls
         {
             if (sender is FrameworkElement frameworkElement && frameworkElement.Tag is ContactItem contactItem)
             {
-                ContactsModel?.ChangeContactAvatarCommand?.Execute(contactItem);
+                ChangeContactAvatarCommand?.Execute(contactItem);
             }
         }
 
@@ -80,7 +127,7 @@ namespace Eppie.App.UI.Controls
         {
             if (sender is FrameworkElement frameworkElement && frameworkElement.Tag is ContactItem contactItem)
             {
-                ContactsModel?.RemoveContactCommand?.Execute(contactItem);
+                RemoveContactCommand?.Execute(contactItem);
             }
         }
     }

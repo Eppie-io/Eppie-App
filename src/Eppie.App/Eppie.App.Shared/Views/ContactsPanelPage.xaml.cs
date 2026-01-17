@@ -16,10 +16,17 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Windows.Storage;
+using Windows.Storage.Pickers;
+using Eppie.App.Helpers;
+using Eppie.App.UI.Tools;
+using Tuvi.App.IncrementalLoading;
 using Tuvi.App.ViewModels;
 
 #if WINDOWS_UWP
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Navigation;
 #else
 using Microsoft.UI.Xaml;
@@ -28,33 +35,63 @@ using Microsoft.UI.Xaml.Navigation;
 
 namespace Eppie.App.Views
 {
-    internal partial class ContactsPanelPageBase : BasePage<BaseViewModel, BaseViewModel>
+    internal partial class ContactsPanelPageBase : BasePage<ContactsPanelPageViewModel, BaseViewModel>
     {
     }
 
     internal sealed partial class ContactsPanelPage : ContactsPanelPageBase
     {
+        private readonly CancellationTokenSource _contactsCancellationTokenSource;
+
         public ContactsPanelPage()
         {
             this.InitializeComponent();
+            _contactsCancellationTokenSource = new CancellationTokenSource();
         }
-
-        public ContactsModel ContactsModel
-        {
-            get { return (ContactsModel)GetValue(ContactsModelProperty); }
-            set { SetValue(ContactsModelProperty, value); }
-        }
-
-        public static readonly DependencyProperty ContactsModelProperty =
-            DependencyProperty.Register(nameof(ContactsModel), typeof(ContactsModel), typeof(ContactsPanelPage), new PropertyMetadata(null));
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            base.OnNavigatedTo(e);
-            if (e?.Parameter is ContactsModel model)
+            if (ViewModel != null && ViewModel.Contacts == null)
             {
-                ContactsModel = model;
+                ViewModel.SetAvatarProvider(PickAvatarBytesAsync);
+
+                var contactsCollection = new IncrementalLoadingCollection<ContactsPanelPageViewModel, ContactItem>(
+                    ViewModel,
+                    _contactsCancellationTokenSource);
+
+                ViewModel.SetContactsCollection(contactsCollection);
             }
+
+            base.OnNavigatedTo(e);
+        }
+
+        private async Task<byte[]> PickAvatarBytesAsync()
+        {
+            try
+            {
+                FileOpenPicker fileOpenPicker = FileOpenPickerBuilder.CreateBuilder(Eppie.App.App.MainWindow)
+                                                                     .Configure((picker) =>
+                                                                     {
+                                                                         picker.ViewMode = PickerViewMode.Thumbnail;
+                                                                         picker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
+                                                                         picker.FileTypeFilter.Add(".jpg");
+                                                                         picker.FileTypeFilter.Add(".jpeg");
+                                                                         picker.FileTypeFilter.Add(".png");
+                                                                         picker.FileTypeFilter.Add(".bmp");
+                                                                     })
+                                                                     .Build();
+
+                StorageFile file = await fileOpenPicker.PickSingleFileAsync();
+                if (file != null)
+                {
+                    return await BitmapTools.GetThumbnailPixelDataAsync(file, (uint)ContactItem.DefaultAvatarSize, (uint)ContactItem.DefaultAvatarSize).ConfigureAwait(true);
+                }
+            }
+            catch (Exception e)
+            {
+                ViewModel.OnError(e);
+            }
+            return null;
         }
     }
 }

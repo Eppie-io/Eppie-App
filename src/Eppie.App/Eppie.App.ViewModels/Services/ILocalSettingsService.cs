@@ -18,6 +18,7 @@
 
 using System;
 using Microsoft.Extensions.Logging;
+using Tuvi.Core.Entities;
 
 namespace Tuvi.App.ViewModels.Services
 {
@@ -183,9 +184,9 @@ namespace Tuvi.App.ViewModels.Services
         string LastShownWhatsNewId { get; set; }
 
         /// <summary>
-        /// Selected contacts comparer type used to persist sorting across runs
+        /// Selected contacts sort order.
         /// </summary>
-        string SelectedContactsSortingComparer { get; set; }
+        ContactsSortOrder ContactsSortOrder { get; set; }
     }
 
     /// <summary>

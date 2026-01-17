@@ -75,6 +75,7 @@ namespace Tuvi.App.ViewModels
         public ContactItem()
         {
         }
+
         public ContactItem(Contact contact)
         {
             if (contact is null)
@@ -86,7 +87,9 @@ namespace Tuvi.App.ViewModels
             FullName = contact.FullName;
             AvatarInfo = contact.AvatarInfo;
             LastMessageData = contact.LastMessageData;
+            UnreadMessagesCount = contact.UnreadCount;
         }
+
         public ContactItem(EmailAddress email)
         {
             if (email is null)
@@ -96,6 +99,34 @@ namespace Tuvi.App.ViewModels
 
             Email = email;
             FullName = email.Name;
+        }
+
+        public void UpdateFrom(ContactItem other)
+        {
+            if (other is null)
+            {
+                throw new ArgumentNullException(nameof(other));
+            }
+
+            FullName = other.FullName;
+            AvatarInfo = other.AvatarInfo;
+            LastMessageData = other.LastMessageData;
+            UnreadMessagesCount = other.UnreadMessagesCount;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is ContactItem other)
+            {
+                return Email.Equals(other.Email);
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return Email.GetHashCode();
         }
 
         public EmailAddress ToEmailAddress()

@@ -16,45 +16,10 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-using System;
-using Tuvi.Core.Entities;
-
 namespace Tuvi.App.ViewModels
 {
-    public class ByNameContactComparer : ContactComparer
+    public interface IIncrementalSourceState
     {
-        public ByNameContactComparer()
-        {
-        }
-        public ByNameContactComparer(string label)
-        {
-            Label = label;
-        }
-
-        public override int Compare(ContactItem x, ContactItem y)
-        {
-            if (x is null)
-            {
-                throw new ArgumentNullException(nameof(x));
-            }
-            if (y is null)
-            {
-                throw new ArgumentNullException(nameof(y));
-            }
-
-            var xName = string.IsNullOrEmpty(x.FullName) ? x.Email.Address : x.FullName;
-            var yName = string.IsNullOrEmpty(y.FullName) ? y.Email.Address : y.FullName;
-
-#pragma warning disable CA1309 // Use ordinal string comparison
-            // This comparison is intended to be culture-aware because the list is shown to the user.
-            var result = string.Compare(xName, yName, StringComparison.CurrentCultureIgnoreCase);
-#pragma warning restore CA1309
-            if (result == 0)
-            {
-                result = StringHelper.CompareEmails(x.Email.Address, y.Email.Address);
-            }
-
-            return result;
-        }
+        bool HasMoreItems { get; }
     }
 }

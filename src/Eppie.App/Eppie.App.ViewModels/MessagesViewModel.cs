@@ -331,7 +331,7 @@ namespace Tuvi.App.ViewModels
                                                                         })
                                                                     .ToArray();
 
-                    messageList.VerifyItemsPassFilter(changedMessages);
+                    messageList.RefilterItems(changedMessages);
 
                 }).ConfigureAwait(true);
             }
@@ -479,7 +479,7 @@ namespace Tuvi.App.ViewModels
                 {
                     quickAction(messageInfo);
                 }
-                MessageList.VerifyItemsPassFilter(messages);
+                MessageList.RefilterItems(messages);
 
                 // Remove the selection from the mail list
                 parameter.Clear();
@@ -516,7 +516,7 @@ namespace Tuvi.App.ViewModels
                     message.WasDeleted = true;
                 }
                 var messageList = MessageList;
-                messageList.VerifyItemsPassFilter(messages);
+                messageList.RefilterItems(messages);
 
                 SetUpMessagesDeletedText(messages.Length);
 
@@ -547,7 +547,7 @@ namespace Tuvi.App.ViewModels
                     {
                         message.WasDeleted = false;
                     }
-                    messageList.VerifyItemsPassFilter(messages);
+                    messageList.RefilterItems(messages);
                 }
                 else
                 {

@@ -16,42 +16,14 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-using System;
-using Tuvi.Core.Entities;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 
-namespace Tuvi.App.ViewModels
+namespace Tuvi.App.ViewModels.Messages
 {
-    public class ByTimeContactComparer : ContactComparer
+    public sealed class ClearSelectedContactMessage : ValueChangedMessage<bool>
     {
-        public ByTimeContactComparer()
+        public ClearSelectedContactMessage() : base(true)
         {
-        }
-        public ByTimeContactComparer(string label)
-        {
-            Label = label;
-        }
-
-        public override int Compare(ContactItem x, ContactItem y)
-        {
-            if (x is null)
-            {
-                throw new ArgumentNullException(nameof(x));
-            }
-            if (y is null)
-            {
-                throw new ArgumentNullException(nameof(y));
-            }
-
-            var xDate = x.LastMessageData?.Date ?? DateTimeOffset.MinValue;
-            var yDate = y.LastMessageData?.Date ?? DateTimeOffset.MinValue;
-
-            var result = DateTimeOffset.Compare(yDate, xDate);
-            if (result == 0)
-            {
-                result = StringHelper.CompareEmails(x.Email.Address, y.Email.Address);
-            }
-
-            return result;
         }
     }
 }
