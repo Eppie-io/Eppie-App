@@ -249,15 +249,11 @@ namespace Tuvi.App.IncrementalLoading
             }
             else
             {
-                var previousCount = Count;
                 Clear();
                 HasMoreItems = true;
                 GetSource()?.Reset();
-                if (previousCount == 0)
-                {
-                    // When the list was empty before clearing, the automatic reload isn't fired, so force a reload.
-                    return LoadMoreItemsAsync(0).AsTask();
-                }
+
+                return LoadMoreItemsAsync(0).AsTask();
             }
 
             return Task.CompletedTask;
