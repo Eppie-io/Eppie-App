@@ -74,6 +74,7 @@ namespace Tuvi.App.IncrementalLoading
         private CancellationToken _cancellationToken;
         private bool _refreshOnLoad;
         private CancellationTokenSource _cancellationTokenSource;
+        private CancellationTokenSource _currentLoadCts;
         private const int DefaultCount = 30;
 
         /// <summary>
@@ -246,6 +247,7 @@ namespace Tuvi.App.IncrementalLoading
             if (IsLoading)
             {
                 _refreshOnLoad = true;
+                _currentLoadCts?.Cancel();
             }
             else
             {
@@ -297,9 +299,13 @@ namespace Tuvi.App.IncrementalLoading
                 return new LoadMoreItemsResult { Count = 0 };
             }
 
+            _currentLoadCts?.Dispose();
+            _currentLoadCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            var token = _currentLoadCts.Token;
+
             try
             {
-                if (!_cancellationToken.IsCancellationRequested)
+                if (!token.IsCancellationRequested)
                 {
                     IsLoading = true;
 
@@ -321,12 +327,12 @@ namespace Tuvi.App.IncrementalLoading
 
                     while ((uint)(Count - initialVisibleCountTotal) < targetVisibleIncrease
                            && HasMoreItems
-                           && !_cancellationToken.IsCancellationRequested)
+                           && !token.IsCancellationRequested)
                     {
                         IEnumerable<TItemType> data = null;
                         try
                         {
-                            data = await LoadDataAsync((int)count, _cancellationToken).ConfigureAwait(true);
+                            data = await LoadDataAsync((int)count, token).ConfigureAwait(true);
                         }
                         catch (OperationCanceledException)
                         {
@@ -359,7 +365,7 @@ namespace Tuvi.App.IncrementalLoading
                         else
                         {
                             // If cancellation requested we should not change HasMoreItems otherwise we can lose the ability to load more items.
-                            if (!_cancellationToken.IsCancellationRequested)
+                            if (!token.IsCancellationRequested)
                             {
                                 HasMoreItems = false;
                             }

@@ -34,7 +34,7 @@ namespace Tuvi.App.ViewModels
         public bool IsChanging
         {
             get => _isChanging;
-            set
+            private set
             {
                 if (_isChanging != value)
                 {
@@ -73,7 +73,7 @@ namespace Tuvi.App.ViewModels
                     return;
                 }
                 _itemsComparer = value;
-                RequestRefilter();
+                ReFilterItems();
                 OnPropertyChanged(new PropertyChangedEventArgs(nameof(ItemsComparer)));
                 OnPropertyChanged(new PropertyChangedEventArgs(nameof(SelectedSortingIndex)));
             }
@@ -92,7 +92,7 @@ namespace Tuvi.App.ViewModels
                     return;
                 }
                 _itemsFilter = value;
-                RequestRefilter();
+                ReFilterItems();
                 OnPropertyChanged(new PropertyChangedEventArgs(nameof(ItemsFilter)));
             }
         }
@@ -107,6 +107,7 @@ namespace Tuvi.App.ViewModels
                 {
                     return;
                 }
+
                 if (_searchFilter != null)
                 {
                     _searchFilter.PropertyChanged -= OnSearchFilterPropertyChanged;
@@ -119,38 +120,17 @@ namespace Tuvi.App.ViewModels
                     _searchFilter.PropertyChanged += OnSearchFilterPropertyChanged;
                 }
 
-                RequestRefilter();
+                ReFilterItems();
                 OnPropertyChanged(new PropertyChangedEventArgs(nameof(SearchFilter)));
             }
         }
         private void OnSearchFilterPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            RequestRefilter();
-        }
-
-        private bool _pendingRefilter;
-        private bool _isRefiltering;
-
-        private void RequestRefilter()
-        {
-            if (!IsChanging && !_isRefiltering)
-            {
-                ReFilterItems();
-            }
-            else
-            {
-                _pendingRefilter = true;
-            }
+            ReFilterItems();
         }
 
         private void ReFilterItems()
         {
-            if (_isRefiltering)
-            {
-                return;
-            }
-
-            _isRefiltering = true;
             StartChanging();
 
             try
@@ -159,7 +139,6 @@ namespace Tuvi.App.ViewModels
             }
             finally
             {
-                _isRefiltering = false;
                 EndChanging();
             }
         }
@@ -361,7 +340,7 @@ namespace Tuvi.App.ViewModels
 
             try
             {
-                RequestRefilter();
+                ReFilterItems();
                 await RefreshImplAsync().ConfigureAwait(true);
             }
             finally
@@ -378,21 +357,24 @@ namespace Tuvi.App.ViewModels
         private int _changingRequestsCount;
         public void StartChanging()
         {
-            Interlocked.Increment(ref _changingRequestsCount);
-            IsChanging = true;
+            if (_changingRequestsCount == 0)
+            {
+                IsChanging = true;
+            }
+            _changingRequestsCount++;
         }
 
         public void EndChanging()
         {
-            if (Interlocked.Decrement(ref _changingRequestsCount) == 0)
+            if (_changingRequestsCount <= 0)
+            {
+                throw new InvalidOperationException("EndChanging called without matching StartChanging.");
+            }
+
+            _changingRequestsCount--;
+            if (_changingRequestsCount == 0)
             {
                 IsChanging = false;
-
-                if (_pendingRefilter)
-                {
-                    _pendingRefilter = false;
-                    ReFilterItems();
-                }
             }
         }
 
@@ -477,12 +459,6 @@ namespace Tuvi.App.ViewModels
             }
             finally
             {
-                // We have fully reconciled the visual collection with the new state (including filters/sort).
-                // Any pending refilter request (e.g., triggered by property changes during updateItem)
-                // is now satisfied/obsolete. Clearing it prevents EndChanging() from triggering a redundant
-                // sync.
-                _pendingRefilter = false;
-
                 EndChanging();
             }
         }
