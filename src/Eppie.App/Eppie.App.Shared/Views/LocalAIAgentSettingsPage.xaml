@@ -9,9 +9,12 @@
                                     xmlns:local="using:Eppie.App.Views"
                                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                                     xmlns:viewmodels="using:Tuvi.App.ViewModels"
-                                    xmlns:win="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                                     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
                                     mc:Ignorable="d">
+
+    <local:LocalAIAgentSettingsPageBase.Resources>
+        <x:Double x:Key="NormalOptionGapHeight">36</x:Double>
+    </local:LocalAIAgentSettingsPageBase.Resources>
 
     <local:LocalAIAgentSettingsPageBase.DataContext>
         <viewmodels:LocalAIAgentSettingsPageViewModel />
@@ -23,51 +26,41 @@
                                   HandleErrorCommand="{x:Bind ViewModel.HandleErrorCommand}" />
     </interactivity:Interaction.Behaviors>
 
-    <Grid Padding="16">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
+    <controls:AddressSettingsView x:Uid="AIAgentSettingsView"
+                                  ApplyCommand="{x:Bind ViewModel.ApplySettingsCommand}"
+                                  CancelCommand="{x:Bind ViewModel.CancelSettingsCommand}"
+                                  IsApplying="{x:Bind ViewModel.IsWaitingResponse, Mode=OneWay}"
+                                  IsRemoveButtonVisible="{x:Bind ViewModel.IsCreatingAgentMode, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
+                                  RemoveCommand="{x:Bind ViewModel.RemoveAgentCommand}">
+        <StackPanel>
 
-        <Button x:Uid="RemoveLocalAIAgentButton"
-                HorizontalAlignment="Right"
-                Command="{x:Bind ViewModel.RemoveAgentCommand}"
-                Visibility="{x:Bind ViewModel.IsCreatingAgentMode, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+            <controls:OptionControl x:Uid="AIModelOption" GapHeight="{StaticResource NormalOptionGapHeight}">
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Uid="ImportLocalAIModelButton"
+                            Command="{x:Bind ViewModel.ImportLocalAIModelCommand}"
+                            Visibility="{x:Bind ViewModel.IsImportAIModelButtonVisible, Mode=OneWay}" />
+                    <Button x:Uid="DeleteLocalAIModelButton"
+                            Command="{x:Bind ViewModel.DeleteLocalAIModelCommand}"
+                            Visibility="{x:Bind ViewModel.IsDeleteAIModelButtonVisible, Mode=OneWay}" />
+                    <ProgressRing Width="20"
+                                  Height="20"
+                                  Margin="12,0,0,0"
+                                  IsActive="True"
+                                  Visibility="{x:Bind ViewModel.IsAIProgressRingVisible, Mode=OneWay}" />
+                    <!--  TODO: Temporary link to the documentation  -->
+                    <HyperlinkButton Margin="12,0,0,0"
+                                     extensions:HyperlinkExtension.Link="https://blog.eppie.io/post/eppie-ai/"
+                                     Content="How to set up your AI agent" />
+                </StackPanel>
+            </controls:OptionControl>
 
-        <StackPanel Orientation="Horizontal">
-            <Button x:Uid="ImportLocalAIModelButton"
-                    Command="{x:Bind ViewModel.ImportLocalAIModelCommand}"
-                    Visibility="{x:Bind ViewModel.IsImportAIModelButtonVisible, Mode=OneWay}" />
-            <Button x:Uid="DeleteLocalAIModelButton"
-                    Command="{x:Bind ViewModel.DeleteLocalAIModelCommand}"
-                    Visibility="{x:Bind ViewModel.IsDeleteAIModelButtonVisible, Mode=OneWay}" />
-            <ProgressRing HorizontalAlignment="Left"
-                          IsActive="True"
-                          Visibility="{x:Bind ViewModel.IsAIProgressRingVisible, Mode=OneWay}" />
-            <!--  TODO: Temporary link to the documentation  -->
-            <HyperlinkButton Margin="4,0,0,0"
-                             extensions:HyperlinkExtension.Link="https://blog.eppie.io/post/eppie-ai/"
-                             Content="How to set up your AI agent" />
-        </StackPanel>
-
-        <Grid Grid.Row="1"
-              ColumnSpacing="36"
-              RowSpacing="8">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="286" />
-            </Grid.ColumnDefinitions>
-            <StackPanel Orientation="Vertical" Spacing="12">
-                <TextBox x:Uid="AIAgentNameTextBox"
-                         Grid.Row="0"
-                         AcceptsReturn="True"
+            <controls:OptionControl x:Uid="AIAgentNameOption" GapHeight="{StaticResource NormalOptionGapHeight}">
+                <TextBox HorizontalAlignment="Stretch"
+                         IsSpellCheckEnabled="False"
                          Text="{x:Bind ViewModel.AgentSettingsModel.Name, Mode=TwoWay}" />
+            </controls:OptionControl>
+
+            <controls:OptionControl x:Uid="AgentSpecialtyOption" GapHeight="{StaticResource NormalOptionGapHeight}">
                 <StackPanel Orientation="Horizontal">
                     <ComboBox x:Uid="AgentSpecialtyCombobox"
                               VerticalAlignment="Center"
@@ -81,76 +74,78 @@
                               SelectedItem="{x:Bind ViewModel.AgentSettingsModel.Language, Mode=TwoWay}"
                               Visibility="{x:Bind ViewModel.AgentSettingsModel.IsLanguageVisible, Mode=OneWay}" />
                 </StackPanel>
-                <TextBox x:Uid="SystemPromptInputTextBox"
-                         Grid.Row="0"
-                         MinHeight="96"
-                         MaxHeight="300"
+            </controls:OptionControl>
+
+            <controls:OptionControl x:Uid="SystemPromptOption" GapHeight="{StaticResource NormalOptionGapHeight}">
+                <TextBox MinHeight="96"
+                         MaxHeight="800"
+                         HorizontalAlignment="Stretch"
                          AcceptsReturn="True"
                          Text="{x:Bind ViewModel.AgentSettingsModel.SystemPrompt, Mode=TwoWay}"
                          TextWrapping="Wrap" />
-                <ComboBox x:Uid="AIAgentLinkedAccount"
-                          VerticalAlignment="Center"
-                          ItemsSource="{x:Bind ViewModel.AccountsList}"
-                          SelectedItem="{x:Bind ViewModel.LinkedAccount, Mode=TwoWay}" />
-                <CheckBox x:Uid="AllowSendEmailsCheckBox" IsChecked="{x:Bind ViewModel.AgentSettingsModel.IsAllowedToSendingEmails, Mode=TwoWay}" />
-                <ComboBox x:Uid="PreprocessWithAIAgent"
-                          VerticalAlignment="Center"
-                          ItemsSource="{x:Bind ViewModel.AIAgentsList}"
-                          SelectedItem="{x:Bind ViewModel.PreProcessorAIAgent, Mode=TwoWay}" />
-                <ComboBox x:Uid="PostprocessWithAIAgent"
-                          VerticalAlignment="Center"
-                          ItemsSource="{x:Bind ViewModel.AIAgentsList}"
-                          SelectedItem="{x:Bind ViewModel.PostProcessorAIAgent, Mode=TwoWay}" />
-            </StackPanel>
-            <StackPanel Grid.RowSpan="3"
-                        Grid.Column="1"
-                        Spacing="12">
-                <Slider x:Uid="/App.Resources/AIOptionTopPSlider"
-                        Header="Top P"
-                        IsEnabled="{x:Bind ViewModel.AgentSettingsModel.DoSample, Mode=OneWay}"
-                        Maximum="1"
-                        Minimum="0"
-                        StepFrequency="0.01"
-                        Value="{x:Bind ViewModel.AgentSettingsModel.TopP, Mode=TwoWay}" />
-                <Slider x:Uid="/App.Resources/AIOptionTopKSlider"
-                        Header="Top K"
-                        IsEnabled="{x:Bind ViewModel.AgentSettingsModel.DoSample, Mode=OneWay}"
-                        Maximum="200"
-                        Minimum="0"
-                        StepFrequency="1"
-                        Value="{x:Bind ViewModel.AgentSettingsModel.TopK, Mode=TwoWay}" />
-                <Slider x:Uid="/App.Resources/AIOptionTemperatureSlider"
-                        Header="Temperature"
-                        IsEnabled="{x:Bind ViewModel.AgentSettingsModel.DoSample, Mode=OneWay}"
-                        Maximum="5"
-                        Minimum="0.01"
-                        StepFrequency="0.01"
-                        Value="{x:Bind ViewModel.AgentSettingsModel.Temperature, Mode=TwoWay}" />
-                <ToggleSwitch x:Uid="/App.Resources/DoSampleToggle"
-                              Header="Sampling"
-                              IsOn="{x:Bind ViewModel.AgentSettingsModel.DoSample, Mode=TwoWay}" />
-            </StackPanel>
-        </Grid>
+            </controls:OptionControl>
 
-        <Grid Grid.Row="2" Margin="0,16,0,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="1*" />
-            </Grid.ColumnDefinitions>
+            <controls:AdvancedSettingsControl HideResetButton="True">
+                <StackPanel>
 
-            <Button x:Uid="Apply"
-                    Margin="0,4,4,4"
-                    HorizontalAlignment="Stretch"
-                    Command="{x:Bind ViewModel.ApplySettingsCommand, Mode=OneWay}"
-                    Style="{StaticResource AccentButtonStyle}" />
+                    <controls:OptionControl x:Uid="LinkedAccountOption" GapHeight="{StaticResource NormalOptionGapHeight}">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <ComboBox VerticalAlignment="Center"
+                                      ItemsSource="{x:Bind ViewModel.AccountsList}"
+                                      SelectedItem="{x:Bind ViewModel.LinkedAccount, Mode=TwoWay}" />
+                            <CheckBox x:Uid="AllowSendEmailsCheckBox" IsChecked="{x:Bind ViewModel.AgentSettingsModel.IsAllowedToSendingEmails, Mode=TwoWay}" />
+                        </StackPanel>
+                    </controls:OptionControl>
 
-            <Button x:Uid="Cancel"
-                    Grid.Column="1"
-                    Margin="4,4,0,4"
-                    HorizontalAlignment="Stretch"
-                    Command="{x:Bind ViewModel.CancelSettingsCommand}" />
+                    <controls:OptionControl x:Uid="AIAgentProcessingOption" GapHeight="{StaticResource NormalOptionGapHeight}">
+                        <StackPanel Spacing="12">
+                            <ComboBox x:Uid="PreprocessWithAIAgent"
+                                      VerticalAlignment="Center"
+                                      ItemsSource="{x:Bind ViewModel.AIAgentsList}"
+                                      SelectedItem="{x:Bind ViewModel.PreProcessorAIAgent, Mode=TwoWay}" />
+                            <ComboBox x:Uid="PostprocessWithAIAgent"
+                                      VerticalAlignment="Center"
+                                      ItemsSource="{x:Bind ViewModel.AIAgentsList}"
+                                      SelectedItem="{x:Bind ViewModel.PostProcessorAIAgent, Mode=TwoWay}" />
+                        </StackPanel>
+                    </controls:OptionControl>
 
-        </Grid>
+                    <controls:OptionControl x:Uid="AIParametersOption" GapHeight="{StaticResource NormalOptionGapHeight}">
+                        <StackPanel Spacing="12">
+                            <!--  NOTE: We will not translate the term "Sampling" for now.  -->
+                            <ToggleSwitch x:Uid="/App.Resources/DoSampleToggle"
+                                          Header="Sampling"
+                                          IsOn="{x:Bind ViewModel.AgentSettingsModel.DoSample, Mode=TwoWay}" />
+                            <!--  NOTE: We will not translate the term "Top P" for now.  -->
+                            <Slider x:Uid="/App.Resources/AIOptionTopPSlider"
+                                    Header="Top P"
+                                    IsEnabled="{x:Bind ViewModel.AgentSettingsModel.DoSample, Mode=OneWay}"
+                                    Maximum="1"
+                                    Minimum="0"
+                                    StepFrequency="0.01"
+                                    Value="{x:Bind ViewModel.AgentSettingsModel.TopP, Mode=TwoWay}" />
+                            <!--  NOTE: We will not translate the term "Top K" for now.  -->
+                            <Slider x:Uid="/App.Resources/AIOptionTopKSlider"
+                                    Header="Top K"
+                                    IsEnabled="{x:Bind ViewModel.AgentSettingsModel.DoSample, Mode=OneWay}"
+                                    Maximum="200"
+                                    Minimum="0"
+                                    StepFrequency="1"
+                                    Value="{x:Bind ViewModel.AgentSettingsModel.TopK, Mode=TwoWay}" />
+                            <!--  NOTE: We will not translate the term "Temperature" for now.  -->
+                            <Slider x:Uid="/App.Resources/AIOptionTemperatureSlider"
+                                    Header="Temperature"
+                                    IsEnabled="{x:Bind ViewModel.AgentSettingsModel.DoSample, Mode=OneWay}"
+                                    Maximum="5"
+                                    Minimum="0.01"
+                                    StepFrequency="0.01"
+                                    Value="{x:Bind ViewModel.AgentSettingsModel.Temperature, Mode=TwoWay}" />
+                        </StackPanel>
+                    </controls:OptionControl>
 
-    </Grid>
+                </StackPanel>
+            </controls:AdvancedSettingsControl>
+
+        </StackPanel>
+    </controls:AddressSettingsView>
 </local:LocalAIAgentSettingsPageBase>
