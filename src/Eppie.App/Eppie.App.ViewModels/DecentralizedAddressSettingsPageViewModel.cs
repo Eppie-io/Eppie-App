@@ -230,16 +230,16 @@ namespace Tuvi.App.ViewModels
                 return true;
             }
 
-            var nameRaw = AddressSettingsModel.SenderName.Value?.Trim();
+            var name = AddressSettingsModel.SenderName.Value?.Trim();
 
-            if (string.IsNullOrWhiteSpace(nameRaw))
+            if (string.IsNullOrWhiteSpace(name))
             {
                 return true;
             }
 
             AddressSettingsModel.SenderName.Errors.Clear();
 
-            if (!ValidateName(nameRaw, out var normalized, out var errorKey))
+            if (!ValidateName(name, out var errorKey))
             {
                 AddressSettingsModel.SenderName.Errors.Add(GetLocalizedString(errorKey));
                 return false;
@@ -248,10 +248,10 @@ namespace Tuvi.App.ViewModels
             try
             {
                 var account = AddressSettingsModel.ToAccount();
-                var result = await Core.ClaimDecentralizedNameAsync(normalized, account.Email).ConfigureAwait(true);
-                if (result)
+                var normalizedName = await Core.ClaimDecentralizedNameAsync(name, account).ConfigureAwait(true);
+                if (!string.IsNullOrWhiteSpace(normalizedName))
                 {
-                    OnNameClaimSucceeded(normalized, account);
+                    AddressSettingsModel.ClaimedName = normalizedName;
                     return true;
                 }
                 else
@@ -278,30 +278,14 @@ namespace Tuvi.App.ViewModels
             await base.ApplySettingsAndGoBackAsync().ConfigureAwait(true);
         }
 
-        private void OnNameClaimSucceeded(string normalized, Account account)
+        private static bool ValidateName(string name, out string errorKey)
         {
-            // TODO: Remove hardcoded ".test" suffix after Testnet phase is over
-            normalized += ".test";
-
-            AddressSettingsModel.ClaimedName = normalized;
-        }
-
-        private static bool ValidateName(string name, out string normalized, out string errorKey)
-        {
-            normalized = string.Empty;
             errorKey = string.Empty;
             if (string.IsNullOrWhiteSpace(name))
             {
                 errorKey = "NameIsEmptyError";
                 return false;
             }
-
-            if (name.IndexOf('+') >= 0)
-            {
-                errorKey = "InvalidNameError";
-                return false;
-            }
-            name = name.ToLowerInvariant();
 
             var syntheticEmail = EmailAddress.CreateDecentralizedAddress(NetworkType.Eppie, name);
             if (!EmailValidator.Validate(syntheticEmail.Address, allowTopLevelDomains: true))
@@ -310,7 +294,6 @@ namespace Tuvi.App.ViewModels
                 return false;
             }
 
-            normalized = name;
             return true;
         }
     }
