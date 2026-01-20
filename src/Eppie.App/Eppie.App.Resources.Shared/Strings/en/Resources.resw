@@ -1573,4 +1573,36 @@ Subject: {3}
     <value>Chain agents for pre- and post-processing tasks.</value>
     <comment>Note for the AI agent processing option</comment>
   </data>
+  <data name="InvitationPageTitle.Text" xml:space="preserve">
+    <value>INVITATION</value>
+    <comment>Invitation page title</comment>
+  </data>
+  <data name="InvitationPageHeader.Text" xml:space="preserve">
+    <value>Invite contacts to Eppie</value>
+    <comment>Invitation page header</comment>
+  </data>
+  <data name="InvitationPageNote.Text" xml:space="preserve">
+    <value>Pick contacts to share your Eppie address and start a secure, peer-to-peer conversation from the very first message.</value>
+    <comment>Invitation page note text</comment>
+  </data>
+  <data name="InvitationSenderAddressComboBox.Header" xml:space="preserve">
+    <value>From:</value>
+    <comment>The header of the combobox containing the sender addresses</comment>
+  </data>
+  <data name="InvitationRecipientAddressHeader.Text" xml:space="preserve">
+    <value>Who to invite</value>
+    <comment>Header of the block containing recipient addresses</comment>
+  </data>
+  <data name="InvitationContactSuggestBox.PlaceholderText" xml:space="preserve">
+    <value>Enter name or email</value>
+    <comment>The text displayed in the Contacts control when no email address is entered</comment>
+  </data>
+  <data name="InvitationEppieAddressComboBox.Header" xml:space="preserve">
+    <value>Insert your Eppie address</value>
+    <comment>The header of the combobox containing the eppie addresses</comment>
+  </data>
+  <data name="SendInviteButton.Content" xml:space="preserve">
+    <value>Send invite</value>
+    <comment>The text of the Send Invite button on the invitation page</comment>
+  </data>
 </root>

@@ -51,6 +51,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\ContactsPanelPage.xaml.cs">
       <DependentUpon>ContactsPanelPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\InvitationPage.xaml.cs">
+      <DependentUpon>InvitationPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\MailboxesPanelPage.xaml.cs">
       <DependentUpon>MailboxesPanelPage.xaml</DependentUpon>
     </Compile>
@@ -185,6 +188,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Views\AIAgentsManagerPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\InvitationPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

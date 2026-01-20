@@ -336,12 +336,14 @@ namespace Tuvi.App.ViewModels
             return Task.CompletedTask;
         }
 
-        public void ShowPreview()
+        public async void ShowPreview()
         {
             try
             {
                 // ToDo: Here you can add a preview of your UI controls.
                 // And change the `IsPreviewAvailable` property to true.
+
+                await MessageService.ShowInvitationDialogAsync();
             }
             catch (Exception e)
             {
