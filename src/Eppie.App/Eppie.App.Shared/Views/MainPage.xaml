@@ -166,6 +166,14 @@
                         <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE99A;" />
                     </winui:NavigationViewItem.Icon>
                 </winui:NavigationViewItem>
+                <!--  NOTE: We will not translate the term "Preview" for now.  -->
+                <winui:NavigationViewItem extensions:AttachedCommands.ClickCommand="{x:Bind ShowPreviewCommand}"
+                                          Content="Preview"
+                                          Visibility="{x:Bind ViewModel.IsPreviewAvailable}">
+                    <winui:NavigationViewItem.Icon>
+                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xEB3C;" />
+                    </winui:NavigationViewItem.Icon>
+                </winui:NavigationViewItem>
             </winui:NavigationView.MenuItems>
 
             <winui:NavigationView.PaneFooter>
