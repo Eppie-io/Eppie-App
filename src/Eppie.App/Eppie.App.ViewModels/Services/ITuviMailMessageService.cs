@@ -52,5 +52,7 @@ namespace Tuvi.App.ViewModels.Services
             ICommand supportDevelopmentCommand);
 
         Task ShowProtonConnectAddressDialogAsync(object data = null);
+
+        Task ShowInvitationDialogAsync(object invitationData = null);
     }
 }
