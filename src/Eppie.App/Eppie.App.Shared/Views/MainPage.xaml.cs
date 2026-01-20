@@ -67,6 +67,8 @@ namespace Eppie.App.Views
 
         public ICommand OpenAIAgentsPanelCommand => new RelayCommand(ToggleAIAgentsPane);
 
+        public ICommand ShowPreviewCommand => new RelayCommand(ShowPreview);
+
         public ICommand ClosePaneCommand => new RelayCommand(ClosePane);
 
         public MainPage()
@@ -129,6 +131,11 @@ namespace Eppie.App.Views
         private void ShowAboutPage()
         {
             contentFrame.Navigate(typeof(AboutPage));
+        }
+
+        private void ShowPreview()
+        {
+            ViewModel.ShowPreview();
         }
 
         private SidePaneKind _openedPane = SidePaneKind.None;
