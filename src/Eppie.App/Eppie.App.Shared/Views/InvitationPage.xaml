@@ -29,7 +29,7 @@
                     <ColumnDefinition Width="10*" MaxWidth="72" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <!--  ProfilePicture="{x:Bind Avatar, Mode=OneWay}"  -->
+                <!--  ToDo: ProfilePicture="{x:Bind Avatar, Mode=OneWay}"  -->
                 <muxc:PersonPicture Width="{StaticResource PictureSize}"
                                     Height="{StaticResource PictureSize}"
                                     Margin="{StaticResource ElementMargin}"
@@ -45,11 +45,11 @@
             </Grid>
         </DataTemplate>
 
-        <DataTemplate x:Key="AddressTemplate" x:DataType="viewmodels:AddressItem">
+        <DataTemplate x:Key="RecipientTemplate" x:DataType="viewmodels:AddressItem">
+            <!--  ToDo: Avatar="{x:Bind local:AddressManagerPage.GetAvatar(AvatarInfo), Mode=OneWay}"  -->
             <controls:AddressItemControl Address="{x:Bind Address, Mode=OneWay}"
-                                         Avatar="{x:Bind local:AddressManagerPage.GetAvatar(AvatarInfo), Mode=OneWay}"
                                          DisplayName="{x:Bind DisplayName, Mode=OneWay}"
-                                         Invoked="OnInvitedAddressRemoved"
+                                         Invoked="OnRecipientRemoved"
                                          Tag="{x:Bind}" />
         </DataTemplate>
 
@@ -74,15 +74,15 @@
                           Margin="0,0,0,32"
                           HorizontalAlignment="Stretch"
                           ItemTemplate="{StaticResource AddressComboboxItemTemplate}"
-                          ItemsSource="{x:Bind ViewModel.FromAddresses, Mode=OneWay}"
-                          SelectedIndex="{x:Bind ViewModel.FromAddressIndex, Mode=TwoWay}" />
+                          ItemsSource="{x:Bind ViewModel.SenderAddresses, Mode=OneWay}"
+                          SelectedIndex="{x:Bind ViewModel.SenderAddressIndex, Mode=TwoWay}" />
                 <TextBlock x:Uid="InvitationRecipientAddressHeader"
                            Margin="0,0,0,8"
                            FontSize="16" />
                 <AutoSuggestBox x:Uid="InvitationContactSuggestBox"
                                 HorizontalAlignment="Stretch"
                                 ItemTemplate="{StaticResource AddressComboboxItemTemplate}"
-                                ItemsSource="{x:Bind ViewModel.SuggestedContacts, Mode=OneWay}"
+                                ItemsSource="{x:Bind ViewModel.SuitableContacts, Mode=OneWay}"
                                 QueryIcon="PhoneBook"
                                 QuerySubmitted="OnContactQuerySubmitted"
                                 SuggestionChosen="OnContactSuggestionChosen"
@@ -90,9 +90,9 @@
 
                 <muxc:ItemsRepeater Margin="0,12,0,0"
                                     HorizontalAlignment="Stretch"
-                                    ItemTemplate="{StaticResource AddressTemplate}"
-                                    ItemsSource="{x:Bind ViewModel.InvitedContacts, Mode=OneWay}"
-                                    Visibility="{x:Bind ViewModel.IsAnyoneInvited, Mode=OneWay}">
+                                    ItemTemplate="{StaticResource RecipientTemplate}"
+                                    ItemsSource="{x:Bind ViewModel.Recipients, Mode=OneWay}"
+                                    Visibility="{x:Bind ViewModel.IsAnyRecipient, Mode=OneWay}">
                     <muxc:ItemsRepeater.Layout>
                         <muxc:StackLayout Orientation="Vertical" Spacing="4" />
                     </muxc:ItemsRepeater.Layout>
@@ -109,7 +109,7 @@
                         Margin="0,28,0,0"
                         HorizontalAlignment="Stretch"
                         Command="{x:Bind ViewModel.SendInviteCommand, Mode=OneWay}"
-                        IsEnabled="{x:Bind ViewModel.IsAnyoneInvited, Mode=OneWay}"
+                        IsEnabled="{x:Bind ViewModel.CanInvite, Mode=OneWay}"
                         Style="{StaticResource AccentButtonStyle}" />
 
             </StackPanel>

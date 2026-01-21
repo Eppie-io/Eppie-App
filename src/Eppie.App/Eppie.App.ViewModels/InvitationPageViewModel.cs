@@ -27,19 +27,18 @@ namespace Tuvi.App.ViewModels
 
     public class InvitationPageViewModel : BaseViewModel
     {
-        public ObservableCollection<AddressItem> InvitedContacts { get; } = new ObservableCollection<AddressItem>();
-        public ObservableCollection<AddressItem> SuggestedContacts { get; } = new ObservableCollection<AddressItem>();
-        public IList<AddressItem> FromAddresses { get; } = new List<AddressItem>();
+        public ObservableCollection<AddressItem> Recipients { get; } = new ObservableCollection<AddressItem>();
+        public ObservableCollection<AddressItem> SuitableContacts { get; } = new ObservableCollection<AddressItem>();
+        public IList<AddressItem> SenderAddresses { get; } = new List<AddressItem>();
         public IList<AddressItem> EppieAddresses { get; } = new List<AddressItem>();
-        public bool IsAnyoneInvited => InvitedContacts.Count > 0;
 
-        private int _fromAddressIndex;
-        public int FromAddressIndex
+        private int _senderAddressIndex;
+        public int SenderAddressIndex
         {
-            get { return _fromAddressIndex; }
+            get { return _senderAddressIndex; }
             set
             {
-                SetProperty(ref _fromAddressIndex, value);
+                SetProperty(ref _senderAddressIndex, value);
             }
         }
 
@@ -53,9 +52,11 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        public ICommand SendInviteCommand => new RelayCommand(SendInvite);
-        public Action ClosePopupAction { get; set; }
+        public bool IsAnyRecipient => Recipients.Count > 0;
+        public bool CanInvite => IsAnyRecipient && SenderAddressIndex != -1 && EppieAddressIndex != -1;
 
+        public ICommand SendInviteCommand => new RelayCommand(SendInvite, () => CanInvite);
+        public Action ClosePopupAction { get; set; }
 
         public InvitationPageViewModel() : base()
         {
@@ -73,40 +74,42 @@ namespace Tuvi.App.ViewModels
             // ToDo: send invite
         }
 
-        public void OnInvitedAddressRemoved(AddressItem item)
+        public void OnRecipientRemoved(AddressItem item)
         {
-            // ToDo: update InvitedContacts
+            // ToDo: update Recipients
 
             // ToDo: Test code should be removed
-            InvitedContacts.Remove(item);
-            OnPropertyChanged(nameof(IsAnyoneInvited));
+            Recipients.Remove(item);
+            OnPropertyChanged(nameof(IsAnyRecipient));
+            OnPropertyChanged(nameof(CanInvite));
         }
 
         public void OnContactQuerySubmitted(AddressItem queryItem, string queryText)
         {
-            // ToDo: update InvitedContacts
+            // ToDo: update Recipients
 
             // ToDo: Test code should be removed
             if (queryItem != null)
             {
-                InvitedContacts.Add(queryItem);
+                Recipients.Add(queryItem);
             }
             else if (!string.IsNullOrEmpty(queryText))
             {
-                InvitedContacts.Add(CreateFakeAddressItem(queryText, null));
+                Recipients.Add(CreateFakeAddressItem(queryText, null));
             }
 
-            OnPropertyChanged(nameof(IsAnyoneInvited));
+            OnPropertyChanged(nameof(IsAnyRecipient));
+            OnPropertyChanged(nameof(CanInvite));
         }
 
         public void OnContactQueryChanged(string queryText)
         {
-            // ToDo: update SuggestedContacts
+            // ToDo: update SuitableContacts
 
             // ToDo: Test code should be removed
-            if (SuggestedContacts.Count < 10)
+            if (SuitableContacts.Count < 10)
             {
-                SuggestedContacts.Add(CreateFakeAddressItem("eva@gmail.com", "Eva"));
+                SuitableContacts.Add(CreateFakeAddressItem("eva@gmail.com", "Eva"));
             }
         }
 
@@ -117,15 +120,15 @@ namespace Tuvi.App.ViewModels
             {
                 CreateFakeAddressItem("bob@gmail.com","Bob"),
                 CreateFakeAddressItem("alice@gmail.com","Alice"),
-                CreateFakeAddressItem("very-very-very-huge-and-vast-mail-address@gmail.com","VeryVeryVeryHugeAndVastName"),
+                CreateFakeAddressItem("very-very-very-huge-and-vast-mail-address@gmail.com","VeryVeryVeryHugeAndVastName VeryVeryVeryHugeAndVastSurname"),
             };
 
-            Copy(from, FromAddresses);
-            Copy(from, SuggestedContacts);
-            Copy(from, InvitedContacts);
+            Copy(from, SenderAddresses);
+            Copy(from, SuitableContacts);
+            Copy(from, Recipients);
             Copy(from, EppieAddresses);
 
-            FromAddressIndex = 1;
+            SenderAddressIndex = 1;
             EppieAddressIndex = 2;
 
             void Copy(ICollection<AddressItem> source, ICollection<AddressItem> target)
@@ -138,7 +141,8 @@ namespace Tuvi.App.ViewModels
                 }
             }
 
-            OnPropertyChanged(nameof(IsAnyoneInvited));
+            OnPropertyChanged(nameof(IsAnyRecipient));
+            OnPropertyChanged(nameof(CanInvite));
         }
 
         // ToDo: Test code should be removed
