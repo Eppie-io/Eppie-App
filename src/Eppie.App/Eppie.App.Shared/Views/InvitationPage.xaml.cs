@@ -51,11 +51,11 @@ namespace Eppie.App.Views
         { }
 
 
-        private void OnInvitedAddressRemoved(object sender, EventArgs e)
+        private void OnRecipientRemoved(object sender, EventArgs e)
         {
             if (sender is FrameworkElement element && element.Tag is AddressItem item)
             {
-                ViewModel?.OnInvitedAddressRemoved(item);
+                ViewModel?.OnRecipientRemoved(item);
             }
         }
 
