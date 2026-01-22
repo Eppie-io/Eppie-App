@@ -19,18 +19,24 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Windows.Input;
+using System.Linq;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
+using Tuvi.Core.Entities;
 
 namespace Tuvi.App.ViewModels
 {
-
     public class InvitationPageViewModel : BaseViewModel
     {
-        public ObservableCollection<AddressItem> Recipients { get; } = new ObservableCollection<AddressItem>();
-        public ObservableCollection<AddressItem> SuitableContacts { get; } = new ObservableCollection<AddressItem>();
-        public IList<AddressItem> SenderAddresses { get; } = new List<AddressItem>();
-        public IList<AddressItem> EppieAddresses { get; } = new List<AddressItem>();
+        public ObservableCollection<ContactItem> Recipients { get; } = new ObservableCollection<ContactItem>();
+        public ManagedCollection<ContactItem> SuitableContacts { get; } = new ManagedCollection<ContactItem>();
+        public ObservableCollection<AddressItem> SenderAddresses { get; } = new ObservableCollection<AddressItem>();
+        public ObservableCollection<AddressItem> EppieAddresses { get; } = new ObservableCollection<AddressItem>();
+
+        private readonly ObservableCollection<ContactItem> _allContacts = new ObservableCollection<ContactItem>();
+
+        private readonly SearchContactFilter _contactsSearchFilter = new SearchContactFilter();
+        private string _currentContactsQuery = string.Empty;
 
         private int _senderAddressIndex;
         public int SenderAddressIndex
@@ -38,7 +44,11 @@ namespace Tuvi.App.ViewModels
             get { return _senderAddressIndex; }
             set
             {
-                SetProperty(ref _senderAddressIndex, value);
+                if (SetProperty(ref _senderAddressIndex, value))
+                {
+                    OnPropertyChanged(nameof(CanInvite));
+                    SendInviteCommand.NotifyCanExecuteChanged();
+                }
             }
         }
 
@@ -48,24 +58,178 @@ namespace Tuvi.App.ViewModels
             get { return _eppieAddressIndex; }
             set
             {
-                SetProperty(ref _eppieAddressIndex, value);
+                if (SetProperty(ref _eppieAddressIndex, value))
+                {
+                    OnPropertyChanged(nameof(CanInvite));
+                    SendInviteCommand.NotifyCanExecuteChanged();
+                }
             }
         }
 
         public bool IsAnyRecipient => Recipients.Count > 0;
         public bool CanInvite => IsAnyRecipient && SenderAddressIndex != -1 && EppieAddressIndex != -1;
 
-        public ICommand SendInviteCommand => new RelayCommand(SendInvite, () => CanInvite);
+        public IRelayCommand SendInviteCommand { get; }
         public Action ClosePopupAction { get; set; }
 
         public InvitationPageViewModel() : base()
         {
-            InitFakeData();
+            SendInviteCommand = new RelayCommand(SendInvite, () => CanInvite);
+            SenderAddressIndex = -1;
+            EppieAddressIndex = -1;
+
+            SuitableContacts.SearchFilter = _contactsSearchFilter;
+            _contactsSearchFilter.SearchText = string.Empty;
         }
 
         public override void OnNavigatedTo(object data)
         {
             base.OnNavigatedTo(data);
+
+            LoadAddresses();
+            LoadContacts();
+        }
+
+        private async void LoadAddresses()
+        {
+            try
+            {
+                await LoadAddressesAsync().ConfigureAwait(true);
+            }
+            catch (Exception ex)
+            {
+                OnError(ex);
+            }
+        }
+
+        private async Task LoadAddressesAsync()
+        {
+            var accounts = await Core.GetAccountsAsync().ConfigureAwait(true);
+
+            var senderAccounts = accounts.Where(a => a.Type != MailBoxType.Dec).ToList();
+            var eppieAccounts = accounts.Where(a => a.Type == MailBoxType.Dec || a.Type == MailBoxType.Hybrid).ToList();
+
+            SenderAddresses.Clear();
+            foreach (var account in senderAccounts)
+            {
+                SenderAddresses.Add(new AddressItem(account));
+            }
+
+            EppieAddresses.Clear();
+            foreach (var account in eppieAccounts)
+            {
+                EppieAddresses.Add(new AddressItem(account));
+            }
+
+            SenderAddressIndex = SenderAddresses.Count > 0 ? 0 : -1;
+            EppieAddressIndex = EppieAddresses.Count > 0 ? 0 : -1;
+        }
+
+        private void LoadContacts()
+        {
+            _allContacts.Clear();
+            SuitableContacts.Clear();
+
+            _ = LoadContactsInBackgroundAsync();
+        }
+
+        private async Task LoadContactsInBackgroundAsync()
+        {
+                var existingEmails = new HashSet<string>(
+                    _allContacts.Select(c => c?.Email?.Address ?? string.Empty),
+                    StringComparer.OrdinalIgnoreCase);
+
+                var contacts = await Core.GetContactsAsync().ConfigureAwait(true);
+
+                var newItems = contacts
+                    .Where(contact => !existingEmails.Contains(contact.Email?.Address ?? string.Empty))
+                    .Select(contact => new ContactItem(contact))
+                    .ToList();
+
+                foreach (var item in DistinctByAddress(newItems))
+                {
+                    _allContacts.Add(item);
+                }
+
+                SuitableContacts.ReconcileOriginalItems(_allContacts);
+
+                if (!string.IsNullOrWhiteSpace(_currentContactsQuery))
+                {
+                    UpdateSuitableContacts(_currentContactsQuery);
+                }
+            }
+
+        public void OnContactQuerySubmitted(ContactItem queryItem, string queryText)
+        {
+            if (queryItem != null)
+            {
+                AddRecipient(queryItem);
+            }
+            else if (!string.IsNullOrWhiteSpace(queryText))
+            {
+                AddRecipient(CreateAddressItemFromText(queryText));
+            }
+
+            OnPropertyChanged(nameof(IsAnyRecipient));
+            OnPropertyChanged(nameof(CanInvite));
+            SendInviteCommand.NotifyCanExecuteChanged();
+        }
+
+        public void OnContactQueryChanged(string queryText)
+        {
+            UpdateSuitableContacts(queryText);
+        }
+
+        private void UpdateSuitableContacts(string queryText)
+        {
+            var query = (queryText ?? string.Empty).Trim();
+
+            _currentContactsQuery = query;
+            _contactsSearchFilter.SearchText = query;
+        }
+
+        private void AddRecipient(ContactItem item)
+        {
+            if (item is null)
+            {
+                return;
+            }
+
+            string address = item.Email?.Address;
+            if (string.IsNullOrWhiteSpace(address))
+            {
+                return;
+            }
+
+            bool exists = Recipients.Any(r => StringComparer.OrdinalIgnoreCase.Equals(r?.Email?.Address, address));
+            if (!exists)
+            {
+                Recipients.Add(item);
+            }
+        }
+
+        private static ContactItem CreateAddressItemFromText(string queryText)
+        {
+            var email = EmailAddress.Parse(queryText);
+            return new ContactItem(new Contact(string.Empty, email));
+        }
+
+        private static IEnumerable<ContactItem> DistinctByAddress(IEnumerable<ContactItem> items)
+        {
+            var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            foreach (var item in items ?? Enumerable.Empty<ContactItem>())
+            {
+                var address = item?.Email?.Address;
+                if (string.IsNullOrWhiteSpace(address))
+                {
+                    continue;
+                }
+
+                if (seen.Add(address))
+                {
+                    yield return item;
+                }
+            }
         }
 
         private void SendInvite()
@@ -74,81 +238,13 @@ namespace Tuvi.App.ViewModels
             // ToDo: send invite
         }
 
-        public void OnRecipientRemoved(AddressItem item)
+        public void OnRecipientRemoved(ContactItem item)
         {
-            // ToDo: update Recipients
-
-            // ToDo: Test code should be removed
             Recipients.Remove(item);
-            OnPropertyChanged(nameof(IsAnyRecipient));
-            OnPropertyChanged(nameof(CanInvite));
-        }
-
-        public void OnContactQuerySubmitted(AddressItem queryItem, string queryText)
-        {
-            // ToDo: update Recipients
-
-            // ToDo: Test code should be removed
-            if (queryItem != null)
-            {
-                Recipients.Add(queryItem);
-            }
-            else if (!string.IsNullOrEmpty(queryText))
-            {
-                Recipients.Add(CreateFakeAddressItem(queryText, null));
-            }
 
             OnPropertyChanged(nameof(IsAnyRecipient));
             OnPropertyChanged(nameof(CanInvite));
-        }
-
-        public void OnContactQueryChanged(string queryText)
-        {
-            // ToDo: update SuitableContacts
-
-            // ToDo: Test code should be removed
-            if (SuitableContacts.Count < 10)
-            {
-                SuitableContacts.Add(CreateFakeAddressItem("eva@gmail.com", "Eva"));
-            }
-        }
-
-        // ToDo: Test code should be removed
-        private void InitFakeData()
-        {
-            var from = new List<AddressItem>()
-            {
-                CreateFakeAddressItem("bob@gmail.com","Bob"),
-                CreateFakeAddressItem("alice@gmail.com","Alice"),
-                CreateFakeAddressItem("very-very-very-huge-and-vast-mail-address@gmail.com","VeryVeryVeryHugeAndVastName VeryVeryVeryHugeAndVastSurname"),
-            };
-
-            Copy(from, SenderAddresses);
-            Copy(from, SuitableContacts);
-            Copy(from, Recipients);
-            Copy(from, EppieAddresses);
-
-            SenderAddressIndex = 1;
-            EppieAddressIndex = 2;
-
-            void Copy(ICollection<AddressItem> source, ICollection<AddressItem> target)
-            {
-                target.Clear();
-
-                foreach (var item in source)
-                {
-                    target.Add(item);
-                }
-            }
-
-            OnPropertyChanged(nameof(IsAnyRecipient));
-            OnPropertyChanged(nameof(CanInvite));
-        }
-
-        // ToDo: Test code should be removed
-        private static AddressItem CreateFakeAddressItem(string address, string name)
-        {
-            return new AddressItem(new Tuvi.Core.Entities.Account() { Email = new Core.Entities.EmailAddress(address, name) });
+            SendInviteCommand.NotifyCanExecuteChanged();
         }
     }
 }

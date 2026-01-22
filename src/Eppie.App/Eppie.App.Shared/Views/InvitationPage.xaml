@@ -22,6 +22,29 @@
         <x:Double x:Key="PictureSize">28</x:Double>
         <Thickness x:Key="ElementMargin">0,0,12,0</Thickness>
 
+        <DataTemplate x:Key="ContactComboboxItemTemplate" x:DataType="viewmodels:ContactItem">
+            <Grid HorizontalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="10*" MaxWidth="72" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <!--  ToDo: ProfilePicture="{x:Bind Avatar, Mode=OneWay}"  -->
+                <muxc:PersonPicture Width="{StaticResource PictureSize}"
+                                    Height="{StaticResource PictureSize}"
+                                    Margin="{StaticResource ElementMargin}"
+                                    VerticalAlignment="Center"
+                                    DisplayName="{x:Bind DisplayName, Mode=OneWay}" />
+
+                <TextBlock Grid.Column="1"
+                           VerticalAlignment="Center"
+                           Text="{x:Bind DisplayName, Mode=OneWay}" />
+                <TextBlock Grid.Column="2"
+                           VerticalAlignment="Center"
+                           Text="{x:Bind Email.Address, Mode=OneWay}" />
+            </Grid>
+        </DataTemplate>
+
         <DataTemplate x:Key="AddressComboboxItemTemplate" x:DataType="viewmodels:AddressItem">
             <Grid HorizontalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
@@ -44,10 +67,10 @@
                            Text="{x:Bind Address, Mode=OneWay}" />
             </Grid>
         </DataTemplate>
-
-        <DataTemplate x:Key="RecipientTemplate" x:DataType="viewmodels:AddressItem">
+        
+        <DataTemplate x:Key="RecipientTemplate" x:DataType="viewmodels:ContactItem">
             <!--  ToDo: Avatar="{x:Bind local:AddressManagerPage.GetAvatar(AvatarInfo), Mode=OneWay}"  -->
-            <controls:AddressItemControl Address="{x:Bind Address, Mode=OneWay}"
+            <controls:AddressItemControl Address="{x:Bind Email.Address, Mode=OneWay}"
                                          DisplayName="{x:Bind DisplayName, Mode=OneWay}"
                                          Invoked="OnRecipientRemoved"
                                          Tag="{x:Bind}" />
@@ -81,7 +104,7 @@
                            FontSize="16" />
                 <AutoSuggestBox x:Uid="InvitationContactSuggestBox"
                                 HorizontalAlignment="Stretch"
-                                ItemTemplate="{StaticResource AddressComboboxItemTemplate}"
+                                ItemTemplate="{StaticResource ContactComboboxItemTemplate}"
                                 ItemsSource="{x:Bind ViewModel.SuitableContacts, Mode=OneWay}"
                                 QueryIcon="PhoneBook"
                                 QuerySubmitted="OnContactQuerySubmitted"
