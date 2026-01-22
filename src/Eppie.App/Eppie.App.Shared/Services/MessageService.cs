@@ -563,5 +563,10 @@ namespace Eppie.App.Services
         {
             return UITools.ShowPopupAsync<ConnectProtonAddressPage>(_xamlRootProvider(), data);
         }
+
+        public Task ShowInvitationDialogAsync(object invitationData)
+        {
+            return UITools.ShowPopupAsync<InvitationPage>(_xamlRootProvider(), invitationData);
+        }
     }
 }
