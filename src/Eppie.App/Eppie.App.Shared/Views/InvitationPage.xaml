@@ -67,7 +67,7 @@
                            Text="{x:Bind Address, Mode=OneWay}" />
             </Grid>
         </DataTemplate>
-        
+
         <DataTemplate x:Key="RecipientTemplate" x:DataType="viewmodels:ContactItem">
             <!--  ToDo: Avatar="{x:Bind local:AddressManagerPage.GetAvatar(AvatarInfo), Mode=OneWay}"  -->
             <controls:AddressItemControl Address="{x:Bind Email.Address, Mode=OneWay}"
