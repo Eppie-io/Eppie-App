@@ -656,7 +656,7 @@ namespace Eppie.App.UI.Tests.IncrementalLoading
 
             // Request 5 visible items. The implementation will keep loading from the source
             // until it has enough items that pass the filter to reach the target visible count.
-            var result = await collection.LoadMoreItemsAsync(5).AsTask().ConfigureAwait(false);
+            await collection.LoadMoreItemsAsync(5).AsTask().ConfigureAwait(false);
 
             // Should have loaded enough items to get 5 visible ones after filtering
             Assert.That(collection.Count, Is.EqualTo(5)); // Only even numbers visible
