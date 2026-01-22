@@ -18,17 +18,14 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
-using Eppie.App.UI.Tools;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.UI.Xaml.Controls;
 using Eppie.App.UI.Extensions;
-using Eppie.App.Helpers;
 using Tuvi.App.ViewModels;
+using Tuvi.App.ViewModels.Messages;
 using Tuvi.App.ViewModels.Services;
-using Windows.Storage;
-using Windows.Storage.Pickers;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -51,12 +48,6 @@ namespace Eppie.App.Views
 
         public ICommand MailBoxItemDropCommand => new RelayCommand<MailBoxItem>(MailBoxItemDropMessages, IsDropMessagesAllowed);
 
-        public ICommand ContactItemClickCommand => new RelayCommand<ContactItem>(ContactItemClick);
-
-        public ICommand RenameContactCommand => new AsyncRelayCommand<ContactItem>(RenameContactAsync);
-
-        public ICommand ChangeContactPictureCommand => new AsyncRelayCommand<ContactItem>(ChangeContactPictureAsync);
-
         public ICommand ShowAboutPageCommand => new RelayCommand(ShowAboutPage);
 
         public ICommand OpenAddressManagerCommand => new RelayCommand(ShowAddressManagerPane);
@@ -75,10 +66,12 @@ namespace Eppie.App.Views
         {
             this.InitializeComponent();
 
-            ViewModel.InitializeModels(ContactItemClickCommand, RenameContactCommand, ChangeContactPictureCommand, MailBoxItemClickCommand, MailBoxItemDropCommand);
+            ViewModel.InitializeMailboxModel(MailBoxItemClickCommand, MailBoxItemDropCommand);
 
             NavigationMenu.PaneOpened += OnNavigationPaneToggled;
             NavigationMenu.PaneClosed += OnNavigationPaneToggled;
+
+            WeakReferenceMessenger.Default.Register<ContactSelectedMessage>(this, OnContactSelected);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -89,7 +82,7 @@ namespace Eppie.App.Views
             {
                 ShowAllMessagesCommand.Execute(this);
 
-                var app = Eppie.App.App.Current as Eppie.App.App;
+                var app = App.Current as App;
                 var settings = app?.LocalSettingsService;
 
                 if (settings != null)
@@ -192,7 +185,7 @@ namespace Eppie.App.Views
                     paneFrame.Navigate(typeof(AIAgentsManagerPage));
                     break;
                 case SidePaneKind.ContactsPanel:
-                    paneFrame.Navigate(typeof(ContactsPanelPage), ViewModel.ContactsModel);
+                    paneFrame.Navigate(typeof(ContactsPanelPage));
                     break;
                 case SidePaneKind.MailboxesPanel:
                     paneFrame.Navigate(typeof(MailboxesPanelPage), ViewModel.MailBoxesModel);
@@ -229,7 +222,7 @@ namespace Eppie.App.Views
 
         private void SavePaneState()
         {
-            var app = Eppie.App.App.Current as Eppie.App.App;
+            var app = App.Current as App;
             var settings = app?.LocalSettingsService;
             if (settings != null)
             {
@@ -246,43 +239,6 @@ namespace Eppie.App.Views
         private void ShowAppSettings()
         {
             contentFrame.Navigate(typeof(AppSettingsPage), new AllMessagesPageViewModel.NavigationData() { ErrorHandler = this });
-        }
-
-        private async Task RenameContactAsync(ContactItem contactItem)
-        {
-            await ViewModel.RenameContactAsync(contactItem).ConfigureAwait(true);
-        }
-
-        private async Task ChangeContactPictureAsync(ContactItem contactItem)
-        {
-            try
-            {
-                FileOpenPicker fileOpenPicker = FileOpenPickerBuilder.CreateBuilder(Eppie.App.App.MainWindow)
-                                                                     .Configure((picker) =>
-                                                                     {
-                                                                         picker.ViewMode = PickerViewMode.Thumbnail;
-                                                                         picker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
-                                                                         picker.FileTypeFilter.Add(".jpg");
-                                                                         picker.FileTypeFilter.Add(".jpeg");
-                                                                         picker.FileTypeFilter.Add(".png");
-                                                                         picker.FileTypeFilter.Add(".bmp");
-                                                                     })
-                                                                     .Build();
-
-                StorageFile file = await fileOpenPicker.PickSingleFileAsync();
-                if (file != null)
-                {
-                    var bitmapBytes = await BitmapTools.GetThumbnailPixelDataAsync(file, (uint)ContactItem.DefaultAvatarSize, (uint)ContactItem.DefaultAvatarSize).ConfigureAwait(true);
-                    if (bitmapBytes != null)
-                    {
-                        await ViewModel.SetContactAvatarAsync(contactItem, bitmapBytes, ContactItem.DefaultAvatarSize, ContactItem.DefaultAvatarSize).ConfigureAwait(true);
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                ViewModel.OnError(e);
-            }
         }
 
         [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Event handler is referenced from XAML and must be an instance method.")]
@@ -320,20 +276,19 @@ namespace Eppie.App.Views
 
         private void MailBoxItemClick(MailBoxItem mailBoxItem)
         {
-            ViewModel.ContactsModel.SelectedContact = null;
+            WeakReferenceMessenger.Default.Send(new ClearSelectedContactMessage());
             contentFrame.Navigate(typeof(FolderMessagesPage), new FolderMessagesPageViewModel.NavigationData() { MailBoxItem = mailBoxItem, ErrorHandler = this });
         }
 
-        private void ContactItemClick(ContactItem contactItem)
+        private void OnContactSelected(object recipient, ContactSelectedMessage message)
         {
             ViewModel.MailBoxesModel.SelectedItem = null;
-            contentFrame.Navigate(typeof(ContactMessagesPage), new ContactMessagesPageViewModel.NavigationData() { ContactItem = contactItem, ErrorHandler = this });
+            contentFrame.Navigate(typeof(ContactMessagesPage), new ContactMessagesPageViewModel.NavigationData() { ContactItem = message.Value, ErrorHandler = this });
         }
 
         public override void HandleBack()
         {
             // Do nothing, disable back navigation on main page
         }
-
     }
 }
