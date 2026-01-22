@@ -814,7 +814,7 @@ namespace Eppie.App.UI.Tests.IncrementalLoading
 
             public int GetHashCode(int obj)
             {
-                return obj.GetHashCode();
+                return obj;
             }
         }
 
