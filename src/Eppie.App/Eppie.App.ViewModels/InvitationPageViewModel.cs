@@ -135,29 +135,29 @@ namespace Tuvi.App.ViewModels
 
         private async Task LoadContactsInBackgroundAsync()
         {
-                var existingEmails = new HashSet<string>(
-                    _allContacts.Select(c => c?.Email?.Address ?? string.Empty),
-                    StringComparer.OrdinalIgnoreCase);
+            var existingEmails = new HashSet<string>(
+                _allContacts.Select(c => c?.Email?.Address ?? string.Empty),
+                StringComparer.OrdinalIgnoreCase);
 
-                var contacts = await Core.GetContactsAsync().ConfigureAwait(true);
+            var contacts = await Core.GetContactsAsync().ConfigureAwait(true);
 
-                var newItems = contacts
-                    .Where(contact => !existingEmails.Contains(contact.Email?.Address ?? string.Empty))
-                    .Select(contact => new ContactItem(contact))
-                    .ToList();
+            var newItems = contacts
+                .Where(contact => !existingEmails.Contains(contact.Email?.Address ?? string.Empty))
+                .Select(contact => new ContactItem(contact))
+                .ToList();
 
-                foreach (var item in DistinctByAddress(newItems))
-                {
-                    _allContacts.Add(item);
-                }
-
-                SuitableContacts.ReconcileOriginalItems(_allContacts);
-
-                if (!string.IsNullOrWhiteSpace(_currentContactsQuery))
-                {
-                    UpdateSuitableContacts(_currentContactsQuery);
-                }
+            foreach (var item in DistinctByAddress(newItems))
+            {
+                _allContacts.Add(item);
             }
+
+            SuitableContacts.ReconcileOriginalItems(_allContacts);
+
+            if (!string.IsNullOrWhiteSpace(_currentContactsQuery))
+            {
+                UpdateSuitableContacts(_currentContactsQuery);
+            }
+        }
 
         public void OnContactQuerySubmitted(ContactItem queryItem, string queryText)
         {
