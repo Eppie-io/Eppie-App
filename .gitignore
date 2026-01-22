@@ -29,3 +29,7 @@ src/Tests/Eppie.App.ViewModels.Tests/bin/
 src/Eppie.App/Eppie.AI/obj/
 src/Eppie.App/Eppie.AI/bin/
 /.vs
+src/Eppie.App/Tests/Eppie.App.ViewModels.Tests/obj/
+src/Eppie.App/Tests/Eppie.App.ViewModels.Tests/bin/
+src/Eppie.App/Tests/Eppie.App.UI.Tests/obj/
+src/Eppie.App/Tests/Eppie.App.UI.Tests/bin/
