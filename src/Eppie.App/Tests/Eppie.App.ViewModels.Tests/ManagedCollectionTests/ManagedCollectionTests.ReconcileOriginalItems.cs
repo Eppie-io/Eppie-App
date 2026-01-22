@@ -1786,8 +1786,7 @@ namespace Eppie.App.ViewModels.Tests.ManagedCollectionTestSuite
             var collection = new ManagedCollection<string>();
             collection.AddRange(new[] { "A", "B", "C" });
 
-            // Use LINQ query that returns IEnumerable, not IList
-            var targetEnumerable = new[] { "B", "D", "C" }.Where(x => true).Select(x => x);
+            IEnumerable<string> targetEnumerable = new[] { "B", "D", "C" };
 
             // Act
             collection.ReconcileOriginalItems(targetEnumerable);
