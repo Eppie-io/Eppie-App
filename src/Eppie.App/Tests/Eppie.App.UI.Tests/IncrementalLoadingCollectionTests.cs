@@ -952,7 +952,7 @@ namespace Eppie.App.UI.Tests.IncrementalLoading
                 searchFilter: searchFilter);
 
             // Request items - should get only even numbers > 10 (12, 14, 16, 18, 20)
-            var result = await collection.LoadMoreItemsAsync(10).AsTask().ConfigureAwait(false);
+            await collection.LoadMoreItemsAsync(10).AsTask().ConfigureAwait(false);
 
             // All 20 items loaded to OriginalItems
             Assert.That(collection.OriginalItems.Count, Is.EqualTo(20));
