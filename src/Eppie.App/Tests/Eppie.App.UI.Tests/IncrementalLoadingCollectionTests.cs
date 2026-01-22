@@ -1003,8 +1003,7 @@ namespace Eppie.App.UI.Tests.IncrementalLoading
             Assert.That(collection.Count, Is.EqualTo(10));
             Assert.That(collection.OriginalItems.Count, Is.EqualTo(10));
 
-            // Store first item to verify collection was cleared and reloaded
-            var firstItemBefore = collection.First();
+            // Trigger refresh to verify collection was cleared and reloaded
 
             // Refresh
             await collection.RefreshForTestAsync().ConfigureAwait(false);
