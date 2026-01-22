@@ -902,7 +902,7 @@ namespace Eppie.App.UI.Tests.IncrementalLoading
                 itemsFilter: filter);
 
             // Request 10 visible items, but only 5 exist
-            var result = await collection.LoadMoreItemsAsync(10).AsTask().ConfigureAwait(false);
+            await collection.LoadMoreItemsAsync(10).AsTask().ConfigureAwait(false);
 
             // Should have loaded all 10 items to OriginalItems
             Assert.That(collection.OriginalItems.Count, Is.EqualTo(10));
