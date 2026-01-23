@@ -79,6 +79,7 @@ namespace Tuvi.App.ViewModels
             EppieAddressIndex = -1;
 
             SuitableContacts.SearchFilter = _contactsSearchFilter;
+            _contactsSearchFilter.IncludeItemsOnEmptySearch = false;
             _contactsSearchFilter.SearchText = string.Empty;
         }
 
@@ -107,7 +108,7 @@ namespace Tuvi.App.ViewModels
             var accounts = await Core.GetAccountsAsync().ConfigureAwait(true);
 
             var senderAccounts = accounts.Where(a => a.Type != MailBoxType.Dec).ToList();
-            var eppieAccounts = accounts.Where(a => a.Type == MailBoxType.Dec || a.Type == MailBoxType.Hybrid).ToList();
+            var eppieAccounts = accounts.Where(a => a.Type == MailBoxType.Dec).ToList();
 
             SenderAddresses.Clear();
             foreach (var account in senderAccounts)
@@ -234,8 +235,33 @@ namespace Tuvi.App.ViewModels
 
         private void SendInvite()
         {
+            var sender = SenderAddresses[SenderAddressIndex].Account.Email;
+            var senderName = SenderAddresses[SenderAddressIndex].DisplayName;
+            var eppieAddressString = EppieAddresses[EppieAddressIndex].Account.Email.DisplayAddress;
+            var downloadLink = BrandService.GetHomepage();
+            var subject = string.Format(System.Globalization.CultureInfo.InvariantCulture, GetLocalizedString("InvitationSubjectText"), senderName);
+            var body = string.Format(System.Globalization.CultureInfo.InvariantCulture, GetLocalizedString("InvitationBodyText"), senderName, eppieAddressString, downloadLink);
+
+            _ = SendEmailsAsync(Core, sender, Recipients.ToList(), subject, body);
+
             ClosePopupAction?.Invoke();
-            // ToDo: send invite
+        }
+
+        private static async Task SendEmailsAsync(Core.ITuviMail core, EmailAddress sender, List<ContactItem> recipients, string subject, string body)
+        {
+            foreach (var recipient in recipients)
+            {
+                if (recipient.Email != null)
+                {
+                    var message = new Message();
+                    message.From.Add(sender);
+                    message.To.Add(recipient.Email);
+                    message.Subject = subject;
+                    message.TextBody = body;
+
+                    await core.SendMessageAsync(message, false, false).ConfigureAwait(false);
+                }
+            }
         }
 
         public void OnRecipientRemoved(ContactItem item)

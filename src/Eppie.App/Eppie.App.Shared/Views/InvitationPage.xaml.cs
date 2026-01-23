@@ -67,14 +67,10 @@ namespace Eppie.App.Views
             }
         }
 
-        private void OnContactSuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
-        {
-            sender.Text = string.Empty;
-        }
-
         private void OnContactQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
             ViewModel?.OnContactQuerySubmitted(args.ChosenSuggestion as ContactItem, args.QueryText);
+            ViewModel?.OnContactQueryChanged(string.Empty);
             sender.Text = string.Empty;
         }
     }

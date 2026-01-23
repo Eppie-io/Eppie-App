@@ -108,7 +108,6 @@
                                 ItemsSource="{x:Bind ViewModel.SuitableContacts, Mode=OneWay}"
                                 QueryIcon="PhoneBook"
                                 QuerySubmitted="OnContactQuerySubmitted"
-                                SuggestionChosen="OnContactSuggestionChosen"
                                 TextChanged="OnContactQueryChanged" />
 
                 <muxc:ItemsRepeater Margin="0,12,0,0"

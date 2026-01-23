@@ -31,10 +31,21 @@ namespace Tuvi.App.ViewModels
             set => SetProperty(ref _searchText, value);
         }
 
+        private bool _includeItemsOnEmptySearch = true;
+        public bool IncludeItemsOnEmptySearch
+        {
+            get => _includeItemsOnEmptySearch;
+            set => SetProperty(ref _includeItemsOnEmptySearch, value);
+        }
+
         public bool ItemPassedFilter(ContactItem item)
         {
-            return string.IsNullOrEmpty(SearchText)
-                || StringHelper.StringContains(item?.DisplayName, SearchText, StringComparison.CurrentCultureIgnoreCase)
+            if (string.IsNullOrEmpty(SearchText))
+            {
+                return IncludeItemsOnEmptySearch;
+            }
+
+            return StringHelper.StringContains(item?.DisplayName, SearchText, StringComparison.CurrentCultureIgnoreCase)
                 || StringHelper.EmailContains(item?.Email.Address, SearchText);
         }
     }

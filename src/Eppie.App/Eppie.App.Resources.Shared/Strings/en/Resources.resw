@@ -1605,4 +1605,27 @@ Subject: {3}
     <value>Send invite</value>
     <comment>The text of the Send Invite button on the invitation page</comment>
   </data>
+  <data name="InvitationSubjectText" xml:space="preserve">
+    <value>{0} invited you to Eppie</value>
+    <comment>The text of the invitation email subject. {0} - Sender name.</comment>
+  </data>
+  <data name="InvitationBodyText" xml:space="preserve">
+    <value>Hi, {0} invited you to try Eppie.
+
+I'm Eppie, and I do email differently.
+
+Instead of storing your messages on corporate servers, I connect you directly to the people you email. Your messages are encrypted on your device and stay that way until they reach the other person. No middlemen, no data mining, no ads.
+You don't have to abandon your current email either. I work seamlessly with Gmail, Outlook, and Proton accounts, so privacy and convenience finally stop being enemies.
+
+{0} trusts me with their communications. If you're curious:
+1. Download me from {2}
+2. Add {0} as a contact: {1}
+
+That's literally it. No forced account creation. No personal information required. No tracking.
+I believe email should be private by default. If you agree, I'm ready when you are.
+
+Eppie
+    </value>
+    <comment>The text of the invitation email. {0} - Sender name. {1} - Sender email. {2} - Downloading url.</comment>
+  </data>
 </root>
