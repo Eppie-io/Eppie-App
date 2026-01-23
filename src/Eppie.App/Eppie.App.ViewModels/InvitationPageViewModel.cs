@@ -249,18 +249,15 @@ namespace Tuvi.App.ViewModels
 
         private static async Task SendEmailsAsync(Core.ITuviMail core, EmailAddress sender, List<ContactItem> recipients, string subject, string body)
         {
-            foreach (var recipient in recipients)
+            foreach (var recipient in recipients.Where(r => r != null && r.Email != null))
             {
-                if (recipient.Email != null)
-                {
-                    var message = new Message();
-                    message.From.Add(sender);
-                    message.To.Add(recipient.Email);
-                    message.Subject = subject;
-                    message.TextBody = body;
+                var message = new Message();
+                message.From.Add(sender);
+                message.To.Add(recipient.Email);
+                message.Subject = subject;
+                message.TextBody = body;
 
-                    await core.SendMessageAsync(message, false, false).ConfigureAwait(false);
-                }
+                await core.SendMessageAsync(message, false, false).ConfigureAwait(false);
             }
         }
 
