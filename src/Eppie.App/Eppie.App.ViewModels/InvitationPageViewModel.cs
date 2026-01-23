@@ -87,15 +87,15 @@ namespace Tuvi.App.ViewModels
         {
             base.OnNavigatedTo(data);
 
-            LoadAddresses();
+            InitializeFromContact(data as ContactItem);
             LoadContacts();
         }
 
-        private async void LoadAddresses()
+        private async void InitializeFromContact(ContactItem contactItem)
         {
             try
             {
-                await LoadAddressesAsync().ConfigureAwait(true);
+                await InitializeFromContactAsync(contactItem).ConfigureAwait(true);
             }
             catch (Exception ex)
             {
@@ -103,8 +103,13 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        private async Task LoadAddressesAsync()
+        private async Task InitializeFromContactAsync(ContactItem contactItem)
         {
+            if (contactItem != null)
+            {
+                AddRecipient(contactItem);
+            }
+
             var accounts = await Core.GetAccountsAsync().ConfigureAwait(true);
 
             var senderAccounts = accounts.Where(a => a.Type != MailBoxType.Dec).ToList();
@@ -122,7 +127,20 @@ namespace Tuvi.App.ViewModels
                 EppieAddresses.Add(new AddressItem(account));
             }
 
-            SenderAddressIndex = SenderAddresses.Count > 0 ? 0 : -1;
+            var requestedAccountId = contactItem?.LastMessageData?.AccountId;
+            if (requestedAccountId.HasValue)
+            {
+                int requestedId = requestedAccountId.Value;
+                SenderAddressIndex = senderAccounts.FindIndex(a => a != null && a.Id == requestedId);
+                if (SenderAddressIndex < 0)
+                {
+                    SenderAddressIndex = SenderAddresses.Count > 0 ? 0 : -1;
+                }
+            }
+            else
+            {
+                SenderAddressIndex = SenderAddresses.Count > 0 ? 0 : -1;
+            }
             EppieAddressIndex = EppieAddresses.Count > 0 ? 0 : -1;
         }
 
@@ -207,6 +225,10 @@ namespace Tuvi.App.ViewModels
             {
                 Recipients.Add(item);
             }
+
+            OnPropertyChanged(nameof(IsAnyRecipient));
+            OnPropertyChanged(nameof(CanInvite));
+            SendInviteCommand.NotifyCanExecuteChanged();
         }
 
         private static ContactItem CreateAddressItemFromText(string queryText)

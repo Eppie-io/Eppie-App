@@ -197,6 +197,10 @@
     <value>Rename contact</value>
     <comment>Text of the context menu item that renames contact</comment>
   </data>
+  <data name="InviteContactMenuItem.Text" xml:space="preserve">
+    <value>Invite contact</value>
+    <comment>Text of the context menu item that opens invitation dialog for a contact</comment>
+  </data>
   <data name="ChangeContactAvatarMenuItem.Text" xml:space="preserve">
     <value>Change avatar</value>
     <comment>Text of the context menu item that changes contact's avatar</comment>
