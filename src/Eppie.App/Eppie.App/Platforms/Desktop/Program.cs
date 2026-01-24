@@ -16,6 +16,8 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
+using System;
+using System.Linq;
 using Uno.UI.Hosting;
 
 namespace Eppie.App
@@ -25,8 +27,28 @@ namespace Eppie.App
         [STAThread]
         public static void Main(string[] args)
         {
+            // Check for mailto: protocol in arguments
+            string mailtoUri = null;
+            if (args != null && args.Length > 0)
+            {
+                // Look for mailto: URI in arguments
+                mailtoUri = args.FirstOrDefault(arg =>
+                    arg != null && arg.StartsWith(Tuvi.App.ViewModels.Helpers.MailtoUriParser.MailtoSchemePrefix, StringComparison.OrdinalIgnoreCase));
+            }
+
             var host = UnoPlatformHostBuilder.Create()
-                .App(() => new Eppie.App.App())
+                .App(() =>
+                {
+                    var app = new Eppie.App.App();
+
+                    // If we have a mailto URI, set it as pending
+                    if (!string.IsNullOrEmpty(mailtoUri))
+                    {
+                        app.SetPendingMailtoUri(mailtoUri);
+                    }
+
+                    return app;
+                })
                 .UseX11()
                 .UseLinuxFrameBuffer()
                 .UseMacOS()

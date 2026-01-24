@@ -22,6 +22,7 @@ using Eppie.App.Authorization;
 using Eppie.App.Views;
 using Microsoft.Services.Store.Engagement;
 using System;
+using System.Linq;
 using Tuvi.App.ViewModels;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -181,6 +182,38 @@ namespace Eppie.App
             if (args.Uri.Scheme == AuthConfig.UriScheme)
             {
                 ProtocolAuthenticationBroker.CompleteAuthentication(args.Uri);
+            }
+            else if (string.Equals(args.Uri.Scheme, Tuvi.App.ViewModels.Helpers.MailtoUriParser.MailtoScheme, StringComparison.OrdinalIgnoreCase))
+            {
+                HandleMailtoActivation(args.Uri);
+            }
+        }
+
+        private async void HandleMailtoActivation(Uri mailtoUri)
+        {
+            try
+            {
+                // Get the default email account
+                var accounts = await Core.GetAccountsAsync().ConfigureAwait(true);
+                var defaultAccount = accounts.FirstOrDefault();
+
+                if (defaultAccount is null)
+                {
+                    // No accounts configured, just open the app normally
+                    return;
+                }
+
+                // Create message data from mailto URI
+                var messageData = Tuvi.App.ViewModels.Common.MailtoMessageData.FromMailtoUri(
+                    mailtoUri, 
+                    defaultAccount.Email);
+
+                // Navigate to the new message page with the pre-filled data
+                NavigationService.Navigate("NewMessagePageViewModel", messageData);
+            }
+            catch (Exception ex)
+            {
+                OnError(ex);
             }
         }
 

@@ -34,6 +34,27 @@
 		<key>UIApplicationSupportsIndirectInputEvents</key>
 		<true/>
 
+		<!-- URL Scheme Support -->
+		<key>CFBundleURLTypes</key>
+		<array>
+			<dict>
+				<key>CFBundleURLName</key>
+				<string>io.eppie.auth</string>
+				<key>CFBundleURLSchemes</key>
+				<array>
+					<string>io.eppie</string>
+				</array>
+			</dict>
+			<dict>
+				<key>CFBundleURLName</key>
+				<string>io.eppie.mailto</string>
+				<key>CFBundleURLSchemes</key>
+				<array>
+					<string>mailto</string>
+				</array>
+			</dict>
+		</array>
+
 		<!--
 		Adjust this to your application's encryption usage.
 		<key>ITSAppUsesNonExemptEncryption</key>

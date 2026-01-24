@@ -70,6 +70,9 @@ namespace Eppie.App
                 }
                 // Ensure the current window is active
                 MainWindow.Activate();
+
+                // Process any pending mailto URI after the app is fully initialized
+                ProcessPendingMailtoUri();
             }
             catch (Exception ex)
             {
