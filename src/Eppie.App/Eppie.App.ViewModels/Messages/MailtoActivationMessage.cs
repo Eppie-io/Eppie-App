@@ -16,24 +16,9 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-using Uno.UI.Hosting;
-
-namespace Eppie.App
+namespace Tuvi.App.ViewModels.Messages
 {
-    public class Program
+    public sealed class MailtoActivationMessage
     {
-        [STAThread]
-        public static void Main(string[] args)
-        {
-            var host = UnoPlatformHostBuilder.Create()
-                .App(() => new Eppie.App.App())
-                .UseX11()
-                .UseLinuxFrameBuffer()
-                .UseMacOS()
-                .UseWin32()
-                .Build();
-
-            host.Run();
-        }
     }
 }

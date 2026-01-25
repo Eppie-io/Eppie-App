@@ -80,6 +80,7 @@ namespace Eppie.App
         public INavigationService NavigationService { get; private set; }
         public ITuviMail Core { get; private set; }
         public ILocalSettingsService LocalSettingsService { get; private set; }
+        public IPendingMailtoService PendingMailtoService { get; private set; }
         public AuthorizationProvider AuthProvider { get; private set; }
         private NotificationManager _notificationManager { get; set; }
         public IAIService AIService { get; private set; }
@@ -90,62 +91,6 @@ namespace Eppie.App
         private ErrorHandler _errorHandler;
 
         public IHost Host { get; private set; }
-
-        // Store pending mailto URI for activation after app is fully initialized
-        private string _pendingMailtoUri;
-
-        /// <summary>
-        /// Sets a pending mailto URI to be handled after the app completes initialization.
-        /// </summary>
-        public void SetPendingMailtoUri(string mailtoUri)
-        {
-            _pendingMailtoUri = mailtoUri;
-
-            // If app is already initialized, process immediately
-            if (NavigationService != null && Core != null)
-            {
-                ProcessPendingMailtoUri();
-            }
-        }
-
-        /// <summary>
-        /// Processes any pending mailto URI after navigation is ready.
-        /// </summary>
-        private async void ProcessPendingMailtoUri()
-        {
-            if (string.IsNullOrEmpty(_pendingMailtoUri) || NavigationService == null || Core == null)
-            {
-                return;
-            }
-
-            try
-            {
-                var mailtoUri = _pendingMailtoUri;
-                _pendingMailtoUri = null;
-
-                // Get the default email account
-                var accounts = await Core.GetAccountsAsync().ConfigureAwait(true);
-                var defaultAccount = accounts.FirstOrDefault();
-
-                if (defaultAccount is null)
-                {
-                    // No accounts configured, just ignore the mailto
-                    return;
-                }
-
-                // Create message data from mailto URI
-                var messageData = Tuvi.App.ViewModels.Common.MailtoMessageData.FromMailtoUri(
-                    mailtoUri,
-                    defaultAccount.Email);
-
-                // Navigate to the new message page with the pre-filled data
-                NavigationService.Navigate("NewMessagePageViewModel", messageData);
-            }
-            catch (Exception ex)
-            {
-                OnError(ex);
-            }
-        }
 
         /// <summary>
         /// Initializes the singleton application object. This is the first line of authored code
@@ -213,6 +158,12 @@ namespace Eppie.App
             CreateCore();
 
             CreateAIService();
+            CreatePendingMailtoService();
+        }
+
+        private void CreatePendingMailtoService()
+        {
+            PendingMailtoService = new Services.PendingMailtoService();
         }
 
         private void CreateAIService()

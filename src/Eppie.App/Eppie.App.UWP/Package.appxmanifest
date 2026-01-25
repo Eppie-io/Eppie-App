@@ -48,7 +48,7 @@
         </uap:Extension>
         <uap:Extension Category="windows.protocol">
           <uap:Protocol Name="mailto">
-            <uap:DisplayName>Eppie Email</uap:DisplayName>
+            <uap:DisplayName>Eppie mailto</uap:DisplayName>
           </uap:Protocol>
         </uap:Extension>
       </Extensions>

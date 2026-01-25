@@ -452,6 +452,39 @@ namespace Tuvi.App.ViewModels
                 _ = ShowOneStartupPopupIfNeededAsync();
 
                 LogEnabledWarning();
+
+                TryHandlePendingMailto();
+            }
+            catch (Exception ex)
+            {
+                OnError(ex);
+            }
+        }
+
+
+        private async void TryHandlePendingMailto()
+        {
+            try
+            {
+                if (PendingMailtoService is null)
+                {
+                    return;
+                }
+
+                if (!PendingMailtoService.TryDequeuePendingMailtoUri(out var mailtoUri))
+                {
+                    return;
+                }
+
+                var accounts = await Core.GetAccountsAsync().ConfigureAwait(true);
+                var defaultAccount = accounts.FirstOrDefault();
+                if (defaultAccount is null)
+                {
+                    return;
+                }
+
+                var messageData = MailtoMessageData.FromMailtoUri(mailtoUri, defaultAccount.Email);
+                NavigationService?.Navigate(nameof(NewMessagePageViewModel), messageData);
             }
             catch (Exception ex)
             {
@@ -608,6 +641,11 @@ namespace Tuvi.App.ViewModels
             Core.AccountUpdated += OnAccountUpdated;
 
             LocalSettingsService.SettingChanged += LocalSettingsService_SettingChanged;
+
+            WeakReferenceMessenger.Default.Register<MailtoActivationMessage>(this, (r, m) =>
+            {
+                TryHandlePendingMailto();
+            });
         }
 
         private void UnsubscribeEvents()
@@ -620,6 +658,8 @@ namespace Tuvi.App.ViewModels
             Core.AccountUpdated -= OnAccountUpdated;
 
             LocalSettingsService.SettingChanged -= LocalSettingsService_SettingChanged;
+
+            WeakReferenceMessenger.Default.Unregister<MailtoActivationMessage>(this);
         }
 
         private void OnCoreException(object sender, ExceptionEventArgs e)

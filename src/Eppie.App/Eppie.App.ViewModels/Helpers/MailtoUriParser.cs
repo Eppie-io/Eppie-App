@@ -86,27 +86,6 @@ namespace Tuvi.App.ViewModels.Helpers
             return parser;
         }
 
-        /// <summary>
-        /// Parses a mailto: URI string and extracts email components.
-        /// </summary>
-        /// <param name="mailtoUriString">The mailto: URI string to parse.</param>
-        /// <returns>A MailtoUriParser instance with parsed data.</returns>
-        /// <exception cref="ArgumentException">Thrown when URI string is invalid.</exception>
-        public static MailtoUriParser Parse(string mailtoUriString)
-        {
-            if (string.IsNullOrWhiteSpace(mailtoUriString))
-            {
-                throw new ArgumentException("URI string cannot be null or whitespace.", nameof(mailtoUriString));
-            }
-
-            if (!Uri.TryCreate(mailtoUriString, UriKind.Absolute, out Uri uri))
-            {
-                throw new ArgumentException("Invalid URI format.", nameof(mailtoUriString));
-            }
-
-            return Parse(uri);
-        }
-
         private void ParseInternal(Uri mailtoUri)
         {
             // Extract the primary recipient (the part after mailto: and before ?)

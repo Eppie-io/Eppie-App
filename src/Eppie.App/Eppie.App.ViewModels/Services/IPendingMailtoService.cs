@@ -16,24 +16,13 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-using Uno.UI.Hosting;
+using System;
 
-namespace Eppie.App
+namespace Tuvi.App.ViewModels.Services
 {
-    public class Program
+    public interface IPendingMailtoService
     {
-        [STAThread]
-        public static void Main(string[] args)
-        {
-            var host = UnoPlatformHostBuilder.Create()
-                .App(() => new Eppie.App.App())
-                .UseX11()
-                .UseLinuxFrameBuffer()
-                .UseMacOS()
-                .UseWin32()
-                .Build();
-
-            host.Run();
-        }
+        void SetPendingMailtoUri(Uri mailtoUri);
+        bool TryDequeuePendingMailtoUri(out Uri mailtoUri);
     }
 }

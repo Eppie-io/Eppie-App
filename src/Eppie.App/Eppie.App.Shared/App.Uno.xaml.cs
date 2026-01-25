@@ -18,7 +18,6 @@
 
 #if !WINDOWS_UWP
 
-using Eppie.App.Models;
 using Eppie.App.Views;
 using Microsoft.UI.Windowing;
 using Tuvi.App.ViewModels;
@@ -71,8 +70,28 @@ namespace Eppie.App
                 // Ensure the current window is active
                 MainWindow.Activate();
 
-                // Process any pending mailto URI after the app is fully initialized
-                ProcessPendingMailtoUri();
+                TryHandleMailtoActivation(args?.Arguments);
+            }
+            catch (Exception ex)
+            {
+                OnError(ex);
+            }
+        }
+
+        private void TryHandleMailtoActivation(string arguments)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(arguments))
+                {
+                    return;
+                }
+
+                if (Uri.TryCreate(arguments, UriKind.Absolute, out var uri) &&
+                    string.Equals(uri.Scheme, Tuvi.App.ViewModels.Helpers.MailtoUriParser.MailtoScheme, StringComparison.OrdinalIgnoreCase))
+                {
+                    PendingMailtoService?.SetPendingMailtoUri(uri);
+                }
             }
             catch (Exception ex)
             {

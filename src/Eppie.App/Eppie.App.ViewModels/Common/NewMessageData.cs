@@ -271,11 +271,11 @@ namespace Tuvi.App.ViewModels.Common
     {
         public SharePublicKeyMessageData(string userIdentity, byte[] keyFileData, string keyFileName, string messageSubject)
             : base(new EmailAddress(userIdentity),
-                   String.Empty,
-                   String.Empty,
-                   String.Empty,
+                   string.Empty,
+                   string.Empty,
+                   string.Empty,
                    messageSubject,
-                   String.Empty,
+                   string.Empty,
                    new AttachmentsCollection
                    {
                        new Attachment
@@ -291,11 +291,11 @@ namespace Tuvi.App.ViewModels.Common
     {
         public SelectedAccountNewMessageData(EmailAddress email)
             : base(email,
-                   String.Empty,
-                   String.Empty,
-                   String.Empty,
-                   String.Empty,
-                   String.Empty)
+                   string.Empty,
+                   string.Empty,
+                   string.Empty,
+                   string.Empty,
+                   string.Empty)
         { }
     }
 
@@ -303,11 +303,11 @@ namespace Tuvi.App.ViewModels.Common
     {
         public SelectedContactNewMessageData(EmailAddress email, EmailAddress contactEmail)
             : base(email,
-                   contactEmail != null ? contactEmail.Address : String.Empty,
-                   String.Empty,
-                   String.Empty,
-                   String.Empty,
-                   String.Empty)
+                   contactEmail != null ? contactEmail.Address : string.Empty,
+                   string.Empty,
+                   string.Empty,
+                   string.Empty,
+                   string.Empty)
         { }
     }
 
@@ -316,8 +316,8 @@ namespace Tuvi.App.ViewModels.Common
         public ErrorReportNewMessageData(string support, string title, string message)
             : base(new EmailAddress(""),
                    support,
-                   String.Empty,
-                   String.Empty,
+                   string.Empty,
+                   string.Empty,
                    title,
                    message)
         { }
@@ -327,11 +327,11 @@ namespace Tuvi.App.ViewModels.Common
     {
         public MailtoMessageData(EmailAddress from, string to, string cc, string bcc, string subject, string body)
             : base(from,
-                   to ?? String.Empty,
-                   cc ?? String.Empty,
-                   bcc ?? String.Empty,
-                   subject ?? String.Empty,
-                   body ?? String.Empty)
+                   to ?? string.Empty,
+                   cc ?? string.Empty,
+                   bcc ?? string.Empty,
+                   subject ?? string.Empty,
+                   body ?? string.Empty)
         { }
 
         public static MailtoMessageData FromMailtoUri(Uri mailtoUri, EmailAddress defaultFromAddress)
@@ -341,7 +341,7 @@ namespace Tuvi.App.ViewModels.Common
                 throw new ArgumentNullException(nameof(mailtoUri));
             }
 
-            var parser = Tuvi.App.ViewModels.Helpers.MailtoUriParser.Parse(mailtoUri);
+            var parser = Helpers.MailtoUriParser.Parse(mailtoUri);
             return new MailtoMessageData(
                 defaultFromAddress,
                 parser.To,
@@ -349,21 +349,6 @@ namespace Tuvi.App.ViewModels.Common
                 parser.Bcc,
                 parser.Subject,
                 parser.Body);
-        }
-
-        public static MailtoMessageData FromMailtoUri(string mailtoUriString, EmailAddress defaultFromAddress)
-        {
-            if (string.IsNullOrWhiteSpace(mailtoUriString))
-            {
-                throw new ArgumentException("Mailto URI string cannot be null or whitespace.", nameof(mailtoUriString));
-            }
-
-            if (!Uri.TryCreate(mailtoUriString, UriKind.Absolute, out Uri uri))
-            {
-                throw new ArgumentException("Invalid mailto URI format.", nameof(mailtoUriString));
-            }
-
-            return FromMailtoUri(uri, defaultFromAddress);
         }
     }
 

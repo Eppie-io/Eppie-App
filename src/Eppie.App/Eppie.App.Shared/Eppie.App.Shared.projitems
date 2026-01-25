@@ -23,6 +23,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Logging\HashTransformOperator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Logging\LogConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Logging\LoggingExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\PendingMailtoService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)StaticResources\BrandResource.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\NotificationManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\AIService.cs" />

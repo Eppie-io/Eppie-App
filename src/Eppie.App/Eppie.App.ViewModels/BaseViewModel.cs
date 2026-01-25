@@ -60,6 +60,12 @@ namespace Tuvi.App.ViewModels
             NavigationService = navigationService;
         }
 
+        protected IPendingMailtoService PendingMailtoService { get; private set; }
+        public void SetPendingMailtoService(IPendingMailtoService pendingMailtoService)
+        {
+            PendingMailtoService = pendingMailtoService;
+        }
+
         protected ILocalSettingsService LocalSettingsService { get; private set; }
         public void SetLocalSettingsService(ILocalSettingsService localSettingsService)
         {
