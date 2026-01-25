@@ -100,7 +100,7 @@ namespace Eppie.App.UI.Tests.IncrementalLoading
 
             LoadMoreItemsResult result = await collection.LoadMoreItemsAsync(0).AsTask().ConfigureAwait(false);
 
-            Assert.That(result.Count, Is.GreaterThan(0));
+            Assert.That(result, Is.Not.Empty);
             Assert.That(collection.Count, Is.EqualTo(result.Count));
             Assert.That(source.RequestedCounts.Last(), Is.EqualTo(30));
             Assert.That(collection.HasMoreItems, Is.True);
@@ -171,8 +171,8 @@ namespace Eppie.App.UI.Tests.IncrementalLoading
             // Refresh after load completes
             await collection.RefreshForTestAsync().ConfigureAwait(false);
 
-            Assert.That(source.ResetCalls, Is.GreaterThanOrEqualTo(1));
-            Assert.That(collection.Count, Is.GreaterThan(0));
+            Assert.That(source.ResetCalls, Is.Positive);
+            Assert.That(collection, Is.Not.Empty);
             Assert.That(collection.OriginalItems.Count, Is.EqualTo(collection.Count));
         }
 
@@ -187,8 +187,8 @@ namespace Eppie.App.UI.Tests.IncrementalLoading
 
             await collection.RefreshForTestAsync().ConfigureAwait(false);
 
-            Assert.That(collection.Count, Is.GreaterThan(0));
-            Assert.That(source.ResetCalls, Is.GreaterThanOrEqualTo(1));
+            Assert.That(collection, Is.Not.Empty);
+            Assert.That(source.ResetCalls, Is.Positive);
             Assert.That(collection.OriginalItems.Count, Is.EqualTo(collection.Count));
         }
 
@@ -457,8 +457,8 @@ namespace Eppie.App.UI.Tests.IncrementalLoading
 
             await collection.RefreshForTestAsync().ConfigureAwait(false);
 
-            Assert.That(source.ResetCalls, Is.GreaterThanOrEqualTo(1));
-            Assert.That(collection.Count, Is.GreaterThan(0));
+            Assert.That(source.ResetCalls, Is.Positive);
+            Assert.That(collection, Is.Not.Empty);
             Assert.That(collection.OriginalItems.Count, Is.EqualTo(collection.Count));
             Assert.That(collection.HasMoreItems, Is.True);
         }
@@ -561,13 +561,13 @@ namespace Eppie.App.UI.Tests.IncrementalLoading
 
             // Multiple sequential refresh calls
             await collection.RefreshForTestAsync().ConfigureAwait(false);
-            Assert.That(collection.Count, Is.GreaterThan(0));
+            Assert.That(collection, Is.Not.Empty);
 
             await collection.RefreshForTestAsync().ConfigureAwait(false);
-            Assert.That(collection.Count, Is.GreaterThan(0));
+            Assert.That(collection, Is.Not.Empty);
 
             await collection.RefreshForTestAsync().ConfigureAwait(false);
-            Assert.That(collection.Count, Is.GreaterThan(0));
+            Assert.That(collection, Is.Not.Empty);
 
             // Should complete without issues
             Assert.That(source.ResetCalls, Is.GreaterThanOrEqualTo(3));
@@ -611,7 +611,7 @@ namespace Eppie.App.UI.Tests.IncrementalLoading
 
             // HasMoreItems returns false because the cancellation token is checked in the getter
             Assert.That(collection.HasMoreItems, Is.False);
-            Assert.That(result.Count, Is.Zero);
+            Assert.That(result, Is.Empty);
             Assert.That(source.LoadCalls, Is.Zero);
         }
 
@@ -638,8 +638,8 @@ namespace Eppie.App.UI.Tests.IncrementalLoading
 
             await collection.LoadMoreItemsAsync(5).AsTask().ConfigureAwait(false);
 
-            Assert.That(changingStartCount, Is.GreaterThan(0));
-            Assert.That(changingEndCount, Is.GreaterThan(0));
+            Assert.That(changingStartCount, Is.Positive);
+            Assert.That(changingEndCount, Is.Positive);
             Assert.That(collection.IsChanging, Is.False);
         }
 
@@ -700,7 +700,7 @@ namespace Eppie.App.UI.Tests.IncrementalLoading
             await collection.RefreshForTestAsync().ConfigureAwait(false);
 
             Assert.That(source.ResetCalls, Is.GreaterThan(firstResetCalls));
-            Assert.That(collection.Count, Is.GreaterThan(0)); // Should have reloaded
+            Assert.That(collection, Is.Not.Empty); // Should have reloaded
             Assert.That(collection.HasMoreItems, Is.True);
         }
 
@@ -872,7 +872,7 @@ namespace Eppie.App.UI.Tests.IncrementalLoading
             await refreshTask.ConfigureAwait(false);
 
             Assert.That(collection.IsLoading, Is.False);
-            Assert.That(collection.Count, Is.GreaterThan(0));
+            Assert.That(collection, Is.Not.Empty);
             Assert.That(collection.HasMoreItems, Is.True);
         }
 
@@ -1009,7 +1009,7 @@ namespace Eppie.App.UI.Tests.IncrementalLoading
             await collection.RefreshForTestAsync().ConfigureAwait(false);
 
             // Collection should be cleared and reloaded (starts from beginning)
-            Assert.That(collection.Count, Is.GreaterThan(0));
+            Assert.That(collection, Is.Not.Empty);
             Assert.That(collection.OriginalItems.Count, Is.EqualTo(collection.Count));
             // First item should be 1 again (source was reset)
             Assert.That(collection.First(), Is.EqualTo(1));
