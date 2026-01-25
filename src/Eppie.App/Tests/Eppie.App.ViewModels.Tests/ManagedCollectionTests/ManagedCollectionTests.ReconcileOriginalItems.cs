@@ -180,7 +180,7 @@ namespace Eppie.App.ViewModels.Tests.ManagedCollectionTestSuite
 
             // Assert
             // A updated, B matched (no update), C added (no update call, just add)
-            Assert.That(updatesCount, Is.GreaterThanOrEqualTo(1));
+            Assert.That(updatesCount, Is.Positive);
             Assert.That(collection.OriginalItems[0].Name, Is.EqualTo("A2")); // Updated in place
             Assert.That(collection.Count, Is.EqualTo(3));
         }
@@ -1299,8 +1299,8 @@ namespace Eppie.App.ViewModels.Tests.ManagedCollectionTestSuite
             Assert.That(collection.ToArray(), Is.EqualTo(targetList));
             Assert.That(collection.OriginalItems, Is.EqualTo(targetList));
             // Should have removed 3 and added 3
-            Assert.That(removeCount, Is.GreaterThan(0));
-            Assert.That(addCount, Is.GreaterThan(0));
+            Assert.That(removeCount, Is.Positive);
+            Assert.That(addCount, Is.Positive);
         }
 
         [Test]
