@@ -57,6 +57,7 @@ namespace Tuvi.App.ViewModels
         public ICommand RenameContactCommand => new AsyncRelayCommand<ContactItem>(RenameContactAsync);
         public ICommand ChangeContactAvatarCommand => new AsyncRelayCommand<ContactItem>(ChangeContactAvatarAsync);
         public ICommand RemoveContactCommand => new AsyncRelayCommand<ContactItem>(RemoveContactAsync);
+        public ICommand InviteContactCommand => new AsyncRelayCommand<ContactItem>(InviteContactAsync);
 
         private ContactItem _selectedContact;
         public ContactItem SelectedContact
@@ -154,6 +155,16 @@ namespace Tuvi.App.ViewModels
             }
 
             return Core.RemoveContactAsync(contactItem.Email);
+        }
+
+        private Task InviteContactAsync(ContactItem contactItem)
+        {
+            if (contactItem is null)
+            {
+                throw new ArgumentNullException(nameof(contactItem));
+            }
+
+            return MessageService.ShowInvitationDialogAsync(contactItem);
         }
 
         public void SetAvatarProvider(Func<Task<byte[]>> avatarProvider)

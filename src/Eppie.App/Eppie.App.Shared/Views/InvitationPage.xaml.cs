@@ -53,7 +53,7 @@ namespace Eppie.App.Views
 
         private void OnRecipientRemoved(object sender, EventArgs e)
         {
-            if (sender is FrameworkElement element && element.Tag is AddressItem item)
+            if (sender is FrameworkElement element && element.Tag is ContactItem item)
             {
                 ViewModel?.OnRecipientRemoved(item);
             }
@@ -67,17 +67,11 @@ namespace Eppie.App.Views
             }
         }
 
-        private void OnContactSuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
-        {
-            if (args.SelectedItem is AddressItem item)
-            {
-                sender.Text = item.Address;
-            }
-        }
-
         private void OnContactQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-            ViewModel?.OnContactQuerySubmitted(args.ChosenSuggestion as AddressItem, args.QueryText);
+            ViewModel?.OnContactQuerySubmitted(args.ChosenSuggestion as ContactItem, args.QueryText);
+            ViewModel?.OnContactQueryChanged(string.Empty);
+            sender.Text = string.Empty;
         }
     }
 }

@@ -91,6 +91,15 @@ namespace Eppie.App.UI.Controls
         public static readonly DependencyProperty RemoveContactCommandProperty =
             DependencyProperty.Register(nameof(RemoveContactCommand), typeof(ICommand), typeof(ContactsListControl), new PropertyMetadata(null));
 
+        public ICommand InviteContactCommand
+        {
+            get { return (ICommand)GetValue(InviteContactCommandProperty); }
+            set { SetValue(InviteContactCommandProperty, value); }
+        }
+
+        public static readonly DependencyProperty InviteContactCommandProperty =
+            DependencyProperty.Register(nameof(InviteContactCommand), typeof(ICommand), typeof(ContactsListControl), new PropertyMetadata(null));
+
         public ContactsListControl()
         {
             this.InitializeComponent();
@@ -128,6 +137,14 @@ namespace Eppie.App.UI.Controls
             if (sender is FrameworkElement frameworkElement && frameworkElement.Tag is ContactItem contactItem)
             {
                 RemoveContactCommand?.Execute(contactItem);
+            }
+        }
+
+        private void InviteContactMenuItemClick(object sender, RoutedEventArgs args)
+        {
+            if (sender is FrameworkElement frameworkElement && frameworkElement.Tag is ContactItem contactItem)
+            {
+                InviteContactCommand?.Execute(contactItem);
             }
         }
     }
