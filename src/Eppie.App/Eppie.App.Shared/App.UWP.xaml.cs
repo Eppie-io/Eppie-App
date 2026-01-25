@@ -18,13 +18,11 @@
 
 #if WINDOWS_UWP
 
+using System;
 using Eppie.App.Authorization;
 using Eppie.App.Views;
 using Microsoft.Services.Store.Engagement;
-using System;
-using CommunityToolkit.Mvvm.Messaging;
 using Tuvi.App.ViewModels;
-using Tuvi.App.ViewModels.Messages;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
