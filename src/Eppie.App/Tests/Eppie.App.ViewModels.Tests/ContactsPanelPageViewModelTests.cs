@@ -221,7 +221,7 @@ namespace Eppie.App.ViewModels.Tests
                 var command = (AsyncRelayCommand<ContactItem>)vm.ChangeContactAvatarCommand;
                 await command.ExecuteAsync(new ContactItem(contact)).ConfigureAwait(false);
 
-                Assert.That(core.SetContactAvatarCalls, Is.EqualTo(0));
+                Assert.That(core.SetContactAvatarCalls, Is.Zero);
             }
         }
 
@@ -258,7 +258,7 @@ namespace Eppie.App.ViewModels.Tests
                 var command = (AsyncRelayCommand<ContactItem>)vm.ChangeContactAvatarCommand;
                 await command.ExecuteAsync(new ContactItem(contact)).ConfigureAwait(false);
 
-                Assert.That(core.SetContactAvatarCalls, Is.EqualTo(0));
+                Assert.That(core.SetContactAvatarCalls, Is.Zero);
             }
         }
 
@@ -289,7 +289,7 @@ namespace Eppie.App.ViewModels.Tests
 
                 Assert.That(vm.SortingVariants, Is.Not.Null);
                 Assert.That(vm.SortingVariants.Length, Is.EqualTo(3));
-                Assert.That(vm.SelectedSortingIndex, Is.GreaterThanOrEqualTo(0));
+                Assert.That(vm.SelectedSortingIndex, Is.Not.Negative);
                 Assert.That(vm.SortOrder, Is.EqualTo(ContactsSortOrder.ByName));
 
                 // Ensure labels are created (comes from localization service).
@@ -308,7 +308,7 @@ namespace Eppie.App.ViewModels.Tests
                 var initialRefresh = collection.RefreshCalls;
 
                 var byNameIdx = Array.FindIndex(vm.SortingVariants, v => v.SortOrder == ContactsSortOrder.ByName);
-                Assert.That(byNameIdx, Is.GreaterThanOrEqualTo(0));
+                Assert.That(byNameIdx, Is.Not.Negative);
 
                 vm.SelectedSortingIndex = byNameIdx;
 
@@ -410,7 +410,7 @@ namespace Eppie.App.ViewModels.Tests
                        && collection.OriginalItems.Any(i => i.Email.Address == "b@b.com" && i.UnreadMessagesCount == 1))
                     .ConfigureAwait(false);
 
-                Assert.That(core.GetUnreadCountsCalls, Is.GreaterThanOrEqualTo(1));
+                Assert.That(core.GetUnreadCountsCalls, Is.Positive);
             }
         }
 
