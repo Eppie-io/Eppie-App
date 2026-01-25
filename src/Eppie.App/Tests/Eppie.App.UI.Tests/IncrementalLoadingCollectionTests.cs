@@ -153,7 +153,7 @@ namespace Eppie.App.UI.Tests.IncrementalLoading
             Assert.That(result.Count, Is.Zero);
             Assert.That(collection.Count, Is.Zero);
             Assert.That(collection.HasMoreItems, Is.False);
-            Assert.That(source.LoadCalls, Is.EqualTo(0));
+            Assert.That(source.LoadCalls, Is.Zero);
         }
 
         [Test]
@@ -183,7 +183,7 @@ namespace Eppie.App.UI.Tests.IncrementalLoading
             var source = new PagedIntSource(Enumerable.Range(1, 50));
             var collection = new TestIncrementalLoadingCollection(source, cts);
 
-            Assert.That(collection.Count, Is.EqualTo(0));
+            Assert.That(collection, Is.Empty);
 
             await collection.RefreshForTestAsync().ConfigureAwait(false);
 
@@ -226,7 +226,7 @@ namespace Eppie.App.UI.Tests.IncrementalLoading
 
             var result = await collection.LoadMoreItemsAsync(1).AsTask().ConfigureAwait(false);
 
-            Assert.That(result.Count, Is.EqualTo(0));
+            Assert.That(result, Is.Empty);
             Assert.That(observed, Is.Not.Null);
             Assert.That(observed, Is.TypeOf<ArgumentOutOfRangeException>());
         }
@@ -886,7 +886,7 @@ namespace Eppie.App.UI.Tests.IncrementalLoading
 
             Assert.That(collection, Is.Not.Null);
             Assert.That(collection.HasMoreItems, Is.True);
-            Assert.That(collection.Count, Is.EqualTo(0));
+            Assert.That(collection, Is.Empty);
         }
 
         [Test]
