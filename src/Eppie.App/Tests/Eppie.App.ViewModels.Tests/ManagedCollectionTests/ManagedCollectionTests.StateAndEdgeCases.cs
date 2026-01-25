@@ -607,7 +607,7 @@ namespace Eppie.App.ViewModels.Tests.ManagedCollectionTestSuite
             col.Add("A");
 
             Assert.That(col, Is.EqualTo(new[] { "A" }));
-            Assert.That(changeEvents, Is.GreaterThanOrEqualTo(1));
+            Assert.That(changeEvents, Is.Positive);
         }
 
         [Test]
