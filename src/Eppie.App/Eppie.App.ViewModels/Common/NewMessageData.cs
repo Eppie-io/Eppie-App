@@ -336,7 +336,7 @@ namespace Tuvi.App.ViewModels.Common
 
         public static MailtoMessageData FromMailtoUri(Uri mailtoUri, EmailAddress defaultFromAddress)
         {
-            if (mailtoUri == null)
+            if (mailtoUri is null)
             {
                 throw new ArgumentNullException(nameof(mailtoUri));
             }
