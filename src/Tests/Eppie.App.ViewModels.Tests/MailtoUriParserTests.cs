@@ -121,8 +121,6 @@ namespace Eppie.App.ViewModels.Tests
             Assert.Throws<ArgumentNullException>(() => MailtoUriParser.Parse((Uri)null!));
         }
 
-
-
         [Test]
         public void ParseWithInvalidSchemeThrowsArgumentException()
         {
