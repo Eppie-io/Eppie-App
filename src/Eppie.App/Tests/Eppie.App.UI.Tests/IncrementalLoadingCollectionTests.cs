@@ -100,7 +100,7 @@ namespace Eppie.App.UI.Tests.IncrementalLoading
 
             LoadMoreItemsResult result = await collection.LoadMoreItemsAsync(0).AsTask().ConfigureAwait(false);
 
-            Assert.That(result, Is.Not.Empty);
+            Assert.That(result.Count, Is.Positive);
             Assert.That(collection.Count, Is.EqualTo(result.Count));
             Assert.That(source.RequestedCounts.Last(), Is.EqualTo(30));
             Assert.That(collection.HasMoreItems, Is.True);
@@ -226,7 +226,7 @@ namespace Eppie.App.UI.Tests.IncrementalLoading
 
             var result = await collection.LoadMoreItemsAsync(1).AsTask().ConfigureAwait(false);
 
-            Assert.That(result, Is.Empty);
+            Assert.That(result.Count, Is.Zero);
             Assert.That(observed, Is.Not.Null);
             Assert.That(observed, Is.TypeOf<ArgumentOutOfRangeException>());
         }
@@ -611,7 +611,7 @@ namespace Eppie.App.UI.Tests.IncrementalLoading
 
             // HasMoreItems returns false because the cancellation token is checked in the getter
             Assert.That(collection.HasMoreItems, Is.False);
-            Assert.That(result, Is.Empty);
+            Assert.That(result.Count, Is.Zero);
             Assert.That(source.LoadCalls, Is.Zero);
         }
 
