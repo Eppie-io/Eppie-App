@@ -186,3 +186,12 @@ jobs:
           $framework_option=$( if($framework) {"-property:TargetFramework=$framework"} else {""} )
 
           msbuild -target:Build -property:Configuration=$configuration $framework_option $extra_options $project
+
+      - name: Run tests via dotnet (${{ env.EPPIE_BUILD_CONFIGURATION }})
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $configuration='${{ env.EPPIE_BUILD_CONFIGURATION }}'
+
+          dotnet test --configuration $configuration --nologo --verbosity minimal src/Eppie.App/Tests/Eppie.App.ViewModels.Tests/Eppie.App.ViewModels.Tests.csproj
+          dotnet test --configuration $configuration --nologo --verbosity minimal src/Eppie.App/Tests/Eppie.App.UI.Tests/Eppie.App.UI.Tests.csproj
