@@ -193,5 +193,5 @@ jobs:
         run: |
           $configuration='${{ env.EPPIE_BUILD_CONFIGURATION }}'
 
-          dotnet test --configuration $configuration --nologo --verbosity minimal ./Tests/Eppie.App.ViewModels.Tests/Eppie.App.ViewModels.Tests.csproj
-          dotnet test --configuration $configuration --nologo --verbosity minimal ./Tests/Eppie.App.UI.Tests/Eppie.App.UI.Tests.csproj
+          dotnet test --configuration $configuration --nologo --verbosity minimal src/Eppie.App/Tests/Eppie.App.ViewModels.Tests/Eppie.App.ViewModels.Tests.csproj
+          dotnet test --configuration $configuration --nologo --verbosity minimal src/Eppie.App/Tests/Eppie.App.UI.Tests/Eppie.App.UI.Tests.csproj
