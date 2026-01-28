@@ -79,6 +79,7 @@ namespace Eppie.App
         public INavigationService NavigationService { get; private set; }
         public ITuviMail Core { get; private set; }
         public ILocalSettingsService LocalSettingsService { get; private set; }
+        public IPendingMailtoService PendingMailtoService { get; private set; }
         public AuthorizationProvider AuthProvider { get; private set; }
         private NotificationManager _notificationManager { get; set; }
         public IAIService AIService { get; private set; }
@@ -156,6 +157,12 @@ namespace Eppie.App
             CreateCore();
 
             CreateAIService();
+            CreatePendingMailtoService();
+        }
+
+        private void CreatePendingMailtoService()
+        {
+            PendingMailtoService = new Services.PendingMailtoService();
         }
 
         private void CreateAIService()

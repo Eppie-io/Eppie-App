@@ -61,15 +61,16 @@ namespace Eppie.App.Views
 
         private void DataContextChangedImpl()
         {
-            var app = Application.Current as Eppie.App.App;
+            var app = Application.Current as App;
 
             ViewModel = DataContext as TViewModel;
             ViewModel.SetCoreProvider(() => app.Core);
             ViewModel.SetAIServiceProvider(() => app.AIService);
             ViewModel.SetNavigationService(app.NavigationService);
+            ViewModel.SetPendingMailtoService(app.PendingMailtoService);
             ViewModel.SetLocalSettingsService(app.LocalSettingsService);
             ViewModel.SetLocalizationService(new LocalizationService(app.Host?.Services));
-            ViewModel.SetMessageService(new MessageService(() => Eppie.App.App.XamlRoot));
+            ViewModel.SetMessageService(new MessageService(() => App.XamlRoot));
             ViewModel.SetErrorHandler(new ErrorHandler());
             ViewModel.SetDispatcherService(new DispatcherService());
             ViewModel.SetBrandService(new BrandLoader());

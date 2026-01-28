@@ -28,6 +28,13 @@
       <uap:VisualElements DisplayName="Eppie" Description="Eppie App">
         <uap:DefaultTile/>
       </uap:VisualElements>
+      <Extensions>
+        <uap:Extension Category="windows.protocol">
+          <uap:Protocol Name="mailto">
+            <uap:DisplayName>Eppie mailto</uap:DisplayName>
+          </uap:Protocol>
+        </uap:Extension>
+      </Extensions>
     </Application>
   </Applications>
 

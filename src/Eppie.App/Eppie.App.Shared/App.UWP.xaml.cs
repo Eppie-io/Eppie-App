@@ -18,10 +18,10 @@
 
 #if WINDOWS_UWP
 
+using System;
 using Eppie.App.Authorization;
 using Eppie.App.Views;
 using Microsoft.Services.Store.Engagement;
-using System;
 using Tuvi.App.ViewModels;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -181,6 +181,10 @@ namespace Eppie.App
             if (args.Uri.Scheme == AuthConfig.UriScheme)
             {
                 ProtocolAuthenticationBroker.CompleteAuthentication(args.Uri);
+            }
+            else if (string.Equals(args.Uri.Scheme, Tuvi.App.ViewModels.Helpers.MailtoUriParser.MailtoScheme, StringComparison.OrdinalIgnoreCase))
+            {
+                PendingMailtoService?.SetPendingMailtoUri(args.Uri);
             }
         }
 

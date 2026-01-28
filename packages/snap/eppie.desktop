@@ -2,7 +2,8 @@
 Type=Application
 Name=Eppie
 Comment=Eppie
-Exec=eppie
+Exec=eppie %u
 Icon=${SNAP}/meta/gui/icon.png
 Terminal=false
 Categories=Network;Email;
+MimeType=x-scheme-handler/mailto;
