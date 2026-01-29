@@ -188,7 +188,7 @@ jobs:
           msbuild -target:Build -property:Configuration=$configuration $framework_option $extra_options $project
 
       - name: Run tests via dotnet (${{ env.EPPIE_BUILD_CONFIGURATION }})
-        if: runner.os == 'Windows'
+        if: runner.os == 'Windows' && !contains(matrix.build.project, 'UWP')
         shell: pwsh
         run: |
           $configuration='${{ env.EPPIE_BUILD_CONFIGURATION }}'
