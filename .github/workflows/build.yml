@@ -194,9 +194,10 @@ jobs:
           configuration='${{ env.EPPIE_BUILD_CONFIGURATION }}'
           extra_options='${{ matrix.test.extra }}'
           
-          # Override configuration if test config specifies one
+          # Override configuration with test configuration for non-manual runs
+          # For workflow_dispatch, keep the user-selected configuration from EPPIE_BUILD_CONFIGURATION
           test_configuration='${{ matrix.test.configuration }}'
-          if [ -n "$test_configuration" ]; then
+          if [[ '${{ github.event_name }}' != 'workflow_dispatch' && -n "$test_configuration" ]]; then
             configuration="$test_configuration"
           fi
           
