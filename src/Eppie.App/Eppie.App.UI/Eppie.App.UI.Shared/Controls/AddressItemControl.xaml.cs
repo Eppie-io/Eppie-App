@@ -92,7 +92,7 @@ namespace Eppie.App.UI.Controls
         }
 
         public static readonly DependencyProperty ExtraContentProperty =
-            DependencyProperty.Register(nameof(ExtraContent), typeof(UIElement), typeof(AdvancedSettingsControl), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(ExtraContent), typeof(UIElement), typeof(AddressItemControl), new PropertyMetadata(null));
 
 
         private bool _canInvoke;
