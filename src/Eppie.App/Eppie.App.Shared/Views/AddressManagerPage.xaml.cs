@@ -18,7 +18,6 @@
 
 using System;
 using Tuvi.App.ViewModels;
-using Tuvi.Core.Entities;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -92,12 +91,6 @@ namespace Eppie.App.Views
         public static Visibility GetImageVisibility(AddressGroupType type)
         {
             return GetGroupImage(type) is null ? Visibility.Collapsed : Visibility.Visible;
-        }
-
-        public static ImageSource GetAvatar(ImageInfo imageInfo)
-        {
-            // Todo: Implement image conversion logic
-            return null;
         }
     }
 }
