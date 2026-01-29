@@ -32,7 +32,13 @@
                                          Avatar="{x:Bind local:AddressManagerPage.GetAvatar(AvatarInfo), Mode=OneWay}"
                                          DisplayName="{x:Bind DisplayName, Mode=OneWay}"
                                          Invoked="OnItemInvoked"
-                                         Tag="{x:Bind}" />
+                                         Tag="{x:Bind}">
+                <FontIcon x:Name="ChevronRightIcon"
+                          Margin="4"
+                          VerticalAlignment="Center"
+                          FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                          Glyph="&#xE76C;" />
+            </controls:AddressItemControl>
         </DataTemplate>
 
         <DataTemplate x:Key="AddressGroupTemplate" x:DataType="viewmodels:AddressGroupItem">
