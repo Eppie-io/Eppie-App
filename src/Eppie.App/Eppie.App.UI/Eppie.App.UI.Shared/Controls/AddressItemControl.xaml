@@ -11,28 +11,29 @@
 
     <UserControl.Resources>
         <x:Double x:Key="ControlHeigth">32</x:Double>
-        <x:Double x:Key="PictureSize">32</x:Double>
+        <x:Double x:Key="PictureSize">28</x:Double>
         <CornerRadius x:Key="ControlCornerRadius">16</CornerRadius>
+        <Thickness x:Key="PictureMargin">1,1,12,1</Thickness>
         <Thickness x:Key="ElementMargin">0,0,12,0</Thickness>
     </UserControl.Resources>
 
     <Grid x:Name="RootGrid"
           Height="{StaticResource ControlHeigth}"
           Background="{ThemeResource ControlFillColorDefaultBrush}"
-          BorderBrush="{ThemeResource SolidBackgroundFillColorBaseAltBrush}"
+          BorderBrush="{ThemeResource ControlElevationBorderBrush}"
           BorderThickness="1"
           CornerRadius="{StaticResource ControlCornerRadius}"
           Tapped="OnRootGridTapped">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="10*" MaxWidth="144" />
+            <ColumnDefinition Width="10*" MaxWidth="{x:Bind NameColumnMaxWidth, Mode=OneWay}" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
         <muxc:PersonPicture Width="{StaticResource PictureSize}"
                             Height="{StaticResource PictureSize}"
-                            Margin="{StaticResource ElementMargin}"
+                            Margin="{StaticResource PictureMargin}"
                             DisplayName="{x:Bind DisplayName, Mode=OneWay}"
                             ProfilePicture="{x:Bind Avatar, Mode=OneWay}" />
         <TextBlock x:Name="DisplayNameTextBlock"
@@ -47,12 +48,10 @@
                    VerticalAlignment="Center"
                    Text="{x:Bind Address, Mode=OneWay}"
                    TextTrimming="CharacterEllipsis" />
-        <FontIcon x:Name="ChevronRightIcon"
-                  Grid.Column="3"
-                  Margin="4"
-                  VerticalAlignment="Center"
-                  FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                  Glyph="&#xE76C;" />
+        <ContentPresenter x:Name="ExtraContentPresenter"
+                          Grid.Column="3"
+                          VerticalAlignment="Center"
+                          Content="{x:Bind ExtraContent}" />
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="CommonStates">
@@ -60,14 +59,16 @@
                 <VisualState x:Name="PointerOver">
                     <VisualState.Setters>
                         <Setter Target="RootGrid.Background" Value="{ThemeResource ControlFillColorSecondaryBrush}" />
+                        <Setter Target="RootGrid.BorderBrush" Value="{ThemeResource ControlElevationBorderBrush}" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Pressed">
                     <VisualState.Setters>
                         <Setter Target="RootGrid.Background" Value="{ThemeResource ControlFillColorTertiaryBrush}" />
+                        <Setter Target="RootGrid.BorderBrush" Value="{ThemeResource ControlStrokeColorDefaultBrush}" />
                         <Setter Target="DisplayNameTextBlock.Foreground" Value="{ThemeResource TextFillColorTertiaryBrush}" />
                         <Setter Target="AddressTextBlock.Foreground" Value="{ThemeResource TextFillColorTertiaryBrush}" />
-                        <Setter Target="ChevronRightIcon.Foreground" Value="{ThemeResource TextFillColorTertiaryBrush}" />
+                        <Setter Target="ExtraContentPresenter.Foreground" Value="{ThemeResource TextFillColorTertiaryBrush}" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>

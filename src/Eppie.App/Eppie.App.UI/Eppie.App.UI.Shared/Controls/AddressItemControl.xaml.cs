@@ -26,18 +26,21 @@ using Windows.UI.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 #else
 using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Markup;
 using Microsoft.UI.Xaml.Media;
 #endif
 
 namespace Eppie.App.UI.Controls
 {
     [SuppressMessage("Design", "CA1010:Generic collections should implement generic interface", Justification = "ContentControl implements IEnumerable for XAML infrastructure")]
+    [ContentProperty(Name = nameof(ExtraContent))]
     public sealed partial class AddressItemControl : UserControl
     {
         public event EventHandler Invoked;
@@ -70,6 +73,26 @@ namespace Eppie.App.UI.Controls
 
         public static readonly DependencyProperty AvatarProperty =
             DependencyProperty.Register(nameof(Avatar), typeof(ImageSource), typeof(AddressItemControl), new PropertyMetadata(null));
+
+
+        public double NameColumnMaxWidth
+        {
+            get { return (double)GetValue(NameColumnMaxWidthProperty); }
+            set { SetValue(NameColumnMaxWidthProperty, value); }
+        }
+
+        public static readonly DependencyProperty NameColumnMaxWidthProperty =
+            DependencyProperty.Register(nameof(NameColumnMaxWidth), typeof(double), typeof(AddressItemControl), new PropertyMetadata(144.0));
+
+
+        public UIElement ExtraContent
+        {
+            get { return (UIElement)GetValue(ExtraContentProperty); }
+            set { SetValue(ExtraContentProperty, value); }
+        }
+
+        public static readonly DependencyProperty ExtraContentProperty =
+            DependencyProperty.Register(nameof(ExtraContent), typeof(UIElement), typeof(AddressItemControl), new PropertyMetadata(null));
 
 
         private bool _canInvoke;
@@ -108,7 +131,7 @@ namespace Eppie.App.UI.Controls
 
                     _canInvoke = e.Pointer.PointerDeviceType != PointerDeviceType.Mouse || properties?.IsLeftButtonPressed == true;
 
-                    if (_canInvoke)
+                    if (_canInvoke && Invoked != null)
                     {
                         VisualStateManager.GoToState(this, "Pressed", true);
                     }
