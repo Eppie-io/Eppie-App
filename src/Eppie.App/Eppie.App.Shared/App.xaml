@@ -11,6 +11,7 @@
 
                 <ResourceDictionary Source="ms-appx:///StaticResources/StaticStringResources.xaml" />
                 <ResourceDictionary Source="ms-appx:///StaticResources/StaticResources.xaml" />
+                <ResourceDictionary Source="ms-appx:///Eppie.App.UI/Styles/ThinButtonStyle.xaml" />
                 <ResourceDictionary Source="ms-appx:///Eppie.App.UI/Styles/TuviMailStyles.xaml" />
                 <ResourceDictionary Source="ms-appx:///Eppie.App.UI/Converters/ConvertersDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>

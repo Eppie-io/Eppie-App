@@ -72,8 +72,20 @@
             <!--  ToDo: Avatar="{x:Bind local:AddressManagerPage.GetAvatar(AvatarInfo), Mode=OneWay}"  -->
             <controls:AddressItemControl Address="{x:Bind Email.Address, Mode=OneWay}"
                                          DisplayName="{x:Bind DisplayName, Mode=OneWay}"
-                                         Invoked="OnRecipientRemoved"
-                                         Tag="{x:Bind}" />
+                                         NameColumnMaxWidth="72">
+                <Button Width="28"
+                        Height="28"
+                        Margin="2"
+                        Padding="0"
+                        Click="OnRecipientRemoved"
+                        Style="{StaticResource ThinButtonStyle}"
+                        Tag="{x:Bind}">
+                    <FontIcon HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              FontSize="16"
+                              Glyph="&#xE894;" />
+                </Button>
+            </controls:AddressItemControl>
         </DataTemplate>
 
     </local:InvitationPageBase.Resources>
