@@ -17,6 +17,15 @@
             "configuration": "release",
             "framework": "net9.0-desktop",
             "extra": "--verbosity=minimal --nologo"
+        },
+        "test": {
+            "tool": "dotnet",
+            "projects": [
+                "./src/Eppie.App/Tests/Eppie.App.ViewModels.Tests/Eppie.App.ViewModels.Tests.csproj",
+                "./src/Eppie.App/Tests/Eppie.App.UI.Tests/Eppie.App.UI.Tests.csproj"
+            ],
+            "configuration": "release",
+            "extra": "--nologo --verbosity=minimal"
         }
     },
     {
@@ -78,6 +87,15 @@
             "configuration": "release",
             "framework": "net9.0-browserwasm",
             "extra": "--verbosity=minimal --nologo"
+        },
+        "test": {
+            "tool": "dotnet",
+            "projects": [
+                "./src/Eppie.App/Tests/Eppie.App.ViewModels.Tests/Eppie.App.ViewModels.Tests.csproj",
+                "./src/Eppie.App/Tests/Eppie.App.UI.Tests/Eppie.App.UI.Tests.csproj"
+            ],
+            "configuration": "release",
+            "extra": "--nologo --verbosity=minimal"
         }
     },
     {
@@ -144,6 +162,15 @@
             "configuration": "release",
             "framework": "net9.0-windows10.0.19041",
             "extra": "-verbosity:minimal -consoleLoggerParameters:Summary -maxCpuCount"
+        },
+        "test": {
+            "tool": "dotnet",
+            "projects": [
+                "./src/Eppie.App/Tests/Eppie.App.ViewModels.Tests/Eppie.App.ViewModels.Tests.csproj",
+                "./src/Eppie.App/Tests/Eppie.App.UI.Tests/Eppie.App.UI.Tests.csproj"
+            ],
+            "configuration": "release",
+            "extra": "--nologo --verbosity=minimal"
         }
     },
 
@@ -187,6 +214,15 @@
             "configuration": "release",
             "framework": "net9.0-android",
             "extra": "--verbosity=minimal --nologo"
+        },
+        "test": {
+            "tool": "dotnet",
+            "projects": [
+                "./src/Eppie.App/Tests/Eppie.App.ViewModels.Tests/Eppie.App.ViewModels.Tests.csproj",
+                "./src/Eppie.App/Tests/Eppie.App.UI.Tests/Eppie.App.UI.Tests.csproj"
+            ],
+            "configuration": "release",
+            "extra": "--nologo --verbosity=minimal"
         }
     },
     {
@@ -268,6 +304,15 @@
             "project": "./src/Eppie.App/Eppie.App.sln",
             "configuration": "debug",
             "extra": "-restore:True -verbosity:minimal -consoleLoggerParameters:Summary -maxCpuCount"
+        },
+        "test": {
+            "tool": "dotnet",
+            "projects": [
+                "./src/Eppie.App/Tests/Eppie.App.ViewModels.Tests/Eppie.App.ViewModels.Tests.csproj",
+                "./src/Eppie.App/Tests/Eppie.App.UI.Tests/Eppie.App.UI.Tests.csproj"
+            ],
+            "configuration": "debug",
+            "extra": "--nologo --verbosity=minimal"
         }
     }
 ]
