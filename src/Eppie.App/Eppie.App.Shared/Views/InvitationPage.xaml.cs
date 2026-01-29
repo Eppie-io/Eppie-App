@@ -51,7 +51,7 @@ namespace Eppie.App.Views
         { }
 
 
-        private void OnRecipientRemoved(object sender, EventArgs e)
+        private void OnRecipientRemoved(object sender, RoutedEventArgs e)
         {
             if (sender is FrameworkElement element && element.Tag is ContactItem item)
             {
