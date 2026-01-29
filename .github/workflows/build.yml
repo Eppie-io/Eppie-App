@@ -187,7 +187,7 @@ jobs:
 
           msbuild -target:Build -property:Configuration=$configuration $framework_option $extra_options $project
 
-      - name: Run tests via dotnet (${{ env.EPPIE_BUILD_CONFIGURATION }})
+      - name: Run tests via dotnet
         if: matrix.test.tool == 'dotnet' && matrix.test.projects
         shell: bash
         run: |
