@@ -20,15 +20,16 @@ using System;
 using Eppie.App.UI.Controls;
 using Tuvi.App.ViewModels;
 
-
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
 #else
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Media;
 #endif
 
 namespace Eppie.App.Views
@@ -72,6 +73,62 @@ namespace Eppie.App.Views
             ViewModel?.OnContactQuerySubmitted(args.ChosenSuggestion as ContactItem, args.QueryText);
             ViewModel?.OnContactQueryChanged(string.Empty);
             sender.Text = string.Empty;
+        }
+
+        private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender is ComboBox combobox && combobox.SelectedItem is CreateEppieAddressItem)
+            {
+                ViewModel?.OnCreateEppieAddress();
+            }
+        }
+    }
+
+    public class EppieAddressesDataTemplateSelector : DataTemplateSelector
+    {
+        public DataTemplate DropDownTemplate { get; set; }
+        public DataTemplate SelectedTemplate { get; set; }
+        public DataTemplate CreateAddressTemplate { get; set; }
+
+        protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
+        {
+            if (item is CreateEppieAddressItem) return CreateAddressTemplate;
+
+            if (item is AddressItem)
+            {
+                if (IsDropDownItem(container))
+                {
+                    return DropDownTemplate;
+                }
+                else
+                {
+                    if (item is AddressItem) return SelectedTemplate;
+                }
+            }
+
+            return base.SelectTemplateCore(item, container);
+        }
+
+        private static bool IsDropDownItem(DependencyObject container)
+        {
+            var current = container;
+
+            while (current != null)
+            {
+                if (current is ComboBoxItem)
+                {
+                    return true;
+                }
+
+                if (current is ComboBox)
+                {
+                    return false;
+                }
+
+                current = VisualTreeHelper.GetParent(current);
+            }
+
+            return false;
         }
     }
 }

@@ -26,12 +26,16 @@ using Tuvi.Core.Entities;
 
 namespace Tuvi.App.ViewModels
 {
+
+    public class CreateEppieAddressItem
+    { }
+
     public class InvitationPageViewModel : BaseViewModel
     {
         public ObservableCollection<ContactItem> Recipients { get; } = new ObservableCollection<ContactItem>();
         public ManagedCollection<ContactItem> SuitableContacts { get; } = new ManagedCollection<ContactItem>();
         public ObservableCollection<AddressItem> SenderAddresses { get; } = new ObservableCollection<AddressItem>();
-        public ObservableCollection<AddressItem> EppieAddresses { get; } = new ObservableCollection<AddressItem>();
+        public ObservableCollection<object> EppieAddresses { get; } = new ObservableCollection<object>();
 
         private readonly ObservableCollection<ContactItem> _allContacts = new ObservableCollection<ContactItem>();
 
@@ -67,9 +71,10 @@ namespace Tuvi.App.ViewModels
         }
 
         public bool IsAnyRecipient => Recipients.Count > 0;
-        public bool CanInvite => IsAnyRecipient && SenderAddressIndex != -1 && EppieAddressIndex != -1;
+        public bool CanInvite => IsAnyRecipient && SenderAddressIndex != -1 && EppieAddressIndex != -1 && EppieAddresses[EppieAddressIndex] is AddressItem;
 
         public IRelayCommand SendInviteCommand { get; }
+        public IRelayCommand PreviewCommand { get; }
         public Action ClosePopupAction { get; set; }
 
         public InvitationPageViewModel() : base()
@@ -126,6 +131,7 @@ namespace Tuvi.App.ViewModels
             {
                 EppieAddresses.Add(new AddressItem(account));
             }
+            EppieAddresses.Add(new CreateEppieAddressItem());
 
             var requestedAccountId = contactItem?.LastMessageData?.AccountId;
             if (requestedAccountId.HasValue)
@@ -199,6 +205,17 @@ namespace Tuvi.App.ViewModels
             UpdateSuitableContacts(queryText);
         }
 
+        public void OnCreateEppieAddress()
+        {
+            // ToDo: implement
+            // 1) Create new Eppie address,
+            // 2) Add new item to EppieAddresses
+            // 3) Select it
+
+            // Test code remove it:
+            EppieAddressIndex = -1;
+        }
+
         private void UpdateSuitableContacts(string queryText)
         {
             var query = (queryText ?? string.Empty).Trim();
@@ -257,16 +274,23 @@ namespace Tuvi.App.ViewModels
 
         private void SendInvite()
         {
-            var sender = SenderAddresses[SenderAddressIndex].Account.Email;
-            var senderName = SenderAddresses[SenderAddressIndex].DisplayName;
-            var eppieAddressString = EppieAddresses[EppieAddressIndex].Account.Email.DisplayAddress;
-            var downloadLink = BrandService.GetHomepage();
-            var subject = string.Format(System.Globalization.CultureInfo.InvariantCulture, GetLocalizedString("InvitationSubjectText"), senderName);
-            var body = string.Format(System.Globalization.CultureInfo.InvariantCulture, GetLocalizedString("InvitationBodyText"), senderName, eppieAddressString, downloadLink);
+            if (EppieAddresses[EppieAddressIndex] is AddressItem eppieAddressItem)
+            {
+                var sender = SenderAddresses[SenderAddressIndex].Account.Email;
+                var senderName = SenderAddresses[SenderAddressIndex].DisplayName;
+                var eppieAddressString = eppieAddressItem.Account.Email.DisplayAddress;
+                var downloadLink = BrandService.GetHomepage();
+                var subject = string.Format(System.Globalization.CultureInfo.InvariantCulture, GetLocalizedString("InvitationSubjectText"), senderName);
+                var body = string.Format(System.Globalization.CultureInfo.InvariantCulture, GetLocalizedString("InvitationBodyText"), senderName, eppieAddressString, downloadLink);
 
-            _ = SendEmailsAsync(Core, sender, Recipients.ToList(), subject, body);
+                _ = SendEmailsAsync(Core, sender, Recipients.ToList(), subject, body);
 
-            ClosePopupAction?.Invoke();
+                ClosePopupAction?.Invoke();
+            }
+            else
+            {
+                // Todo : error
+            }
         }
 
         private static async Task SendEmailsAsync(Core.ITuviMail core, EmailAddress sender, List<ContactItem> recipients, string subject, string body)

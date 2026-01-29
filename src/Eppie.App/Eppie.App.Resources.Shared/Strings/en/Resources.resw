@@ -1585,7 +1585,7 @@ Subject: {3}
     <value>Pick contacts to share your Eppie address and start a secure, peer-to-peer conversation from the very first message.</value>
     <comment>Invitation page note text</comment>
   </data>
-  <data name="InvitationSenderAddressComboBox.Header" xml:space="preserve">
+  <data name="InvitationSenderAddressComboBoxHeader.Text" xml:space="preserve">
     <value>From:</value>
     <comment>The header of the combobox containing the sender addresses</comment>
   </data>
@@ -1601,9 +1601,21 @@ Subject: {3}
     <value>Insert your Eppie address</value>
     <comment>The header of the combobox containing the eppie addresses</comment>
   </data>
+  <data name="InvitationEppieAddressComboBox.PlaceholderText" xml:space="preserve">
+    <value>Select Address</value>
+    <comment>Placeholder text for the combobox containing Eppie addresses</comment>
+  </data>
   <data name="SendInviteButton.Content" xml:space="preserve">
     <value>Send invite</value>
     <comment>The text of the Send Invite button on the invitation page</comment>
+  </data>
+  <data name="PreviewButton.Content" xml:space="preserve">
+    <value>Preview</value>
+    <comment>The text of the Preview button on the invitation page</comment>
+  </data>
+  <data name="CreateNewEppieAddressItem.Text" xml:space="preserve">
+    <value>Create a new address</value>
+    <comment>The text of the item that creates a new Eppie address on the invitation page</comment>
   </data>
   <data name="InvitationSubjectText" xml:space="preserve">
     <value>{0} invited you to Eppie</value>
