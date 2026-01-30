@@ -304,7 +304,7 @@ namespace Eppie.App.Views
 
         private void NewFolder(MailBoxItem mailBoxItem)
         {
-            if (mailBoxItem == null || !mailBoxItem.IsRootItem)
+            if (mailBoxItem is null || !mailBoxItem.IsRootItem)
             {
                 return;
             }
@@ -328,7 +328,7 @@ namespace Eppie.App.Views
 
         private async void OpenMailboxSettings(MailBoxItem mailBoxItem)
         {
-            if (mailBoxItem == null || !mailBoxItem.IsRootItem)
+            if (mailBoxItem is null || !mailBoxItem.IsRootItem)
             {
                 return;
             }
@@ -349,7 +349,7 @@ namespace Eppie.App.Views
 
         private async void RemoveMailbox(MailBoxItem mailBoxItem)
         {
-            if (mailBoxItem == null || !mailBoxItem.IsRootItem)
+            if (mailBoxItem is null || !mailBoxItem.IsRootItem)
             {
                 return;
             }
@@ -360,7 +360,6 @@ namespace Eppie.App.Views
                 if (account != null)
                 {
                     await ViewModel.RemoveAccountAsync(account).ConfigureAwait(true);
-                    // TODO: Refresh the mailbox list
                 }
             }
             catch (Exception ex)
@@ -371,7 +370,7 @@ namespace Eppie.App.Views
 
         private void RenameFolder(MailBoxItem mailBoxItem)
         {
-            if (mailBoxItem == null || mailBoxItem.IsRootItem || mailBoxItem.Folder == null)
+            if (mailBoxItem is null || mailBoxItem.IsRootItem || mailBoxItem.Folder is null)
             {
                 return;
             }
@@ -395,7 +394,7 @@ namespace Eppie.App.Views
 
         private async void DeleteFolder(MailBoxItem mailBoxItem)
         {
-            if (mailBoxItem == null || mailBoxItem.IsRootItem || mailBoxItem.Folder == null)
+            if (mailBoxItem is null || mailBoxItem.IsRootItem || mailBoxItem.Folder is null)
             {
                 return;
             }
