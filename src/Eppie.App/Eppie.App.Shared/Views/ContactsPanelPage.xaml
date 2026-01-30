@@ -51,6 +51,7 @@
             <sharedControls:ContactsListControl Grid.Row="2"
                                                 Margin="0,4,0,0"
                                                 ChangeContactAvatarCommand="{x:Bind ViewModel.ChangeContactAvatarCommand, Mode=OneWay}"
+                                                ComposeEmailCommand="{x:Bind ViewModel.ComposeEmailCommand, Mode=OneWay}"
                                                 ContactClickCommand="{x:Bind ViewModel.ContactClickCommand, Mode=OneWay}"
                                                 Contacts="{x:Bind ViewModel.Contacts, Mode=OneWay}"
                                                 InviteContactCommand="{x:Bind ViewModel.InviteContactCommand, Mode=OneWay}"

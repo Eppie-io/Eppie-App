@@ -22,6 +22,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using Eppie.App.ViewModels.Tests.TestDoubles;
 using NUnit.Framework;
 using Tuvi.App.ViewModels;
+using Tuvi.App.ViewModels.Common;
 using Tuvi.App.ViewModels.Messages;
 using Tuvi.Core.Entities;
 
@@ -631,6 +632,88 @@ namespace Eppie.App.ViewModels.Tests
 
                 await SpinWaitAsync(() => errors.Errors.Count > 0, failMessage: "Expected error handler to be invoked after dispatcher exception.").ConfigureAwait(false);
                 Assert.That(errors.Errors.Last(), Is.TypeOf<InvalidOperationException>());
+            }
+        }
+
+        [Test]
+        public void ComposeEmailCommandNullArgumentThrowsArgumentNullException()
+        {
+            var (vm, _, _, _, _) = CreateVm();
+            using (vm)
+            {
+                Assert.That(async () => await ((AsyncRelayCommand<ContactItem>)vm.ComposeEmailCommand).ExecuteAsync(null).ConfigureAwait(false), Throws.InstanceOf<ArgumentNullException>());
+            }
+        }
+
+        [Test]
+        public async Task ComposeEmailCommandNavigatesToNewMessagePageWithCorrectData()
+        {
+            var contact = CreateContact("user@site.com", "Test User");
+            var (vm, _, _, _, _) = CreateVm(new[] { contact });
+            using (vm)
+            {
+                var navService = new TestNavigationService();
+                vm.SetNavigationService(navService);
+
+                var contactItem = new ContactItem(contact);
+                await ((AsyncRelayCommand<ContactItem>)vm.ComposeEmailCommand).ExecuteAsync(contactItem).ConfigureAwait(false);
+
+                Assert.That(navService.LastNavigatedPage, Is.EqualTo(nameof(NewMessagePageViewModel)));
+                Assert.That(navService.LastNavigationData, Is.Not.Null);
+                Assert.That(navService.LastNavigationData, Is.TypeOf<SelectedContactNewMessageData>());
+
+                var messageData = (SelectedContactNewMessageData)navService.LastNavigationData!;
+                Assert.That(messageData.From.Address, Is.EqualTo("acc@local"));
+                Assert.That(messageData.To, Is.EqualTo("user@site.com"));
+            }
+        }
+
+        [Test]
+        public async Task ComposeEmailCommandWithNoAccountsShowsAddAccountMessage()
+        {
+            var contact = CreateContact("user@site.com", "Test User");
+            var (vm, _, _, _, _) = CreateVm(new[] { contact });
+            using (vm)
+            {
+                var navService = new TestNavigationService();
+                vm.SetNavigationService(navService);
+
+                var messageService = new TestMessageService();
+                vm.SetMessageService(messageService);
+
+                // Create a ContactItem using the EmailAddress constructor
+                var contactItem = new ContactItem(new EmailAddress("test@example.com", "Test Contact"));
+
+                await ((AsyncRelayCommand<ContactItem>)vm.ComposeEmailCommand).ExecuteAsync(contactItem).ConfigureAwait(false);
+
+                // Should not navigate when no accounts are available
+                Assert.That(navService.LastNavigatedPage, Is.Null);
+                Assert.That(messageService.ShowAddAccountMessageCalled, Is.True);
+            }
+        }
+
+        [Test]
+        public async Task ComposeEmailCommandWithNullEmailReportsError()
+        {
+            var contact = CreateContact("user@site.com", "Test User");
+            var (vm, _, _, _, errors) = CreateVm(new[] { contact });
+            using (vm)
+            {
+                var navService = new TestNavigationService();
+                vm.SetNavigationService(navService);
+
+                // Create a ContactItem with parameterless constructor, which leaves Email null
+                var contactItem = new ContactItem();
+
+                await ((AsyncRelayCommand<ContactItem>)vm.ComposeEmailCommand).ExecuteAsync(contactItem).ConfigureAwait(false);
+
+                // Should not navigate when email is null
+                Assert.That(navService.LastNavigatedPage, Is.Null);
+
+                // Should report error
+                Assert.That(errors.Errors.Count, Is.EqualTo(1));
+                Assert.That(errors.Errors[0], Is.TypeOf<InvalidOperationException>());
+                Assert.That(errors.Errors[0].Message, Is.EqualTo("Selected contact does not have an email address."));
             }
         }
 
