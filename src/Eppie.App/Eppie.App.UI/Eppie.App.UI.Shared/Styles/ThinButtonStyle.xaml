@@ -2,6 +2,10 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="using:Microsoft.UI.Xaml.Controls">
 
+    <ResourceDictionary.MergedDictionaries>
+        <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
+    </ResourceDictionary.MergedDictionaries>
+
     <ResourceDictionary.ThemeDictionaries>
         <ResourceDictionary x:Key="Default">
             <StaticResource x:Key="ThinButtonBackground" ResourceKey="SubtleFillColorTransparentBrush" />
@@ -48,7 +52,7 @@
     </ResourceDictionary.ThemeDictionaries>
 
     <!--
-        Note: This is a copy of the SubtleButtonStyle
+        Note: This is a copy of the `SubtleButtonStyle` style which is currently not supported by the UWP and Uno platforms
         https://github.com/microsoft/microsoft-ui-xaml/blob/main/src/controls/dev/CommonStyles/Button_themeresources.xaml#L297
     -->
     <Style x:Key="ThinButtonStyle" TargetType="Button">
