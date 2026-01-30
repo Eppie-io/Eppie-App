@@ -859,6 +859,21 @@ namespace Tuvi.App.ViewModels
             return !accounts.Any();
         }
 
+        public async Task<Account> GetAccountAsync(EmailAddress email)
+        {
+            return await Core.GetAccountAsync(email).ConfigureAwait(true);
+        }
+
+        public void OpenMailboxSettings(Account account)
+        {
+            NavigateToMailboxSettingsPage(account, isReloginNeeded: false);
+        }
+
+        public async Task RemoveAccountAsync(Account account)
+        {
+            await Core.DeleteAccountAsync(account).ConfigureAwait(true);
+        }
+
         private void LogEnabledWarning()
         {
             var title = GetLocalizedString("LogEnabledWarningTitle");
