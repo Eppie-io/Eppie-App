@@ -178,7 +178,6 @@ namespace Tuvi.App.ViewModels
 
             try
             {
-                // Check if contact has an email address
                 if (contactItem.Email is null)
                 {
                     OnError(new InvalidOperationException("Selected contact does not have an email address."));
@@ -187,14 +186,12 @@ namespace Tuvi.App.ViewModels
 
                 EmailAddress fromEmail;
 
-                // Try to get the account email from LastMessageData
                 if (contactItem.LastMessageData?.AccountEmail != null)
                 {
                     fromEmail = contactItem.LastMessageData.AccountEmail;
                 }
                 else
                 {
-                    // If LastMessageData or AccountEmail is null, use the first available account
                     var accounts = await Core.GetCompositeAccountsAsync().ConfigureAwait(true);
                     if (accounts.Count > 0)
                     {
@@ -202,7 +199,6 @@ namespace Tuvi.App.ViewModels
                     }
                     else
                     {
-                        // No accounts available - show message to user
                         await MessageService.ShowAddAccountMessageAsync().ConfigureAwait(true);
                         return;
                     }
