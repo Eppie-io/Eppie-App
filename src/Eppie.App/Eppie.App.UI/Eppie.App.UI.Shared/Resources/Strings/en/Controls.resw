@@ -475,4 +475,24 @@
     <value>Choose how to handle external content (images, stylesheets) in email messages.</value>
     <comment>Note for the external content policy setting in account settings</comment>
   </data>
+  <data name="NewFolderMenuItem.Text" xml:space="preserve">
+    <value>New folder</value>
+    <comment>The text of context menu item that creates a new folder in mailbox</comment>
+  </data>
+  <data name="MailboxSettingsMenuItem.Text" xml:space="preserve">
+    <value>Settings</value>
+    <comment>The text of context menu item that opens mailbox settings</comment>
+  </data>
+  <data name="RemoveMailboxMenuItem.Text" xml:space="preserve">
+    <value>Remove</value>
+    <comment>The text of context menu item that removes mailbox from the app</comment>
+  </data>
+  <data name="RenameFolderMenuItem.Text" xml:space="preserve">
+    <value>Rename</value>
+    <comment>The text of context menu item that renames a folder</comment>
+  </data>
+  <data name="DeleteFolderMenuItem.Text" xml:space="preserve">
+    <value>Delete</value>
+    <comment>The text of context menu item that deletes a folder</comment>
+  </data>
 </root>

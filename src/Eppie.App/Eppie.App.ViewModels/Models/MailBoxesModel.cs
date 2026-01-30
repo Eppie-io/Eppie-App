@@ -58,6 +58,41 @@ namespace Tuvi.App.ViewModels
             set { SetProperty(ref _itemDropCommand, value); }
         }
 
+        private ICommand _newFolderCommand;
+        public ICommand NewFolderCommand
+        {
+            get { return _newFolderCommand; }
+            set { SetProperty(ref _newFolderCommand, value); }
+        }
+
+        private ICommand _mailboxSettingsCommand;
+        public ICommand MailboxSettingsCommand
+        {
+            get { return _mailboxSettingsCommand; }
+            set { SetProperty(ref _mailboxSettingsCommand, value); }
+        }
+
+        private ICommand _removeMailboxCommand;
+        public ICommand RemoveMailboxCommand
+        {
+            get { return _removeMailboxCommand; }
+            set { SetProperty(ref _removeMailboxCommand, value); }
+        }
+
+        private ICommand _renameFolderCommand;
+        public ICommand RenameFolderCommand
+        {
+            get { return _renameFolderCommand; }
+            set { SetProperty(ref _renameFolderCommand, value); }
+        }
+
+        private ICommand _deleteFolderCommand;
+        public ICommand DeleteFolderCommand
+        {
+            get { return _deleteFolderCommand; }
+            set { SetProperty(ref _deleteFolderCommand, value); }
+        }
+
 
         public MailBoxesModel(ICommand itemClickCommand, ICommand itemDropCommand)
         {
