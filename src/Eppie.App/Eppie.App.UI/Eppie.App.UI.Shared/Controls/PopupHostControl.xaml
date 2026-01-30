@@ -17,9 +17,6 @@
 
     <Grid Margin="-24">
         <Frame x:Name="PopupHostFrame" />
-        <!--
-            ToDo: Here we can try using 'Style="{StaticResource SubtleButtonStyle}"' after adding it to the Uno Platform
-        -->
         <Button x:Name="CloseButton"
                 Width="{StaticResource CloseButtonSize}"
                 Height="{StaticResource CloseButtonSize}"
