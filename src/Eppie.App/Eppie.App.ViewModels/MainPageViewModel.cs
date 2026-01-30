@@ -639,6 +639,7 @@ namespace Tuvi.App.ViewModels
             Core.MessagesIsReadChanged += OnMessagesIsReadChanged;
             Core.AccountAdded += OnAccountAdded;
             Core.AccountUpdated += OnAccountUpdated;
+            Core.AccountDeleted += OnAccountDeleted;
 
             LocalSettingsService.SettingChanged += LocalSettingsService_SettingChanged;
 
@@ -656,6 +657,7 @@ namespace Tuvi.App.ViewModels
             Core.MessagesIsReadChanged -= OnMessagesIsReadChanged;
             Core.AccountAdded -= OnAccountAdded;
             Core.AccountUpdated -= OnAccountUpdated;
+            Core.AccountDeleted -= OnAccountDeleted;
 
             LocalSettingsService.SettingChanged -= LocalSettingsService_SettingChanged;
 
@@ -751,6 +753,11 @@ namespace Tuvi.App.ViewModels
         }
 
         private void OnAccountUpdated(object sender, AccountEventArgs e)
+        {
+            UpdateAccountsList();
+        }
+
+        private void OnAccountDeleted(object sender, AccountEventArgs e)
         {
             UpdateAccountsList();
         }

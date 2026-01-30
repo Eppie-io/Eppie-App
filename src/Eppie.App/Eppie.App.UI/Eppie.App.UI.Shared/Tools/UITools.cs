@@ -272,18 +272,18 @@ namespace Eppie.App.UI.Common
             }
         }
 
-        public static async Task ShowRenameContactDialogAsync(
+        public static async Task ShowTextInputDialogAsync(
              string title,
              string primaryButtonText,
              string closeButtonText,
              string textBoxHeader,
              string initialText,
              XamlRoot root,
-             Action<string> onRename)
+             Action<string> onApply)
         {
-            if (onRename is null)
+            if (onApply is null)
             {
-                throw new ArgumentNullException(nameof(onRename));
+                throw new ArgumentNullException(nameof(onApply));
             }
 
             await _mutex.WaitAsync().ConfigureAwait(true);
@@ -307,8 +307,7 @@ namespace Eppie.App.UI.Common
                 {
                     if (e.Key == Windows.System.VirtualKey.Enter)
                     {
-                        onRename(textBox.Text);
-                        dialog.Hide();
+                        HandleApplyAndCloseDialog(onApply, dialog, textBox);
                     }
                     else if (e.Key == Windows.System.VirtualKey.Escape)
                     {
@@ -318,7 +317,7 @@ namespace Eppie.App.UI.Common
 
                 dialog.PrimaryButtonClick += (s, e) =>
                 {
-                    onRename(textBox.Text);
+                    HandleApplyAndCloseDialog(onApply, dialog, textBox);
                 };
 
                 await dialog.ShowAsync();
@@ -326,6 +325,18 @@ namespace Eppie.App.UI.Common
             finally
             {
                 _mutex.Release();
+            }
+
+            void HandleApplyAndCloseDialog(Action<string> action, ContentDialog dialog, TextBox textBox)
+            {
+                try
+                {
+                    action(textBox.Text);
+                }
+                finally
+                {
+                    dialog.Hide();
+                }
             }
         }
     }

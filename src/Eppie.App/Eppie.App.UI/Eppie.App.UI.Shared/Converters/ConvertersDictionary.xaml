@@ -7,10 +7,6 @@
                                           FalseValue="Visible"
                                           TrueValue="Collapsed" />
 
-    <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"
-                                          FalseValue="Collapsed"
-                                          TrueValue="Visible" />
-
     <converters:BoolConverter x:Key="InverseBoolConverter"
                               FalseValue="True"
                               TrueValue="False" />

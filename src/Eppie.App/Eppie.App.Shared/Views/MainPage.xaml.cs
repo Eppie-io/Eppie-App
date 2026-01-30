@@ -302,17 +302,15 @@ namespace Eppie.App.Views
             contentFrame.Navigate(typeof(ContactMessagesPage), new ContactMessagesPageViewModel.NavigationData() { ContactItem = message.Value, ErrorHandler = this });
         }
 
-        private async void NewFolder(MailBoxItem mailBoxItem)
+        private void NewFolder(MailBoxItem mailBoxItem)
         {
             if (mailBoxItem == null || !mailBoxItem.IsRootItem)
             {
                 return;
             }
 
-            var stringProvider = Eppie.App.UI.Resources.StringProvider.GetInstance();
-            // Note: Reusing ShowRenameContactDialogAsync for generic text input
-            // Consider creating ShowTextInputDialogAsync for better clarity
-            await UITools.ShowRenameContactDialogAsync(
+            var stringProvider = UI.Resources.StringProvider.GetInstance();
+            _ = UITools.ShowTextInputDialogAsync(
                 stringProvider.GetString("NewFolderDialogTitle"),
                 stringProvider.GetString("NewFolderDialogPrimaryButtonText"),
                 stringProvider.GetString("NewFolderDialogCloseButtonText"),
@@ -323,18 +321,7 @@ namespace Eppie.App.Views
                 {
                     if (!string.IsNullOrWhiteSpace(folderName))
                     {
-                        // TODO: Implement folder creation
-                        // This callback is synchronous. The async Core API call should be
-                        // invoked in a fire-and-forget manner or by refactoring the dialog
-                        // to support async callbacks. Example:
-                        // _ = Task.Run(async () => {
-                        //     try {
-                        //         await ViewModel.Core.CreateFolderAsync(mailBoxItem.Email, folderName).ConfigureAwait(false);
-                        //     }
-                        //     catch (Exception ex) {
-                        //         await DispatcherQueue.EnqueueAsync(() => OnError(ex));
-                        //     }
-                        // });
+                        throw new NotImplementedException();
                     }
                 });
         }
@@ -373,7 +360,7 @@ namespace Eppie.App.Views
                 if (account != null)
                 {
                     await ViewModel.RemoveAccountAsync(account).ConfigureAwait(true);
-                    // Refresh the mailbox list will happen automatically via events
+                    // TODO: Refresh the mailbox list
                 }
             }
             catch (Exception ex)
@@ -382,17 +369,15 @@ namespace Eppie.App.Views
             }
         }
 
-        private async void RenameFolder(MailBoxItem mailBoxItem)
+        private void RenameFolder(MailBoxItem mailBoxItem)
         {
             if (mailBoxItem == null || mailBoxItem.IsRootItem || mailBoxItem.Folder == null)
             {
                 return;
             }
 
-            var stringProvider = Eppie.App.UI.Resources.StringProvider.GetInstance();
-            // Note: Reusing ShowRenameContactDialogAsync for generic text input
-            // Consider creating ShowTextInputDialogAsync for better clarity
-            await UITools.ShowRenameContactDialogAsync(
+            var stringProvider = UI.Resources.StringProvider.GetInstance();
+            _ = UITools.ShowTextInputDialogAsync(
                 stringProvider.GetString("RenameFolderDialogTitle"),
                 stringProvider.GetString("RenameFolderDialogPrimaryButtonText"),
                 stringProvider.GetString("RenameFolderDialogCloseButtonText"),
@@ -403,18 +388,7 @@ namespace Eppie.App.Views
                 {
                     if (!string.IsNullOrWhiteSpace(newFolderName) && newFolderName != mailBoxItem.Text)
                     {
-                        // TODO: Implement folder renaming
-                        // This callback is synchronous. The async Core API call should be
-                        // invoked in a fire-and-forget manner or by refactoring the dialog
-                        // to support async callbacks. Example:
-                        // _ = Task.Run(async () => {
-                        //     try {
-                        //         await ViewModel.Core.RenameFolderAsync(mailBoxItem.Folder, newFolderName).ConfigureAwait(false);
-                        //     }
-                        //     catch (Exception ex) {
-                        //         await DispatcherQueue.EnqueueAsync(() => OnError(ex));
-                        //     }
-                        // });
+                        throw new NotImplementedException();
                     }
                 });
         }
@@ -428,9 +402,7 @@ namespace Eppie.App.Views
 
             try
             {
-                // TODO: Implement folder deletion
-                // Call Core API when available:
-                // await ViewModel.Core.DeleteFolderAsync(mailBoxItem.Folder).ConfigureAwait(true);
+                throw new NotImplementedException();
             }
             catch (Exception ex)
             {
