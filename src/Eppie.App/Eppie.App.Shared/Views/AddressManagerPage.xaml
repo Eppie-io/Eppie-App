@@ -29,7 +29,7 @@
 
         <DataTemplate x:Key="AddressTemplate" x:DataType="viewmodels:AddressItem">
             <controls:AddressItemControl Address="{x:Bind Address, Mode=OneWay}"
-                                         Avatar="{x:Bind local:AddressManagerPage.GetAvatar(AvatarInfo), Mode=OneWay}"
+                                         Avatar="{x:Bind AvatarInfo, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}"
                                          DisplayName="{x:Bind DisplayName, Mode=OneWay}"
                                          Invoked="OnItemInvoked"
                                          Tag="{x:Bind}">
