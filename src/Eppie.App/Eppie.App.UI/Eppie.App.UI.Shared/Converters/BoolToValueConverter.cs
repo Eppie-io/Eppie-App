@@ -61,14 +61,7 @@ namespace Tuvi.App.Converters
     public class BoolToDoubleConverter : BoolToValueConverter<double> { }
     public class BoolToIntConverter : BoolToValueConverter<int> { }
     public class BoolConverter : BoolToValueConverter<bool> { }
-    public class BoolToFontWeightConverter : BoolToValueConverter<FontWeight>
-    {
-        public BoolToFontWeightConverter()
-        {
-            TrueValue = FontWeights.ExtraBold;
-            FalseValue = FontWeights.Normal;
-        }
-    }
+    public class BoolToFontWeightConverter : BoolToValueConverter<FontWeight> { }
     public class BoolToHorizontalAlignConverter : BoolToValueConverter<HorizontalAlignment> { }
     public class BoolToThicknessConverter : BoolToValueConverter<Thickness> { }
     public class BoolToStyleConverter : BoolToValueConverter<Style> { }
