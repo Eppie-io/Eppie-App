@@ -350,20 +350,20 @@ namespace Eppie.App.ViewModels.Tests
         [Test]
         public void CanInviteFalseWhenMissingParts()
         {
-            // no recipients
             _vm.SenderAddressIndex = -1;
             _vm.EppieAddressIndex = -1;
             Assert.That(_vm.CanInvite, Is.False);
 
-            // recipient but no addresses
             _vm.Recipients.Add(new ContactItem(new EmailAddress("a@x.test", "A")));
             _vm.SenderAddressIndex = -1;
             _vm.EppieAddressIndex = -1;
             Assert.That(_vm.CanInvite, Is.False);
 
+            _vm.SenderAddresses.Add(new AddressItem(new Account()));
             _vm.SenderAddressIndex = 0;
             Assert.That(_vm.CanInvite, Is.False);
 
+            _vm.EppieAddresses.Add(new AddressItem(new Account()));
             _vm.EppieAddressIndex = 0;
             Assert.That(_vm.CanInvite, Is.True);
         }
@@ -394,6 +394,9 @@ namespace Eppie.App.ViewModels.Tests
         public void OnRecipientRemovedUpdatesCanInvite()
         {
             _vm.Recipients.Add(new ContactItem(new EmailAddress("a@x.test", "A")));
+            _vm.SenderAddresses.Add(new AddressItem(new Account()));
+            _vm.EppieAddresses.Add(new AddressItem(new Account()));
+
             _vm.SenderAddressIndex = 0;
             _vm.EppieAddressIndex = 0;
 
