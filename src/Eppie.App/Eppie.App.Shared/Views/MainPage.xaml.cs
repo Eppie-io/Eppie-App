@@ -26,6 +26,7 @@ using Eppie.App.UI.Extensions;
 using Tuvi.App.ViewModels;
 using Tuvi.App.ViewModels.Messages;
 using Tuvi.App.ViewModels.Services;
+using Eppie.App.UI.Common;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -48,6 +49,16 @@ namespace Eppie.App.Views
 
         public ICommand MailBoxItemDropCommand => new RelayCommand<MailBoxItem>(MailBoxItemDropMessages, IsDropMessagesAllowed);
 
+        public ICommand NewFolderCommand => new RelayCommand<MailBoxItem>(NewFolder);
+
+        public ICommand MailboxSettingsCommand => new RelayCommand<MailBoxItem>(OpenMailboxSettings);
+
+        public ICommand RemoveMailboxCommand => new RelayCommand<MailBoxItem>(RemoveMailbox);
+
+        public ICommand RenameFolderCommand => new RelayCommand<MailBoxItem>(RenameFolder);
+
+        public ICommand DeleteFolderCommand => new RelayCommand<MailBoxItem>(DeleteFolder);
+
         public ICommand ShowAboutPageCommand => new RelayCommand(ShowAboutPage);
 
         public ICommand OpenAddressManagerCommand => new RelayCommand(ShowAddressManagerPane);
@@ -67,6 +78,11 @@ namespace Eppie.App.Views
             this.InitializeComponent();
 
             ViewModel.InitializeMailboxModel(MailBoxItemClickCommand, MailBoxItemDropCommand);
+            ViewModel.MailBoxesModel.NewFolderCommand = NewFolderCommand;
+            ViewModel.MailBoxesModel.MailboxSettingsCommand = MailboxSettingsCommand;
+            ViewModel.MailBoxesModel.RemoveMailboxCommand = RemoveMailboxCommand;
+            ViewModel.MailBoxesModel.RenameFolderCommand = RenameFolderCommand;
+            ViewModel.MailBoxesModel.DeleteFolderCommand = DeleteFolderCommand;
 
             NavigationMenu.PaneOpened += OnNavigationPaneToggled;
             NavigationMenu.PaneClosed += OnNavigationPaneToggled;
@@ -284,6 +300,113 @@ namespace Eppie.App.Views
         {
             ViewModel.MailBoxesModel.SelectedItem = null;
             contentFrame.Navigate(typeof(ContactMessagesPage), new ContactMessagesPageViewModel.NavigationData() { ContactItem = message.Value, ErrorHandler = this });
+        }
+
+        private void NewFolder(MailBoxItem mailBoxItem)
+        {
+            if (mailBoxItem is null || !mailBoxItem.IsRootItem)
+            {
+                return;
+            }
+
+            var stringProvider = UI.Resources.StringProvider.GetInstance();
+            _ = UITools.ShowTextInputDialogAsync(
+                stringProvider.GetString("NewFolderDialogTitle"),
+                stringProvider.GetString("NewFolderDialogPrimaryButtonText"),
+                stringProvider.GetString("NewFolderDialogCloseButtonText"),
+                stringProvider.GetString("NewFolderDialogTextBoxHeader"),
+                string.Empty,
+                this.XamlRoot,
+                (folderName) =>
+                {
+                    if (!string.IsNullOrWhiteSpace(folderName))
+                    {
+                        throw new NotImplementedException();
+                    }
+                });
+        }
+
+        private async void OpenMailboxSettings(MailBoxItem mailBoxItem)
+        {
+            if (mailBoxItem is null || !mailBoxItem.IsRootItem)
+            {
+                return;
+            }
+
+            try
+            {
+                var account = await ViewModel.GetAccountAsync(mailBoxItem.Email).ConfigureAwait(true);
+                if (account != null)
+                {
+                    ViewModel.OpenMailboxSettings(account);
+                }
+            }
+            catch (Exception ex)
+            {
+                OnError(ex);
+            }
+        }
+
+        private async void RemoveMailbox(MailBoxItem mailBoxItem)
+        {
+            if (mailBoxItem is null || !mailBoxItem.IsRootItem)
+            {
+                return;
+            }
+
+            try
+            {
+                var account = await ViewModel.GetAccountAsync(mailBoxItem.Email).ConfigureAwait(true);
+                if (account != null)
+                {
+                    await ViewModel.RemoveAccountAsync(account).ConfigureAwait(true);
+                }
+            }
+            catch (Exception ex)
+            {
+                OnError(ex);
+            }
+        }
+
+        private void RenameFolder(MailBoxItem mailBoxItem)
+        {
+            if (mailBoxItem is null || mailBoxItem.IsRootItem || mailBoxItem.Folder is null)
+            {
+                return;
+            }
+
+            var stringProvider = UI.Resources.StringProvider.GetInstance();
+            _ = UITools.ShowTextInputDialogAsync(
+                stringProvider.GetString("RenameFolderDialogTitle"),
+                stringProvider.GetString("RenameFolderDialogPrimaryButtonText"),
+                stringProvider.GetString("RenameFolderDialogCloseButtonText"),
+                stringProvider.GetString("RenameFolderDialogTextBoxHeader"),
+                mailBoxItem.Text,
+                this.XamlRoot,
+                (newFolderName) =>
+                {
+                    if (!string.IsNullOrWhiteSpace(newFolderName) && newFolderName != mailBoxItem.Text)
+                    {
+                        throw new NotImplementedException();
+                    }
+                });
+        }
+
+        private async void DeleteFolder(MailBoxItem mailBoxItem)
+        {
+            if (mailBoxItem is null || mailBoxItem.IsRootItem || mailBoxItem.Folder is null)
+            {
+                return;
+            }
+
+            try
+            {
+                throw new NotImplementedException();
+            }
+            catch (Exception ex)
+            {
+                OnError(ex);
+            }
         }
 
         public override void HandleBack()

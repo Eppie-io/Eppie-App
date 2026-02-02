@@ -25,6 +25,24 @@ namespace Eppie.App.ViewModels.Tests.TestDoubles
 {
     internal sealed class FakeTuviMail : ITuviMail
     {
+        private readonly List<Account> _accounts = new();
+        public readonly List<Message> SentMessages = new();
+
+        public bool ShouldThrowOnSend { get; set; }
+
+        public void SeedAccounts(IEnumerable<Account> accounts)
+        {
+            _accounts.Clear();
+            if (accounts != null)
+            {
+                _accounts.AddRange(accounts);
+            }
+            // Notify listeners that accounts are available/updated
+            foreach (var acc in _accounts)
+            {
+                AccountAdded?.Invoke(this, new AccountEventArgs(acc));
+            }
+        }
         private readonly List<Contact> _contacts = new();
         private readonly Dictionary<EmailAddress, int> _unreadCounts = new();
 
@@ -60,6 +78,11 @@ namespace Eppie.App.ViewModels.Tests.TestDoubles
         {
             _contacts.Clear();
             _contacts.AddRange(contacts);
+            // Notify listeners that contacts are available/updated
+            foreach (var c in _contacts)
+            {
+                ContactAdded?.Invoke(this, new ContactAddedEventArgs(c));
+            }
         }
 
         public void SetUnreadCounts(IReadOnlyDictionary<EmailAddress, int> counts)
@@ -126,6 +149,11 @@ namespace Eppie.App.ViewModels.Tests.TestDoubles
             return Task.FromResult<IEnumerable<Contact>>(_contacts.ToList());
         }
 
+        public Task<List<Account>> GetAccountsAsync(CancellationToken cancellationToken = default)
+        {
+            return Task.FromResult(new List<Account>(_accounts));
+        }
+
         public Task<IReadOnlyList<Contact>> GetContactsAsync(int count, Contact lastContact, ContactsSortOrder sortOrder, CancellationToken cancellationToken = default)
         {
             GetContactsCalls++;
@@ -187,19 +215,31 @@ namespace Eppie.App.ViewModels.Tests.TestDoubles
             return Task.CompletedTask;
         }
 
-        public Task<IReadOnlyList<Message>> GetAllEarlierMessagesAsync(int count, Message lastMessage, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-        public Task<IReadOnlyList<Message>> GetContactEarlierMessagesAsync(EmailAddress contactEmail, int count, Message lastMessage, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-        public Task<IReadOnlyList<Message>> GetFolderEarlierMessagesAsync(Folder folder, int count, Message lastMessage, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-        public Task<IReadOnlyList<Message>> GetFolderEarlierMessagesAsync(CompositeFolder folder, int count, Message lastMessage, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-
-        public Task<int> GetUnreadCountForAllAccountsInboxAsync(CancellationToken cancellationToken = default) => throw new NotImplementedException();
-
         public Task<IReadOnlyDictionary<EmailAddress, int>> GetUnreadMessagesCountByContactAsync(CancellationToken cancellationToken = default)
         {
             GetUnreadCountsCalls++;
             return Task.FromResult<IReadOnlyDictionary<EmailAddress, int>>(new Dictionary<EmailAddress, int>(_unreadCounts));
         }
 
+        public Task SendMessageAsync(Message message, bool encrypt, bool sign, CancellationToken cancellationToken = default)
+        {
+            if (ShouldThrowOnSend)
+            {
+                throw new InvalidOperationException("Simulated send failure");
+            }
+            SentMessages.Add(message);
+            MessageSent?.Invoke(this, EventArgs.Empty);
+            return Task.CompletedTask;
+        }
+
+        // Event raised when a message is sent (useful for tests to await)
+        public event EventHandler? MessageSent;
+
+        public Task<IReadOnlyList<Message>> GetAllEarlierMessagesAsync(int count, Message lastMessage, CancellationToken cancellationToken = default) => throw new NotImplementedException();
+        public Task<IReadOnlyList<Message>> GetContactEarlierMessagesAsync(EmailAddress contactEmail, int count, Message lastMessage, CancellationToken cancellationToken = default) => throw new NotImplementedException();
+        public Task<IReadOnlyList<Message>> GetFolderEarlierMessagesAsync(Folder folder, int count, Message lastMessage, CancellationToken cancellationToken = default) => throw new NotImplementedException();
+        public Task<IReadOnlyList<Message>> GetFolderEarlierMessagesAsync(CompositeFolder folder, int count, Message lastMessage, CancellationToken cancellationToken = default) => throw new NotImplementedException();
+        public Task<int> GetUnreadCountForAllAccountsInboxAsync(CancellationToken cancellationToken = default) => throw new NotImplementedException();
         public Task DeleteMessagesAsync(IReadOnlyList<Message> messages, CancellationToken cancellationToken = default) => throw new NotImplementedException();
         public Task RestoreFromBackupIfNeededAsync(Uri downloadUri) => throw new NotImplementedException();
         public Task MarkMessagesAsReadAsync(IEnumerable<Message> messages, CancellationToken cancellationToken = default) => throw new NotImplementedException();
@@ -208,7 +248,6 @@ namespace Eppie.App.ViewModels.Tests.TestDoubles
         public Task UnflagMessagesAsync(IEnumerable<Message> messages, CancellationToken cancellationToken = default) => throw new NotImplementedException();
         public Task<Message> GetMessageBodyAsync(Message message, CancellationToken cancellationToken = default) => throw new NotImplementedException();
         public Task<Message> GetMessageBodyHighPriorityAsync(Message message, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-        public Task SendMessageAsync(Message message, bool encrypt, bool sign, CancellationToken cancellationToken = default) => throw new NotImplementedException();
         public Task<Message> CreateDraftMessageAsync(Message message, CancellationToken cancellationToken = default) => throw new NotImplementedException();
         public Task<Message> UpdateDraftMessageAsync(uint id, Message message, CancellationToken cancellationToken = default) => throw new NotImplementedException();
         public Task MoveMessagesAsync(IReadOnlyList<Message> messages, CompositeFolder targetFolder, CancellationToken cancellationToken = default) => throw new NotImplementedException();

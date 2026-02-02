@@ -1585,7 +1585,7 @@ Subject: {3}
     <value>Pick contacts to share your Eppie address and start a secure, peer-to-peer conversation from the very first message.</value>
     <comment>Invitation page note text</comment>
   </data>
-  <data name="InvitationSenderAddressComboBox.Header" xml:space="preserve">
+  <data name="InvitationSenderAddressComboBoxHeader.Text" xml:space="preserve">
     <value>From:</value>
     <comment>The header of the combobox containing the sender addresses</comment>
   </data>
@@ -1601,9 +1601,21 @@ Subject: {3}
     <value>Insert your Eppie address</value>
     <comment>The header of the combobox containing the eppie addresses</comment>
   </data>
+  <data name="InvitationEppieAddressComboBox.PlaceholderText" xml:space="preserve">
+    <value>Select Address</value>
+    <comment>Placeholder text for the combobox containing Eppie addresses</comment>
+  </data>
   <data name="SendInviteButton.Content" xml:space="preserve">
     <value>Send invite</value>
     <comment>The text of the Send Invite button on the invitation page</comment>
+  </data>
+  <data name="PreviewButton.Content" xml:space="preserve">
+    <value>Preview</value>
+    <comment>The text of the Preview button on the invitation page</comment>
+  </data>
+  <data name="CreateNewEppieAddressItem.Text" xml:space="preserve">
+    <value>Create a new address</value>
+    <comment>The text of the item that creates a new Eppie address on the invitation page</comment>
   </data>
   <data name="InvitationSubjectText" xml:space="preserve">
     <value>{0} invited you to Eppie</value>
@@ -1627,5 +1639,69 @@ I believe email should be private by default. If you agree, I'm ready when you a
 Eppie
     </value>
     <comment>The text of the invitation email. {0} - Sender name. {1} - Sender email. {2} - Downloading url.</comment>
+  </data>
+  <data name="RemoveMailboxDialogTitle" xml:space="preserve">
+    <value>Remove mailbox?</value>
+    <comment>The title of the dialog shown when user wants to remove a mailbox</comment>
+  </data>
+  <data name="RemoveMailboxDialogMessage" xml:space="preserve">
+    <value>Are you sure you want to remove this mailbox from Eppie on this device?</value>
+    <comment>The message of the dialog shown when user wants to remove a mailbox</comment>
+  </data>
+  <data name="RemoveMailboxDialogAcceptText" xml:space="preserve">
+    <value>Remove</value>
+    <comment>The accept button text for the remove mailbox dialog</comment>
+  </data>
+  <data name="RemoveMailboxDialogRejectText" xml:space="preserve">
+    <value>Cancel</value>
+    <comment>The reject button text for the remove mailbox dialog</comment>
+  </data>
+  <data name="DeleteFolderDialogTitle" xml:space="preserve">
+    <value>Delete folder?</value>
+    <comment>The title of the dialog shown when user wants to delete a folder</comment>
+  </data>
+  <data name="DeleteFolderDialogMessage" xml:space="preserve">
+    <value>Are you sure you want to delete this folder?</value>
+    <comment>The message of the dialog shown when user wants to delete a folder</comment>
+  </data>
+  <data name="DeleteFolderDialogAcceptText" xml:space="preserve">
+    <value>Delete</value>
+    <comment>The accept button text for the delete folder dialog</comment>
+  </data>
+  <data name="DeleteFolderDialogRejectText" xml:space="preserve">
+    <value>Cancel</value>
+    <comment>The reject button text for the delete folder dialog</comment>
+  </data>
+  <data name="NewFolderDialogTitle" xml:space="preserve">
+    <value>New Folder</value>
+    <comment>The title of the dialog for creating a new folder</comment>
+  </data>
+  <data name="NewFolderDialogPrimaryButtonText" xml:space="preserve">
+    <value>Create</value>
+    <comment>The primary button text for the new folder dialog</comment>
+  </data>
+  <data name="NewFolderDialogCloseButtonText" xml:space="preserve">
+    <value>Cancel</value>
+    <comment>The close button text for the new folder dialog</comment>
+  </data>
+  <data name="NewFolderDialogTextBoxHeader" xml:space="preserve">
+    <value>Enter folder name</value>
+    <comment>The textbox header for the new folder dialog</comment>
+  </data>
+  <data name="RenameFolderDialogTitle" xml:space="preserve">
+    <value>Rename Folder</value>
+    <comment>The title of the dialog for renaming a folder</comment>
+  </data>
+  <data name="RenameFolderDialogPrimaryButtonText" xml:space="preserve">
+    <value>Rename</value>
+    <comment>The primary button text for the rename folder dialog</comment>
+  </data>
+  <data name="RenameFolderDialogCloseButtonText" xml:space="preserve">
+    <value>Cancel</value>
+    <comment>The close button text for the rename folder dialog</comment>
+  </data>
+  <data name="RenameFolderDialogTextBoxHeader" xml:space="preserve">
+    <value>Enter new folder name</value>
+    <comment>The textbox header for the rename folder dialog</comment>
   </data>
 </root>

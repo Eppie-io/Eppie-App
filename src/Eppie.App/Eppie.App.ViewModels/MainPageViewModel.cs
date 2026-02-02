@@ -639,6 +639,7 @@ namespace Tuvi.App.ViewModels
             Core.MessagesIsReadChanged += OnMessagesIsReadChanged;
             Core.AccountAdded += OnAccountAdded;
             Core.AccountUpdated += OnAccountUpdated;
+            Core.AccountDeleted += OnAccountDeleted;
 
             LocalSettingsService.SettingChanged += LocalSettingsService_SettingChanged;
 
@@ -656,6 +657,7 @@ namespace Tuvi.App.ViewModels
             Core.MessagesIsReadChanged -= OnMessagesIsReadChanged;
             Core.AccountAdded -= OnAccountAdded;
             Core.AccountUpdated -= OnAccountUpdated;
+            Core.AccountDeleted -= OnAccountDeleted;
 
             LocalSettingsService.SettingChanged -= LocalSettingsService_SettingChanged;
 
@@ -751,6 +753,11 @@ namespace Tuvi.App.ViewModels
         }
 
         private void OnAccountUpdated(object sender, AccountEventArgs e)
+        {
+            UpdateAccountsList();
+        }
+
+        private void OnAccountDeleted(object sender, AccountEventArgs e)
         {
             UpdateAccountsList();
         }
@@ -857,6 +864,21 @@ namespace Tuvi.App.ViewModels
         {
             var accounts = await Core.GetCompositeAccountsAsync().ConfigureAwait(true);
             return !accounts.Any();
+        }
+
+        public async Task<Account> GetAccountAsync(EmailAddress email)
+        {
+            return await Core.GetAccountAsync(email).ConfigureAwait(true);
+        }
+
+        public void OpenMailboxSettings(Account account)
+        {
+            NavigateToMailboxSettingsPage(account, isReloginNeeded: false);
+        }
+
+        public async Task RemoveAccountAsync(Account account)
+        {
+            await Core.DeleteAccountAsync(account).ConfigureAwait(true);
         }
 
         private void LogEnabledWarning()
