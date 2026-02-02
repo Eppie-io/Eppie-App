@@ -128,7 +128,6 @@ namespace Eppie.App.ViewModels.Tests.TestDoubles
 
         public Task<bool> ExistsAccountWithEmailAddressAsync(EmailAddress email, CancellationToken cancellationToken = default) => throw new NotImplementedException();
         public Task<Account> GetAccountAsync(EmailAddress email, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-        public Task<List<Account>> GetAccountsAsync(CancellationToken cancellationToken = default) => throw new NotImplementedException();
         public Task<IReadOnlyList<CompositeAccount>> GetCompositeAccountsAsync(CancellationToken cancellationToken = default)
         {
             // Return empty list - tests that need accounts should use contacts with LastMessageData set
