@@ -20,6 +20,7 @@ using Tuvi.App.ViewModels;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using System.Diagnostics.CodeAnalysis;
+using Eppie.App.UI.Resources;
 
 
 #if WINDOWS_UWP
@@ -35,6 +36,8 @@ namespace Eppie.App.UI.Controls
     [SuppressMessage("Design", "CA1010:Generic collections should implement generic interface", Justification = "ContentControl implements IEnumerable for XAML infrastructure")]
     public sealed partial class MailBoxesListControl : UserControl
     {
+        private static readonly StringProvider StringProvider = StringProvider.GetInstance();
+
         public MailBoxesModel MailBoxesModel
         {
             get { return (MailBoxesModel)GetValue(MailBoxesModelProperty); }
@@ -133,6 +136,66 @@ namespace Eppie.App.UI.Controls
                 }
 
                 deferral.Complete();
+            }
+        }
+
+        private void NewFolderMenuItemClick(object sender, RoutedEventArgs args)
+        {
+            if (sender is FrameworkElement frameworkElement && frameworkElement.Tag is MailBoxItem mailBoxItem)
+            {
+                MailBoxesModel?.NewFolderCommand?.Execute(mailBoxItem);
+            }
+        }
+
+        private void MailboxSettingsMenuItemClick(object sender, RoutedEventArgs args)
+        {
+            if (sender is FrameworkElement frameworkElement && frameworkElement.Tag is MailBoxItem mailBoxItem)
+            {
+                MailBoxesModel?.MailboxSettingsCommand?.Execute(mailBoxItem);
+            }
+        }
+
+        private async void RemoveMailboxMenuItemClick(object sender, RoutedEventArgs args)
+        {
+            if (sender is FrameworkElement frameworkElement && frameworkElement.Tag is MailBoxItem mailBoxItem)
+            {
+                bool confirmed = await Common.UITools.ShowDialogAsync(
+                    StringProvider.GetString("RemoveMailboxDialogTitle"),
+                    StringProvider.GetString("RemoveMailboxDialogMessage"),
+                    StringProvider.GetString("RemoveMailboxDialogAcceptText"),
+                    StringProvider.GetString("RemoveMailboxDialogRejectText"),
+                    this.XamlRoot);
+
+                if (confirmed)
+                {
+                    MailBoxesModel?.RemoveMailboxCommand?.Execute(mailBoxItem);
+                }
+            }
+        }
+
+        private void RenameFolderMenuItemClick(object sender, RoutedEventArgs args)
+        {
+            if (sender is FrameworkElement frameworkElement && frameworkElement.Tag is MailBoxItem mailBoxItem)
+            {
+                MailBoxesModel?.RenameFolderCommand?.Execute(mailBoxItem);
+            }
+        }
+
+        private async void DeleteFolderMenuItemClick(object sender, RoutedEventArgs args)
+        {
+            if (sender is FrameworkElement frameworkElement && frameworkElement.Tag is MailBoxItem mailBoxItem)
+            {
+                bool confirmed = await Common.UITools.ShowDialogAsync(
+                    StringProvider.GetString("DeleteFolderDialogTitle"),
+                    StringProvider.GetString("DeleteFolderDialogMessage"),
+                    StringProvider.GetString("DeleteFolderDialogAcceptText"),
+                    StringProvider.GetString("DeleteFolderDialogRejectText"),
+                    this.XamlRoot);
+
+                if (confirmed)
+                {
+                    MailBoxesModel?.DeleteFolderCommand?.Execute(mailBoxItem);
+                }
             }
         }
 

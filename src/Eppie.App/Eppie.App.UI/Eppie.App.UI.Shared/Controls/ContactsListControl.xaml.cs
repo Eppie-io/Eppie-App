@@ -109,7 +109,7 @@ namespace Eppie.App.UI.Controls
         {
             if (sender is FrameworkElement frameworkElement && frameworkElement.Tag is ContactItem contactItem)
             {
-                _ = Common.UITools.ShowRenameContactDialogAsync(
+                _ = Common.UITools.ShowTextInputDialogAsync(
                         StringProvider.GetString("RenameContactDialogTitle"),
                         StringProvider.GetString("RenameContactDialogPrimaryButtonText"),
                         StringProvider.GetString("RenameContactDialogCloseButtonText"),
