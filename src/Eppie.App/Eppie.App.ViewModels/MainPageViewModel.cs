@@ -46,6 +46,10 @@ namespace Tuvi.App.ViewModels
         string DateFullString { get; }
         string PreviewText { get; }
         bool HasAttachments { get; }
+        int AttachmentCount { get; }
+        int AdditionalRecipientCount { get; }
+        string SenderEmail { get; }
+        string FirstRecipientDisplayName { get; }
         bool IsMarkedAsRead { get; }
         bool IsFlagged { get; }
         bool WasDeleted { get; }
@@ -182,7 +186,44 @@ namespace Tuvi.App.ViewModels
 
         public bool HasAttachments
         {
-            get { return Attachments.Count > 0; }
+            get { return _message.Attachments != null && _message.Attachments.Count > 0; }
+        }
+
+        public int AttachmentCount
+        {
+            get { return _message.Attachments?.Count ?? 0; }
+        }
+
+        public int AdditionalRecipientCount
+        {
+            get
+            {
+                var count = _message.To?.Count ?? 0;
+                // Return count minus 1 since one recipient is shown as avatar
+                return count > 0 ? count - 1 : 0;
+            }
+        }
+
+        public string SenderEmail
+        {
+            get
+            {
+                if (_message.From == null)
+                    return string.Empty;
+                var firstSender = _message.From.FirstOrDefault();
+                return firstSender?.Address ?? string.Empty;
+            }
+        }
+
+        public string FirstRecipientDisplayName
+        {
+            get
+            {
+                if (_message.To == null)
+                    return string.Empty;
+                var firstRecipient = _message.To.FirstOrDefault();
+                return firstRecipient?.DisplayName ?? string.Empty;
+            }
         }
 
         public bool IsMarkedAsRead
@@ -324,6 +365,10 @@ namespace Tuvi.App.ViewModels
             OnPropertyChanged(nameof(PreviewText));
             OnPropertyChanged(nameof(Attachments));
             OnPropertyChanged(nameof(HasAttachments));
+            OnPropertyChanged(nameof(AttachmentCount));
+            OnPropertyChanged(nameof(AdditionalRecipientCount));
+            OnPropertyChanged(nameof(SenderEmail));
+            OnPropertyChanged(nameof(FirstRecipientDisplayName));
             OnPropertyChanged(nameof(IsMarkedAsRead));
             OnPropertyChanged(nameof(IsFlagged));
             OnPropertyChanged(nameof(DateBriefString));
