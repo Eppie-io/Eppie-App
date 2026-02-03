@@ -107,9 +107,13 @@
                                 </SwipeControl.LeftItems>
                                 <SwipeControl.RightItems>
                                     <SwipeItems Mode="Execute">
-                                        <SwipeItem Background="{StaticResource WarningBackgroundBrush}"
-                                                   Command="{StaticResource DeleteItemCommand}"
-                                                   Invoked="OnDeleteSwipeItemInvoked" />
+                                        <SwipeItem x:Uid="/App.Resources/ToggleDeleteSwipeItem"
+                                                   Background="{StaticResource WarningBackgroundBrush}"
+                                                   Invoked="OnDeleteSwipeItemInvoked">
+                                            <SwipeItem.IconSource>
+                                                <SymbolIconSource Symbol="Delete" />
+                                            </SwipeItem.IconSource>
+                                        </SwipeItem>
                                     </SwipeItems>
                                 </SwipeControl.RightItems>
                                 <!--  It leaks see TVM-344  -->
@@ -160,7 +164,7 @@
                                               CommandParameter="{Binding}"
                                               Icon="Flag"
                                               Visibility="{Binding IsFlagged, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
-                                <AppBarButton x:Uid="/App.Resources/SetFlagButton"
+                                <AppBarButton x:Uid="/App.Resources/ClearFlagButton"
                                               Command="{StaticResource UnflagItemCommand}"
                                               CommandParameter="{Binding}"
                                               Icon="Flag"

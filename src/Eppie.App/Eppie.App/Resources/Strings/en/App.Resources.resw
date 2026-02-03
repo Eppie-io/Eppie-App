@@ -157,6 +157,10 @@
     <value>Read/Unread</value>
     <comment>Text on swipe item to toggle read/unread status</comment>
   </data>
+  <data name="ToggleDeleteSwipeItem.Text" xml:space="preserve">
+    <value>Delete</value>
+    <comment>Text on swipe item to delete email</comment>
+  </data>
   <data name="ReplyButton.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Reply</value>
     <comment>The tooltip for reply button</comment>

@@ -5,15 +5,35 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewmodels="using:Tuvi.App.ViewModels"
              mc:Ignorable="d">
-    
+
     <UserControl.Resources>
-        <LinearGradientBrush x:Key="P2PGradientBrush" StartPoint="0,0" EndPoint="1,0">
-            <GradientStop Offset="0.0" Color="#FFD9EE" />
-            <GradientStop Offset="0.5" Color="#FFFFFF" />
-            <GradientStop Offset="1.0" Color="#D9FFFF" />
-        </LinearGradientBrush>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Default">
+                    <LinearGradientBrush x:Key="P2PGradientBrush" StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Offset="0.0" Color="#FFD9EE" />
+                        <GradientStop Offset="0.5" Color="#FFFFFF" />
+                        <GradientStop Offset="1.0" Color="#D9FFFF" />
+                    </LinearGradientBrush>
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Light">
+                    <LinearGradientBrush x:Key="P2PGradientBrush" StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Offset="0.0" Color="#FFD9EE" />
+                        <GradientStop Offset="0.5" Color="#FFFFFF" />
+                        <GradientStop Offset="1.0" Color="#D9FFFF" />
+                    </LinearGradientBrush>
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Dark">
+                    <LinearGradientBrush x:Key="P2PGradientBrush" StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Offset="0.0" Color="#80334A" />
+                        <GradientStop Offset="0.5" Color="#404040" />
+                        <GradientStop Offset="1.0" Color="#338080" />
+                    </LinearGradientBrush>
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
     </UserControl.Resources>
-    
+
     <Grid Margin="0,4"
           Padding="16,10"
           BorderThickness="0">
@@ -94,7 +114,7 @@
 
             <Border Margin="0,0,12,0"
                     Padding="10,4"
-                    Background="{StaticResource P2PGradientBrush}"
+                    Background="{ThemeResource P2PGradientBrush}"
                     CornerRadius="10"
                     Visibility="{Binding IsDecentralized}">
                 <TextBlock x:Uid="P2PLabel"
@@ -150,7 +170,7 @@
                     <StackPanel Orientation="Horizontal" Spacing="8">
                         <PersonPicture Width="24"
                                        Height="24"
-                                       DisplayName="{Binding FirstRecipientDisplayName, Mode=OneWay}" />
+                                       DisplayName="{Binding Email.DisplayName, Mode=OneWay}" />
                         <TextBlock VerticalAlignment="Center"
                                    FontSize="14"
                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
