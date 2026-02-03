@@ -100,6 +100,15 @@ namespace Eppie.App.UI.Controls
         public static readonly DependencyProperty InviteContactCommandProperty =
             DependencyProperty.Register(nameof(InviteContactCommand), typeof(ICommand), typeof(ContactsListControl), new PropertyMetadata(null));
 
+        public ICommand ComposeEmailCommand
+        {
+            get { return (ICommand)GetValue(ComposeEmailCommandProperty); }
+            set { SetValue(ComposeEmailCommandProperty, value); }
+        }
+
+        public static readonly DependencyProperty ComposeEmailCommandProperty =
+            DependencyProperty.Register(nameof(ComposeEmailCommand), typeof(ICommand), typeof(ContactsListControl), new PropertyMetadata(null));
+
         public ContactsListControl()
         {
             this.InitializeComponent();
@@ -145,6 +154,14 @@ namespace Eppie.App.UI.Controls
             if (sender is FrameworkElement frameworkElement && frameworkElement.Tag is ContactItem contactItem)
             {
                 InviteContactCommand?.Execute(contactItem);
+            }
+        }
+
+        private void ComposeEmailMenuItemClick(object sender, RoutedEventArgs args)
+        {
+            if (sender is FrameworkElement frameworkElement && frameworkElement.Tag is ContactItem contactItem)
+            {
+                ComposeEmailCommand?.Execute(contactItem);
             }
         }
     }
