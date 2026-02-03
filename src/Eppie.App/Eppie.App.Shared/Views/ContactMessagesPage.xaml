@@ -11,277 +11,71 @@
                                NavigationCacheMode="Enabled"
                                mc:Ignorable="d">
 
-    <local:ContactMessagesPageBase.DataContext>
-        <viewmodels:ContactMessagesPageViewModel />
-    </local:ContactMessagesPageBase.DataContext>
-
     <local:ContactMessagesPageBase.Resources>
+        <ResourceDictionary>
+            <viewmodels:ContactMessagesPageViewModel x:Key="PageViewModel" />
 
-        <XamlUICommand x:Name="DeleteItemCommand"
-                       x:Uid="/App.Resources/DeleteButton"
-                       Command="{Binding DeleteMessageCommand}">
-            <XamlUICommand.IconSource>
-                <SymbolIconSource Symbol="Delete" />
-            </XamlUICommand.IconSource>
-            <XamlUICommand.KeyboardAccelerators>
-                <KeyboardAccelerator Key="Delete" />
-            </XamlUICommand.KeyboardAccelerators>
-        </XamlUICommand>
+            <XamlUICommand x:Key="DeleteItemCommand"
+                           x:Uid="/App.Resources/DeleteButton"
+                           Command="{Binding DeleteMessageCommand, Source={StaticResource PageViewModel}}">
+                <XamlUICommand.IconSource>
+                    <SymbolIconSource Symbol="Delete" />
+                </XamlUICommand.IconSource>
+                <XamlUICommand.KeyboardAccelerators>
+                    <KeyboardAccelerator Key="Delete" />
+                </XamlUICommand.KeyboardAccelerators>
+            </XamlUICommand>
 
-        <XamlUICommand x:Name="MarkAsReadItemCommand"
-                       x:Uid="/App.Resources/MarkAsReadButton"
-                       Command="{Binding MarkMessageAsReadCommand}">
-            <XamlUICommand.IconSource>
-                <SymbolIconSource Symbol="Read" />
-            </XamlUICommand.IconSource>
-            <XamlUICommand.KeyboardAccelerators>
-                <KeyboardAccelerator Key="R" Modifiers="Control" />
-            </XamlUICommand.KeyboardAccelerators>
-        </XamlUICommand>
+            <XamlUICommand x:Key="MarkAsReadItemCommand"
+                           x:Uid="/App.Resources/MarkAsReadButton"
+                           Command="{Binding MarkMessageAsReadCommand, Source={StaticResource PageViewModel}}">
+                <XamlUICommand.IconSource>
+                    <SymbolIconSource Symbol="Read" />
+                </XamlUICommand.IconSource>
+                <XamlUICommand.KeyboardAccelerators>
+                    <KeyboardAccelerator Key="R" Modifiers="Control" />
+                </XamlUICommand.KeyboardAccelerators>
+            </XamlUICommand>
 
-        <XamlUICommand x:Name="MarkAsUnreadItemCommand"
-                       x:Uid="/App.Resources/MarkAsUnreadButton"
-                       Command="{Binding MarkMessageAsUnreadCommand}">
-            <XamlUICommand.IconSource>
-                <SymbolIconSource Symbol="Mail" />
-            </XamlUICommand.IconSource>
-            <XamlUICommand.KeyboardAccelerators>
-                <KeyboardAccelerator Key="U" Modifiers="Control" />
-            </XamlUICommand.KeyboardAccelerators>
-        </XamlUICommand>
+            <XamlUICommand x:Key="MarkAsUnreadItemCommand"
+                           x:Uid="/App.Resources/MarkAsUnreadButton"
+                           Command="{Binding MarkMessageAsUnreadCommand, Source={StaticResource PageViewModel}}">
+                <XamlUICommand.IconSource>
+                    <SymbolIconSource Symbol="Mail" />
+                </XamlUICommand.IconSource>
+                <XamlUICommand.KeyboardAccelerators>
+                    <KeyboardAccelerator Key="U" Modifiers="Control" />
+                </XamlUICommand.KeyboardAccelerators>
+            </XamlUICommand>
 
-        <XamlUICommand x:Name="FlagItemCommand"
-                       x:Uid="/App.Resources/SetFlagButton"
-                       Command="{Binding FlagMessageCommand}">
-            <XamlUICommand.IconSource>
-                <SymbolIconSource Symbol="Flag" />
-            </XamlUICommand.IconSource>
-            <XamlUICommand.KeyboardAccelerators>
-                <KeyboardAccelerator Key="F" Modifiers="Control, Shift" />
-            </XamlUICommand.KeyboardAccelerators>
-        </XamlUICommand>
+            <XamlUICommand x:Key="FlagItemCommand"
+                           x:Uid="/App.Resources/SetFlagButton"
+                           Command="{Binding FlagMessageCommand, Source={StaticResource PageViewModel}}">
+                <XamlUICommand.IconSource>
+                    <SymbolIconSource Symbol="Flag" />
+                </XamlUICommand.IconSource>
+                <XamlUICommand.KeyboardAccelerators>
+                    <KeyboardAccelerator Key="F" Modifiers="Control, Shift" />
+                </XamlUICommand.KeyboardAccelerators>
+            </XamlUICommand>
 
-        <XamlUICommand x:Name="UnflagItemCommand"
-                       x:Uid="/App.Resources/ClearFlagButton"
-                       Command="{Binding UnflagMessageCommand}">
-            <XamlUICommand.IconSource>
-                <SymbolIconSource Symbol="Flag" />
-            </XamlUICommand.IconSource>
-            <XamlUICommand.KeyboardAccelerators>
-                <KeyboardAccelerator Key="U" Modifiers="Control, Shift" />
-            </XamlUICommand.KeyboardAccelerators>
-        </XamlUICommand>
+            <XamlUICommand x:Key="UnflagItemCommand"
+                           x:Uid="/App.Resources/ClearFlagButton"
+                           Command="{Binding UnflagMessageCommand, Source={StaticResource PageViewModel}}">
+                <XamlUICommand.IconSource>
+                    <SymbolIconSource Symbol="Flag" />
+                </XamlUICommand.IconSource>
+                <XamlUICommand.KeyboardAccelerators>
+                    <KeyboardAccelerator Key="U" Modifiers="Control, Shift" />
+                </XamlUICommand.KeyboardAccelerators>
+            </XamlUICommand>
 
-        <DataTemplate x:Key="DefaultMessageItemTemplate" x:DataType="viewmodels:IMessageInfo">
-            <!--<UserControl PointerEntered="ListViewSwipeContainerPointerEntered"
-                         PointerExited="ListViewSwipeContainerPointerExited">-->
-            <UserControl>
-                <!--  It leaks see TVM-344  -->
-                <UserControl.ContextFlyout>
-                    <MenuFlyout>
-                        <MenuFlyoutItem Command="{StaticResource MarkAsReadItemCommand}"
-                                        CommandParameter="{Binding}"
-                                        Visibility="{Binding IsMarkedAsRead, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
-
-                        <MenuFlyoutItem Command="{StaticResource MarkAsUnreadItemCommand}"
-                                        CommandParameter="{Binding}"
-                                        Visibility="{Binding IsMarkedAsRead}" />
-
-                        <MenuFlyoutItem Command="{StaticResource FlagItemCommand}"
-                                        CommandParameter="{Binding}"
-                                        Visibility="{Binding IsFlagged, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
-
-                        <MenuFlyoutItem Command="{StaticResource UnflagItemCommand}"
-                                        CommandParameter="{Binding}"
-                                        Visibility="{Binding IsFlagged}" />
-
-                        <MenuFlyoutItem Command="{StaticResource DeleteItemCommand}" CommandParameter="{Binding}" />
-                    </MenuFlyout>
-                </UserControl.ContextFlyout>
-                <Grid>
-                    <!--<SwipeControl BorderThickness="0,1,0,0" BorderBrush="{ThemeResource ButtonBackground}">
-                        <SwipeControl.RightItems>
-                            <SwipeItems Mode="Execute">
-                                <SwipeItem
-                               Command="{StaticResource DeleteItemCommand}"
-                               CommandParameter="{Binding}"
-                               Background="{StaticResource WarningBackgroundBrush}"/>
-                            </SwipeItems>
-                        </SwipeControl.RightItems>-->
-                    <!--  It leaks see TVM-344  -->
-
-                    <Grid Padding="16,12"
-                          BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                          BorderThickness="0,0,0,1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <!--  Unread indicator  -->
-                            <ColumnDefinition Width="8" />
-                            <!--  Spacing  -->
-                            <ColumnDefinition Width="Auto" />
-                            <!--  Avatar  -->
-                            <ColumnDefinition Width="12" />
-                            <!--  Spacing  -->
-                            <ColumnDefinition Width="*" />
-                            <!--  Content  -->
-                            <ColumnDefinition Width="Auto" />
-                            <!--  Metadata  -->
-                        </Grid.ColumnDefinitions>
-
-                        <!--  Unread indicator icon  -->
-                        <Grid Grid.Column="0"
-                              Width="24"
-                              Height="24"
-                              VerticalAlignment="Top">
-                            <SymbolIcon Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
-                                        Symbol="Mail"
-                                        Visibility="{Binding IsMarkedAsRead, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
-                            <SymbolIcon Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                        Symbol="Read"
-                                        Visibility="{Binding IsMarkedAsRead}" />
-                        </Grid>
-
-                        <!--  Sender Avatar  -->
-                        <PersonPicture Grid.Column="2"
-                                       Width="48"
-                                       Height="48"
-                                       VerticalAlignment="Top"
-                                       DisplayName="{Binding MessageSender, Mode=OneWay}" />
-
-                        <!--  Main content area  -->
-                        <StackPanel Grid.Column="4" VerticalAlignment="Top">
-
-                            <!--  Sender name and email  -->
-                            <TextBlock FontSize="14"
-                                       FontWeight="{Binding IsMarkedAsRead, Converter={StaticResource InverseBoolToFontWeightConverter}}"
-                                       Text="{Binding MessageSender}"
-                                       TextTrimming="CharacterEllipsis" />
-                            <TextBlock Margin="0,2,0,4"
-                                       FontSize="12"
-                                       Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                       Text="{Binding SenderEmail}"
-                                       TextTrimming="CharacterEllipsis" />
-
-                            <!--  Subject with P2P badge  -->
-                            <StackPanel Margin="0,0,0,4"
-                                        Orientation="Horizontal"
-                                        Spacing="8">
-                                <Border Padding="6,2"
-                                        Background="{ThemeResource SystemFillColorAttentionBackgroundBrush}"
-                                        CornerRadius="4"
-                                        Visibility="{Binding IsDecentralized}">
-                                    <TextBlock x:Uid="P2PLabel"
-                                               FontSize="11"
-                                               FontWeight="SemiBold"
-                                               Foreground="{ThemeResource SystemFillColorCriticalBrush}" />
-                                </Border>
-                                <TextBlock VerticalAlignment="Center"
-                                           FontSize="14"
-                                           FontWeight="{Binding IsMarkedAsRead, Converter={StaticResource InverseBoolToFontWeightConverter}}"
-                                           Text="{Binding MessageSubject}"
-                                           TextTrimming="CharacterEllipsis" />
-                            </StackPanel>
-
-                            <!--  Preview text  -->
-                            <TextBlock FontSize="13"
-                                       Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                       MaxLines="1"
-                                       Text="{Binding PreviewText, Mode=OneWay}"
-                                       TextTrimming="CharacterEllipsis" />
-                        </StackPanel>
-
-                        <!--  Right metadata section  -->
-                        <StackPanel x:Name="MetadataPanel"
-                                    Grid.Column="5"
-                                    Margin="16,0,0,0"
-                                    VerticalAlignment="Top"
-                                    Orientation="Horizontal"
-                                    Spacing="16">
-
-                            <!--  Attachment indicator with count  -->
-                            <StackPanel Orientation="Horizontal"
-                                        Spacing="4"
-                                        Visibility="{Binding HasAttachments, Mode=OneWay}">
-                                <SymbolIcon Symbol="Attach" />
-                                <TextBlock VerticalAlignment="Center"
-                                           FontSize="13"
-                                           Text="{Binding AttachmentCount}" />
-                            </StackPanel>
-
-                            <!--  Recipients preview  -->
-                            <StackPanel Orientation="Horizontal" Spacing="8">
-                                <TextBlock x:Uid="MessageTo"
-                                           VerticalAlignment="Center"
-                                           FontSize="13"
-                                           Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                                <StackPanel Orientation="Horizontal" Spacing="-8">
-                                    <PersonPicture Width="24"
-                                                   Height="24"
-                                                   DisplayName="{Binding FirstRecipientDisplayName, Mode=OneWay}" />
-                                    <TextBlock Margin="12,0,0,0"
-                                               VerticalAlignment="Center"
-                                               FontSize="13"
-                                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                               Visibility="{Binding AdditionalRecipientCount, Converter={StaticResource IntToVisibilityConverter}}">
-                                        <Run Text="+" /><Run Text="{Binding AdditionalRecipientCount}" />
-                                    </TextBlock>
-                                </StackPanel>
-                            </StackPanel>
-
-                            <!--  Timestamp  -->
-                            <TextBlock MinWidth="120"
-                                       VerticalAlignment="Center"
-                                       FontSize="13"
-                                       Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                       Text="{Binding DateBriefString}"
-                                       TextAlignment="Right" />
-                        </StackPanel>
-
-                        <!--  Hover command bar (hidden by default)  -->
-                        <CommandBar x:Name="CommandBar"
-                                    Grid.Column="5"
-                                    VerticalAlignment="Center"
-                                    Background="Transparent"
-                                    OverflowButtonVisibility="Collapsed"
-                                    Visibility="Collapsed">
-                            <AppBarButton Command="{StaticResource DeleteItemCommand}" CommandParameter="{Binding}" />
-                            <AppBarButton x:Uid="/App.Resources/MarkAsReadButton"
-                                          Command="{StaticResource MarkAsReadItemCommand}"
-                                          CommandParameter="{Binding}"
-                                          Visibility="{Binding IsMarkedAsRead, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
-                            <AppBarButton x:Uid="/App.Resources/MarkAsUnreadButton"
-                                          Command="{StaticResource MarkAsUnreadItemCommand}"
-                                          CommandParameter="{Binding}"
-                                          Visibility="{Binding IsMarkedAsRead}" />
-                            <AppBarButton x:Uid="/App.Resources/SetFlagButton"
-                                          Command="{StaticResource FlagItemCommand}"
-                                          CommandParameter="{Binding}"
-                                          Visibility="{Binding IsFlagged, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
-                            <AppBarButton x:Uid="/App.Resources/ClearFlagButton"
-                                          Command="{StaticResource UnflagItemCommand}"
-                                          CommandParameter="{Binding}"
-                                          Visibility="{Binding IsFlagged}" />
-                        </CommandBar>
-
-                        <!--</SwipeControl>-->
-                        <!--  It leaks see TVM-344  -->
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="HoveringStates">
-                                <VisualState x:Name="HoverButtonsHidden" />
-                                <VisualState x:Name="HoverButtonsShown">
-                                    <VisualState.Setters>
-                                        <Setter Target="CommandBar.Visibility" Value="Visible" />
-                                        <Setter Target="MetadataPanel.Visibility" Value="Collapsed" />
-                                    </VisualState.Setters>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
-                    </Grid>
-                </Grid>
-            </UserControl>
-        </DataTemplate>
-
+        </ResourceDictionary>
     </local:ContactMessagesPageBase.Resources>
+
+    <local:ContactMessagesPageBase.DataContext>
+        <StaticResource ResourceKey="PageViewModel" />
+    </local:ContactMessagesPageBase.DataContext>
 
     <Grid Padding="12,0,12,0">
 
@@ -290,13 +84,104 @@
                                      ExceptionOccurred="OnExceptionOccurred"
                                      IsDeleteInProcess="{Binding IsDeleteInProcess, Mode=OneWay}"
                                      IsWaitingForMoreMessages="{Binding MessageList.IsChanging, Mode=OneWay}"
-                                     ItemTemplate="{StaticResource DefaultMessageItemTemplate}"
                                      MessageClickCommand="{Binding OpenMessageCommand, Mode=OneWay}"
                                      Messages="{Binding MessageList, Mode=OneWay}"
                                      MessagesDeletedText="{Binding MessagesDeletedText, Mode=OneWay}"
                                      SelectedItemsChangedCommand="{Binding SelectedItemsChangedCommand}"
                                      SelectionMode="{Binding IsSelectMessagesMode, Mode=OneWay, Converter={StaticResource BoolToSelectionModeConverter}}"
                                      StartDragMessagesCommand="{Binding StartDragMessagesCommand}">
+
+            <controls:MessageListControl.ItemTemplate>
+                <DataTemplate x:DataType="viewmodels:IMessageInfo">
+                    <UserControl PointerEntered="ListViewSwipeContainerPointerEntered" PointerExited="ListViewSwipeContainerPointerExited">
+                        <Grid>
+                            <SwipeControl>
+                                <SwipeControl.LeftItems>
+                                    <SwipeItems Mode="Execute">
+                                        <SwipeItem x:Uid="/App.Resources/ToggleReadSwipeItem"
+                                                   Background="{ThemeResource SystemAccentColor}"
+                                                   Invoked="OnToggleReadSwipeItemInvoked">
+                                            <SwipeItem.IconSource>
+                                                <SymbolIconSource Symbol="Read" />
+                                            </SwipeItem.IconSource>
+                                        </SwipeItem>
+                                    </SwipeItems>
+                                </SwipeControl.LeftItems>
+                                <SwipeControl.RightItems>
+                                    <SwipeItems Mode="Execute">
+                                        <SwipeItem Background="{StaticResource WarningBackgroundBrush}"
+                                                   Command="{StaticResource DeleteItemCommand}"
+                                                   Invoked="OnDeleteSwipeItemInvoked" />
+                                    </SwipeItems>
+                                </SwipeControl.RightItems>
+                                <!--  It leaks see TVM-344  -->
+                                <local:MessageItemView>
+                                    <local:MessageItemView.ContextFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Command="{StaticResource MarkAsReadItemCommand}"
+                                                            CommandParameter="{Binding}"
+                                                            Visibility="{Binding IsMarkedAsRead, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+                                            <MenuFlyoutItem Command="{StaticResource MarkAsUnreadItemCommand}"
+                                                            CommandParameter="{Binding}"
+                                                            Visibility="{Binding IsMarkedAsRead}" />
+                                            <MenuFlyoutItem Command="{StaticResource FlagItemCommand}"
+                                                            CommandParameter="{Binding}"
+                                                            Visibility="{Binding IsFlagged, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+                                            <MenuFlyoutItem Command="{StaticResource UnflagItemCommand}"
+                                                            CommandParameter="{Binding}"
+                                                            Visibility="{Binding IsFlagged}" />
+                                            <MenuFlyoutItem Command="{StaticResource DeleteItemCommand}" CommandParameter="{Binding}" />
+                                        </MenuFlyout>
+                                    </local:MessageItemView.ContextFlyout>
+                                </local:MessageItemView>
+                            </SwipeControl>
+                            <!--  It leaks see TVM-344  -->
+                            <CommandBar x:Name="HoverCommandBar"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Bottom"
+                                        Background="Transparent"
+                                        DefaultLabelPosition="Collapsed"
+                                        OverflowButtonVisibility="Collapsed"
+                                        Visibility="Collapsed">
+                                <AppBarButton x:Uid="/App.Resources/DeleteButton"
+                                              Command="{StaticResource DeleteItemCommand}"
+                                              CommandParameter="{Binding}"
+                                              Icon="Delete" />
+                                <AppBarButton x:Uid="/App.Resources/MarkAsReadButton"
+                                              Command="{StaticResource MarkAsReadItemCommand}"
+                                              CommandParameter="{Binding}"
+                                              Icon="Read"
+                                              Visibility="{Binding IsMarkedAsRead, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+                                <AppBarButton x:Uid="/App.Resources/MarkAsUnreadButton"
+                                              Command="{StaticResource MarkAsUnreadItemCommand}"
+                                              CommandParameter="{Binding}"
+                                              Icon="Mail"
+                                              Visibility="{Binding IsMarkedAsRead}" />
+                                <AppBarButton x:Uid="/App.Resources/SetFlagButton"
+                                              Command="{StaticResource FlagItemCommand}"
+                                              CommandParameter="{Binding}"
+                                              Icon="Flag"
+                                              Visibility="{Binding IsFlagged, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+                                <AppBarButton x:Uid="/App.Resources/SetFlagButton"
+                                              Command="{StaticResource UnflagItemCommand}"
+                                              CommandParameter="{Binding}"
+                                              Icon="Flag"
+                                              Visibility="{Binding IsFlagged}" />
+                            </CommandBar>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="HoveringStates">
+                                    <VisualState x:Name="HoverButtonsHidden" />
+                                    <VisualState x:Name="HoverButtonsShown">
+                                        <VisualState.Setters>
+                                            <Setter Target="HoverCommandBar.Visibility" Value="Visible" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </Grid>
+                    </UserControl>
+                </DataTemplate>
+            </controls:MessageListControl.ItemTemplate>
 
             <controls:MessageListControl.HeaderHolder>
                 <Grid>

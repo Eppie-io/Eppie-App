@@ -22,8 +22,10 @@ using Tuvi.App.ViewModels;
 #if WINDOWS_UWP
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 #else
 using Microsoft.UI.Xaml.Navigation;
+using Microsoft.UI.Xaml.Controls;
 #endif
 
 namespace Eppie.App.Views
@@ -69,5 +71,29 @@ namespace Eppie.App.Views
         {
             MessageListControl.SelectAllMessages();
         }
+
+        private void OnDeleteSwipeItemInvoked(SwipeItem sender, SwipeItemInvokedEventArgs args)
+        {
+            if (args.SwipeControl.DataContext is IMessageInfo messageInfo)
+            {
+                ViewModel?.DeleteMessageCommand?.Execute(messageInfo);
+            }
+        }
+
+        private void OnToggleReadSwipeItemInvoked(SwipeItem sender, SwipeItemInvokedEventArgs args)
+        {
+            if (args.SwipeControl.DataContext is IMessageInfo messageInfo)
+            {
+                if (messageInfo.IsMarkedAsRead)
+                {
+                    ViewModel?.MarkMessageAsUnreadCommand?.Execute(messageInfo);
+                }
+                else
+                {
+                    ViewModel?.MarkMessageAsReadCommand?.Execute(messageInfo);
+                }
+            }
+        }
     }
 }
+

@@ -851,7 +851,7 @@ Subject: {3}
     <comment>The label of input field to enter check messages interval value in minutes</comment>
   </data>
   <data name="P2PLabel.Text" xml:space="preserve">
-    <value>[P2P]</value>
+    <value>P2P</value>
     <comment>The label shown for decentarilzed messages</comment>
   </data>
   <data name="OrderByUnreadContactComparerLabel" xml:space="preserve">
