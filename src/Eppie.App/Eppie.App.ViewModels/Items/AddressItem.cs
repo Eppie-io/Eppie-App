@@ -30,7 +30,7 @@ namespace Tuvi.App.ViewModels
 
         public ImageInfo AvatarInfo { get; internal set; }
 
-        internal AddressItem(Account account)
+        public AddressItem(Account account)
         {
             Account = account ?? throw new ArgumentNullException(nameof(account));
         }
