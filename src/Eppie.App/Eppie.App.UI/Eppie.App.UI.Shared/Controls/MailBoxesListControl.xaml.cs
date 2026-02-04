@@ -59,7 +59,7 @@ namespace Eppie.App.UI.Controls
         {
             e.AcceptedOperation = DataPackageOperation.None;
 
-            if (sender is TreeView treeView)
+            if (sender is Microsoft.UI.Xaml.Controls.TreeView treeView)
             {
                 var pointerPosition = e.GetPosition(treeView);
 
@@ -77,7 +77,7 @@ namespace Eppie.App.UI.Controls
             }
         }
 
-        private static TreeViewNode GetTreeViewNodeAtPoint(TreeView treeView, Point position)
+        private static Microsoft.UI.Xaml.Controls.TreeViewNode GetTreeViewNodeAtPoint(Microsoft.UI.Xaml.Controls.TreeView treeView, Point position)
         {
             foreach (var item in treeView.RootNodes)
             {
@@ -91,9 +91,9 @@ namespace Eppie.App.UI.Controls
             return null;
         }
 
-        private static TreeViewNode FindNodeAtPoint(TreeView treeView, TreeViewNode node, Point position)
+        private static Microsoft.UI.Xaml.Controls.TreeViewNode FindNodeAtPoint(Microsoft.UI.Xaml.Controls.TreeView treeView, Microsoft.UI.Xaml.Controls.TreeViewNode node, Point position)
         {
-            var container = treeView.ContainerFromNode(node) as TreeViewItem;
+            var container = treeView.ContainerFromNode(node) as Microsoft.UI.Xaml.Controls.TreeViewItem;
 
             if (container != null)
             {
@@ -128,7 +128,7 @@ namespace Eppie.App.UI.Controls
             {
                 var deferral = e.GetDeferral();
 
-                var targetNode = GetTreeViewNodeAtPoint(sender as TreeView, e.GetPosition(sender as TreeView));
+                var targetNode = GetTreeViewNodeAtPoint(sender as Microsoft.UI.Xaml.Controls.TreeView, e.GetPosition(sender as Microsoft.UI.Xaml.Controls.TreeView));
                 if (targetNode != null)
                 {
                     var targetMailBoxItem = targetNode.Content as MailBoxItem;
