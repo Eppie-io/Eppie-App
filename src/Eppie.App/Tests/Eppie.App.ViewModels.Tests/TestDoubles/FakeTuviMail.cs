@@ -231,8 +231,16 @@ namespace Eppie.App.ViewModels.Tests.TestDoubles
             return Task.CompletedTask;
         }
 
-        // Event raised when a message is sent (useful for tests to await)
         public event EventHandler? MessageSent;
+
+        public Task<Folder> CreateFolderAsync(EmailAddress accountEmail, string folderName, CancellationToken cancellationToken = default)
+        {
+            var folder = new Folder { FullName = folderName };
+            FolderCreated?.Invoke(this, new FolderCreatedEventArgs(folder, accountEmail));
+            return Task.FromResult(folder);
+        }
+
+        public event EventHandler<FolderCreatedEventArgs>? FolderCreated;
 
         public Task<IReadOnlyList<Message>> GetAllEarlierMessagesAsync(int count, Message lastMessage, CancellationToken cancellationToken = default) => throw new NotImplementedException();
         public Task<IReadOnlyList<Message>> GetContactEarlierMessagesAsync(EmailAddress contactEmail, int count, Message lastMessage, CancellationToken cancellationToken = default) => throw new NotImplementedException();
@@ -252,14 +260,9 @@ namespace Eppie.App.ViewModels.Tests.TestDoubles
         public Task MoveMessagesAsync(IReadOnlyList<Message> messages, CompositeFolder targetFolder, CancellationToken cancellationToken = default) => throw new NotImplementedException();
         public Task UpdateMessageProcessingResultAsync(Message message, string result, CancellationToken cancellationToken = default) => throw new NotImplementedException();
         public Task<bool> ClaimDecentralizedNameAsync(string name, EmailAddress address, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-
+        public Task<string> ClaimDecentralizedNameAsync(string name, Account account, CancellationToken cancellationToken = default) => throw new NotImplementedException();
         public void Dispose()
         {
-        }
-
-        public Task<string> ClaimDecentralizedNameAsync(string name, Account account, CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
         }
     }
 }
