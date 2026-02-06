@@ -408,7 +408,7 @@ namespace Eppie.App.Views
 
             try
             {
-                throw new NotImplementedException();
+                await ViewModel.DeleteFolderAsync(mailBoxItem.Email, mailBoxItem.Folder).ConfigureAwait(true);
             }
             catch (Exception ex)
             {
