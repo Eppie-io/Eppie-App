@@ -50,7 +50,7 @@ namespace Eppie.App.ViewModels.Tests
             {
                 vm.InitializeMailboxModel(null, null);
                 var accountEmail = new EmailAddress("test@example.com");
-                var folder = new CompositeFolder(new Folder { FullName = "TestFolder" });
+                var folder = new Folder { FullName = "TestFolder" };
 
                 bool eventRaised = false;
                 Folder? deletedFolder = null;
@@ -79,7 +79,7 @@ namespace Eppie.App.ViewModels.Tests
             {
                 vm.InitializeMailboxModel(null, null);
                 var accountEmail = new EmailAddress("test@example.com");
-                var folder = new CompositeFolder(new Folder { FullName = "TestFolder" });
+                var folder = new Folder { FullName = "TestFolder" };
 
                 // Call OnNavigatedTo so the ViewModel subscribes to Core events (e.g., FolderDeleted)
                 vm.OnNavigatedTo(null);
