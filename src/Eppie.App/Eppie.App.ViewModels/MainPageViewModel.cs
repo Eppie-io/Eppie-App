@@ -31,6 +31,7 @@ using Microsoft.Extensions.Logging;
 using Tuvi.App.ViewModels.Common;
 using Tuvi.App.ViewModels.Messages;
 using Tuvi.App.ViewModels.Services;
+using Tuvi.Core;
 using Tuvi.Core.Entities;
 
 namespace Tuvi.App.ViewModels
@@ -902,7 +903,11 @@ namespace Tuvi.App.ViewModels
 
         public async Task DeleteFolderAsync(EmailAddress accountEmail, CompositeFolder folder)
         {
-            await Core.DeleteFolderAsync(accountEmail, folder).ConfigureAwait(true);
+            // Foe now, only support simple folders deletion.
+            if (folder.Folders.Count == 1)
+            {
+                await Core.DeleteFolderAsync(accountEmail, folder.Folders[0]).ConfigureAwait(true);
+            }
         }
 
         private void LogEnabledWarning()
