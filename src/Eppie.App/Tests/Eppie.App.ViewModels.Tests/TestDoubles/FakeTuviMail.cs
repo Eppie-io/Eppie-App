@@ -251,6 +251,17 @@ namespace Eppie.App.ViewModels.Tests.TestDoubles
 
         public event EventHandler<FolderDeletedEventArgs>? FolderDeleted;
 
+
+        public Task<Folder> RenameFolderAsync(EmailAddress accountEmail, Folder folder, string newName, CancellationToken cancellationToken = default)
+        {
+            var oldName = folder.FullName;
+            folder.FullName = newName;
+            FolderRenamed?.Invoke(this, new FolderRenamedEventArgs(folder, accountEmail, oldName));
+            return Task.FromResult(folder);
+        }
+
+        public event EventHandler<FolderRenamedEventArgs>? FolderRenamed;
+
         public Task<IReadOnlyList<Message>> GetAllEarlierMessagesAsync(int count, Message lastMessage, CancellationToken cancellationToken = default) => throw new NotImplementedException();
         public Task<IReadOnlyList<Message>> GetContactEarlierMessagesAsync(EmailAddress contactEmail, int count, Message lastMessage, CancellationToken cancellationToken = default) => throw new NotImplementedException();
         public Task<IReadOnlyList<Message>> GetFolderEarlierMessagesAsync(Folder folder, int count, Message lastMessage, CancellationToken cancellationToken = default) => throw new NotImplementedException();
