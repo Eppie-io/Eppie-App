@@ -1,4 +1,4 @@
-// ---------------------------------------------------------------------------- //
+﻿// ---------------------------------------------------------------------------- //
 //                                                                              //
 //   Copyright 2026 Eppie (https://eppie.io)                                    //
 //                                                                              //
@@ -88,11 +88,11 @@ namespace Eppie.App.ViewModels.Tests
 
                 // Act
                 await vm.DeleteFolderAsync(accountEmail, folder).ConfigureAwait(false);
-                
+
                 // Assert - verify that the ViewModel's event handler triggered UpdateAccountsList
                 // which should call GetCompositeAccountsAsync
                 // Note: TestDispatcherService executes synchronously, so no delay needed
-                Assert.That(core.GetCompositeAccountsCalls, Is.GreaterThan(getCompositeAccountsCallsBefore), 
+                Assert.That(core.GetCompositeAccountsCalls, Is.GreaterThan(getCompositeAccountsCallsBefore),
                     "ViewModel should call GetCompositeAccountsAsync when FolderDeleted event is raised");
             }
         }
