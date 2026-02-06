@@ -317,11 +317,18 @@ namespace Eppie.App.Views
                 stringProvider.GetString("NewFolderDialogTextBoxHeader"),
                 string.Empty,
                 this.XamlRoot,
-                (folderName) =>
+                async (folderName) =>
                 {
                     if (!string.IsNullOrWhiteSpace(folderName))
                     {
-                        throw new NotImplementedException();
+                        try
+                        {
+                            await ViewModel.CreateFolderAsync(mailBoxItem.Email, folderName).ConfigureAwait(true);
+                        }
+                        catch (Exception ex)
+                        {
+                            OnError(ex);
+                        }
                     }
                 });
         }
