@@ -641,6 +641,7 @@ namespace Tuvi.App.ViewModels
             Core.AccountUpdated += OnAccountUpdated;
             Core.AccountDeleted += OnAccountDeleted;
             Core.FolderCreated += OnFolderCreated;
+            Core.FolderDeleted += OnFolderDeleted;
 
             LocalSettingsService.SettingChanged += LocalSettingsService_SettingChanged;
 
@@ -660,6 +661,7 @@ namespace Tuvi.App.ViewModels
             Core.AccountUpdated -= OnAccountUpdated;
             Core.AccountDeleted -= OnAccountDeleted;
             Core.FolderCreated -= OnFolderCreated;
+            Core.FolderDeleted -= OnFolderDeleted;
 
             LocalSettingsService.SettingChanged -= LocalSettingsService_SettingChanged;
 
@@ -765,6 +767,11 @@ namespace Tuvi.App.ViewModels
         }
 
         private void OnFolderCreated(object sender, FolderCreatedEventArgs e)
+        {
+            UpdateAccountsList();
+        }
+
+        private void OnFolderDeleted(object sender, FolderDeletedEventArgs e)
         {
             UpdateAccountsList();
         }
@@ -891,6 +898,11 @@ namespace Tuvi.App.ViewModels
         public async Task CreateFolderAsync(EmailAddress accountEmail, string folderName)
         {
             await Core.CreateFolderAsync(accountEmail, folderName).ConfigureAwait(true);
+        }
+
+        public async Task DeleteFolderAsync(EmailAddress accountEmail, Folder folder)
+        {
+            await Core.DeleteFolderAsync(accountEmail, folder).ConfigureAwait(true);
         }
 
         private void LogEnabledWarning()

@@ -48,6 +48,7 @@ namespace Eppie.App.ViewModels.Tests.TestDoubles
 
         public int GetContactsCalls { get; private set; }
         public int GetUnreadCountsCalls { get; private set; }
+        public int GetCompositeAccountsCalls { get; private set; }
 
         public int SetContactNameCalls { get; private set; }
         public (EmailAddress Email, string Name)? LastSetContactName { get; private set; }
@@ -130,6 +131,7 @@ namespace Eppie.App.ViewModels.Tests.TestDoubles
         public Task<Account> GetAccountAsync(EmailAddress email, CancellationToken cancellationToken = default) => throw new NotImplementedException();
         public Task<IReadOnlyList<CompositeAccount>> GetCompositeAccountsAsync(CancellationToken cancellationToken = default)
         {
+            GetCompositeAccountsCalls++;
             // Return empty list - tests that need accounts should use contacts with LastMessageData set
             return Task.FromResult<IReadOnlyList<CompositeAccount>>(Array.Empty<CompositeAccount>());
         }
@@ -246,6 +248,19 @@ namespace Eppie.App.ViewModels.Tests.TestDoubles
         public Task DeleteFolderAsync(EmailAddress accountEmail, Folder folder, CancellationToken cancellationToken = default)
         {
             FolderDeleted?.Invoke(this, new FolderDeletedEventArgs(folder, accountEmail));
+            return Task.CompletedTask;
+        }
+
+        public Task DeleteFolderAsync(EmailAddress accountEmail, CompositeFolder folder, CancellationToken cancellationToken = default)
+        {
+            if (folder is null)
+            {
+                return Task.CompletedTask;
+            }
+
+            // CompositeFolder contains the base Folder, so we can pass it to the event
+            var baseFolder = new Folder { FullName = folder.FullName };
+            FolderDeleted?.Invoke(this, new FolderDeletedEventArgs(baseFolder, accountEmail));
             return Task.CompletedTask;
         }
 
