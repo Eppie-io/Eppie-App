@@ -60,6 +60,7 @@ namespace Tuvi.App.ViewModels
         public ICommand RemoveContactCommand => new AsyncRelayCommand<ContactItem>(RemoveContactAsync);
         public ICommand InviteContactCommand => new AsyncRelayCommand<ContactItem>(InviteContactAsync);
         public ICommand ComposeEmailCommand => new AsyncRelayCommand<ContactItem>(ComposeEmailToContactAsync);
+        public ICommand CopyContactAddressCommand => new RelayCommand<(ContactItem, Services.IClipboardProvider)>(CopyContactAddress);
 
         private ContactItem _selectedContact;
         public ContactItem SelectedContact
@@ -206,6 +207,39 @@ namespace Tuvi.App.ViewModels
 
                 var messageData = new SelectedContactNewMessageData(fromEmail, contactItem.Email);
                 NavigationService?.Navigate(nameof(NewMessagePageViewModel), messageData);
+            }
+            catch (Exception ex)
+            {
+                OnError(ex);
+            }
+        }
+
+        private void CopyContactAddress((ContactItem contactItem, Services.IClipboardProvider clipboard) commandParameters)
+        {
+            var (contactItem, clipboard) = commandParameters;
+
+            if (contactItem is null)
+            {
+                throw new ArgumentNullException(nameof(commandParameters));
+            }
+
+            try
+            {
+                if (clipboard is null)
+                {
+                    OnError(new InvalidOperationException("Clipboard provider is not available."));
+                    return;
+                }
+
+                string formattedAddress = contactItem.GetFormattedAddress();
+
+                if (string.IsNullOrEmpty(formattedAddress))
+                {
+                    OnError(new InvalidOperationException("Selected contact does not have an email address."));
+                    return;
+                }
+
+                clipboard.SetClipboardContent(formattedAddress);
             }
             catch (Exception ex)
             {
