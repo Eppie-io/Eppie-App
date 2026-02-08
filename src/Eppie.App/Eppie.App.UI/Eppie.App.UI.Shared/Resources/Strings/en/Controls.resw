@@ -479,6 +479,10 @@
     <value>Compose email</value>
     <comment>Text of the context menu item that opens compose window to send email to the contact</comment>
   </data>
+  <data name="CopyContactAddressMenuItem.Text" xml:space="preserve">
+    <value>Copy address</value>
+    <comment>Text of the context menu item that copies contact's address to clipboard in extended format</comment>
+  </data>
   <data name="NewFolderMenuItem.Text" xml:space="preserve">
     <value>New folder</value>
     <comment>The text of context menu item that creates a new folder in mailbox</comment>
