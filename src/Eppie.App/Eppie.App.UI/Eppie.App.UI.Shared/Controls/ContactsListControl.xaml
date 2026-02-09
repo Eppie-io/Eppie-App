@@ -28,6 +28,12 @@
                 </Grid.ColumnDefinitions>
                 <Grid.ContextFlyout>
                     <MenuFlyout>
+                        <MenuFlyoutItem x:Uid="/Eppie.App.UI/Controls/ComposeEmailMenuItem"
+                                        Click="ComposeEmailMenuItemClick"
+                                        Tag="{x:Bind}" />
+                        <MenuFlyoutItem x:Uid="/Eppie.App.UI/Controls/CopyContactAddressMenuItem"
+                                        Click="CopyContactAddressMenuItemClick"
+                                        Tag="{x:Bind}" />
                         <!--  TODO: Enable when invite feature is ready  -->
                         <!--<MenuFlyoutItem x:Uid="/Eppie.App.UI/Controls/InviteContactMenuItem"
                                         Click="InviteContactMenuItemClick"

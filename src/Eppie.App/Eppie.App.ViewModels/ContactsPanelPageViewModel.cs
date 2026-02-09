@@ -24,6 +24,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using Tuvi.App.ViewModels.Common;
 using Tuvi.App.ViewModels.Messages;
 using Tuvi.Core.Entities;
 
@@ -58,6 +59,8 @@ namespace Tuvi.App.ViewModels
         public ICommand ChangeContactAvatarCommand => new AsyncRelayCommand<ContactItem>(ChangeContactAvatarAsync);
         public ICommand RemoveContactCommand => new AsyncRelayCommand<ContactItem>(RemoveContactAsync);
         public ICommand InviteContactCommand => new AsyncRelayCommand<ContactItem>(InviteContactAsync);
+        public ICommand ComposeEmailCommand => new AsyncRelayCommand<ContactItem>(ComposeEmailToContactAsync);
+        public ICommand CopyContactAddressCommand => new RelayCommand<(ContactItem, Services.IClipboardProvider)>(CopyContactAddress);
 
         private ContactItem _selectedContact;
         public ContactItem SelectedContact
@@ -165,6 +168,83 @@ namespace Tuvi.App.ViewModels
             }
 
             return MessageService.ShowInvitationDialogAsync(contactItem);
+        }
+
+        private async Task ComposeEmailToContactAsync(ContactItem contactItem)
+        {
+            if (contactItem is null)
+            {
+                throw new ArgumentNullException(nameof(contactItem));
+            }
+
+            try
+            {
+                if (contactItem.Email is null)
+                {
+                    OnError(new InvalidOperationException("Selected contact does not have an email address."));
+                    return;
+                }
+
+                EmailAddress fromEmail;
+
+                if (contactItem.LastMessageData?.AccountEmail != null)
+                {
+                    fromEmail = contactItem.LastMessageData.AccountEmail;
+                }
+                else
+                {
+                    var accounts = await Core.GetCompositeAccountsAsync().ConfigureAwait(true);
+                    if (accounts.Count > 0)
+                    {
+                        fromEmail = accounts[0].Email;
+                    }
+                    else
+                    {
+                        await MessageService.ShowAddAccountMessageAsync().ConfigureAwait(true);
+                        return;
+                    }
+                }
+
+                var messageData = new SelectedContactNewMessageData(fromEmail, contactItem.Email);
+                NavigationService?.Navigate(nameof(NewMessagePageViewModel), messageData);
+            }
+            catch (Exception ex)
+            {
+                OnError(ex);
+            }
+        }
+
+        private void CopyContactAddress((ContactItem contactItem, Services.IClipboardProvider clipboard) commandParameters)
+        {
+            var (contactItem, clipboard) = commandParameters;
+
+            if (contactItem is null)
+            {
+                throw new ArgumentNullException(nameof(commandParameters));
+            }
+
+            try
+            {
+                if (clipboard is null)
+                {
+                    OnError(new InvalidOperationException("Clipboard provider is not available."));
+                    return;
+                }
+
+                string formattedAddress = contactItem.GetFormattedAddress();
+
+                if (string.IsNullOrEmpty(formattedAddress))
+                {
+                    OnError(new InvalidOperationException("Selected contact does not have an email address."));
+                    return;
+                }
+
+                clipboard.SetClipboardContent(formattedAddress);
+            }
+            catch (Exception ex)
+            {
+                OnError(ex);
+            }
         }
 
         public void SetAvatarProvider(Func<Task<byte[]>> avatarProvider)

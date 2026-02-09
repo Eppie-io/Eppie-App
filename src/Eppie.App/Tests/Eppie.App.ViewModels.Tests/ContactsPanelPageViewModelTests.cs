@@ -22,7 +22,9 @@ using CommunityToolkit.Mvvm.Messaging;
 using Eppie.App.ViewModels.Tests.TestDoubles;
 using NUnit.Framework;
 using Tuvi.App.ViewModels;
+using Tuvi.App.ViewModels.Common;
 using Tuvi.App.ViewModels.Messages;
+using Tuvi.App.ViewModels.Services;
 using Tuvi.Core.Entities;
 
 namespace Eppie.App.ViewModels.Tests
@@ -634,6 +636,88 @@ namespace Eppie.App.ViewModels.Tests
             }
         }
 
+        [Test]
+        public void ComposeEmailCommandNullArgumentThrowsArgumentNullException()
+        {
+            var (vm, _, _, _, _) = CreateVm();
+            using (vm)
+            {
+                Assert.That(async () => await ((AsyncRelayCommand<ContactItem>)vm.ComposeEmailCommand).ExecuteAsync(null).ConfigureAwait(false), Throws.InstanceOf<ArgumentNullException>());
+            }
+        }
+
+        [Test]
+        public async Task ComposeEmailCommandNavigatesToNewMessagePageWithCorrectData()
+        {
+            var contact = CreateContact("user@site.com", "Test User");
+            var (vm, _, _, _, _) = CreateVm(new[] { contact });
+            using (vm)
+            {
+                var navService = new TestNavigationService();
+                vm.SetNavigationService(navService);
+
+                var contactItem = new ContactItem(contact);
+                await ((AsyncRelayCommand<ContactItem>)vm.ComposeEmailCommand).ExecuteAsync(contactItem).ConfigureAwait(false);
+
+                Assert.That(navService.LastNavigatedPage, Is.EqualTo(nameof(NewMessagePageViewModel)));
+                Assert.That(navService.LastNavigationData, Is.Not.Null);
+                Assert.That(navService.LastNavigationData, Is.TypeOf<SelectedContactNewMessageData>());
+
+                var messageData = (SelectedContactNewMessageData)navService.LastNavigationData!;
+                Assert.That(messageData.From.Address, Is.EqualTo("acc@local"));
+                Assert.That(messageData.To, Is.EqualTo("user@site.com"));
+            }
+        }
+
+        [Test]
+        public async Task ComposeEmailCommandWithNoAccountsShowsAddAccountMessage()
+        {
+            var contact = CreateContact("user@site.com", "Test User");
+            var (vm, _, _, _, _) = CreateVm(new[] { contact });
+            using (vm)
+            {
+                var navService = new TestNavigationService();
+                vm.SetNavigationService(navService);
+
+                var messageService = new TestMessageService();
+                vm.SetMessageService(messageService);
+
+                // Create a ContactItem using the EmailAddress constructor
+                var contactItem = new ContactItem(new EmailAddress("test@example.com", "Test Contact"));
+
+                await ((AsyncRelayCommand<ContactItem>)vm.ComposeEmailCommand).ExecuteAsync(contactItem).ConfigureAwait(false);
+
+                // Should not navigate when no accounts are available
+                Assert.That(navService.LastNavigatedPage, Is.Null);
+                Assert.That(messageService.ShowAddAccountMessageCalled, Is.True);
+            }
+        }
+
+        [Test]
+        public async Task ComposeEmailCommandWithNullEmailReportsError()
+        {
+            var contact = CreateContact("user@site.com", "Test User");
+            var (vm, _, _, _, errors) = CreateVm(new[] { contact });
+            using (vm)
+            {
+                var navService = new TestNavigationService();
+                vm.SetNavigationService(navService);
+
+                // Create a ContactItem with parameterless constructor, which leaves Email null
+                var contactItem = new ContactItem();
+
+                await ((AsyncRelayCommand<ContactItem>)vm.ComposeEmailCommand).ExecuteAsync(contactItem).ConfigureAwait(false);
+
+                // Should not navigate when email is null
+                Assert.That(navService.LastNavigatedPage, Is.Null);
+
+                // Should report error
+                Assert.That(errors.Errors.Count, Is.EqualTo(1));
+                Assert.That(errors.Errors[0], Is.TypeOf<InvalidOperationException>());
+                Assert.That(errors.Errors[0].Message, Is.EqualTo("Selected contact does not have an email address."));
+            }
+        }
+
         private sealed class ThrowingDispatcherService : Tuvi.App.ViewModels.Services.IDispatcherService
         {
             private readonly Exception _exception;
@@ -647,6 +731,139 @@ namespace Eppie.App.ViewModels.Tests
             {
                 _ = action;
                 throw _exception;
+            }
+        }
+
+        private sealed class TestClipboardProvider : Tuvi.App.ViewModels.Services.IClipboardProvider
+        {
+            public string? LastSetContent { get; private set; }
+
+            public Task<string> GetClipboardContentAsync()
+            {
+                return Task.FromResult(LastSetContent ?? string.Empty);
+            }
+
+            public void SetClipboardContent(string text)
+            {
+                LastSetContent = text;
+            }
+        }
+
+        [Test]
+        public void CopyContactAddressCommandWithFullNameAndEmailCopiesExtendedFormat()
+        {
+            // Arrange
+            var contact = CreateContact("test@example.com", "John Doe");
+            var (vm, _, _, _, _) = CreateVm(new[] { contact });
+            using (vm)
+            {
+                var clipboard = new TestClipboardProvider();
+                var contactItem = new ContactItem(contact);
+
+                // Act
+                ((RelayCommand<(ContactItem, IClipboardProvider)>)vm.CopyContactAddressCommand).Execute((contactItem, clipboard));
+
+                // Assert
+                Assert.That(clipboard.LastSetContent, Is.EqualTo("John Doe <test@example.com>"));
+            }
+        }
+
+        [Test]
+        public void CopyContactAddressCommandWithOnlyEmailCopiesEmailOnly()
+        {
+            // Arrange
+            var contact = CreateContact("test@example.com", "");
+            var (vm, _, _, _, _) = CreateVm(new[] { contact });
+            using (vm)
+            {
+                var clipboard = new TestClipboardProvider();
+                var contactItem = new ContactItem(contact);
+
+                // Act
+                ((RelayCommand<(ContactItem, IClipboardProvider)>)vm.CopyContactAddressCommand).Execute((contactItem, clipboard));
+
+                // Assert
+                Assert.That(clipboard.LastSetContent, Is.EqualTo("test@example.com"));
+            }
+        }
+
+        [Test]
+        public void CopyContactAddressCommandWithWhitespaceOnlyNameCopiesEmailOnly()
+        {
+            // Arrange
+            var contact = CreateContact("test@example.com", "   ");
+            var (vm, _, _, _, _) = CreateVm(new[] { contact });
+            using (vm)
+            {
+                var clipboard = new TestClipboardProvider();
+                var contactItem = new ContactItem(contact);
+
+                // Act
+                ((RelayCommand<(ContactItem, IClipboardProvider)>)vm.CopyContactAddressCommand).Execute((contactItem, clipboard));
+
+                // Assert
+                Assert.That(clipboard.LastSetContent, Is.EqualTo("test@example.com"));
+            }
+        }
+
+        [Test]
+        public void CopyContactAddressCommandWithNullEmailReportsError()
+        {
+            // Arrange
+            var (vm, _, _, _, errors) = CreateVm();
+            using (vm)
+            {
+                var clipboard = new TestClipboardProvider();
+                var contactItem = new ContactItem
+                {
+                    Email = null,
+                    FullName = "John Doe"
+                };
+
+                // Act
+                ((RelayCommand<(ContactItem, IClipboardProvider)>)vm.CopyContactAddressCommand).Execute((contactItem, clipboard));
+
+                // Assert
+                Assert.That(errors.Errors, Has.Count.EqualTo(1));
+                Assert.That(errors.Errors[0], Is.TypeOf<InvalidOperationException>());
+                Assert.That(errors.Errors[0].Message, Does.Contain("does not have an email address"));
+                Assert.That(clipboard.LastSetContent, Is.Null);
+            }
+        }
+
+        [Test]
+        public void CopyContactAddressCommandWithNullClipboardReportsError()
+        {
+            // Arrange
+            var contact = CreateContact("test@example.com", "John Doe");
+            var (vm, _, _, _, errors) = CreateVm(new[] { contact });
+            using (vm)
+            {
+                var contactItem = new ContactItem(contact);
+                var param = (contactItem, (IClipboardProvider)null!);
+
+                // Act
+                ((RelayCommand<(ContactItem, IClipboardProvider)>)vm.CopyContactAddressCommand).Execute(param);
+
+                // Assert
+                Assert.That(errors.Errors, Has.Count.EqualTo(1));
+                Assert.That(errors.Errors[0], Is.TypeOf<InvalidOperationException>());
+                Assert.That(errors.Errors[0].Message, Does.Contain("Clipboard provider is not available"));
+            }
+        }
+
+        [Test]
+        public void CopyContactAddressCommandWithNullContactItemThrowsArgumentNullException()
+        {
+            // Arrange
+            var (vm, _, _, _, _) = CreateVm();
+            using (vm)
+            {
+                var clipboard = new TestClipboardProvider();
+                var param = ((ContactItem)null!, clipboard);
+
+                // Act & Assert
+                Assert.Throws<ArgumentNullException>(() => ((RelayCommand<(ContactItem, IClipboardProvider)>)vm.CopyContactAddressCommand).Execute(param));
             }
         }
     }

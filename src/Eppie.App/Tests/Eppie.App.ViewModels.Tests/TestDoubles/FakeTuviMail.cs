@@ -48,6 +48,7 @@ namespace Eppie.App.ViewModels.Tests.TestDoubles
 
         public int GetContactsCalls { get; private set; }
         public int GetUnreadCountsCalls { get; private set; }
+        public int GetCompositeAccountsCalls { get; private set; }
 
         public int SetContactNameCalls { get; private set; }
         public (EmailAddress Email, string Name)? LastSetContactName { get; private set; }
@@ -128,7 +129,12 @@ namespace Eppie.App.ViewModels.Tests.TestDoubles
 
         public Task<bool> ExistsAccountWithEmailAddressAsync(EmailAddress email, CancellationToken cancellationToken = default) => throw new NotImplementedException();
         public Task<Account> GetAccountAsync(EmailAddress email, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-        public Task<IReadOnlyList<CompositeAccount>> GetCompositeAccountsAsync(CancellationToken cancellationToken = default) => throw new NotImplementedException();
+        public Task<IReadOnlyList<CompositeAccount>> GetCompositeAccountsAsync(CancellationToken cancellationToken = default)
+        {
+            GetCompositeAccountsCalls++;
+            // Return empty list - tests that need accounts should use contacts with LastMessageData set
+            return Task.FromResult<IReadOnlyList<CompositeAccount>>(Array.Empty<CompositeAccount>());
+        }
         public Task<IAccountService> GetAccountServiceAsync(EmailAddress email, CancellationToken cancellationToken = default) => throw new NotImplementedException();
         public Task AddAccountAsync(Account account, CancellationToken cancellationToken = default) => throw new NotImplementedException();
         public Task DeleteAccountAsync(Account account, CancellationToken cancellationToken = default) => throw new NotImplementedException();
@@ -227,8 +233,49 @@ namespace Eppie.App.ViewModels.Tests.TestDoubles
             return Task.CompletedTask;
         }
 
-        // Event raised when a message is sent (useful for tests to await)
         public event EventHandler? MessageSent;
+
+        public Task<Folder> CreateFolderAsync(EmailAddress accountEmail, string folderName, CancellationToken cancellationToken = default)
+        {
+            var folder = new Folder { FullName = folderName };
+            FolderCreated?.Invoke(this, new FolderCreatedEventArgs(folder, accountEmail));
+            return Task.FromResult(folder);
+        }
+
+        public event EventHandler<FolderCreatedEventArgs>? FolderCreated;
+
+
+        public Task DeleteFolderAsync(EmailAddress accountEmail, Folder folder, CancellationToken cancellationToken = default)
+        {
+            FolderDeleted?.Invoke(this, new FolderDeletedEventArgs(folder, accountEmail));
+            return Task.CompletedTask;
+        }
+
+        public Task DeleteFolderAsync(EmailAddress accountEmail, CompositeFolder folder, CancellationToken cancellationToken = default)
+        {
+            if (folder is null)
+            {
+                return Task.CompletedTask;
+            }
+
+            // CompositeFolder contains the base Folder, so we can pass it to the event
+            var baseFolder = new Folder { FullName = folder.FullName };
+            FolderDeleted?.Invoke(this, new FolderDeletedEventArgs(baseFolder, accountEmail));
+            return Task.CompletedTask;
+        }
+
+        public event EventHandler<FolderDeletedEventArgs>? FolderDeleted;
+
+
+        public Task<Folder> RenameFolderAsync(EmailAddress accountEmail, Folder folder, string newName, CancellationToken cancellationToken = default)
+        {
+            var oldName = folder.FullName;
+            folder.FullName = newName;
+            FolderRenamed?.Invoke(this, new FolderRenamedEventArgs(folder, accountEmail, oldName));
+            return Task.FromResult(folder);
+        }
+
+        public event EventHandler<FolderRenamedEventArgs>? FolderRenamed;
 
         public Task<IReadOnlyList<Message>> GetAllEarlierMessagesAsync(int count, Message lastMessage, CancellationToken cancellationToken = default) => throw new NotImplementedException();
         public Task<IReadOnlyList<Message>> GetContactEarlierMessagesAsync(EmailAddress contactEmail, int count, Message lastMessage, CancellationToken cancellationToken = default) => throw new NotImplementedException();
@@ -248,14 +295,9 @@ namespace Eppie.App.ViewModels.Tests.TestDoubles
         public Task MoveMessagesAsync(IReadOnlyList<Message> messages, CompositeFolder targetFolder, CancellationToken cancellationToken = default) => throw new NotImplementedException();
         public Task UpdateMessageProcessingResultAsync(Message message, string result, CancellationToken cancellationToken = default) => throw new NotImplementedException();
         public Task<bool> ClaimDecentralizedNameAsync(string name, EmailAddress address, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-
+        public Task<string> ClaimDecentralizedNameAsync(string name, Account account, CancellationToken cancellationToken = default) => throw new NotImplementedException();
         public void Dispose()
         {
-        }
-
-        public Task<string> ClaimDecentralizedNameAsync(string name, Account account, CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
         }
     }
 }
