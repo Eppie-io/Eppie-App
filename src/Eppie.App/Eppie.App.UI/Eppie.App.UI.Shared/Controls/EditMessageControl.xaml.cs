@@ -49,6 +49,17 @@ namespace Eppie.App.UI.Controls
         public static readonly DependencyProperty HtmlProperty =
             DependencyProperty.Register(nameof(Html), typeof(string), typeof(EditMessageControl), new PropertyMetadata(null));
 
+
+        public string PlaceholderText
+        {
+            get { return (string)GetValue(PlaceholderTextProperty); }
+            set { SetValue(PlaceholderTextProperty, value); }
+        }
+
+        public static readonly DependencyProperty PlaceholderTextProperty =
+            DependencyProperty.Register(nameof(PlaceholderText), typeof(string), typeof(EditMessageControl), new PropertyMetadata(null));
+
+
         public EditMessageControl()
         {
             this.InitializeComponent();
