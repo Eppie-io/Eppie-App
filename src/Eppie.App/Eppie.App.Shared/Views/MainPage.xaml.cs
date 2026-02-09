@@ -408,7 +408,15 @@ namespace Eppie.App.Views
 
             try
             {
-                throw new NotImplementedException();
+                // For now, only support simple folders deletion.
+                if (mailBoxItem.Folder.Folders.Count == 1)
+                {
+                    await ViewModel.DeleteFolderAsync(mailBoxItem.Email, mailBoxItem.Folder.Folders[0]).ConfigureAwait(true);
+                }
+                else
+                {
+                    throw new NotImplementedException("Only simple folders deletion is supported.");
+                }
             }
             catch (Exception ex)
             {
