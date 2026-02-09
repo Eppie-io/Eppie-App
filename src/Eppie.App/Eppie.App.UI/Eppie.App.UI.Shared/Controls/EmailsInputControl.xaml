@@ -51,9 +51,8 @@
                 </Grid.ColumnDefinitions>
 
                 <PersonPicture Grid.RowSpan="2"
-                               Width="24"
-                               Height="24"
-                               Margin="0,4,0,0"
+                               Width="28"
+                               Height="28"
                                DisplayName="{x:Bind FullName, Mode=OneWay}"
                                ProfilePicture="{x:Bind AvatarInfo, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}" />
 
@@ -71,6 +70,7 @@
 
         <controls:TokenizingTextBox ItemsSource="{x:Bind SelectedContacts, Mode=OneWay}"
                                     LostFocus="SuggestBox_LostFocus"
+                                    PlaceholderText="{x:Bind PlaceholderText, Mode=OneWay}"
                                     SuggestedItemTemplate="{StaticResource SuggestContactItemTemplate}"
                                     TextChanged="SuggestBox_TextChanged"
                                     TokenDelimiter=";"

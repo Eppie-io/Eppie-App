@@ -64,6 +64,17 @@ namespace Eppie.App.UI.Controls
         public static readonly DependencyProperty ContactsProperty =
             DependencyProperty.Register(nameof(Contacts), typeof(object), typeof(EmailsInputControl), new PropertyMetadata(new ObservableCollection<ContactItem>()));
 
+
+        public string PlaceholderText
+        {
+            get { return (string)GetValue(PlaceholderTextProperty); }
+            set { SetValue(PlaceholderTextProperty, value); }
+        }
+
+        public static readonly DependencyProperty PlaceholderTextProperty =
+            DependencyProperty.Register(nameof(PlaceholderText), typeof(string), typeof(EmailsInputControl), new PropertyMetadata(null));
+
+
         private string _oldUserInputText = string.Empty;
         private void SuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {

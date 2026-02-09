@@ -10,6 +10,7 @@
     <Grid>
         <TextBox VerticalAlignment="Center"
                  IsSpellCheckEnabled="{x:Bind IsSpellCheckEnabled, Mode=OneWay}"
+                 PlaceholderText="{x:Bind PlaceholderText, Mode=OneWay}"
                  Text="{x:Bind Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
     </Grid>
 </UserControl>
