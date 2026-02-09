@@ -43,6 +43,8 @@ namespace Eppie.App.Views
 
     internal sealed partial class MainPage : MainPageBase, IErrorHandler
     {
+        public ICommand OpenComposeMessageCommand => new RelayCommand(OpenComposeMessageC);
+
         public ICommand ShowAllMessagesCommand => new RelayCommand(ShowAllMessages);
 
         public ICommand MailBoxItemClickCommand => new RelayCommand<MailBoxItem>(MailBoxItemClick);
@@ -244,6 +246,12 @@ namespace Eppie.App.Views
             {
                 settings.LastSidePane = _openedPane;
             }
+        }
+
+
+        private void OpenComposeMessageC()
+        {
+            _ = ViewModel.WriteNewMessageAsync((messageData) => contentFrame.Navigate(typeof(ComposeMessagePage), messageData));
         }
 
         private void ShowAllMessages()

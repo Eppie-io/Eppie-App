@@ -314,6 +314,22 @@ You need to enable IMAP for this account first and try again.</value>
     <value>Subject:</value>
     <comment>Caption for the subject of the message</comment>
   </data>
+  <data name="MessageSubjectBox.PlaceholderText" xml:space="preserve">
+    <value>Add a subject</value>
+    <comment>Placeholder text for the message subject</comment>
+  </data>
+  <data name="MessageReceiverBox.PlaceholderText" xml:space="preserve">
+    <value>Enter email address or name</value>
+    <comment>Placeholder text for the message receiver</comment>
+  </data>
+  <data name="BlindCarbonCopyBox.PlaceholderText" xml:space="preserve">
+    <value>Add contacts to hidden copy</value>
+    <comment>Placeholder text for a blind carbon copy (BCC) of message</comment>
+  </data>
+  <data name="EditMessageBox.PlaceholderText" xml:space="preserve">
+    <value>Start typing here...</value>
+    <comment>Placeholder text for message editor</comment>
+  </data>
   <data name="MessageTo.Text" xml:space="preserve">
     <value>To:</value>
     <comment>Caption for the receiver of the message</comment>

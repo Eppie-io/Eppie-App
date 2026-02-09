@@ -366,7 +366,7 @@ namespace Tuvi.App.ViewModels
         {
             get
             {
-                return new AsyncRelayCommand(WriteNewMessageAsync);
+                return new AsyncRelayCommand(() => WriteNewMessageAsync(null));
             }
         }
 
@@ -386,7 +386,7 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        private async Task WriteNewMessageAsync()
+        public async Task WriteNewMessageAsync(Action<object> navigateContentFrameAction)
         {
             try
             {
@@ -409,7 +409,14 @@ namespace Tuvi.App.ViewModels
                         messageData = new SelectedAccountNewMessageData(MailBoxesModel.SelectedItem.Email);
                     }
 
-                    NavigationService?.Navigate(nameof(NewMessagePageViewModel), messageData);
+                    if (navigateContentFrameAction is null)
+                    {
+                        NavigationService?.Navigate(nameof(NewMessagePageViewModel), messageData);
+                    }
+                    else
+                    {
+                        navigateContentFrameAction?.Invoke(messageData);
+                    }
                 }
                 else
                 {
