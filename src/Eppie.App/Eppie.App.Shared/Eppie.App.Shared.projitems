@@ -46,6 +46,9 @@
       <DependentUpon>AppSettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\BasePage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\ComposeMessagePage.xaml.cs">
+      <DependentUpon>ComposeMessagePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\ConnectProtonAddressPage.xaml.cs">
       <DependentUpon>ConnectProtonAddressPage.xaml</DependentUpon>
     </Compile>
@@ -160,6 +163,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Views\AppSettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\ComposeMessagePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

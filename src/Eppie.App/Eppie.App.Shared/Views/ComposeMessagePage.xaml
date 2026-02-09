@@ -1,0 +1,267 @@
+﻿<local:ComposeMessagePageBase x:Class="Eppie.App.Views.ComposeMessagePage"
+                              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                              xmlns:controls="using:Eppie.App.UI.Controls"
+                              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                              xmlns:local="using:Eppie.App.Views"
+                              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                              xmlns:viewmodels="using:Tuvi.App.ViewModels"
+                              Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                              mc:Ignorable="d">
+
+    <local:ComposeMessagePageBase.DataContext>
+        <viewmodels:NewMessagePageViewModel />
+    </local:ComposeMessagePageBase.DataContext>
+
+
+    <!--  Todo:  Encrypted, Signed, OpenAllPgpKeys commands should be added  -->
+
+    <local:ComposeMessagePageBase.Resources>
+        <x:Double x:Key="AreaMaxWidth">960</x:Double>
+        <CornerRadius x:Key="AreaRadius">4</CornerRadius>
+
+        <x:Double x:Key="SenderAddressBoxMinWidth">120</x:Double>
+        <x:Double x:Key="SenderAddressBoxMaxWidth">360</x:Double>
+        <CornerRadius x:Key="SenderAddressRadius">16</CornerRadius>
+
+        <x:Double x:Key="MessageEditorMinHeight">160</x:Double>
+
+        <x:Double x:Key="SymbolSize">16</x:Double>
+
+        <x:Double x:Key="PictureSize">28</x:Double>
+        <x:Double x:Key="NameMaxWidth">72</x:Double>
+        <Thickness x:Key="HorizontalMargin">0,0,12,0</Thickness>
+
+        <DataTemplate x:Key="RemovableAttachmentItemTemplate" x:DataType="viewmodels:RemovableAttachment">
+            <Grid Padding="12,4,4,4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <SymbolIcon Symbol="Document" />
+
+                <TextBlock Grid.Column="1"
+                           Margin="8,0,0,0"
+                           VerticalAlignment="Center"
+                           Text="{x:Bind FileName, Mode=OneWay}" />
+
+                <CommandBar Grid.Column="2"
+                            IsEnabled="{x:Bind IsEmpty, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
+                            OverflowButtonVisibility="Collapsed">
+
+                    <AppBarButton x:Uid="/App.Resources/SaveAttachmentButton"
+                                  Command="{x:Bind DownloadCommand}"
+                                  CommandParameter="{x:Bind Converter={StaticResource AttachmentConverter}}"
+                                  Icon="Save" />
+
+                    <AppBarButton x:Uid="/App.Resources/OpenAttachmentButton"
+                                  Command="{x:Bind OpenCommand}"
+                                  CommandParameter="{x:Bind Converter={StaticResource AttachmentConverter}}"
+                                  Icon="OpenFile" />
+
+                    <AppBarButton x:Uid="/App.Resources/DeleteAttachmentButton"
+                                  Command="{x:Bind RemoveCommand, Mode=OneWay}"
+                                  CommandParameter="{x:Bind}"
+                                  Icon="Delete" />
+
+                </CommandBar>
+
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="AddressComboboxItemTemplate" x:DataType="viewmodels:AddressItem">
+            <Grid HorizontalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="10*" MaxWidth="{StaticResource NameMaxWidth}" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <PersonPicture Width="{StaticResource PictureSize}"
+                               Height="{StaticResource PictureSize}"
+                               Margin="{StaticResource HorizontalMargin}"
+                               VerticalAlignment="Center"
+                               DisplayName="{x:Bind DisplayName, Mode=OneWay}"
+                               ProfilePicture="{x:Bind AvatarInfo, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}" />
+
+                <TextBlock Grid.Column="1"
+                           Margin="{StaticResource HorizontalMargin}"
+                           VerticalAlignment="Center"
+                           Text="{x:Bind DisplayName, Mode=OneWay}" />
+                <TextBlock Grid.Column="2"
+                           VerticalAlignment="Center"
+                           Text="{x:Bind Address, Mode=OneWay}" />
+            </Grid>
+        </DataTemplate>
+    </local:ComposeMessagePageBase.Resources>
+
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                  HorizontalScrollMode="Disabled"
+                  VerticalScrollBarVisibility="Auto"
+                  VerticalScrollMode="Auto"
+                  ZoomMode="Disabled">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="100*" MaxWidth="{StaticResource AreaMaxWidth}" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="1"
+                        Margin="20"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Top"
+                        Orientation="Vertical">
+
+                <controls:PromptTextInputControl x:Uid="MessageSubjectBox"
+                                                 Margin="0,0,0,16"
+                                                 HorizontalAlignment="Stretch"
+                                                 VerticalAlignment="Top"
+                                                 Text="{x:Bind ViewModel.Subject, Mode=TwoWay}" />
+
+                <Grid Padding="24,12,24,20"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Top"
+                      Background="{ThemeResource LayerFillColorDefaultBrush}"
+                      CornerRadius="{StaticResource AreaRadius}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" MinHeight="{StaticResource MessageEditorMinHeight}" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!--  Receiver  -->
+                    <TextBlock x:Uid="MessageTo"
+                               Grid.Row="0"
+                               Grid.Column="0"
+                               Margin="{StaticResource HorizontalMargin}"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center" />
+
+                    <controls:EmailsInputControl x:Uid="MessageReceiverBox"
+                                                 Grid.Row="0"
+                                                 Grid.Column="1"
+                                                 HorizontalAlignment="Stretch"
+                                                 VerticalAlignment="Center"
+                                                 Contacts="{x:Bind ViewModel.Contacts, Mode=OneWay}"
+                                                 SelectedContacts="{x:Bind ViewModel.To, Mode=OneWay}"
+                                                 UntokenizedContact="{x:Bind ViewModel.UntokenizedContactTo, Mode=TwoWay}" />
+
+                    <Viewbox Grid.Row="1"
+                             Grid.Column="0"
+                             Width="{StaticResource SymbolSize}"
+                             Height="{StaticResource SymbolSize}"
+                             Margin="{StaticResource HorizontalMargin}"
+                             HorizontalAlignment="Left"
+                             VerticalAlignment="Center">
+                        <SymbolIcon Symbol="Contact2" />
+                    </Viewbox>
+
+                    <controls:EmailsInputControl x:Uid="BlindCarbonCopyBox"
+                                                 Grid.Row="1"
+                                                 Grid.Column="1"
+                                                 HorizontalAlignment="Stretch"
+                                                 VerticalAlignment="Center"
+                                                 Contacts="{x:Bind ViewModel.Contacts, Mode=OneWay}"
+                                                 SelectedContacts="{x:Bind ViewModel.HiddenCopy, Mode=OneWay}"
+                                                 UntokenizedContact="{x:Bind ViewModel.UntokenizedContactHiddenCopy, Mode=TwoWay}" />
+
+                    <Grid Grid.Row="2"
+                          Grid.ColumnSpan="2"
+                          Margin="0,28"
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Stretch"
+                          AllowDrop="True"
+                          DragOver="OnDragOver"
+                          Drop="OnDrop">
+
+                        <controls:EditMessageControl x:Uid="EditMessageBox"
+                                                     HorizontalAlignment="Stretch"
+                                                     VerticalAlignment="Stretch"
+                                                     AIAgentProcessedBody="{x:Bind ViewModel.MessageInfo.AIAgentProcessedBody, Mode=OneWay}"
+                                                     Html="{x:Bind ViewModel.HtmlBody, Mode=TwoWay}"
+                                                     IsEnabled="{x:Bind ViewModel.LoadingContent, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
+                                                     Text="{x:Bind ViewModel.TextBody, Mode=TwoWay}" />
+                    </Grid>
+
+                    <controls:AttachmentListControl x:Uid="AttachedFiles"
+                                                    Grid.Row="3"
+                                                    Grid.ColumnSpan="2"
+                                                    Margin="0,0,0,28"
+                                                    AllowDrop="True"
+                                                    DragOver="OnDragOver"
+                                                    Drop="OnDrop"
+                                                    IsTitleVisible="True"
+                                                    ItemTemplate="{StaticResource RemovableAttachmentItemTemplate}"
+                                                    Items="{x:Bind ViewModel.Attachments, Mode=OneWay}"
+                                                    ListAreaHeight="80"
+                                                    Visibility="{x:Bind ViewModel.HasAttachments, Mode=OneWay}" />
+
+                    <Grid Grid.Row="4" Grid.ColumnSpan="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <ComboBox Grid.Column="0"
+                                  MinWidth="{StaticResource SenderAddressBoxMinWidth}"
+                                  MaxWidth="{StaticResource SenderAddressBoxMaxWidth}"
+                                  Margin="{StaticResource HorizontalMargin}"
+                                  Padding="0,0,8,0"
+                                  HorizontalAlignment="Left"
+                                  VerticalAlignment="Center"
+                                  CornerRadius="{StaticResource SenderAddressRadius}"
+                                  ItemTemplate="{StaticResource AddressComboboxItemTemplate}"
+                                  ItemsSource="{x:Bind ViewModel.SenderAddresses, Mode=OneWay}"
+                                  SelectedIndex="{x:Bind ViewModel.SenderAddressIndex, Mode=TwoWay}" />
+
+                        <Button Grid.Column="1"
+                                Margin="4,0"
+                                VerticalAlignment="Center"
+                                Command="{x:Bind ViewModel.AttachFilesCommand}"
+                                CommandParameter="{StaticResource FileOperationProvider}"
+                                Style="{StaticResource ThinButtonStyle}">
+                            <StackPanel Orientation="Horizontal">
+                                <Viewbox Width="{StaticResource SymbolSize}" Height="{StaticResource SymbolSize}">
+                                    <SymbolIcon Symbol="Attach" />
+                                </Viewbox>
+                                <TextBlock Margin="4,0,0,0" Text="Attach" />
+                            </StackPanel>
+                        </Button>
+
+                        <Button Grid.Column="2"
+                                Margin="4,0"
+                                VerticalAlignment="Center"
+                                Command="{x:Bind ViewModel.DeleteMessageAndGoBackCommand}"
+                                Style="{StaticResource ThinButtonStyle}">
+                            <StackPanel Orientation="Horizontal">
+                                <Viewbox Width="{StaticResource SymbolSize}" Height="{StaticResource SymbolSize}">
+                                    <SymbolIcon Symbol="Delete" />
+                                </Viewbox>
+                                <TextBlock Margin="4,0,0,0" Text="Delete" />
+                            </StackPanel>
+                        </Button>
+
+                        <Button Grid.Column="4"
+                                MinWidth="112"
+                                Margin="4,0,0,0"
+                                VerticalAlignment="Center"
+                                Command="{x:Bind ViewModel.SendMessageAndGoBackCommand}"
+                                Content="Send"
+                                Style="{StaticResource AccentButtonStyle}" />
+                    </Grid>
+                </Grid>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+</local:ComposeMessagePageBase>
