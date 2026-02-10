@@ -243,6 +243,25 @@ namespace Tuvi.App.ViewModels
             }
         }
 
+        protected async Task<Account> CreateDecentralizedAccountAsync(NetworkType networkType, CancellationToken cancellationToken)
+        {
+            var (publicKey, accountIndex) = await Core.GetSecurityManager()
+                .GetNextDecAccountPublicKeyAsync(networkType, cancellationToken)
+                .ConfigureAwait(true);
+
+            var email = EmailAddress.CreateDecentralizedAddress(networkType, publicKey);
+
+            return new Account()
+            {
+                Email = email,
+                IsBackupAccountSettingsEnabled = true,
+                IsBackupAccountMessagesEnabled = true,
+                Type = MailBoxType.Dec,
+                DecentralizedAccountIndex = accountIndex,
+                IsMessageFooterEnabled = false
+            };
+        }
+
         protected void NavigateToMailboxSettingsPage(Account account, bool isReloginNeeded)
         {
             if (account is null)

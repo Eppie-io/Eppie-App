@@ -74,14 +74,6 @@ namespace Eppie.App.Views
             ViewModel?.OnContactQueryChanged(string.Empty);
             sender.Text = string.Empty;
         }
-
-        private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (sender is ComboBox combobox && combobox.SelectedItem is CreateEppieAddressItem)
-            {
-                ViewModel?.OnCreateEppieAddress();
-            }
-        }
     }
 
     public class EppieAddressesDataTemplateSelector : DataTemplateSelector

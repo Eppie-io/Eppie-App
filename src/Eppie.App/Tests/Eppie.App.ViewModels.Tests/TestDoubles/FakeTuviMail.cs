@@ -16,10 +16,14 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
+using KeyDerivation;
 using Tuvi.Core;
+using Tuvi.Core.Backup;
 using Tuvi.Core.DataStorage;
 using Tuvi.Core.Entities;
+using Tuvi.Core.Mail;
 using Tuvi.Core.Utils;
+using TuviPgpLib.Entities;
 
 namespace Eppie.App.ViewModels.Tests.TestDoubles
 {
@@ -27,6 +31,7 @@ namespace Eppie.App.ViewModels.Tests.TestDoubles
     {
         private readonly List<Account> _accounts = new();
         public readonly List<Message> SentMessages = new();
+        public readonly List<Account> AddedAccounts = new();
 
         public bool ShouldThrowOnSend { get; set; }
 
@@ -113,8 +118,10 @@ namespace Eppie.App.ViewModels.Tests.TestDoubles
         public void RaiseUnreadMessagesReceived(EmailAddress accountEmail)
             => UnreadMessagesReceived?.Invoke(this, new UnreadMessagesReceivedEventArgs(accountEmail, new Folder()));
 
-        public IBackupManager GetBackupManager() => throw new NotImplementedException();
-        public ISecurityManager GetSecurityManager() => throw new NotImplementedException();
+        private readonly FakeSecurityManager _securityManager = new();
+
+        public IBackupManager GetBackupManager() => new FakeBackupManager();
+        public ISecurityManager GetSecurityManager() => _securityManager;
         public ICredentialsManager CredentialsManager => throw new NotImplementedException();
         public ITextUtils GetTextUtils() => throw new NotImplementedException();
         public IAIAgentsStorage GetAIAgentsStorage() => throw new NotImplementedException();
@@ -136,7 +143,17 @@ namespace Eppie.App.ViewModels.Tests.TestDoubles
             return Task.FromResult<IReadOnlyList<CompositeAccount>>(Array.Empty<CompositeAccount>());
         }
         public Task<IAccountService> GetAccountServiceAsync(EmailAddress email, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-        public Task AddAccountAsync(Account account, CancellationToken cancellationToken = default) => throw new NotImplementedException();
+        public Task AddAccountAsync(Account account, CancellationToken cancellationToken = default)
+        {
+            if (account != null)
+            {
+                _accounts.Add(account);
+                AddedAccounts.Add(account);
+                AccountAdded?.Invoke(this, new AccountEventArgs(account));
+            }
+
+            return Task.CompletedTask;
+        }
         public Task DeleteAccountAsync(Account account, CancellationToken cancellationToken = default) => throw new NotImplementedException();
         public Task UpdateAccountAsync(Account account, CancellationToken cancellationToken = default) => throw new NotImplementedException();
         public Task CreateHybridAccountAsync(Account account, CancellationToken cancellationToken = default) => throw new NotImplementedException();
@@ -296,6 +313,67 @@ namespace Eppie.App.ViewModels.Tests.TestDoubles
         public Task UpdateMessageProcessingResultAsync(Message message, string result, CancellationToken cancellationToken = default) => throw new NotImplementedException();
         public Task<bool> ClaimDecentralizedNameAsync(string name, EmailAddress address, CancellationToken cancellationToken = default) => throw new NotImplementedException();
         public Task<string> ClaimDecentralizedNameAsync(string name, Account account, CancellationToken cancellationToken = default) => throw new NotImplementedException();
+
+        private sealed class FakeSecurityManager : ISecurityManager
+        {
+            private int _nextAccountIndex;
+
+            public void SetKeyDerivationDetails(IKeyDerivationDetailsProvider keyDerivationDetails) => throw new NotImplementedException();
+            public Task<bool> IsNeverStartedAsync(CancellationToken cancellationToken = default) => throw new NotImplementedException();
+            public Task<bool> IsSeedPhraseInitializedAsync(CancellationToken cancellationToken = default) => Task.FromResult(false);
+            public Task InitializeMasterKeyAsync(CancellationToken cancellationToken = default) => throw new NotImplementedException();
+            public Task<string[]> CreateSeedPhraseAsync() => throw new NotImplementedException();
+            public Task RestoreSeedPhraseAsync(string[] seedPhrase) => throw new NotImplementedException();
+            public Task StartAsync(string storagePassword, CancellationToken cancellationToken = default) => throw new NotImplementedException();
+            public Task ResetAsync() => throw new NotImplementedException();
+            public Task ChangePasswordAsync(string currentPassword, string newPassword, CancellationToken cancellationToken = default) => throw new NotImplementedException();
+            public Task CreateDefaultPgpKeysAsync(Account account) => throw new NotImplementedException();
+            public ICollection<PgpKeyInfo> GetPublicPgpKeysInfo() => throw new NotImplementedException();
+            public void ImportPublicPgpKey(byte[] keyData) => throw new NotImplementedException();
+            public void ImportPgpKeyRingBundle(Stream keyBundle) => throw new NotImplementedException();
+            public Task ExportPgpKeyRingAsync(long keyId, Stream stream, CancellationToken cancellationToken = default) => throw new NotImplementedException();
+            public int GetRequiredSeedPhraseLength() => throw new NotImplementedException();
+            public ISeedQuiz GetSeedQuiz() => throw new NotImplementedException();
+            public ISeedValidator GetSeedValidator() => throw new NotImplementedException();
+            public IMessageProtector GetMessageProtector() => throw new NotImplementedException();
+            public IBackupProtector GetBackupProtector() => throw new NotImplementedException();
+            public void RemovePgpKeys(Account account) => throw new NotImplementedException();
+            public void RemovePgpKeys(EmailAddress email) => throw new NotImplementedException();
+
+            public Task<(string, int)> GetNextDecAccountPublicKeyAsync(NetworkType networkType, CancellationToken cancellationToken = default)
+            {
+                var index = _nextAccountIndex++;
+                return Task.FromResult(($"public-key-{index}", index));
+            }
+
+            public Task<string> GetSecretKeyWIFAsync(Account account, CancellationToken cancellationToken = default) => throw new NotImplementedException();
+            public Task<string> GetEmailPublicKeyStringAsync(EmailAddress email, CancellationToken cancellationToken = default) => throw new NotImplementedException();
+            public Task ActivateAddressAsync(Account account, CancellationToken cancellationToken = default) => throw new NotImplementedException();
+            public Task<string> SignNameClaimAsync(string name, Account account, CancellationToken cancellationToken = default) => throw new NotImplementedException();
+        }
+
+        private sealed class FakeBackupManager : IBackupManager
+        {
+            public FakeBackupManager()
+            {
+                TouchEvents();
+            }
+
+            public void SetBackupDetails(IBackupDetailsProvider detailsProvider) => throw new NotImplementedException();
+            public Task CreateBackupAsync(Stream outputStream, CancellationToken cancellationToken = default) => throw new NotImplementedException();
+            public Task RestoreBackupAsync(Stream inputStream, CancellationToken cancellationToken = default) => throw new NotImplementedException();
+            public string GetBackupKeyFingerprint() => "";
+            public Task CreateDetachedSignatureDataAsync(Stream dataToSign, Stream deatachedSignatureData, Stream publicKeyData, CancellationToken cancellationToken = default) => throw new NotImplementedException();
+            public event Func<Account, Task>? AccountRestoredAsync;
+            public event Func<EmailAddress, IReadOnlyList<FolderMessagesBackupContainer>, Task>? MessagesRestoredAsync;
+
+            private void TouchEvents()
+            {
+                _ = AccountRestoredAsync;
+                _ = MessagesRestoredAsync;
+            }
+        }
+
         public void Dispose()
         {
         }

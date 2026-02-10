@@ -495,6 +495,28 @@ namespace Eppie.App.ViewModels.Tests
         }
 
         [Test]
+        public async Task SendInviteCreatesDecentralizedAccountWhenSelectedCreateItem()
+        {
+            var senderAcc = CreateAccount(1, "from@site.com", "Sender");
+            SeedAccounts(senderAcc);
+
+            _vm.OnNavigatedTo(null);
+            await WaitForAddressesAsync(requireSender: true, requireEppie: true).ConfigureAwait(false);
+
+            var contact = CreateContact("to@recipient.test", "Recipient");
+            _vm.OnContactQuerySubmitted(contact, null);
+
+            _vm.SendInviteCommand.Execute(null);
+
+            await WaitForSentMessagesAsync(1).ConfigureAwait(false);
+
+            Assert.That(_core.AddedAccounts, Has.Count.EqualTo(1));
+            var created = _core.AddedAccounts.First();
+            Assert.That(created.Type, Is.EqualTo(MailBoxType.Dec));
+            Assert.That(created.Email.Network, Is.EqualTo(NetworkType.Eppie));
+        }
+
+        [Test]
         public void CreateAddressFromTextInvalidDoesNotAdd()
         {
             // Provide invalid text (no @) - EmailAddress.Parse may still create but test conservative behavior

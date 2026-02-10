@@ -209,8 +209,7 @@
                           HorizontalAlignment="Stretch"
                           ItemTemplateSelector="{StaticResource EppieAddressDataTemplateSelector}"
                           ItemsSource="{x:Bind ViewModel.EppieAddresses, Mode=OneWay}"
-                          SelectedIndex="{x:Bind ViewModel.EppieAddressIndex, Mode=TwoWay}"
-                          SelectionChanged="OnSelectionChanged" />
+                          SelectedIndex="{x:Bind ViewModel.EppieAddressIndex, Mode=TwoWay}" />
 
                 <Button x:Uid="PreviewButton"
                         Margin="0,28,0,12"
