@@ -20,8 +20,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
+using Tuvi.App.ViewModels.Common;
 using Tuvi.Core.Entities;
 
 namespace Tuvi.App.ViewModels
@@ -52,6 +54,7 @@ namespace Tuvi.App.ViewModels
                 {
                     OnPropertyChanged(nameof(CanInvite));
                     SendInviteCommand.NotifyCanExecuteChanged();
+                    PreviewCommand.NotifyCanExecuteChanged();
                 }
             }
         }
@@ -66,12 +69,13 @@ namespace Tuvi.App.ViewModels
                 {
                     OnPropertyChanged(nameof(CanInvite));
                     SendInviteCommand.NotifyCanExecuteChanged();
+                    PreviewCommand.NotifyCanExecuteChanged();
                 }
             }
         }
 
         public bool IsAnyRecipient => Recipients.Count > 0;
-        public bool CanInvite => IsAnyRecipient && SenderAddressIndex != -1 && EppieAddressIndex != -1 && EppieAddresses[EppieAddressIndex] is AddressItem;
+        public bool CanInvite => IsAnyRecipient && SenderAddressIndex != -1 && EppieAddressIndex != -1;
 
         public IRelayCommand SendInviteCommand { get; }
         public IRelayCommand PreviewCommand { get; }
@@ -79,7 +83,9 @@ namespace Tuvi.App.ViewModels
 
         public InvitationPageViewModel() : base()
         {
-            SendInviteCommand = new RelayCommand(SendInvite, () => CanInvite);
+            SendInviteCommand = new AsyncRelayCommand(SendInviteAsync, () => CanInvite);
+            PreviewCommand = new AsyncRelayCommand(PreviewInviteAsync, () => CanInvite);
+
             SenderAddressIndex = -1;
             EppieAddressIndex = -1;
 
@@ -198,22 +204,12 @@ namespace Tuvi.App.ViewModels
             OnPropertyChanged(nameof(IsAnyRecipient));
             OnPropertyChanged(nameof(CanInvite));
             SendInviteCommand.NotifyCanExecuteChanged();
+            PreviewCommand.NotifyCanExecuteChanged();
         }
 
         public void OnContactQueryChanged(string queryText)
         {
             UpdateSuitableContacts(queryText);
-        }
-
-        public void OnCreateEppieAddress()
-        {
-            // ToDo: implement
-            // 1) Create new Eppie address,
-            // 2) Add new item to EppieAddresses
-            // 3) Select it
-
-            // Test code remove it:
-            EppieAddressIndex = -1;
         }
 
         private void UpdateSuitableContacts(string queryText)
@@ -246,6 +242,7 @@ namespace Tuvi.App.ViewModels
             OnPropertyChanged(nameof(IsAnyRecipient));
             OnPropertyChanged(nameof(CanInvite));
             SendInviteCommand.NotifyCanExecuteChanged();
+            PreviewCommand.NotifyCanExecuteChanged();
         }
 
         private static ContactItem CreateAddressItemFromText(string queryText)
@@ -272,36 +269,28 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        private void SendInvite()
+        private async Task SendInviteAsync()
         {
-            if (EppieAddresses[EppieAddressIndex] is AddressItem eppieAddressItem)
+            var context = await BuildInviteMessageAsync().ConfigureAwait(true);
+            if (context is null)
             {
-                var sender = SenderAddresses[SenderAddressIndex].Account.Email;
-                var senderName = SenderAddresses[SenderAddressIndex].DisplayName;
-                var eppieAddressString = eppieAddressItem.Account.Email.DisplayAddress;
-                var downloadLink = BrandService.GetHomepage();
-                var subject = string.Format(System.Globalization.CultureInfo.InvariantCulture, GetLocalizedString("InvitationSubjectText"), senderName);
-                var body = string.Format(System.Globalization.CultureInfo.InvariantCulture, GetLocalizedString("InvitationBodyText"), senderName, eppieAddressString, downloadLink);
-
-                _ = SendEmailsAsync(Core, sender, Recipients.ToList(), subject, body);
-
-                ClosePopupAction?.Invoke();
+                return;
             }
-            else
-            {
-                // Todo : error
-            }
+
+            _ = SendEmailsAsync(Core, context).ConfigureAwait(true);
+
+            ClosePopupAction?.Invoke();
         }
 
-        private static async Task SendEmailsAsync(Core.ITuviMail core, EmailAddress sender, List<ContactItem> recipients, string subject, string body)
+        private static async Task SendEmailsAsync(Core.ITuviMail core, InviteMessageContext context)
         {
-            foreach (var recipient in recipients.Where(r => r != null && r.Email != null))
+            foreach (var recipient in context.Recipients.Where(r => r != null && r.Email != null))
             {
                 var message = new Message();
-                message.From.Add(sender);
+                message.From.Add(context.MessageData.From);
                 message.To.Add(recipient.Email);
-                message.Subject = subject;
-                message.TextBody = body;
+                message.Subject = context.MessageData.Subject;
+                message.TextBody = context.MessageData.TextBody;
 
                 await core.SendMessageAsync(message, false, false).ConfigureAwait(false);
             }
@@ -314,6 +303,95 @@ namespace Tuvi.App.ViewModels
             OnPropertyChanged(nameof(IsAnyRecipient));
             OnPropertyChanged(nameof(CanInvite));
             SendInviteCommand.NotifyCanExecuteChanged();
+            PreviewCommand.NotifyCanExecuteChanged();
+        }
+
+        private async Task PreviewInviteAsync()
+        {
+            try
+            {
+                var context = await BuildInviteMessageAsync().ConfigureAwait(true);
+                if (context is null)
+                {
+                    return;
+                }
+
+                NavigationService?.Navigate(nameof(NewMessagePageViewModel), context.MessageData);
+                ClosePopupAction?.Invoke();
+            }
+            catch (Exception ex)
+            {
+                OnError(ex);
+            }
+        }
+
+        private async Task<InviteMessageContext> BuildInviteMessageAsync()
+        {
+            if (!CanInvite)
+            {
+                return null;
+            }
+
+            string eppieAddressString;
+            if (EppieAddresses[EppieAddressIndex] is AddressItem eppieAddressItem)
+            {
+                eppieAddressString = eppieAddressItem.Account.Email.DisplayAddress;
+            }
+            else
+            {
+                eppieAddressString = await CreateEppieAddressAsync().ConfigureAwait(true);
+                if (string.IsNullOrWhiteSpace(eppieAddressString))
+                {
+                    return null;
+                }
+            }
+
+            var senderAddress = SenderAddresses[SenderAddressIndex];
+            var senderName = senderAddress.DisplayName;
+            var downloadLink = BrandService.GetHomepage();
+            var subject = string.Format(System.Globalization.CultureInfo.InvariantCulture, GetLocalizedString("InvitationSubjectText"), senderName);
+            var body = string.Format(System.Globalization.CultureInfo.InvariantCulture, GetLocalizedString("InvitationBodyText"), senderName, eppieAddressString, downloadLink);
+
+            var recipients = Recipients.ToList();
+            var to = string.Join(", ", recipients
+                .Where(recipient => recipient?.Email?.Address != null)
+                .Select(recipient => recipient.Email.Address)
+                .Distinct(StringComparer.OrdinalIgnoreCase));
+
+            var messageData = new NewMessageData(senderAddress.Account.Email, to, string.Empty, string.Empty, subject, body);
+
+            return new InviteMessageContext(messageData, recipients);
+        }
+
+        private async Task<string> CreateEppieAddressAsync()
+        {
+            try
+            {
+                var account = await CreateDecentralizedAccountAsync(NetworkType.Eppie, CancellationToken.None)
+                    .ConfigureAwait(true);
+
+                await Core.AddAccountAsync(account, CancellationToken.None).ConfigureAwait(true);
+                _ = BackupIfNeededAsync();
+
+                return account.Email.DisplayAddress;
+            }
+            catch (Exception ex)
+            {
+                OnError(ex);
+                return string.Empty;
+            }
+        }
+
+        private sealed class InviteMessageContext
+        {
+            public InviteMessageContext(NewMessageData messageData, List<ContactItem> recipients)
+            {
+                MessageData = messageData;
+                Recipients = recipients;
+            }
+
+            public NewMessageData MessageData { get; }
+            public List<ContactItem> Recipients { get; }
         }
     }
 }
