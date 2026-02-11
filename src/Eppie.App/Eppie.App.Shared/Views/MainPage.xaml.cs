@@ -408,6 +408,8 @@ namespace Eppie.App.Views
                             if (mailBoxItem.Folder.Folders.Count == 1)
                             {
                                 await ViewModel.RenameFolderAsync(mailBoxItem.Email, mailBoxItem.Folder.Folders[0], newFolderName).ConfigureAwait(true);
+
+                                ShowAllMessages();
                             }
                             else
                             {
@@ -435,6 +437,8 @@ namespace Eppie.App.Views
                 if (mailBoxItem.Folder.Folders.Count == 1)
                 {
                     await ViewModel.DeleteFolderAsync(mailBoxItem.Email, mailBoxItem.Folder.Folders[0]).ConfigureAwait(true);
+
+                    ShowAllMessages();
                 }
                 else
                 {

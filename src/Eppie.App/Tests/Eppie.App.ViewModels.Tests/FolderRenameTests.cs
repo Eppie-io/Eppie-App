@@ -1,4 +1,4 @@
-// ---------------------------------------------------------------------------- //
+﻿// ---------------------------------------------------------------------------- //
 //                                                                              //
 //   Copyright 2026 Eppie (https://eppie.io)                                    //
 //                                                                              //
@@ -19,7 +19,6 @@
 using Eppie.App.ViewModels.Tests.TestDoubles;
 using NUnit.Framework;
 using Tuvi.App.ViewModels;
-using Tuvi.Core;
 using Tuvi.Core.Entities;
 
 namespace Eppie.App.ViewModels.Tests
