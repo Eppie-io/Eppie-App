@@ -19,6 +19,10 @@
                                           FalseValue="Normal"
                                           TrueValue="Bold" />
 
+    <converters:BoolToFontWeightConverter x:Key="InverseBoolToFontWeightConverter"
+                                          FalseValue="Bold"
+                                          TrueValue="Normal" />
+
     <converters:BoolToHorizontalAlignConverter x:Key="BoolToRightAlignConverter"
                                                FalseValue="Left"
                                                TrueValue="Right" />
