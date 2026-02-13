@@ -7,6 +7,7 @@
              xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
              d:DesignHeight="300"
              d:DesignWidth="400"
+             Loaded="OnLoaded"
              mc:Ignorable="d">
 
     <UserControl.Resources>
@@ -17,61 +18,39 @@
         <Thickness x:Key="ElementMargin">0,0,12,0</Thickness>
     </UserControl.Resources>
 
-    <Grid x:Name="RootGrid"
-          Height="{StaticResource ControlHeigth}"
-          Background="{ThemeResource ControlFillColorDefaultBrush}"
-          BorderBrush="{ThemeResource ControlElevationBorderBrush}"
-          BorderThickness="1"
-          CornerRadius="{StaticResource ControlCornerRadius}"
-          Tapped="OnRootGridTapped">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="10*" MaxWidth="{x:Bind NameColumnMaxWidth, Mode=OneWay}" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="Auto" />
-        </Grid.ColumnDefinitions>
+    <local:ItemContainer x:Name="Container"
+                         Height="{StaticResource ControlHeigth}"
+                         CornerRadius="{StaticResource ControlCornerRadius}">
+        <Grid x:Name="RootGrid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="10*" MaxWidth="{x:Bind NameColumnMaxWidth, Mode=OneWay}" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
 
-        <muxc:PersonPicture Width="{StaticResource PictureSize}"
-                            Height="{StaticResource PictureSize}"
-                            Margin="{StaticResource PictureMargin}"
-                            DisplayName="{x:Bind DisplayName, Mode=OneWay}"
-                            ProfilePicture="{x:Bind Avatar, Mode=OneWay}" />
-        <TextBlock x:Name="DisplayNameTextBlock"
-                   Grid.Column="1"
-                   Margin="{StaticResource ElementMargin}"
-                   VerticalAlignment="Center"
-                   Text="{x:Bind DisplayName, Mode=OneWay}"
-                   TextTrimming="CharacterEllipsis" />
-        <TextBlock x:Name="AddressTextBlock"
-                   Grid.Column="2"
-                   Margin="{StaticResource ElementMargin}"
-                   VerticalAlignment="Center"
-                   Text="{x:Bind Address, Mode=OneWay}"
-                   TextTrimming="CharacterEllipsis" />
-        <ContentPresenter x:Name="ExtraContentPresenter"
-                          Grid.Column="3"
-                          VerticalAlignment="Center"
-                          Content="{x:Bind ExtraContent}" />
+            <muxc:PersonPicture Width="{StaticResource PictureSize}"
+                                Height="{StaticResource PictureSize}"
+                                Margin="{StaticResource PictureMargin}"
+                                DisplayName="{x:Bind DisplayName, Mode=OneWay}"
+                                ProfilePicture="{x:Bind Avatar, Mode=OneWay}" />
+            <TextBlock x:Name="DisplayNameTextBlock"
+                       Grid.Column="1"
+                       Margin="{StaticResource ElementMargin}"
+                       VerticalAlignment="Center"
+                       Text="{x:Bind DisplayName, Mode=OneWay}"
+                       TextTrimming="CharacterEllipsis" />
+            <TextBlock x:Name="AddressTextBlock"
+                       Grid.Column="2"
+                       Margin="{StaticResource ElementMargin}"
+                       VerticalAlignment="Center"
+                       Text="{x:Bind Address, Mode=OneWay}"
+                       TextTrimming="CharacterEllipsis" />
+            <ContentPresenter x:Name="ExtraContentPresenter"
+                              Grid.Column="3"
+                              VerticalAlignment="Center"
+                              Content="{x:Bind ExtraContent}" />
+        </Grid>
+    </local:ItemContainer>
 
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup x:Name="CommonStates">
-                <VisualState x:Name="Normal" />
-                <VisualState x:Name="PointerOver">
-                    <VisualState.Setters>
-                        <Setter Target="RootGrid.Background" Value="{ThemeResource ControlFillColorSecondaryBrush}" />
-                        <Setter Target="RootGrid.BorderBrush" Value="{ThemeResource ControlElevationBorderBrush}" />
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState x:Name="Pressed">
-                    <VisualState.Setters>
-                        <Setter Target="RootGrid.Background" Value="{ThemeResource ControlFillColorTertiaryBrush}" />
-                        <Setter Target="RootGrid.BorderBrush" Value="{ThemeResource ControlStrokeColorDefaultBrush}" />
-                        <Setter Target="DisplayNameTextBlock.Foreground" Value="{ThemeResource TextFillColorTertiaryBrush}" />
-                        <Setter Target="AddressTextBlock.Foreground" Value="{ThemeResource TextFillColorTertiaryBrush}" />
-                        <Setter Target="ExtraContentPresenter.Foreground" Value="{ThemeResource TextFillColorTertiaryBrush}" />
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
-    </Grid>
 </UserControl>
