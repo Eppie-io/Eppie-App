@@ -36,6 +36,12 @@ namespace Tuvi.App.ViewModels
     public class RemovableAttachment : DownloadableAttachment
     {
         public ICommand RemoveCommand { get; set; }
+
+        // ToDo: this needs to be implemented
+        public string FileSize { get; set; }
+
+        // ToDo: this needs to be implemented
+        public ImageInfo FileThumbnail { get; set; }
     }
 
     public static class RemovableAttachmentConvertor
