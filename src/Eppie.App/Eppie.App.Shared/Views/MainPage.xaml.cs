@@ -398,11 +398,28 @@ namespace Eppie.App.Views
                 stringProvider.GetString("RenameFolderDialogTextBoxHeader"),
                 mailBoxItem.Text,
                 this.XamlRoot,
-                (newFolderName) =>
+                async (newFolderName) =>
                 {
                     if (!string.IsNullOrWhiteSpace(newFolderName) && newFolderName != mailBoxItem.Text)
                     {
-                        throw new NotImplementedException();
+                        try
+                        {
+                            // For now, only support simple folders renaming
+                            if (mailBoxItem.Folder.Folders.Count == 1)
+                            {
+                                await ViewModel.RenameFolderAsync(mailBoxItem.Email, mailBoxItem.Folder.Folders[0], newFolderName).ConfigureAwait(true);
+
+                                ShowAllMessages();
+                            }
+                            else
+                            {
+                                throw new NotImplementedException("Only simple folders renaming is supported.");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            OnError(ex);
+                        }
                     }
                 });
         }
@@ -420,6 +437,8 @@ namespace Eppie.App.Views
                 if (mailBoxItem.Folder.Folders.Count == 1)
                 {
                     await ViewModel.DeleteFolderAsync(mailBoxItem.Email, mailBoxItem.Folder.Folders[0]).ConfigureAwait(true);
+
+                    ShowAllMessages();
                 }
                 else
                 {
