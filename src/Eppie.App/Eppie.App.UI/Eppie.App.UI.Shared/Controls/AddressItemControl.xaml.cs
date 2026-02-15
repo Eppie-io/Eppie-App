@@ -19,20 +19,14 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-
 #if WINDOWS_UWP
-using Windows.Devices.Input;
-using Windows.UI.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 #else
-using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Markup;
 using Microsoft.UI.Xaml.Media;
 #endif
@@ -95,58 +89,20 @@ namespace Eppie.App.UI.Controls
             DependencyProperty.Register(nameof(ExtraContent), typeof(UIElement), typeof(AddressItemControl), new PropertyMetadata(null));
 
 
-        private bool _canInvoke;
-        private bool _isPointerOver;
-
         public AddressItemControl()
         {
             this.InitializeComponent();
-
-            InitializeVisualStateManager();
         }
 
-        private void InitializeVisualStateManager()
+        private void OnLoaded(object sender, RoutedEventArgs args)
         {
-            RootGrid.PointerExited += (s, e) =>
+            if (Invoked != null)
             {
-                _canInvoke = false;
-                _isPointerOver = false;
-                VisualStateManager.GoToState(this, "Normal", true);
-            };
-
-            RootGrid.PointerEntered += (s, e) =>
-            {
-                _canInvoke = false;
-                _isPointerOver = true;
-                VisualStateManager.GoToState(this, "PointerOver", true);
-            };
-
-            RootGrid.PointerReleased += (s, e) => VisualStateManager.GoToState(this, _isPointerOver ? "PointerOver" : "Normal", true);
-
-            RootGrid.PointerPressed += (s, e) =>
-            {
-                if (s is UIElement element)
+                Container.Invoked += (s, e) =>
                 {
-                    PointerPointProperties properties = e.GetCurrentPoint(element)?.Properties;
-
-                    _canInvoke = e.Pointer.PointerDeviceType != PointerDeviceType.Mouse || properties?.IsLeftButtonPressed == true;
-
-                    if (_canInvoke && Invoked != null)
-                    {
-                        VisualStateManager.GoToState(this, "Pressed", true);
-                    }
-                }
-            };
-        }
-
-        private void OnRootGridTapped(object sender, TappedRoutedEventArgs e)
-        {
-            if (_canInvoke)
-            {
-                Invoked?.Invoke(this, EventArgs.Empty);
+                    Invoked?.Invoke(this, EventArgs.Empty);
+                };
             }
-
-            _canInvoke = false;
         }
     }
 }
