@@ -18,7 +18,7 @@
 
     <local:ComposeMessagePageBase.Resources>
         <x:Double x:Key="AreaMaxWidth">960</x:Double>
-        <CornerRadius x:Key="AreaRadius">4</CornerRadius>
+        <CornerRadius x:Key="BorderRadius">4</CornerRadius>
 
         <x:Double x:Key="SenderAddressBoxMinWidth">120</x:Double>
         <x:Double x:Key="SenderAddressBoxMaxWidth">360</x:Double>
@@ -27,48 +27,87 @@
         <x:Double x:Key="MessageEditorMinHeight">160</x:Double>
 
         <x:Double x:Key="SymbolSize">16</x:Double>
+        <x:Double x:Key="FileSymbolSize">36</x:Double>
+        <x:Double x:Key="FileThumbnailSize">48</x:Double>
 
-        <x:Double x:Key="PictureSize">28</x:Double>
+        <x:Double x:Key="AvatarSize">28</x:Double>
         <x:Double x:Key="NameMaxWidth">72</x:Double>
         <Thickness x:Key="HorizontalMargin">0,0,12,0</Thickness>
 
+        <x:Double x:Key="AttachmentItemWidth">282</x:Double>
+
         <DataTemplate x:Key="RemovableAttachmentItemTemplate" x:DataType="viewmodels:RemovableAttachment">
-            <Grid Padding="12,4,4,4">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="1*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
+            <controls:ItemContainer CornerRadius="{StaticResource BorderRadius}">
+                <Grid Width="{StaticResource AttachmentItemWidth}" Padding="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
 
-                <SymbolIcon Symbol="Document" />
+                    <Grid Grid.RowSpan="2"
+                          Width="{StaticResource FileThumbnailSize}"
+                          Height="{StaticResource FileThumbnailSize}">
 
-                <TextBlock Grid.Column="1"
-                           Margin="8,0,0,0"
-                           VerticalAlignment="Center"
-                           Text="{x:Bind FileName, Mode=OneWay}" />
+                        <Viewbox Width="{StaticResource FileSymbolSize}"
+                                 Height="{StaticResource FileSymbolSize}"
+                                 Visibility="{x:Bind FileThumbnail, Mode=OneWay, Converter={StaticResource InverseObjectToVisibilityConverter}}">
+                            <SymbolIcon Symbol="Document" />
+                        </Viewbox>
 
-                <CommandBar Grid.Column="2"
+                        <Image Width="{StaticResource FileThumbnailSize}"
+                               Height="{StaticResource FileThumbnailSize}"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top"
+                               Source="{x:Bind FileThumbnail, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}"
+                               Stretch="Uniform"
+                               Visibility="{x:Bind FileThumbnail, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}" />
+                    </Grid>
+
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="1"
+                               Margin="12,0"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               Text="{x:Bind FileName, Mode=OneWay}"
+                               TextTrimming="CharacterEllipsis" />
+
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="1"
+                               Margin="12,0"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               Text="{x:Bind FileSize, Mode=OneWay}"
+                               TextTrimming="CharacterEllipsis" />
+
+                    <Button Grid.RowSpan="2"
+                            Grid.Column="2"
                             IsEnabled="{x:Bind IsEmpty, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
-                            OverflowButtonVisibility="Collapsed">
-
-                    <AppBarButton x:Uid="/App.Resources/SaveAttachmentButton"
-                                  Command="{x:Bind DownloadCommand}"
-                                  CommandParameter="{x:Bind Converter={StaticResource AttachmentConverter}}"
-                                  Icon="Save" />
-
-                    <AppBarButton x:Uid="/App.Resources/OpenAttachmentButton"
-                                  Command="{x:Bind OpenCommand}"
-                                  CommandParameter="{x:Bind Converter={StaticResource AttachmentConverter}}"
-                                  Icon="OpenFile" />
-
-                    <AppBarButton x:Uid="/App.Resources/DeleteAttachmentButton"
-                                  Command="{x:Bind RemoveCommand, Mode=OneWay}"
-                                  CommandParameter="{x:Bind}"
-                                  Icon="Delete" />
-
-                </CommandBar>
-
-            </Grid>
+                            Style="{StaticResource ThinButtonStyle}">
+                        <SymbolIcon Symbol="More" />
+                        <Button.Flyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem x:Uid="SaveAttachedFileMenuItem"
+                                                Command="{x:Bind DownloadCommand}"
+                                                CommandParameter="{x:Bind Converter={StaticResource AttachmentConverter}}"
+                                                Icon="Save" />
+                                <MenuFlyoutItem x:Uid="OpenAttachedFileMenuItem"
+                                                Command="{x:Bind OpenCommand}"
+                                                CommandParameter="{x:Bind Converter={StaticResource AttachmentConverter}}"
+                                                Icon="OpenFile" />
+                                <MenuFlyoutItem x:Uid="DeleteAttachedFileMenuItem"
+                                                Command="{x:Bind RemoveCommand, Mode=OneWay}"
+                                                CommandParameter="{x:Bind}"
+                                                Icon="Delete" />
+                            </MenuFlyout>
+                        </Button.Flyout>
+                    </Button>
+                </Grid>
+            </controls:ItemContainer>
         </DataTemplate>
 
         <DataTemplate x:Key="AddressComboboxItemTemplate" x:DataType="viewmodels:AddressItem">
@@ -78,8 +117,8 @@
                     <ColumnDefinition Width="10*" MaxWidth="{StaticResource NameMaxWidth}" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <PersonPicture Width="{StaticResource PictureSize}"
-                               Height="{StaticResource PictureSize}"
+                <PersonPicture Width="{StaticResource AvatarSize}"
+                               Height="{StaticResource AvatarSize}"
                                Margin="{StaticResource HorizontalMargin}"
                                VerticalAlignment="Center"
                                DisplayName="{x:Bind DisplayName, Mode=OneWay}"
@@ -124,7 +163,7 @@
                       HorizontalAlignment="Stretch"
                       VerticalAlignment="Top"
                       Background="{ThemeResource LayerFillColorDefaultBrush}"
-                      CornerRadius="{StaticResource AreaRadius}">
+                      CornerRadius="{StaticResource BorderRadius}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
@@ -191,18 +230,16 @@
                                                      Text="{x:Bind ViewModel.TextBody, Mode=TwoWay}" />
                     </Grid>
 
-                    <controls:AttachmentListControl x:Uid="AttachedFiles"
-                                                    Grid.Row="3"
-                                                    Grid.ColumnSpan="2"
-                                                    Margin="0,0,0,28"
-                                                    AllowDrop="True"
-                                                    DragOver="OnDragOver"
-                                                    Drop="OnDrop"
-                                                    IsTitleVisible="True"
-                                                    ItemTemplate="{StaticResource RemovableAttachmentItemTemplate}"
-                                                    Items="{x:Bind ViewModel.Attachments, Mode=OneWay}"
-                                                    ListAreaHeight="80"
-                                                    Visibility="{x:Bind ViewModel.HasAttachments, Mode=OneWay}" />
+                    <controls:AttachmentRepeaterControl x:Uid="AttachedFiles"
+                                                        Grid.Row="3"
+                                                        Grid.ColumnSpan="2"
+                                                        Margin="0,0,0,28"
+                                                        AllowDrop="True"
+                                                        DragOver="OnDragOver"
+                                                        Drop="OnDrop"
+                                                        ItemTemplate="{StaticResource RemovableAttachmentItemTemplate}"
+                                                        Items="{x:Bind ViewModel.Attachments, Mode=OneWay}"
+                                                        Visibility="{x:Bind ViewModel.HasAttachments, Mode=OneWay}" />
 
                     <Grid Grid.Row="4" Grid.ColumnSpan="2">
                         <Grid.ColumnDefinitions>
@@ -235,7 +272,7 @@
                                 <Viewbox Width="{StaticResource SymbolSize}" Height="{StaticResource SymbolSize}">
                                     <SymbolIcon Symbol="Attach" />
                                 </Viewbox>
-                                <TextBlock Margin="4,0,0,0" Text="Attach" />
+                                <TextBlock x:Uid="AttachFileButton" Margin="4,0,0,0" />
                             </StackPanel>
                         </Button>
 
@@ -248,16 +285,16 @@
                                 <Viewbox Width="{StaticResource SymbolSize}" Height="{StaticResource SymbolSize}">
                                     <SymbolIcon Symbol="Delete" />
                                 </Viewbox>
-                                <TextBlock Margin="4,0,0,0" Text="Delete" />
+                                <TextBlock x:Uid="DeleteDraftMessageButton" Margin="4,0,0,0" />
                             </StackPanel>
                         </Button>
 
-                        <Button Grid.Column="4"
+                        <Button x:Uid="SendMessageButton"
+                                Grid.Column="4"
                                 MinWidth="112"
                                 Margin="4,0,0,0"
                                 VerticalAlignment="Center"
                                 Command="{x:Bind ViewModel.SendMessageAndGoBackCommand}"
-                                Content="Send"
                                 Style="{StaticResource AccentButtonStyle}" />
                     </Grid>
                 </Grid>

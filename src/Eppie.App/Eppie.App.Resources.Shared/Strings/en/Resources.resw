@@ -1720,4 +1720,28 @@ Eppie
     <value>Enter new folder name</value>
     <comment>The textbox header for the rename folder dialog</comment>
   </data>
+  <data name="SendMessageButton.Content" xml:space="preserve">
+    <value>Send</value>
+    <comment>Text for the send message button</comment>
+  </data>
+  <data name="DeleteDraftMessageButton.Text" xml:space="preserve">
+    <value>Delete</value>
+    <comment>Text for the delete draft message button</comment>
+  </data>
+  <data name="AttachFileButton.Text" xml:space="preserve">
+    <value>Attach</value>
+    <comment>Text for the button that attaches a file to a message</comment>
+  </data>
+  <data name="DeleteAttachedFileMenuItem.Text" xml:space="preserve">
+    <value>Delete</value>
+    <comment>Text for the menu item that deletes an attached file</comment>
+  </data>
+  <data name="SaveAttachedFileMenuItem.Text" xml:space="preserve">
+    <value>Save</value>
+    <comment>Text for the button that saves the attached file to disk</comment>
+  </data>
+    <data name="OpenAttachedFileMenuItem.Text" xml:space="preserve">
+    <value>Open File</value>
+    <comment>Text for the button that opens the attached file</comment>
+  </data>
 </root>
