@@ -267,6 +267,13 @@ namespace Tuvi.App.ViewModels
             set { SetProperty(ref _isAdvancedSettingsVisible, value); }
         }
 
+        private bool _isHiddenCopyVisible;
+        public bool IsHiddenCopyVisible
+        {
+            get { return _isHiddenCopyVisible; }
+            set { SetProperty(ref _isHiddenCopyVisible, value); }
+        }
+
         public bool HasAttachments => Attachments.Any();
 
         // ToDo: SenderAddresses should be used
@@ -315,6 +322,8 @@ namespace Tuvi.App.ViewModels
 
         public ICommand RemoveAttachmentCommand => new RelayCommand<RemovableAttachment>(RemoveAttachment);
 
+        public ICommand ToggleHiddenCopyCommand => new RelayCommand(ToggleHiddenCopy);
+
         private async Task PickAndAttachFilesAsync(IFileOperationProvider fileOperationsProvider)
         {
             try
@@ -352,6 +361,13 @@ namespace Tuvi.App.ViewModels
             Attachments.Remove(item);
         }
 
+        private void ToggleHiddenCopy()
+        {
+            IsHiddenCopyVisible = !IsHiddenCopyVisible;
+
+            // Todo: Managing the BCC list when toggling visibility (e.g., clear bcc when hiding)
+        }
+
         public override async void OnNavigatedTo(object data)
         {
             try
@@ -376,9 +392,6 @@ namespace Tuvi.App.ViewModels
                         From = FromList.FirstOrDefault();
                     }
                 }
-
-                // ToDo: remove test code
-                InitFakeSenderAddresses();
 
                 base.OnNavigatedTo(data);
             }
@@ -666,32 +679,6 @@ namespace Tuvi.App.ViewModels
             catch (Exception e)
             {
                 OnError(e);
-            }
-        }
-
-        // ToDo: remove test code
-        private void InitFakeSenderAddresses()
-        {
-            SenderAddresses.Clear();
-
-            SenderAddresses.Add(new AddressItem(CreateFakeAccount("alice@mail.fake", MailBoxType.Email, "alice")));
-            SenderAddresses.Add(new AddressItem(CreateFakeAccount("bob@mail.fake", MailBoxType.Email, "bob")));
-            SenderAddresses.Add(new AddressItem(CreateFakeAccount("eva@mail.fake", MailBoxType.Email)));
-            SenderAddresses.Add(new AddressItem(CreateFakeAccount("huge-huge-huge-huge-huge-email-address@mail.fake", MailBoxType.Email)));
-            SenderAddresses.Add(new AddressItem(CreateFakeAccount("huge-huge-huge-huge-huge-email-address@mail.fake", MailBoxType.Email, "huge-huge-huge-huge-huge-name")));
-            SenderAddresses.Add(new AddressItem(CreateFakeAccount("email-address@mail.fake", MailBoxType.Email, "huge-huge-huge-huge-huge-name")));
-            SenderAddresses.Add(new AddressItem(CreateFakeAccount("email@mail.fake", MailBoxType.Email, "firstname secondname")));
-
-            SenderAddressIndex = -1;
-
-
-            Account CreateFakeAccount(string email, MailBoxType type, string name = null)
-            {
-                return new Account()
-                {
-                    Email = new EmailAddress(email, name),
-                    Type = type
-                };
             }
         }
     }

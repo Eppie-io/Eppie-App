@@ -19,12 +19,13 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using CommunityToolkit.WinUI.Controls;
-using Tuvi.Core.Entities;
-using Tuvi.App.ViewModels;
 using System.Diagnostics.CodeAnalysis;
-
+using System.Linq;
+using System.Windows.Input;
+using CommunityToolkit.WinUI.Controls;
+using Tuvi.App.Converters;
+using Tuvi.App.ViewModels;
+using Tuvi.Core.Entities;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -73,6 +74,36 @@ namespace Eppie.App.UI.Controls
 
         public static readonly DependencyProperty PlaceholderTextProperty =
             DependencyProperty.Register(nameof(PlaceholderText), typeof(string), typeof(EmailsInputControl), new PropertyMetadata(null));
+
+
+        public bool IsExtraButtonVisible
+        {
+            get { return (bool)GetValue(IsExtraButtonVisibleProperty); }
+            set { SetValue(IsExtraButtonVisibleProperty, value); }
+        }
+
+        public static readonly DependencyProperty IsExtraButtonVisibleProperty =
+            DependencyProperty.Register(nameof(IsExtraButtonVisible), typeof(bool), typeof(EmailsInputControl), new PropertyMetadata(false));
+
+
+        public object ExtraButtonContent
+        {
+            get { return (object)GetValue(ExtraButtonContentProperty); }
+            set { SetValue(ExtraButtonContentProperty, value); }
+        }
+
+        public static readonly DependencyProperty ExtraButtonContentProperty =
+            DependencyProperty.Register(nameof(ExtraButtonContent), typeof(object), typeof(EmailsInputControl), new PropertyMetadata(null));
+
+
+        public ICommand ExtraCommand
+        {
+            get { return (ICommand)GetValue(ExtraCommandProperty); }
+            set { SetValue(ExtraCommandProperty, value); }
+        }
+
+        public static readonly DependencyProperty ExtraCommandProperty =
+            DependencyProperty.Register(nameof(ExtraCommand), typeof(ICommand), typeof(EmailsInputControl), new PropertyMetadata(null));
 
 
         private string _oldUserInputText = string.Empty;
@@ -222,4 +253,6 @@ namespace Eppie.App.UI.Controls
             InitializeComponent();
         }
     }
+
+    internal class BoolToStyleSelectorConverter : BoolToValueConverter<StyleSelector> { }
 }
