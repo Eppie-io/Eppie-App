@@ -30,6 +30,7 @@
         <x:Double x:Key="AvatarSize">28</x:Double>
         <x:Double x:Key="NameMaxWidth">72</x:Double>
         <Thickness x:Key="HorizontalMargin">0,0,12,0</Thickness>
+        <Thickness x:Key="BlindCarbonCopyMargin">0,8,0,0</Thickness>
 
         <x:Double x:Key="AttachmentItemWidth">282</x:Double>
 
@@ -187,27 +188,43 @@
                                                  HorizontalAlignment="Stretch"
                                                  VerticalAlignment="Center"
                                                  Contacts="{x:Bind ViewModel.Contacts, Mode=OneWay}"
+                                                 ExtraCommand="{x:Bind ViewModel.ToggleHiddenCopyCommand, Mode=OneWay}"
+                                                 IsExtraButtonVisible="True"
                                                  SelectedContacts="{x:Bind ViewModel.To, Mode=OneWay}"
-                                                 UntokenizedContact="{x:Bind ViewModel.UntokenizedContactTo, Mode=TwoWay}" />
+                                                 UntokenizedContact="{x:Bind ViewModel.UntokenizedContactTo, Mode=TwoWay}">
+                        <controls:EmailsInputControl.ExtraButtonContent>
+                            <FontIcon HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"
+                                      FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                      FontSize="{StaticResource SymbolSize}"
+                                      Glyph="&#xE8D4;" />
+                        </controls:EmailsInputControl.ExtraButtonContent>
+                    </controls:EmailsInputControl>
 
-                    <Viewbox Grid.Row="1"
-                             Grid.Column="0"
-                             Width="{StaticResource SymbolSize}"
-                             Height="{StaticResource SymbolSize}"
-                             Margin="{StaticResource HorizontalMargin}"
-                             HorizontalAlignment="Left"
-                             VerticalAlignment="Center">
-                        <SymbolIcon Symbol="Contact2" />
-                    </Viewbox>
+                    <Grid Grid.Row="1"
+                          Grid.Column="0"
+                          Margin="{StaticResource BlindCarbonCopyMargin}"
+                          Visibility="{x:Bind ViewModel.IsHiddenCopyVisible, Mode=OneWay}">
+                        <Viewbox Width="{StaticResource SymbolSize}"
+                                 Height="{StaticResource SymbolSize}"
+                                 Margin="{StaticResource HorizontalMargin}"
+                                 HorizontalAlignment="Left"
+                                 VerticalAlignment="Center">
+                            <SymbolIcon Symbol="Contact2" />
+                        </Viewbox>
+                    </Grid>
 
                     <controls:EmailsInputControl x:Uid="BlindCarbonCopyBox"
                                                  Grid.Row="1"
                                                  Grid.Column="1"
+                                                 Margin="{StaticResource BlindCarbonCopyMargin}"
                                                  HorizontalAlignment="Stretch"
                                                  VerticalAlignment="Center"
                                                  Contacts="{x:Bind ViewModel.Contacts, Mode=OneWay}"
+                                                 IsExtraButtonVisible="False"
                                                  SelectedContacts="{x:Bind ViewModel.HiddenCopy, Mode=OneWay}"
-                                                 UntokenizedContact="{x:Bind ViewModel.UntokenizedContactHiddenCopy, Mode=TwoWay}" />
+                                                 UntokenizedContact="{x:Bind ViewModel.UntokenizedContactHiddenCopy, Mode=TwoWay}"
+                                                 Visibility="{x:Bind ViewModel.IsHiddenCopyVisible, Mode=OneWay}" />
 
                     <Grid Grid.Row="2"
                           Grid.ColumnSpan="2"

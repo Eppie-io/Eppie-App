@@ -1,0 +1,454 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+                    xmlns:win="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="ms-appx:///CommunityToolkit.WinUI.Controls.TokenizingTextBox/Themes/Generic.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Thickness x:Key="TextBoxTopHeaderMargin">0,0,0,0</Thickness>
+    <Thickness x:Key="TokenItemPadding">0,0,4,0</Thickness>
+    <Thickness x:Key="AutoSuggestBoxInnerButtonMargin">0,4</Thickness>
+    <x:Double x:Key="TokenizingTextBoxIconFontSize">16</x:Double>
+
+    <controls:TokenizingTextBoxStyleSelector x:Key="EmailTokenizingTextBoxStyleSelector"
+                                             TextStyle="{StaticResource EmailTokenizingTextBoxItemTextStyle}"
+                                             TokenStyle="{StaticResource EmailTokenizingTextBoxItemTokenStyle}" />
+
+    <controls:TokenizingTextBoxStyleSelector x:Key="EmailTokenizingTextBoxReservedSpaceStyleSelector"
+                                         TextStyle="{StaticResource EmailTokenizingTextBoxItemTextReservedSpaceStyle}"
+                                         TokenStyle="{StaticResource EmailTokenizingTextBoxItemTokenStyle}" />
+
+    <Style x:Key="EmailTokenizingTextBoxItemTextStyle"
+           BasedOn="{StaticResource TokenizingTextBoxItemTextStyle}"
+           TargetType="controls:TokenizingTextBoxItem">
+        <Setter Property="Height" Value="32" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:TokenizingTextBoxItem">
+                    <AutoSuggestBox Name="PART_AutoSuggestBox"
+                                    Height="32"
+                                    VerticalAlignment="Center"
+                                    DisplayMemberPath="{Binding Path=Owner.DisplayMemberPath, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                    ItemTemplate="{Binding Path=Owner.SuggestedItemTemplate, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                    ItemsSource="{Binding Path=Owner.SuggestedItemsSource, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                    PlaceholderText="{Binding Path=Owner.PlaceholderText, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                    Style="{Binding Path=Owner.AutoSuggestBoxStyle, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                    Text="{Binding Text, Mode=TwoWay}"
+                                    TextBoxStyle="{StaticResource EmailTokenizingTextBoxTextBoxStyle}"
+                                    TextMemberPath="{Binding Path=Owner.TextMemberPath, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                    UpdateTextOnSelect="False" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="EmailTokenizingTextBoxItemTextReservedSpaceStyle"
+           BasedOn="{StaticResource TokenizingTextBoxItemTextStyle}"
+           TargetType="controls:TokenizingTextBoxItem">
+        <Setter Property="Height" Value="32" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:TokenizingTextBoxItem">
+                    <AutoSuggestBox Name="PART_AutoSuggestBox"
+                                    Height="32"
+                                    VerticalAlignment="Center"
+                                    DisplayMemberPath="{Binding Path=Owner.DisplayMemberPath, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                    ItemTemplate="{Binding Path=Owner.SuggestedItemTemplate, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                    ItemsSource="{Binding Path=Owner.SuggestedItemsSource, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                    PlaceholderText="{Binding Path=Owner.PlaceholderText, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                    Style="{Binding Path=Owner.AutoSuggestBoxStyle, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                    Text="{Binding Text, Mode=TwoWay}"
+                                    TextBoxStyle="{StaticResource EmailTokenizingTextBoxTextBoxReservedSpaceStyle}"
+                                    TextMemberPath="{Binding Path=Owner.TextMemberPath, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                    UpdateTextOnSelect="False" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="EmailTokenizingTextBoxItemTokenStyle" TargetType="controls:TokenizingTextBoxItem">
+        <Setter Property="CornerRadius" Value="16" />
+        <Setter Property="Height" Value="32" />
+    </Style>
+
+    <Style x:Key="EmailTokenizingTextBoxTextBoxStyle"
+           BasedOn="{StaticResource AutoSuggestBoxTextBoxStyle}"
+           TargetType="TextBox">
+        <Setter Property="MinWidth" Value="{ThemeResource TextControlThemeMinWidth}" />
+        <Setter Property="Foreground" Value="{ThemeResource TextControlForeground}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="SelectionHighlightColor" Value="{ThemeResource TextControlSelectionHighlightColor}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <!--  Override  -->
+        <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+        <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
+        <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Auto" />
+        <Setter Property="ScrollViewer.VerticalScrollMode" Value="Auto" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden" />
+        <win:Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="False" />
+        <Setter Property="Padding" Value="8,5,6,6" />
+        <Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}" />
+        <Setter Property="MinHeight" Value="28" />
+        <!--  Override  -->
+        <win:Setter Property="SelectionHighlightColorWhenNotFocused" Value="{ThemeResource TextControlSelectionHighlightColor}" />
+        <!--  Override  -->
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Grid ColumnSpacing="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Border x:Name="BorderElement"
+                                Grid.Row="1"
+                                Grid.RowSpan="1"
+                                Grid.ColumnSpan="3"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}" />
+                        <ContentPresenter x:Name="HeaderContentPresenter"
+                                          Grid.Row="0"
+                                          Grid.ColumnSpan="3"
+                                          Margin="{ThemeResource AutoSuggestBoxTopHeaderMargin}"
+                                          x:DeferLoadStrategy="Lazy"
+                                          Content="{TemplateBinding Header}"
+                                          ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                          FontWeight="Normal"
+                                          Foreground="{ThemeResource TextControlHeaderForeground}"
+                                          TextWrapping="Wrap"
+                                          Visibility="Collapsed" />
+                        <ScrollViewer x:Name="ContentElement"
+                                      Grid.Row="1"
+                                      Margin="{TemplateBinding BorderThickness}"
+                                      Padding="{TemplateBinding Padding}"
+                                      win:AutomationProperties.AccessibilityView="Raw"
+                                      win:IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
+                                      win:IsHorizontalRailEnabled="{TemplateBinding ScrollViewer.IsHorizontalRailEnabled}"
+                                      win:IsVerticalRailEnabled="{TemplateBinding ScrollViewer.IsVerticalRailEnabled}"
+                                      HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                                      HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}"
+                                      IsTabStop="False"
+                                      VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
+                                      VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}"
+                                      ZoomMode="Disabled" />
+                        <ContentControl x:Name="PlaceholderTextContentPresenter"
+                                        Grid.Row="1"
+                                        Grid.ColumnSpan="2"
+                                        Padding="{TemplateBinding Padding}"
+                                        VerticalContentAlignment="Center"
+                                        Content="{TemplateBinding PlaceholderText}"
+                                        Foreground="{ThemeResource TextControlPlaceholderForeground}"
+                                        IsHitTestVisible="False"
+                                        IsTabStop="False" />
+                        <Button x:Name="DeleteButton"
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                Width="32"
+                                Height="28"
+                                Padding="{ThemeResource HelperButtonThemePadding}"
+                                VerticalAlignment="Stretch"
+                                win:AutomationProperties.AccessibilityView="Raw"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding CornerRadius}"
+                                FontSize="{TemplateBinding FontSize}"
+                                IsTabStop="False"
+                                Style="{StaticResource TokenizingTextBoxDeleteButtonStyle}"
+                                Visibility="Collapsed" />
+
+                        <TextBlock Name="PART_TokensCounter"
+                                   Grid.Row="1"
+                                   Grid.Column="2"
+                                   Margin="2,0,0,2"
+                                   VerticalAlignment="Center"
+                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                   Style="{StaticResource CaptionTextBlockStyle}" />
+
+                        <!--  Eppie override - QueryButton removed  -->
+
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="HeaderContentPresenter" Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlHeaderForegroundDisabled}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentElement" Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlForegroundDisabled}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PlaceholderTextContentPresenter" Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlPlaceholderForegroundDisabled}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="PointerOver">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PlaceholderTextContentPresenter" Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlPlaceholderForegroundPointerOver}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentElement" Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlForegroundPointerOver}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Focused">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PlaceholderTextContentPresenter" Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlPlaceholderForegroundFocused}" />
+                                            <!--  WinUI override  -->
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentElement" Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlForegroundFocused}" />
+                                            <!--  WinUI override  -->
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentElement"
+                                                                       Storyboard.TargetProperty="RequestedTheme">
+                                            <DiscreteObjectKeyFrame KeyTime="0"
+                                                                    Value="Light" />
+                                        </ObjectAnimationUsingKeyFrames>-->
+
+                                        <!--  Eppie override - QueryButton removed
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="QueryButton" Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlButtonForeground}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        -->
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="ButtonStates">
+                                <VisualState x:Name="ButtonVisible">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="DeleteButton" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Visible</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="ButtonCollapsed" />
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="TokensCounterStates">
+                                <VisualState x:Name="MaxReachedState">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_TokensCounter" Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemFillColorCriticalBrush}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Default" />
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="EmailTokenizingTextBoxTextBoxReservedSpaceStyle"
+       BasedOn="{StaticResource AutoSuggestBoxTextBoxStyle}"
+       TargetType="TextBox">
+        <Setter Property="MinWidth" Value="{ThemeResource TextControlThemeMinWidth}" />
+        <Setter Property="Foreground" Value="{ThemeResource TextControlForeground}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="SelectionHighlightColor" Value="{ThemeResource TextControlSelectionHighlightColor}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <!--  Override  -->
+        <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+        <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
+        <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Auto" />
+        <Setter Property="ScrollViewer.VerticalScrollMode" Value="Auto" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden" />
+        <win:Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="False" />
+        <Setter Property="Padding" Value="8,5,6,6" />
+        <Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}" />
+        <Setter Property="MinHeight" Value="28" />
+        <!--  Override  -->
+        <win:Setter Property="SelectionHighlightColorWhenNotFocused" Value="{ThemeResource TextControlSelectionHighlightColor}" />
+        <!--  Override  -->
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Grid ColumnSpacing="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Border x:Name="BorderElement"
+                            Grid.Row="1"
+                            Grid.RowSpan="1"
+                            Grid.ColumnSpan="3"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}" />
+                        <ContentPresenter x:Name="HeaderContentPresenter"
+                                      Grid.Row="0"
+                                      Grid.ColumnSpan="3"
+                                      Margin="{ThemeResource AutoSuggestBoxTopHeaderMargin}"
+                                      x:DeferLoadStrategy="Lazy"
+                                      Content="{TemplateBinding Header}"
+                                      ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                      FontWeight="Normal"
+                                      Foreground="{ThemeResource TextControlHeaderForeground}"
+                                      TextWrapping="Wrap"
+                                      Visibility="Collapsed" />
+                        <ScrollViewer x:Name="ContentElement"
+                                  Grid.Row="1"
+                                  Margin="{TemplateBinding BorderThickness}"
+                                  Padding="{TemplateBinding Padding}"
+                                  win:AutomationProperties.AccessibilityView="Raw"
+                                  win:IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
+                                  win:IsHorizontalRailEnabled="{TemplateBinding ScrollViewer.IsHorizontalRailEnabled}"
+                                  win:IsVerticalRailEnabled="{TemplateBinding ScrollViewer.IsVerticalRailEnabled}"
+                                  HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                                  HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}"
+                                  IsTabStop="False"
+                                  VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
+                                  VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}"
+                                  ZoomMode="Disabled" />
+                        <ContentControl x:Name="PlaceholderTextContentPresenter"
+                                    Grid.Row="1"
+                                    Grid.ColumnSpan="2"
+                                    Padding="{TemplateBinding Padding}"
+                                    VerticalContentAlignment="Center"
+                                    Content="{TemplateBinding PlaceholderText}"
+                                    Foreground="{ThemeResource TextControlPlaceholderForeground}"
+                                    IsHitTestVisible="False"
+                                    IsTabStop="False" />
+                        <Button x:Name="DeleteButton"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Width="32"
+                            Height="28"
+                            Padding="{ThemeResource HelperButtonThemePadding}"
+                            VerticalAlignment="Stretch"
+                            win:AutomationProperties.AccessibilityView="Raw"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}"
+                            FontSize="{TemplateBinding FontSize}"
+                            IsTabStop="False"
+                            Style="{StaticResource TokenizingTextBoxDeleteButtonStyle}"
+                            Visibility="Collapsed" />
+
+                        <TextBlock Name="PART_TokensCounter"
+                               Grid.Row="1"
+                               Grid.Column="2"
+                               Margin="2,0,0,2"
+                               VerticalAlignment="Center"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                               Style="{StaticResource CaptionTextBlockStyle}" />
+
+                        <!--  Eppie override - QueryButton removed  -->
+                        <!--  Eppie override - ReservedSpace added  -->
+                        <Grid x:Name="ReservedSpace"
+                          Grid.Row="1"
+                          Grid.Column="3"
+                          Width="32"
+                          Height="28"
+                          Margin="0,0,2,0"
+                          Padding="0"
+                          VerticalAlignment="Stretch" />
+
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="HeaderContentPresenter" Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlHeaderForegroundDisabled}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentElement" Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlForegroundDisabled}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PlaceholderTextContentPresenter" Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlPlaceholderForegroundDisabled}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="PointerOver">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PlaceholderTextContentPresenter" Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlPlaceholderForegroundPointerOver}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentElement" Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlForegroundPointerOver}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Focused">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PlaceholderTextContentPresenter" Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlPlaceholderForegroundFocused}" />
+                                            <!--  WinUI override  -->
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentElement" Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlForegroundFocused}" />
+                                            <!--  WinUI override  -->
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentElement"
+                                                                   Storyboard.TargetProperty="RequestedTheme">
+                                        <DiscreteObjectKeyFrame KeyTime="0"
+                                                                Value="Light" />
+                                    </ObjectAnimationUsingKeyFrames>-->
+
+                                        <!--  Eppie override - QueryButton removed
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="QueryButton" Storyboard.TargetProperty="Foreground">
+                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlButtonForeground}" />
+                                    </ObjectAnimationUsingKeyFrames>
+                                    -->
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="ButtonStates">
+                                <VisualState x:Name="ButtonVisible">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="DeleteButton" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Visible</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="ButtonCollapsed" />
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="TokensCounterStates">
+                                <VisualState x:Name="MaxReachedState">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_TokensCounter" Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemFillColorCriticalBrush}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Default" />
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+</ResourceDictionary>

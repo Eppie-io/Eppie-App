@@ -267,6 +267,13 @@ namespace Tuvi.App.ViewModels
             set { SetProperty(ref _isAdvancedSettingsVisible, value); }
         }
 
+        private bool _isHiddenCopyVisible;
+        public bool IsHiddenCopyVisible
+        {
+            get { return _isHiddenCopyVisible; }
+            set { SetProperty(ref _isHiddenCopyVisible, value); }
+        }
+
         public bool HasAttachments => Attachments.Any();
 
         // ToDo: SenderAddresses should be used
@@ -315,6 +322,8 @@ namespace Tuvi.App.ViewModels
 
         public ICommand RemoveAttachmentCommand => new RelayCommand<RemovableAttachment>(RemoveAttachment);
 
+        public ICommand ToggleHiddenCopyCommand => new RelayCommand(ToggleHiddenCopy);
+
         private async Task PickAndAttachFilesAsync(IFileOperationProvider fileOperationsProvider)
         {
             try
@@ -350,6 +359,13 @@ namespace Tuvi.App.ViewModels
             }
 
             Attachments.Remove(item);
+        }
+
+        private void ToggleHiddenCopy()
+        {
+            IsHiddenCopyVisible = !IsHiddenCopyVisible;
+
+            // Todo: Managing the BCC list when toggling visibility (e.g., clear bcc when hiding)
         }
 
         public override async void OnNavigatedTo(object data)
