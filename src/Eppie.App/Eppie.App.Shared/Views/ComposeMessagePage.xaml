@@ -13,9 +13,6 @@
         <viewmodels:NewMessagePageViewModel />
     </local:ComposeMessagePageBase.DataContext>
 
-
-    <!--  Todo:  Encrypted, Signed, OpenAllPgpKeys commands should be added  -->
-
     <local:ComposeMessagePageBase.Resources>
         <x:Double x:Key="AreaMaxWidth">960</x:Double>
         <CornerRadius x:Key="BorderRadius">4</CornerRadius>
@@ -246,6 +243,7 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
@@ -289,8 +287,26 @@
                             </StackPanel>
                         </Button>
 
+                        <Button x:Uid="ComposeMessageAdvancedButton"
+                                Grid.Column="3"
+                                Margin="4,0"
+                                VerticalAlignment="Center"
+                                Style="{StaticResource ThinButtonStyle}">
+                            <Button.Flyout>
+                                <MenuFlyout>
+                                    <ToggleMenuFlyoutItem x:Uid="MessageEncryptedMenuItem"
+                                                          IsChecked="{x:Bind ViewModel.IsEncrypted, Mode=TwoWay}"
+                                                          IsEnabled="{x:Bind ViewModel.IsChangeCryptographyEnabled, Mode=OneWay}" />
+                                    <ToggleMenuFlyoutItem x:Uid="MessageSignedMenuItem"
+                                                          IsChecked="{x:Bind ViewModel.IsSigned, Mode=TwoWay}"
+                                                          IsEnabled="{x:Bind ViewModel.IsChangeCryptographyEnabled, Mode=OneWay}" />
+                                    <MenuFlyoutItem x:Uid="PgpKeysMenuItem" Command="{x:Bind ViewModel.OpenAllPgpKeysCommand}" />
+                                </MenuFlyout>
+                            </Button.Flyout>
+                        </Button>
+
                         <Button x:Uid="SendMessageButton"
-                                Grid.Column="4"
+                                Grid.Column="5"
                                 MinWidth="112"
                                 Margin="4,0,0,0"
                                 VerticalAlignment="Center"

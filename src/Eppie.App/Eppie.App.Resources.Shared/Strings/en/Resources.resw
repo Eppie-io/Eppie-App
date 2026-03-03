@@ -554,6 +554,22 @@ You need to enable IMAP for this account first and try again.</value>
     <value>PGP keys</value>
     <comment>Go to PGP keys management page button content</comment>
   </data>
+  <data name="ComposeMessageAdvancedButton.Content" xml:space="preserve">
+    <value>Advanced</value>
+    <comment>Button text that opens menu with additional options</comment>
+  </data>
+  <data name="MessageEncryptedMenuItem.Text" xml:space="preserve">
+    <value>Encrypt</value>
+    <comment>Text for the menu item that encrypts emails</comment>
+  </data>
+  <data name="MessageSignedMenuItem.Text" xml:space="preserve">
+    <value>Sign</value>
+    <comment>Text for the menu item that signs emails</comment>
+  </data>
+  <data name="PgpKeysMenuItem.Text" xml:space="preserve">
+    <value>PGP keys</value>
+    <comment>Text for the menu item that opens PGP keys management</comment>
+  </data>
   <data name="PgpKeyImportButton.Content" xml:space="preserve">
     <value>Import key from file</value>
     <comment>Import PGP key from file button content</comment>
