@@ -377,9 +377,6 @@ namespace Tuvi.App.ViewModels
                     }
                 }
 
-                // ToDo: remove test code
-                InitFakeSenderAddresses();
-
                 base.OnNavigatedTo(data);
             }
             catch (Exception ex)
@@ -666,32 +663,6 @@ namespace Tuvi.App.ViewModels
             catch (Exception e)
             {
                 OnError(e);
-            }
-        }
-
-        // ToDo: remove test code
-        private void InitFakeSenderAddresses()
-        {
-            SenderAddresses.Clear();
-
-            SenderAddresses.Add(new AddressItem(CreateFakeAccount("alice@mail.fake", MailBoxType.Email, "alice")));
-            SenderAddresses.Add(new AddressItem(CreateFakeAccount("bob@mail.fake", MailBoxType.Email, "bob")));
-            SenderAddresses.Add(new AddressItem(CreateFakeAccount("eva@mail.fake", MailBoxType.Email)));
-            SenderAddresses.Add(new AddressItem(CreateFakeAccount("huge-huge-huge-huge-huge-email-address@mail.fake", MailBoxType.Email)));
-            SenderAddresses.Add(new AddressItem(CreateFakeAccount("huge-huge-huge-huge-huge-email-address@mail.fake", MailBoxType.Email, "huge-huge-huge-huge-huge-name")));
-            SenderAddresses.Add(new AddressItem(CreateFakeAccount("email-address@mail.fake", MailBoxType.Email, "huge-huge-huge-huge-huge-name")));
-            SenderAddresses.Add(new AddressItem(CreateFakeAccount("email@mail.fake", MailBoxType.Email, "firstname secondname")));
-
-            SenderAddressIndex = -1;
-
-
-            Account CreateFakeAccount(string email, MailBoxType type, string name = null)
-            {
-                return new Account()
-                {
-                    Email = new EmailAddress(email, name),
-                    Type = type
-                };
             }
         }
     }
