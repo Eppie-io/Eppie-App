@@ -61,6 +61,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\MailboxesPanelPage.xaml.cs">
       <DependentUpon>MailboxesPanelPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\MessageItemView.xaml.cs">
+      <DependentUpon>MessageItemView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)App.Uno.xaml.cs">
@@ -209,6 +212,10 @@
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Views\MailboxesPanelPage.xaml" />
     <Page Include="$(MSBuildThisFileDirectory)Views\MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\MessageItemView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
