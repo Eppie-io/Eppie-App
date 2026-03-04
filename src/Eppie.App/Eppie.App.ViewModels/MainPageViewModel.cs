@@ -100,7 +100,7 @@ namespace Tuvi.App.ViewModels
             get
             {
                 var firstSender = _message.From?.FirstOrDefault();
-                if (firstSender == null)
+                if (firstSender is null)
                 {
                     return string.Empty;
                 }
@@ -229,7 +229,7 @@ namespace Tuvi.App.ViewModels
         {
             get
             {
-                if (_message.From == null)
+                if (_message.From is null)
                     return string.Empty;
                 var firstSender = _message.From.FirstOrDefault();
                 return firstSender?.Address ?? string.Empty;
@@ -240,7 +240,7 @@ namespace Tuvi.App.ViewModels
         {
             get
             {
-                if (_message.To == null)
+                if (_message.To is null)
                     return string.Empty;
                 var firstRecipient = _message.To.FirstOrDefault();
                 return firstRecipient?.DisplayName ?? string.Empty;
