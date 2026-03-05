@@ -332,13 +332,13 @@
                         </Button>
 
                         <AppBarButton x:Name="AIAgentButton"
-                                x:Uid="/App.Resources/AIAgentProcessMessageButton"
-                                Grid.Column="4"
-                                Margin="4,0"
-                                VerticalAlignment="Center"
-                                IsEnabled="{x:Bind ViewModel.IsLocalAIEnabled, Mode=OneWay}"
-                                Style="{StaticResource ThinButtonStyle}"
-                                Visibility="{x:Bind ViewModel.IsLocalAIAvailable, Mode=OneWay}">
+                                      x:Uid="/App.Resources/AIAgentProcessMessageButton"
+                                      Grid.Column="4"
+                                      Margin="4,0"
+                                      VerticalAlignment="Center"
+                                      IsEnabled="{x:Bind ViewModel.IsLocalAIEnabled, Mode=OneWay}"
+                                      Style="{StaticResource ThinButtonStyle}"
+                                      Visibility="{x:Bind ViewModel.IsLocalAIAvailable, Mode=OneWay}">
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
                                           FontSize="{StaticResource SymbolSize}"
