@@ -477,7 +477,7 @@ namespace Tuvi.App.ViewModels
 
                     if (navigateContentFrameAction is null)
                     {
-                        NavigationService?.Navigate(nameof(NewMessagePageViewModel), messageData);
+                        NavigationService?.NavigateContent(nameof(ComposeMessagePageViewModel), messageData);
                     }
                     else
                     {
@@ -557,7 +557,7 @@ namespace Tuvi.App.ViewModels
                 }
 
                 var messageData = MailtoMessageData.FromMailtoUri(mailtoUri, defaultAccount.Email);
-                NavigationService?.Navigate(nameof(NewMessagePageViewModel), messageData);
+                NavigationService?.NavigateContent(nameof(ComposeMessagePageViewModel), messageData);
             }
             catch (Exception ex)
             {

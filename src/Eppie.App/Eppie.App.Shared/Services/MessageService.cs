@@ -241,7 +241,7 @@ namespace Eppie.App.Services
             var brand = new Models.BrandLoader();
             var navigationService = (Application.Current as Eppie.App.App).NavigationService;
             var messageData = new ErrorReportNewMessageData(brand.GetSupport(), StringProvider.GetString("ErrorReportEmailTitle"), message);
-            navigationService?.Navigate(nameof(NewMessagePageViewModel), messageData);
+            navigationService?.NavigateContent(nameof(ComposeMessagePageViewModel), messageData);
         }
 
         public Task ShowEnableImapMessageAsync(string forEmail)

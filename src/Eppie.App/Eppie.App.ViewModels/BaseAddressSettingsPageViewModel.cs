@@ -170,14 +170,7 @@ namespace Tuvi.App.ViewModels
 
         protected void NavigateFromCurrentPage()
         {
-            if (IsCreatingAccountMode)
-            {
-                NavigationService?.GoBackToOrNavigate(nameof(MainPageViewModel));
-            }
-            else
-            {
-                NavigationService?.GoBackOrNavigate(nameof(MainPageViewModel));
-            }
+            NavigationService?.GoBack();
         }
 
         protected virtual async Task ApplySettingsAndGoBackAsync()

@@ -18,7 +18,6 @@
 
 using Tuvi.App.ViewModels.Services;
 using System;
-using System.Linq;
 using System.Globalization;
 using System.Diagnostics.CodeAnalysis;
 
@@ -35,6 +34,7 @@ namespace Eppie.App.Services
     public class NavigationService : INavigationService
     {
         protected Frame MainFrame { get; }
+        protected Frame ContentFrame { get; private set; }
         protected string PageTypePrefix { get; }
 
         public NavigationService(Frame mainFrame, string pageTypePrefix)
@@ -43,14 +43,34 @@ namespace Eppie.App.Services
             PageTypePrefix = pageTypePrefix;
         }
 
+        public void SetContentFrame(Frame contentFrame)
+        {
+            ContentFrame = contentFrame;
+        }
+
+        private Frame GetGoBackFrame()
+        {
+            if (ContentFrame != null && ContentFrame.IsLoaded && ContentFrame.CanGoBack)
+            {
+                return ContentFrame;
+            }
+
+            return MainFrame;
+        }
+
         public bool CanGoBack()
         {
-            return MainFrame != null && MainFrame.CanGoBack;
+            var frame = GetGoBackFrame();
+            return frame != null && frame.CanGoBack;
         }
 
         public void GoBack()
         {
-            MainFrame?.GoBack();
+            var frame = GetGoBackFrame();
+            if (frame != null && frame.CanGoBack)
+            {
+                frame.GoBack();
+            }
         }
 
         [SuppressMessage("ILLink", "IL2057:Unrecognized value passed to the parameter 'typeName' of method 'System.Type.GetType(System.String)'. It's not possible to guarantee the availability of the target type.", Justification = "Pages are located in the same assembly; resolving by name at runtime is intended and safe in this app.")]
@@ -65,70 +85,21 @@ namespace Eppie.App.Services
             }
         }
 
-        public bool CanGoBackTo(string pageKey)
+        [SuppressMessage("ILLink", "IL2057:Unrecognized value passed to the parameter 'typeName' of method 'System.Type.GetType(System.String)'. It's not possible to guarantee the availability of the target type.", Justification = "Pages are located in the same assembly; resolving by name at runtime is intended and safe in this app.")]
+        public void NavigateContent(string pageKey, object parameter = null)
         {
+            var frame = ContentFrame ?? MainFrame;
             string pageTypeName = GetPageTypeNameFromKey(pageKey);
-            return MainFrame?.BackStack.LastOrDefault(item => item.SourcePageType.ToString() == pageTypeName) != null;
-        }
-
-        public void GoBackTo(string pageKey)
-        {
-            string pageTypeName = GetPageTypeNameFromKey(pageKey);
-            int backStepsCount = GetBackStepsCountTo(pageTypeName);
-            for (int i = 0; i < backStepsCount; i++)
+            Type pageType = Type.GetType(pageTypeName);
+            if (pageType != null)
             {
-                MainFrame?.GoBack();
-            }
-        }
-
-        private int GetBackStepsCountTo(string pageTypeName)
-        {
-            if (MainFrame != null)
-            {
-                for (int i = MainFrame.BackStack.Count - 1; i >= 0; i--)
-                {
-                    if (MainFrame.BackStack[i].SourcePageType?.ToString() == pageTypeName)
-                    {
-                        return MainFrame.BackStack.Count - i;
-                    }
-                }
-            }
-
-            return 0;
-        }
-
-        public void GoBackOrNavigate(string pageKey, object parameter = null)
-        {
-            if (CanGoBack())
-            {
-                GoBack();
-            }
-            else
-            {
-                Navigate(pageKey, parameter);
-            }
-        }
-
-        public void GoBackToOrNavigate(string pageKey, object parameter = null)
-        {
-            if (CanGoBackTo(pageKey))
-            {
-                GoBackTo(pageKey);
-            }
-            else
-            {
-                Navigate(pageKey, parameter);
+                frame?.Navigate(pageType, parameter);
             }
         }
 
         public void ExitApplication()
         {
             Application.Current.Exit(); // ToDo: Uno0001
-        }
-
-        public void ClearHistory()
-        {
-            MainFrame?.BackStack.Clear();
         }
 
         protected string GetPageTypeNameFromKey(string pageKey)

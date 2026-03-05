@@ -634,14 +634,7 @@ namespace Tuvi.App.ViewModels
 
         private void NavigateFromCurrentPage()
         {
-            if (IsCreatingAgentMode)
-            {
-                NavigationService?.GoBackToOrNavigate(nameof(MainPageViewModel));
-            }
-            else
-            {
-                NavigationService?.GoBackOrNavigate(nameof(MainPageViewModel));
-            }
+            NavigationService?.GoBack();
         }
 
         private void DoCancel()
