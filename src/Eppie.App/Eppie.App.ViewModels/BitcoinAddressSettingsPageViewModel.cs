@@ -21,6 +21,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
+using Tuvi.App.ViewModels.Services;
 using Tuvi.Core.Entities;
 
 namespace Tuvi.App.ViewModels
@@ -28,6 +29,7 @@ namespace Tuvi.App.ViewModels
     public class BitcoinAddressSettingsPageViewModel : DecentralizedAddressSettingsPageViewModel
     {
         public IRelayCommand ActivateAddressCommand { get; }
+        public IRelayCommand CopyAddressCommand { get; }
 
         private bool _isActivationEnabled = true;
         public bool IsActivationEnabled
@@ -82,6 +84,7 @@ namespace Tuvi.App.ViewModels
         public BitcoinAddressSettingsPageViewModel() : base()
         {
             ActivateAddressCommand = new AsyncRelayCommand(ActivateAddressAsync, () => IsActivationEnabled && AddressSettingsModel != null);
+            CopyAddressCommand = new RelayCommand<IClipboardProvider>(DoCopyAddress, CanCopyAddress);
         }
 
         public override async void OnNavigatedTo(object data)
@@ -119,9 +122,15 @@ namespace Tuvi.App.ViewModels
             finally
             {
                 CopySecretKeyCommand.NotifyCanExecuteChanged();
+                CopyAddressCommand.NotifyCanExecuteChanged();
                 ActivateAddressCommand.NotifyCanExecuteChanged();
                 ApplySettingsCommand.NotifyCanExecuteChanged();
             }
+        }
+
+        private bool CanCopyAddress(IClipboardProvider clipboard)
+        {
+            return clipboard != null && !string.IsNullOrWhiteSpace(AddressSettingsModel?.ToAccount()?.Email?.DecentralizedAddress);
         }
 
         private void ValidateActivationProperty()
@@ -243,6 +252,21 @@ namespace Tuvi.App.ViewModels
 
                 _activationCts?.Dispose();
                 _activationCts = null;
+            }
+        }
+
+        private void DoCopyAddress(IClipboardProvider clipboard)
+        {
+            if (clipboard is null)
+            {
+                throw new ArgumentNullException(nameof(clipboard));
+            }
+
+            var address = AddressSettingsModel?.ToAccount()?.Email?.DecentralizedAddress;
+
+            if (!string.IsNullOrWhiteSpace(address))
+            {
+                clipboard.SetClipboardContent(address);
             }
         }
 
