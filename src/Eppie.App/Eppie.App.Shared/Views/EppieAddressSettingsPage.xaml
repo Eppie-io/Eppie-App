@@ -26,7 +26,7 @@
     </local:EppieAddressSettingsPageBase.DataContext>
 
     <interactivity:Interaction.Behaviors>
-        <behaviors:DialogBehavior ApplyCommand="{x:Bind ViewModel.JoinWaitingListCommand}"
+        <behaviors:DialogBehavior ApplyCommand="{x:Bind ViewModel.ApplySettingsCommand}"
                                   CancelCommand="{x:Bind ViewModel.CancelSettingsCommand}"
                                   HandleErrorCommand="{x:Bind ViewModel.HandleErrorCommand}" />
     </interactivity:Interaction.Behaviors>
@@ -36,7 +36,6 @@
                                   CancelCommand="{x:Bind ViewModel.CancelSettingsCommand}"
                                   IsApplying="{x:Bind ViewModel.IsWaitingResponse, Mode=OneWay}"
                                   IsRemoveButtonVisible="{x:Bind ViewModel.IsCreatingAccountMode, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
-                                  JoinWaitingListCommand="{x:Bind ViewModel.JoinWaitingListCommand, Mode=OneWay}"
                                   RemoveCommand="{x:Bind ViewModel.RemoveAccountCommand}">
         <StackPanel>
 
