@@ -17,8 +17,8 @@
                                              TokenStyle="{StaticResource EmailTokenizingTextBoxItemTokenStyle}" />
 
     <controls:TokenizingTextBoxStyleSelector x:Key="EmailTokenizingTextBoxReservedSpaceStyleSelector"
-                                         TextStyle="{StaticResource EmailTokenizingTextBoxItemTextReservedSpaceStyle}"
-                                         TokenStyle="{StaticResource EmailTokenizingTextBoxItemTokenStyle}" />
+                                             TextStyle="{StaticResource EmailTokenizingTextBoxItemTextReservedSpaceStyle}"
+                                             TokenStyle="{StaticResource EmailTokenizingTextBoxItemTokenStyle}" />
 
     <Style x:Key="EmailTokenizingTextBoxItemTextStyle"
            BasedOn="{StaticResource TokenizingTextBoxItemTextStyle}"
@@ -259,8 +259,8 @@
     </Style>
 
     <Style x:Key="EmailTokenizingTextBoxTextBoxReservedSpaceStyle"
-       BasedOn="{StaticResource AutoSuggestBoxTextBoxStyle}"
-       TargetType="TextBox">
+           BasedOn="{StaticResource AutoSuggestBoxTextBoxStyle}"
+           TargetType="TextBox">
         <Setter Property="MinWidth" Value="{ThemeResource TextControlThemeMinWidth}" />
         <Setter Property="Foreground" Value="{ThemeResource TextControlForeground}" />
         <Setter Property="Background" Value="Transparent" />
@@ -296,78 +296,78 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <Border x:Name="BorderElement"
-                            Grid.Row="1"
-                            Grid.RowSpan="1"
-                            Grid.ColumnSpan="3"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}" />
+                                Grid.Row="1"
+                                Grid.RowSpan="1"
+                                Grid.ColumnSpan="3"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}" />
                         <ContentPresenter x:Name="HeaderContentPresenter"
-                                      Grid.Row="0"
-                                      Grid.ColumnSpan="3"
-                                      Margin="{ThemeResource AutoSuggestBoxTopHeaderMargin}"
-                                      x:DeferLoadStrategy="Lazy"
-                                      Content="{TemplateBinding Header}"
-                                      ContentTemplate="{TemplateBinding HeaderTemplate}"
-                                      FontWeight="Normal"
-                                      Foreground="{ThemeResource TextControlHeaderForeground}"
-                                      TextWrapping="Wrap"
-                                      Visibility="Collapsed" />
+                                          Grid.Row="0"
+                                          Grid.ColumnSpan="3"
+                                          Margin="{ThemeResource AutoSuggestBoxTopHeaderMargin}"
+                                          x:DeferLoadStrategy="Lazy"
+                                          Content="{TemplateBinding Header}"
+                                          ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                          FontWeight="Normal"
+                                          Foreground="{ThemeResource TextControlHeaderForeground}"
+                                          TextWrapping="Wrap"
+                                          Visibility="Collapsed" />
                         <ScrollViewer x:Name="ContentElement"
-                                  Grid.Row="1"
-                                  Margin="{TemplateBinding BorderThickness}"
-                                  Padding="{TemplateBinding Padding}"
-                                  win:AutomationProperties.AccessibilityView="Raw"
-                                  win:IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
-                                  win:IsHorizontalRailEnabled="{TemplateBinding ScrollViewer.IsHorizontalRailEnabled}"
-                                  win:IsVerticalRailEnabled="{TemplateBinding ScrollViewer.IsVerticalRailEnabled}"
-                                  HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
-                                  HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}"
-                                  IsTabStop="False"
-                                  VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
-                                  VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}"
-                                  ZoomMode="Disabled" />
+                                      Grid.Row="1"
+                                      Margin="{TemplateBinding BorderThickness}"
+                                      Padding="{TemplateBinding Padding}"
+                                      win:AutomationProperties.AccessibilityView="Raw"
+                                      win:IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
+                                      win:IsHorizontalRailEnabled="{TemplateBinding ScrollViewer.IsHorizontalRailEnabled}"
+                                      win:IsVerticalRailEnabled="{TemplateBinding ScrollViewer.IsVerticalRailEnabled}"
+                                      HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                                      HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}"
+                                      IsTabStop="False"
+                                      VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
+                                      VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}"
+                                      ZoomMode="Disabled" />
                         <ContentControl x:Name="PlaceholderTextContentPresenter"
-                                    Grid.Row="1"
-                                    Grid.ColumnSpan="2"
-                                    Padding="{TemplateBinding Padding}"
-                                    VerticalContentAlignment="Center"
-                                    Content="{TemplateBinding PlaceholderText}"
-                                    Foreground="{ThemeResource TextControlPlaceholderForeground}"
-                                    IsHitTestVisible="False"
-                                    IsTabStop="False" />
+                                        Grid.Row="1"
+                                        Grid.ColumnSpan="2"
+                                        Padding="{TemplateBinding Padding}"
+                                        VerticalContentAlignment="Center"
+                                        Content="{TemplateBinding PlaceholderText}"
+                                        Foreground="{ThemeResource TextControlPlaceholderForeground}"
+                                        IsHitTestVisible="False"
+                                        IsTabStop="False" />
                         <Button x:Name="DeleteButton"
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            Width="32"
-                            Height="28"
-                            Padding="{ThemeResource HelperButtonThemePadding}"
-                            VerticalAlignment="Stretch"
-                            win:AutomationProperties.AccessibilityView="Raw"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="{TemplateBinding CornerRadius}"
-                            FontSize="{TemplateBinding FontSize}"
-                            IsTabStop="False"
-                            Style="{StaticResource TokenizingTextBoxDeleteButtonStyle}"
-                            Visibility="Collapsed" />
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                Width="32"
+                                Height="28"
+                                Padding="{ThemeResource HelperButtonThemePadding}"
+                                VerticalAlignment="Stretch"
+                                win:AutomationProperties.AccessibilityView="Raw"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding CornerRadius}"
+                                FontSize="{TemplateBinding FontSize}"
+                                IsTabStop="False"
+                                Style="{StaticResource TokenizingTextBoxDeleteButtonStyle}"
+                                Visibility="Collapsed" />
 
                         <TextBlock Name="PART_TokensCounter"
-                               Grid.Row="1"
-                               Grid.Column="2"
-                               Margin="2,0,0,2"
-                               VerticalAlignment="Center"
-                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                               Style="{StaticResource CaptionTextBlockStyle}" />
+                                   Grid.Row="1"
+                                   Grid.Column="2"
+                                   Margin="2,0,0,2"
+                                   VerticalAlignment="Center"
+                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                   Style="{StaticResource CaptionTextBlockStyle}" />
 
                         <!--  Eppie override - QueryButton removed  -->
                         <!--  Eppie override - ReservedSpace added  -->
                         <Grid x:Name="ReservedSpace"
-                          Grid.Row="1"
-                          Grid.Column="3"
-                          Width="32"
-                          Height="28"
-                          Margin="0,0,2,0"
-                          Padding="0"
-                          VerticalAlignment="Stretch" />
+                              Grid.Row="1"
+                              Grid.Column="3"
+                              Width="32"
+                              Height="28"
+                              Margin="0,0,2,0"
+                              Padding="0"
+                              VerticalAlignment="Stretch" />
 
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
@@ -415,7 +415,7 @@
                                     <ObjectAnimationUsingKeyFrames Storyboard.TargetName="QueryButton" Storyboard.TargetProperty="Foreground">
                                         <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlButtonForeground}" />
                                     </ObjectAnimationUsingKeyFrames>
-                                    -->
+                                        -->
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
