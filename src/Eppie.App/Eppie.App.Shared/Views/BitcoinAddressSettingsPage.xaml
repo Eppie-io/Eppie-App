@@ -23,7 +23,7 @@
     </local:BitcoinAddressSettingsPageBase.DataContext>
 
     <interactivity:Interaction.Behaviors>
-        <behaviors:DialogBehavior ApplyCommand="{x:Bind ViewModel.JoinWaitingListCommand}"
+        <behaviors:DialogBehavior ApplyCommand="{x:Bind ViewModel.ApplySettingsCommand}"
                                   CancelCommand="{x:Bind ViewModel.CancelSettingsCommand}"
                                   HandleErrorCommand="{x:Bind ViewModel.HandleErrorCommand}" />
     </interactivity:Interaction.Behaviors>
@@ -33,7 +33,6 @@
                                   CancelCommand="{x:Bind ViewModel.CancelSettingsCommand}"
                                   IsApplying="{x:Bind ViewModel.IsWaitingResponse, Mode=OneWay}"
                                   IsRemoveButtonVisible="{x:Bind ViewModel.IsCreatingAccountMode, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
-                                  JoinWaitingListCommand="{x:Bind ViewModel.JoinWaitingListCommand, Mode=OneWay}"
                                   RemoveCommand="{x:Bind ViewModel.RemoveAccountCommand}">
         <StackPanel>
 
@@ -57,14 +56,22 @@
             <controls:OptionControl x:Uid="ActivateBitcoinAddressOption"
                                     GapHeight="{StaticResource NormalOptionGapHeight}"
                                     Visibility="{x:Bind ViewModel.IsCreatingAccountMode, Mode=OneWay}">
-                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-                    <HyperlinkButton x:Uid="GetTestnetBtcLink"
-                                     Margin="12,0,0,0"
-                                     extensions:HyperlinkExtension.Link="{StaticResource BitcoinFaucetLink}" />
+                <StackPanel HorizontalAlignment="Left"
+                            Orientation="Vertical"
+                            Spacing="16">
+                    <Button x:Uid="CopyBitcoinAddressButton"
+                            Margin="0,16,0,0"
+                            Command="{x:Bind ViewModel.CopyAddressCommand}"
+                            CommandParameter="{StaticResource ClipboardProvider}" />
+                    <TextBlock Margin="4,0,0,0">
+                        <Hyperlink NavigateUri="{StaticResource BitcoinFaucetLink}">
+                            <Run x:Uid="GetTestnetBtcLink" />
+                        </Hyperlink>
+                    </TextBlock>
                     <Button x:Uid="ActivateAddressButton"
                             Command="{x:Bind ViewModel.ActivateAddressCommand}"
                             IsEnabled="{x:Bind ViewModel.IsActivationEnabled, Mode=OneWay}" />
-                    <TextBlock Margin="12,0,0,0"
+                    <TextBlock Margin="4,0,0,0"
                                VerticalAlignment="Center"
                                Style="{x:Bind ViewModel.IsActivationError, Mode=OneWay, Converter={StaticResource ActivationErrorToStyle}}"
                                Text="{x:Bind ViewModel.ActivationStatus, Mode=OneWay}" />

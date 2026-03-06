@@ -1495,12 +1495,14 @@ Subject: {3}
     <comment>Caption for the activation Bitcoin address option.</comment>
   </data>
   <data name="ActivateBitcoinAddressOption.TextNote" xml:space="preserve">
-    <value>1) Request testnet BTC and wait confirmations.
-2) Click 'Activate address' to broadcast.
-3) When status shows 'Activation sent', click 'Apply'.
-</value>
+    <value>1) Copy your Bitcoin testnet4 address.
+2) Click 'Request testnet4 BTC' (coinfaucet.eu will open).
+3) Paste the address into the input field and request the transfer.
+4) Wait for confirmations, then return to the app.
+5) Click 'Activate address' to broadcast.
+6) When the status shows 'Activation sent', click 'Apply'.</value>
     <comment>Note for the activation Bitcoin address option.</comment>
-  </data>    
+  </data>
   <data name="ActivationStatus.Caption" xml:space="preserve">
     <value>Activation status</value>
     <comment>Caption for the activation status block shown after address creation</comment>
@@ -1537,9 +1539,13 @@ Subject: {3}
     <value>Activate address</value>
     <comment>Activate address button content in Bitcoin address settings</comment>
   </data>
-  <data name="GetTestnetBtcLink.Content" xml:space="preserve">
+  <data name="GetTestnetBtcLink.Text" xml:space="preserve">
     <value>Request testnet4 BTC</value>
     <comment>Text for link/button that opens a faucet site to obtain testnet bitcoins</comment>
+  </data>
+  <data name="CopyBitcoinAddressButton.Content" xml:space="preserve">
+    <value>Copy testnet4 address</value>
+    <comment>Text for button that copy current testnet4 bitcoin address.</comment>
   </data>
   <data name="AIAgentSettingsView.Header" xml:space="preserve">
     <value>AI AGENT SETTINGS</value>
