@@ -158,7 +158,7 @@ namespace Tuvi.App.ViewModels
                 string defaultMessageSubject = GetLocalizedString("PgpPublicKeyShareMessageSubject");
 
                 var shareKeyMessageData = new SharePublicKeyMessageData(key.UserIdentity, fileContent, defaultFileName, defaultMessageSubject);
-                NavigationService?.Navigate(nameof(NewMessagePageViewModel), shareKeyMessageData);
+                NavigationService?.NavigateContent(nameof(ComposeMessagePageViewModel), shareKeyMessageData);
             }
             catch (Exception e)
             {

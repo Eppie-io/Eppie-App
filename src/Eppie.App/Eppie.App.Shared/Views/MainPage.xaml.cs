@@ -96,11 +96,17 @@ namespace Eppie.App.Views
         {
             base.OnNavigatedTo(e);
 
+            var app = App.Current as App;
+
+            if (app?.NavigationService is Services.NavigationService navigationService)
+            {
+                navigationService.SetContentFrame(contentFrame);
+            }
+
             if (e.NavigationMode != NavigationMode.Back)
             {
                 ShowAllMessagesCommand.Execute(this);
 
-                var app = App.Current as App;
                 var settings = app?.LocalSettingsService;
 
                 if (settings != null)

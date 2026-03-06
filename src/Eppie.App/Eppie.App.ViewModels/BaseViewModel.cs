@@ -92,7 +92,7 @@ namespace Tuvi.App.ViewModels
         }
 
         public ICommand SupportDevelopmentCommand => new AsyncRelayCommand(SupportDevelopmentAsync);
-        public ICommand OpenAllPgpKeysCommand => new RelayCommand(() => NavigationService?.Navigate(nameof(PgpKeysPageViewModel)));
+        public ICommand OpenAllPgpKeysCommand => new RelayCommand(() => NavigationService?.NavigateContent(nameof(PgpKeysPageViewModel)));
 
         private bool _isStorePaymentProcessor = true;
         public bool IsStorePaymentProcessor
@@ -273,15 +273,15 @@ namespace Tuvi.App.ViewModels
             {
                 if (account.Email.Network == NetworkType.Eppie)
                 {
-                    NavigationService?.Navigate(nameof(EppieAddressSettingsPageViewModel), account);
+                    NavigationService?.NavigateContent(nameof(EppieAddressSettingsPageViewModel), account);
                 }
                 else if (account.Email.Network == NetworkType.Bitcoin)
                 {
-                    NavigationService?.Navigate(nameof(BitcoinAddressSettingsPageViewModel), account);
+                    NavigationService?.NavigateContent(nameof(BitcoinAddressSettingsPageViewModel), account);
                 }
                 else if (account.Email.Network == NetworkType.Ethereum)
                 {
-                    NavigationService?.Navigate(nameof(EthereumAddressSettingsPageViewModel), account);
+                    NavigationService?.NavigateContent(nameof(EthereumAddressSettingsPageViewModel), account);
                 }
             }
             else if (Proton.Extensions.IsProton(account.Email))
@@ -292,18 +292,18 @@ namespace Tuvi.App.ViewModels
                 }
                 else
                 {
-                    NavigationService?.Navigate(nameof(ProtonAddressSettingsPageViewModel), account);
+                    NavigationService?.NavigateContent(nameof(ProtonAddressSettingsPageViewModel), account);
                 }
             }
             else
             {
                 if (isReloginNeeded)
                 {
-                    NavigationService?.Navigate(nameof(EmailAddressSettingsPageViewModel), new EmailAddressSettingsPageViewModel.NeedReloginData { Account = account });
+                    NavigationService?.NavigateContent(nameof(EmailAddressSettingsPageViewModel), new EmailAddressSettingsPageViewModel.NeedReloginData { Account = account });
                 }
                 else
                 {
-                    NavigationService?.Navigate(nameof(EmailAddressSettingsPageViewModel), account);
+                    NavigationService?.NavigateContent(nameof(EmailAddressSettingsPageViewModel), account);
                 }
             }
         }
