@@ -110,13 +110,13 @@ namespace Eppie.App.ViewModels.Tests.TestDoubles
             => ContactDeleted?.Invoke(this, new ContactDeletedEventArgs(email));
 
         public void RaiseMessageDeleted(EmailAddress accountEmail)
-            => MessageDeleted?.Invoke(this, new MessageDeletedEventArgs(accountEmail, new Folder(), 0));
+            => MessageDeleted?.Invoke(this, new MessageDeletedEventArgs(new Account { Email = accountEmail }, new Folder(), 0));
 
         public void RaiseMessagesIsReadChanged(EmailAddress accountEmail)
-            => MessagesIsReadChanged?.Invoke(this, new MessagesAttributeChangedEventArgs(accountEmail, new Folder(), Array.Empty<Message>()));
+            => MessagesIsReadChanged?.Invoke(this, new MessagesAttributeChangedEventArgs(new Account { Email = accountEmail }, new Folder(), Array.Empty<Message>()));
 
         public void RaiseUnreadMessagesReceived(EmailAddress accountEmail)
-            => UnreadMessagesReceived?.Invoke(this, new UnreadMessagesReceivedEventArgs(accountEmail, new Folder()));
+            => UnreadMessagesReceived?.Invoke(this, new UnreadMessagesReceivedEventArgs(new Account { Email = accountEmail }, new Folder()));
 
         private readonly FakeSecurityManager _securityManager = new();
 
@@ -307,7 +307,7 @@ namespace Eppie.App.ViewModels.Tests.TestDoubles
         public Task UnflagMessagesAsync(IEnumerable<Message> messages, CancellationToken cancellationToken = default) => throw new NotImplementedException();
         public Task<Message> GetMessageBodyAsync(Message message, CancellationToken cancellationToken = default) => throw new NotImplementedException();
         public Task<Message> GetMessageBodyHighPriorityAsync(Message message, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-        public Task<Message> CreateDraftMessageAsync(Message message, CancellationToken cancellationToken = default) => throw new NotImplementedException();
+        public Task<Message> CreateDraftMessageAsync(Account account, Message message, CancellationToken cancellationToken = default) => throw new NotImplementedException();
         public Task<Message> UpdateDraftMessageAsync(uint id, Message message, CancellationToken cancellationToken = default) => throw new NotImplementedException();
         public Task MoveMessagesAsync(IReadOnlyList<Message> messages, CompositeFolder targetFolder, CancellationToken cancellationToken = default) => throw new NotImplementedException();
         public Task UpdateMessageProcessingResultAsync(Message message, string result, CancellationToken cancellationToken = default) => throw new NotImplementedException();

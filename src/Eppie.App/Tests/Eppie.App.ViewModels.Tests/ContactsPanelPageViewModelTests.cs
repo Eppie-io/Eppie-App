@@ -70,7 +70,7 @@ namespace Eppie.App.ViewModels.Tests
                 Email = new EmailAddress(email, name),
                 FullName = name,
                 UnreadCount = unread,
-                LastMessageData = new LastMessageData { AccountEmail = new EmailAddress("acc@local") }
+                LastMessageData = new LastMessageData { Account = new Account { Email = new EmailAddress("acc@local") } }
             };
         }
 
@@ -650,9 +650,14 @@ namespace Eppie.App.ViewModels.Tests
         public async Task ComposeEmailCommandNavigatesToNewMessagePageWithCorrectData()
         {
             var contact = CreateContact("user@site.com", "Test User");
-            var (vm, _, _, _, _) = CreateVm(new[] { contact });
+            var (vm, _, core, _, _) = CreateVm(new[] { contact });
             using (vm)
             {
+                core.SeedAccounts(new[]
+                {
+                    new Account { Email = new EmailAddress("acc@local") }
+                });
+
                 var navService = new TestNavigationService();
                 vm.SetNavigationService(navService);
 
@@ -664,7 +669,7 @@ namespace Eppie.App.ViewModels.Tests
                 Assert.That(navService.LastNavigationData, Is.TypeOf<SelectedContactNewMessageData>());
 
                 var messageData = (SelectedContactNewMessageData)navService.LastNavigationData!;
-                Assert.That(messageData.From.Address, Is.EqualTo("acc@local"));
+                Assert.That(messageData.Account.Email.Address, Is.EqualTo("acc@local"));
                 Assert.That(messageData.To, Is.EqualTo("user@site.com"));
             }
         }

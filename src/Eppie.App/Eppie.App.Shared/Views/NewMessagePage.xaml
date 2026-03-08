@@ -135,12 +135,11 @@
             <ComboBox Grid.Column="1"
                       Margin="4,0,0,0"
                       VerticalAlignment="Center"
-                      ItemsSource="{x:Bind ViewModel.FromList, Mode=OneWay}"
-                      SelectedItem="{x:Bind ViewModel.From, Mode=TwoWay}"
-                      SelectionChanged="onFromChanged">
+                      ItemsSource="{x:Bind ViewModel.SenderAddresses, Mode=OneWay}"
+                      SelectedIndex="{x:Bind ViewModel.SenderAddressIndex, Mode=TwoWay}">
                 <ComboBox.ItemTemplate>
-                    <DataTemplate x:DataType="entities:EmailAddress">
-                        <TextBlock Text="{x:Bind DisplayAddress, Mode=OneWay}" />
+                    <DataTemplate x:DataType="viewmodels:AddressItem">
+                        <TextBlock Text="{x:Bind Address, Mode=OneWay}" />
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>

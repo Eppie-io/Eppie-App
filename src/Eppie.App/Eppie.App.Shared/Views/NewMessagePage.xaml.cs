@@ -58,11 +58,6 @@ namespace Eppie.App.Views
             ViewModel.IsSigned = true;
         }
 
-        private void onFromChanged(object sender, RoutedEventArgs e)
-        {
-            ViewModel.OnFromChanged();
-        }
-
 #if WINDOWS_UWP
         private async void NewMessagePage_Grid_Drop(object sender, DragEventArgs e)
 #else

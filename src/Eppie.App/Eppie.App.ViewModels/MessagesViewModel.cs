@@ -271,7 +271,7 @@ namespace Tuvi.App.ViewModels
 
         protected virtual IEnumerable<MessageInfo> SelectAppropriateMessagesFrom(List<ReceivedMessageInfo> receivedMessages)
         {
-            return receivedMessages.Select(m => new MessageInfo(m.Email, m.Message));
+            return receivedMessages.Select(m => new MessageInfo(m.Message));
         }
 
         private async void OnMessageDeleted(object sender, MessageDeletedEventArgs e)
@@ -298,7 +298,7 @@ namespace Tuvi.App.ViewModels
             {
                 var message = collection.FirstOrDefault(m =>
                     m.MessageID == arg.MessageID &&
-                    m.Email.HasSameAddress(arg.Email) &&
+                    m.Account == arg.Account &&
                     m.Folder.HasSameName(arg.Folder));
 
                 if (message != null)
@@ -357,7 +357,7 @@ namespace Tuvi.App.ViewModels
                 return new List<MessageInfo>() { null };
             }
 
-            var messages = loadedMessages.Select(m => new MessageInfo(m.Folder.AccountEmail, m));
+            var messages = loadedMessages.Select(m => new MessageInfo(m));
             if (messageComparer is null)
             {
                 return messages.OrderByDescending(mi => mi.MessageData.Date);

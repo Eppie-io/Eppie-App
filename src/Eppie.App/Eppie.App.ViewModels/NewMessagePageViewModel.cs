@@ -21,7 +21,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
@@ -127,25 +126,9 @@ namespace Tuvi.App.ViewModels
 
     public class NewMessagePageViewModel : BaseMessageViewModel
     {
-        // ToDo: SenderAddressIndex should be used
-
-        private EmailAddress _from;
-        public EmailAddress From
-        {
-            get { return _from; }
-            set
-            {
-                if (_from != value)
-                {
-                    SetProperty(ref _from, value);
-                    OnFromUpdated();
-                }
-            }
-        }
-
         public ObservableCollection<AddressItem> SenderAddresses { get; } = new ObservableCollection<AddressItem>();
 
-        private int _senderAddressIndex;
+        private int _senderAddressIndex = -1;
         public int SenderAddressIndex
         {
             get { return _senderAddressIndex; }
@@ -153,31 +136,49 @@ namespace Tuvi.App.ViewModels
             {
                 if (SetProperty(ref _senderAddressIndex, value))
                 {
-                    OnFromUpdated();
+                    OnPropertyChanged(nameof(Account));
+                    OnSenderChanged();
                 }
             }
         }
 
-        private void OnFromUpdated()
+        public Account Account
         {
-            _ = UpdateDraftMessageAsync();
-            _ = UpdateMessageFooterAsync();
+            get
+            {
+                return (_senderAddressIndex >= 0 && _senderAddressIndex < SenderAddresses.Count)
+                    ? SenderAddresses[_senderAddressIndex].Account
+                    : null;
+            }
         }
 
-        private async Task UpdateMessageFooterAsync()
+        private void OnSenderChanged()
         {
-            if (From is null)
+            if (Account is null)
             {
                 return;
             }
 
-            var account = await Core.GetAccountAsync(From).ConfigureAwait(true);
-            var accountFooter = account?.MessageFooter ?? string.Empty;
+            IsSigned = IsEncrypted = Account.Email.IsDecentralized;
+            IsChangeCryptographyEnabled = !Account.Email.IsDecentralized;
+            IsAdvancedSettingsVisible = !Proton.Extensions.IsProton(Account.Email) && !Account.Email.IsDecentralized;
 
-            if (account != null && account.IsMessageFooterEnabled && string.IsNullOrWhiteSpace(TextBody))
+            UpdateMessageFooter();
+
+            _ = UpdateDraftMessageAsync();
+        }
+
+        private void UpdateMessageFooter()
+        {
+            if (Account is null)
+            {
+                return;
+            }
+
+            if (Account.IsMessageFooterEnabled && string.IsNullOrWhiteSpace(TextBody))
             {
                 string defaultFooter = GetLocalizedString("DefaultSignatureText");
-                TextBody = $"{Environment.NewLine}{Environment.NewLine}{accountFooter}{Environment.NewLine}{defaultFooter}";
+                TextBody = $"{Environment.NewLine}{Environment.NewLine}{Account.MessageFooter}{Environment.NewLine}{defaultFooter}";
             }
         }
 
@@ -239,11 +240,11 @@ namespace Tuvi.App.ViewModels
             set { SetProperty(ref _htmlBody, value); }
         }
 
-        private bool _isEcnrypted;
+        private bool _isEncrypted;
         public bool IsEncrypted
         {
-            get { return _isEcnrypted; }
-            set { SetProperty(ref _isEcnrypted, value); }
+            get { return _isEncrypted; }
+            set { SetProperty(ref _isEncrypted, value); }
         }
 
         private bool _isSigned;
@@ -275,9 +276,6 @@ namespace Tuvi.App.ViewModels
         }
 
         public bool HasAttachments => Attachments.Any();
-
-        // ToDo: SenderAddresses should be used
-        public ObservableCollection<EmailAddress> FromList { get; } = new ObservableCollection<EmailAddress>();
 
         private bool _loadingContent;
         public bool LoadingContent
@@ -387,9 +385,9 @@ namespace Tuvi.App.ViewModels
 
                 if (!(data is DraftMessageData))
                 {
-                    if (From == null)
+                    if (Account is null && SenderAddresses.Count > 0)
                     {
-                        From = FromList.FirstOrDefault();
+                        SenderAddressIndex = 0;
                     }
                 }
 
@@ -435,7 +433,6 @@ namespace Tuvi.App.ViewModels
 
         private void SetMessageParameters(NewMessageData messageData)
         {
-            From = GetFrom(messageData);
             To.SetItems(ParseContacts(messageData.To));
             Copy.SetItems(ParseContacts(messageData.Copy));
             HiddenCopy.SetItems(ParseContacts(messageData.HiddenCopy));
@@ -455,6 +452,9 @@ namespace Tuvi.App.ViewModels
                     SetAttachments(messageData.Attachments);
                 }
             }
+
+            var matchingAddress = SenderAddresses.FirstOrDefault(address => address.Account == messageData.Account);
+            SenderAddressIndex = matchingAddress != null ? SenderAddresses.IndexOf(matchingAddress) : 0;
         }
 
         private IEnumerable<ContactItem> ParseContacts(string text)
@@ -468,20 +468,14 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        private EmailAddress GetFrom(NewMessageData messageData)
-        {
-            return FromList.FirstOrDefault((email) => StringHelper.AreEmailsEqual(email.Address, messageData.From.Address)) ?? FromList.First();
-        }
-
         private async Task UpdateEmailAccountsAndContactsAsync()
         {
-            var accounts = await Core.GetCompositeAccountsAsync().ConfigureAwait(true);
-            FromList.SetItems(accounts.SelectMany(account => account.Addresses));
+            var accounts = await Core.GetAccountsAsync().ConfigureAwait(true);
+
+            SenderAddresses.SetItems(accounts.Select(account => new AddressItem(account)));
 
             // Add email addresses from accounts as contacts immediately
-            var accountContactItems = accounts.SelectMany(account => account.Addresses)
-                                              .Select(address => new ContactItem(address))
-                                              .ToList();
+            var accountContactItems = accounts.Select(account => new ContactItem(account.DisplayEmail)).ToList();
             Contacts.SetItems(accountContactItems);
 
             // Load contacts in background for autocomplete
@@ -512,7 +506,8 @@ namespace Tuvi.App.ViewModels
             {
                 CanSendMessage = false;
 
-                if ((From.IsDecentralized || IsEncrypted || IsSigned) && !await Core.GetSecurityManager().IsSeedPhraseInitializedAsync().ConfigureAwait(true))
+                if (((Account?.Email?.IsDecentralized ?? false) || IsEncrypted || IsSigned) &&
+                    !await Core.GetSecurityManager().IsSeedPhraseInitializedAsync().ConfigureAwait(true))
                 {
                     await MessageService.ShowNeedToCreateSeedPhraseMessageAsync().ConfigureAwait(true);
 
@@ -530,16 +525,17 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        private Task SendMessageAsync()
+        private async Task SendMessageAsync()
         {
-            return Core.SendMessageAsync(CreateMessage(), IsEncrypted, IsSigned);
+            await SaveDraftIfNeededAsync().ConfigureAwait(true);
+            await Core.SendMessageAsync(CreateMessage(), IsEncrypted, IsSigned).ConfigureAwait(true);
         }
 
         private Message CreateMessage()
         {
             var message = new Message();
 
-            message.From.Add(From);
+            message.From.Add(Account.Email);
             message.TextBody = TextBody;
             message.HtmlBody = HtmlBody;
 
@@ -563,7 +559,7 @@ namespace Tuvi.App.ViewModels
 
             message.Attachments.AddRange(Attachments.Select(attachment => attachment.ToAttachment()));
 
-            if (MessageInfo != null && MessageInfo.Email == From)
+            if (MessageInfo?.Account == Account)
             {
                 message.Id = MessageInfo.MessageID;
                 message.Folder = MessageInfo.Folder;
@@ -623,26 +619,26 @@ namespace Tuvi.App.ViewModels
             OnPropertyChanged(nameof(HasAttachments));
         }
 
-        protected override async Task SaveDraftIfNeeded()
+        protected override async Task SaveDraftIfNeededAsync()
         {
             await UpdateDraftMessageAsync().ConfigureAwait(true);
         }
 
-        private async Task<MessageInfo> CreateDraftMessageAsync(EmailAddress account, Message message)
+        private async Task<MessageInfo> CreateDraftMessageAsync(Message message)
         {
             if (!IsEmptyContentMessage(message))
             {
-                message = await Core.CreateDraftMessageAsync(message).ConfigureAwait(true);
+                message = await Core.CreateDraftMessageAsync(Account, message).ConfigureAwait(true);
             }
 
-            return new MessageInfo(account, message);
+            return new MessageInfo(message);
         }
 
         private async Task UpdateDraftMessageAsync()
         {
-            if (MessageInfo?.Folder is null || MessageInfo?.Email != From)
+            if (MessageInfo?.Folder is null || MessageInfo?.Account != Account)
             {
-                MessageInfo = await CreateDraftMessageAsync(From, CreateMessage()).ConfigureAwait(true);
+                MessageInfo = await CreateDraftMessageAsync(CreateMessage()).ConfigureAwait(true);
             }
             else
             {
@@ -652,14 +648,6 @@ namespace Tuvi.App.ViewModels
                 message = await Core.UpdateDraftMessageAsync(MessageInfo.MessageID, message).ConfigureAwait(true);
                 MessageInfo.MessageData = message;
             }
-        }
-
-        public void OnFromChanged()
-        {
-            // If the sender is a Decentralized or Hybrid account, then the message encrypted and signed automatically
-            IsSigned = IsEncrypted = From.IsDecentralized;
-            IsChangeCryptographyEnabled = !From.IsDecentralized;
-            IsAdvancedSettingsVisible = !Proton.Extensions.IsProton(From) && !From.IsDecentralized;
         }
 
         protected override async void ProcessMessage(LocalAIAgent agent)

@@ -232,15 +232,18 @@ namespace Eppie.App.Services
 
             if (await ShowErrorMessageAsync(title, message, StringProvider.GetString("MsgBtnOk"), StringProvider.GetString("MessageButtonCancel")).ConfigureAwait(true))
             {
-                SendErrorReport(message);
+                await SendErrorReportAsync(message).ConfigureAwait(true);
             }
         }
 
-        private void SendErrorReport(string message)
+        private async Task SendErrorReportAsync(string message)
         {
-            var brand = new Models.BrandLoader();
-            var navigationService = (Application.Current as Eppie.App.App).NavigationService;
-            var messageData = new ErrorReportNewMessageData(brand.GetSupport(), StringProvider.GetString("ErrorReportEmailTitle"), message);
+            var brand = new BrandLoader();
+            var app = Application.Current as App;
+            var navigationService = app?.NavigationService;
+            var account = (await app.Core.GetAccountsAsync().ConfigureAwait(true)).FirstOrDefault();
+
+            var messageData = new ErrorReportNewMessageData(account, brand.GetSupport(), StringProvider.GetString("ErrorReportEmailTitle"), message);
             navigationService?.Navigate(nameof(NewMessagePageViewModel), messageData);
         }
 

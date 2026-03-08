@@ -287,7 +287,7 @@ namespace Tuvi.App.ViewModels
             foreach (var recipient in context.Recipients.Where(r => r != null && r.Email != null))
             {
                 var message = new Message();
-                message.From.Add(context.MessageData.From);
+                message.From.Add(context.MessageData.Account.Email);
                 message.To.Add(recipient.Email);
                 message.Subject = context.MessageData.Subject;
                 message.TextBody = context.MessageData.TextBody;
@@ -335,7 +335,7 @@ namespace Tuvi.App.ViewModels
             string eppieAddressString;
             if (EppieAddresses[EppieAddressIndex] is AddressItem eppieAddressItem)
             {
-                eppieAddressString = eppieAddressItem.Account.Email.DisplayAddress;
+                eppieAddressString = eppieAddressItem.Account.DisplayEmail.Address;
             }
             else
             {
@@ -358,7 +358,7 @@ namespace Tuvi.App.ViewModels
                 .Select(recipient => recipient.Email.Address)
                 .Distinct(StringComparer.OrdinalIgnoreCase));
 
-            var messageData = new NewMessageData(senderAddress.Account.Email, to, string.Empty, string.Empty, subject, body);
+            var messageData = new NewMessageData(senderAddress.Account, to, string.Empty, string.Empty, subject, body);
 
             return new InviteMessageContext(messageData, recipients);
         }
@@ -373,7 +373,7 @@ namespace Tuvi.App.ViewModels
                 await Core.AddAccountAsync(account, CancellationToken.None).ConfigureAwait(true);
                 _ = BackupIfNeededAsync();
 
-                return account.Email.DisplayAddress;
+                return account.DisplayEmail.Address;
             }
             catch (Exception ex)
             {

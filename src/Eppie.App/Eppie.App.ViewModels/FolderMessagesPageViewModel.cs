@@ -33,14 +33,16 @@ namespace Tuvi.App.ViewModels
             public MailBoxItem MailBoxItem { get; set; }
         }
 
-        private EmailAddress _email;
-        public EmailAddress Email
+        private CompositeAccount _account;
+        public CompositeAccount Account
         {
-            get { return _email; }
+            get { return _account; }
             set
             {
-                SetProperty(ref _email, value);
-                OnPropertyChanged(nameof(FolderPath));
+                if (SetProperty(ref _account, value))
+                {
+                    OnPropertyChanged(nameof(FolderPath));
+                }
             }
         }
 
@@ -59,17 +61,17 @@ namespace Tuvi.App.ViewModels
         {
             get
             {
-                if (string.IsNullOrEmpty(Email?.Address))
+                if (string.IsNullOrEmpty(Account?.DisplayAddress))
                 {
                     return "";
                 }
                 else if (string.IsNullOrEmpty(Folder?.FullName))
                 {
-                    return Email.DisplayAddress;
+                    return Account.DisplayAddress;
                 }
                 else
                 {
-                    return $"{Email.DisplayAddress}/{Folder?.FullName}";
+                    return $"{Account.DisplayAddress}/{Folder?.FullName}";
                 }
             }
         }
@@ -78,7 +80,7 @@ namespace Tuvi.App.ViewModels
         {
             if (data is NavigationData navigationData)
             {
-                Email = navigationData.MailBoxItem.Email;
+                Account = navigationData.MailBoxItem.Account;
                 Folder = navigationData.MailBoxItem.Folder;
             }
 
@@ -87,8 +89,8 @@ namespace Tuvi.App.ViewModels
 
         protected override IEnumerable<MessageInfo> SelectAppropriateMessagesFrom(List<ReceivedMessageInfo> receivedMessages)
         {
-            return receivedMessages.Where(m => m.Email.HasSameAddress(Email) && m.Folder.HasSameName(Folder.FullName))
-                                   .Select(m => new MessageInfo(m.Email, m.Message));
+            return receivedMessages.Where(m => Account.HasAccount(m.Account) && m.Folder.HasSameName(Folder?.FullName))
+                                   .Select(m => new MessageInfo(m.Message));
         }
 
         protected override Task<IReadOnlyList<Message>> LoadMoreMessagesAsync(int count, Message lastMessage, CancellationToken cancellationToken)

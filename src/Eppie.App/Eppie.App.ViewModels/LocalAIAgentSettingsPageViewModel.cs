@@ -522,7 +522,7 @@ namespace Tuvi.App.ViewModels
         private async Task UpdateEmailAccountsListAsync()
         {
             var accounts = await Core.GetCompositeAccountsAsync().ConfigureAwait(true);
-            AccountsList.SetItems(accounts.SelectMany(account => account.Addresses));
+            AccountsList.SetItems(accounts.SelectMany(account => account.Accounts).Select(account => account.Email));
 
             var noneEmail = new EmailAddress(string.Empty, GetLocalizedString("NoneText"));
             AccountsList.Insert(0, noneEmail);

@@ -29,27 +29,19 @@ namespace Tuvi.App.ViewModels
         {
         }
 
-        public MailBoxItem(EmailAddress email, CompositeFolder folder, string text, bool isRootItem)
+        public MailBoxItem(CompositeAccount account, CompositeFolder folder, string text, bool isRootItem)
         {
-            Email = email;
+            Account = account;
             Folder = folder;
             UnreadMessagesCount = Folder.UnreadCount;
-            Path = $"{email?.Address}/{folder?.FullName}";
+            Path = $"{Account?.Email?.Address}/{folder?.FullName}";
             Text = text;
             IsRootItem = isRootItem;
         }
 
         public bool IsRootItem { get; }
 
-        private EmailAddress _email;
-        public EmailAddress Email
-        {
-            get { return _email; }
-            set
-            {
-                SetProperty(ref _email, value);
-            }
-        }
+        public CompositeAccount Account { get; }
 
         private string _path = "";
         public string Path

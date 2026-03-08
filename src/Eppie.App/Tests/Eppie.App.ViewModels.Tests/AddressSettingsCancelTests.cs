@@ -252,7 +252,7 @@ namespace Tuvi.App.ViewModels.Tests
                 var model = vm.AddressSettingsModel;
 
                 // Act: change values in the editable model (simulate user edits)
-                model.Email.Value = EmailAddress.CreateDecentralizedAddress(NetworkType.Eppie, "newowner").DisplayAddress;
+                model.Email.Value = EmailAddress.CreateDecentralizedAddress(NetworkType.Eppie, "newowner").Address;
                 model.SenderName.Value = "New Sender";
                 model.ClaimedName = "claimed";
                 model.SecretKeyWIF = "wif-key";

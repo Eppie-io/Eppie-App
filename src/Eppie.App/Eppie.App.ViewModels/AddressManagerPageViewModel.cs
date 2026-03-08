@@ -208,7 +208,7 @@ namespace Tuvi.App.ViewModels
                 throw new ArgumentNullException(nameof(account));
             }
 
-            return group.Items.FirstOrDefault(item => item.Account.Id == account.Id);
+            return group.Items.FirstOrDefault(item => item.Account == account);
         }
 
         private static void AddAccount(AddressGroupItem group, Account account)

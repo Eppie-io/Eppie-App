@@ -185,27 +185,20 @@ namespace Tuvi.App.ViewModels
                     return;
                 }
 
-                EmailAddress fromEmail;
+                Account fromAccount = contactItem?.LastMessageData?.Account;
 
-                if (contactItem.LastMessageData?.AccountEmail != null)
+                if (fromAccount is null)
                 {
-                    fromEmail = contactItem.LastMessageData.AccountEmail;
-                }
-                else
-                {
-                    var accounts = await Core.GetCompositeAccountsAsync().ConfigureAwait(true);
-                    if (accounts.Count > 0)
-                    {
-                        fromEmail = accounts[0].Email;
-                    }
-                    else
-                    {
-                        await MessageService.ShowAddAccountMessageAsync().ConfigureAwait(true);
-                        return;
-                    }
+                    fromAccount = (await Core.GetAccountsAsync().ConfigureAwait(true)).FirstOrDefault();
                 }
 
-                var messageData = new SelectedContactNewMessageData(fromEmail, contactItem.Email);
+                if (fromAccount is null)
+                {
+                    await MessageService.ShowAddAccountMessageAsync().ConfigureAwait(true);
+                    return;
+                }
+
+                var messageData = new SelectedContactNewMessageData(fromAccount, contactItem.Email);
                 NavigationService?.Navigate(nameof(NewMessagePageViewModel), messageData);
             }
             catch (Exception ex)

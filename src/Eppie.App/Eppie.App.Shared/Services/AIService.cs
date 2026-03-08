@@ -288,7 +288,7 @@ namespace Eppie.App.Services
 
         private async Task ProcessMessage(LocalAIAgent agent, ReceivedMessageInfo message)
         {
-            if (agent?.Email == message.Email && message.Folder.IsInbox && !message.Message.From.Any(x => x == agent?.Email))
+            if (agent?.Email == message.Account.Email && message.Folder.IsInbox && !message.Message.From.Any(x => x == agent?.Email))
             {
                 var text = message.Message.TextBody;
 
@@ -319,7 +319,7 @@ namespace Eppie.App.Services
         {
             var reply = new Message();
 
-            reply.From.Add(message.Email);
+            reply.From.Add(message.Account.Email);
             reply.TextBody = text;
             reply.To.AddRange(message.Message.From);
             reply.Subject = "RE(AI): " + message.Message.Subject;
