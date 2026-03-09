@@ -74,23 +74,23 @@ namespace Tuvi.App.ViewModels
                         await MessageService.ShowProtonConnectAddressDialogAsync().ConfigureAwait(true);
                         return;
                     case AddressGroupType.Eppie:
-                        NavigationService?.Navigate(nameof(EppieAddressSettingsPageViewModel));
+                        NavigationService?.NavigateContent(nameof(EppieAddressSettingsPageViewModel));
                         return;
                     case AddressGroupType.Bitcoin:
-                        NavigationService?.Navigate(nameof(BitcoinAddressSettingsPageViewModel));
+                        NavigationService?.NavigateContent(nameof(BitcoinAddressSettingsPageViewModel));
                         return;
                     case AddressGroupType.Ethereum:
-                        NavigationService?.Navigate(nameof(EthereumAddressSettingsPageViewModel));
+                        NavigationService?.NavigateContent(nameof(EthereumAddressSettingsPageViewModel));
                         return;
                     case AddressGroupType.Gmail:
-                        NavigationService?.Navigate(nameof(EmailAddressSettingsPageViewModel), MailService.Gmail);
+                        NavigationService?.NavigateContent(nameof(EmailAddressSettingsPageViewModel), MailService.Gmail);
                         return;
                     case AddressGroupType.Outlook:
-                        NavigationService?.Navigate(nameof(EmailAddressSettingsPageViewModel), MailService.Outlook);
+                        NavigationService?.NavigateContent(nameof(EmailAddressSettingsPageViewModel), MailService.Outlook);
                         return;
                     case AddressGroupType.OtherEmail:
                     default:
-                        NavigationService?.Navigate(nameof(EmailAddressSettingsPageViewModel), MailService.Unknown);
+                        NavigationService?.NavigateContent(nameof(EmailAddressSettingsPageViewModel), MailService.Unknown);
                         return;
                 }
             }

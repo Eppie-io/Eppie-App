@@ -398,11 +398,11 @@ namespace Tuvi.App.ViewModels
             {
                 if (messageInfo.Folder.IsDraft)
                 {
-                    NavigationService?.Navigate(nameof(NewMessagePageViewModel), new DraftMessageData(messageInfo, Core.GetTextUtils(), messageInfo.IsEmptyBody ? GetMessageBodyAsync(messageInfo) : null));
+                    NavigationService?.NavigateContent(nameof(ComposeMessagePageViewModel), new DraftMessageData(messageInfo, Core.GetTextUtils(), messageInfo.IsEmptyBody ? GetMessageBodyAsync(messageInfo) : null));
                 }
                 else
                 {
-                    NavigationService?.Navigate(nameof(MessagePageViewModel), messageInfo);
+                    NavigationService?.NavigateContent(nameof(MessagePageViewModel), messageInfo);
                 }
             }
         }

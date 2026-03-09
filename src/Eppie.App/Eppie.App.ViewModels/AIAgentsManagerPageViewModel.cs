@@ -30,7 +30,7 @@ namespace Tuvi.App.ViewModels
     {
         public ObservableCollection<LocalAIAgent> AIAgents { get; } = new ObservableCollection<LocalAIAgent>();
         public ICommand EditAIAgentCommand => new RelayCommand<object>(EditAIAgentInfo);
-        public ICommand CreateAIAgentCommand => new RelayCommand(() => NavigationService?.Navigate(nameof(LocalAIAgentSettingsPageViewModel)));
+        public ICommand CreateAIAgentCommand => new RelayCommand(() => NavigationService?.NavigateContent(nameof(LocalAIAgentSettingsPageViewModel)));
 
         public override async void OnNavigatedTo(object data)
         {
@@ -118,7 +118,7 @@ namespace Tuvi.App.ViewModels
         {
             if (item is LocalAIAgent agent)
             {
-                NavigationService?.Navigate(nameof(LocalAIAgentSettingsPageViewModel), agent);
+                NavigationService?.NavigateContent(nameof(LocalAIAgentSettingsPageViewModel), agent);
             }
         }
     }
