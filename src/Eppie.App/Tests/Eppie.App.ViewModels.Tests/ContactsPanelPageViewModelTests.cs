@@ -670,7 +670,7 @@ namespace Eppie.App.ViewModels.Tests
 
                 var messageData = (SelectedContactNewMessageData)navService.LastNavigationData!;
                 Assert.That(messageData.Account.Email.Address, Is.EqualTo("acc@local"));
-                Assert.That(messageData.To, Is.EqualTo("user@site.com"));
+                Assert.That(messageData.To, Is.EqualTo(contact.Email.ToString()));
             }
         }
 

@@ -525,10 +525,9 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        private async Task SendMessageAsync()
+        private Task SendMessageAsync()
         {
-            await SaveDraftIfNeededAsync().ConfigureAwait(true);
-            await Core.SendMessageAsync(CreateMessage(), IsEncrypted, IsSigned).ConfigureAwait(true);
+            return Core.SendMessageAsync(CreateMessage(), IsEncrypted, IsSigned);
         }
 
         private Message CreateMessage()
