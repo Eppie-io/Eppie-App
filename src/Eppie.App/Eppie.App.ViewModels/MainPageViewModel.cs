@@ -237,7 +237,7 @@ namespace Tuvi.App.ViewModels
                 if (_message.To is null)
                     return string.Empty;
                 var firstRecipient = _message.To.FirstOrDefault();
-                return firstRecipient?.DisplayName ?? string.Empty;
+                return firstRecipient?.Name ?? string.Empty;
             }
         }
 
