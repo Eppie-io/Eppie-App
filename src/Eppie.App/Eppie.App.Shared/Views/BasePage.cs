@@ -24,6 +24,7 @@ using Tuvi.App.ViewModels;
 using Tuvi.Core.Entities;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -194,6 +195,16 @@ namespace Eppie.App.Views
 
         protected async void InitAIAgentButton(AppBarButton agentButton)
         {
+            await SetAIAgentFlyoutAsync(flyout => agentButton.Flyout = flyout);
+        }
+
+        protected async void InitAIAgentButton(Button agentButton)
+        {
+            await SetAIAgentFlyoutAsync(flyout => agentButton.Flyout = flyout);
+        }
+
+        private async Task SetAIAgentFlyoutAsync(Action<MenuFlyout> applyFlyout)
+        {
             try
             {
                 var menuFlyout = new MenuFlyout();
@@ -207,7 +218,7 @@ namespace Eppie.App.Views
 
                 if (menuFlyout.Items.Count > 0)
                 {
-                    agentButton.Flyout = menuFlyout;
+                    applyFlyout(menuFlyout);
                 }
             }
             catch (Exception ex)

@@ -223,7 +223,7 @@ namespace Tuvi.App.ViewModels
                     await SaveDraftIfNeededAsync().ConfigureAwait(true);
                 }
 
-                NavigationService?.GoBackOrNavigate(nameof(MainPageViewModel));
+                NavigationService?.GoBack();
             }
             catch (Exception e)
             {

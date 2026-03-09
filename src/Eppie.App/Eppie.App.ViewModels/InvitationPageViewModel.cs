@@ -316,7 +316,7 @@ namespace Tuvi.App.ViewModels
                     return;
                 }
 
-                NavigationService?.Navigate(nameof(NewMessagePageViewModel), context.MessageData);
+                NavigationService?.NavigateContent(nameof(ComposeMessagePageViewModel), context.MessageData);
                 ClosePopupAction?.Invoke();
             }
             catch (Exception ex)

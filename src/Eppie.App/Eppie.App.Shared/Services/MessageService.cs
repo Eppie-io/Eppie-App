@@ -244,7 +244,7 @@ namespace Eppie.App.Services
             var account = (await app.Core.GetAccountsAsync().ConfigureAwait(true)).FirstOrDefault();
 
             var messageData = new ErrorReportNewMessageData(account, brand.GetSupport(), StringProvider.GetString("ErrorReportEmailTitle"), message);
-            navigationService?.Navigate(nameof(NewMessagePageViewModel), messageData);
+            navigationService?.NavigateContent(nameof(ComposeMessagePageViewModel), messageData);
         }
 
         public Task ShowEnableImapMessageAsync(string forEmail)

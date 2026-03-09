@@ -124,14 +124,14 @@ namespace Tuvi.App.ViewModels
         }
     }
 
-    public class NewMessagePageViewModel : BaseMessageViewModel
+    public class ComposeMessagePageViewModel : BaseMessageViewModel
     {
         public ObservableCollection<AddressItem> SenderAddresses { get; } = new ObservableCollection<AddressItem>();
 
         private int _senderAddressIndex = -1;
         public int SenderAddressIndex
         {
-            get { return _senderAddressIndex; }
+            get => _senderAddressIndex;
             set
             {
                 if (SetProperty(ref _senderAddressIndex, value))
@@ -144,12 +144,8 @@ namespace Tuvi.App.ViewModels
 
         public Account Account
         {
-            get
-            {
-                return (_senderAddressIndex >= 0 && _senderAddressIndex < SenderAddresses.Count)
-                    ? SenderAddresses[_senderAddressIndex].Account
-                    : null;
-            }
+            get => (_senderAddressIndex >= 0 && _senderAddressIndex < SenderAddresses.Count)
+                ? SenderAddresses[_senderAddressIndex].Account                : null;
         }
 
         private void OnSenderChanged()
@@ -159,6 +155,7 @@ namespace Tuvi.App.ViewModels
                 return;
             }
 
+            // If the sender is a Decentralized or Hybrid account, then the message encrypted and signed automatically
             IsSigned = IsEncrypted = Account.Email.IsDecentralized;
             IsChangeCryptographyEnabled = !Account.Email.IsDecentralized;
             IsAdvancedSettingsVisible = !Proton.Extensions.IsProton(Account.Email) && !Account.Email.IsDecentralized;
@@ -291,11 +288,11 @@ namespace Tuvi.App.ViewModels
             {
                 // Check that all correspondents have valid emails
                 bool allValid = To.All(c => c?.Email != null && IsEmailValid(c.Email))
-                    && (UntokenizedContactTo == null || (UntokenizedContactTo.Email != null && IsEmailValid(UntokenizedContactTo.Email)))
+                    && (UntokenizedContactTo is null || (UntokenizedContactTo.Email != null && IsEmailValid(UntokenizedContactTo.Email)))
                     && Copy.All(c => c?.Email != null && IsEmailValid(c.Email))
-                    && (UntokenizedContactCopy == null || (UntokenizedContactCopy.Email != null && IsEmailValid(UntokenizedContactCopy.Email)))
+                    && (UntokenizedContactCopy is null || (UntokenizedContactCopy.Email != null && IsEmailValid(UntokenizedContactCopy.Email)))
                     && HiddenCopy.All(c => c?.Email != null && IsEmailValid(c.Email))
-                    && (UntokenizedContactHiddenCopy == null || (UntokenizedContactHiddenCopy.Email != null && IsEmailValid(UntokenizedContactHiddenCopy.Email)));
+                    && (UntokenizedContactHiddenCopy is null || (UntokenizedContactHiddenCopy.Email != null && IsEmailValid(UntokenizedContactHiddenCopy.Email)));
 
                 return _canSendMessage
                     && allValid
@@ -335,7 +332,7 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        public NewMessagePageViewModel()
+        public ComposeMessagePageViewModel()
         {
             SendMessageAndGoBackCommand = new AsyncRelayCommand(SendMessageAndGoBackAsync, () => CanSendMessage);
 
@@ -471,7 +468,6 @@ namespace Tuvi.App.ViewModels
         private async Task UpdateEmailAccountsAndContactsAsync()
         {
             var accounts = await Core.GetAccountsAsync().ConfigureAwait(true);
-
             SenderAddresses.SetItems(accounts.Select(account => new AddressItem(account)));
 
             // Add email addresses from accounts as contacts immediately

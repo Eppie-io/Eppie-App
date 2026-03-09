@@ -162,7 +162,7 @@ namespace Tuvi.App.ViewModels
                 var account = accounts.Find(a => a.Email == emailAddress);
 
                 var shareKeyMessageData = new SharePublicKeyMessageData(account, fileContent, defaultFileName, defaultMessageSubject);
-                NavigationService?.Navigate(nameof(NewMessagePageViewModel), shareKeyMessageData);
+                NavigationService?.NavigateContent(nameof(ComposeMessagePageViewModel), shareKeyMessageData);
             }
             catch (Exception e)
             {

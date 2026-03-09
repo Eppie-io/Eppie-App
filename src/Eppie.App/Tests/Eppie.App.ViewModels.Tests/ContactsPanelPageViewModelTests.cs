@@ -664,7 +664,7 @@ namespace Eppie.App.ViewModels.Tests
                 var contactItem = new ContactItem(contact);
                 await ((AsyncRelayCommand<ContactItem>)vm.ComposeEmailCommand).ExecuteAsync(contactItem).ConfigureAwait(false);
 
-                Assert.That(navService.LastNavigatedPage, Is.EqualTo(nameof(NewMessagePageViewModel)));
+                Assert.That(navService.LastNavigatedPage, Is.EqualTo(nameof(ComposeMessagePageViewModel)));
                 Assert.That(navService.LastNavigationData, Is.Not.Null);
                 Assert.That(navService.LastNavigationData, Is.TypeOf<SelectedContactNewMessageData>());
 

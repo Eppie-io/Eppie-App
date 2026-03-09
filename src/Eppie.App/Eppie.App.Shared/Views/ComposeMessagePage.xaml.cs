@@ -26,16 +26,18 @@ using Windows.ApplicationModel.DataTransfer;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Navigation;
 #else
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Navigation;
 #endif
 
 namespace Eppie.App.Views
 {
 
-    internal partial class ComposeMessagePageBase : BasePage<NewMessagePageViewModel, BaseViewModel>
+    internal partial class ComposeMessagePageBase : BasePage<ComposeMessagePageViewModel, BaseViewModel>
     {
     }
 
@@ -44,6 +46,12 @@ namespace Eppie.App.Views
         public ComposeMessagePage()
         {
             this.InitializeComponent();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            InitAIAgentButton(AIAgentButton);
         }
 
 #if WINDOWS_UWP

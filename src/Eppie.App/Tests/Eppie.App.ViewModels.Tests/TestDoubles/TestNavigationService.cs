@@ -42,36 +42,15 @@ namespace Eppie.App.ViewModels.Tests.TestDoubles
             throw new NotImplementedException();
         }
 
-        public bool CanGoBackTo(string pageKey)
-        {
-            _ = pageKey;
-            return false;
-        }
-
-        public void GoBackTo(string pageKey)
-        {
-            _ = pageKey;
-            throw new NotImplementedException();
-        }
-
-        public void GoBackOrNavigate(string pageKey, object? parameter = null)
-        {
-            Navigate(pageKey, parameter);
-        }
-
-        public void GoBackToOrNavigate(string pageKey, object? parameter = null)
-        {
-            Navigate(pageKey, parameter);
-        }
-
         public void ExitApplication()
         {
             throw new NotImplementedException();
         }
 
-        public void ClearHistory()
+        public void NavigateContent(string pageKey, object? data = null)
         {
-            throw new NotImplementedException();
+            LastNavigatedPage = pageKey;
+            LastNavigationData = data;
         }
     }
 }

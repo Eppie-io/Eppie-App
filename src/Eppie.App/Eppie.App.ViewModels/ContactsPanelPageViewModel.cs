@@ -199,7 +199,7 @@ namespace Tuvi.App.ViewModels
                 }
 
                 var messageData = new SelectedContactNewMessageData(fromAccount, contactItem.Email);
-                NavigationService?.Navigate(nameof(NewMessagePageViewModel), messageData);
+                NavigationService?.NavigateContent(nameof(ComposeMessagePageViewModel), messageData);
             }
             catch (Exception ex)
             {
