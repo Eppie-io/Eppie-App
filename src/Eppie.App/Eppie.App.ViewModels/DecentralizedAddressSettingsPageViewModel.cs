@@ -86,7 +86,7 @@ namespace Tuvi.App.ViewModels
             CurrentAccount = account;
 
             Email.Value = account.Email.Address;
-            SenderName.Value = account.Email.Name;
+            SenderName.Value = account.GetDecentralizedName();
             ClaimedName = account.GetDecentralizedName();
 
             if (account.DecentralizedAccountIndex >= 0)

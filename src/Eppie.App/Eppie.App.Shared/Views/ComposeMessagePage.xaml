@@ -125,7 +125,7 @@
                 <TextBlock Grid.Column="1"
                            Margin="{StaticResource HorizontalMargin}"
                            VerticalAlignment="Center"
-                           Text="{x:Bind Name, Mode=OneWay}" />
+                           Text="{x:Bind DisplayName, Mode=OneWay}" />
                 <TextBlock Grid.Column="2"
                            VerticalAlignment="Center"
                            Text="{x:Bind Address, Mode=OneWay}" />

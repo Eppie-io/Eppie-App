@@ -549,7 +549,7 @@ namespace Tuvi.App.ViewModels
                     return;
                 }
 
-                var messageData = MailtoMessageData.FromMailtoUri(mailtoUri, defaultAccount.Email);
+                var messageData = MailtoMessageData.FromMailtoUri(mailtoUri, defaultAccount);
                 NavigationService?.NavigateContent(nameof(ComposeMessagePageViewModel), messageData);
             }
             catch (Exception ex)

@@ -145,7 +145,7 @@ namespace Tuvi.App.ViewModels
         public Account Account
         {
             get => (_senderAddressIndex >= 0 && _senderAddressIndex < SenderAddresses.Count)
-                ? SenderAddresses[_senderAddressIndex].Account                : null;
+                ? SenderAddresses[_senderAddressIndex].Account : null;
         }
 
         private void OnSenderChanged()
@@ -360,7 +360,11 @@ namespace Tuvi.App.ViewModels
         {
             IsHiddenCopyVisible = !IsHiddenCopyVisible;
 
-            // Todo: Managing the BCC list when toggling visibility (e.g., clear bcc when hiding)
+            if (!IsHiddenCopyVisible)
+            {
+                HiddenCopy.Clear();
+                UntokenizedContactHiddenCopy = null;
+            }
         }
 
         public override async void OnNavigatedTo(object data)
