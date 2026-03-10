@@ -154,19 +154,6 @@ namespace Eppie.App.Views
         }
         #endregion
 
-        protected void ListViewSwipeContainerPointerEntered(object sender, PointerRoutedEventArgs e)
-        {
-            if (e.Pointer.PointerDeviceType == PointerDeviceType.Mouse || e.Pointer.PointerDeviceType == PointerDeviceType.Pen)
-            {
-                VisualStateManager.GoToState(sender as Control, "HoverButtonsShown", true);
-            }
-        }
-
-        protected void ListViewSwipeContainerPointerExited(object sender, PointerRoutedEventArgs e)
-        {
-            VisualStateManager.GoToState(sender as Control, "HoverButtonsHidden", true);
-        }
-
         protected async void InitAIAgentButton(AppBarButton agentButton, Eppie.App.UI.Controls.MessageListControl messageListControl)
         {
             try
