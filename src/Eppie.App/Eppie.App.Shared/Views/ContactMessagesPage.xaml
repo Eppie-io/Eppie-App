@@ -11,179 +11,32 @@
                                NavigationCacheMode="Enabled"
                                mc:Ignorable="d">
 
-    <local:ContactMessagesPageBase.Resources>
-        <ResourceDictionary>
-            <viewmodels:ContactMessagesPageViewModel x:Key="PageViewModel" />
-
-            <XamlUICommand x:Key="DeleteItemCommand"
-                           x:Uid="/App.Resources/DeleteButton"
-                           Command="{Binding DeleteMessageCommand, Source={StaticResource PageViewModel}}">
-                <XamlUICommand.IconSource>
-                    <SymbolIconSource Symbol="Delete" />
-                </XamlUICommand.IconSource>
-                <XamlUICommand.KeyboardAccelerators>
-                    <KeyboardAccelerator Key="Delete" />
-                </XamlUICommand.KeyboardAccelerators>
-            </XamlUICommand>
-
-            <XamlUICommand x:Key="MarkAsReadItemCommand"
-                           x:Uid="/App.Resources/MarkAsReadButton"
-                           Command="{Binding MarkMessageAsReadCommand, Source={StaticResource PageViewModel}}">
-                <XamlUICommand.IconSource>
-                    <SymbolIconSource Symbol="Read" />
-                </XamlUICommand.IconSource>
-                <XamlUICommand.KeyboardAccelerators>
-                    <KeyboardAccelerator Key="R" Modifiers="Control" />
-                </XamlUICommand.KeyboardAccelerators>
-            </XamlUICommand>
-
-            <XamlUICommand x:Key="MarkAsUnreadItemCommand"
-                           x:Uid="/App.Resources/MarkAsUnreadButton"
-                           Command="{Binding MarkMessageAsUnreadCommand, Source={StaticResource PageViewModel}}">
-                <XamlUICommand.IconSource>
-                    <SymbolIconSource Symbol="Mail" />
-                </XamlUICommand.IconSource>
-                <XamlUICommand.KeyboardAccelerators>
-                    <KeyboardAccelerator Key="U" Modifiers="Control" />
-                </XamlUICommand.KeyboardAccelerators>
-            </XamlUICommand>
-
-            <XamlUICommand x:Key="FlagItemCommand"
-                           x:Uid="/App.Resources/SetFlagButton"
-                           Command="{Binding FlagMessageCommand, Source={StaticResource PageViewModel}}">
-                <XamlUICommand.IconSource>
-                    <SymbolIconSource Symbol="Flag" />
-                </XamlUICommand.IconSource>
-                <XamlUICommand.KeyboardAccelerators>
-                    <KeyboardAccelerator Key="F" Modifiers="Control, Shift" />
-                </XamlUICommand.KeyboardAccelerators>
-            </XamlUICommand>
-
-            <XamlUICommand x:Key="UnflagItemCommand"
-                           x:Uid="/App.Resources/ClearFlagButton"
-                           Command="{Binding UnflagMessageCommand, Source={StaticResource PageViewModel}}">
-                <XamlUICommand.IconSource>
-                    <SymbolIconSource Symbol="Flag" />
-                </XamlUICommand.IconSource>
-                <XamlUICommand.KeyboardAccelerators>
-                    <KeyboardAccelerator Key="U" Modifiers="Control, Shift" />
-                </XamlUICommand.KeyboardAccelerators>
-            </XamlUICommand>
-
-        </ResourceDictionary>
-    </local:ContactMessagesPageBase.Resources>
-
     <local:ContactMessagesPageBase.DataContext>
-        <StaticResource ResourceKey="PageViewModel" />
+        <viewmodels:ContactMessagesPageViewModel />
     </local:ContactMessagesPageBase.DataContext>
 
     <Grid Padding="12,0,12,0">
-
         <controls:MessageListControl x:Name="MessageListControl"
-                                     CancelMessagesDeleteCommand="{Binding CancelMessagesDeleteCommand, Mode=OneWay}"
+                                     CancelMessagesDeleteCommand="{x:Bind ViewModel.CancelMessagesDeleteCommand, Mode=OneWay}"
                                      ExceptionOccurred="OnExceptionOccurred"
-                                     IsDeleteInProcess="{Binding IsDeleteInProcess, Mode=OneWay}"
-                                     IsWaitingForMoreMessages="{Binding MessageList.IsChanging, Mode=OneWay}"
-                                     MessageClickCommand="{Binding OpenMessageCommand, Mode=OneWay}"
-                                     Messages="{Binding MessageList, Mode=OneWay}"
-                                     MessagesDeletedText="{Binding MessagesDeletedText, Mode=OneWay}"
-                                     SelectedItemsChangedCommand="{Binding SelectedItemsChangedCommand}"
-                                     SelectionMode="{Binding IsSelectMessagesMode, Mode=OneWay, Converter={StaticResource BoolToSelectionModeConverter}}"
-                                     StartDragMessagesCommand="{Binding StartDragMessagesCommand}">
+                                     IsDeleteInProcess="{x:Bind ViewModel.IsDeleteInProcess, Mode=OneWay}"
+                                     IsWaitingForMoreMessages="{x:Bind ViewModel.MessageList.IsChanging, Mode=OneWay}"
+                                     MessageClickCommand="{x:Bind ViewModel.OpenMessageCommand, Mode=OneWay}"
+                                     Messages="{x:Bind ViewModel.MessageList, Mode=OneWay}"
+                                     MessagesDeletedText="{x:Bind ViewModel.MessagesDeletedText, Mode=OneWay}"
+                                     SelectedItemsChangedCommand="{x:Bind ViewModel.SelectedItemsChangedCommand}"
+                                     SelectionMode="{x:Bind ViewModel.IsSelectMessagesMode, Mode=OneWay, Converter={StaticResource BoolToSelectionModeConverter}}"
+                                     StartDragMessagesCommand="{x:Bind ViewModel.StartDragMessagesCommand, Mode=OneWay}">
 
             <controls:MessageListControl.ItemTemplate>
-                <DataTemplate x:DataType="viewmodels:IMessageInfo">
-                    <UserControl PointerEntered="ListViewSwipeContainerPointerEntered" PointerExited="ListViewSwipeContainerPointerExited">
-                        <Grid>
-                            <SwipeControl>
-                                <SwipeControl.LeftItems>
-                                    <SwipeItems Mode="Execute">
-                                        <SwipeItem x:Uid="/App.Resources/ToggleReadSwipeItem"
-                                                   Background="{ThemeResource SystemAccentColor}"
-                                                   Invoked="OnToggleReadSwipeItemInvoked">
-                                            <SwipeItem.IconSource>
-                                                <SymbolIconSource Symbol="Read" />
-                                            </SwipeItem.IconSource>
-                                        </SwipeItem>
-                                    </SwipeItems>
-                                </SwipeControl.LeftItems>
-                                <SwipeControl.RightItems>
-                                    <SwipeItems Mode="Execute">
-                                        <SwipeItem x:Uid="/App.Resources/ToggleDeleteSwipeItem"
-                                                   Background="{StaticResource WarningBackgroundBrush}"
-                                                   Invoked="OnDeleteSwipeItemInvoked">
-                                            <SwipeItem.IconSource>
-                                                <SymbolIconSource Symbol="Delete" />
-                                            </SwipeItem.IconSource>
-                                        </SwipeItem>
-                                    </SwipeItems>
-                                </SwipeControl.RightItems>
-                                <!--  It leaks see TVM-344  -->
-                                <local:MessageItemView>
-                                    <local:MessageItemView.ContextFlyout>
-                                        <MenuFlyout>
-                                            <MenuFlyoutItem Command="{StaticResource MarkAsReadItemCommand}"
-                                                            CommandParameter="{Binding}"
-                                                            Visibility="{Binding IsMarkedAsRead, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
-                                            <MenuFlyoutItem Command="{StaticResource MarkAsUnreadItemCommand}"
-                                                            CommandParameter="{Binding}"
-                                                            Visibility="{Binding IsMarkedAsRead}" />
-                                            <MenuFlyoutItem Command="{StaticResource FlagItemCommand}"
-                                                            CommandParameter="{Binding}"
-                                                            Visibility="{Binding IsFlagged, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
-                                            <MenuFlyoutItem Command="{StaticResource UnflagItemCommand}"
-                                                            CommandParameter="{Binding}"
-                                                            Visibility="{Binding IsFlagged}" />
-                                            <MenuFlyoutItem Command="{StaticResource DeleteItemCommand}" CommandParameter="{Binding}" />
-                                        </MenuFlyout>
-                                    </local:MessageItemView.ContextFlyout>
-                                </local:MessageItemView>
-                            </SwipeControl>
-                            <!--  It leaks see TVM-344  -->
-                            <CommandBar x:Name="HoverCommandBar"
-                                        HorizontalAlignment="Right"
-                                        VerticalAlignment="Bottom"
-                                        Background="Transparent"
-                                        DefaultLabelPosition="Collapsed"
-                                        OverflowButtonVisibility="Collapsed"
-                                        Visibility="Collapsed">
-                                <AppBarButton x:Uid="/App.Resources/DeleteButton"
-                                              Command="{StaticResource DeleteItemCommand}"
-                                              CommandParameter="{Binding}"
-                                              Icon="Delete" />
-                                <AppBarButton x:Uid="/App.Resources/MarkAsReadButton"
-                                              Command="{StaticResource MarkAsReadItemCommand}"
-                                              CommandParameter="{Binding}"
-                                              Icon="Read"
-                                              Visibility="{Binding IsMarkedAsRead, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
-                                <AppBarButton x:Uid="/App.Resources/MarkAsUnreadButton"
-                                              Command="{StaticResource MarkAsUnreadItemCommand}"
-                                              CommandParameter="{Binding}"
-                                              Icon="Mail"
-                                              Visibility="{Binding IsMarkedAsRead}" />
-                                <AppBarButton x:Uid="/App.Resources/SetFlagButton"
-                                              Command="{StaticResource FlagItemCommand}"
-                                              CommandParameter="{Binding}"
-                                              Icon="Flag"
-                                              Visibility="{Binding IsFlagged, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
-                                <AppBarButton x:Uid="/App.Resources/ClearFlagButton"
-                                              Command="{StaticResource UnflagItemCommand}"
-                                              CommandParameter="{Binding}"
-                                              Icon="Flag"
-                                              Visibility="{Binding IsFlagged}" />
-                            </CommandBar>
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="HoveringStates">
-                                    <VisualState x:Name="HoverButtonsHidden" />
-                                    <VisualState x:Name="HoverButtonsShown">
-                                        <VisualState.Setters>
-                                            <Setter Target="HoverCommandBar.Visibility" Value="Visible" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>
-                        </Grid>
-                    </UserControl>
+                <DataTemplate x:DataType="viewmodels:MessageInfo">
+                    <!--  It leaks see TVM-344  -->
+                    <local:MessageItemView Deleted="OnDeleted"
+                                           Flagged="OnFlagged"
+                                           MessageInfo="{x:Bind Mode=OneWay}"
+                                           ReadMarked="OnReadMarked"
+                                           Unflagged="OnUnflagged"
+                                           UnreadMarked="OnUnreadMarked" />
                 </DataTemplate>
             </controls:MessageListControl.ItemTemplate>
 

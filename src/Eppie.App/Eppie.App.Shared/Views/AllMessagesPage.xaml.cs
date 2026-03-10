@@ -20,12 +20,12 @@ using Tuvi.App.IncrementalLoading;
 using Tuvi.App.ViewModels;
 
 #if WINDOWS_UWP
-using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 #else
-using Microsoft.UI.Xaml.Navigation;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Navigation;
 #endif
 
 namespace Eppie.App.Views
@@ -74,27 +74,29 @@ namespace Eppie.App.Views
             MessageListControl.SelectAllMessages();
         }
 
-        private void OnDeleteSwipeItemInvoked(SwipeItem sender, SwipeItemInvokedEventArgs args)
+        private void OnDeleted(object sender, MessageItemViewEventArgs args)
         {
-            if (args.SwipeControl.DataContext is IMessageInfo messageInfo)
-            {
-                ViewModel?.DeleteMessageCommand?.Execute(messageInfo);
-            }
+            ViewModel?.DeleteMessageCommand?.Execute(args.MessageInfo);
         }
 
-        private void OnToggleReadSwipeItemInvoked(SwipeItem sender, SwipeItemInvokedEventArgs args)
+        private void OnFlagged(object sender, MessageItemViewEventArgs args)
         {
-            if (args.SwipeControl.DataContext is IMessageInfo messageInfo)
-            {
-                if (messageInfo.IsMarkedAsRead)
-                {
-                    ViewModel?.MarkMessageAsUnreadCommand?.Execute(messageInfo);
-                }
-                else
-                {
-                    ViewModel?.MarkMessageAsReadCommand?.Execute(messageInfo);
-                }
-            }
+            ViewModel?.FlagMessageCommand?.Execute(args.MessageInfo);
+        }
+
+        private void OnUnflagged(object sender, MessageItemViewEventArgs args)
+        {
+            ViewModel?.UnflagMessageCommand?.Execute(args.MessageInfo);
+        }
+
+        private void OnReadMarked(object sender, MessageItemViewEventArgs args)
+        {
+            ViewModel?.MarkMessageAsReadCommand?.Execute(args.MessageInfo);
+        }
+
+        private void OnUnreadMarked(object sender, MessageItemViewEventArgs args)
+        {
+            ViewModel?.MarkMessageAsUnreadCommand?.Execute(args.MessageInfo);
         }
     }
 }
