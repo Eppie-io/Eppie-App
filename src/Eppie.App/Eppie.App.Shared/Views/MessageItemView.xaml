@@ -265,10 +265,10 @@
                             <StackPanel Orientation="Horizontal" Spacing="8">
                                 <PersonPicture Width="24"
                                                Height="24"
-                                               DisplayName="{x:Bind MessageInfo.Email.DisplayName, Mode=OneWay}" />
+                                               DisplayName="{x:Bind MessageInfo.Account.DisplayEmail.Name, Mode=OneWay}" />
                                 <TextBlock VerticalAlignment="Center"
                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                           Text="{x:Bind MessageInfo.Email.Name, Mode=OneWay}" />
+                                           Text="{x:Bind MessageInfo.Account.DisplayEmail.Name, Mode=OneWay}" />
                                 <TextBlock VerticalAlignment="Center"
                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                            Visibility="{x:Bind MessageInfo.AdditionalRecipientCount, Mode=OneWay, Converter={StaticResource IntToVisibilityConverter}}">
