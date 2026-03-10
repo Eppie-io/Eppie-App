@@ -413,6 +413,12 @@ namespace Tuvi.App.ViewModels
                 await Task.Delay(ReconcileDelayMs, ct);
 
                 int countToLoad = Contacts.OriginalItems.Count;
+                if (countToLoad == 0)
+                {
+                    RefreshContacts();
+                    return;
+                }
+
                 var freshItems = await ReloadLoadedItemsAsync(countToLoad, ct);
 
                 if (!ct.IsCancellationRequested)

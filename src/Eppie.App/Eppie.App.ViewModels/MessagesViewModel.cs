@@ -125,7 +125,8 @@ namespace Tuvi.App.ViewModels
             {
                 RefreshMessagesCommand.NotifyCanExecuteChanged();
             }
-            else if (e.PropertyName == nameof(ManagedCollection<MessageInfo>.ItemsFilter))
+            else if (e.PropertyName == nameof(ManagedCollection<MessageInfo>.ItemsFilter) &&
+                     MessageList?.ItemsFilter != null)
             {
                 SaveSelectedItemsFilter(MessageList.ItemsFilter.GetType().Name);
             }
