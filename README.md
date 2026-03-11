@@ -50,12 +50,17 @@ Eppie is early in development. The p2p part is not publicly available at the mom
   <img src="/screenshots/Windows/Settings.png" alt="Settings Page"/>
 </details>
 
-## Install from Microsoft Store, Snap Store, App Store and Google Play
+## Get Eppie
 
-There's a preview version currently available at:
+### Stable releases
+
+Stable releases are intended for everyday use and are distributed through app stores.
+
+At the moment, the stable channel provides the classic Eppie email client experience.
+
 <p align="left">
-  <a href="https://apps.microsoft.com/detail/Eppie%20Mail%20Preview/9n3r8xkz16c5?mode=direct&cid=github">
-    <img src="https://get.microsoft.com/images/en-us%20light.svg" width="200" alt="Download" />
+  <a href="https://apps.microsoft.com/detail/9n90htgx54z0?mode=direct&cid=github">
+    <img src="https://get.microsoft.com/images/en-us%20light.svg" width="200" alt="Download from Microsoft Store" />
   </a>
 </p>
 
@@ -63,29 +68,31 @@ There's a preview version currently available at:
 
 App Store and Google Play: WIP
 
-## Downloads
+### Testnet builds
 
-You may download the latest release for your system:
+Testnet builds are distributed through GitHub Releases only and are intended for early adopters.
 
-### Windows
+They include the first decentralized version of Eppie running on testnet.
+
+#### Windows
 
 - [**[Recommended] Eppie.App-x86-x64-ARM64.msixbundle**](https://github.com/Eppie-io/Eppie-App/releases/latest/download/Eppie.App-x86-x64-ARM64.msixbundle) (UWP)
 - [Eppie.App.WinAppSDK-x86-x64-ARM64.msixbundle](https://github.com/Eppie-io/Eppie-App/releases/latest/download/Eppie.App.WinAppSDK-x86-x64-ARM64.msixbundle) (Windows App SDK)
 - [eppie.desktop-win-x64.zip](https://github.com/Eppie-io/Eppie-App/releases/latest/download/eppie.desktop-win-x64.zip) (x64 binaries)
 
-### Linux
+#### Linux
 
 - [eppie.desktop-linux-x64.tar.gz](https://github.com/Eppie-io/Eppie-App/releases/latest/download/eppie.desktop-linux-x64.tar.gz) (x64 binaries)
 - [eppie.desktop-linux-arm64.tar.gz](https://github.com/Eppie-io/Eppie-App/releases/latest/download/eppie.desktop-linux-arm64.tar.gz) (arm64 binaries)
 - [eppie.desktop-snap-linux-x64.tar.gz](https://github.com/Eppie-io/Eppie-App/releases/latest/download/eppie.desktop-snap-linux-x64.tar.gz) (x64 snap package)
 - [eppie.desktop-snap-linux-arm64.tar.gz](https://github.com/Eppie-io/Eppie-App/releases/latest/download/eppie.desktop-snap-linux-arm64.tar.gz) (arm64 snap package)
 
-### macOS
+#### macOS
 
 - [Eppie-osx-arm64.app.zip](https://github.com/Eppie-io/Eppie-App/releases/latest/download/Eppie-osx-arm64.app.zip) (Apple Silicon app package)
 - [Eppie-osx-x64.app.zip](https://github.com/Eppie-io/Eppie-App/releases/latest/download/Eppie-osx-x64.app.zip) (Apple Intel app package)
 
-### Android
+#### Android and iOS
 
 WIP
 
