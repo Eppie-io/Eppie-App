@@ -103,7 +103,7 @@
     </UserControl.Resources>
 
     <Grid>
-        <!-- TODO: Temporarily disable SwipeControl due to leak. Re-enable after fixing (TVM-344). -->
+        <!--  TODO: Temporarily disable SwipeControl due to leak. Re-enable after fixing (TVM-344).  -->
         <!--<SwipeControl>
             <SwipeControl.LeftItems>
                 <SwipeItems Mode="Execute">
@@ -303,7 +303,7 @@
                 </MenuFlyout>
             </Grid.ContextFlyout>
         </Grid>
-        <!--  It leaks see TVM-344  -->
+        <!--  TODO: Temporarily disable SwipeControl due to leak. Re-enable after fixing (TVM-344).  -->
         <!--</SwipeControl>-->
 
         <CommandBar x:Name="HoverCommandBar"
