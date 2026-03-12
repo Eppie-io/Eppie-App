@@ -257,7 +257,7 @@ namespace Tuvi.App.ViewModels
             foreach (var item in items ?? Enumerable.Empty<ContactItem>())
             {
                 var address = item?.Email?.Address;
-                if (string.IsNullOrWhiteSpace(address))
+                if (string.IsNullOrWhiteSpace(address) || item?.Email?.IsDecentralized == true)
                 {
                     continue;
                 }
@@ -353,11 +353,7 @@ namespace Tuvi.App.ViewModels
             var body = string.Format(System.Globalization.CultureInfo.InvariantCulture, GetLocalizedString("InvitationBodyText"), senderName, eppieAddressString, downloadLink);
 
             var recipients = Recipients.ToList();
-            var to = string.Join(", ", recipients
-                .Where(recipient => recipient?.Email?.Address != null)
-                .Select(recipient => recipient.Email.Address)
-                .Distinct(StringComparer.OrdinalIgnoreCase));
-
+            var to = recipients.First(recipient => recipient?.Email?.Address != null).Email.Address;
             var messageData = new NewMessageData(senderAddress.Account.Email, to, string.Empty, string.Empty, subject, body);
 
             return new InviteMessageContext(messageData, recipients);
