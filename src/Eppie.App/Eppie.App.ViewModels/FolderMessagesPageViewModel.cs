@@ -63,7 +63,7 @@ namespace Tuvi.App.ViewModels
             {
                 if (string.IsNullOrEmpty(Account?.DisplayAddress))
                 {
-                    return "";
+                    return string.Empty;
                 }
                 else if (string.IsNullOrEmpty(Folder?.FullName))
                 {
