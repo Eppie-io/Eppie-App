@@ -57,14 +57,14 @@ namespace Tuvi.App.ViewModels
             if (ContactItem?.Email != null)
             {
                 return receivedMessages.Where(m => m.Message != null
-                                                && m.Message.IsFromCorrespondenceWithContact(m.Email, ContactItem.Email)
+                                                && m.Message.IsFromCorrespondenceWithContact(m.Account?.Email, ContactItem.Email)
                                                 && !m.Folder.IsJunk
                                                 && !m.Folder.IsTrash)
-                                       .Select(m => new MessageInfo(m.Email, m.Message));
+                                       .Select(m => new MessageInfo(m.Message));
             }
             else
             {
-                return receivedMessages.Select(m => new MessageInfo(m.Email, m.Message));
+                return receivedMessages.Select(m => new MessageInfo(m.Message));
             }
         }
 

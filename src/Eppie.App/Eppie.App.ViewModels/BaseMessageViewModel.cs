@@ -207,7 +207,7 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        protected virtual Task SaveDraftIfNeeded()
+        protected virtual Task SaveDraftIfNeededAsync()
         {
             return Task.CompletedTask;
         }
@@ -220,7 +220,7 @@ namespace Tuvi.App.ViewModels
 
                 if (saveDraftIfNeeded)
                 {
-                    await SaveDraftIfNeeded().ConfigureAwait(true);
+                    await SaveDraftIfNeededAsync().ConfigureAwait(true);
                 }
 
                 NavigationService?.GoBack();

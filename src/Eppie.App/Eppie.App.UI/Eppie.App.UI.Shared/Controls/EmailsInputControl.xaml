@@ -42,12 +42,12 @@
                                Grid.Column="2"
                                FontSize="12"
                                Opacity="0.6"
-                               Text="{x:Bind Email.DisplayAddress, Mode=OneWay}" />
+                               Text="{x:Bind Email.Address, Mode=OneWay}" />
                 </Grid>
             </DataTemplate>
 
             <DataTemplate x:Key="TokenContactItemTemplate" x:DataType="viewmodels:ContactItem">
-                <Grid Height="32" ToolTipService.ToolTip="{x:Bind Email.DisplayAddress, Mode=OneWay}">
+                <Grid Height="32" ToolTipService.ToolTip="{x:Bind Email.Address, Mode=OneWay}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="8" />
@@ -84,7 +84,9 @@
                                     ItemsSource="{x:Bind SelectedContacts, Mode=OneWay}"
                                     LostFocus="SuggestBox_LostFocus"
                                     PlaceholderText="{x:Bind PlaceholderText, Mode=OneWay}"
+                                    QuerySubmitted="SuggestBox_QuerySubmitted"
                                     SuggestedItemTemplate="{StaticResource SuggestContactItemTemplate}"
+                                    SuggestionChosen="SuggestBox_SuggestionChosen"
                                     TextChanged="SuggestBox_TextChanged"
                                     TokenDelimiter=";"
                                     TokenItemAdded="SuggestBox_TokenItemAdded"

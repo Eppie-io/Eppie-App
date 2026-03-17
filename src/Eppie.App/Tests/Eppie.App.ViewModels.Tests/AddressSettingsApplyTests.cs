@@ -17,6 +17,7 @@
 // ---------------------------------------------------------------------------- //
 
 using System.Globalization;
+using CommunityToolkit.Mvvm.Input;
 using NUnit.Framework;
 using Tuvi.Core.Entities;
 
@@ -51,7 +52,7 @@ namespace Tuvi.App.ViewModels.Tests
         private const string DecClaimedName = "coolname";
 
         [Test]
-        public void BasicEmailModelAppliesCurrentAccountFields()
+        public async Task BasicEmailModelAppliesCurrentAccountFields()
         {
             // Arrange: existing account with some initial values
             var account = new Account
@@ -104,9 +105,7 @@ namespace Tuvi.App.ViewModels.Tests
                 model.OutgoingPassword.Value = NewOutgoingPassword;
 
                 // Act: use page command
-                vm.ApplySettingsCommand.Execute(null);
-                // Wait briefly for async command body to run
-                SpinWait.SpinUntil(() => !vm.IsWaitingResponse, TimeSpan.FromMilliseconds(200));
+                await ((IAsyncRelayCommand)vm.ApplySettingsCommand).ExecuteAsync(null).ConfigureAwait(true);
             }
 
             // Assert: all fields applied on original account
@@ -137,7 +136,7 @@ namespace Tuvi.App.ViewModels.Tests
         }
 
         [Test]
-        public void OAuth2EmailModelAppliesOAuth2AuthData()
+        public async Task OAuth2EmailModelAppliesOAuth2AuthData()
         {
             // Arrange
             var account = new Account
@@ -159,8 +158,7 @@ namespace Tuvi.App.ViewModels.Tests
                 model.AuthAssistantId = OauthAssistantId;
 
                 // Act
-                vm.ApplySettingsCommand.Execute(null);
-                SpinWait.SpinUntil(() => !vm.IsWaitingResponse, TimeSpan.FromMilliseconds(200));
+                await ((IAsyncRelayCommand)vm.ApplySettingsCommand).ExecuteAsync(null).ConfigureAwait(true);
             }
 
             // Assert
@@ -171,7 +169,7 @@ namespace Tuvi.App.ViewModels.Tests
         }
 
         [Test]
-        public void ProtonModelAppliesType()
+        public async Task ProtonModelAppliesType()
         {
             // Arrange
             var account = new Account
@@ -185,8 +183,7 @@ namespace Tuvi.App.ViewModels.Tests
                 var model = vm.AddressSettingsModel;
 
                 // Act
-                vm.ApplySettingsCommand.Execute(null);
-                SpinWait.SpinUntil(() => !vm.IsWaitingResponse, TimeSpan.FromMilliseconds(200));
+                await ((IAsyncRelayCommand)vm.ApplySettingsCommand).ExecuteAsync(null).ConfigureAwait(true);
             }
 
             // Assert
@@ -194,14 +191,15 @@ namespace Tuvi.App.ViewModels.Tests
         }
 
         [Test]
-        public void DecentralizedModelAppliesClaimedNameAndType()
+        public async Task DecentralizedModelAppliesClaimedNameAndType()
         {
             // Arrange: Eppie decentralized address
             var decEmail = EmailAddress.CreateDecentralizedAddress(NetworkType.Eppie, "owner");
             var account = new Account
             {
                 Email = decEmail,
-                Type = MailBoxType.Email // will be overridden
+                Type = MailBoxType.Email, // will be overridden
+                DecentralizedAccountIndex = 0
             };
 
             using (var vm = new DecentralizedAddressSettingsPageViewModel())
@@ -213,13 +211,12 @@ namespace Tuvi.App.ViewModels.Tests
                 model.ClaimedName = DecClaimedName;
 
                 // Act
-                vm.ApplySettingsCommand.Execute(null);
-                SpinWait.SpinUntil(() => !vm.IsWaitingResponse, TimeSpan.FromMilliseconds(200));
+                await ((IAsyncRelayCommand)vm.ApplySettingsCommand).ExecuteAsync(null).ConfigureAwait(true);
             }
 
             // Assert
             Assert.That(account.Type, Is.EqualTo(MailBoxType.Dec));
-            Assert.That(account.Email.Name, Is.EqualTo(DecClaimedName));
+            Assert.That(account.GetDecentralizedName(), Is.EqualTo(DecClaimedName));
         }
     }
 }

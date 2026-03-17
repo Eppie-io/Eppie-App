@@ -30,7 +30,7 @@ namespace Tuvi.App.ViewModels.Common
 
     public class NewMessageData
     {
-        public EmailAddress From { get; private set; }
+        public Account Account { get; private set; }
         public string To { get; private set; }
         public string Copy { get; private set; }
         public string HiddenCopy { get; private set; }
@@ -38,9 +38,9 @@ namespace Tuvi.App.ViewModels.Common
         public string TextBody { get; private set; }
         public AttachmentsCollection Attachments { get; private set; }
 
-        public NewMessageData(EmailAddress from, string to, string copy, string hiddenCopy, string subject, string textBody, AttachmentsCollection attachments = null)
+        public NewMessageData(Account account, string to, string copy, string hiddenCopy, string subject, string textBody, AttachmentsCollection attachments = null)
         {
-            From = from;
+            Account = account;
             To = to;
             Copy = copy;
             HiddenCopy = hiddenCopy;
@@ -105,8 +105,8 @@ namespace Tuvi.App.ViewModels.Common
 
     public class AsyncLoadMessageData : NewMessageData
     {
-        public AsyncLoadMessageData(EmailAddress from, string to, string copy, string hiddenCopy, string subject, string textBody, string template, AttachmentsCollection attachments, Task<MessageInfo> activeMessageInfoLoadTask)
-             : base(from, to, copy, hiddenCopy, subject, textBody, attachments)
+        public AsyncLoadMessageData(Account account, string to, string copy, string hiddenCopy, string subject, string textBody, string template, AttachmentsCollection attachments, Task<MessageInfo> activeMessageInfoLoadTask)
+             : base(account, to, copy, hiddenCopy, subject, textBody, attachments)
         {
             messageInfoLoadTask = activeMessageInfoLoadTask;
             bodyTemplate = template;
@@ -158,11 +158,11 @@ namespace Tuvi.App.ViewModels.Common
     {
         public ReplyMessageData(MessageInfo messageInfo, string template, ITextUtils textUtils, Task<MessageInfo> activeMessageInfoLoadTask = null)
 
-             : base(messageInfo?.Email, CreateToAdress(messageInfo), string.Empty, string.Empty, CreateSubject(messageInfo), CreateMessageBody(messageInfo, template, textUtils), template, null, activeMessageInfoLoadTask)
+             : base(messageInfo?.Account, CreateToAdress(messageInfo), string.Empty, string.Empty, CreateSubject(messageInfo), CreateMessageBody(messageInfo, template, textUtils), template, null, activeMessageInfoLoadTask)
         { }
 
         protected ReplyMessageData(MessageInfo messageInfo, string template, ITextUtils textUtils)
-            : base(messageInfo?.Email, CreateToAdress(messageInfo), string.Empty, string.Empty, CreateSubject(messageInfo), CreateMessageBody(messageInfo, template, textUtils), template, null, null)
+            : base(messageInfo?.Account, CreateToAdress(messageInfo), string.Empty, string.Empty, CreateSubject(messageInfo), CreateMessageBody(messageInfo, template, textUtils), template, null, null)
         { }
 
         protected override AsyncLoadMessageData Create(MessageInfo messageInfo, AttachmentsCollection attachments, string bodyTemplate, ITextUtils textUtils)
@@ -179,11 +179,11 @@ namespace Tuvi.App.ViewModels.Common
     public class ReplyAllMessageData : AsyncLoadMessageData
     {
         public ReplyAllMessageData(MessageInfo messageInfo, string template, ITextUtils textUtils, Task<MessageInfo> activeMessageInfoLoadTask = null)
-             : base(messageInfo?.Email, CreateToAdresses(messageInfo), CreateCopyAdresses(messageInfo), messageInfo?.MessageHiddenCopy, CreateSubject(messageInfo), CreateMessageBody(messageInfo, template, textUtils), template, null, activeMessageInfoLoadTask)
+             : base(messageInfo?.Account, CreateToAdresses(messageInfo), CreateCopyAdresses(messageInfo), messageInfo?.MessageHiddenCopy, CreateSubject(messageInfo), CreateMessageBody(messageInfo, template, textUtils), template, null, activeMessageInfoLoadTask)
         { }
 
         protected ReplyAllMessageData(MessageInfo messageInfo, string template, ITextUtils textUtils)
-            : base(messageInfo?.Email, CreateToAdresses(messageInfo), CreateCopyAdresses(messageInfo), messageInfo?.MessageHiddenCopy, CreateSubject(messageInfo), CreateMessageBody(messageInfo, template, textUtils), template, null, null)
+            : base(messageInfo?.Account, CreateToAdresses(messageInfo), CreateCopyAdresses(messageInfo), messageInfo?.MessageHiddenCopy, CreateSubject(messageInfo), CreateMessageBody(messageInfo, template, textUtils), template, null, null)
         { }
 
         protected override AsyncLoadMessageData Create(MessageInfo messageInfo, AttachmentsCollection attachments, string bodyTemplate, ITextUtils textUtils)
@@ -220,18 +220,18 @@ namespace Tuvi.App.ViewModels.Common
         }
         private static bool HasSameAddress(MessageInfo messageInfo, EmailAddress email)
         {
-            return messageInfo.Email.HasSameAddress(email) || email.HasSameAddress(messageInfo.Email.DisplayAddress);
+            return email == messageInfo.Account.Email || email == messageInfo.Account.DisplayEmail;
         }
     }
 
     public class ForwardMessageData : AsyncLoadMessageData
     {
         public ForwardMessageData(MessageInfo messageInfo, string template, ITextUtils textUtils, Task<MessageInfo> activeMessageInfoLoadTask = null)
-             : base(messageInfo?.Email, string.Empty, string.Empty, string.Empty, CreateSubject(messageInfo), CreateMessageBody(messageInfo, template, textUtils), template, messageInfo?.Attachments, activeMessageInfoLoadTask)
+             : base(messageInfo?.Account, string.Empty, string.Empty, string.Empty, CreateSubject(messageInfo), CreateMessageBody(messageInfo, template, textUtils), template, messageInfo?.Attachments, activeMessageInfoLoadTask)
         { }
 
         protected ForwardMessageData(MessageInfo messageInfo, AttachmentsCollection attachments, string template, ITextUtils textUtils)
-             : base(messageInfo?.Email, string.Empty, string.Empty, string.Empty, CreateSubject(messageInfo), CreateMessageBody(messageInfo, template, textUtils), template, attachments, null)
+             : base(messageInfo?.Account, string.Empty, string.Empty, string.Empty, CreateSubject(messageInfo), CreateMessageBody(messageInfo, template, textUtils), template, attachments, null)
         { }
 
         protected override AsyncLoadMessageData Create(MessageInfo messageInfo, AttachmentsCollection attachments, string bodyTemplate, ITextUtils textUtils)
@@ -250,13 +250,13 @@ namespace Tuvi.App.ViewModels.Common
         public MessageInfo MessageInfo { get; private set; }
 
         public DraftMessageData(MessageInfo messageInfo, ITextUtils textUtils, Task<MessageInfo> activeMessageInfoLoadTask = null)
-             : base(messageInfo?.Email, messageInfo?.MessageReceiver, messageInfo?.MessageCopy, messageInfo?.MessageHiddenCopy, messageInfo?.MessageSubject, CreateMessageBody(messageInfo, null, textUtils), null, messageInfo?.Attachments, activeMessageInfoLoadTask)
+             : base(messageInfo?.Account, messageInfo?.MessageReceiver, messageInfo?.MessageCopy, messageInfo?.MessageHiddenCopy, messageInfo?.MessageSubject, CreateMessageBody(messageInfo, null, textUtils), null, messageInfo?.Attachments, activeMessageInfoLoadTask)
         {
             MessageInfo = messageInfo;
         }
 
         protected DraftMessageData(MessageInfo messageInfo, ITextUtils textUtils, AttachmentsCollection attachments)
-            : base(messageInfo?.Email, messageInfo?.MessageReceiver, messageInfo?.MessageCopy, messageInfo?.MessageHiddenCopy, messageInfo?.MessageSubject, CreateMessageBody(messageInfo, null, textUtils), null, attachments, null)
+            : base(messageInfo?.Account, messageInfo?.MessageReceiver, messageInfo?.MessageCopy, messageInfo?.MessageHiddenCopy, messageInfo?.MessageSubject, CreateMessageBody(messageInfo, null, textUtils), null, attachments, null)
         {
             MessageInfo = messageInfo;
         }
@@ -269,8 +269,8 @@ namespace Tuvi.App.ViewModels.Common
 
     public class SharePublicKeyMessageData : NewMessageData
     {
-        public SharePublicKeyMessageData(string userIdentity, byte[] keyFileData, string keyFileName, string messageSubject)
-            : base(new EmailAddress(userIdentity),
+        public SharePublicKeyMessageData(Account account, byte[] keyFileData, string keyFileName, string messageSubject)
+            : base(account,
                    string.Empty,
                    string.Empty,
                    string.Empty,
@@ -289,8 +289,8 @@ namespace Tuvi.App.ViewModels.Common
 
     public class SelectedAccountNewMessageData : NewMessageData
     {
-        public SelectedAccountNewMessageData(EmailAddress email)
-            : base(email,
+        public SelectedAccountNewMessageData(Account account)
+            : base(account,
                    string.Empty,
                    string.Empty,
                    string.Empty,
@@ -301,20 +301,25 @@ namespace Tuvi.App.ViewModels.Common
 
     public class SelectedContactNewMessageData : NewMessageData
     {
-        public SelectedContactNewMessageData(EmailAddress email, EmailAddress contactEmail)
-            : base(email,
-                   contactEmail != null ? contactEmail.Address : string.Empty,
+        public SelectedContactNewMessageData(Account account, EmailAddress contactEmail)
+            : base(account,
+                   CreateToAdresses(contactEmail),
                    string.Empty,
                    string.Empty,
                    string.Empty,
                    string.Empty)
         { }
+
+        private static string CreateToAdresses(EmailAddress contactEmail)
+        {
+            return contactEmail.ToString();
+        }
     }
 
     public class ErrorReportNewMessageData : NewMessageData
     {
-        public ErrorReportNewMessageData(string support, string title, string message)
-            : base(new EmailAddress(""),
+        public ErrorReportNewMessageData(Account account, string support, string title, string message)
+            : base(account,
                    support,
                    string.Empty,
                    string.Empty,
@@ -325,8 +330,8 @@ namespace Tuvi.App.ViewModels.Common
 
     public class MailtoMessageData : NewMessageData
     {
-        public MailtoMessageData(EmailAddress from, string to, string cc, string bcc, string subject, string body)
-            : base(from,
+        public MailtoMessageData(Account account, string to, string cc, string bcc, string subject, string body)
+            : base(account,
                    to ?? string.Empty,
                    cc ?? string.Empty,
                    bcc ?? string.Empty,
@@ -334,7 +339,7 @@ namespace Tuvi.App.ViewModels.Common
                    body ?? string.Empty)
         { }
 
-        public static MailtoMessageData FromMailtoUri(Uri mailtoUri, EmailAddress defaultFromAddress)
+        public static MailtoMessageData FromMailtoUri(Uri mailtoUri, Account defaultAccount)
         {
             if (mailtoUri is null)
             {
@@ -343,7 +348,7 @@ namespace Tuvi.App.ViewModels.Common
 
             var parser = Helpers.MailtoUriParser.Parse(mailtoUri);
             return new MailtoMessageData(
-                defaultFromAddress,
+                defaultAccount,
                 parser.To,
                 parser.Cc,
                 parser.Bcc,

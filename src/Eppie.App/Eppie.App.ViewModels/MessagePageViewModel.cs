@@ -91,6 +91,7 @@ namespace Tuvi.App.ViewModels
                 if (data is MessageInfo messageInfo)
                 {
                     MessageInfo = messageInfo;
+                    LoadExternalContentPolicy();
 
                     _messageLoadTask = GetMessageBodyAsync();
                 }
@@ -103,13 +104,10 @@ namespace Tuvi.App.ViewModels
             base.OnNavigatedTo(data);
         }
 
-        private async Task LoadExternalContentPolicyAsync()
+        private void LoadExternalContentPolicy()
         {
-            if (MessageInfo?.Email != null)
-            {
-                var account = await Core.GetAccountAsync(MessageInfo.Email).ConfigureAwait(true);
-                ExternalContentDecider.Policy = account.ExternalContentPolicy;
-            }
+            ExternalContentDecider.Policy = MessageInfo.Account.ExternalContentPolicy;
+            OnPropertyChanged(nameof(ExternalContentDecider));
         }
 
         private async Task SetupMessageAsync()
@@ -189,7 +187,6 @@ namespace Tuvi.App.ViewModels
             {
                 MessageInfo.MessageData = await Core.GetMessageBodyHighPriorityAsync(MessageInfo.MessageData).ConfigureAwait(true);
 
-                await LoadExternalContentPolicyAsync().ConfigureAwait(true);
                 await SetupMessageAsync().ConfigureAwait(true);
             }
             catch (Exception ex)

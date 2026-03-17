@@ -103,10 +103,10 @@ namespace Tuvi.App.ViewModels
 
         public void SetAccounts(IReadOnlyList<CompositeAccount> accounts)
         {
-            EmailAddress prevSelectedRootEmail = null;
+            CompositeAccount prevSelectedRoot = null;
             if (SelectedItem != null)
             {
-                prevSelectedRootEmail = SelectedItem.Email;
+                prevSelectedRoot = SelectedItem.Account;
             }
 
             AccountList.Clear();
@@ -114,9 +114,9 @@ namespace Tuvi.App.ViewModels
 
             RefreshFolderStructure();
 
-            if (prevSelectedRootEmail != null)
+            if (prevSelectedRoot != null)
             {
-                SelectedItem = GetRootItemByEmail(prevSelectedRootEmail);
+                SelectedItem = GetRootItemByAccount(prevSelectedRoot);
             }
         }
 
@@ -126,11 +126,11 @@ namespace Tuvi.App.ViewModels
 
             foreach (var accountData in AccountList)
             {
-                var rootItem = new MailBoxItem(accountData.Email, accountData.DefaultInboxFolder, accountData.Email.DisplayAddress, true);
+                var rootItem = new MailBoxItem(accountData, accountData.DefaultInboxFolder, accountData.DisplayAddress, true);
 
                 foreach (var folder in accountData.FoldersStructure)
                 {
-                    var folderItem = new MailBoxItem(accountData.Email, folder, folder.FullName, false);
+                    var folderItem = new MailBoxItem(accountData, folder, folder.FullName, false);
                     rootItem.Children.Add(folderItem);
                 }
 
@@ -140,9 +140,14 @@ namespace Tuvi.App.ViewModels
             Items = newItems;
         }
 
-        public MailBoxItem GetRootItemByEmail(EmailAddress email)
+        public MailBoxItem GetRootItemByAccount(CompositeAccount account)
         {
-            return Items.FirstOrDefault(item => item.Email.HasSameAddress(email));
+            return Items.FirstOrDefault(item => item.Account == account);
+        }
+
+        public MailBoxItem GetRootItemByAccount(Account account)
+        {
+            return Items.FirstOrDefault(item => item.Account.HasAccount(account));
         }
 
         public void ItemDrop(MailBoxItem targetMailBoxItem)

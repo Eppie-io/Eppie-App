@@ -136,49 +136,46 @@ namespace Tuvi.App.ViewModels
             {
                 if (SetProperty(ref _senderAddressIndex, value))
                 {
-                    OnPropertyChanged(nameof(From));
+                    OnPropertyChanged(nameof(Account));
                     OnSenderChanged();
                 }
             }
         }
 
-        public EmailAddress From
+        public Account Account
         {
             get => (_senderAddressIndex >= 0 && _senderAddressIndex < SenderAddresses.Count)
-                ? SenderAddresses[_senderAddressIndex].Account.Email
-                : null;
+                ? SenderAddresses[_senderAddressIndex].Account : null;
         }
 
         private void OnSenderChanged()
         {
-            if (From is null)
+            if (Account is null)
             {
                 return;
             }
 
             // If the sender is a Decentralized or Hybrid account, then the message encrypted and signed automatically
-            IsSigned = IsEncrypted = From.IsDecentralized;
-            IsChangeCryptographyEnabled = !From.IsDecentralized;
-            IsAdvancedSettingsVisible = !Proton.Extensions.IsProton(From) && !From.IsDecentralized;
+            IsSigned = IsEncrypted = Account.Email.IsDecentralized;
+            IsChangeCryptographyEnabled = !Account.Email.IsDecentralized;
+            IsAdvancedSettingsVisible = !Proton.Extensions.IsProton(Account.Email) && !Account.Email.IsDecentralized;
+
+            UpdateMessageFooter();
 
             _ = UpdateDraftMessageAsync();
-            _ = UpdateMessageFooterAsync();
         }
 
-        private async Task UpdateMessageFooterAsync()
+        private void UpdateMessageFooter()
         {
-            if (From is null)
+            if (Account is null)
             {
                 return;
             }
 
-            var account = await Core.GetAccountAsync(From).ConfigureAwait(true);
-            var accountFooter = account?.MessageFooter ?? string.Empty;
-
-            if (account != null && account.IsMessageFooterEnabled && string.IsNullOrWhiteSpace(TextBody))
+            if (Account.IsMessageFooterEnabled && string.IsNullOrWhiteSpace(TextBody))
             {
                 string defaultFooter = GetLocalizedString("DefaultSignatureText");
-                TextBody = $"{Environment.NewLine}{Environment.NewLine}{accountFooter}{Environment.NewLine}{defaultFooter}";
+                TextBody = $"{Environment.NewLine}{Environment.NewLine}{Account.MessageFooter}{Environment.NewLine}{defaultFooter}";
             }
         }
 
@@ -363,7 +360,11 @@ namespace Tuvi.App.ViewModels
         {
             IsHiddenCopyVisible = !IsHiddenCopyVisible;
 
-            // Todo: Managing the BCC list when toggling visibility (e.g., clear bcc when hiding)
+            if (!IsHiddenCopyVisible)
+            {
+                HiddenCopy.Clear();
+                UntokenizedContactHiddenCopy = null;
+            }
         }
 
         public override async void OnNavigatedTo(object data)
@@ -385,7 +386,7 @@ namespace Tuvi.App.ViewModels
 
                 if (!(data is DraftMessageData))
                 {
-                    if (From is null && SenderAddresses.Count > 0)
+                    if (Account is null && SenderAddresses.Count > 0)
                     {
                         SenderAddressIndex = 0;
                     }
@@ -433,9 +434,6 @@ namespace Tuvi.App.ViewModels
 
         private void SetMessageParameters(NewMessageData messageData)
         {
-            var matchingAddress = SenderAddresses.FirstOrDefault(a => a.Account.Email == messageData.From);
-            SenderAddressIndex = matchingAddress != null ? SenderAddresses.IndexOf(matchingAddress) : 0;
-
             To.SetItems(ParseContacts(messageData.To));
             Copy.SetItems(ParseContacts(messageData.Copy));
             HiddenCopy.SetItems(ParseContacts(messageData.HiddenCopy));
@@ -455,6 +453,9 @@ namespace Tuvi.App.ViewModels
                     SetAttachments(messageData.Attachments);
                 }
             }
+
+            var matchingAddress = SenderAddresses.FirstOrDefault(address => address.Account == messageData.Account);
+            SenderAddressIndex = matchingAddress != null ? SenderAddresses.IndexOf(matchingAddress) : 0;
         }
 
         private IEnumerable<ContactItem> ParseContacts(string text)
@@ -471,9 +472,10 @@ namespace Tuvi.App.ViewModels
         private async Task UpdateEmailAccountsAndContactsAsync()
         {
             var accounts = await Core.GetAccountsAsync().ConfigureAwait(true);
-            SenderAddresses.SetItems(accounts.Select(a => new AddressItem(a)));
+            SenderAddresses.SetItems(accounts.Select(account => new AddressItem(account)));
 
-            var accountContactItems = accounts.Select(a => new ContactItem(a.Email)).ToList();
+            // Add email addresses from accounts as contacts immediately
+            var accountContactItems = accounts.Select(account => new ContactItem(account.DisplayEmail)).ToList();
             Contacts.SetItems(accountContactItems);
 
             // Load contacts in background for autocomplete
@@ -504,7 +506,8 @@ namespace Tuvi.App.ViewModels
             {
                 CanSendMessage = false;
 
-                if ((From.IsDecentralized || IsEncrypted || IsSigned) && !await Core.GetSecurityManager().IsSeedPhraseInitializedAsync().ConfigureAwait(true))
+                if (((Account?.Email?.IsDecentralized ?? false) || IsEncrypted || IsSigned) &&
+                    !await Core.GetSecurityManager().IsSeedPhraseInitializedAsync().ConfigureAwait(true))
                 {
                     await MessageService.ShowNeedToCreateSeedPhraseMessageAsync().ConfigureAwait(true);
 
@@ -531,7 +534,7 @@ namespace Tuvi.App.ViewModels
         {
             var message = new Message();
 
-            message.From.Add(From);
+            message.From.Add(Account.Email);
             message.TextBody = TextBody;
             message.HtmlBody = HtmlBody;
 
@@ -555,7 +558,7 @@ namespace Tuvi.App.ViewModels
 
             message.Attachments.AddRange(Attachments.Select(attachment => attachment.ToAttachment()));
 
-            if (MessageInfo != null && MessageInfo.Email == From)
+            if (MessageInfo?.Account == Account)
             {
                 message.Id = MessageInfo.MessageID;
                 message.Folder = MessageInfo.Folder;
@@ -615,26 +618,26 @@ namespace Tuvi.App.ViewModels
             OnPropertyChanged(nameof(HasAttachments));
         }
 
-        protected override async Task SaveDraftIfNeeded()
+        protected override async Task SaveDraftIfNeededAsync()
         {
             await UpdateDraftMessageAsync().ConfigureAwait(true);
         }
 
-        private async Task<MessageInfo> CreateDraftMessageAsync(EmailAddress account, Message message)
+        private async Task<MessageInfo> CreateDraftMessageAsync(Message message)
         {
             if (!IsEmptyContentMessage(message))
             {
-                message = await Core.CreateDraftMessageAsync(message).ConfigureAwait(true);
+                message = await Core.CreateDraftMessageAsync(Account, message).ConfigureAwait(true);
             }
 
-            return new MessageInfo(account, message);
+            return new MessageInfo(message);
         }
 
         private async Task UpdateDraftMessageAsync()
         {
-            if (MessageInfo?.Folder is null || MessageInfo?.Email != From)
+            if (MessageInfo?.Folder is null || MessageInfo?.Account != Account)
             {
-                MessageInfo = await CreateDraftMessageAsync(From, CreateMessage()).ConfigureAwait(true);
+                MessageInfo = await CreateDraftMessageAsync(CreateMessage()).ConfigureAwait(true);
             }
             else
             {

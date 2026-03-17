@@ -58,13 +58,7 @@ namespace Tuvi.App.ViewModels
 
     public class MessageInfo : ObservableObject, IMessageInfo
     {
-        private EmailAddress _email;
-        public EmailAddress Email
-        {
-            get { return _email; }
-            set { SetProperty(ref _email, value); }
-        }
-
+        public Account Account => Folder?.Account;
         public Folder Folder => MessageData.Folder;
 
         private Message _message;
@@ -243,7 +237,7 @@ namespace Tuvi.App.ViewModels
                 if (_message.To is null)
                     return string.Empty;
                 var firstRecipient = _message.To.FirstOrDefault();
-                return firstRecipient?.DisplayName ?? string.Empty;
+                return firstRecipient?.Name ?? string.Empty;
             }
         }
 
@@ -325,14 +319,13 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        public MessageInfo(EmailAddress email, Message message)
+        public MessageInfo(Message message)
         {
             if (message is null)
             {
                 throw new ArgumentNullException(nameof(message));
             }
 
-            Email = email;
             MessageData = message;
         }
 
@@ -467,12 +460,12 @@ namespace Tuvi.App.ViewModels
                     if (selectedContact?.Email != null)
                     {
                         messageData = new SelectedContactNewMessageData(
-                            selectedContact.LastMessageData.AccountEmail,
+                            selectedContact.LastMessageData.Account,
                             selectedContact.Email);
                     }
-                    else if (MailBoxesModel?.SelectedItem != null)
+                    else if (MailBoxesModel?.SelectedItem?.Account?.Accounts.Count > 0)
                     {
-                        messageData = new SelectedAccountNewMessageData(MailBoxesModel.SelectedItem.Email);
+                        messageData = new SelectedAccountNewMessageData(MailBoxesModel.SelectedItem.Account.Accounts[0]);
                     }
 
                     if (navigateContentFrameAction is null)
@@ -556,7 +549,7 @@ namespace Tuvi.App.ViewModels
                     return;
                 }
 
-                var messageData = MailtoMessageData.FromMailtoUri(mailtoUri, defaultAccount.Email);
+                var messageData = MailtoMessageData.FromMailtoUri(mailtoUri, defaultAccount);
                 NavigationService?.NavigateContent(nameof(ComposeMessagePageViewModel), messageData);
             }
             catch (Exception ex)
@@ -691,10 +684,10 @@ namespace Tuvi.App.ViewModels
 
         private async Task UpdateMailboxItemsUnreadCountAsync()
         {
-            var accounts = await Core.GetCompositeAccountsAsync().ConfigureAwait(true);
+            var accounts = await Core.GetAccountsAsync().ConfigureAwait(true);
             foreach (var account in accounts)
             {
-                await UpdateMailboxItemUnreadCountAsync(account.Email).ConfigureAwait(true);
+                await UpdateMailboxItemUnreadCountAsync(account).ConfigureAwait(true);
             }
         }
 
@@ -797,24 +790,24 @@ namespace Tuvi.App.ViewModels
 
         private void OnMessageDeleted(object sender, MessageDeletedEventArgs e)
         {
-            UpdateUnreadCounts(e.Email);
+            UpdateUnreadCounts(e.Account);
         }
 
         private void OnMessagesIsReadChanged(object sender, MessagesAttributeChangedEventArgs e)
         {
-            UpdateUnreadCounts(e.Email);
+            UpdateUnreadCounts(e.Account);
         }
 
         private void OnUnreadMessagesReceived(object sender, UnreadMessagesReceivedEventArgs e)
         {
-            UpdateUnreadCounts(e.Email);
+            UpdateUnreadCounts(e.Account);
         }
 
-        private async void UpdateUnreadCounts(EmailAddress email)
+        private async void UpdateUnreadCounts(Account account)
         {
             try
             {
-                await UpdateMailboxItemUnreadCountAsync(email).ConfigureAwait(true);
+                await UpdateMailboxItemUnreadCountAsync(account).ConfigureAwait(true);
             }
             catch (ObjectDisposedException)
             { }
@@ -879,9 +872,9 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        private async Task UpdateMailboxItemUnreadCountAsync(EmailAddress email)
+        private async Task UpdateMailboxItemUnreadCountAsync(Account account)
         {
-            var rootItem = MailBoxesModel.GetRootItemByEmail(email);
+            var rootItem = MailBoxesModel.GetRootItemByAccount(account);
             if (rootItem is null)
             {
                 // TODO: investigate
@@ -944,7 +937,7 @@ namespace Tuvi.App.ViewModels
             {
                 var messages = DragAndDropService.GetDraggedMessages();
 
-                res = messages.Any(x => x.Email == item.Email);
+                res = messages.Any(x => item.Account.HasAccount(x.Account));
             }
             catch (Exception e)
             {

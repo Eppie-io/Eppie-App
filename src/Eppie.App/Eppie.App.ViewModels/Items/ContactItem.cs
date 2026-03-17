@@ -49,7 +49,7 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        public string DisplayName => string.IsNullOrEmpty(FullName) ? Email.DisplayName : FullName;
+        public string DisplayName => string.IsNullOrEmpty(FullName) ? Email.Name : FullName;
 
         private ImageInfo _avatarInfo;
         public ImageInfo AvatarInfo

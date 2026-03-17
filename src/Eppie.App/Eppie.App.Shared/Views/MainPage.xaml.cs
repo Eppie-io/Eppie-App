@@ -337,7 +337,7 @@ namespace Eppie.App.Views
                     {
                         try
                         {
-                            await ViewModel.CreateFolderAsync(mailBoxItem.Email, folderName).ConfigureAwait(true);
+                            await ViewModel.CreateFolderAsync(mailBoxItem.Account.Email, folderName).ConfigureAwait(true);
                         }
                         catch (Exception ex)
                         {
@@ -356,7 +356,7 @@ namespace Eppie.App.Views
 
             try
             {
-                var account = await ViewModel.GetAccountAsync(mailBoxItem.Email).ConfigureAwait(true);
+                var account = await ViewModel.GetAccountAsync(mailBoxItem.Account.Email).ConfigureAwait(true);
                 if (account != null)
                 {
                     ViewModel.OpenMailboxSettings(account);
@@ -377,7 +377,7 @@ namespace Eppie.App.Views
 
             try
             {
-                var account = await ViewModel.GetAccountAsync(mailBoxItem.Email).ConfigureAwait(true);
+                var account = await ViewModel.GetAccountAsync(mailBoxItem.Account.Email).ConfigureAwait(true);
                 if (account != null)
                 {
                     await ViewModel.RemoveAccountAsync(account).ConfigureAwait(true);
@@ -413,7 +413,7 @@ namespace Eppie.App.Views
                             // For now, only support simple folders renaming
                             if (mailBoxItem.Folder.Folders.Count == 1)
                             {
-                                await ViewModel.RenameFolderAsync(mailBoxItem.Email, mailBoxItem.Folder.Folders[0], newFolderName).ConfigureAwait(true);
+                                await ViewModel.RenameFolderAsync(mailBoxItem.Account.Email, mailBoxItem.Folder.Folders[0], newFolderName).ConfigureAwait(true);
 
                                 ShowAllMessages();
                             }
@@ -442,7 +442,7 @@ namespace Eppie.App.Views
                 // For now, only support simple folders deletion.
                 if (mailBoxItem.Folder.Folders.Count == 1)
                 {
-                    await ViewModel.DeleteFolderAsync(mailBoxItem.Email, mailBoxItem.Folder.Folders[0]).ConfigureAwait(true);
+                    await ViewModel.DeleteFolderAsync(mailBoxItem.Account.Email, mailBoxItem.Folder.Folders[0]).ConfigureAwait(true);
 
                     ShowAllMessages();
                 }

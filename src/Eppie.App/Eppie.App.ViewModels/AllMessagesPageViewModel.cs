@@ -34,7 +34,7 @@ namespace Tuvi.App.ViewModels
         protected override IEnumerable<MessageInfo> SelectAppropriateMessagesFrom(List<ReceivedMessageInfo> receivedMessages)
         {
             return receivedMessages.Where(m => m.Folder.IsInbox)
-                                   .Select(m => new MessageInfo(m.Email, m.Message));
+                                   .Select(m => new MessageInfo(m.Message));
         }
 
         protected override Task<IReadOnlyList<Message>> LoadMoreMessagesAsync(int count, Message lastMessage, CancellationToken cancellationToken)

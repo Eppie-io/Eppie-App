@@ -143,7 +143,25 @@ namespace Eppie.App.UI.Controls
             if (contact == null || SelectedContacts.Any(selContact => selContact.Email == contact.Email))
             {
                 e.Cancel = true;
+
+                if (sender is TokenizingTextBox tokenizingTextBox)
+                {
+                    tokenizingTextBox.Text = string.Empty;
+                }
+
+                UntokenizedContact = null;
             }
+        }
+
+        private void SuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+        {
+            UntokenizedContact = null;
+            sender.Text = string.Empty;
+        }
+
+        private void SuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+            sender.Text = string.Empty;
         }
 
         private void SuggestBox_TokenItemAdded(TokenizingTextBox sender, object args)
@@ -197,6 +215,7 @@ namespace Eppie.App.UI.Controls
             {
                 contact = new ContactItem()
                 {
+                    FullName = text,
                     Email = new EmailAddress(text)
                 };
             }
@@ -235,7 +254,7 @@ namespace Eppie.App.UI.Controls
         private void SuggestBox_LostFocus(object sender, RoutedEventArgs e)
         {
             if (UntokenizedContact?.Email != null &&
-                !SelectedContacts.Any(c => c.Email != null && c.Email.Address == UntokenizedContact.Email.Address))
+                !SelectedContacts.Any(c => c.Email != null && c.Email == UntokenizedContact.Email))
             {
                 SelectedContacts.Add(UntokenizedContact);
 

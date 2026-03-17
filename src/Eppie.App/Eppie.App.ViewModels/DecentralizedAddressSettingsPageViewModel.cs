@@ -72,7 +72,7 @@ namespace Tuvi.App.ViewModels
             set => SetProperty(ref _claimedName, value);
         }
 
-        public string DisplayAddress => CurrentAccount?.Email?.DisplayAddress;
+        public string DisplayAddress => CurrentAccount?.DisplayEmail.Address;
 
         protected DecentralizedAddressSettingsModel(Account account) : base(account)
         {
@@ -86,8 +86,8 @@ namespace Tuvi.App.ViewModels
             CurrentAccount = account;
 
             Email.Value = account.Email.Address;
-            SenderName.Value = account.Email.Name;
-            ClaimedName = account.Email.Name;
+            SenderName.Value = account.GetDecentralizedName();
+            ClaimedName = account.GetDecentralizedName();
 
             if (account.DecentralizedAccountIndex >= 0)
             {
@@ -105,11 +105,7 @@ namespace Tuvi.App.ViewModels
 
             if (IsSenderNameVisible && !string.IsNullOrEmpty(ClaimedName))
             {
-                account.Email = new EmailAddress(account.Email.Address, ClaimedName);
-            }
-            else
-            {
-                account.Email = new EmailAddress(account.Email.Address, string.Empty);
+                account.SetDecentralizedName(ClaimedName);
             }
 
             account.Type = MailBoxType.Dec;
