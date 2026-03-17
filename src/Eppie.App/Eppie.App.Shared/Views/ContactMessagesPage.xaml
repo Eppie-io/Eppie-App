@@ -30,7 +30,6 @@
 
             <controls:MessageListControl.ItemTemplate>
                 <DataTemplate x:DataType="viewmodels:MessageInfo">
-                    <!--  It leaks see TVM-344  -->
                     <local:MessageItemView Deleted="OnDeleted"
                                            Flagged="OnFlagged"
                                            MessageInfo="{x:Bind Mode=OneWay}"
