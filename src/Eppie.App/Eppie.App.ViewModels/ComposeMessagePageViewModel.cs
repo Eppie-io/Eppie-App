@@ -180,7 +180,6 @@ namespace Tuvi.App.ViewModels
         }
 
         public ObservableCollection<ContactItem> To { get; } = new ObservableCollection<ContactItem>();
-        public ObservableCollection<ContactItem> Copy { get; } = new ObservableCollection<ContactItem>();
         public ObservableCollection<ContactItem> HiddenCopy { get; } = new ObservableCollection<ContactItem>();
 
         private ContactItem _untokenizedContactTo;
@@ -190,17 +189,6 @@ namespace Tuvi.App.ViewModels
             set
             {
                 SetProperty(ref _untokenizedContactTo, value);
-                SendMessageAndGoBackCommand.NotifyCanExecuteChanged();
-            }
-        }
-
-        private ContactItem _untokenizedContactCopy;
-        public ContactItem UntokenizedContactCopy
-        {
-            get { return _untokenizedContactCopy; }
-            set
-            {
-                SetProperty(ref _untokenizedContactCopy, value);
                 SendMessageAndGoBackCommand.NotifyCanExecuteChanged();
             }
         }
@@ -289,8 +277,6 @@ namespace Tuvi.App.ViewModels
                 // Check that all correspondents have valid emails
                 bool allValid = To.All(c => c?.Email != null && IsEmailValid(c.Email))
                     && (UntokenizedContactTo is null || (UntokenizedContactTo.Email != null && IsEmailValid(UntokenizedContactTo.Email)))
-                    && Copy.All(c => c?.Email != null && IsEmailValid(c.Email))
-                    && (UntokenizedContactCopy is null || (UntokenizedContactCopy.Email != null && IsEmailValid(UntokenizedContactCopy.Email)))
                     && HiddenCopy.All(c => c?.Email != null && IsEmailValid(c.Email))
                     && (UntokenizedContactHiddenCopy is null || (UntokenizedContactHiddenCopy.Email != null && IsEmailValid(UntokenizedContactHiddenCopy.Email)));
 
@@ -298,7 +284,6 @@ namespace Tuvi.App.ViewModels
                     && allValid
                     && (
                         To.Count > 0 || UntokenizedContactTo != null ||
-                        Copy.Count > 0 || UntokenizedContactCopy != null ||
                         HiddenCopy.Count > 0 || UntokenizedContactHiddenCopy != null
                     );
             }
@@ -337,7 +322,6 @@ namespace Tuvi.App.ViewModels
             SendMessageAndGoBackCommand = new AsyncRelayCommand(SendMessageAndGoBackAsync, () => CanSendMessage);
 
             To.CollectionChanged += OnCollectionChanged;
-            Copy.CollectionChanged += OnCollectionChanged;
             HiddenCopy.CollectionChanged += OnCollectionChanged;
         }
 
@@ -435,7 +419,7 @@ namespace Tuvi.App.ViewModels
         private void SetMessageParameters(NewMessageData messageData)
         {
             To.SetItems(ParseContacts(messageData.To));
-            Copy.SetItems(ParseContacts(messageData.Copy));
+            MergeCopyRecipientsIntoTo(messageData.Copy);
             HiddenCopy.SetItems(ParseContacts(messageData.HiddenCopy));
             Subject = messageData.Subject;
             TextBody = messageData.TextBody;
@@ -466,6 +450,17 @@ namespace Tuvi.App.ViewModels
             {
                 var existingContact = Contacts.FirstOrDefault(contact => contact.Email == email);
                 yield return existingContact ?? new ContactItem(email);
+            }
+        }
+
+        private void MergeCopyRecipientsIntoTo(string copyRecipients)
+        {
+            foreach (var contact in ParseContacts(copyRecipients))
+            {
+                if (contact?.Email != null && !To.Any(existing => existing?.Email != null && existing.Email.HasSameAddress(contact.Email)))
+                {
+                    To.Add(contact);
+                }
             }
         }
 
@@ -543,11 +538,6 @@ namespace Tuvi.App.ViewModels
             {
                 message.To.Add(UntokenizedContactTo.ToEmailAddress());
             }
-            message.Cc.AddRange(Copy.Select(contact => contact.ToEmailAddress()));
-            if (UntokenizedContactCopy != null && !message.Cc.Any(address => address.HasSameAddress(UntokenizedContactCopy.Email)))
-            {
-                message.Cc.Add(UntokenizedContactCopy.ToEmailAddress());
-            }
             message.Bcc.AddRange(HiddenCopy.Select(contact => contact.ToEmailAddress()));
             if (UntokenizedContactHiddenCopy != null && !message.Bcc.Any(address => address.HasSameAddress(UntokenizedContactHiddenCopy.Email)))
             {
@@ -572,7 +562,6 @@ namespace Tuvi.App.ViewModels
                          && string.IsNullOrEmpty(message.TextBody)
                          && string.IsNullOrEmpty(message.HtmlBody)
                          && !message.To.Any()
-                         && !message.Cc.Any()
                          && !message.Bcc.Any()
                          && !message.Attachments.Any();
 
