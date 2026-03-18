@@ -22,7 +22,7 @@ At its core, the users' confidence that their data is accessible to them, and no
 
 ## Features
 
-Eppie is early in development. The p2p part is not publicly available at the moment. For now it works as a conventional email client with additional security features:
+Eppie is early in development. In stable releases, the decentralized p2p network is not enabled yet, so it currently works as a conventional email client with additional security features. Experimental decentralized functionality is available in the Testnet builds described below:
 
 - Compatible with Gmail, Microsoft Outlook and other major email providers.
 - Eppie can authenticate at Proton Mail servers (which no other native desktop client can do, as far as we are aware).
