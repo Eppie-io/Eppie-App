@@ -79,7 +79,9 @@ namespace Tuvi.App.ViewModels
         private const int ActivationPollIntervalMs = 15_000;
 
         [CustomValidation(typeof(BitcoinAddressSettingsPageViewModel), nameof(ValidateActivation))]
-        public static object ActivationValidation => null;
+#pragma warning disable CA1822
+        public object ActivationValidation => new object();
+#pragma warning restore CA1822
 
         public BitcoinAddressSettingsPageViewModel() : base()
         {
