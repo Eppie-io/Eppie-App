@@ -3,10 +3,9 @@
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
-  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
-  IgnorableNamespaces="uap rescap mp">
+  IgnorableNamespaces="uap rescap">
 
-  <Identity Name="Tuvisoft.Eppie" Version="1.0.0.0"/>
+  <Identity Name="Tuvisoft.Eppie" Version="1.2.2.0"/>
   <Properties>
     <DisplayName>Eppie</DisplayName>
     <PublisherDisplayName>Finebits</PublisherDisplayName>
