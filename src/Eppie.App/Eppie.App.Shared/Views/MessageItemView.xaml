@@ -3,8 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             PointerEntered="OnPointerEntered"
-             PointerExited="OnPointerExited"
              mc:Ignorable="d">
 
     <UserControl.Resources>
@@ -90,7 +88,9 @@
                            x:Uid="/App.Resources/ClearFlagButton"
                            ExecuteRequested="OnUnflagged">
                 <XamlUICommand.IconSource>
-                    <SymbolIconSource Symbol="Flag" />
+                    <FontIconSource FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                    Foreground="{ThemeResource TextFillColorDisabledBrush}"
+                                    Glyph="&#xEB4B;" />
                 </XamlUICommand.IconSource>
                 <!-- Todo: It doesn't work
                 <XamlUICommand.KeyboardAccelerators>
@@ -102,7 +102,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid>
+    <Grid Height="128">
         <!--  TODO: Temporarily disable SwipeControl due to leak. Re-enable after fixing (TVM-344).  -->
         <!--<SwipeControl>
             <SwipeControl.LeftItems>
@@ -128,215 +128,293 @@
                 </SwipeItems>
             </SwipeControl.RightItems>-->
 
-        <Grid Margin="0,2"
-              Padding="16,6"
-              Background="Transparent">
+        <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="32" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
+            <StackPanel Margin="8,0"
+                        Padding="0,20"
+                        VerticalAlignment="Top"
+                        Orientation="Vertical">
 
-            <Grid Width="24"
-                  Height="24"
-                  HorizontalAlignment="Left"
-                  VerticalAlignment="Center">
-                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                          FontSize="14"
-                          Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
-                          Glyph="&#xE715;"
-                          Visibility="{x:Bind MessageInfo.IsMarkedAsRead, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
-                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                          FontSize="14"
-                          Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                          Glyph="&#xE8C3;"
-                          Visibility="{x:Bind MessageInfo.IsMarkedAsRead, Mode=OneWay}" />
-            </Grid>
+                <Button x:Uid="/App.Resources/MarkAsReadItemButton"
+                        Width="32"
+                        Height="32"
+                        Padding="0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Command="{StaticResource MarkAsReadUICommand}"
+                        CommandParameter="{x:Bind MessageInfo, Mode=OneWay}"
+                        Style="{StaticResource ThinButtonStyle}"
+                        Visibility="{x:Bind MessageInfo.IsMarkedAsRead, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                    <Viewbox Width="16" Height="16">
+                        <SymbolIcon Symbol="Mail" />
+                    </Viewbox>
+                </Button>
 
-            <Grid Grid.Row="1"
-                  Width="24"
-                  Height="24"
-                  HorizontalAlignment="Left"
-                  VerticalAlignment="Center">
-                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                          FontSize="14"
-                          Foreground="{ThemeResource TextFillColorDisabledBrush}"
-                          Glyph="&#xE81B;"
-                          Visibility="{x:Bind MessageInfo.IsFlagged, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
-                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                          FontSize="14"
-                          Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
-                          Glyph="&#xEB4B;"
-                          Visibility="{x:Bind MessageInfo.IsFlagged, Mode=OneWay}" />
-            </Grid>
+                <Button x:Uid="/App.Resources/MarkAsUnreadItemButton"
+                        Width="32"
+                        Height="32"
+                        Padding="0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Command="{StaticResource MarkAsUnreadUICommand}"
+                        CommandParameter="{x:Bind MessageInfo, Mode=OneWay}"
+                        Style="{StaticResource ThinButtonStyle}"
+                        Visibility="{x:Bind MessageInfo.IsMarkedAsRead, Mode=OneWay}">
+                    <Viewbox Width="16" Height="16">
+                        <SymbolIcon Symbol="Read" />
+                    </Viewbox>
+                </Button>
 
-            <PersonPicture Grid.Column="1"
-                           Width="40"
-                           Height="40"
-                           VerticalAlignment="Center"
-                           DisplayName="{x:Bind MessageInfo.MessageSender, Mode=OneWay}" />
+                <Button x:Uid="/App.Resources/SetFlagItemButton"
+                        Width="32"
+                        Height="32"
+                        Margin="0,8,0,0"
+                        Padding="0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Command="{StaticResource FlagUICommand}"
+                        CommandParameter="{x:Bind MessageInfo, Mode=OneWay}"
+                        Style="{StaticResource ThinButtonStyle}"
+                        Visibility="{x:Bind MessageInfo.IsFlagged, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                    <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                              FontSize="16"
+                              Foreground="{ThemeResource TextFillColorDisabledBrush}"
+                              Glyph="&#xEB4B;" />
+                </Button>
 
-            <StackPanel Grid.Column="2"
-                        Margin="12,0,0,0"
-                        VerticalAlignment="Center">
-                <TextBlock Style="{x:Bind MessageInfo.IsMarkedAsRead, Mode=OneWay, Converter={StaticResource InverseBoolToAccentTextBlockStyleConverter}}"
-                           Text="{x:Bind MessageInfo.SenderName, Mode=OneWay}"
-                           TextTrimming="CharacterEllipsis"
-                           TextWrapping="NoWrap" />
-                <TextBlock Margin="0,2,0,0"
-                           Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                           Text="{x:Bind MessageInfo.SenderEmail, Mode=OneWay}"
-                           TextTrimming="CharacterEllipsis"
-                           TextWrapping="NoWrap" />
+                <Button x:Uid="/App.Resources/ClearFlagItemButton"
+                        Width="32"
+                        Height="32"
+                        Margin="0,8,0,0"
+                        Padding="0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Command="{StaticResource UnflagUICommand}"
+                        CommandParameter="{x:Bind MessageInfo, Mode=OneWay}"
+                        Style="{StaticResource ThinButtonStyle}"
+                        Visibility="{x:Bind MessageInfo.IsFlagged, Mode=OneWay}">
+                    <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                              FontSize="16"
+                              Glyph="&#xEB4B;" />
+                </Button>
+
             </StackPanel>
 
-            <Grid Grid.Row="1"
-                  Grid.Column="1"
+            <Grid Grid.Column="1"
                   Grid.ColumnSpan="2"
-                  Margin="0,4,0,0">
+                  Padding="28,16,16,20"
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch"
+                  Background="{ThemeResource LayerFillColorDefaultBrush}"
+                  CornerRadius="4">
+
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <Border Margin="0,0,12,0"
-                        Padding="6,2"
-                        VerticalAlignment="Center"
-                        Background="{ThemeResource P2PGradientBrush}"
-                        CornerRadius="8"
-                        Visibility="{x:Bind MessageInfo.IsDecentralized, Mode=OneWay}">
-                    <TextBlock x:Uid="P2PLabel"
-                               HorizontalAlignment="Center"
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <PersonPicture Width="44"
+                               Height="44"
+                               Margin="0,4,0,0"
                                VerticalAlignment="Center"
-                               FontSize="10"
-                               Foreground="{ThemeResource TextFillColorPrimaryBrush}"
-                               TextAlignment="Center" />
-                </Border>
+                               DisplayName="{x:Bind MessageInfo.MessageSender, Mode=OneWay}" />
 
-                <TextBlock Grid.Column="1"
-                           VerticalAlignment="Center"
-                           Style="{x:Bind MessageInfo.IsMarkedAsRead, Mode=OneWay, Converter={StaticResource InverseBoolToAccentTextBlockStyleConverter}}"
-                           Text="{x:Bind MessageInfo.MessageSubject, Mode=OneWay}"
-                           TextTrimming="CharacterEllipsis"
-                           TextWrapping="NoWrap" />
-                <TextBlock Grid.Column="2"
-                           Margin="8,0,0,0"
-                           VerticalAlignment="Center"
-                           Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                           Text="{x:Bind MessageInfo.PreviewText, Mode=OneWay}"
-                           TextTrimming="CharacterEllipsis"
-                           TextWrapping="NoWrap" />
-            </Grid>
+                <Grid Grid.Column="1" Margin="16,0,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
 
-            <StackPanel x:Name="MetadataPanel"
-                        Grid.Column="3"
-                        Margin="12,0,0,0"
-                        VerticalAlignment="Center"
-                        Orientation="Horizontal"
-                        Spacing="12">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
 
-                <Border Height="32"
-                        Padding="4,0"
-                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                        BorderThickness="1"
-                        CornerRadius="14"
-                        Visibility="{x:Bind MessageInfo.HasAttachments, Mode=OneWay}">
-                    <StackPanel Orientation="Horizontal" Spacing="8">
-                        <SymbolIcon Symbol="Attach" />
-                        <TextBlock VerticalAlignment="Center" Text="{x:Bind MessageInfo.AttachmentCount, Mode=OneWay}" />
-                    </StackPanel>
-                </Border>
-
-                <StackPanel Orientation="Horizontal" Spacing="8">
-                    <TextBlock x:Uid="MessageTo"
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="0"
                                VerticalAlignment="Center"
-                               Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                    <Border Height="32"
-                            Padding="4,0"
+                               Style="{x:Bind MessageInfo.IsMarkedAsRead, Mode=OneWay, Converter={StaticResource InverseBoolToAccentTextBlockStyleConverter}}"
+                               Text="{x:Bind MessageInfo.SenderName, Mode=OneWay}"
+                               TextTrimming="CharacterEllipsis"
+                               TextWrapping="NoWrap" />
+
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="0"
+                               VerticalAlignment="Top"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                               Text="{x:Bind MessageInfo.SenderEmail, Mode=OneWay}"
+                               TextTrimming="CharacterEllipsis"
+                               TextWrapping="NoWrap" />
+
+                    <Border Grid.Row="0"
+                            Grid.Column="1"
+                            Height="32"
+                            Margin="16,0,8,0"
+                            Padding="12,0"
                             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                             BorderThickness="1"
-                            CornerRadius="14">
+                            CornerRadius="16"
+                            Visibility="{x:Bind MessageInfo.HasAttachments, Mode=OneWay}">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <PersonPicture Width="24"
-                                           Height="24"
-                                           DisplayName="{x:Bind MessageInfo.Account.DisplayEmail.Name, Mode=OneWay}" />
-                            <TextBlock VerticalAlignment="Center"
-                                       Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                       Text="{x:Bind MessageInfo.Account.DisplayEmail.Name, Mode=OneWay}" />
-                            <TextBlock VerticalAlignment="Center"
-                                       Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                       Visibility="{x:Bind MessageInfo.AdditionalRecipientCount, Mode=OneWay, Converter={StaticResource IntToVisibilityConverter}}">
-                                <Run Text="+" /><Run Text="{x:Bind MessageInfo.AdditionalRecipientCount, Mode=OneWay}" />
-                            </TextBlock>
+                            <Viewbox Width="16"
+                                     Height="16"
+                                     VerticalAlignment="Center">
+                                <SymbolIcon Symbol="Attach" />
+                            </Viewbox>
+                            <TextBlock VerticalAlignment="Center" Text="{x:Bind MessageInfo.AttachmentCount, Mode=OneWay}" />
                         </StackPanel>
                     </Border>
-                </StackPanel>
 
-                <TextBlock MinWidth="96"
-                           VerticalAlignment="Center"
-                           Foreground="{ThemeResource TextFillColorPrimaryBrush}"
-                           Text="{x:Bind MessageInfo.DateBriefString, Mode=OneWay}"
-                           TextAlignment="Right" />
-            </StackPanel>
-            <Grid.ContextFlyout>
-                <MenuFlyout>
-                    <MenuFlyoutItem Command="{StaticResource MarkAsReadUICommand}"
-                                    CommandParameter="{x:Bind MessageInfo, Mode=OneWay}"
-                                    Visibility="{x:Bind MessageInfo.IsMarkedAsRead, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
-                    <MenuFlyoutItem Command="{StaticResource MarkAsUnreadUICommand}"
-                                    CommandParameter="{x:Bind MessageInfo, Mode=OneWay}"
-                                    Visibility="{x:Bind MessageInfo.IsMarkedAsRead, Mode=OneWay}" />
-                    <MenuFlyoutItem Command="{StaticResource FlagUICommand}"
-                                    CommandParameter="{x:Bind MessageInfo, Mode=OneWay}"
-                                    Visibility="{x:Bind MessageInfo.IsFlagged, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
-                    <MenuFlyoutItem Command="{StaticResource UnflagUICommand}"
-                                    CommandParameter="{x:Bind MessageInfo, Mode=OneWay}"
-                                    Visibility="{x:Bind MessageInfo.IsFlagged, Mode=OneWay}" />
-                    <MenuFlyoutItem Command="{StaticResource DeleteUICommand}" CommandParameter="{x:Bind MessageInfo, Mode=OneWay}" />
-                </MenuFlyout>
-            </Grid.ContextFlyout>
+                    <StackPanel Grid.Row="0"
+                                Grid.Column="2"
+                                Margin="16,0,8,0"
+                                Orientation="Horizontal"
+                                Spacing="8">
+                        <TextBlock x:Uid="MessageTo"
+                                   VerticalAlignment="Center"
+                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                        <Border Height="32"
+                                Padding="0,0,8,0"
+                                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                BorderThickness="1"
+                                CornerRadius="16">
+                            <StackPanel Orientation="Horizontal">
+                                <PersonPicture Width="28"
+                                               Height="28"
+                                               Margin="0,0,8,0"
+                                               DisplayName="{x:Bind MessageInfo.Account.DisplayEmail.Name, Mode=OneWay}" />
+                                <TextBlock Margin="0,0,8,0"
+                                           VerticalAlignment="Center"
+                                           Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                           Text="{x:Bind MessageInfo.Account.DisplayEmail.Name, Mode=OneWay}" />
+                                <TextBlock Margin="0,0,8,0"
+                                           VerticalAlignment="Center"
+                                           Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                           Visibility="{x:Bind MessageInfo.AdditionalRecipientCount, Mode=OneWay, Converter={StaticResource IntToVisibilityConverter}}">
+                                    <Run Text="+" /><Run Text="{x:Bind MessageInfo.AdditionalRecipientCount, Mode=OneWay}" />
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="3"
+                               MinWidth="96"
+                               VerticalAlignment="Center"
+                               Foreground="{ThemeResource TextFillColorPrimaryBrush}"
+                               Text="{x:Bind MessageInfo.DateBriefString, Mode=OneWay}"
+                               TextAlignment="Right" />
+
+                    <Button Grid.Row="0"
+                            Grid.Column="4"
+                            Width="32"
+                            Height="32"
+                            Margin="16,0,0,0"
+                            Padding="0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Style="{StaticResource ThinButtonStyle}">
+                        <Viewbox Width="16" Height="16">
+                            <SymbolIcon Symbol="More" />
+                        </Viewbox>
+                        <Button.Flyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem Command="{StaticResource MarkAsReadUICommand}"
+                                                CommandParameter="{x:Bind MessageInfo, Mode=OneWay}"
+                                                Visibility="{x:Bind MessageInfo.IsMarkedAsRead, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+                                <MenuFlyoutItem Command="{StaticResource MarkAsUnreadUICommand}"
+                                                CommandParameter="{x:Bind MessageInfo, Mode=OneWay}"
+                                                Visibility="{x:Bind MessageInfo.IsMarkedAsRead, Mode=OneWay}" />
+                                <MenuFlyoutItem Command="{StaticResource FlagUICommand}"
+                                                CommandParameter="{x:Bind MessageInfo, Mode=OneWay}"
+                                                Visibility="{x:Bind MessageInfo.IsFlagged, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+                                <MenuFlyoutItem Command="{StaticResource UnflagUICommand}"
+                                                CommandParameter="{x:Bind MessageInfo, Mode=OneWay}"
+                                                Visibility="{x:Bind MessageInfo.IsFlagged, Mode=OneWay}" />
+                                <MenuFlyoutItem Command="{StaticResource DeleteUICommand}" CommandParameter="{x:Bind MessageInfo, Mode=OneWay}" />
+                            </MenuFlyout>
+                        </Button.Flyout>
+                    </Button>
+                </Grid>
+
+                <Grid Grid.Row="2"
+                      Grid.Column="0"
+                      Grid.ColumnSpan="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Border Grid.Column="0"
+                            Width="32"
+                            Height="16"
+                            Margin="0,0,16,0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Background="{ThemeResource P2PGradientBrush}"
+                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                            BorderThickness="1"
+                            CornerRadius="8"
+                            Visibility="{x:Bind MessageInfo.IsDecentralized, Mode=OneWay}">
+                        <TextBlock x:Uid="P2PLabel"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontSize="12"
+                                   Foreground="{ThemeResource TextFillColorPrimaryBrush}"
+                                   TextAlignment="Center" />
+                    </Border>
+
+                    <TextBlock Grid.Column="1"
+                               Margin="0,0,16,0"
+                               VerticalAlignment="Center"
+                               Style="{x:Bind MessageInfo.IsMarkedAsRead, Mode=OneWay, Converter={StaticResource InverseBoolToAccentTextBlockStyleConverter}}"
+                               Text="{x:Bind MessageInfo.MessageSubject, Mode=OneWay}"
+                               TextTrimming="CharacterEllipsis"
+                               TextWrapping="NoWrap" />
+                    <TextBlock Grid.Column="2"
+                               VerticalAlignment="Center"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                               Text="{x:Bind MessageInfo.PreviewText, Mode=OneWay}"
+                               TextTrimming="CharacterEllipsis"
+                               TextWrapping="NoWrap" />
+                </Grid>
+
+                <Grid.ContextFlyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem Command="{StaticResource MarkAsReadUICommand}"
+                                        CommandParameter="{x:Bind MessageInfo, Mode=OneWay}"
+                                        Visibility="{x:Bind MessageInfo.IsMarkedAsRead, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+                        <MenuFlyoutItem Command="{StaticResource MarkAsUnreadUICommand}"
+                                        CommandParameter="{x:Bind MessageInfo, Mode=OneWay}"
+                                        Visibility="{x:Bind MessageInfo.IsMarkedAsRead, Mode=OneWay}" />
+                        <MenuFlyoutItem Command="{StaticResource FlagUICommand}"
+                                        CommandParameter="{x:Bind MessageInfo, Mode=OneWay}"
+                                        Visibility="{x:Bind MessageInfo.IsFlagged, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+                        <MenuFlyoutItem Command="{StaticResource UnflagUICommand}"
+                                        CommandParameter="{x:Bind MessageInfo, Mode=OneWay}"
+                                        Visibility="{x:Bind MessageInfo.IsFlagged, Mode=OneWay}" />
+                        <MenuFlyoutItem Command="{StaticResource DeleteUICommand}" CommandParameter="{x:Bind MessageInfo, Mode=OneWay}" />
+                    </MenuFlyout>
+                </Grid.ContextFlyout>
+            </Grid>
+
+            <!--  TODO: Temporarily disable SwipeControl due to leak. Re-enable after fixing (TVM-344).  -->
+            <!--</SwipeControl>-->
+
         </Grid>
-        <!--  TODO: Temporarily disable SwipeControl due to leak. Re-enable after fixing (TVM-344).  -->
-        <!--</SwipeControl>-->
-
-        <CommandBar x:Name="HoverCommandBar"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Bottom"
-                    Background="Transparent"
-                    DefaultLabelPosition="Collapsed"
-                    OverflowButtonVisibility="Collapsed"
-                    Visibility="Collapsed">
-            <AppBarButton Command="{StaticResource MarkAsReadUICommand}"
-                          CommandParameter="{x:Bind MessageInfo, Mode=OneWay}"
-                          Visibility="{x:Bind MessageInfo.IsMarkedAsRead, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
-            <AppBarButton Command="{StaticResource MarkAsUnreadUICommand}"
-                          CommandParameter="{x:Bind MessageInfo, Mode=OneWay}"
-                          Visibility="{x:Bind MessageInfo.IsMarkedAsRead, Mode=OneWay}" />
-            <AppBarButton Command="{StaticResource FlagUICommand}"
-                          CommandParameter="{x:Bind MessageInfo, Mode=OneWay}"
-                          Visibility="{x:Bind MessageInfo.IsFlagged, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
-            <AppBarButton Command="{StaticResource UnflagUICommand}"
-                          CommandParameter="{x:Bind MessageInfo, Mode=OneWay}"
-                          Visibility="{x:Bind MessageInfo.IsFlagged, Mode=OneWay}" />
-            <AppBarButton Command="{StaticResource DeleteUICommand}" CommandParameter="{x:Bind MessageInfo, Mode=OneWay}" />
-        </CommandBar>
-
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup x:Name="HoveringStates">
-                <VisualState x:Name="HoverButtonsHidden" />
-                <VisualState x:Name="HoverButtonsShown">
-                    <VisualState.Setters>
-                        <Setter Target="HoverCommandBar.Visibility" Value="Visible" />
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
     </Grid>
 </UserControl>

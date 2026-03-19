@@ -137,6 +137,10 @@
     <value>Delete</value>
     <comment>Text on Delete button</comment>
   </data>
+  <data name="MarkAsReadItemButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Mark as read</value>
+    <comment>The tooltip for `Mark as read` button</comment>
+  </data>
   <data name="MarkAsReadButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Mark as read</value>
     <comment>The tooltip for Mark as read button</comment>
@@ -145,7 +149,11 @@
     <value>Mark as read</value>
     <comment>Text on Mark as read button</comment>
   </data>
-  <data name="MarkAsUnreadButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+  <data name="MarkAsUnreadItemButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Mark as unread</value>
+    <comment>The tooltip for `Mark as unread` button</comment>
+  </data>
+    <data name="MarkAsUnreadButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Mark as unread</value>
     <comment>The tooltip for Mark as unread button</comment>
   </data>
@@ -249,6 +257,10 @@
     <value>Clear flag</value>
     <comment>The tooltip for Clear flag button</comment>
   </data>
+  <data name="ClearFlagItemButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Clear flag</value>
+    <comment>The tooltip for `Clear flag` buttont</comment>
+  </data>
   <data name="SetFlagButton.Label" xml:space="preserve">
     <value>Set flag</value>
     <comment>Text on Set flag button</comment>
@@ -256,6 +268,10 @@
   <data name="SetFlagButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Set flag</value>
     <comment>The tooltip for Set flag button</comment>
+  </data>
+  <data name="SetFlagItemButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Set flag</value>
+    <comment>The tooltip for `Set flag` button</comment>
   </data>
   <data name="SelectAllButton.Label" xml:space="preserve">
     <value>Select All</value>
