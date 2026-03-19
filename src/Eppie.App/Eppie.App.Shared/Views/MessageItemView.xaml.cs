@@ -17,19 +17,16 @@
 // ---------------------------------------------------------------------------- //
 
 using System;
-using System.Windows.Input;
 using Tuvi.App.ViewModels;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
-using Windows.Devices.Input;
 #else
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Input;
 #endif
 
 namespace Eppie.App.Views
@@ -64,19 +61,6 @@ namespace Eppie.App.Views
         public MessageItemView()
         {
             InitializeComponent();
-        }
-
-        private void OnPointerEntered(object sender, PointerRoutedEventArgs e)
-        {
-            if (e.Pointer.PointerDeviceType == PointerDeviceType.Mouse || e.Pointer.PointerDeviceType == PointerDeviceType.Pen)
-            {
-                VisualStateManager.GoToState(sender as Control, "HoverButtonsShown", true);
-            }
-        }
-
-        private void OnPointerExited(object sender, PointerRoutedEventArgs e)
-        {
-            VisualStateManager.GoToState(sender as Control, "HoverButtonsHidden", true);
         }
 
         private void OnRightSwipeInvoked(SwipeItem sender, SwipeItemInvokedEventArgs args)

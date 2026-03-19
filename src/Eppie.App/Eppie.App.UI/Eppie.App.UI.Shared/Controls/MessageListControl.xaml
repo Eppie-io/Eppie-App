@@ -12,6 +12,16 @@
                           d:DesignWidth="400"
                           mc:Ignorable="d">
 
+    <local:AIAgentUserControl.Resources>
+        <Style x:Key="MessageListViewItemStyle"
+               BasedOn="{StaticResource ListViewItemExpanded}"
+               TargetType="ListViewItem">
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Margin" Value="0,4" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        </Style>
+    </local:AIAgentUserControl.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -47,6 +57,7 @@
 
         <ListView x:Name="MessageListView"
                   Grid.Row="2"
+                  Margin="0,16,0,0"
                   Padding="0,0,20,0"
                   AllowDrop="False"
                   CanDragItems="True"
@@ -55,6 +66,7 @@
                   IncrementalLoadingThreshold="1"
                   IncrementalLoadingTrigger="Edge"
                   IsItemClickEnabled="True"
+                  ItemContainerStyle="{StaticResource MessageListViewItemStyle}"
                   ItemTemplate="{x:Bind ItemTemplate}"
                   ItemsSource="{x:Bind Messages, Mode=OneWay}"
                   SelectionChanged="MessageListView_SelectionChanged"
