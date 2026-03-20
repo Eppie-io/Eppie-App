@@ -15,7 +15,7 @@
     <ApplicationId>io.eppie.app</ApplicationId>
     <!-- Versions -->
     <ApplicationDisplayVersion>1.2.3</ApplicationDisplayVersion>
-    <ApplicationVersion>3</ApplicationVersion>
+    <ApplicationVersion>4</ApplicationVersion>
     <!-- Package Publisher -->
     <ApplicationPublisher>Finebits OU</ApplicationPublisher>
     <!-- Package Description -->
