@@ -78,6 +78,11 @@
     <!-- Default values for command line builds -->
     <RuntimeIdentifier Condition="$(TargetFramework.Contains('ios'))">iossimulator-x64</RuntimeIdentifier>
   </PropertyGroup>
+
+  <PropertyGroup Condition="$(TargetFramework.Contains('desktop'))">
+    <UnoMacOSCustomInfoPlist>Platforms\Desktop\Info.plist</UnoMacOSCustomInfoPlist>
+    <UnoMacOSEntitlements>Platforms\Desktop\Entitlements.plist</UnoMacOSEntitlements>
+  </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-android|AnyCPU'">
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
