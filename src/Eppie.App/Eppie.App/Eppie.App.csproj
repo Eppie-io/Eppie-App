@@ -79,7 +79,7 @@
     <RuntimeIdentifier Condition="$(TargetFramework.Contains('ios'))">iossimulator-x64</RuntimeIdentifier>
   </PropertyGroup>
 
-  <PropertyGroup Condition="$(TargetFramework.Contains('desktop'))">
+  <PropertyGroup Condition="$(TargetFramework.Contains('desktop')) And '$(RuntimeIdentifier)' != '' And $(RuntimeIdentifier.Contains('osx'))">
     <UnoMacOSCustomInfoPlist>Platforms\Desktop\Info.plist</UnoMacOSCustomInfoPlist>
     <UnoMacOSEntitlements>Platforms\Desktop\Entitlements.plist</UnoMacOSEntitlements>
   </PropertyGroup>
