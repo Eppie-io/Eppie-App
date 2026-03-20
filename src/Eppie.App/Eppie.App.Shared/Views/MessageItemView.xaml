@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:win="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              mc:Ignorable="d">
 
     <UserControl.Resources>
@@ -102,7 +103,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid Height="128">
+    <Grid Height="128" win:Margin="4,2">
         <!--  TODO: Temporarily disable SwipeControl due to leak. Re-enable after fixing (TVM-344).  -->
         <!--<SwipeControl>
             <SwipeControl.LeftItems>
