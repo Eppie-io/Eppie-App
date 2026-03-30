@@ -19,240 +19,430 @@
     </local:MessagePageBase.DataContext>
 
     <local:MessagePageBase.Resources>
+        <x:Double x:Key="SymbolButtonWidth">32</x:Double>
+        <x:Double x:Key="SymbolButtonHeigth">32</x:Double>
+        <x:Double x:Key="SymbolSize">16</x:Double>
+
+        <x:String x:Key="FlagGlyph">&#xEB4B;</x:String>
+
+        <x:Double x:Key="MainAreaMaxWidth">960</x:Double>
+        <x:Double x:Key="SideAreaMinWidth">20</x:Double>
+
+        <x:Double x:Key="AvatarSize">44</x:Double>
+
+        <x:Double x:Key="MessageViewMinHeight">120</x:Double>
+
+        <x:Double x:Key="FileSymbolSize">36</x:Double>
+        <x:Double x:Key="FileThumbnailSize">48</x:Double>
+        <x:Double x:Key="ProgressRingSize">48</x:Double>
+
+        <x:Double x:Key="AttachmentItemWidth">282</x:Double>
 
         <DataTemplate x:Key="DownloadableAttachmentItemTemplate" x:DataType="viewmodels:DownloadableAttachment">
 
-            <Grid Padding="12,4,4,4">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="1*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
+            <controls:ItemContainer CornerRadius="{ThemeResource ControlCornerRadius}">
+                <Grid Width="{StaticResource AttachmentItemWidth}" Padding="4,4,8,4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
 
-                <SymbolIcon Symbol="Document" />
+                    <Grid Width="{StaticResource FileThumbnailSize}" Height="{StaticResource FileThumbnailSize}">
 
-                <TextBlock Grid.Column="1"
-                           VerticalAlignment="Center"
-                           Text="{x:Bind FileName, Mode=OneWay}" />
+                        <Viewbox Width="{StaticResource FileSymbolSize}"
+                                 Height="{StaticResource FileSymbolSize}"
+                                 Visibility="{x:Bind FileThumbnail, Mode=OneWay, Converter={StaticResource InverseObjectToVisibilityConverter}}">
+                            <SymbolIcon Symbol="Document" />
+                        </Viewbox>
 
-                <CommandBar Grid.Column="2"
+                        <Image Width="{StaticResource FileThumbnailSize}"
+                               Height="{StaticResource FileThumbnailSize}"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top"
+                               Source="{x:Bind FileThumbnail, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}"
+                               Stretch="Uniform"
+                               Visibility="{x:Bind FileThumbnail, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}" />
+                    </Grid>
+
+                    <StackPanel Grid.Column="1"
+                                Margin="12,0"
+                                VerticalAlignment="Center"
+                                Orientation="Vertical">
+                        <TextBlock HorizontalAlignment="Left"
+                                   VerticalAlignment="Top"
+                                   Text="{x:Bind FileName, Mode=OneWay}"
+                                   TextTrimming="CharacterEllipsis" />
+
+                        <TextBlock HorizontalAlignment="Left"
+                                   VerticalAlignment="Top"
+                                   FontSize="12"
+                                   Foreground="{StaticResource TextFillColorSecondaryBrush}"
+                                   Text="{x:Bind FileSize, Mode=OneWay}"
+                                   TextTrimming="CharacterEllipsis" />
+                    </StackPanel>
+
+                    <Button Grid.Column="2"
+                            Width="{StaticResource SymbolButtonWidth}"
+                            Height="{StaticResource SymbolButtonHeigth}"
+                            Padding="0"
+                            VerticalAlignment="Center"
                             IsEnabled="{x:Bind IsEmpty, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
-                            OverflowButtonVisibility="Collapsed">
-
-                    <AppBarButton x:Uid="/App.Resources/SaveAttachmentButton"
-                                  Command="{x:Bind DownloadCommand}"
-                                  CommandParameter="{x:Bind Converter={StaticResource AttachmentConverter}}"
-                                  Icon="Save" />
-
-                    <AppBarButton x:Uid="/App.Resources/OpenAttachmentButton"
-                                  Command="{x:Bind OpenCommand}"
-                                  CommandParameter="{x:Bind Converter={StaticResource AttachmentConverter}}"
-                                  Icon="OpenFile" />
-                </CommandBar>
-
-            </Grid>
+                            Style="{StaticResource ThinButtonStyle}">
+                        <SymbolIcon Symbol="More" />
+                        <Button.Flyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem x:Uid="SaveAttachedFileMenuItem"
+                                                Command="{x:Bind DownloadCommand}"
+                                                CommandParameter="{x:Bind Converter={StaticResource AttachmentConverter}}"
+                                                Icon="Save" />
+                                <MenuFlyoutItem x:Uid="OpenAttachedFileMenuItem"
+                                                Command="{x:Bind OpenCommand}"
+                                                CommandParameter="{x:Bind Converter={StaticResource AttachmentConverter}}"
+                                                Icon="OpenFile" />
+                            </MenuFlyout>
+                        </Button.Flyout>
+                    </Button>
+                </Grid>
+            </controls:ItemContainer>
 
         </DataTemplate>
 
     </local:MessagePageBase.Resources>
 
-    <Grid Padding="16">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" MinWidth="{StaticResource SideAreaMinWidth}" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="100*" MaxWidth="{StaticResource MainAreaMaxWidth}" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="1*" MinWidth="{StaticResource SideAreaMinWidth}" />
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="24" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="8" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="20" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="24" />
         </Grid.RowDefinitions>
 
-        <!--  upper menu  -->
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
 
-            <Button x:Name="BackButton"
-                    x:Uid="/App.Resources/BackButton"
-                    Command="{x:Bind ViewModel.GoBackCommand}">
+        <Button x:Uid="/App.Resources/BackButton"
+                Grid.Row="1"
+                Grid.Column="1"
+                Width="{StaticResource SymbolButtonWidth}"
+                Height="{StaticResource SymbolButtonHeigth}"
+                Margin="0,0,8,0"
+                Padding="0"
+                VerticalAlignment="Center"
+                Command="{x:Bind ViewModel.GoBackCommand}"
+                Style="{StaticResource ThinButtonStyle}">
+            <Viewbox Width="{StaticResource SymbolSize}" Height="{StaticResource SymbolSize}">
                 <SymbolIcon Symbol="Back" />
-            </Button>
-
-            <CommandBar Grid.Column="2" DefaultLabelPosition="Right">
-
-                <AppBarButton x:Name="AIAgentButton"
-                              x:Uid="/App.Resources/AIAgentProcessMessageButton"
-                              IsEnabled="{x:Bind ViewModel.IsLocalAIEnabled, Mode=OneWay}"
-                              Visibility="{x:Bind ViewModel.IsLocalAIAvailable, Mode=OneWay}">
-                    <FontIcon Glyph="&#xE99A;" />
-                </AppBarButton>
-
-                <AppBarButton x:Uid="/App.Resources/MarkAsReadButton"
-                              Command="{x:Bind ViewModel.MarkMessageAsReadCommand}"
-                              Icon="Read"
-                              Visibility="{x:Bind ViewModel.MessageInfo.IsMarkedAsRead, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
-
-                <AppBarButton x:Uid="/App.Resources/MarkAsUnreadButton"
-                              Command="{x:Bind ViewModel.MarkMessageAsUnReadCommand}"
-                              Icon="Mail"
-                              Visibility="{x:Bind ViewModel.MessageInfo.IsMarkedAsRead, Mode=OneWay}" />
-
-                <AppBarButton x:Uid="/App.Resources/SetFlagButton"
-                              Command="{x:Bind ViewModel.FlagMessageCommand}"
-                              Icon="Flag"
-                              Visibility="{x:Bind ViewModel.MessageInfo.IsFlagged, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
-
-                <AppBarButton x:Uid="/App.Resources/ClearFlagButton"
-                              Command="{x:Bind ViewModel.UnflagMessageCommand}"
-                              Icon="Flag"
-                              Visibility="{x:Bind ViewModel.MessageInfo.IsFlagged, Mode=OneWay}" />
-
-                <AppBarButton x:Uid="/App.Resources/DeleteButton"
-                              Command="{x:Bind ViewModel.DeleteMessageAndGoBackCommand}"
-                              Icon="Delete" />
-
-                <AppBarButton x:Uid="/App.Resources/ForwardButton"
-                              Command="{x:Bind ViewModel.ForwardCommand}"
-                              Icon="MailForward" />
-
-                <AppBarButton x:Uid="/App.Resources/ReplyButton"
-                              Command="{x:Bind ViewModel.ReplyCommand}"
-                              Icon="MailReply" />
-
-                <AppBarButton x:Uid="/App.Resources/ReplyAllButton"
-                              Command="{x:Bind ViewModel.ReplyCommandAll}"
-                              Icon="MailReplyAll" />
-
-            </CommandBar>
-
-        </Grid>
-
-        <!--  Sender  -->
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="1*" />
-            </Grid.ColumnDefinitions>
-
-            <TextBlock x:Uid="MessageFrom"
-                       Margin="0,4,4,0"
-                       FontWeight="Bold" />
-
-            <StackPanel Grid.Column="1" Orientation="Horizontal">
-
-                <TextBlock Margin="4,4,0,0"
-                           IsTextSelectionEnabled="True"
-                           Text="{x:Bind ViewModel.MessageInfo.MessageSender, Mode=OneWay}" />
-
-                <FontIcon Margin="4,4,0,0"
-                          FontSize="14"
-                          Glyph="&#xE1A6;"
-                          Visibility="{x:Bind ViewModel.MessageInfo.IsSigned, Mode=OneWay}" />
-            </StackPanel>
-
-        </Grid>
-
-        <!--  Receiver  -->
-        <Grid Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="1*" />
-            </Grid.ColumnDefinitions>
-
-            <TextBlock x:Uid="MessageTo"
-                       Margin="0,4,4,0"
-                       FontWeight="Bold" />
-
-            <TextBlock Grid.Column="1"
-                       Margin="4,4,0,0"
-                       IsTextSelectionEnabled="True"
-                       Text="{x:Bind ViewModel.MessageInfo.MessageReceiver, Mode=OneWay}" />
-
-        </Grid>
-
-
-        <!--  Copy  -->
-        <Grid Grid.Row="3">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="1*" />
-            </Grid.ColumnDefinitions>
-
-            <TextBlock x:Uid="CopyTo"
-                       Margin="0,4,4,0"
-                       FontWeight="Bold" />
-
-            <TextBlock Grid.Column="1"
-                       Margin="4,4,0,0"
-                       IsTextSelectionEnabled="True"
-                       Text="{x:Bind ViewModel.MessageInfo.MessageCopy, Mode=OneWay}" />
-
-        </Grid>
-
-        <!--  Date & time  -->
-        <StackPanel Grid.Row="4" Orientation="Horizontal">
-            <TextBlock Margin="0,4,0,0"
-                       Opacity="0.6"
-                       Text="{x:Bind ViewModel.MessageInfo.DateFullString, Mode=OneWay}" />
-            <FontIcon Margin="4,4,0,0"
-                      FontSize="14"
-                      Glyph="&#xE131;"
-                      Visibility="{x:Bind ViewModel.MessageInfo.IsEncrypted, Mode=OneWay}" />
-            <TextBlock x:Uid="P2PLabel"
-                       Margin="4,4,0,0"
-                       Foreground="Blue"
-                       Visibility="{x:Bind ViewModel.MessageInfo.IsDecentralized, Mode=OneWay}" />
-        </StackPanel>
+            </Viewbox>
+        </Button>
 
         <!--  Subject  -->
-        <Grid Grid.Row="5">
+        <TextBlock Grid.Row="1"
+                   Grid.Column="2"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Center"
+                   FontSize="16"
+                   FontWeight="Medium"
+                   Text="{x:Bind ViewModel.MessageInfo.MessageSubject, Mode=OneWay}" />
+
+        <Button Grid.Row="1"
+                Grid.Column="3"
+                Width="{StaticResource SymbolButtonWidth}"
+                Height="{StaticResource SymbolButtonHeigth}"
+                Margin="8,0,0,0"
+                Padding="0"
+                VerticalAlignment="Center"
+                Style="{StaticResource ThinButtonStyle}">
+            <Viewbox Width="{StaticResource SymbolSize}" Height="{StaticResource SymbolSize}">
+                <SymbolIcon Symbol="More" />
+            </Viewbox>
+            <Button.Flyout>
+                <MenuFlyout>
+                    <MenuFlyoutSubItem x:Name="AIAgentMenu"
+                                       x:Uid="/App.Resources/AIAgentProcessMessageMenu"
+                                       IsEnabled="{x:Bind ViewModel.IsLocalAIEnabled, Mode=OneWay}"
+                                       Visibility="{x:Bind ViewModel.IsLocalAIAvailable, Mode=OneWay}">
+                        <MenuFlyoutSubItem.Icon>
+                            <FontIcon Glyph="&#xE99A;" />
+                        </MenuFlyoutSubItem.Icon>
+                    </MenuFlyoutSubItem>
+
+                    <MenuFlyoutItem x:Uid="/App.Resources/MarkAsReadMenu"
+                                    Command="{x:Bind ViewModel.MarkMessageAsReadCommand}"
+                                    Icon="Read"
+                                    Visibility="{x:Bind ViewModel.MessageInfo.IsMarkedAsRead, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+
+                    <MenuFlyoutItem x:Uid="/App.Resources/MarkAsUnreadMenu"
+                                    Command="{x:Bind ViewModel.MarkMessageAsUnReadCommand}"
+                                    Icon="Mail"
+                                    Visibility="{x:Bind ViewModel.MessageInfo.IsMarkedAsRead, Mode=OneWay}" />
+
+                    <MenuFlyoutItem x:Uid="/App.Resources/SetFlagMenu"
+                                    Command="{x:Bind ViewModel.FlagMessageCommand}"
+                                    Visibility="{x:Bind ViewModel.MessageInfo.IsFlagged, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                        <MenuFlyoutItem.Icon>
+                            <FontIcon Glyph="{StaticResource FlagGlyph}" />
+                        </MenuFlyoutItem.Icon>
+                    </MenuFlyoutItem>
+
+                    <MenuFlyoutItem x:Uid="/App.Resources/ClearFlagMenu"
+                                    Command="{x:Bind ViewModel.UnflagMessageCommand}"
+                                    Visibility="{x:Bind ViewModel.MessageInfo.IsFlagged, Mode=OneWay}">
+                        <MenuFlyoutItem.Icon>
+                            <FontIcon Foreground="{ThemeResource TextFillColorDisabledBrush}" Glyph="{StaticResource FlagGlyph}" />
+                        </MenuFlyoutItem.Icon>
+                    </MenuFlyoutItem>
+
+                    <MenuFlyoutItem x:Uid="/App.Resources/DeleteMenu"
+                                    Command="{x:Bind ViewModel.DeleteMessageAndGoBackCommand}"
+                                    Icon="Delete" />
+
+                    <MenuFlyoutItem x:Uid="/App.Resources/ForwardMenu"
+                                    Command="{x:Bind ViewModel.ForwardCommand}"
+                                    Icon="MailForward" />
+
+                    <MenuFlyoutItem x:Uid="/App.Resources/ReplyMenu"
+                                    Command="{x:Bind ViewModel.ReplyCommand}"
+                                    Icon="MailReply" />
+
+                    <MenuFlyoutItem x:Uid="/App.Resources/ReplyAllMenu"
+                                    Command="{x:Bind ViewModel.ReplyCommandAll}"
+                                    Icon="MailReplyAll" />
+                </MenuFlyout>
+            </Button.Flyout>
+        </Button>
+
+        <StackPanel Grid.Row="3"
+                    Grid.Column="1"
+                    Margin="0,20,8,20"
+                    Orientation="Vertical">
+
+            <Button x:Uid="/App.Resources/MarkAsReadItemButton"
+                    Width="{StaticResource SymbolButtonWidth}"
+                    Height="{StaticResource SymbolButtonHeigth}"
+                    Padding="0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Command="{x:Bind ViewModel.MarkMessageAsReadCommand}"
+                    Style="{StaticResource ThinButtonStyle}"
+                    Visibility="{x:Bind ViewModel.MessageInfo.IsMarkedAsRead, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                <Viewbox Width="{StaticResource SymbolSize}" Height="{StaticResource SymbolSize}">
+                    <SymbolIcon Symbol="Mail" />
+                </Viewbox>
+            </Button>
+
+            <Button x:Uid="/App.Resources/MarkAsUnreadItemButton"
+                    Width="{StaticResource SymbolButtonWidth}"
+                    Height="{StaticResource SymbolButtonHeigth}"
+                    Padding="0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Command="{x:Bind ViewModel.MarkMessageAsUnReadCommand}"
+                    Style="{StaticResource ThinButtonStyle}"
+                    Visibility="{x:Bind ViewModel.MessageInfo.IsMarkedAsRead, Mode=OneWay}">
+                <Viewbox Width="{StaticResource SymbolSize}" Height="{StaticResource SymbolSize}">
+                    <SymbolIcon Symbol="Read" />
+                </Viewbox>
+            </Button>
+
+            <Button x:Uid="/App.Resources/SetFlagItemButton"
+                    Width="{StaticResource SymbolButtonWidth}"
+                    Height="{StaticResource SymbolButtonHeigth}"
+                    Margin="0,8,0,0"
+                    Padding="0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Command="{x:Bind ViewModel.FlagMessageCommand}"
+                    CommandParameter="{x:Bind ViewModel.MessageInfo, Mode=OneWay}"
+                    Style="{StaticResource ThinButtonStyle}"
+                    Visibility="{x:Bind ViewModel.MessageInfo.IsFlagged, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                          FontSize="{StaticResource SymbolSize}"
+                          Foreground="{ThemeResource TextFillColorDisabledBrush}"
+                          Glyph="{StaticResource FlagGlyph}" />
+            </Button>
+
+            <Button x:Uid="/App.Resources/ClearFlagItemButton"
+                    Width="{StaticResource SymbolButtonWidth}"
+                    Height="{StaticResource SymbolButtonHeigth}"
+                    Margin="0,8,0,0"
+                    Padding="0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Command="{x:Bind ViewModel.UnflagMessageCommand}"
+                    CommandParameter="{x:Bind ViewModel.MessageInfo, Mode=OneWay}"
+                    Style="{StaticResource ThinButtonStyle}"
+                    Visibility="{x:Bind ViewModel.MessageInfo.IsFlagged, Mode=OneWay}">
+                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                          FontSize="{StaticResource SymbolSize}"
+                          Glyph="{StaticResource FlagGlyph}" />
+            </Button>
+
+        </StackPanel>
+
+        <Grid Grid.Row="3"
+              Grid.Column="2"
+              Grid.ColumnSpan="2"
+              Padding="28,16,24,20"
+              HorizontalAlignment="Stretch"
+              VerticalAlignment="Stretch"
+              Background="{ThemeResource LayerFillColorDefaultBrush}"
+              CornerRadius="{ThemeResource ControlCornerRadius}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="100*" MinHeight="{StaticResource MessageViewMinHeight}" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <TextBlock x:Uid="MessageSubject"
-                       Margin="0,4,4,0"
-                       FontWeight="Bold" />
+            <PersonPicture Grid.Column="0"
+                           Width="{StaticResource AvatarSize}"
+                           Height="{StaticResource AvatarSize}"
+                           Margin="0,4,16,0"
+                           VerticalAlignment="Center"
+                           DisplayName="{x:Bind ViewModel.MessageInfo.MessageSender, Mode=OneWay}" />
 
-            <TextBlock Grid.Column="1"
-                       Margin="4,4,0,0"
-                       IsTextSelectionEnabled="True"
-                       Text="{x:Bind ViewModel.MessageInfo.MessageSubject, Mode=OneWay}" />
+            <!--  Message Info  -->
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
 
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!--  Sender  -->
+                <TextBlock Grid.Row="0"
+                           Grid.Column="0"
+                           VerticalAlignment="Center"
+                           Text="{x:Bind ViewModel.MessageInfo.SenderName, Mode=OneWay}"
+                           TextTrimming="CharacterEllipsis"
+                           TextWrapping="NoWrap" />
+
+                <TextBlock Grid.Row="1"
+                           Grid.Column="0"
+                           VerticalAlignment="Top"
+                           Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                           Text="{x:Bind ViewModel.MessageInfo.SenderEmail, Mode=OneWay}"
+                           TextTrimming="CharacterEllipsis"
+                           TextWrapping="NoWrap" />
+
+                <!--  ToDo: Add P2P and encryption labels.  -->
+
+                <!--  Receiver  -->
+                <!--  ToDo: Combine receivers and copy receivers  -->
+                <StackPanel Grid.Row="0"
+                            Grid.Column="1"
+                            Margin="16,0,8,0"
+                            Orientation="Horizontal"
+                            Spacing="8">
+
+                    <TextBlock x:Uid="MessageTo"
+                               VerticalAlignment="Center"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+
+                    <!--  ToDo: Create Control  -->
+                    <Border Height="32"
+                            Padding="0,0,8,0"
+                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                            BorderThickness="1"
+                            CornerRadius="16">
+                        <StackPanel Orientation="Horizontal">
+                            <PersonPicture Width="28"
+                                           Height="28"
+                                           Margin="0,0,8,0"
+                                           DisplayName="{x:Bind ViewModel.MessageInfo.Account.DisplayEmail.Name, Mode=OneWay}" />
+                            <TextBlock Margin="0,0,8,0"
+                                       VerticalAlignment="Center"
+                                       Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                       Text="{x:Bind ViewModel.MessageInfo.Account.DisplayEmail.Name, Mode=OneWay}" />
+                            <TextBlock Margin="0,0,8,0"
+                                       VerticalAlignment="Center"
+                                       Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                       Visibility="{x:Bind ViewModel.MessageInfo.AdditionalRecipientCount, Mode=OneWay, Converter={StaticResource IntToVisibilityConverter}}">
+                                <Run Text="+" /><Run Text="{x:Bind ViewModel.MessageInfo.AdditionalRecipientCount, Mode=OneWay}" />
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <TextBlock Grid.Row="0"
+                           Grid.Column="2"
+                           MinWidth="96"
+                           VerticalAlignment="Center"
+                           Foreground="{ThemeResource TextFillColorPrimaryBrush}"
+                           Text="{x:Bind ViewModel.MessageInfo.DateBriefString, Mode=OneWay}"
+                           TextAlignment="Right" />
+            </Grid>
+
+            <!--  Message  -->
+            <Grid Grid.Row="1"
+                  Grid.ColumnSpan="2"
+                  Margin="0,24,0,0"
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch">
+
+                <eppie_controls:MessageControl AIAgentProcessedBody="{x:Bind ViewModel.MessageInfo.AIAgentProcessedBody, Mode=OneWay}"
+                                               ExternalContentDecider="{x:Bind ViewModel.ExternalContentDecider, Mode=OneWay}"
+                                               HasHtmlBody="{x:Bind ViewModel.MessageInfo.HasHtmlBody, Mode=OneWay}"
+                                               HtmlBody="{x:Bind ViewModel.MessageInfo.MessageHtmlBody, Mode=OneWay}"
+                                               TextBody="{x:Bind ViewModel.MessageInfo.MessageTextBody, Mode=OneWay}"
+                                               Visibility="{x:Bind ViewModel.LoadingContent, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+
+                <!--  Wrapped to Grid because Android doesn't have Visibility=Collapsed for ProgressRing  -->
+                <!--  ToDo: Check it on new Uno  -->
+                <Grid Visibility="{x:Bind ViewModel.LoadingContent, Mode=OneWay}">
+                    <ProgressRing Width="{StaticResource ProgressRingSize}"
+                                  Height="{StaticResource ProgressRingSize}"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  IsActive="True" />
+                </Grid>
+            </Grid>
+
+            <!--  Attachments  -->
+            <StackPanel Grid.Row="2"
+                        Grid.ColumnSpan="2"
+                        Orientation="Vertical"
+                        Visibility="{x:Bind ViewModel.LoadingContent, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+
+                <TextBlock x:Uid="AttachedFilesTitle"
+                           Margin="0,24,0,0"
+                           FontSize="12"
+                           FontWeight="Medium"
+                           Foreground="{StaticResource TextFillColorSecondaryBrush}"
+                           Visibility="{x:Bind ViewModel.MessageInfo.HasAttachments, Mode=OneWay}" />
+
+                <ScrollViewer MinHeight="56"
+                              MaxHeight="124"
+                              Margin="0,16,0,0"
+                              VerticalAlignment="Top"
+                              HorizontalScrollBarVisibility="Disabled"
+                              HorizontalScrollMode="Disabled"
+                              VerticalScrollBarVisibility="Auto"
+                              VerticalScrollMode="Auto"
+                              Visibility="{x:Bind ViewModel.MessageInfo.HasAttachments, Mode=OneWay}"
+                              ZoomMode="Disabled">
+                    <controls:AttachmentRepeaterControl VerticalAlignment="Top"
+                                                        ItemTemplate="{StaticResource DownloadableAttachmentItemTemplate}"
+                                                        Items="{x:Bind ViewModel.Attachments, Mode=OneWay}" />
+                </ScrollViewer>
+            </StackPanel>
         </Grid>
-
-        <Grid Grid.Row="7"
-              BorderBrush="#FFE0E0E0"
-              BorderThickness="1">
-
-            <eppie_controls:MessageControl AIAgentProcessedBody="{x:Bind ViewModel.MessageInfo.AIAgentProcessedBody, Mode=OneWay}"
-                                           ExternalContentDecider="{x:Bind ViewModel.ExternalContentDecider, Mode=OneWay}"
-                                           HasHtmlBody="{x:Bind ViewModel.MessageInfo.HasHtmlBody, Mode=OneWay}"
-                                           HtmlBody="{x:Bind ViewModel.MessageInfo.MessageHtmlBody, Mode=OneWay}"
-                                           TextBody="{x:Bind ViewModel.MessageInfo.MessageTextBody, Mode=OneWay}" />
-        </Grid>
-
-        <!--  Wrapped to Grid because Android doesn't have Visibility=Collapsed for ProgressRing  -->
-        <Grid Grid.Row="7" Visibility="{x:Bind ViewModel.LoadingContent, Mode=OneWay}">
-            <ProgressRing HorizontalAlignment="Center"
-                          VerticalAlignment="Center"
-                          IsActive="True" />
-        </Grid>
-
-        <controls:AttachmentListControl x:Uid="AttachedFiles"
-                                        Grid.Row="8"
-                                        Margin="0,16,0,0"
-                                        IsTitleVisible="True"
-                                        ItemTemplate="{StaticResource DownloadableAttachmentItemTemplate}"
-                                        Items="{x:Bind ViewModel.Attachments, Mode=OneWay}"
-                                        ListAreaHeight="80"
-                                        Visibility="{x:Bind ViewModel.MessageInfo.HasAttachments, Mode=OneWay}" />
-
     </Grid>
+
 </local:MessagePageBase>
