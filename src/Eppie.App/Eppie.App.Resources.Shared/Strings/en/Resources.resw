@@ -197,6 +197,10 @@
     <value>Attached files:</value>
     <comment>Title for list of attached files</comment>
   </data>
+  <data name="AttachedFilesTitle.Text" xml:space="preserve">
+    <value>ATTACHMENTS</value>
+    <comment>Title for list of attached files</comment>
+  </data>
   <data name="AuthenticationError" xml:space="preserve">
     <value>Authentification error</value>
     <comment>Notification text when authentification failed</comment>

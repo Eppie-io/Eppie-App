@@ -32,6 +32,27 @@ namespace Tuvi.App.ViewModels
     {
         public ICommand DownloadCommand { get; set; }
         public ICommand OpenCommand { get; set; }
+
+        public string FileSize => FormatFileSize(Data.Length);
+
+        // ToDo: this needs to be implemented
+        public ImageInfo FileThumbnail { get; set; }
+
+        // ToDo: can be moved to Tools
+        private static string FormatFileSize(long bytes)
+        {
+            string[] units = { "B", "KB", "MB", "GB", "TB", "PB", "EB" };
+            double size = bytes;
+            int unitIndex = 0;
+
+            while (size >= 1024 && unitIndex < units.Length - 1)
+            {
+                size /= 1024;
+                unitIndex++;
+            }
+
+            return $"{size:0.##} {units[unitIndex]}";
+        }
     }
 
     public static class DownloadableAttachmentConvertor

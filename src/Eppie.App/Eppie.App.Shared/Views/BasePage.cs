@@ -190,6 +190,17 @@ namespace Eppie.App.Views
             await SetAIAgentFlyoutAsync(flyout => agentButton.Flyout = flyout);
         }
 
+        protected async void InitAIAgentFlyoutMenu(MenuFlyoutSubItem menuFlyoutSubItem)
+        {
+            await SetAIAgentFlyoutAsync((flyout) =>
+            {
+                foreach (MenuFlyoutItem item in flyout.Items)
+                {
+                    menuFlyoutSubItem.Items.Add(item);
+                }
+            });
+        }
+
         private async Task SetAIAgentFlyoutAsync(Action<MenuFlyout> applyFlyout)
         {
             try
