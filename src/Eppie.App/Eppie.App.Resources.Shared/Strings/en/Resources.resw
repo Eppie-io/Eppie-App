@@ -201,6 +201,10 @@
     <value>ATTACHMENTS</value>
     <comment>Title for list of attached files</comment>
   </data>
+  <data name="ComposeEmailTitle.Text" xml:space="preserve">
+    <value>Compose email</value>
+    <comment>The title for 'Compose email' page</comment>
+  </data>
   <data name="AuthenticationError" xml:space="preserve">
     <value>Authentification error</value>
     <comment>Notification text when authentification failed</comment>
@@ -557,10 +561,6 @@ You need to enable IMAP for this account first and try again.</value>
   <data name="PgpKeysButton.Content" xml:space="preserve">
     <value>PGP keys</value>
     <comment>Go to PGP keys management page button content</comment>
-  </data>
-  <data name="ComposeMessageAdvancedButton.Content" xml:space="preserve">
-    <value>Advanced</value>
-    <comment>Button text that opens menu with additional options</comment>
   </data>
   <data name="MessageEncryptedMenuItem.Text" xml:space="preserve">
     <value>Encrypt</value>
@@ -1757,6 +1757,10 @@ Eppie
   <data name="AttachFileButton.Text" xml:space="preserve">
     <value>Attach</value>
     <comment>Text for the button that attaches a file to a message</comment>
+  </data>
+  <data name="AttachFileMenu.Text" xml:space="preserve">
+    <value>Attach</value>
+    <comment>Text for the menu that attaches a file to a message</comment>
   </data>
   <data name="DeleteAttachedFileMenuItem.Text" xml:space="preserve">
     <value>Delete</value>
