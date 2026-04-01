@@ -51,7 +51,7 @@ namespace Eppie.App.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            InitAIAgentButton(AIAgentButton);
+            InitAIAgentFlyoutMenu(AIAgentMenu);
         }
 
 #if WINDOWS_UWP
