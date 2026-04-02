@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
              xmlns:win="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              mc:Ignorable="d">
 
@@ -224,11 +225,11 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <PersonPicture Width="44"
-                               Height="44"
-                               Margin="0,4,0,0"
-                               VerticalAlignment="Center"
-                               DisplayName="{x:Bind MessageInfo.MessageSender, Mode=OneWay}" />
+                <muxc:PersonPicture Width="44"
+                                    Height="44"
+                                    Margin="0,4,0,0"
+                                    VerticalAlignment="Center"
+                                    DisplayName="{x:Bind MessageInfo.MessageSender, Mode=OneWay}" />
 
                 <Grid Grid.Column="1" Margin="16,0,0,0">
                     <Grid.ColumnDefinitions>
@@ -293,10 +294,10 @@
                                 BorderThickness="1"
                                 CornerRadius="16">
                             <StackPanel Orientation="Horizontal">
-                                <PersonPicture Width="28"
-                                               Height="28"
-                                               Margin="0,0,8,0"
-                                               DisplayName="{x:Bind MessageInfo.Account.DisplayEmail.Name, Mode=OneWay}" />
+                                <muxc:PersonPicture Width="28"
+                                                    Height="28"
+                                                    Margin="0,0,8,0"
+                                                    DisplayName="{x:Bind MessageInfo.Account.DisplayEmail.Name, Mode=OneWay}" />
                                 <TextBlock Margin="0,0,8,0"
                                            VerticalAlignment="Center"
                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
