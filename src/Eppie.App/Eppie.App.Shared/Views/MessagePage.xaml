@@ -39,73 +39,15 @@
         <x:Double x:Key="AttachmentItemWidth">282</x:Double>
 
         <DataTemplate x:Key="DownloadableAttachmentItemTemplate" x:DataType="viewmodels:DownloadableAttachment">
-
-            <controls:ItemContainer CornerRadius="{ThemeResource ControlCornerRadius}">
-                <Grid Width="{StaticResource AttachmentItemWidth}" Padding="4,4,8,4">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-
-                    <Grid Width="{StaticResource FileThumbnailSize}" Height="{StaticResource FileThumbnailSize}">
-
-                        <Viewbox Width="{StaticResource FileSymbolSize}"
-                                 Height="{StaticResource FileSymbolSize}"
-                                 Visibility="{x:Bind FileThumbnail, Mode=OneWay, Converter={StaticResource InverseObjectToVisibilityConverter}}">
-                            <SymbolIcon Symbol="Document" />
-                        </Viewbox>
-
-                        <Image Width="{StaticResource FileThumbnailSize}"
-                               Height="{StaticResource FileThumbnailSize}"
-                               HorizontalAlignment="Left"
-                               VerticalAlignment="Top"
-                               Source="{x:Bind FileThumbnail, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}"
-                               Stretch="Uniform"
-                               Visibility="{x:Bind FileThumbnail, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}" />
-                    </Grid>
-
-                    <StackPanel Grid.Column="1"
-                                Margin="12,0"
-                                VerticalAlignment="Center"
-                                Orientation="Vertical">
-                        <TextBlock HorizontalAlignment="Left"
-                                   VerticalAlignment="Top"
-                                   Text="{x:Bind FileName, Mode=OneWay}"
-                                   TextTrimming="CharacterEllipsis" />
-
-                        <TextBlock HorizontalAlignment="Left"
-                                   VerticalAlignment="Top"
-                                   FontSize="12"
-                                   Foreground="{StaticResource TextFillColorSecondaryBrush}"
-                                   Text="{x:Bind FileSize, Mode=OneWay}"
-                                   TextTrimming="CharacterEllipsis" />
-                    </StackPanel>
-
-                    <Button Grid.Column="2"
-                            Width="{StaticResource SymbolButtonWidth}"
-                            Height="{StaticResource SymbolButtonHeigth}"
-                            Padding="0"
-                            VerticalAlignment="Center"
-                            IsEnabled="{x:Bind IsEmpty, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
-                            Style="{StaticResource ThinButtonStyle}">
-                        <SymbolIcon Symbol="More" />
-                        <Button.Flyout>
-                            <MenuFlyout>
-                                <MenuFlyoutItem x:Uid="SaveAttachedFileMenuItem"
-                                                Command="{x:Bind DownloadCommand}"
-                                                CommandParameter="{x:Bind Converter={StaticResource AttachmentConverter}}"
-                                                Icon="Save" />
-                                <MenuFlyoutItem x:Uid="OpenAttachedFileMenuItem"
-                                                Command="{x:Bind OpenCommand}"
-                                                CommandParameter="{x:Bind Converter={StaticResource AttachmentConverter}}"
-                                                Icon="OpenFile" />
-                            </MenuFlyout>
-                        </Button.Flyout>
-                    </Button>
-                </Grid>
-            </controls:ItemContainer>
-
+            <controls:AttachmentFileControl FileExtension="{x:Bind FileExtension, Mode=OneWay}"
+                                            FileName="{x:Bind FileName, Mode=OneWay}"
+                                            FileSize="{x:Bind FileSize, Mode=OneWay}"
+                                            FileThumbnail="{x:Bind FileThumbnail, Mode=OneWay}"
+                                            IsFileEmpty="{x:Bind IsEmpty, Mode=OneWay}"
+                                            OpenFileCommand="{x:Bind OpenCommand}"
+                                            OpenFileCommandParameter="{x:Bind Converter={StaticResource AttachmentConverter}}"
+                                            SaveFileCommand="{x:Bind DownloadCommand}"
+                                            SaveFileCommandParameter="{x:Bind Converter={StaticResource AttachmentConverter}}" />
         </DataTemplate>
 
     </local:MessagePageBase.Resources>

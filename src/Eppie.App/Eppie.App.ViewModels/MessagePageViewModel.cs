@@ -18,6 +18,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -33,6 +34,7 @@ namespace Tuvi.App.ViewModels
         public ICommand DownloadCommand { get; set; }
         public ICommand OpenCommand { get; set; }
 
+        public string FileExtension => Path.GetExtension(FileName)?.TrimStart('.').ToUpperInvariant() ?? string.Empty;
         public string FileSize => FormatFileSize(Data.Length);
 
         // ToDo: this needs to be implemented
@@ -41,13 +43,14 @@ namespace Tuvi.App.ViewModels
         // ToDo: can be moved to Tools
         private static string FormatFileSize(long bytes)
         {
+            const int BaseSize = 1024;
             string[] units = { "B", "KB", "MB", "GB", "TB", "PB", "EB" };
             double size = bytes;
             int unitIndex = 0;
 
-            while (size >= 1024 && unitIndex < units.Length - 1)
+            while (size >= BaseSize && unitIndex < units.Length - 1)
             {
-                size /= 1024;
+                size /= BaseSize;
                 unitIndex++;
             }
 
