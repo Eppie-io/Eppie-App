@@ -503,4 +503,16 @@
     <value>Delete</value>
     <comment>The text of context menu item that deletes a folder</comment>
   </data>
+  <data name="DeleteAttachedFileMenuItem.Text" xml:space="preserve">
+    <value>Delete</value>
+    <comment>Text for the menu item that deletes an attached file</comment>
+  </data>
+  <data name="SaveAttachedFileMenuItem.Text" xml:space="preserve">
+    <value>Save</value>
+    <comment>Text for the button that saves the attached file to disk</comment>
+  </data>
+  <data name="OpenAttachedFileMenuItem.Text" xml:space="preserve">
+    <value>Open File</value>
+    <comment>Text for the button that opens the attached file</comment>
+  </data>
 </root>
