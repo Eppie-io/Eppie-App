@@ -98,7 +98,8 @@
                            HorizontalAlignment="Left"
                            VerticalAlignment="Top"
                            Text="{x:Bind FileName, Mode=OneWay}"
-                           TextTrimming="CharacterEllipsis" />
+                           TextTrimming="CharacterEllipsis"
+                           ToolTipService.ToolTip="{x:Bind FileName, Mode=OneWay}" />
 
                 <TextBlock Grid.Row="1"
                            HorizontalAlignment="Left"
