@@ -6,6 +6,7 @@
              xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
              xmlns:local="using:Eppie.App.UI.Controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
              xmlns:viewmodels="using:Tuvi.App.ViewModels"
              xmlns:winui="using:Microsoft.UI.Xaml.Controls"
              d:DesignHeight="300"
@@ -49,11 +50,11 @@
                     </MenuFlyout>
                 </Grid.ContextFlyout>
 
-                <PersonPicture Grid.RowSpan="2"
-                               Width="32"
-                               Height="32"
-                               DisplayName="{x:Bind DisplayName, Mode=OneWay}"
-                               ProfilePicture="{x:Bind AvatarInfo, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}" />
+                <muxc:PersonPicture Grid.RowSpan="2"
+                                    Width="32"
+                                    Height="32"
+                                    DisplayName="{x:Bind DisplayName, Mode=OneWay}"
+                                    ProfilePicture="{x:Bind AvatarInfo, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}" />
 
                 <TextBlock Grid.Column="2" Text="{x:Bind DisplayName, Mode=OneWay}" />
 

@@ -9,6 +9,7 @@
                        xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
                        xmlns:local="using:Eppie.App.Views"
                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                       xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
                        xmlns:viewmodels="using:Tuvi.App.ViewModels"
                        xmlns:win="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                        Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
@@ -246,12 +247,12 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <PersonPicture Grid.Column="0"
-                           Width="{StaticResource AvatarSize}"
-                           Height="{StaticResource AvatarSize}"
-                           Margin="0,4,16,0"
-                           VerticalAlignment="Center"
-                           DisplayName="{x:Bind ViewModel.MessageInfo.MessageSender, Mode=OneWay}" />
+            <muxc:PersonPicture Grid.Column="0"
+                                Width="{StaticResource AvatarSize}"
+                                Height="{StaticResource AvatarSize}"
+                                Margin="0,4,16,0"
+                                VerticalAlignment="Center"
+                                DisplayName="{x:Bind ViewModel.MessageInfo.MessageSender, Mode=OneWay}" />
 
             <!--  Message Info  -->
             <Grid Grid.Column="1">
@@ -304,10 +305,10 @@
                             BorderThickness="1"
                             CornerRadius="16">
                         <StackPanel Orientation="Horizontal">
-                            <PersonPicture Width="28"
-                                           Height="28"
-                                           Margin="0,0,8,0"
-                                           DisplayName="{x:Bind ViewModel.MessageInfo.Account.DisplayEmail.Name, Mode=OneWay}" />
+                            <muxc:PersonPicture Width="28"
+                                                Height="28"
+                                                Margin="0,0,8,0"
+                                                DisplayName="{x:Bind ViewModel.MessageInfo.Account.DisplayEmail.Name, Mode=OneWay}" />
                             <TextBlock Margin="0,0,8,0"
                                        VerticalAlignment="Center"
                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"

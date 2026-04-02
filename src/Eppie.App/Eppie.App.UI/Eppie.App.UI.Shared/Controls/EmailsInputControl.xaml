@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="using:Eppie.App.UI.Controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
              xmlns:viewmodels="using:Tuvi.App.ViewModels"
              d:DesignHeight="300"
              d:DesignWidth="400"
@@ -28,11 +29,11 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
 
-                    <PersonPicture Grid.RowSpan="2"
-                                   Width="48"
-                                   Height="48"
-                                   DisplayName="{x:Bind FullName, Mode=OneWay}"
-                                   ProfilePicture="{x:Bind AvatarInfo, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}" />
+                    <muxc:PersonPicture Grid.RowSpan="2"
+                                        Width="48"
+                                        Height="48"
+                                        DisplayName="{x:Bind FullName, Mode=OneWay}"
+                                        ProfilePicture="{x:Bind AvatarInfo, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}" />
 
                     <TextBlock Grid.Column="2"
                                FontSize="16"
@@ -54,13 +55,13 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
 
-                    <PersonPicture Grid.RowSpan="2"
-                                   Width="28"
-                                   Height="28"
-                                   Margin="1,0"
-                                   VerticalAlignment="Center"
-                                   DisplayName="{x:Bind FullName, Mode=OneWay}"
-                                   ProfilePicture="{x:Bind AvatarInfo, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}" />
+                    <muxc:PersonPicture Grid.RowSpan="2"
+                                        Width="28"
+                                        Height="28"
+                                        Margin="1,0"
+                                        VerticalAlignment="Center"
+                                        DisplayName="{x:Bind FullName, Mode=OneWay}"
+                                        ProfilePicture="{x:Bind AvatarInfo, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}" />
 
                     <TextBlock Grid.Column="2"
                                VerticalAlignment="Center"
