@@ -18,7 +18,6 @@
 
 #if !WINDOWS_UWP
 
-using Eppie.App.Platforms.Desktop;
 using Eppie.App.Views;
 using Microsoft.UI.Windowing;
 using Tuvi.App.ViewModels;
@@ -70,7 +69,7 @@ namespace Eppie.App
                 }
                 // Ensure the current window is active
                 MainWindow.Activate();
-                TryInstallMacOSMainMenu(brand.GetName());
+                InstallPlatformMainMenu(brand.GetName());
 
                 TryHandleMailtoActivation(args?.Arguments);
             }
@@ -101,22 +100,7 @@ namespace Eppie.App
             }
         }
 
-        private void TryInstallMacOSMainMenu(string appName)
-        {
-            if (!OperatingSystem.IsMacOS())
-            {
-                return;
-            }
-
-            try
-            {
-                MacOSMainMenuInstaller.InstallIfNeeded(appName);
-            }
-            catch (Exception ex)
-            {
-                OnError(ex);
-            }
-        }
+        partial void InstallPlatformMainMenu(string appName);
 
         /// <summary>
         /// Invoked when Navigation to a certain page fails
