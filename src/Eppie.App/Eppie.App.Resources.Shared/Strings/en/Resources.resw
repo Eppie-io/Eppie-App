@@ -117,6 +117,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="MacOSMenuAboutApp" xml:space="preserve">
+    <value>About App</value>
+    <comment>About item in the macOS application menu</comment>
+  </data>
+  <data name="MacOSMenuHideApp" xml:space="preserve">
+    <value>Hide App</value>
+    <comment>Hide item in the macOS application menu</comment>
+  </data>
+  <data name="MacOSMenuHideOthers" xml:space="preserve">
+    <value>Hide Others</value>
+    <comment>Hide others item in the macOS application menu</comment>
+  </data>
+  <data name="MacOSMenuShowAll" xml:space="preserve">
+    <value>Show All</value>
+    <comment>Show all item in the macOS application menu</comment>
+  </data>
+  <data name="MacOSMenuQuitApp" xml:space="preserve">
+    <value>Quit App</value>
+    <comment>Quit item in the macOS application menu</comment>
+  </data>
+  <data name="MacOSMenuFile" xml:space="preserve">
+    <value>File</value>
+    <comment>Title of the macOS File menu</comment>
+  </data>
+  <data name="MacOSMenuCloseWindow" xml:space="preserve">
+    <value>Close Window</value>
+    <comment>Close window item in the macOS File menu</comment>
+  </data>
   <data name="AboutApp.Text" xml:space="preserve">
     <value>About</value>
     <comment>About application page title</comment>
