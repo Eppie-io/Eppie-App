@@ -69,6 +69,7 @@ namespace Eppie.App
                 }
                 // Ensure the current window is active
                 MainWindow.Activate();
+                InstallPlatformMainMenu(brand.GetName());
 
                 TryHandleMailtoActivation(args?.Arguments);
             }
@@ -98,6 +99,8 @@ namespace Eppie.App
                 OnError(ex);
             }
         }
+
+        partial void InstallPlatformMainMenu(string appName);
 
         /// <summary>
         /// Invoked when Navigation to a certain page fails
