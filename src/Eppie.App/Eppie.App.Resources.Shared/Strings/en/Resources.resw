@@ -118,11 +118,11 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="MacOSMenuAboutApp" xml:space="preserve">
-    <value>About App</value>
+    <value>About</value>
     <comment>About item in the macOS application menu</comment>
   </data>
   <data name="MacOSMenuHideApp" xml:space="preserve">
-    <value>Hide App</value>
+    <value>Hide</value>
     <comment>Hide item in the macOS application menu</comment>
   </data>
   <data name="MacOSMenuHideOthers" xml:space="preserve">
@@ -134,7 +134,7 @@
     <comment>Show all item in the macOS application menu</comment>
   </data>
   <data name="MacOSMenuQuitApp" xml:space="preserve">
-    <value>Quit App</value>
+    <value>Quit</value>
     <comment>Quit item in the macOS application menu</comment>
   </data>
   <data name="MacOSMenuFile" xml:space="preserve">
