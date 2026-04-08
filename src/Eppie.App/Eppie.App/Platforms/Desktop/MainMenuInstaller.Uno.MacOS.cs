@@ -16,6 +16,8 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
+#if HAS_UNO_SKIA_MACOS || __UNO_SKIA_MACOS__
+
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using Eppie.App.UI.Resources;
@@ -53,27 +55,33 @@ namespace Eppie.App.Platforms.Desktop
             AddItem(mainMenu, appMenuHostItem);
 
             IntPtr appMenu = CreateTitledMenu(appName);
-            AddItem(appMenu, CreateMenuItem(strings.GetString("MacOSMenuAboutApp"), Interop.AboutSelector, string.Empty));
+            AddItemAndRelease(appMenu, CreateMenuItem(strings.GetString("MacOSMenuAboutApp"), Interop.AboutSelector, string.Empty));
             AddItem(appMenu, CreateSeparatorItem());
-            AddItem(appMenu, CreateMenuItem(strings.GetString("MacOSMenuHideApp"), Interop.HideSelector, "h"));
+            AddItemAndRelease(appMenu, CreateMenuItem(strings.GetString("MacOSMenuHideApp"), Interop.HideSelector, "h"));
 
             IntPtr hideOthersItem = CreateMenuItem(strings.GetString("MacOSMenuHideOthers"), Interop.HideOthersSelector, "h");
             SetKeyEquivalentModifierMask(hideOthersItem, CommandModifierMask | OptionModifierMask);
             AddItem(appMenu, hideOthersItem);
+            Release(hideOthersItem);
 
-            AddItem(appMenu, CreateMenuItem(strings.GetString("MacOSMenuShowAll"), Interop.ShowAllSelector, string.Empty));
+            AddItemAndRelease(appMenu, CreateMenuItem(strings.GetString("MacOSMenuShowAll"), Interop.ShowAllSelector, string.Empty));
             AddItem(appMenu, CreateSeparatorItem());
-            AddItem(appMenu, CreateMenuItem(strings.GetString("MacOSMenuQuitApp"), Interop.QuitSelector, "q"));
+            AddItemAndRelease(appMenu, CreateMenuItem(strings.GetString("MacOSMenuQuitApp"), Interop.QuitSelector, "q"));
             SetSubmenu(appMenuHostItem, appMenu);
+            Release(appMenu);
+            Release(appMenuHostItem);
 
             string fileMenuTitle = strings.GetString("MacOSMenuFile");
             IntPtr fileMenuHostItem = CreateMenuItem(fileMenuTitle, IntPtr.Zero, string.Empty);
             IntPtr fileMenu = CreateTitledMenu(fileMenuTitle);
-            AddItem(fileMenu, CreateMenuItem(strings.GetString("MacOSMenuCloseWindow"), Interop.PerformCloseSelector, "w"));
+            AddItemAndRelease(fileMenu, CreateMenuItem(strings.GetString("MacOSMenuCloseWindow"), Interop.PerformCloseSelector, "w"));
             SetSubmenu(fileMenuHostItem, fileMenu);
             AddItem(mainMenu, fileMenuHostItem);
+            Release(fileMenu);
+            Release(fileMenuHostItem);
 
             SetMainMenu(sharedApplication, mainMenu);
+            Release(mainMenu);
             _isInstalled = true;
         }
 
@@ -86,18 +94,38 @@ namespace Eppie.App.Platforms.Desktop
         private static IntPtr CreateTitledMenu(string title)
         {
             IntPtr menu = SendIntPtr(Interop.NSMenuClass, Interop.AllocSelector);
-            return SendIntPtr(menu, Interop.InitWithTitleSelector, CreateNSString(title));
+            IntPtr titleString = CreateNSString(title);
+
+            try
+            {
+                return SendIntPtr(menu, Interop.InitWithTitleSelector, titleString);
+            }
+            finally
+            {
+                Release(titleString);
+            }
         }
 
         private static IntPtr CreateMenuItem(string title, IntPtr actionSelector, string keyEquivalent)
         {
             IntPtr menuItem = SendIntPtr(Interop.NSMenuItemClass, Interop.AllocSelector);
-            return SendIntPtr(
-                menuItem,
-                Interop.InitWithTitleActionKeyEquivalentSelector,
-                CreateNSString(title),
-                actionSelector,
-                CreateNSString(keyEquivalent));
+            IntPtr titleString = CreateNSString(title);
+            IntPtr keyEquivalentString = CreateNSString(keyEquivalent);
+
+            try
+            {
+                return SendIntPtr(
+                    menuItem,
+                    Interop.InitWithTitleActionKeyEquivalentSelector,
+                    titleString,
+                    actionSelector,
+                    keyEquivalentString);
+            }
+            finally
+            {
+                Release(keyEquivalentString);
+                Release(titleString);
+            }
         }
 
         private static IntPtr CreateSeparatorItem()
@@ -125,6 +153,12 @@ namespace Eppie.App.Platforms.Desktop
             SendVoid(menu, Interop.AddItemSelector, menuItem);
         }
 
+        private static void AddItemAndRelease(IntPtr menu, IntPtr menuItem)
+        {
+            AddItem(menu, menuItem);
+            Release(menuItem);
+        }
+
         private static void SetSubmenu(IntPtr menuItem, IntPtr submenu)
         {
             SendVoid(menuItem, Interop.SetSubmenuSelector, submenu);
@@ -143,6 +177,14 @@ namespace Eppie.App.Platforms.Desktop
         private static void SetKeyEquivalentModifierMask(IntPtr menuItem, ulong modifierMask)
         {
             SendVoid(menuItem, Interop.SetKeyEquivalentModifierMaskSelector, modifierMask);
+        }
+
+        private static void Release(IntPtr value)
+        {
+            if (value != IntPtr.Zero)
+            {
+                SendVoid(value, Interop.ReleaseSelector);
+            }
         }
 
         private static class Interop
@@ -164,6 +206,7 @@ namespace Eppie.App.Platforms.Desktop
             internal static readonly IntPtr SetActivationPolicySelector = SelRegisterName("setActivationPolicy:");
             internal static readonly IntPtr SeparatorItemSelector = SelRegisterName("separatorItem");
             internal static readonly IntPtr SetKeyEquivalentModifierMaskSelector = SelRegisterName("setKeyEquivalentModifierMask:");
+            internal static readonly IntPtr ReleaseSelector = SelRegisterName("release");
 
             internal static readonly IntPtr AboutSelector = SelRegisterName("orderFrontStandardAboutPanel:");
             internal static readonly IntPtr HideSelector = SelRegisterName("hide:");
@@ -191,6 +234,9 @@ namespace Eppie.App.Platforms.Desktop
         private static extern IntPtr SendIntPtr(IntPtr receiver, IntPtr selector, IntPtr arg1, IntPtr arg2, IntPtr arg3);
 
         [DllImport(ObjectiveCLibrary, EntryPoint = "objc_msgSend")]
+        private static extern void SendVoid(IntPtr receiver, IntPtr selector);
+
+        [DllImport(ObjectiveCLibrary, EntryPoint = "objc_msgSend")]
         private static extern void SendVoid(IntPtr receiver, IntPtr selector, IntPtr arg1);
 
         [DllImport(ObjectiveCLibrary, EntryPoint = "objc_msgSend")]
@@ -200,3 +246,5 @@ namespace Eppie.App.Platforms.Desktop
         private static extern void SendVoid(IntPtr receiver, IntPtr selector, ulong arg1);
     }
 }
+
+#endif
