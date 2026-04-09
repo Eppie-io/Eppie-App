@@ -6,6 +6,7 @@
                               xmlns:local="using:Eppie.App.Views"
                               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                               xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+                              xmlns:triggers="using:Eppie.App.UI.Triggers"
                               xmlns:viewmodels="using:Tuvi.App.ViewModels"
                               Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
                               mc:Ignorable="d">
@@ -75,6 +76,70 @@
                            Text="{x:Bind Address, Mode=OneWay}" />
             </Grid>
         </DataTemplate>
+
+        <DataTemplate x:Key="FooterTemplate" x:DataType="viewmodels:ComposeMessagePageViewModel">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10*"
+                                      MinWidth="{StaticResource SenderAddressBoxMinWidth}"
+                                      MaxWidth="{StaticResource SenderAddressBoxMaxWidth}" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+
+                <ComboBox Grid.Column="0"
+                          MinWidth="{StaticResource SenderAddressBoxMinWidth}"
+                          MaxWidth="{StaticResource SenderAddressBoxMaxWidth}"
+                          Margin="{StaticResource HorizontalMargin}"
+                          Padding="0,0,8,0"
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Center"
+                          CornerRadius="{StaticResource SenderAddressRadius}"
+                          ItemTemplate="{StaticResource AddressComboboxItemTemplate}"
+                          ItemsSource="{x:Bind SenderAddresses, Mode=OneWay}"
+                          SelectedIndex="{x:Bind SenderAddressIndex, Mode=TwoWay}" />
+
+                <!--  ToDo: Hide text if page width is less than 800  -->
+                <Button Grid.Column="1"
+                        Margin="4,0"
+                        VerticalAlignment="Center"
+                        Command="{x:Bind AttachFilesCommand}"
+                        CommandParameter="{StaticResource FileOperationProvider}"
+                        Style="{StaticResource ThinButtonStyle}">
+                    <StackPanel Orientation="Horizontal">
+                        <Viewbox Width="{StaticResource SymbolSize}" Height="{StaticResource SymbolSize}">
+                            <SymbolIcon Symbol="Attach" />
+                        </Viewbox>
+                        <TextBlock x:Uid="AttachFileButton" Margin="4,0,0,0" />
+                    </StackPanel>
+                </Button>
+
+                <!--  ToDo: Hide text if page width is less than 800  -->
+                <Button Grid.Column="2"
+                        Margin="4,0"
+                        VerticalAlignment="Center"
+                        Command="{x:Bind DeleteMessageAndGoBackCommand}"
+                        Style="{StaticResource ThinButtonStyle}">
+                    <StackPanel Orientation="Horizontal">
+                        <Viewbox Width="{StaticResource SymbolSize}" Height="{StaticResource SymbolSize}">
+                            <SymbolIcon Symbol="Delete" />
+                        </Viewbox>
+                        <TextBlock x:Uid="DeleteDraftMessageButton" Margin="4,0,0,0" />
+                    </StackPanel>
+                </Button>
+
+                <Button x:Uid="SendMessageButton"
+                        Grid.Column="4"
+                        MinWidth="112"
+                        Margin="4,0,0,0"
+                        VerticalAlignment="Center"
+                        Command="{x:Bind SendMessageAndGoBackCommand}"
+                        Style="{StaticResource AccentButtonStyle}" />
+            </Grid>
+        </DataTemplate>
     </local:ComposeMessagePageBase.Resources>
 
     <Grid Margin="24,0">
@@ -85,99 +150,18 @@
             <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="24" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="20" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="24" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Button x:Uid="/App.Resources/BackButton"
-                Grid.Row="1"
-                Grid.Column="1"
-                Width="{StaticResource SymbolButtonWidth}"
-                Height="{StaticResource SymbolButtonHeigth}"
-                Margin="0,0,8,0"
-                Padding="0"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Center"
-                Command="{x:Bind ViewModel.GoBackCommand}"
-                Style="{StaticResource ThinButtonStyle}">
-            <Viewbox Width="{StaticResource SymbolSize}" Height="{StaticResource SymbolSize}">
-                <SymbolIcon Symbol="Back" />
-            </Viewbox>
-        </Button>
-
-        <Grid Grid.Row="1" Grid.Column="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <!--  Title  -->
-            <TextBlock x:Uid="ComposeEmailTitle"
-                       HorizontalAlignment="Stretch"
-                       VerticalAlignment="Center"
-                       FontSize="16"
-                       FontWeight="Medium" />
-
-            <!--  More options  -->
-            <Button Grid.Column="1"
-                    Width="{StaticResource SymbolButtonWidth}"
-                    Height="{StaticResource SymbolButtonHeigth}"
-                    Margin="8,0,0,0"
-                    Padding="0"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Center"
-                    Style="{StaticResource ThinButtonStyle}">
-                <Viewbox Width="{StaticResource SymbolSize}" Height="{StaticResource SymbolSize}">
-                    <SymbolIcon Symbol="More" />
-                </Viewbox>
-                <Button.Flyout>
-                    <MenuFlyout>
-                        <MenuFlyoutSubItem x:Name="AIAgentMenu"
-                                           x:Uid="/App.Resources/AIAgentProcessMessageMenu"
-                                           IsEnabled="{x:Bind ViewModel.IsLocalAIEnabled, Mode=OneWay}"
-                                           Visibility="{x:Bind ViewModel.IsLocalAIAvailable, Mode=OneWay}">
-                            <MenuFlyoutSubItem.Icon>
-                                <FontIcon Glyph="&#xE99A;" />
-                            </MenuFlyoutSubItem.Icon>
-                        </MenuFlyoutSubItem>
-
-                        <MenuFlyoutSeparator Visibility="{x:Bind ViewModel.IsLocalAIAvailable, Mode=OneWay}" />
-
-                        <ToggleMenuFlyoutItem x:Uid="MessageEncryptedMenuItem"
-                                              IsChecked="{x:Bind ViewModel.IsEncrypted, Mode=TwoWay}"
-                                              IsEnabled="{x:Bind ViewModel.IsChangeCryptographyEnabled, Mode=OneWay}"
-                                              Visibility="{x:Bind ViewModel.IsAdvancedSettingsVisible, Mode=OneWay}" />
-                        <ToggleMenuFlyoutItem x:Uid="MessageSignedMenuItem"
-                                              IsChecked="{x:Bind ViewModel.IsSigned, Mode=TwoWay}"
-                                              IsEnabled="{x:Bind ViewModel.IsChangeCryptographyEnabled, Mode=OneWay}"
-                                              Visibility="{x:Bind ViewModel.IsAdvancedSettingsVisible, Mode=OneWay}" />
-                        <MenuFlyoutItem x:Uid="PgpKeysMenuItem"
-                                        Command="{x:Bind ViewModel.OpenAllPgpKeysCommand}"
-                                        Visibility="{x:Bind ViewModel.IsAdvancedSettingsVisible, Mode=OneWay}" />
-
-                        <MenuFlyoutSeparator Visibility="{x:Bind ViewModel.IsAdvancedSettingsVisible, Mode=OneWay}" />
-
-                        <MenuFlyoutItem x:Uid="AttachFileMenu"
-                                        Command="{x:Bind ViewModel.AttachFilesCommand}"
-                                        CommandParameter="{StaticResource FileOperationProvider}"
-                                        Icon="Attach" />
-
-                        <MenuFlyoutItem x:Uid="/App.Resources/DeleteMenu"
-                                        Command="{x:Bind ViewModel.DeleteMessageAndGoBackCommand}"
-                                        Icon="Delete"
-                                        Text="Delete" />
-                    </MenuFlyout>
-                </Button.Flyout>
-            </Button>
-        </Grid>
-
-        <ScrollViewer Grid.Row="3"
+        <ScrollViewer x:Name="ScrollArea"
+                      Grid.Row="0"
+                      Grid.RowSpan="3"
                       Grid.Column="2"
-                      Grid.ColumnSpan="3"
+                      Grid.ColumnSpan="2"
                       Margin="0,0,-24,0"
-                      Padding="0,0,24,0"
+                      Padding="0,76,24,24"
                       HorizontalScrollBarVisibility="Disabled"
                       HorizontalScrollMode="Disabled"
                       VerticalScrollBarVisibility="Auto"
@@ -319,72 +303,139 @@
                                                                 Visibility="{x:Bind ViewModel.HasAttachments, Mode=OneWay}" />
                         </StackPanel>
 
-                        <Grid Grid.Row="4"
-                              Grid.ColumnSpan="2"
-                              Margin="0,36,0,0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="10*"
-                                                  MinWidth="{StaticResource SenderAddressBoxMinWidth}"
-                                                  MaxWidth="{StaticResource SenderAddressBoxMaxWidth}" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-
-
-                            <ComboBox Grid.Column="0"
-                                      MinWidth="{StaticResource SenderAddressBoxMinWidth}"
-                                      MaxWidth="{StaticResource SenderAddressBoxMaxWidth}"
-                                      Margin="{StaticResource HorizontalMargin}"
-                                      Padding="0,0,8,0"
-                                      HorizontalAlignment="Stretch"
-                                      VerticalAlignment="Center"
-                                      CornerRadius="{StaticResource SenderAddressRadius}"
-                                      ItemTemplate="{StaticResource AddressComboboxItemTemplate}"
-                                      ItemsSource="{x:Bind ViewModel.SenderAddresses, Mode=OneWay}"
-                                      SelectedIndex="{x:Bind ViewModel.SenderAddressIndex, Mode=TwoWay}" />
-
-                            <!--  ToDo: Hide text if page width is less than 800  -->
-                            <Button Grid.Column="1"
-                                    Margin="4,0"
-                                    VerticalAlignment="Center"
-                                    Command="{x:Bind ViewModel.AttachFilesCommand}"
-                                    CommandParameter="{StaticResource FileOperationProvider}"
-                                    Style="{StaticResource ThinButtonStyle}">
-                                <StackPanel Orientation="Horizontal">
-                                    <Viewbox Width="{StaticResource SymbolSize}" Height="{StaticResource SymbolSize}">
-                                        <SymbolIcon Symbol="Attach" />
-                                    </Viewbox>
-                                    <TextBlock x:Uid="AttachFileButton" Margin="4,0,0,0" />
-                                </StackPanel>
-                            </Button>
-
-                            <!--  ToDo: Hide text if page width is less than 800  -->
-                            <Button Grid.Column="2"
-                                    Margin="4,0"
-                                    VerticalAlignment="Center"
-                                    Command="{x:Bind ViewModel.DeleteMessageAndGoBackCommand}"
-                                    Style="{StaticResource ThinButtonStyle}">
-                                <StackPanel Orientation="Horizontal">
-                                    <Viewbox Width="{StaticResource SymbolSize}" Height="{StaticResource SymbolSize}">
-                                        <SymbolIcon Symbol="Delete" />
-                                    </Viewbox>
-                                    <TextBlock x:Uid="DeleteDraftMessageButton" Margin="4,0,0,0" />
-                                </StackPanel>
-                            </Button>
-
-                            <Button x:Uid="SendMessageButton"
-                                    Grid.Column="4"
-                                    MinWidth="112"
-                                    Margin="4,0,0,0"
-                                    VerticalAlignment="Center"
-                                    Command="{x:Bind ViewModel.SendMessageAndGoBackCommand}"
-                                    Style="{StaticResource AccentButtonStyle}" />
-                        </Grid>
+                        <ContentControl x:Name="Footer"
+                                        Grid.Row="4"
+                                        Grid.ColumnSpan="2"
+                                        Margin="0,36,0,0"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Stretch"
+                                        HorizontalContentAlignment="Stretch"
+                                        VerticalContentAlignment="Stretch"
+                                        Content="{x:Bind ViewModel}"
+                                        ContentTemplate="{StaticResource FooterTemplate}" />
                     </Grid>
                 </StackPanel>
             </Grid>
         </ScrollViewer>
+
+        <!--  Header  -->
+
+        <Button x:Uid="/App.Resources/BackButton"
+                Grid.Row="0"
+                Grid.Column="1"
+                Width="{StaticResource SymbolButtonWidth}"
+                Height="{StaticResource SymbolButtonHeigth}"
+                Margin="0,24,8,20"
+                Padding="0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Command="{x:Bind ViewModel.GoBackCommand}"
+                Style="{StaticResource ThinButtonStyle}">
+            <Viewbox Width="{StaticResource SymbolSize}" Height="{StaticResource SymbolSize}">
+                <SymbolIcon Symbol="Back" />
+            </Viewbox>
+        </Button>
+
+        <Grid Grid.Row="0"
+              Grid.Column="2"
+              Margin="0,24,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <!--  Title  -->
+            <TextBlock x:Uid="ComposeEmailTitle"
+                       HorizontalAlignment="Stretch"
+                       VerticalAlignment="Center"
+                       FontSize="16"
+                       FontWeight="Medium" />
+
+            <!--  More options  -->
+            <Button Grid.Column="1"
+                    Width="{StaticResource SymbolButtonWidth}"
+                    Height="{StaticResource SymbolButtonHeigth}"
+                    Margin="8,0,0,0"
+                    Padding="0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Style="{StaticResource ThinButtonStyle}">
+                <Viewbox Width="{StaticResource SymbolSize}" Height="{StaticResource SymbolSize}">
+                    <SymbolIcon Symbol="More" />
+                </Viewbox>
+                <Button.Flyout>
+                    <MenuFlyout>
+                        <MenuFlyoutSubItem x:Name="AIAgentMenu"
+                                           x:Uid="/App.Resources/AIAgentProcessMessageMenu"
+                                           IsEnabled="{x:Bind ViewModel.IsLocalAIEnabled, Mode=OneWay}"
+                                           Visibility="{x:Bind ViewModel.IsLocalAIAvailable, Mode=OneWay}">
+                            <MenuFlyoutSubItem.Icon>
+                                <FontIcon Glyph="&#xE99A;" />
+                            </MenuFlyoutSubItem.Icon>
+                        </MenuFlyoutSubItem>
+
+                        <MenuFlyoutSeparator Visibility="{x:Bind ViewModel.IsLocalAIAvailable, Mode=OneWay}" />
+
+                        <ToggleMenuFlyoutItem x:Uid="MessageEncryptedMenuItem"
+                                              IsChecked="{x:Bind ViewModel.IsEncrypted, Mode=TwoWay}"
+                                              IsEnabled="{x:Bind ViewModel.IsChangeCryptographyEnabled, Mode=OneWay}"
+                                              Visibility="{x:Bind ViewModel.IsAdvancedSettingsVisible, Mode=OneWay}" />
+                        <ToggleMenuFlyoutItem x:Uid="MessageSignedMenuItem"
+                                              IsChecked="{x:Bind ViewModel.IsSigned, Mode=TwoWay}"
+                                              IsEnabled="{x:Bind ViewModel.IsChangeCryptographyEnabled, Mode=OneWay}"
+                                              Visibility="{x:Bind ViewModel.IsAdvancedSettingsVisible, Mode=OneWay}" />
+                        <MenuFlyoutItem x:Uid="PgpKeysMenuItem"
+                                        Command="{x:Bind ViewModel.OpenAllPgpKeysCommand}"
+                                        Visibility="{x:Bind ViewModel.IsAdvancedSettingsVisible, Mode=OneWay}" />
+
+                        <MenuFlyoutSeparator Visibility="{x:Bind ViewModel.IsAdvancedSettingsVisible, Mode=OneWay}" />
+
+                        <MenuFlyoutItem x:Uid="AttachFileMenu"
+                                        Command="{x:Bind ViewModel.AttachFilesCommand}"
+                                        CommandParameter="{StaticResource FileOperationProvider}"
+                                        Icon="Attach" />
+
+                        <MenuFlyoutItem x:Uid="/App.Resources/DeleteMenu"
+                                        Command="{x:Bind ViewModel.DeleteMessageAndGoBackCommand}"
+                                        Icon="Delete"
+                                        Text="Delete" />
+                    </MenuFlyout>
+                </Button.Flyout>
+            </Button>
+        </Grid>
+
+        <!--  End Header  -->
+
+        <Grid x:Name="AttachedFooter"
+              Grid.Row="4"
+              Grid.Column="2"
+              Margin="0,0,0,24"
+              Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+              Visibility="Collapsed">
+            <Border Padding="24,20,24,20"
+                    Background="{ThemeResource LayerFillColorDefaultBrush}"
+                    CornerRadius="{ThemeResource ControlCornerRadius}">
+                <ContentControl HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
+                                HorizontalContentAlignment="Stretch"
+                                VerticalContentAlignment="Stretch"
+                                Content="{x:Bind ViewModel}"
+                                ContentTemplate="{StaticResource FooterTemplate}" />
+
+            </Border>
+        </Grid>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="ScrollVisibleState">
+                    <VisualState.StateTriggers>
+                        <triggers:VerticalScrollVisibilityTrigger TargetScrollViewer="{x:Bind ScrollArea}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Footer.Opacity" Value="0" />
+                        <Setter Target="AttachedFooter.Visibility" Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
     </Grid>
 </local:ComposeMessagePageBase>
