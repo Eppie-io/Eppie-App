@@ -91,7 +91,7 @@ They include the first decentralized version of Eppie running on testnet.
 
 [![Get macOS testnet builds on TestFlight](https://img.shields.io/badge/TestFlight-Get%20macOS%20testnet%20builds-111111?style=for-the-badge&logo=apple&logoColor=white)](https://testflight.apple.com/join/7MuDNmyF)
 
-Direct downloads:
+Direct downloads from GitHub Releases:
 - [Eppie-osx-arm64.app.zip](https://github.com/Eppie-io/Eppie-App/releases/latest/download/Eppie-osx-arm64.app.zip) (Apple Silicon app package)
 - [Eppie-osx-x64.app.zip](https://github.com/Eppie-io/Eppie-App/releases/latest/download/Eppie-osx-x64.app.zip) (Apple Intel app package)
 
