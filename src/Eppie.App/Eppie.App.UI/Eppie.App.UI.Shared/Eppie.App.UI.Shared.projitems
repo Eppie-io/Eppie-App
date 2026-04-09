@@ -101,6 +101,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Tools\ItemPickerBuilder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Tools\IncrementalLoadingCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Tools\UITools.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Triggers\VerticalScrollVisibilityTrigger.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)Controls\AddressHeaderControl.xaml">

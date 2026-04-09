@@ -17,6 +17,7 @@
 
         <local:RichTextEditor Html="{x:Bind Html, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                               PlaceholderText="{x:Bind PlaceholderText, Mode=OneWay}"
+                              ScrollViewer.VerticalScrollBarVisibility="Hidden"
                               Text="{x:Bind Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
         <ScrollViewer Grid.Column="1"

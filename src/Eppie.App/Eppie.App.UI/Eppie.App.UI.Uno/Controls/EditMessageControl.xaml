@@ -22,11 +22,13 @@
         <win:Grid>
             <local:RichTextEditor Html="{x:Bind Html, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                   PlaceholderText="{x:Bind PlaceholderText, Mode=OneWay}"
+                                  ScrollViewer.VerticalScrollBarVisibility="Hidden"
                                   Text="{x:Bind Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         </win:Grid>
         <not_win:Grid>
             <TextBox AcceptsReturn="True"
                      PlaceholderText="{x:Bind PlaceholderText, Mode=OneWay}"
+                     ScrollViewer.VerticalScrollBarVisibility="Hidden"
                      Text="{x:Bind Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         </not_win:Grid>
 
