@@ -29,7 +29,7 @@ using Microsoft.UI.Xaml.Controls.Primitives;
 namespace Eppie.App.UI.Controls
 {
     /// <summary>
-    /// Provides attached properties for setting tooltips on UI elements.This class makes it easy to add tooltips
+    /// Provides attached properties for setting tooltips on UI elements. This class makes it easy to add tooltips
     /// to any UWP and WinUI elements using the x:Uid property and string resources with a name in the format:
     /// "{UID_KEY}.[using:Eppie.App.UI.Controls]ToolTipProvider.ToolTip"
     /// </summary>
