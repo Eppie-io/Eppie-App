@@ -18,6 +18,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -33,6 +34,19 @@ namespace Tuvi.App.ViewModels
 {
     public class BaseViewModel : ObservableValidator
     {
+        public string TwitterPostLink
+        {
+            get
+            {
+                var twitterHandle = BrandService.GetTwitterHandle();
+                var githubUrl = BrandService.GetGitHub();
+                var text = GetLocalizedString("WhatsNewTwitPostText");
+                text = string.Format(CultureInfo.InvariantCulture, text, twitterHandle);
+
+                return $"https://twitter.com/intent/tweet?text={text}&url={githubUrl}";
+            }
+        }
+
         protected IErrorHandler ErrorHandler { get; private set; }
         public void SetErrorHandler(IErrorHandler errorHandler)
         {

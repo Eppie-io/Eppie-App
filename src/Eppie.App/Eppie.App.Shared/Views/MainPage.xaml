@@ -15,14 +15,8 @@
                     mc:Ignorable="d">
 
     <Page.Resources>
-        <LinearGradientBrush x:Key="ButtonGradientBrush" StartPoint="0,0" EndPoint="1,0">
-            <GradientStop Offset="0.0" Color="#FFD9EE" />
-            <GradientStop Offset="0.5" Color="#FFFFFF" />
-            <GradientStop Offset="1.0" Color="#D9FFFF" />
-        </LinearGradientBrush>
-
         <Style x:Key="GradientButtonStyle" TargetType="Button">
-            <Setter Property="Background" Value="{StaticResource ButtonGradientBrush}" />
+            <Setter Property="Background" Value="{StaticResource BrandGradientBrush}" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">

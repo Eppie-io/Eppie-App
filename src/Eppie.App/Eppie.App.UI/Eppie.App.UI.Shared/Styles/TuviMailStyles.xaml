@@ -28,6 +28,12 @@
 
     <SolidColorBrush x:Key="WarningBackgroundBrush" Color="Red" />
 
+    <LinearGradientBrush x:Key="BrandGradientBrush" StartPoint="0,0" EndPoint="1,0">
+        <GradientStop Offset="0.0" Color="#FFD9EE" />
+        <GradientStop Offset="0.5" Color="#FFFFFF" />
+        <GradientStop Offset="1.0" Color="#D9FFFF" />
+    </LinearGradientBrush>
+
     <Style x:Key="CaptionTextStyle"
            BasedOn="{StaticResource CaptionTextBlockStyle}"
            TargetType="TextBlock" />

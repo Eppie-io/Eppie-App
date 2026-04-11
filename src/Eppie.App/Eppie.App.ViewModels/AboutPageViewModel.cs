@@ -17,25 +17,11 @@
 // ---------------------------------------------------------------------------- //
 
 using System;
-using System.Globalization;
 
 namespace Tuvi.App.ViewModels
 {
     public class AboutPageViewModel : BaseViewModel
     {
-        public string TwitterPostLink
-        {
-            get
-            {
-                var twitterHandle = BrandService.GetTwitterHandle();
-                var githubUrl = BrandService.GetGitHub();
-                var text = GetLocalizedString("WhatsNewTwitPostText");
-                text = string.Format(CultureInfo.InvariantCulture, text, twitterHandle);
-
-                return $"https://twitter.com/intent/tweet?text={text}&url={githubUrl}";
-            }
-        }
-
         public async void RequestReview()
         {
             try
