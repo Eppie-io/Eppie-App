@@ -18,78 +18,6 @@
             <Setter Property="TextWrapping" Value="Wrap" />
         </Style>
 
-        <Style x:Key="GradientHyperlinkButtonStyle" TargetType="HyperlinkButton">
-            <Setter Property="Background" Value="{StaticResource BrandGradientBrush}" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="HyperlinkButton">
-                        <Border x:Name="BackgroundBorder"
-                                Background="{TemplateBinding Background}"
-                                CornerRadius="4">
-                            <ContentPresenter x:Name="ContentPresenter"
-                                              Padding="{TemplateBinding Padding}"
-                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                              Content="{TemplateBinding Content}"
-                                              ContentTemplate="{TemplateBinding ContentTemplate}" />
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="CommonStates">
-                                    <VisualState x:Name="Normal" />
-                                    <VisualState x:Name="PointerOver">
-                                        <Storyboard>
-                                            <ColorAnimation EnableDependentAnimation="True"
-                                                            Storyboard.TargetName="BackgroundBorder"
-                                                            Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)"
-                                                            To="#FFD9EE"
-                                                            Duration="0:0:0.2" />
-                                            <ColorAnimation EnableDependentAnimation="True"
-                                                            Storyboard.TargetName="BackgroundBorder"
-                                                            Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)"
-                                                            To="#EEEEEE"
-                                                            Duration="0:0:0.2" />
-                                            <ColorAnimation EnableDependentAnimation="True"
-                                                            Storyboard.TargetName="BackgroundBorder"
-                                                            Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[2].(GradientStop.Color)"
-                                                            To="#D9FFFF"
-                                                            Duration="0:0:0.2" />
-                                        </Storyboard>
-                                    </VisualState>
-                                    <VisualState x:Name="Pressed">
-                                        <Storyboard>
-                                            <ColorAnimation EnableDependentAnimation="True"
-                                                            Storyboard.TargetName="BackgroundBorder"
-                                                            Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)"
-                                                            To="#FFD9EE"
-                                                            Duration="0:0:0.1" />
-                                            <ColorAnimation EnableDependentAnimation="True"
-                                                            Storyboard.TargetName="BackgroundBorder"
-                                                            Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)"
-                                                            To="#DDDDDD"
-                                                            Duration="0:0:0.1" />
-                                            <ColorAnimation EnableDependentAnimation="True"
-                                                            Storyboard.TargetName="BackgroundBorder"
-                                                            Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[2].(GradientStop.Color)"
-                                                            To="#D9FFFF"
-                                                            Duration="0:0:0.1" />
-                                        </Storyboard>
-                                    </VisualState>
-                                    <VisualState x:Name="Disabled">
-                                        <Storyboard>
-                                            <DoubleAnimation EnableDependentAnimation="True"
-                                                             Storyboard.TargetName="BackgroundBorder"
-                                                             Storyboard.TargetProperty="Opacity"
-                                                             To="0.5"
-                                                             Duration="0:0:0.1" />
-                                        </Storyboard>
-                                    </VisualState>
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
     </UserControl.Resources>
 
     <Grid Padding="0,-8,4,8">
@@ -145,15 +73,14 @@
                     <TextBlock Text="{x:Bind Version, Mode=OneWay}" />
                 </StackPanel>
 
-                <HyperlinkButton Grid.Row="1"
-                                 Height="150"
+                <HyperlinkButton Height="150"
                                  HorizontalAlignment="Stretch"
                                  Content="Join the Testnet"
                                  FontSize="20"
                                  FontWeight="SemiBold"
                                  Foreground="Black"
                                  NavigateUri="https://eppie.io"
-                                 Style="{StaticResource GradientHyperlinkButtonStyle}" />
+                                 Style="{StaticResource BrandGradientButtonBaseStyle}" />
 
                 <!--  News 1 is in English only for now  -->
                 <StackPanel Spacing="12">
