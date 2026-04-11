@@ -173,7 +173,7 @@
 
                 <!--  News 2 is in English only for now  -->
                 <StackPanel Spacing="12">
-                    <TextBlock Style="{StaticResource WhatsNewSubtitleTextBlockStyle}" Text="Сonnection &amp; security improvements" />
+                    <TextBlock Style="{StaticResource WhatsNewSubtitleTextBlockStyle}" Text="Connection &amp; security improvements" />
                     <TextBlock Text="The Proton Mail connection flow is now simpler and more reliable. We’ve also added new protections for external content and embedded web resources to keep your communication safer." TextWrapping="Wrap" />
                 </StackPanel>
 
