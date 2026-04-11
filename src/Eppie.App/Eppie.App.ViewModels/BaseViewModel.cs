@@ -43,7 +43,10 @@ namespace Tuvi.App.ViewModels
                 var text = GetLocalizedString("WhatsNewTwitPostText");
                 text = string.Format(CultureInfo.InvariantCulture, text, twitterHandle);
 
-                return $"https://twitter.com/intent/tweet?text={text}&url={githubUrl}";
+                var encodedText = Uri.EscapeDataString(text);
+                var encodedGithubUrl = Uri.EscapeDataString(githubUrl);
+
+                return $"https://twitter.com/intent/tweet?text={encodedText}&url={encodedGithubUrl}";
             }
         }
 
