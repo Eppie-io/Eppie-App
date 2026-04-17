@@ -18,6 +18,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -33,6 +34,9 @@ namespace Tuvi.App.ViewModels
     public class ContactsPanelPageViewModel : BaseViewModel, IControlModel, IIncrementalSource<ContactItem>, IDisposable
     {
         public ManagedCollection<ContactItem> Contacts { get; private set; }
+
+        private CancellationTokenSource _cancellationTokenSource;
+        public CancellationTokenSource CancellationTokenSource { get { return _cancellationTokenSource; } }
 
         private const int ReconcileDelayMs = 200;
 
@@ -88,6 +92,9 @@ namespace Tuvi.App.ViewModels
 
         public override void OnNavigatedTo(object data)
         {
+            Debug.Assert(_cancellationTokenSource is null);
+            _cancellationTokenSource = new CancellationTokenSource();
+
             base.OnNavigatedTo(data);
 
             if (SortingVariants == null)
@@ -109,6 +116,10 @@ namespace Tuvi.App.ViewModels
         {
             UnregisterMessagesListening();
             UnsubscribeFromCoreEvents();
+
+            _cancellationTokenSource.Cancel();
+            _cancellationTokenSource.Dispose();
+            _cancellationTokenSource = null;
 
             base.OnNavigatedFrom();
         }
@@ -516,11 +527,20 @@ namespace Tuvi.App.ViewModels
 
         public void Dispose()
         {
-            UnregisterMessagesListening();
-            UnsubscribeFromCoreEvents();
-
-            _debounceCts?.Dispose();
+            Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                UnregisterMessagesListening();
+                UnsubscribeFromCoreEvents();
+
+                _debounceCts?.Dispose();
+                _cancellationTokenSource?.Dispose();
+            }
         }
     }
 }
