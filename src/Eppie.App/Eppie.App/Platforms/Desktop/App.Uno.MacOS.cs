@@ -22,7 +22,7 @@ namespace Eppie.App
 {
     public partial class App
     {
-        partial void InstallPlatformMainMenu(string appName)
+        static partial void InstallPlatformMainMenu(string appName)
         {
             if (!OperatingSystem.IsMacOS())
             {
