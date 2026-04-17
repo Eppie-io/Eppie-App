@@ -19,11 +19,14 @@
     <PackageVersion Include="Finebits.Authorization.OAuth2.Outlook" Version="0.4.0-preview.1" />
     <PackageVersion Include="Microsoft.Extensions.AI.Abstractions" Version="9.5.0-preview.1.25262.9" />
     <PackageVersion Include="Microsoft.ML.OnnxRuntimeGenAI.DirectML" Version="0.5.2" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
     <PackageVersion Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.2.14" />
     <PackageVersion Include="Microsoft.Services.Store.Engagement" Version="10.2307.3001" />
     <PackageVersion Include="Microsoft.UI.Xaml" Version="2.8.7" />
     <PackageVersion Include="Microsoft.Xaml.Behaviors.Uwp.Managed" Version="3.0.0" />
     <PackageVersion Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="3.0.0" />
+    <PackageVersion Include="NUnit" Version="4.4.0" />
+    <PackageVersion Include="NUnit3TestAdapter" Version="6.0.0" />
     <PackageVersion Include="Serilog" Version="4.3.0" />
     <PackageVersion Include="Serilog.Enrichers.Environment" Version="3.0.1" />
     <PackageVersion Include="Serilog.Enrichers.Process" Version="3.0.0" />
@@ -40,10 +43,12 @@
     <PackageVersion Include="Serilog.Sinks.File" Version="7.0.0" />
     <PackageVersion Include="Serilog.Sinks.Xamarin" Version="1.0.0" />
     <PackageVersion Include="System.IdentityModel.Tokens.Jwt" Version="8.15.0" />
-    <PackageVersion Include="System.Private.Uri" Version="4.3.2" />
     <PackageVersion Include="Uno.Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.4.2" />
-    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
-    <PackageVersion Include="NUnit" Version="4.4.0" />
-    <PackageVersion Include="NUnit3TestAdapter" Version="6.0.0" />
+  </ItemGroup>
+  <!-- Force upgrade of transitive packages with known high severity vulnerabilities. -->
+  <!-- Todo: Please check this again on the new version of Uno SDK. -->
+  <ItemGroup>
+    <PackageVersion Include="System.Security.Cryptography.Xml" Version="10.0.6" />
+    <PackageVersion Include="Tmds.DBus.Protocol" Version="0.92.0" />
   </ItemGroup>
 </Project>

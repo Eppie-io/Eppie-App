@@ -185,6 +185,7 @@
     <PackageReference Include="Uno.Microsoft.Xaml.Behaviors.WinUI.Managed" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="CommunityToolkit.WinUI.Controls.TokenizingTextBox" />
     <PackageReference Include="Serilog" />
     <PackageReference Include="Serilog.Enrichers.Environment" />
     <PackageReference Include="Serilog.Enrichers.Process" />
@@ -199,11 +200,17 @@
     <PackageReference Include="Serilog.Sinks.Console" />
     <PackageReference Include="Serilog.Sinks.Debug" />
     <PackageReference Include="Serilog.Sinks.File" />
-    <PackageReference Include="CommunityToolkit.WinUI.Controls.TokenizingTextBox" />
   </ItemGroup>
 
   <ItemGroup Condition="$(TargetFramework.Contains('android')) OR $(TargetFramework.Contains('ios'))">
     <PackageReference Include="Serilog.Sinks.Xamarin" />
+  </ItemGroup>
+  
+  <!-- Force upgrade of transitive packages with known high severity vulnerabilities. -->
+  <!-- Todo: Please check this again on the new version of Uno SDK. -->
+  <ItemGroup>
+    <PackageReference Include="System.Security.Cryptography.Xml" />
+    <PackageReference Include="Tmds.DBus.Protocol" />
   </ItemGroup>
 
   <!-- Enable WSL support in VS 17.13 and later, when a desktop target is present -->
