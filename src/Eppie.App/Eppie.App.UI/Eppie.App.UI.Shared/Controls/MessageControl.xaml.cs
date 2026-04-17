@@ -255,7 +255,7 @@ namespace Eppie.App.UI.Controls
             if (ExternalContentBlocked != value)
             {
 #if WINDOWS_UWP
-            _ = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => ExternalContentBlocked = value);
+                _ = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => ExternalContentBlocked = value);
 #else
                 var dq = Windows.System.DispatcherQueue.GetForCurrentThread();
                 if (dq != null)
