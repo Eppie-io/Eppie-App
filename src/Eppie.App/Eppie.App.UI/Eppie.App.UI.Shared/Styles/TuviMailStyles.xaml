@@ -1,6 +1,5 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="using:Eppie.App.Styles">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ResourceDictionary.ThemeDictionaries>
         <ResourceDictionary x:Key="Default">
@@ -8,9 +7,6 @@
             <SolidColorBrush x:Key="EmailProviderListBackground" Color="White" />
             <SolidColorBrush x:Key="EmailProviderItemForeground" Color="Black" />
             <SolidColorBrush x:Key="InfoBarBackground" Color="#BBFFFFFF" />
-
-
-
         </ResourceDictionary>
         <ResourceDictionary x:Key="Dark">
             <SolidColorBrush x:Key="InactiveBackground" Color="#808080" />
@@ -27,6 +23,118 @@
                      Color="Red" />
 
     <SolidColorBrush x:Key="WarningBackgroundBrush" Color="Red" />
+
+    <Color x:Key="BrandGradientStartColor">#FFD9EE</Color>
+    <Color x:Key="BrandGradientCenterColor">#FFFFFF</Color>
+    <Color x:Key="BrandGradientEndColor">#D9FFFF</Color>
+    <Color x:Key="BrandGradientPointerOverCenterColor">#EEEEEE</Color>
+    <Color x:Key="BrandGradientPressedCenterColor">#DDDDDD</Color>
+
+    <LinearGradientBrush x:Key="BrandGradientBrush" StartPoint="0,0" EndPoint="1,0">
+        <GradientStop Offset="0.0" Color="{StaticResource BrandGradientStartColor}" />
+        <GradientStop Offset="0.5" Color="{StaticResource BrandGradientCenterColor}" />
+        <GradientStop Offset="1.0" Color="{StaticResource BrandGradientEndColor}" />
+    </LinearGradientBrush>
+
+    <Style x:Key="BrandGradientButtonBaseStyle" TargetType="ButtonBase">
+        <Setter Property="Background" Value="{StaticResource BrandGradientBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ButtonBase">
+                    <Grid>
+                        <Border x:Name="BackgroundBorder"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="4" />
+                        <Border x:Name="AnimatedBackgroundOverlay"
+                                CornerRadius="4"
+                                IsHitTestVisible="False"
+                                Opacity="0">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                    <GradientStop Offset="0.0" Color="{StaticResource BrandGradientStartColor}" />
+                                    <GradientStop Offset="0.5" Color="{StaticResource BrandGradientCenterColor}" />
+                                    <GradientStop Offset="1.0" Color="{StaticResource BrandGradientEndColor}" />
+                                </LinearGradientBrush>
+                            </Border.Background>
+                        </Border>
+                        <ContentPresenter x:Name="ContentPresenter"
+                                          Padding="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}" />
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="PointerOver">
+                                    <Storyboard>
+                                        <DoubleAnimation EnableDependentAnimation="True"
+                                                         Storyboard.TargetName="AnimatedBackgroundOverlay"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="1"
+                                                         Duration="0:0:0.2" />
+                                        <ColorAnimation EnableDependentAnimation="True"
+                                                        Storyboard.TargetName="AnimatedBackgroundOverlay"
+                                                        Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)"
+                                                        To="{StaticResource BrandGradientStartColor}"
+                                                        Duration="0:0:0.2" />
+                                        <ColorAnimation EnableDependentAnimation="True"
+                                                        Storyboard.TargetName="AnimatedBackgroundOverlay"
+                                                        Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)"
+                                                        To="{StaticResource BrandGradientPointerOverCenterColor}"
+                                                        Duration="0:0:0.2" />
+                                        <ColorAnimation EnableDependentAnimation="True"
+                                                        Storyboard.TargetName="AnimatedBackgroundOverlay"
+                                                        Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[2].(GradientStop.Color)"
+                                                        To="{StaticResource BrandGradientEndColor}"
+                                                        Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <DoubleAnimation EnableDependentAnimation="True"
+                                                         Storyboard.TargetName="AnimatedBackgroundOverlay"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="1"
+                                                         Duration="0:0:0.1" />
+                                        <ColorAnimation EnableDependentAnimation="True"
+                                                        Storyboard.TargetName="AnimatedBackgroundOverlay"
+                                                        Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)"
+                                                        To="{StaticResource BrandGradientStartColor}"
+                                                        Duration="0:0:0.1" />
+                                        <ColorAnimation EnableDependentAnimation="True"
+                                                        Storyboard.TargetName="AnimatedBackgroundOverlay"
+                                                        Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)"
+                                                        To="{StaticResource BrandGradientPressedCenterColor}"
+                                                        Duration="0:0:0.1" />
+                                        <ColorAnimation EnableDependentAnimation="True"
+                                                        Storyboard.TargetName="AnimatedBackgroundOverlay"
+                                                        Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[2].(GradientStop.Color)"
+                                                        To="{StaticResource BrandGradientEndColor}"
+                                                        Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <DoubleAnimation EnableDependentAnimation="True"
+                                                         Storyboard.TargetName="BackgroundBorder"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="0.5"
+                                                         Duration="0:0:0.1" />
+                                        <DoubleAnimation EnableDependentAnimation="True"
+                                                         Storyboard.TargetName="AnimatedBackgroundOverlay"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="0"
+                                                         Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
     <Style x:Key="CaptionTextStyle"
            BasedOn="{StaticResource CaptionTextBlockStyle}"

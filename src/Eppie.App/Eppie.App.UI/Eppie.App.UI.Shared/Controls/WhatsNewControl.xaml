@@ -17,6 +17,7 @@
             <Setter Property="FontSize" Value="16" />
             <Setter Property="TextWrapping" Value="Wrap" />
         </Style>
+
     </UserControl.Resources>
 
     <Grid Padding="0,-8,4,8">
@@ -72,6 +73,62 @@
                     <TextBlock Text="{x:Bind Version, Mode=OneWay}" />
                 </StackPanel>
 
+                <HyperlinkButton Height="150"
+                                 HorizontalAlignment="Stretch"
+                                 Content="Join the Testnet"
+                                 FontSize="20"
+                                 FontWeight="SemiBold"
+                                 Foreground="Black"
+                                 NavigateUri="https://eppie.io"
+                                 Style="{StaticResource BrandGradientButtonBaseStyle}" />
+
+                <!--  News 1 is in English only for now  -->
+                <StackPanel Spacing="12">
+                    <TextBlock Style="{StaticResource WhatsNewSubtitleTextBlockStyle}" Text="Try decentralized addresses" />
+                    <TextBlock Text="With Eppie Preview, you can already use decentralized Eppie and Bitcoin addresses for communication on Testnet. This feature will roll out to all versions after testing." TextWrapping="Wrap" />
+                    <HyperlinkButton Margin="-12,0,0,0"
+                                     HorizontalAlignment="Left"
+                                     NavigateUri="https://github.com/Eppie-io/Eppie-App/releases/tag/v1.2.0-preview">
+                        <HyperlinkButton.Content>
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <FontIcon Glyph="&#xE8A7;" />
+                                <TextBlock Text="Download Preview" />
+                            </StackPanel>
+                        </HyperlinkButton.Content>
+                    </HyperlinkButton>
+                </StackPanel>
+
+                <!--  News 2 is in English only for now  -->
+                <StackPanel Spacing="12">
+                    <TextBlock Style="{StaticResource WhatsNewSubtitleTextBlockStyle}" Text="Connection &amp; security improvements" />
+                    <TextBlock Text="The Proton Mail connection flow is now simpler and more reliable. We’ve also added new protections for external content and embedded web resources to keep your communication safer." TextWrapping="Wrap" />
+                </StackPanel>
+
+                <!--  News 3 is in English only for now  -->
+                <StackPanel Spacing="12">
+                    <TextBlock Style="{StaticResource WhatsNewSubtitleTextBlockStyle}" Text="Smoother experience across the app" />
+                    <TextBlock Text="Layout and sorting preferences are now saved between sessions, and folder management is more intuitive. The UI has also been polished with new Contacts and Mailboxes panels, redesigned message tiles, and a better Compose experience." TextWrapping="Wrap" />
+                </StackPanel>
+
+                <local:SupportDevelopmentControl Margin="0"
+                                                 HorizontalAlignment="Left"
+                                                 IsIconVisible="False"
+                                                 IsStorePaymentProcessor="{x:Bind IsStorePaymentProcessor, Mode=OneWay}"
+                                                 Price="{x:Bind Price, Mode=OneWay}"
+                                                 SupportDevelopmentCommand="{x:Bind SupportDevelopmentCommand}"
+                                                 Visibility="{x:Bind IsSupportDevelopmentButtonVisible, Mode=OneWay}" />
+
+                <!--  Old Version  -->
+                <StackPanel HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal"
+                            Spacing="4">
+                    <TextBlock x:Uid="/Eppie.App.UI/Controls/Version" />
+                    <TextBlock Text="1.0.185.0" />
+                </StackPanel>
+
+                <!--  Old News  -->
+
                 <!--  News 1 is in English only for now  -->
                 <StackPanel Spacing="12">
                     <TextBlock Style="{StaticResource WhatsNewSubtitleTextBlockStyle}" Text="Eppie is now on Snap Store" />
@@ -109,14 +166,6 @@
                     <TextBlock Style="{StaticResource WhatsNewSubtitleTextBlockStyle}" Text="Settings got a fresh new look" />
                     <TextBlock Text="We’ve redesigned and reorganized the settings to make them clearer and easier to navigate. You’ll also find new options in address settings and main app preferences." TextWrapping="Wrap" />
                 </StackPanel>
-
-                <local:SupportDevelopmentControl Margin="0"
-                                                 HorizontalAlignment="Left"
-                                                 IsIconVisible="False"
-                                                 IsStorePaymentProcessor="{x:Bind IsStorePaymentProcessor, Mode=OneWay}"
-                                                 Price="{x:Bind Price, Mode=OneWay}"
-                                                 SupportDevelopmentCommand="{x:Bind SupportDevelopmentCommand}"
-                                                 Visibility="{x:Bind IsSupportDevelopmentButtonVisible, Mode=OneWay}" />
 
             </StackPanel>
         </ScrollViewer>

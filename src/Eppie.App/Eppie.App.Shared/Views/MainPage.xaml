@@ -13,87 +13,6 @@
                     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
                     NavigationCacheMode="Enabled"
                     mc:Ignorable="d">
-
-    <Page.Resources>
-        <LinearGradientBrush x:Key="ButtonGradientBrush" StartPoint="0,0" EndPoint="1,0">
-            <GradientStop Offset="0.0" Color="#FFD9EE" />
-            <GradientStop Offset="0.5" Color="#FFFFFF" />
-            <GradientStop Offset="1.0" Color="#D9FFFF" />
-        </LinearGradientBrush>
-
-        <Style x:Key="GradientButtonStyle" TargetType="Button">
-            <Setter Property="Background" Value="{StaticResource ButtonGradientBrush}" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="BackgroundBorder"
-                                Background="{TemplateBinding Background}"
-                                CornerRadius="4">
-                            <ContentPresenter x:Name="ContentPresenter"
-                                              Padding="{TemplateBinding Padding}"
-                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                              Content="{TemplateBinding Content}"
-                                              ContentTemplate="{TemplateBinding ContentTemplate}" />
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="CommonStates">
-                                    <VisualState x:Name="Normal" />
-                                    <VisualState x:Name="PointerOver">
-                                        <Storyboard>
-                                            <ColorAnimation EnableDependentAnimation="True"
-                                                            Storyboard.TargetName="BackgroundBorder"
-                                                            Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)"
-                                                            To="#FFD9EE"
-                                                            Duration="0:0:0.2" />
-                                            <ColorAnimation EnableDependentAnimation="True"
-                                                            Storyboard.TargetName="BackgroundBorder"
-                                                            Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)"
-                                                            To="#EEEEEE"
-                                                            Duration="0:0:0.2" />
-                                            <ColorAnimation EnableDependentAnimation="True"
-                                                            Storyboard.TargetName="BackgroundBorder"
-                                                            Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[2].(GradientStop.Color)"
-                                                            To="#D9FFFF"
-                                                            Duration="0:0:0.2" />
-                                        </Storyboard>
-                                    </VisualState>
-                                    <VisualState x:Name="Pressed">
-                                        <Storyboard>
-                                            <ColorAnimation EnableDependentAnimation="True"
-                                                            Storyboard.TargetName="BackgroundBorder"
-                                                            Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)"
-                                                            To="#FFD9EE"
-                                                            Duration="0:0:0.1" />
-                                            <ColorAnimation EnableDependentAnimation="True"
-                                                            Storyboard.TargetName="BackgroundBorder"
-                                                            Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)"
-                                                            To="#DDDDDD"
-                                                            Duration="0:0:0.1" />
-                                            <ColorAnimation EnableDependentAnimation="True"
-                                                            Storyboard.TargetName="BackgroundBorder"
-                                                            Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[2].(GradientStop.Color)"
-                                                            To="#D9FFFF"
-                                                            Duration="0:0:0.1" />
-                                        </Storyboard>
-                                    </VisualState>
-                                    <VisualState x:Name="Disabled">
-                                        <Storyboard>
-                                            <DoubleAnimation EnableDependentAnimation="True"
-                                                             Storyboard.TargetName="BackgroundBorder"
-                                                             Storyboard.TargetProperty="Opacity"
-                                                             To="0.5"
-                                                             Duration="0:0:0.1" />
-                                        </Storyboard>
-                                    </VisualState>
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </Page.Resources>
-
     <local:MainPageBase.DataContext>
         <viewmodels:MainPageViewModel />
     </local:MainPageBase.DataContext>
@@ -186,7 +105,7 @@
                             Height="36"
                             Margin="4,8,4,0"
                             HorizontalAlignment="Stretch"
-                            Style="{StaticResource GradientButtonStyle}"
+                            Style="{StaticResource BrandGradientButtonBaseStyle}"
                             Visibility="{x:Bind ViewModel.IsSupportDevelopmentButtonVisible, Mode=OneWay}">
                         <Button.Flyout>
                             <Flyout>

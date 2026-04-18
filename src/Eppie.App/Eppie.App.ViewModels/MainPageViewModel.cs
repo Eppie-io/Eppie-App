@@ -591,7 +591,7 @@ namespace Tuvi.App.ViewModels
 
         private async Task<bool> ShowWhatsNewIfNeededAsync()
         {
-            const string WhatsNewCurrentId = "2025-11-10"; // Update when WhatsNew content changes
+            const string WhatsNewCurrentId = "2026-04-11"; // Update when WhatsNew content changes
             if (!string.Equals(LocalSettingsService.LastShownWhatsNewId, WhatsNewCurrentId, StringComparison.Ordinal))
             {
                 await MessageService.ShowWhatsNewDialogAsync(
@@ -600,7 +600,7 @@ namespace Tuvi.App.ViewModels
                     isSupportDevelopmentButtonVisible: IsSupportDevelopmentButtonVisible,
                     price: SupportDevelopmentPrice,
                     supportDevelopmentCommand: SupportDevelopmentCommand,
-                    twitterUrl: BrandService.GetGitHub()
+                    twitterUrl: TwitterPostLink
                 ).ConfigureAwait(true);
 
                 LocalSettingsService.LastShownWhatsNewId = WhatsNewCurrentId;
