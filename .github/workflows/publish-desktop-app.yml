@@ -73,7 +73,7 @@ jobs:
 
       - name: Read the macos app publication configuration
         id: publish-config
-        uses: finebits/github-actions/toolset/select-configuration@39ec051fda4f00ab2ac5ffb6336ab0ea1ad9ad0f # v3.0.0
+        uses: finebits/github-actions/toolset/select-configuration@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1
         with:
           json-file: ./.github/configurations/publish-desktop-app.json
           keywords: |
@@ -145,19 +145,19 @@ jobs:
         id: assign-version
         uses: ./.github/actions/assign-version
 
-      - uses: finebits/github-actions/toolset/file/replace-text@39ec051fda4f00ab2ac5ffb6336ab0ea1ad9ad0f # v3.0.0
+      - uses: finebits/github-actions/toolset/file/replace-text@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1
         with:
           file: ./src/Eppie.App/Eppie.App.Shared/Authorization/AuthConfig.Uno.cs
           find-what: '\"<Gmail-ClientId>\"'
           replace-with: "${{ secrets.GMAIL_CLIENT_ID }}"
 
-      - uses: finebits/github-actions/toolset/file/replace-text@39ec051fda4f00ab2ac5ffb6336ab0ea1ad9ad0f # v3.0.0
+      - uses: finebits/github-actions/toolset/file/replace-text@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1
         with:
           file: ./src/Eppie.App/Eppie.App.Shared/Authorization/AuthConfig.Uno.cs
           find-what: '\"<Gmail-ClientSecret>\"'
           replace-with: "${{ secrets.GMAIL_CLIENT_SECRET }}"
 
-      - uses: finebits/github-actions/toolset/file/replace-text@39ec051fda4f00ab2ac5ffb6336ab0ea1ad9ad0f # v3.0.0
+      - uses: finebits/github-actions/toolset/file/replace-text@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1
         with:
           file: ./src/Eppie.App/Eppie.App.Shared/Authorization/AuthConfig.Uno.cs
           find-what: '\"<Outlook-ClientId>\"'

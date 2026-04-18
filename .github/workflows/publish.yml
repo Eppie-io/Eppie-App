@@ -108,7 +108,7 @@ jobs:
 
       - name: Read configuration
         id: publish-config
-        uses: finebits/github-actions/toolset/file/read@39ec051fda4f00ab2ac5ffb6336ab0ea1ad9ad0f # v3.0.0
+        uses: finebits/github-actions/toolset/file/read@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1
         with:
           file: ./.github/configurations/publish.json
 
@@ -183,7 +183,7 @@ jobs:
           path: "${{ env.assets-path }}"
 
       - name: Upload All Assets
-        uses: finebits/github-actions/toolset/github/upload-release-asset@39ec051fda4f00ab2ac5ffb6336ab0ea1ad9ad0f # v3.0.0
+        uses: finebits/github-actions/toolset/github/upload-release-asset@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.event.release.tag_name }}
