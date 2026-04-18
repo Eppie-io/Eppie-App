@@ -18,6 +18,10 @@
 
 using System;
 
+#if WINDOWS_UWP
+using Windows.System.Profile;
+#endif
+
 namespace Eppie.App.Helpers
 {
     [Flags]
@@ -66,6 +70,14 @@ namespace Eppie.App.Helpers
 
         static public bool IsUno = (PlatformInfo & Platform.Uno) != 0;
         static public bool IsApple = (PlatformInfo & Platform.Apple) != 0;
+
+#if WINDOWS_UWP
+        private const string XboxDeviceFamily = "Windows.Xbox";
+
+        static public bool IsXbox => string.Equals(AnalyticsInfo.VersionInfo.DeviceFamily, XboxDeviceFamily, StringComparison.Ordinal);
+#else
+        static public bool IsXbox => false;
+#endif
 
         static public Platform PlatformGroupMask = Platform.Apple | Platform.Uno;
         static public Platform PlatformMask = (Platform)0xffffffff ^ PlatformGroupMask;

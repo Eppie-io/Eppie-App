@@ -19,6 +19,7 @@
 using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using Eppie.App.Helpers;
 using Eppie.App.Logging;
 using Microsoft.Extensions.Logging;
 using Tuvi.App.ViewModels;
@@ -76,12 +77,17 @@ namespace Eppie.App.Services
         {
             get
             {
-                return GetEnumOption(AppScale.SystemDefault);
+                return GetEnumOption(GetDefaultUIScale());
             }
             set
             {
                 SetEnumOption(value);
             }
+        }
+
+        private static AppScale GetDefaultUIScale()
+        {
+            return PlatformTools.IsXbox ? AppScale.Scale200 : AppScale.SystemDefault;
         }
 
         /// <summary>
