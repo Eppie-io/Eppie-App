@@ -272,6 +272,7 @@
                 <TextBlock Grid.Row="0"
                            Grid.Column="0"
                            VerticalAlignment="Center"
+                           IsTextSelectionEnabled="True"
                            Text="{x:Bind ViewModel.MessageInfo.SenderName, Mode=OneWay}"
                            TextTrimming="CharacterEllipsis"
                            TextWrapping="NoWrap" />
@@ -280,6 +281,7 @@
                            Grid.Column="0"
                            VerticalAlignment="Top"
                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                           IsTextSelectionEnabled="True"
                            Text="{x:Bind ViewModel.MessageInfo.SenderEmail, Mode=OneWay}"
                            TextTrimming="CharacterEllipsis"
                            TextWrapping="NoWrap" />
