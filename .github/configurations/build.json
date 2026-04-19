@@ -206,7 +206,8 @@
         "os": "windows-2025",
         "prerequisites": {
             "msbuild": "false",
-            "uno-platform": "true"
+            "uno-platform": "true",
+            "uno-check-skip": "git xcode vswin vsmac windowshyperv edgewebview2 androidemulator dotnetnewunotemplates"
         },
         "build": {
             "tool": "dotnet",
@@ -235,7 +236,8 @@
         "os": "macos-latest",
         "prerequisites": {
             "msbuild": "false",
-            "uno-platform": "true"
+            "uno-platform": "true",
+            "uno-check-skip": "git xcode vswin vsmac windowshyperv edgewebview2 androidemulator dotnetnewunotemplates"
         },
         "build": {
             "tool": "dotnet",
@@ -277,7 +279,8 @@
         "os": "windows-2022",
         "prerequisites": {
             "msbuild": "true",
-            "uno-platform": "true"
+            "uno-platform": "true",
+            "uno-check-skip": "git xcode vswin vsmac windowshyperv edgewebview2 androidemulator dotnetnewunotemplates"
         },
         "build": {
             "tool": "msbuild",

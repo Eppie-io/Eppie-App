@@ -27,7 +27,7 @@ inputs:
 
   uno-check-skip:
     type: string
-    default: 'xcode vswin vsmac windowshyperv edgewebview2 androidemulator dotnetnewunotemplates'
+    default: 'git xcode vswin vsmac windowshyperv edgewebview2 openjdk androidsdk androidemulator dotnetnewunotemplates'
 
   msbuild:
     type: boolean
