@@ -146,7 +146,7 @@
             "uno",
             "all"
         ],
-        "os": "windows-2025",
+        "os": "windows-2025-vs2026",
         "prerequisites": {
             "msbuild": "true",
             "uno-platform": "true"
@@ -185,7 +185,7 @@
         "prerequisites": {
             "msbuild": "false",
             "uno-platform": "true",
-            "xcode": "/Applications/Xcode_16.4.app"
+            "xcode": "/Applications/Xcode_26.1.1.app"
         },
         "build": {
             "tool": "dotnet",
@@ -252,7 +252,8 @@
         "keywords": [
             "uwp",
             "windows",
-            "all"
+            "all",
+            "autobuild"
         ],
         "os": "windows-2022",
         "prerequisites": {
@@ -276,7 +277,7 @@
         "keywords": [
             "autobuild"
         ],
-        "os": "windows-2022",
+        "os": "windows-2025-vs2026",
         "prerequisites": {
             "msbuild": "true",
             "uno-platform": "true",
@@ -284,7 +285,7 @@
         },
         "build": {
             "tool": "msbuild",
-            "project": "./src/Eppie.App/Eppie.App.sln",
+            "project": "./src/Eppie.App/Eppie.App.Uno.slnf",
             "configuration": "debug",
             "extra": "-restore:True -verbosity:minimal -consoleLoggerParameters:Summary -maxCpuCount"
         },
