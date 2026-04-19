@@ -159,6 +159,7 @@ namespace Eppie.App.UI.Controls
             sender.Text = string.Empty;
         }
 
+        [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Event handler is referenced from XAML and must be an instance method.")]
         private void SuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
             sender.Text = string.Empty;

@@ -41,14 +41,8 @@ namespace Eppie.App.UI.Controls
     }
 
     [SuppressMessage("Design", "CA1010:Generic collections should implement generic interface", Justification = "ContentControl implements IEnumerable for XAML infrastructure")]
-    public sealed partial class PopupHostControl : UserControl
+    public abstract partial class PopupHostControlBase : UserControl
     {
-        public Type PageType
-        {
-            get { return (Type)GetValue(ClientViewProperty); }
-            set { SetValue(ClientViewProperty, value); }
-        }
-
         private object _navigationParameter;
         public object NavigationParameter
         {
@@ -59,17 +53,6 @@ namespace Eppie.App.UI.Controls
             }
         }
 
-        public static readonly DependencyProperty ClientViewProperty =
-            DependencyProperty.Register(nameof(PageType), typeof(Type), typeof(PopupHostControl), new PropertyMetadata(null, OnPageTypeChanged));
-
-        private static void OnPageTypeChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
-        {
-            if (dependencyObject is PopupHostControl control && args.NewValue is Type pageType)
-            {
-                control.Navigate();
-            }
-        }
-
         public bool IsCloseButtonVisible
         {
             get { return (bool)GetValue(IsCloseButtonVisibleProperty); }
@@ -77,13 +60,13 @@ namespace Eppie.App.UI.Controls
         }
 
         public static readonly DependencyProperty IsCloseButtonVisibleProperty =
-            DependencyProperty.Register(nameof(IsCloseButtonVisible), typeof(bool), typeof(PopupHostControl), new PropertyMetadata(true));
+            DependencyProperty.Register(nameof(IsCloseButtonVisible), typeof(bool), typeof(PopupHostControlBase), new PropertyMetadata(true));
 
         public event EventHandler CloseRequested;
 
         private IPopupPage PopupPage => PopupHostFrame.Content as IPopupPage;
 
-        public PopupHostControl()
+        public PopupHostControlBase()
         {
             this.InitializeComponent();
         }
@@ -109,11 +92,13 @@ namespace Eppie.App.UI.Controls
             base.OnKeyDown(e);
         }
 
-        private void Navigate()
+        protected abstract void Navigate();
+
+        protected void Navigate(Type pageType)
         {
-            if (PageType != null)
+            if (pageType != null)
             {
-                PopupHostFrame.Navigate(PageType, NavigationParameter, new SuppressNavigationTransitionInfo());
+                PopupHostFrame.Navigate(pageType, NavigationParameter, new SuppressNavigationTransitionInfo());
 
                 if (PopupPage != null)
                 {
@@ -130,6 +115,16 @@ namespace Eppie.App.UI.Controls
             }
 
             CloseRequested?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
+    [SuppressMessage("Design", "CA1010:Generic collections should implement generic interface", Justification = "ContentControl implements IEnumerable for XAML infrastructure")]
+    public partial class PopupHostControl<TPage> : PopupHostControlBase
+        where TPage : Page, IPopupPage
+    {
+        protected override void Navigate()
+        {
+            Navigate(typeof(TPage));
         }
     }
 }

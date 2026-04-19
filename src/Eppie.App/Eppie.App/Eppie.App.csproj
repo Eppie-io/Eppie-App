@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Uno.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net9.0-android;net9.0-ios;net9.0-windows10.0.19041;net9.0-browserwasm;net9.0-desktop</TargetFrameworks>
+    <TargetFrameworks>net10.0-android;net10.0-ios;net10.0-windows10.0.19041;net10.0-browserwasm;net10.0-desktop</TargetFrameworks>
     <!-- Workaround for https://github.com/unoplatform/uno/issues/19377 -->
     <TargetFrameworks Condition="'$(OverrideTargetFrameworks)'!=''">$(OverrideTargetFrameworks)</TargetFrameworks>
     <OutputType>Exe</OutputType>
@@ -66,7 +66,7 @@
   </PropertyGroup>
 
   <!-- Android signing configuration for Release mode -->
-  <PropertyGroup Condition="'$(Configuration)'=='Release' And '$(TargetFramework)'=='net9.0-android'">
+  <PropertyGroup Condition="'$(Configuration)'=='Release' And '$(TargetFramework)'=='net10.0-android'">
     <AndroidKeyStore>False</AndroidKeyStore>
     <AndroidSigningKeyStore></AndroidSigningKeyStore>
     <AndroidSigningKeyAlias></AndroidSigningKeyAlias>
@@ -84,66 +84,12 @@
     <UnoMacOSEntitlements>Platforms\Desktop\Entitlements.plist</UnoMacOSEntitlements>
   </PropertyGroup>
   
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-android|AnyCPU'">
+  <PropertyGroup>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <WarningsNotAsErrors>Uno0001</WarningsNotAsErrors>
     <WarningLevel>9999</WarningLevel>
   </PropertyGroup>
   
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-ios|AnyCPU'">
-    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-    <WarningsNotAsErrors>Uno0001</WarningsNotAsErrors>
-    <WarningLevel>9999</WarningLevel>
-  </PropertyGroup>
-  
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-windows10.0.19041|AnyCPU'">
-    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-    <WarningsNotAsErrors>Uno0001</WarningsNotAsErrors>
-    <WarningLevel>9999</WarningLevel>
-  </PropertyGroup>
-  
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-browserwasm|AnyCPU'">
-    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-    <WarningsNotAsErrors>Uno0001</WarningsNotAsErrors>
-    <WarningLevel>9999</WarningLevel>
-  </PropertyGroup>
-  
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-desktop|AnyCPU'">
-    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-    <WarningsNotAsErrors>Uno0001</WarningsNotAsErrors>
-    <WarningLevel>9999</WarningLevel>
-  </PropertyGroup>
-  
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-android|AnyCPU'">
-    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-    <WarningsNotAsErrors>Uno0001</WarningsNotAsErrors>
-    <WarningLevel>9999</WarningLevel>
-  </PropertyGroup>
-  
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-ios|AnyCPU'">
-    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-    <WarningsNotAsErrors>Uno0001</WarningsNotAsErrors>
-    <WarningLevel>9999</WarningLevel>
-  </PropertyGroup>
-  
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-windows10.0.19041|AnyCPU'">
-    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-    <WarningsNotAsErrors>Uno0001</WarningsNotAsErrors>
-    <WarningLevel>9999</WarningLevel>
-  </PropertyGroup>
-  
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-browserwasm|AnyCPU'">
-    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-    <WarningsNotAsErrors>Uno0001</WarningsNotAsErrors>
-    <WarningLevel>9999</WarningLevel>
-  </PropertyGroup>
-  
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-desktop|AnyCPU'">
-    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-    <WarningsNotAsErrors>Uno0001</WarningsNotAsErrors>
-    <WarningLevel>9999</WarningLevel>
-  </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\ComponentBuilder\ComponentBuilder.csproj" />
     <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core.Backup\Tuvi.Core.Backup.csproj" />
@@ -185,6 +131,7 @@
     <PackageReference Include="Uno.Microsoft.Xaml.Behaviors.WinUI.Managed" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="CommunityToolkit.WinUI.Controls.TokenizingTextBox" />
     <PackageReference Include="Serilog" />
     <PackageReference Include="Serilog.Enrichers.Environment" />
     <PackageReference Include="Serilog.Enrichers.Process" />
@@ -199,11 +146,17 @@
     <PackageReference Include="Serilog.Sinks.Console" />
     <PackageReference Include="Serilog.Sinks.Debug" />
     <PackageReference Include="Serilog.Sinks.File" />
-    <PackageReference Include="CommunityToolkit.WinUI.Controls.TokenizingTextBox" />
   </ItemGroup>
 
   <ItemGroup Condition="$(TargetFramework.Contains('android')) OR $(TargetFramework.Contains('ios'))">
     <PackageReference Include="Serilog.Sinks.Xamarin" />
+  </ItemGroup>
+  
+  <!-- Force upgrade of transitive packages with known high severity vulnerabilities. -->
+  <!-- Todo: Please check this again on the new version of Uno SDK. -->
+  <ItemGroup>
+    <PackageReference Include="System.Security.Cryptography.Xml" />
+    <PackageReference Include="Tmds.DBus.Protocol" />
   </ItemGroup>
 
   <!-- Enable WSL support in VS 17.13 and later, when a desktop target is present -->

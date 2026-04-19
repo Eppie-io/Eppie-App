@@ -37,7 +37,7 @@ runs:
 
   steps:
     - id: assign-version
-      uses: finebits/github-actions/toolset/assign-version@39ec051fda4f00ab2ac5ffb6336ab0ea1ad9ad0f # v3.0.0
+      uses: finebits/github-actions/toolset/assign-version@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1
 
     - id: provide-version
       shell: bash

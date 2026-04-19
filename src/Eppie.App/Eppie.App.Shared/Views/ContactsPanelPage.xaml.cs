@@ -41,28 +41,25 @@ namespace Eppie.App.Views
 
     internal sealed partial class ContactsPanelPage : ContactsPanelPageBase
     {
-        private readonly CancellationTokenSource _contactsCancellationTokenSource;
-
         public ContactsPanelPage()
         {
             this.InitializeComponent();
-            _contactsCancellationTokenSource = new CancellationTokenSource();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            base.OnNavigatedTo(e);
+
             if (ViewModel != null && ViewModel.Contacts == null)
             {
                 ViewModel.SetAvatarProvider(PickAvatarBytesAsync);
 
                 var contactsCollection = new IncrementalLoadingCollection<ContactsPanelPageViewModel, ContactItem>(
                     ViewModel,
-                    _contactsCancellationTokenSource);
+                    ViewModel.CancellationTokenSource);
 
                 ViewModel.SetContactsCollection(contactsCollection);
             }
-
-            base.OnNavigatedTo(e);
         }
 
         private async Task<byte[]> PickAvatarBytesAsync()

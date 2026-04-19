@@ -19,21 +19,24 @@
 
 #if !WINDOWS_UWP
 
+using System.Diagnostics.CodeAnalysis;
+
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace Eppie.App.Helpers
 {
+    [SuppressMessage("Trimming", "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code", Justification = "Uno.Extensions APIs are used in a way that is safe for trimming.")]
     internal static partial class EppieHost
     {
         public static IHostBuilder CreateBuilder(ILoggerFactory loggerFactory)
         {
-            return UnoHost.CreateDefaultBuilder(Environment.GetCommandLineArgs()).ConfugureDefault().ConfugureUno().AddLoggerFactory(loggerFactory);
+            return UnoHost.CreateDefaultBuilder<App>(Environment.GetCommandLineArgs()).ConfugureDefault().ConfugureUno().AddLoggerFactory(loggerFactory);
         }
 
         public static IHostBuilder CreateBuilder()
         {
-            return UnoHost.CreateDefaultBuilder(Environment.GetCommandLineArgs()).ConfugureDefault().ConfugureUno();
+            return UnoHost.CreateDefaultBuilder<App>(Environment.GetCommandLineArgs()).ConfugureDefault().ConfugureUno();
         }
 
         private static IHostBuilder ConfugureUno(this IHostBuilder hostBuilder)

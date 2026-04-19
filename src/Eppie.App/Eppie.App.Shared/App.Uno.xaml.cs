@@ -100,7 +100,7 @@ namespace Eppie.App
             }
         }
 
-        partial void InstallPlatformMainMenu(string appName);
+        static partial void InstallPlatformMainMenu(string appName);
 
         /// <summary>
         /// Invoked when Navigation to a certain page fails

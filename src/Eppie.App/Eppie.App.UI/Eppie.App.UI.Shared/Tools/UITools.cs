@@ -173,10 +173,9 @@ namespace Eppie.App.UI.Common
                     XamlRoot = root,
                 };
 
-                var popupControl = new Eppie.App.UI.Controls.PopupHostControl
+                var popupControl = new Eppie.App.UI.Controls.PopupHostControl<TPage>()
                 {
-                    PageType = typeof(TPage),
-                    NavigationParameter = data,
+                    NavigationParameter = data
                 };
 
                 popupControl.CloseRequested += (s, e) => dialog.Hide();

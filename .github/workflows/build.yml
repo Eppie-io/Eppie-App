@@ -116,6 +116,9 @@ jobs:
 
     runs-on: ${{ matrix.os }}
 
+    env:
+      default-uno-check-skip: 'git xcode vswin vsmac windowshyperv edgewebview2 openjdk androidsdk androidemulator dotnetnewunotemplates'
+
     steps:
       - name: Initializing configuration
         shell: bash
@@ -142,6 +145,7 @@ jobs:
         uses: ./.github/actions/install-prerequisites
         with:
           uno-platform: ${{ matrix.prerequisites.uno-platform == 'true' }}
+          uno-check-skip: ${{ matrix.prerequisites.uno-check-skip || env.default-uno-check-skip }}
           msbuild: ${{ matrix.prerequisites.msbuild == 'true' }}
           xcode-app: ${{ matrix.prerequisites.xcode }}
 

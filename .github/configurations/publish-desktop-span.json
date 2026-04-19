@@ -10,9 +10,9 @@
             "tool": "dotnet",
             "project": "./src/Eppie.App/Eppie.App/Eppie.App.csproj",
             "configuration": "release",
-            "framework": "net9.0-desktop",
+            "framework": "net10.0-desktop",
             "runtime": "linux-x64",
-            "extra": "--property:SelfContained=true --property:PackageFormat=snap --property:UnoSnapcraftAdditionalParameters=--destructive-mode --property:IncludeSourceRevisionInInformationalVersion=false --property:ExcludePublishDebugSymbols=true --property:OverrideTargetFrameworks=net9.0-desktop",
+            "extra": "--property:SelfContained=true --property:PackageFormat=snap --property:UnoSnapcraftAdditionalParameters=--destructive-mode --property:IncludeSourceRevisionInInformationalVersion=false --property:ExcludePublishDebugSymbols=true --property:OverrideTargetFrameworks=net10.0-desktop",
             "prepare": [
                 "--target:PackageVersioning --no-restore"
             ]
@@ -32,9 +32,9 @@
             "tool": "dotnet",
             "project": "./src/Eppie.App/Eppie.App/Eppie.App.csproj",
             "configuration": "release",
-            "framework": "net9.0-desktop",
+            "framework": "net10.0-desktop",
             "runtime": "linux-arm64",
-            "extra": "--property:SelfContained=true --property:PackageFormat=snap --property:UnoSnapcraftAdditionalParameters=--destructive-mode --property:IncludeSourceRevisionInInformationalVersion=false --property:ExcludePublishDebugSymbols=true --property:OverrideTargetFrameworks=net9.0-desktop",
+            "extra": "--property:SelfContained=true --property:PackageFormat=snap --property:UnoSnapcraftAdditionalParameters=--destructive-mode --property:IncludeSourceRevisionInInformationalVersion=false --property:ExcludePublishDebugSymbols=true --property:OverrideTargetFrameworks=net10.0-desktop",
             "prepare": [
                 "--target:PackageVersioning --no-restore"
             ]

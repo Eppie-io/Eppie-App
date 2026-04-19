@@ -27,7 +27,7 @@ inputs:
 
   uno-check-skip:
     type: string
-    default: 'xcode vswin vsmac windowshyperv edgewebview2 androidemulator dotnetnewunotemplates'
+    default: 'git xcode vswin vsmac windowshyperv edgewebview2 openjdk androidsdk androidemulator dotnetnewunotemplates'
 
   msbuild:
     type: boolean
@@ -53,7 +53,6 @@ runs:
 
     - name: Setup the Uno Platform
       if: inputs.uno-platform == 'true'
-      uses: finebits/github-actions/devhub/uno-platform/setup@39ec051fda4f00ab2ac5ffb6336ab0ea1ad9ad0f # v3.0.0
+      uses: finebits/github-actions/devhub/uno-platform/setup@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1
       with:
         uno-check-skip: ${{ inputs.uno-check-skip }}
-        uno-check-manifest: https://raw.githubusercontent.com/unoplatform/uno.check/1c494ebb42c34eaf74965170e5553ef4792be2c2/manifests/uno.ui.manifest.json # dotnet v9.0.305; todo: remove it after using dotnet v10
