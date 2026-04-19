@@ -10,9 +10,9 @@
             "tool": "dotnet",
             "project": "./src/Eppie.App/Eppie.App/Eppie.App.csproj",
             "configuration": "release",
-            "framework": "net9.0-desktop",
+            "framework": "net10.0-desktop",
             "runtime": "osx-x64",
-            "extra": "--property:SelfContained=true --property:PackageFormat=app --property:UnoMacOSIncludeDebugSymbols=false --property:OverrideTargetFrameworks=net9.0-desktop",
+            "extra": "--property:SelfContained=true --property:PackageFormat=app --property:UnoMacOSIncludeDebugSymbols=false --property:OverrideTargetFrameworks=net10.0-desktop",
             "prepare": [
                 "--target:PackageVersioning --no-restore"
             ]
@@ -32,9 +32,9 @@
             "tool": "dotnet",
             "project": "./src/Eppie.App/Eppie.App/Eppie.App.csproj",
             "configuration": "release",
-            "framework": "net9.0-desktop",
+            "framework": "net10.0-desktop",
             "runtime": "osx-arm64",
-            "extra": "--property:SelfContained=true --property:PackageFormat=app --property:UnoMacOSIncludeDebugSymbols=false --property:OverrideTargetFrameworks=net9.0-desktop",
+            "extra": "--property:SelfContained=true --property:PackageFormat=app --property:UnoMacOSIncludeDebugSymbols=false --property:OverrideTargetFrameworks=net10.0-desktop",
             "prepare": [
                 "--target:PackageVersioning --no-restore"
             ]
@@ -53,9 +53,9 @@
             "tool": "dotnet",
             "project": "./src/Eppie.App/Eppie.App/Eppie.App.csproj",
             "configuration": "release",
-            "framework": "net9.0-desktop",
+            "framework": "net10.0-desktop",
             "runtime": "osx-x64",
-            "extra": "--property:SelfContained=true --property:PackageFormat=app --property:UnoMacOSIncludeDebugSymbols=false --property:OverrideTargetFrameworks=net9.0-desktop",
+            "extra": "--property:SelfContained=true --property:PackageFormat=app --property:UnoMacOSIncludeDebugSymbols=false --property:OverrideTargetFrameworks=net10.0-desktop",
             "prepare": [
                 "--target:PackageVersioning --no-restore"
             ]
