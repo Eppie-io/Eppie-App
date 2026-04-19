@@ -228,26 +228,6 @@
     {
         "keywords": [
             "android",
-            "linux",
-            "uno",
-            "all"
-        ],
-        "os": "ubuntu-latest",
-        "prerequisites": {
-            "msbuild": "false",
-            "uno-platform": "true"
-        },
-        "build": {
-            "tool": "dotnet",
-            "project": "./src/Eppie.App/Eppie.App/Eppie.App.csproj",
-            "configuration": "release",
-            "framework": "net9.0-android",
-            "extra": "--verbosity=minimal --nologo"
-        }
-    },
-    {
-        "keywords": [
-            "android",
             "macos",
             "uno",
             "all"
