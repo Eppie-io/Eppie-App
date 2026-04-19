@@ -60,6 +60,7 @@ jobs:
         with:
           uno-platform: ${{ matrix.language == 'csharp' }}
           msbuild: ${{ matrix.language == 'csharp' }}
+          uno-check-skip: 'git xcode vswin vsmac windowshyperv edgewebview2 androidemulator dotnetnewunotemplates'
 
       # Initializes the CodeQL tools for scanning.
       - name: Initialize CodeQL
