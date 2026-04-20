@@ -1,4 +1,8 @@
+.vs
 src/Eppie.App/.vs/
+src/Eppie.App/Eppie.AI/obj/
+src/Eppie.App/Eppie.AI/bin/
+src/Eppie.App/Eppie.AI/Eppie.AI.csproj.user
 src/Eppie.App/Eppie.App/.vs/
 src/Eppie.App/Eppie.App/bin/
 src/Eppie.App/Eppie.App/obj/
@@ -24,11 +28,6 @@ src/Eppie.App/Eppie.App.ViewModels/obj/
 src/Eppie.App/Eppie.App.ViewModels/Eppie.App.ViewModels.csproj.user
 src/Eppie.App/Eppie.Authorization.OAuth2/bin
 src/Eppie.App/Eppie.Authorization.OAuth2/obj
-src/Tests/Eppie.App.ViewModels.Tests/obj/
-src/Tests/Eppie.App.ViewModels.Tests/bin/
-src/Eppie.App/Eppie.AI/obj/
-src/Eppie.App/Eppie.AI/bin/
-/.vs
 src/Eppie.App/Tests/Eppie.App.ViewModels.Tests/obj/
 src/Eppie.App/Tests/Eppie.App.ViewModels.Tests/bin/
 src/Eppie.App/Tests/Eppie.App.UI.Tests/obj/

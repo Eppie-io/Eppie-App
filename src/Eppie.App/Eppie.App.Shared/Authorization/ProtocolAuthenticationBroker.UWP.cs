@@ -21,10 +21,10 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Eppie.App.UI.Common;
 using Finebits.Authorization.OAuth2.Abstractions;
 using Finebits.Authorization.OAuth2.Types;
 using Windows.System;
-using Eppie.App.UI.Common;
 
 namespace Eppie.App.Authorization
 {

@@ -110,15 +110,15 @@ git clone --recursive https://github.com/Eppie-io/Eppie-App.git eppie-app
 ### Setting up the environment
 
 Use the following [guide](https://platform.uno/docs/articles/get-started-vscode.html) to set up an environment for building Eppie in **VS Code** under Windows, Linux or macOS.  
-For **Visual Studio 2022**, use [this guide](https://platform.uno/docs/articles/get-started-vs-2022.html)  
-To build the UWP project, use [Visual Studio 2022](https://platform.uno/docs/articles/get-started-vs-2022.html) with installed component **Windows application development &#10148; Universal Windows Platform tools**
+For **Visual Studio**, use [this guide](https://platform.uno/docs/articles/get-started-vs-2022.html)  
+To build the UWP project, use [Visual Studio](https://visualstudio.microsoft.com/) with installed component **WinUI application development &#10148; Universal Windows Platform tools**
 
 ### Build and Launch
 
 To [debug Eppie](https://platform.uno/docs/articles/create-an-app-vscode.html?tabs=skia#debug-the-app) on Windows, macOS, and Linux.  
-To [debug Eppie](https://platform.uno/docs/articles/create-an-app-vs2022.html?tabs=desktop#debug-the-app) with **Visual Studio 2022**.
+To [debug Eppie](https://platform.uno/docs/articles/create-an-app-vs2022.html?tabs=desktop#debug-the-app) with **Visual Studio**.
 
-To run the UWP project, open `src/Eppie.App/Eppie.App.sln` file in **Visual Studio 2022** and select `Eppie.App.UWP` as your startup project.
+To run the UWP project, open `src/Eppie.App/Eppie.App.slnx` file in **Visual Studio** and select `Eppie.App.UWP` as your startup project.
 
 To create Eppie packages, refer to [these instructions](https://platform.uno/docs/articles/uno-publishing-overview.html).
 

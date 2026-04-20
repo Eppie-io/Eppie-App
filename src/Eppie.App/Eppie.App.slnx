@@ -1,0 +1,93 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="ARM" />
+    <Platform Name="ARM64" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/AI/">
+    <Project Path="Eppie.AI/Eppie.AI.csproj" />
+  </Folder>
+  <Folder Name="/Application/">
+    <Project Path="Eppie.App.Resources.Shared/Eppie.App.Resources.Shared.shproj" />
+    <Project Path="Eppie.App.Shared/Eppie.App.Shared.shproj" />
+    <Project Path="Eppie.App.UWP/Eppie.App.UWP.csproj" Id="cae118dc-8f0d-476e-a64a-ae165c754c92">
+      <Platform Solution="*|Any CPU" Project="x64" />
+      <Platform Solution="*|ARM" Project="ARM" />
+      <Platform Solution="*|ARM64" Project="ARM64" />
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+      <Deploy />
+    </Project>
+    <Project Path="Eppie.App.ViewModels/Eppie.App.ViewModels.csproj" />
+    <Project Path="Eppie.App/Eppie.App.csproj">
+      <Deploy />
+    </Project>
+  </Folder>
+  <Folder Name="/Application/Eppie.App.UI/">
+    <Project Path="Eppie.App.UI/Eppie.App.UI.Shared/Eppie.App.UI.Shared.shproj" />
+    <Project Path="Eppie.App.UI/Eppie.App.UI.Uno/Eppie.App.UI.Uno.csproj" />
+    <Project Path="Eppie.App.UI/Eppie.App.UI.UWP/Eppie.App.UI.UWP.csproj" Id="a6c30ed1-6213-427e-b255-e5e8c69e6d0e">
+      <Platform Solution="*|Any CPU" Project="x64" />
+      <Platform Solution="*|ARM" Project="ARM" />
+      <Platform Solution="*|ARM64" Project="ARM64" />
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+  </Folder>
+  <Folder Name="/Core/">
+    <Project Path="../../gitmodules/TuviCore/Sources/ComponentBuilder/ComponentBuilder.csproj" />
+    <Project Path="../../gitmodules/TuviCore/Sources/Tuvi.Core.Backup.Impl/Tuvi.Core.Backup.Impl.csproj" />
+    <Project Path="../../gitmodules/TuviCore/Sources/Tuvi.Core.Backup/Tuvi.Core.Backup.csproj" />
+    <Project Path="../../gitmodules/TuviCore/Sources/Tuvi.Core.DataStorage.Impl/Tuvi.Core.DataStorage.Impl.csproj" />
+    <Project Path="../../gitmodules/TuviCore/Sources/Tuvi.Core.DataStorage/Tuvi.Core.DataStorage.csproj" />
+    <Project Path="../../gitmodules/TuviCore/Sources/Tuvi.Core.Dec.Bitcoin/Tuvi.Core.Dec.Bitcoin.csproj" />
+    <Project Path="../../gitmodules/TuviCore/Sources/Tuvi.Core.Dec.Ethereum/Tuvi.Core.Dec.Ethereum.csproj" />
+    <Project Path="../../gitmodules/TuviCore/Sources/Tuvi.Core.Dec.Impl/Tuvi.Core.Dec.Impl.csproj" />
+    <Project Path="../../gitmodules/TuviCore/Sources/Tuvi.Core.Dec.Names/Tuvi.Core.Dec.Names.csproj" />
+    <Project Path="../../gitmodules/TuviCore/Sources/Tuvi.Core.Dec.Web.Impl/Tuvi.Core.Dec.Web.Impl.csproj" />
+    <Project Path="../../gitmodules/TuviCore/Sources/Tuvi.Core.Dec/Tuvi.Core.Dec.csproj" />
+    <Project Path="../../gitmodules/TuviCore/Sources/Tuvi.Core.Entities/Tuvi.Core.Entities.csproj" />
+    <Project Path="../../gitmodules/TuviCore/Sources/Tuvi.Core.Impl/Tuvi.Core.Impl.csproj" />
+    <Project Path="../../gitmodules/TuviCore/Sources/Tuvi.Core.Logging/Tuvi.Core.Logging.csproj" />
+    <Project Path="../../gitmodules/TuviCore/Sources/Tuvi.Core.Mail.Impl/Tuvi.Core.Mail.Impl.csproj" />
+    <Project Path="../../gitmodules/TuviCore/Sources/Tuvi.Core.Mail/Tuvi.Core.Mail.csproj" />
+    <Project Path="../../gitmodules/TuviCore/Sources/Tuvi.Core.Web.BackupService/Tuvi.Core.Web.BackupService.csproj" />
+    <Project Path="../../gitmodules/TuviCore/Sources/Tuvi.Core.Web.BackupServiceClient/Tuvi.Core.Web.BackupServiceClient.csproj" />
+    <Project Path="../../gitmodules/TuviCore/Sources/Tuvi.Core/Tuvi.Core.csproj" />
+    <Project Path="../../gitmodules/TuviCore/Sources/Tuvi.Proton.Impl/Tuvi.Proton.Impl.csproj" />
+    <Project Path="../../gitmodules/TuviCore/Sources/Tuvi.Proton/Tuvi.Proton.csproj" />
+  </Folder>
+  <Folder Name="/Modules/">
+    <Project Path="Eppie.Authorization.OAuth2/Eppie.Authorization.OAuth2.csproj" />
+  </Folder>
+  <Folder Name="/Modules/Crypto/">
+    <Project Path="../../gitmodules/TuviCore/gitmodules/TuviBase32EConverterLib/TuviBytesToEmailConverterLib/TuviBase32EConverterLib/TuviBase32EConverterLib.csproj" />
+    <Project Path="../../gitmodules/TuviCore/gitmodules/TuviPgpLib/gitmodules/TuviKeyDerivationLib/KeyDerivationInterface/KeyDerivation.csproj" />
+    <Project Path="../../gitmodules/TuviCore/gitmodules/TuviPgpLib/gitmodules/TuviKeyDerivationLib/KeyDerivationLib/KeyDerivationLib.csproj" />
+    <Project Path="../../gitmodules/TuviCore/gitmodules/TuviPgpLib/TuviPgpLib/TuviPgpLib.csproj" />
+    <Project Path="../../gitmodules/TuviCore/gitmodules/TuviPgpLib/TuviPgpLibImpl/TuviPgpLibImpl.csproj" />
+  </Folder>
+  <Folder Name="/Modules/ProtonMail/">
+    <Project Path="../../gitmodules/TuviCore/gitmodules/proton-cs-client/gitmodules/TuviAuthProtonLib/gitmodules/TuviRestClientLib/source/TuviRestClientLib/TuviRestClientLib.csproj" />
+    <Project Path="../../gitmodules/TuviCore/gitmodules/proton-cs-client/gitmodules/TuviAuthProtonLib/gitmodules/TuviSRPLib/TuviSRPLib/ProtonBase64Lib/ProtonBase64Lib.csproj" />
+    <Project Path="../../gitmodules/TuviCore/gitmodules/proton-cs-client/gitmodules/TuviAuthProtonLib/gitmodules/TuviSRPLib/TuviSRPLib/TuviSRPLib/TuviSRPLib.csproj" />
+    <Project Path="../../gitmodules/TuviCore/gitmodules/proton-cs-client/gitmodules/TuviAuthProtonLib/source/TuviAuthProtonLib/TuviAuthProtonLib.csproj" />
+    <Project Path="../../gitmodules/TuviCore/gitmodules/proton-cs-client/gitmodules/TuviAuthProtonLib/source/TuviProtonPrimitiveLib/TuviProtonPrimitiveLib.csproj" />
+    <Project Path="../../gitmodules/TuviCore/gitmodules/proton-cs-client/source/proton-cs-client/proton-cs-client.csproj" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Build.targets" />
+    <File Path="Directory.Packages.props" />
+    <File Path="global.json" />
+    <File Path="nuget.config" />
+    <File Path="Settings.XamlStyler" />
+  </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="Tests/Eppie.App.UI.Tests/Eppie.App.UI.Tests.csproj" />
+    <Project Path="Tests/Eppie.App.ViewModels.Tests/Eppie.App.ViewModels.Tests.csproj" />
+  </Folder>
+</Solution>

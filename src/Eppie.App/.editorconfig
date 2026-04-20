@@ -30,7 +30,7 @@ end_of_line = lf
 indent_style = tab
 indent_size = 2
 
-[*.{csproj,proj,projitems,shproj}]
+[*.{csproj,proj,projitems,shproj,slnx}]
 indent_size = 2
 
 [*.{json,slnf}]
