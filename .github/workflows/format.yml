@@ -40,7 +40,7 @@ jobs:
     strategy:
       matrix:
         include:
-          - project: "src/Eppie.App/Eppie.App.sln"
+          - project: "src/Eppie.App/Eppie.App.slnx"
             uno: "true"
 
     runs-on: windows-2025

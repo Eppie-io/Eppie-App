@@ -5,7 +5,7 @@ version: 2
 updates:
 
   - package-ecosystem: "nuget"
-    directory: "/src/Eppie.App/"                           # Path to '*.sln' directory
+    directory: "/src/Eppie.App/"                           # Path to solution directory
     schedule:
       interval: "daily"
     open-pull-requests-limit: 20
