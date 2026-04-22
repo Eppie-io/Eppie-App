@@ -34,7 +34,7 @@ namespace Eppie.App.UI.Controls
     /// "{UID_KEY}.[using:Eppie.App.UI.Controls]ToolTipProvider.ToolTip"
     /// </summary>
 
-    public static class ToolTipProvider
+    public class ToolTipProvider
     {
         public static DependencyProperty ToolTipProperty { get; } = DependencyProperty.RegisterAttached("ToolTip", typeof(object), typeof(ToolTipProvider), new PropertyMetadata(null, OnUpdateToolTip));
 

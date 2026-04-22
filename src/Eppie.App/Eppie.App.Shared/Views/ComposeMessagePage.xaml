@@ -320,7 +320,7 @@
 
         <!--  Header  -->
 
-        <Button x:Uid="/App.Resources/BackButton"
+        <Button x:Uid="BackButton"
                 Grid.Row="0"
                 Grid.Column="1"
                 Width="{StaticResource SymbolButtonWidth}"
@@ -365,7 +365,7 @@
                 <Button.Flyout>
                     <MenuFlyout>
                         <MenuFlyoutSubItem x:Name="AIAgentMenu"
-                                           x:Uid="/App.Resources/AIAgentProcessMessageMenu"
+                                           x:Uid="AIAgentProcessMessageMenu"
                                            IsEnabled="{x:Bind ViewModel.IsLocalAIEnabled, Mode=OneWay}"
                                            Visibility="{x:Bind ViewModel.IsLocalAIAvailable, Mode=OneWay}">
                             <MenuFlyoutSubItem.Icon>
@@ -394,7 +394,7 @@
                                         CommandParameter="{StaticResource FileOperationProvider}"
                                         Icon="Attach" />
 
-                        <MenuFlyoutItem x:Uid="/App.Resources/DeleteMenu"
+                        <MenuFlyoutItem x:Uid="DeleteMenu"
                                         Command="{x:Bind ViewModel.DeleteMessageAndGoBackCommand}"
                                         Icon="Delete"
                                         Text="Delete" />

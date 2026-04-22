@@ -34,7 +34,7 @@
             </ResourceDictionary.ThemeDictionaries>
 
             <XamlUICommand x:Key="DeleteUICommand"
-                           x:Uid="/App.Resources/DeleteButton"
+                           x:Uid="DeleteButton"
                            ExecuteRequested="OnDeleted">
                 <XamlUICommand.IconSource>
                     <SymbolIconSource Symbol="Delete" />
@@ -47,7 +47,7 @@
             </XamlUICommand>
 
             <XamlUICommand x:Key="MarkAsReadUICommand"
-                           x:Uid="/App.Resources/MarkAsReadButton"
+                           x:Uid="MarkAsReadButton"
                            ExecuteRequested="OnMarkAsRead">
                 <XamlUICommand.IconSource>
                     <SymbolIconSource Symbol="Read" />
@@ -60,7 +60,7 @@
             </XamlUICommand>
 
             <XamlUICommand x:Key="MarkAsUnreadUICommand"
-                           x:Uid="/App.Resources/MarkAsUnreadButton"
+                           x:Uid="MarkAsUnreadButton"
                            ExecuteRequested="OnMarkAsUnread">
                 <XamlUICommand.IconSource>
                     <SymbolIconSource Symbol="Mail" />
@@ -73,7 +73,7 @@
             </XamlUICommand>
 
             <XamlUICommand x:Key="FlagUICommand"
-                           x:Uid="/App.Resources/SetFlagButton"
+                           x:Uid="SetFlagButton"
                            ExecuteRequested="OnFlagged">
                 <XamlUICommand.IconSource>
                     <!--<SymbolIconSource Symbol="Flag" />-->
@@ -87,7 +87,7 @@
             </XamlUICommand>
 
             <XamlUICommand x:Key="UnflagUICommand"
-                           x:Uid="/App.Resources/ClearFlagButton"
+                           x:Uid="ClearFlagButton"
                            ExecuteRequested="OnUnflagged">
                 <XamlUICommand.IconSource>
                     <FontIconSource FontFamily="{ThemeResource SymbolThemeFontFamily}"
@@ -109,7 +109,7 @@
         <!--<SwipeControl>
             <SwipeControl.LeftItems>
                 <SwipeItems Mode="Execute">
-                    <SwipeItem x:Uid="/App.Resources/ToggleReadSwipeItem"
+                    <SwipeItem x:Uid="ToggleReadSwipeItem"
                                Background="{ThemeResource SystemAccentColor}"
                                Invoked="OnLeftSwipeInvoked">
                         <SwipeItem.IconSource>
@@ -120,7 +120,7 @@
             </SwipeControl.LeftItems>
             <SwipeControl.RightItems>
                 <SwipeItems Mode="Execute">
-                    <SwipeItem x:Uid="/App.Resources/ToggleDeleteSwipeItem"
+                    <SwipeItem x:Uid="ToggleDeleteSwipeItem"
                                Background="{StaticResource WarningBackgroundBrush}"
                                Invoked="OnRightSwipeInvoked">
                         <SwipeItem.IconSource>
@@ -141,7 +141,7 @@
                         VerticalAlignment="Top"
                         Orientation="Vertical">
 
-                <Button x:Uid="/App.Resources/MarkAsReadItemButton"
+                <Button x:Uid="MarkAsReadItemButton"
                         Width="32"
                         Height="32"
                         Padding="0"
@@ -156,7 +156,7 @@
                     </Viewbox>
                 </Button>
 
-                <Button x:Uid="/App.Resources/MarkAsUnreadItemButton"
+                <Button x:Uid="MarkAsUnreadItemButton"
                         Width="32"
                         Height="32"
                         Padding="0"
@@ -171,7 +171,7 @@
                     </Viewbox>
                 </Button>
 
-                <Button x:Uid="/App.Resources/SetFlagItemButton"
+                <Button x:Uid="SetFlagItemButton"
                         Width="32"
                         Height="32"
                         Margin="0,8,0,0"
@@ -188,7 +188,7 @@
                               Glyph="&#xEB4B;" />
                 </Button>
 
-                <Button x:Uid="/App.Resources/ClearFlagItemButton"
+                <Button x:Uid="ClearFlagItemButton"
                         Width="32"
                         Height="32"
                         Margin="0,8,0,0"

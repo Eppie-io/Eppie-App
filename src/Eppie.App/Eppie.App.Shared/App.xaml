@@ -16,7 +16,13 @@
                 <ResourceDictionary Source="ms-appx:///Eppie.App.UI/Converters/ConvertersDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <!--  Add resources here  -->
+            <!--
+                CRITICAL: This dummy instance forces the WinUI XAML compiler to generate
+                metadata for ToolTipProvider. Without a concrete reference in XAML, the
+                x:Uid system cannot resolve custom attached properties,
+                resulting in a XamlParseException at runtime.
+            -->
+            <ToolTipProvider xmlns="using:Eppie.App.UI.Controls" x:Key="DummyToolTip" />
 
         </ResourceDictionary>
     </Application.Resources>
