@@ -38,7 +38,7 @@
                        Text="{Binding Source={StaticResource Brand}, Path=AppName}" />
 
 
-            <Button x:Uid="/App.Resources/BackButton"
+            <Button x:Uid="BackButton"
                     VerticalAlignment="Center"
                     Command="{x:Bind ViewModel.BackCommand}">
                 <SymbolIcon Symbol="Back" />
@@ -72,7 +72,7 @@
                                          IsTextPredictionEnabled="False"
                                          Text="{x:Bind ViewModel.SeedPhrase.CleanText, Mode=OneWay}" />
 
-                                <Button x:Uid="/App.Resources/SeedGenerateCopyButton"
+                                <Button x:Uid="SeedGenerateCopyButton"
                                         Command="{x:Bind ViewModel.CopySeedCommand}"
                                         CommandParameter="{StaticResource ClipboardProvider}">
                                     <Button.KeyboardAccelerators>

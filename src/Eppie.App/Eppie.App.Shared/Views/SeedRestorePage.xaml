@@ -36,7 +36,7 @@
                        Style="{StaticResource PageTitleTextStyle}"
                        Text="{Binding Source={StaticResource Brand}, Path=AppName}" />
 
-            <Button x:Uid="/App.Resources/BackButton"
+            <Button x:Uid="BackButton"
                     VerticalAlignment="Center"
                     Command="{x:Bind ViewModel.BackCommand}">
                 <SymbolIcon Symbol="Back" />
@@ -73,7 +73,7 @@
                      TextChanging="OnChangingSeed" />
 
 
-            <Button x:Uid="/App.Resources/SeedRestorePasteButton"
+            <Button x:Uid="SeedRestorePasteButton"
                     Command="{x:Bind ViewModel.PasteSeedCommand}"
                     CommandParameter="{StaticResource ClipboardProvider}">
                 <SymbolIcon Symbol="Paste" />

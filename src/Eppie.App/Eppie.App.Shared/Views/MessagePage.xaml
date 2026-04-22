@@ -70,7 +70,7 @@
         </Grid.RowDefinitions>
 
 
-        <Button x:Uid="/App.Resources/BackButton"
+        <Button x:Uid="BackButton"
                 Grid.Row="1"
                 Grid.Column="1"
                 Width="{StaticResource SymbolButtonWidth}"
@@ -108,7 +108,7 @@
             <Button.Flyout>
                 <MenuFlyout>
                     <MenuFlyoutSubItem x:Name="AIAgentMenu"
-                                       x:Uid="/App.Resources/AIAgentProcessMessageMenu"
+                                       x:Uid="AIAgentProcessMessageMenu"
                                        IsEnabled="{x:Bind ViewModel.IsLocalAIEnabled, Mode=OneWay}"
                                        Visibility="{x:Bind ViewModel.IsLocalAIAvailable, Mode=OneWay}">
                         <MenuFlyoutSubItem.Icon>
@@ -116,17 +116,17 @@
                         </MenuFlyoutSubItem.Icon>
                     </MenuFlyoutSubItem>
 
-                    <MenuFlyoutItem x:Uid="/App.Resources/MarkAsReadMenu"
+                    <MenuFlyoutItem x:Uid="MarkAsReadMenu"
                                     Command="{x:Bind ViewModel.MarkMessageAsReadCommand}"
                                     Icon="Read"
                                     Visibility="{x:Bind ViewModel.MessageInfo.IsMarkedAsRead, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
 
-                    <MenuFlyoutItem x:Uid="/App.Resources/MarkAsUnreadMenu"
+                    <MenuFlyoutItem x:Uid="MarkAsUnreadMenu"
                                     Command="{x:Bind ViewModel.MarkMessageAsUnReadCommand}"
                                     Icon="Mail"
                                     Visibility="{x:Bind ViewModel.MessageInfo.IsMarkedAsRead, Mode=OneWay}" />
 
-                    <MenuFlyoutItem x:Uid="/App.Resources/SetFlagMenu"
+                    <MenuFlyoutItem x:Uid="SetFlagMenu"
                                     Command="{x:Bind ViewModel.FlagMessageCommand}"
                                     Visibility="{x:Bind ViewModel.MessageInfo.IsFlagged, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                         <MenuFlyoutItem.Icon>
@@ -134,7 +134,7 @@
                         </MenuFlyoutItem.Icon>
                     </MenuFlyoutItem>
 
-                    <MenuFlyoutItem x:Uid="/App.Resources/ClearFlagMenu"
+                    <MenuFlyoutItem x:Uid="ClearFlagMenu"
                                     Command="{x:Bind ViewModel.UnflagMessageCommand}"
                                     Visibility="{x:Bind ViewModel.MessageInfo.IsFlagged, Mode=OneWay}">
                         <MenuFlyoutItem.Icon>
@@ -142,19 +142,19 @@
                         </MenuFlyoutItem.Icon>
                     </MenuFlyoutItem>
 
-                    <MenuFlyoutItem x:Uid="/App.Resources/DeleteMenu"
+                    <MenuFlyoutItem x:Uid="DeleteMenu"
                                     Command="{x:Bind ViewModel.DeleteMessageAndGoBackCommand}"
                                     Icon="Delete" />
 
-                    <MenuFlyoutItem x:Uid="/App.Resources/ForwardMenu"
+                    <MenuFlyoutItem x:Uid="ForwardMenu"
                                     Command="{x:Bind ViewModel.ForwardCommand}"
                                     Icon="MailForward" />
 
-                    <MenuFlyoutItem x:Uid="/App.Resources/ReplyMenu"
+                    <MenuFlyoutItem x:Uid="ReplyMenu"
                                     Command="{x:Bind ViewModel.ReplyCommand}"
                                     Icon="MailReply" />
 
-                    <MenuFlyoutItem x:Uid="/App.Resources/ReplyAllMenu"
+                    <MenuFlyoutItem x:Uid="ReplyAllMenu"
                                     Command="{x:Bind ViewModel.ReplyCommandAll}"
                                     Icon="MailReplyAll" />
                 </MenuFlyout>
@@ -166,7 +166,7 @@
                     Margin="0,20,8,20"
                     Orientation="Vertical">
 
-            <Button x:Uid="/App.Resources/MarkAsReadItemButton"
+            <Button x:Uid="MarkAsReadItemButton"
                     Width="{StaticResource SymbolButtonWidth}"
                     Height="{StaticResource SymbolButtonHeigth}"
                     Padding="0"
@@ -180,7 +180,7 @@
                 </Viewbox>
             </Button>
 
-            <Button x:Uid="/App.Resources/MarkAsUnreadItemButton"
+            <Button x:Uid="MarkAsUnreadItemButton"
                     Width="{StaticResource SymbolButtonWidth}"
                     Height="{StaticResource SymbolButtonHeigth}"
                     Padding="0"
@@ -194,7 +194,7 @@
                 </Viewbox>
             </Button>
 
-            <Button x:Uid="/App.Resources/SetFlagItemButton"
+            <Button x:Uid="SetFlagItemButton"
                     Width="{StaticResource SymbolButtonWidth}"
                     Height="{StaticResource SymbolButtonHeigth}"
                     Margin="0,8,0,0"
@@ -211,7 +211,7 @@
                           Glyph="{StaticResource FlagGlyph}" />
             </Button>
 
-            <Button x:Uid="/App.Resources/ClearFlagItemButton"
+            <Button x:Uid="ClearFlagItemButton"
                     Width="{StaticResource SymbolButtonWidth}"
                     Height="{StaticResource SymbolButtonHeigth}"
                     Margin="0,8,0,0"

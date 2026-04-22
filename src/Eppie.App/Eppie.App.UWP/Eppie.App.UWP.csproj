@@ -279,16 +279,6 @@
       <Name>Visual C++ 2015-2019 Runtime for Universal Windows Platform Apps</Name>
     </SDKReference>
   </ItemGroup>
-  <ItemGroup>
-    <PRIResource Include="Resources\Strings\en\App.Resources.resw" />
-    <PRIResource Include="Resources\Strings\pl\App.Resources.resw" />
-    <PRIResource Include="Resources\Strings\ru\App.Resources.resw" />
-    <PRIResource Include="Resources\Strings\zh-Hans\App.Resources.resw" />
-    <PRIResource Include="Resources\Strings\nl\App.Resources.resw" />
-    <PRIResource Include="Resources\Strings\be\App.Resources.resw" />
-    <PRIResource Include="Resources\Strings\ja\App.Resources.resw" />
-    <PRIResource Include="Resources\Strings\fr\App.Resources.resw" />
-  </ItemGroup>
   <!-- ToDo: Try include assets from the gitmodule -->
   <!--
   <ItemGroup>
