@@ -1,0 +1,22 @@
+[
+    {
+        "keywords": [
+            "windows"
+        ],
+        "os": "windows-2025",
+        "publish": {
+            "tool": "msbuild",
+            "project": "./src/Eppie.App/Eppie.App/Eppie.App.csproj",
+            "configuration": "release",
+            "framework": "net10.0-windows10.0.19041",
+            "platforms": [
+                "x86",
+                "x64",
+                "arm64"
+            ]
+        },
+        "artifact": {
+            "tool": "cp"
+        }
+    }
+]

@@ -1,0 +1,291 @@
+################################################################################
+#                                                                              #
+#   Copyright 2025 Eppie(https://eppie.io)                                     #
+#                                                                              #
+#   Licensed under the Apache License, Version 2.0 (the "License");            #
+#   you may not use this file except in compliance with the License.           #
+#   You may obtain a copy of the License at                                    #
+#                                                                              #
+#       http://www.apache.org/licenses/LICENSE-2.0                             #
+#                                                                              #
+#   Unless required by applicable law or agreed to in writing, software        #
+#   distributed under the License is distributed on an "AS IS" BASIS,          #
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.   #
+#   See the License for the specific language governing permissions and        #
+#   limitations under the License.                                             #
+#                                                                              #
+################################################################################
+
+---
+
+name: Publish Windows Store
+
+on: # yamllint disable-line rule:truthy
+  workflow_dispatch:
+    inputs:
+      dotnet-verbosity:
+        type: choice
+        default: minimal
+        options:
+          - quiet
+          - minimal
+          - normal
+          - detailed
+          - diagnostic
+  workflow_call:
+    inputs:
+      dotnet-verbosity:
+        type: string
+        required: true
+
+jobs:
+  prepare:
+    name: Prepare
+    runs-on: ubuntu-latest
+
+    outputs:
+      matrix: ${{ steps.publish-config.outputs.matrix }}
+      interrupt-publication: ${{ steps.publish-config.outputs.is-empty }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+
+      - name: Read the Windows Store publication configuration
+        id: publish-config
+        uses: finebits/github-actions/toolset/select-configuration@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1
+        with:
+          json-file: ./.github/configurations/publish-windows-store.json
+          keywords: |
+            windows
+
+  publish:
+    name: Publish ${{ matrix.publish.framework }} [store]
+    needs: prepare
+    if: needs.prepare.outputs.interrupt-publication == 'false'
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.prepare.outputs.matrix) }}
+
+    runs-on: ${{ matrix.os }}
+
+    env:
+      publish-path: '${{ github.workspace }}/.publish/${{ matrix.publish.configuration }}/${{ matrix.publish.framework }}/store'
+      artifacts-path: '${{ github.workspace }}/.artifacts/${{ matrix.publish.configuration }}/${{ matrix.publish.framework }}/store'
+
+    steps:
+      - name: Support longpaths
+        run: git config --system core.longpaths true
+
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+          submodules: recursive
+
+      - name: Install Prerequisites
+        uses: ./.github/actions/install-prerequisites
+        with:
+          uno-platform: true
+
+      - name: Assign version
+        id: assign-version
+        uses: ./.github/actions/assign-version
+
+      - name: Validate Store secrets
+        shell: pwsh
+        run: |
+          $identityName = '${{ secrets.WINDOWS_STORE_IDENTITY_NAME }}'
+          $identityPublisher = '${{ secrets.WINDOWS_STORE_IDENTITY_PUBLISHER }}'
+
+          if ([string]::IsNullOrWhiteSpace($identityName)) {
+            throw "GitHub secret 'WINDOWS_STORE_IDENTITY_NAME' is empty."
+          }
+
+          if ([string]::IsNullOrWhiteSpace($identityPublisher)) {
+            throw "GitHub secret 'WINDOWS_STORE_IDENTITY_PUBLISHER' is empty."
+          }
+
+      - uses: finebits/github-actions/toolset/file/replace-text@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1
+        with:
+          file: ./src/Eppie.App/Eppie.App.Shared/Authorization/AuthConfig.Uno.cs
+          find-what: '\"<Gmail-ClientId>\"'
+          replace-with: "${{ secrets.GMAIL_CLIENT_ID }}"
+
+      - uses: finebits/github-actions/toolset/file/replace-text@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1
+        with:
+          file: ./src/Eppie.App/Eppie.App.Shared/Authorization/AuthConfig.Uno.cs
+          find-what: '\"<Gmail-ClientSecret>\"'
+          replace-with: "${{ secrets.GMAIL_CLIENT_SECRET }}"
+
+      - uses: finebits/github-actions/toolset/file/replace-text@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1
+        with:
+          file: ./src/Eppie.App/Eppie.App.Shared/Authorization/AuthConfig.Uno.cs
+          find-what: '\"<Outlook-ClientId>\"'
+          replace-with: "${{ secrets.OUTLOOK_CLIENT_ID }}"
+
+      - uses: finebits/github-actions/toolset/file/replace-text@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1
+        with:
+          file: ./src/Eppie.App/Eppie.App/Package.appxmanifest
+          find-what: 'Identity.Name'
+          replace-with: "${{ secrets.WINDOWS_STORE_IDENTITY_NAME }}"
+
+      - uses: finebits/github-actions/toolset/file/replace-text@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1
+        with:
+          file: ./src/Eppie.App/Eppie.App/Package.appxmanifest
+          find-what: 'Identity.Publisher'
+          replace-with: "${{ secrets.WINDOWS_STORE_IDENTITY_PUBLISHER }}"
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Resolve Windows packaging tools
+        id: resolve-tools
+        shell: pwsh
+        run: |
+          $msbuildCommand = Get-Command msbuild -ErrorAction Stop
+          if ($null -eq $msbuildCommand) {
+            throw 'MSBuild.exe not found in PATH.'
+          }
+
+          $makeAppxPath = Get-ChildItem (Join-Path ${env:ProgramFiles(x86)} 'Windows Kits\10\bin') -Recurse -Filter makeappx.exe |
+            Where-Object { $_.FullName -like '*\\x64\\makeappx.exe' } |
+            Sort-Object FullName -Descending |
+            Select-Object -ExpandProperty FullName -First 1
+          if ([string]::IsNullOrWhiteSpace($makeAppxPath)) {
+            throw 'makeappx.exe not found.'
+          }
+
+          Write-Host "MSBuild path: $($msbuildCommand.Source)"
+          Write-Host "makeappx path: $makeAppxPath"
+
+          "makeappx-path=$makeAppxPath" >> $env:GITHUB_OUTPUT
+
+      - name: Prepare package version
+        shell: pwsh
+        working-directory: ./src/Eppie.App/Eppie.App
+        run: |
+          $configuration = '${{ matrix.publish.configuration }}'
+          $framework = '${{ matrix.publish.framework }}'
+          $numericVersion = '${{ steps.assign-version.outputs.numeric-version }}'
+
+          msbuild '.\Eppie.App.csproj' /t:PackageVersioning /p:Configuration=$configuration /p:PackageVersion=$numericVersion /p:OverrideTargetFrameworks=$framework /verbosity:${{ inputs.dotnet-verbosity }}
+          if ($LASTEXITCODE -ne 0) {
+            exit $LASTEXITCODE
+          }
+
+      - name: Restore
+        shell: pwsh
+        working-directory: ./src/Eppie.App/Eppie.App
+        run: |
+          $configuration = '${{ matrix.publish.configuration }}'
+          $framework = '${{ matrix.publish.framework }}'
+
+          msbuild '.\Eppie.App.csproj' /r /t:Restore /p:Configuration=$configuration /p:TargetFramework=$framework /p:OverrideTargetFrameworks=$framework /verbosity:${{ inputs.dotnet-verbosity }}
+          if ($LASTEXITCODE -ne 0) {
+            exit $LASTEXITCODE
+          }
+
+      - name: Build Store packages
+        shell: pwsh
+        working-directory: ./src/Eppie.App/Eppie.App
+        run: |
+          $configuration = '${{ matrix.publish.configuration }}'
+          $framework = '${{ matrix.publish.framework }}'
+          $publishPath = '${{ env.publish-path }}'
+          $platforms = '${{ join(matrix.publish.platforms, ',') }}'.Split(',', [System.StringSplitOptions]::RemoveEmptyEntries)
+          $semanticVersion = '${{ steps.assign-version.outputs.semantic-version }}'
+          $numericVersion = '${{ steps.assign-version.outputs.numeric-version }}'
+          $appVersion = '${{ steps.assign-version.outputs.app-version }}'
+          $appDisplayVersion = '${{ steps.assign-version.outputs.app-display-version }}'
+
+          foreach ($platform in $platforms) {
+            $platformPackagePath = Join-Path $publishPath $platform
+            New-Item -ItemType Directory -Path $platformPackagePath -Force | Out-Null
+
+            $arguments = @(
+              '.\Eppie.App.csproj'
+              "/p:Configuration=$configuration"
+              "/p:TargetFramework=$framework"
+              "/p:Platform=$platform"
+              '/p:PublishStorePackage=true'
+              "/p:AppxPackageDir=$platformPackagePath\\"
+              "/p:Version=$semanticVersion"
+              "/p:AssemblyVersion=$numericVersion"
+              "/p:PackageVersion=$numericVersion"
+              "/p:ApplicationVersion=$appVersion"
+              "/p:ApplicationDisplayVersion=$appDisplayVersion"
+              '/p:IncludeSourceRevisionInInformationalVersion=false'
+              "/p:OverrideTargetFrameworks=$framework"
+              '/verbosity:${{ inputs.dotnet-verbosity }}'
+            )
+
+            msbuild @arguments
+            if ($LASTEXITCODE -ne 0) {
+              exit $LASTEXITCODE
+            }
+          }
+
+      - name: Bundle Store packages
+        shell: pwsh
+        run: |
+          $makeAppxPath = '${{ steps.resolve-tools.outputs.makeappx-path }}'
+          $publishPath = '${{ env.publish-path }}'
+          $bundleInputPath = Join-Path $publishPath 'bundle-input'
+          $bundleOutputPath = Join-Path $publishPath 'Eppie.msixbundle'
+          $platforms = '${{ join(matrix.publish.platforms, ',') }}'.Split(',', [System.StringSplitOptions]::RemoveEmptyEntries)
+
+          New-Item -ItemType Directory -Path $bundleInputPath -Force | Out-Null
+
+          $packages = @()
+
+          foreach ($platform in $platforms) {
+            $platformPackagePath = Join-Path $publishPath $platform
+            $platformPackages = @(Get-ChildItem $platformPackagePath -Recurse -Filter *.msix |
+              Where-Object { $_.FullName -notlike "$bundleInputPath*" })
+
+            if ($platformPackages.Count -ne 1) {
+              throw "Expected exactly one .msix package for platform '$platform', but found $($platformPackages.Count)."
+            }
+
+            $packages += $platformPackages[0]
+          }
+
+          foreach ($package in $packages) {
+            Copy-Item $package.FullName -Destination (Join-Path $bundleInputPath $package.Name) -Force
+          }
+
+          & $makeAppxPath bundle /d $bundleInputPath /p $bundleOutputPath
+          if ($LASTEXITCODE -ne 0) {
+            exit $LASTEXITCODE
+          }
+
+      - name: Prepare Artifacts
+        shell: pwsh
+        run: |
+          $artifactPath = '${{ env.artifacts-path }}'
+          $publishPath = '${{ env.publish-path }}'
+          $platforms = '${{ join(matrix.publish.platforms, ',') }}'.Split(',', [System.StringSplitOptions]::RemoveEmptyEntries)
+
+          New-Item -ItemType Directory -Path $artifactPath -Force | Out-Null
+
+          Get-ChildItem $publishPath -Filter *.msixbundle | Copy-Item -Destination $artifactPath -Force
+
+          foreach ($platform in $platforms) {
+            $platformPackagePath = Join-Path $publishPath $platform
+            $platformPackages = @(Get-ChildItem $platformPackagePath -Recurse -Filter *.msix)
+
+            if ($platformPackages.Count -ne 1) {
+              throw "Expected exactly one .msix package for platform '$platform', but found $($platformPackages.Count)."
+            }
+
+            Copy-Item $platformPackages[0].FullName -Destination $artifactPath -Force
+          }
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: Eppie.WindowsStore [${{ steps.assign-version.outputs.artifact-version }}]
+          path: ${{ env.artifacts-path }}

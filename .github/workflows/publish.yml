@@ -78,6 +78,7 @@ jobs:
       publish-binaries: ${{ steps.packages.outputs.binaries }}
       publish-app: ${{ steps.packages.outputs.app }}
       publish-snap: ${{ steps.packages.outputs.snap }}
+      publish-store: ${{ steps.packages.outputs.store }}
 
     steps:
       - name: Checkout
@@ -134,6 +135,12 @@ jobs:
           publish_app=$([[ $os_suitable == 'true' && $framework_suitable == 'true' ]] && echo "true" || echo "false")
           echo "app=$publish_app" >> $GITHUB_OUTPUT
 
+          # Publish Windows Store package bundle
+          os_suitable="${{ contains(fromJSON(steps.publish-config.outputs.content).windows-store.os, steps.init-params.outputs.os) }}"
+          framework_suitable="${{ contains(fromJSON(steps.publish-config.outputs.content).windows-store.framework, steps.init-params.outputs.framework) }}"
+          publish_store=$([[ $os_suitable == 'true' && $framework_suitable == 'true' ]] && echo "true" || echo "false")
+          echo "store=$publish_store" >> $GITHUB_OUTPUT
+
   publish-desktop-binaries:
     name: Publish Desktop Binaries
     needs: prepare
@@ -165,10 +172,19 @@ jobs:
       dotnet-verbosity: ${{ needs.prepare.outputs.dotnet-verbosity }}
     secrets: inherit
 
+  publish-windows-store:
+    name: Publish Windows Store
+    needs: prepare
+    if: ${{ needs.prepare.outputs.publish-store == 'true' }}
+    uses: ./.github/workflows/publish-windows-store.yml
+    with:
+      dotnet-verbosity: ${{ needs.prepare.outputs.dotnet-verbosity }}
+    secrets: inherit
+
   upload-assets:
     name: Upload Assets
     if: ${{ github.event_name == 'release' && !cancelled() && !failure() }}
-    needs: [ publish-desktop-binaries, publish-desktop-snap, publish-desktop-app ]
+    needs: [ publish-desktop-binaries, publish-desktop-snap, publish-desktop-app, publish-windows-store ]
     runs-on: ubuntu-latest
     permissions:
       contents: write

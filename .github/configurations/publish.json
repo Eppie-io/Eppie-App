@@ -10,5 +10,9 @@
     "desktop-app":{
         "os":["macos","all"],
         "framework":["desktop","all"]
+    },
+    "windows-store":{
+        "os":["windows","all"],
+        "framework":["desktop","all"]
     }
 }
