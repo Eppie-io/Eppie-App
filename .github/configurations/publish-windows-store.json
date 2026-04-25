@@ -3,7 +3,7 @@
         "keywords": [
             "windows"
         ],
-        "os": "windows-2025",
+        "os": "windows-2025-vs2026",
         "publish": {
             "tool": "msbuild",
             "project": "./src/Eppie.App/Eppie.App/Eppie.App.csproj",
