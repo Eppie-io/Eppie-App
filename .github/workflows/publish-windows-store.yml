@@ -99,6 +99,7 @@ jobs:
         run: |
           $identityName = '${{ secrets.WINDOWS_STORE_IDENTITY_NAME }}'
           $identityPublisher = '${{ secrets.WINDOWS_STORE_IDENTITY_PUBLISHER }}'
+          $publisherDisplayName = '${{ secrets.WINDOWS_STORE_PUBLISHER_DISPLAY_NAME }}'
 
           if ([string]::IsNullOrWhiteSpace($identityName)) {
             throw "GitHub secret 'WINDOWS_STORE_IDENTITY_NAME' is empty."
@@ -106,6 +107,10 @@ jobs:
 
           if ([string]::IsNullOrWhiteSpace($identityPublisher)) {
             throw "GitHub secret 'WINDOWS_STORE_IDENTITY_PUBLISHER' is empty."
+          }
+
+          if ([string]::IsNullOrWhiteSpace($publisherDisplayName)) {
+            throw "GitHub secret 'WINDOWS_STORE_PUBLISHER_DISPLAY_NAME' is empty."
           }
 
       - uses: finebits/github-actions/toolset/file/replace-text@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1
@@ -137,6 +142,12 @@ jobs:
           file: ./src/Eppie.App/Eppie.App/Package.appxmanifest
           find-what: 'Identity.Publisher'
           replace-with: "${{ secrets.WINDOWS_STORE_IDENTITY_PUBLISHER }}"
+
+      - uses: finebits/github-actions/toolset/file/replace-text@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1
+        with:
+          file: ./src/Eppie.App/Eppie.App/Package.appxmanifest
+          find-what: 'Properties.PublisherDisplayName'
+          replace-with: "${{ secrets.WINDOWS_STORE_PUBLISHER_DISPLAY_NAME }}"
 
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@30375c66a4eea26614e0d39710365f22f8b0af57 # v3
