@@ -12,7 +12,7 @@
 
   <Properties>
     <DisplayName>Eppie</DisplayName>
-    <PublisherDisplayName>Finebits</PublisherDisplayName>
+    <PublisherDisplayName>Properties.PublisherDisplayName</PublisherDisplayName>
   </Properties>
 
   <Dependencies>
