@@ -281,7 +281,7 @@ jobs:
           $makeAppxPath = '${{ steps.resolve-tools.outputs.makeappx-path }}'
           $publishPath = '${{ env.publish-path }}'
           $bundleInputPath = Join-Path $publishPath 'bundle-input'
-          $bundleOutputPath = Join-Path $publishPath 'Eppie.msixbundle'
+          $bundleOutputPath = Join-Path $publishPath 'Eppie.App.WinAppSDK-x86-x64-ARM64.msixbundle'
           $platforms = '${{ join(matrix.publish.platforms, ',') }}'.Split(',', [System.StringSplitOptions]::RemoveEmptyEntries)
 
           New-Item -ItemType Directory -Path $bundleInputPath -Force | Out-Null
@@ -314,22 +314,10 @@ jobs:
         run: |
           $artifactPath = '${{ env.artifacts-path }}'
           $publishPath = '${{ env.publish-path }}'
-          $platforms = '${{ join(matrix.publish.platforms, ',') }}'.Split(',', [System.StringSplitOptions]::RemoveEmptyEntries)
 
           New-Item -ItemType Directory -Path $artifactPath -Force | Out-Null
 
           Get-ChildItem $publishPath -Filter *.msixbundle | Copy-Item -Destination $artifactPath -Force
-
-          foreach ($platform in $platforms) {
-            $platformPackagePath = Join-Path $publishPath $platform
-            $platformPackages = @(Get-ChildItem $platformPackagePath -Recurse -Filter *.msix)
-
-            if ($platformPackages.Count -ne 1) {
-              throw "Expected exactly one .msix package for platform '$platform', but found $($platformPackages.Count)."
-            }
-
-            Copy-Item $platformPackages[0].FullName -Destination $artifactPath -Force
-          }
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
