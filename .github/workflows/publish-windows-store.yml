@@ -152,46 +152,36 @@ jobs:
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@30375c66a4eea26614e0d39710365f22f8b0af57 # v3
 
-      - name: Install Windows SDK packaging tools
+      - name: Ensure Windows packaging tools
+        id: ensure-tools
         shell: pwsh
         run: |
           $makeAppxCommand = Get-Command makeappx.exe -ErrorAction SilentlyContinue
-          if ($null -ne $makeAppxCommand) {
-            Write-Host "makeappx.exe already available: $($makeAppxCommand.Source)"
-            exit 0
+          if ($null -eq $makeAppxCommand) {
+            $vsWherePath = Join-Path ${env:ProgramFiles(x86)} 'Microsoft Visual Studio\Installer\vswhere.exe'
+            $vsInstallerPath = Join-Path ${env:ProgramFiles(x86)} 'Microsoft Visual Studio\Installer\vs_installer.exe'
+
+            if (-not (Test-Path $vsWherePath)) {
+              throw 'vswhere.exe not found.'
+            }
+
+            if (-not (Test-Path $vsInstallerPath)) {
+              throw 'vs_installer.exe not found.'
+            }
+
+            $installationPath = & $vsWherePath -latest -property installationPath
+            if ([string]::IsNullOrWhiteSpace($installationPath)) {
+              throw 'Visual Studio installation path not found.'
+            }
+
+            & $vsInstallerPath modify --installPath "$installationPath" --add Microsoft.VisualStudio.Component.Windows11SDK.26100 --quiet --norestart --wait
+            if ($LASTEXITCODE -ne 0) {
+              exit $LASTEXITCODE
+            }
+
+            $makeAppxCommand = Get-Command makeappx.exe -ErrorAction SilentlyContinue
           }
 
-          $vsWherePath = Join-Path ${env:ProgramFiles(x86)} 'Microsoft Visual Studio\Installer\vswhere.exe'
-          $vsInstallerPath = Join-Path ${env:ProgramFiles(x86)} 'Microsoft Visual Studio\Installer\vs_installer.exe'
-
-          if (-not (Test-Path $vsWherePath)) {
-            throw 'vswhere.exe not found.'
-          }
-
-          if (-not (Test-Path $vsInstallerPath)) {
-            throw 'vs_installer.exe not found.'
-          }
-
-          $installationPath = & $vsWherePath -latest -property installationPath
-          if ([string]::IsNullOrWhiteSpace($installationPath)) {
-            throw 'Visual Studio installation path not found.'
-          }
-
-          & $vsInstallerPath modify --installPath "$installationPath" --add Microsoft.VisualStudio.Component.Windows11SDK.26100 --quiet --norestart --wait
-          if ($LASTEXITCODE -ne 0) {
-            exit $LASTEXITCODE
-          }
-
-      - name: Resolve Windows packaging tools
-        id: resolve-tools
-        shell: pwsh
-        run: |
-          $msbuildCommand = Get-Command msbuild -ErrorAction Stop
-          if ($null -eq $msbuildCommand) {
-            throw 'MSBuild.exe not found in PATH.'
-          }
-
-          $makeAppxCommand = Get-Command makeappx.exe -ErrorAction SilentlyContinue
           $makeAppxPath = $makeAppxCommand.Source
 
           if ([string]::IsNullOrWhiteSpace($makeAppxPath)) {
@@ -215,7 +205,6 @@ jobs:
             throw 'makeappx.exe not found in PATH or common Windows SDK locations.'
           }
 
-          Write-Host "MSBuild path: $($msbuildCommand.Source)"
           Write-Host "makeappx path: $makeAppxPath"
 
           "makeappx-path=$makeAppxPath" >> $env:GITHUB_OUTPUT
@@ -289,7 +278,7 @@ jobs:
       - name: Bundle Store packages
         shell: pwsh
         run: |
-          $makeAppxPath = '${{ steps.resolve-tools.outputs.makeappx-path }}'
+          $makeAppxPath = '${{ steps.ensure-tools.outputs.makeappx-path }}'
           $publishPath = '${{ env.publish-path }}'
           $bundleInputPath = Join-Path $publishPath 'bundle-input'
           $bundleOutputPath = Join-Path $publishPath 'Eppie.App.WinAppSDK-x86-x64-ARM64.msixbundle'
