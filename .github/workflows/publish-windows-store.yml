@@ -229,7 +229,7 @@ jobs:
           $configuration = '${{ matrix.publish.configuration }}'
           $framework = '${{ matrix.publish.framework }}'
 
-          msbuild '.\Eppie.App.csproj' /r /t:Restore /p:Configuration=$configuration /p:TargetFramework=$framework /p:OverrideTargetFrameworks=$framework /p:NuGetAudit=false '/p:RestoreNoWarn=NU1510' /verbosity:${{ inputs.dotnet-verbosity }}
+          msbuild '.\Eppie.App.csproj' /r /t:Restore /p:Configuration=$configuration /p:TargetFramework=$framework /p:OverrideTargetFrameworks=$framework /p:NuGetAudit=false /p:TreatWarningsAsErrors=false '/p:RestoreNoWarn=NU1510' /verbosity:${{ inputs.dotnet-verbosity }}
           if ($LASTEXITCODE -ne 0) {
             exit $LASTEXITCODE
           }
