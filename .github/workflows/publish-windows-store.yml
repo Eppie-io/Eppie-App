@@ -229,7 +229,7 @@ jobs:
           $configuration = '${{ matrix.publish.configuration }}'
           $framework = '${{ matrix.publish.framework }}'
 
-          msbuild '.\Eppie.App.csproj' /r /t:Restore /p:Configuration=$configuration /p:TargetFramework=$framework /p:OverrideTargetFrameworks=$framework '/p:NoWarn="NU1510;NU1902;NU1903"' /verbosity:${{ inputs.dotnet-verbosity }}
+          msbuild '.\Eppie.App.csproj' /r /t:Restore /p:Configuration=$configuration /p:TargetFramework=$framework /p:OverrideTargetFrameworks=$framework /p:NuGetAudit=false '/p:NoWarn="NU1510"' /verbosity:${{ inputs.dotnet-verbosity }}
           if ($LASTEXITCODE -ne 0) {
             exit $LASTEXITCODE
           }
@@ -265,7 +265,8 @@ jobs:
               "/p:ApplicationDisplayVersion=$appDisplayVersion"
               '/p:IncludeSourceRevisionInInformationalVersion=false'
               "/p:OverrideTargetFrameworks=$framework"
-              '/p:NoWarn="NU1510;NU1902;NU1903"'
+              '/p:NuGetAudit=false'
+              '/p:NoWarn="NU1510"'
               '/verbosity:${{ inputs.dotnet-verbosity }}'
             )
 
