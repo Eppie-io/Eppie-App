@@ -60,7 +60,13 @@ namespace Eppie.App.UI.Triggers
         {
             if (_targetScrollViewer != null)
             {
-                SetActive(_targetScrollViewer.ScrollableHeight > 0);
+                const double epsilon = 0.01;
+
+                // ScrollableHeight is the total vertical scrollable height,
+                // so if it's greater than 0, it means there is content to scroll.
+                // Sometimes, due to rounding in the layout or other factors,
+                // it may be safer to check if a value is above a small threshold rather than checking for exactly 0.
+                SetActive(_targetScrollViewer.ScrollableHeight > epsilon);
             }
         }
     }
