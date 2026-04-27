@@ -1,4 +1,4 @@
-﻿<Project Sdk="Uno.Sdk">
+<Project Sdk="Uno.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net10.0-android;net10.0-ios;net10.0-windows10.0.19041;net10.0-browserwasm;net10.0-desktop</TargetFrameworks>
     <!-- Workaround for https://github.com/unoplatform/uno/issues/19377 -->
@@ -73,7 +73,13 @@
     <AndroidSigningKeyPass></AndroidSigningKeyPass>
     <AndroidSigningStorePass></AndroidSigningStorePass>
   </PropertyGroup>
-  
+
+  <PropertyGroup Condition="'$(PublishStorePackage)' == 'true'">
+    <GenerateAppxPackageOnBuild>true</GenerateAppxPackageOnBuild>
+    <AppxBundle>Never</AppxBundle>
+    <UapAppxPackageBuildMode>StoreUpload</UapAppxPackageBuildMode>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(RuntimeIdentifier)'==''">
     <!-- Default values for command line builds -->
     <RuntimeIdentifier Condition="$(TargetFramework.Contains('ios'))">iossimulator-x64</RuntimeIdentifier>
