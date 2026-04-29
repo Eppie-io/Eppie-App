@@ -37,6 +37,7 @@
                           Margin="4"
                           VerticalAlignment="Center"
                           FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                          FontSize="16"
                           Glyph="&#xE76C;" />
             </controls:AddressItemControl>
         </DataTemplate>

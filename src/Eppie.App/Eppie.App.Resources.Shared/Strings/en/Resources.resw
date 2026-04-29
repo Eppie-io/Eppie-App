@@ -2014,4 +2014,8 @@ Eppie
     <value>If Sampling is disabled, a greedy approach will be used and the model will select the most likely token every time. If enabled, tokens will be selected based on the token probability distribution. The Top K, Top P, and Temperature parameters only apply if sampling is enabled.</value>
     <comment>The tooltip for Sampling toggle.</comment>
   </data>
+  <data name="SenderToolTip.Format" xml:space="preserve">
+    <value>From: {0}</value>
+    <comment>Tooltip for message sender. {0} - sender's address</comment>
+  </data>
 </root>

@@ -18,6 +18,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\AddressItemControl.xaml.cs">
       <DependentUpon>AddressItemControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\AddressPresenter.xaml.cs">
+      <DependentUpon>AddressPresenter.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\AddressSettingsView.xaml.cs">
       <DependentUpon>AddressSettingsView.xaml</DependentUpon>
     </Compile>
@@ -43,7 +46,7 @@
       <DependentUpon>ProtonSettingsControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ToolTipProvider.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Converters\EmailValidityToStyleConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\EmailValidityToBoolConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\SupportDevelopmentControl.xaml.cs">
       <DependentUpon>SupportDevelopmentControl.xaml</DependentUpon>
     </Compile>
@@ -98,6 +101,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\TextDocumentExtension.Win.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\TextDocumentExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Resources\StringProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Tools\DataTemplateSelectors.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Tools\ElementHierarchyTools.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Tools\ItemPickerBuilder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Tools\IncrementalLoadingCollection.cs" />
@@ -110,6 +114,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Controls\AddressItemControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Controls\AddressPresenter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

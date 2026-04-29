@@ -1,11 +1,12 @@
 ﻿<UserControl x:Class="Eppie.App.UI.Controls.EmailsInputControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+             xmlns:controls="using:Eppie.App.UI.Controls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="using:Eppie.App.UI.Controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+             xmlns:toolkitcontrols="using:CommunityToolkit.WinUI.Controls"
              xmlns:viewmodels="using:Tuvi.App.ViewModels"
              d:DesignHeight="300"
              d:DesignWidth="400"
@@ -18,56 +19,29 @@
             </ResourceDictionary.MergedDictionaries>
 
             <DataTemplate x:Key="SuggestContactItemTemplate" x:DataType="viewmodels:ContactItem">
-                <Grid Padding="4">
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="8" />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-
-                    <muxc:PersonPicture Grid.RowSpan="2"
-                                        Width="48"
-                                        Height="48"
-                                        DisplayName="{x:Bind FullName, Mode=OneWay}"
-                                        ProfilePicture="{x:Bind AvatarInfo, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}" />
-
-                    <TextBlock Grid.Column="2"
-                               FontSize="16"
-                               Text="{x:Bind FullName, Mode=OneWay}" />
-
-                    <TextBlock Grid.Row="1"
-                               Grid.Column="2"
-                               FontSize="12"
-                               Opacity="0.6"
-                               Text="{x:Bind Email.Address, Mode=OneWay}" />
+                <Grid Padding="2" BorderThickness="1">
+                    <controls:AddressPresenter HorizontalAlignment="Stretch"
+                                               VerticalAlignment="Center"
+                                               Address="{x:Bind Email.Address, Mode=OneWay}"
+                                               Avatar="{x:Bind AvatarInfo, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}"
+                                               DisplayName="{x:Bind DisplayName, Mode=OneWay}"
+                                               IsAddressValid="{x:Bind Email, Converter={StaticResource EmailValidityToBoolConverter}}"
+                                               IsSecure="{x:Bind Email.IsDecentralized, Mode=OneWay}" />
                 </Grid>
             </DataTemplate>
 
             <DataTemplate x:Key="TokenContactItemTemplate" x:DataType="viewmodels:ContactItem">
-                <Grid Height="32" ToolTipService.ToolTip="{x:Bind Email.Address, Mode=OneWay}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="8" />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-
-                    <muxc:PersonPicture Grid.RowSpan="2"
-                                        Width="28"
-                                        Height="28"
-                                        Margin="1,0"
-                                        VerticalAlignment="Center"
-                                        DisplayName="{x:Bind FullName, Mode=OneWay}"
-                                        ProfilePicture="{x:Bind AvatarInfo, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}" />
-
-                    <TextBlock Grid.Column="2"
-                               VerticalAlignment="Center"
-                               Style="{x:Bind Email, Converter={StaticResource EmailValidityToStyleConverter}}"
-                               Text="{x:Bind DisplayName, Mode=OneWay}" />
-
+                <Grid Height="32"
+                      BorderThickness="1"
+                      ToolTipService.ToolTip="{x:Bind Email.Address, Mode=OneWay}">
+                    <controls:AddressPresenter Margin="2"
+                                               HorizontalAlignment="Stretch"
+                                               VerticalAlignment="Center"
+                                               Avatar="{x:Bind AvatarInfo, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}"
+                                               DisplayName="{x:Bind DisplayName, Mode=OneWay}"
+                                               IsAddressValid="{x:Bind Email, Converter={StaticResource EmailValidityToBoolConverter}}"
+                                               IsSecure="{x:Bind Email.IsDecentralized, Mode=OneWay}"
+                                               Mode="Compact" />
                 </Grid>
             </DataTemplate>
 
@@ -78,21 +52,21 @@
     </UserControl.Resources>
 
     <Grid>
-        <controls:TokenizingTextBox x:Name="EmailTokenizingTextBox"
-                                    MinHeight="40"
-                                    Padding="2,4,0,4"
-                                    ItemContainerStyleSelector="{x:Bind IsExtraButtonVisible, Mode=OneWay, Converter={StaticResource StyleSelectorConverter}}"
-                                    ItemsSource="{x:Bind SelectedContacts, Mode=OneWay}"
-                                    LostFocus="SuggestBox_LostFocus"
-                                    PlaceholderText="{x:Bind PlaceholderText, Mode=OneWay}"
-                                    QuerySubmitted="SuggestBox_QuerySubmitted"
-                                    SuggestedItemTemplate="{StaticResource SuggestContactItemTemplate}"
-                                    SuggestionChosen="SuggestBox_SuggestionChosen"
-                                    TextChanged="SuggestBox_TextChanged"
-                                    TokenDelimiter=";"
-                                    TokenItemAdded="SuggestBox_TokenItemAdded"
-                                    TokenItemAdding="SuggestBox_TokenItemAdding"
-                                    TokenItemTemplate="{StaticResource TokenContactItemTemplate}" />
+        <toolkitcontrols:TokenizingTextBox x:Name="EmailTokenizingTextBox"
+                                           MinHeight="40"
+                                           Padding="2,4,0,4"
+                                           ItemContainerStyleSelector="{x:Bind IsExtraButtonVisible, Mode=OneWay, Converter={StaticResource StyleSelectorConverter}}"
+                                           ItemsSource="{x:Bind SelectedContacts, Mode=OneWay}"
+                                           LostFocus="SuggestBox_LostFocus"
+                                           PlaceholderText="{x:Bind PlaceholderText, Mode=OneWay}"
+                                           QuerySubmitted="SuggestBox_QuerySubmitted"
+                                           SuggestedItemTemplate="{StaticResource SuggestContactItemTemplate}"
+                                           SuggestionChosen="SuggestBox_SuggestionChosen"
+                                           TextChanged="SuggestBox_TextChanged"
+                                           TokenDelimiter=";"
+                                           TokenItemAdded="SuggestBox_TokenItemAdded"
+                                           TokenItemAdding="SuggestBox_TokenItemAdding"
+                                           TokenItemTemplate="{StaticResource TokenContactItemTemplate}" />
 
         <!--  Extra button  -->
         <Button Width="28"

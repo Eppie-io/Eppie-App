@@ -16,47 +16,55 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-using System;
-using Tuvi.Core.Entities;
+#if WINDOWS_UWP
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
+#else
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Controls;
+#endif
 
-namespace Tuvi.App.ViewModels
+namespace Eppie.App.UI.Tools
 {
-    public class AddressItem
+    public partial class ComboBoxDataTemplateSelector : DataTemplateSelector
     {
-        internal Account Account { get; }
+        public DataTemplate DropDownTemplate { get; set; }
+        public DataTemplate SelectedTemplate { get; set; }
 
-        public string Address => Account?.DisplayEmail.Address;
-        public string DisplayName => GetDisplayName(Account?.DisplayEmail);
-        public bool IsDecentralized => Account?.DisplayEmail?.IsDecentralized ?? false;
-
-        public ImageInfo AvatarInfo { get; internal set; }
-
-        public AddressItem(Account account)
+        protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
         {
-            Account = account ?? throw new ArgumentNullException(nameof(account));
+            if (IsDropDownItem(container))
+            {
+                return DropDownTemplate;
+            }
+            else
+            {
+                return SelectedTemplate;
+            }
         }
 
-        private static string GetDisplayName(EmailAddress email)
+        private static bool IsDropDownItem(DependencyObject container)
         {
-            if (email is null)
+            var current = container;
+
+            while (current != null)
             {
-                throw new ArgumentNullException(nameof(email));
+                if (current is ComboBoxItem)
+                {
+                    return true;
+                }
+
+                if (current is ComboBox)
+                {
+                    return false;
+                }
+
+                current = VisualTreeHelper.GetParent(current);
             }
 
-            if (!string.IsNullOrWhiteSpace(email.Name))
-            {
-                return email.Name;
-            }
-
-            string displayAddress = email.Address;
-            int idx = displayAddress?.IndexOfAny(new char[] { '+', '@' }) ?? 0;
-
-            if (idx >= 0)
-            {
-                displayAddress = displayAddress.Substring(0, idx);
-            }
-
-            return displayAddress;
+            return false;
         }
     }
 }

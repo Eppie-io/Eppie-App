@@ -31,19 +31,11 @@ using Microsoft.UI.Xaml.Data;
 // ToDo: Change namespace
 namespace Tuvi.App.Converters
 {
-    public class EmailValidityToStyleConverter : IValueConverter
+    public class EmailValidityToBoolConverter : IValueConverter
     {
-        public Style ValidEmailStyle { get; set; }
-        public Style InvalidEmailStyle { get; set; }
-
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if (value is EmailAddress email && EmailValidator.Validate(email.StandardAddress, allowTopLevelDomains: true))
-            {
-                return ValidEmailStyle;
-            }
-
-            return InvalidEmailStyle;
+            return (value is EmailAddress email && EmailValidator.Validate(email.StandardAddress, allowTopLevelDomains: true));
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

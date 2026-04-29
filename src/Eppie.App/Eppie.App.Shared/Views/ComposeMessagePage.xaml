@@ -7,6 +7,7 @@
                               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                               xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
                               xmlns:triggers="using:Eppie.App.UI.Triggers"
+                              xmlns:uitools="using:Eppie.App.UI.Tools"
                               xmlns:viewmodels="using:Tuvi.App.ViewModels"
                               Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
                               mc:Ignorable="d">
@@ -21,23 +22,16 @@
 
         <x:Double x:Key="SenderAddressBoxMinWidth">40</x:Double>
         <x:Double x:Key="SenderAddressBoxMaxWidth">360</x:Double>
-        <CornerRadius x:Key="SenderAddressRadius">16</CornerRadius>
 
         <x:Double x:Key="MessageEditorMinHeight">160</x:Double>
 
         <x:Double x:Key="SymbolButtonWidth">32</x:Double>
         <x:Double x:Key="SymbolButtonHeigth">32</x:Double>
         <x:Double x:Key="SymbolSize">16</x:Double>
-        <x:Double x:Key="FileSymbolSize">36</x:Double>
-        <x:Double x:Key="FileThumbnailSize">48</x:Double>
         <x:Double x:Key="ProgressRingSize">48</x:Double>
 
-        <x:Double x:Key="AvatarSize">28</x:Double>
-        <x:Double x:Key="NameMaxWidth">72</x:Double>
         <Thickness x:Key="HorizontalMargin">0,0,12,0</Thickness>
         <Thickness x:Key="BlindCarbonCopyMargin">0,8,0,0</Thickness>
-
-        <x:Double x:Key="AttachmentItemWidth">282</x:Double>
 
         <DataTemplate x:Key="RemovableAttachmentItemTemplate" x:DataType="viewmodels:RemovableAttachment">
             <controls:AttachmentFileControl DeleteFileCommand="{x:Bind RemoveCommand}"
@@ -53,29 +47,25 @@
                                             SaveFileCommandParameter="{x:Bind Converter={StaticResource AttachmentConverter}}" />
         </DataTemplate>
 
-        <DataTemplate x:Key="AddressComboboxItemTemplate" x:DataType="viewmodels:AddressItem">
-            <Grid HorizontalAlignment="Stretch">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="10*" MaxWidth="{StaticResource NameMaxWidth}" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <muxc:PersonPicture Width="{StaticResource AvatarSize}"
-                                    Height="{StaticResource AvatarSize}"
-                                    Margin="{StaticResource HorizontalMargin}"
-                                    VerticalAlignment="Center"
-                                    DisplayName="{x:Bind DisplayName, Mode=OneWay}"
-                                    ProfilePicture="{x:Bind AvatarInfo, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}" />
 
-                <TextBlock Grid.Column="1"
-                           Margin="{StaticResource HorizontalMargin}"
-                           VerticalAlignment="Center"
-                           Text="{x:Bind DisplayName, Mode=OneWay}" />
-                <TextBlock Grid.Column="2"
-                           VerticalAlignment="Center"
-                           Text="{x:Bind Address, Mode=OneWay}" />
-            </Grid>
+        <DataTemplate x:Key="AddressComboBoxSelectedItemTemplate" x:DataType="viewmodels:AddressItem">
+            <controls:AddressPresenter Address="{x:Bind Address, Mode=OneWay}"
+                                       Avatar="{x:Bind AvatarInfo, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}"
+                                       DisplayName="{x:Bind DisplayName, Mode=OneWay}"
+                                       IsSecure="{x:Bind IsDecentralized, Mode=OneWay}"
+                                       Mode="Compact" />
         </DataTemplate>
+
+        <DataTemplate x:Key="AddressComboBoxItemTemplate" x:DataType="viewmodels:AddressItem">
+            <controls:AddressPresenter Address="{x:Bind Address, Mode=OneWay}"
+                                       Avatar="{x:Bind AvatarInfo, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}"
+                                       DisplayName="{x:Bind DisplayName, Mode=OneWay}"
+                                       IsSecure="{x:Bind IsDecentralized, Mode=OneWay}" />
+        </DataTemplate>
+
+        <uitools:ComboBoxDataTemplateSelector x:Key="ComboBoxDataTemplateSelector"
+                                              DropDownTemplate="{StaticResource AddressComboBoxItemTemplate}"
+                                              SelectedTemplate="{StaticResource AddressComboBoxSelectedItemTemplate}" />
 
         <DataTemplate x:Key="FooterTemplate" x:DataType="viewmodels:ComposeMessagePageViewModel">
             <Grid>
@@ -89,18 +79,17 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-
                 <ComboBox Grid.Column="0"
                           MinWidth="{StaticResource SenderAddressBoxMinWidth}"
                           MaxWidth="{StaticResource SenderAddressBoxMaxWidth}"
                           Margin="{StaticResource HorizontalMargin}"
-                          Padding="0,0,8,0"
                           HorizontalAlignment="Stretch"
                           VerticalAlignment="Center"
-                          CornerRadius="{StaticResource SenderAddressRadius}"
-                          ItemTemplate="{StaticResource AddressComboboxItemTemplate}"
+                          ItemTemplateSelector="{StaticResource ComboBoxDataTemplateSelector}"
                           ItemsSource="{x:Bind SenderAddresses, Mode=OneWay}"
-                          SelectedIndex="{x:Bind SenderAddressIndex, Mode=TwoWay}" />
+                          SelectedIndex="{x:Bind SenderAddressIndex, Mode=TwoWay}"
+                          Style="{StaticResource AddressComboBoxStyle}"
+                          ToolTipService.ToolTip="{x:Bind local:ComposeMessagePage.GetSenderToolTip(Account), Mode=OneWay}" />
 
                 <!--  ToDo: Hide text if page width is less than 800  -->
                 <Button Grid.Column="1"

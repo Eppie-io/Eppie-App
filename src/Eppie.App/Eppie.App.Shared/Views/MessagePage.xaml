@@ -4,7 +4,6 @@
                        xmlns:behaviors="using:Eppie.App.UI.Behaviors"
                        xmlns:controls="using:Eppie.App.UI.Controls"
                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                       xmlns:eppie_controls="using:Eppie.App.UI.Controls"
                        xmlns:extensions="using:Eppie.App.UI.Extensions"
                        xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
                        xmlns:local="using:Eppie.App.Views"
@@ -300,22 +299,17 @@
                                VerticalAlignment="Center"
                                Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
 
-                    <!--  ToDo: Create Control  -->
+                    <!--  ToDo: Create Control; Add tooltip; Add flyout with recipients  -->
                     <Border Height="32"
-                            Padding="0,0,8,0"
+                            Padding="2,0,12,0"
                             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                             BorderThickness="1"
                             CornerRadius="16">
                         <StackPanel Orientation="Horizontal">
-                            <muxc:PersonPicture Width="28"
-                                                Height="28"
-                                                Margin="0,0,8,0"
-                                                DisplayName="{x:Bind ViewModel.MessageInfo.Account.DisplayEmail.Name, Mode=OneWay}" />
-                            <TextBlock Margin="0,0,8,0"
-                                       VerticalAlignment="Center"
-                                       Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                       Text="{x:Bind ViewModel.MessageInfo.Account.DisplayEmail.Name, Mode=OneWay}" />
-                            <TextBlock Margin="0,0,8,0"
+                            <controls:AddressPresenter VerticalAlignment="Center"
+                                                       DisplayName="{x:Bind ViewModel.MessageInfo.Account.DisplayEmail.Name, Mode=OneWay}"
+                                                       Mode="Compact" />
+                            <TextBlock Margin="8,0,0,0"
                                        VerticalAlignment="Center"
                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                        Visibility="{x:Bind ViewModel.MessageInfo.AdditionalRecipientCount, Mode=OneWay, Converter={StaticResource IntToVisibilityConverter}}">
@@ -341,12 +335,12 @@
                   HorizontalAlignment="Stretch"
                   VerticalAlignment="Stretch">
 
-                <eppie_controls:MessageControl AIAgentProcessedBody="{x:Bind ViewModel.MessageInfo.AIAgentProcessedBody, Mode=OneWay}"
-                                               ExternalContentDecider="{x:Bind ViewModel.ExternalContentDecider, Mode=OneWay}"
-                                               HasHtmlBody="{x:Bind ViewModel.MessageInfo.HasHtmlBody, Mode=OneWay}"
-                                               HtmlBody="{x:Bind ViewModel.MessageInfo.MessageHtmlBody, Mode=OneWay}"
-                                               TextBody="{x:Bind ViewModel.MessageInfo.MessageTextBody, Mode=OneWay}"
-                                               Visibility="{x:Bind ViewModel.LoadingContent, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+                <controls:MessageControl AIAgentProcessedBody="{x:Bind ViewModel.MessageInfo.AIAgentProcessedBody, Mode=OneWay}"
+                                         ExternalContentDecider="{x:Bind ViewModel.ExternalContentDecider, Mode=OneWay}"
+                                         HasHtmlBody="{x:Bind ViewModel.MessageInfo.HasHtmlBody, Mode=OneWay}"
+                                         HtmlBody="{x:Bind ViewModel.MessageInfo.MessageHtmlBody, Mode=OneWay}"
+                                         TextBody="{x:Bind ViewModel.MessageInfo.MessageTextBody, Mode=OneWay}"
+                                         Visibility="{x:Bind ViewModel.LoadingContent, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
 
                 <!--  Wrapped to Grid because Android doesn't have Visibility=Collapsed for ProgressRing  -->
                 <!--  ToDo: Check it on new Uno  -->

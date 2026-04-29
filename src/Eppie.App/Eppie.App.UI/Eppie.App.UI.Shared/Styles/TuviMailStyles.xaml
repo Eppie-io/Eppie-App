@@ -18,6 +18,9 @@
 
     <x:Double x:Key="IconFontSize">20</x:Double>
 
+    <CornerRadius x:Key="AddressComboBoxCornerRadius">16</CornerRadius>
+    <Thickness x:Key="AddressComboBoxPadding">2</Thickness>
+
     <SolidColorBrush x:Key="ValidationErrorBrush"
                      Opacity="0.75"
                      Color="Red" />
@@ -167,4 +170,10 @@
         <Setter Property="Foreground" Value="{ThemeResource SystemFillColorCriticalBrush}" />
     </Style>
 
+    <Style x:Key="AddressComboBoxStyle"
+           BasedOn="{StaticResource DefaultComboBoxStyle}"
+           TargetType="ComboBox">
+        <Setter Property="Padding" Value="{ThemeResource AddressComboBoxPadding}" />
+        <Setter Property="CornerRadius" Value="{StaticResource AddressComboBoxCornerRadius}" />
+    </Style>
 </ResourceDictionary>
