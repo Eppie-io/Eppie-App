@@ -9,6 +9,8 @@
     <Import_RootNamespace>Eppie.App.UI</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\TrimmedTextSource.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\TrimmedTextTooltipBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\DialogBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\ListViewItemClickBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\TreeViewItemInvokeBehavior.cs" />
@@ -92,6 +94,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\JoinConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\GridConverters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\TimeConverters.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\TrimmedTextSourceConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ValueToBoolConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\VisibilityConverters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\AttachedCommands.cs" />
