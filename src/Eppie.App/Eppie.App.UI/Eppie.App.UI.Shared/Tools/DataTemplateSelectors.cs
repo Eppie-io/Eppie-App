@@ -22,8 +22,8 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 #else
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
 #endif
 
 namespace Eppie.App.UI.Tools
