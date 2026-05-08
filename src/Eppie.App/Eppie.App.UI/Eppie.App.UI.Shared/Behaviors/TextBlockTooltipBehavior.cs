@@ -59,6 +59,6 @@ namespace Eppie.App.UI.Behaviors
         }
     }
 
-    public class TrimmedTextBlockTooltipBehavior : TooltipBehavior<TextBlock, TextBlockTooltipSource>
+    public class TextBlockTooltipBehavior : TooltipBehavior<TextBlock, TextBlockTooltipSource>
     { }
 }
