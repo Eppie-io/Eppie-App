@@ -16,55 +16,49 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
+using System;
+
 #if WINDOWS_UWP
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
-#else
-using Microsoft.UI.Xaml;
+#else 
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media;
 #endif
 
-namespace Eppie.App.UI.Tools
+namespace Eppie.App.UI.Behaviors
 {
-    public partial class ComboBoxDataTemplateSelector : DataTemplateSelector
+    public class TextBlockTooltipSource : ITooltipSource<TextBlock>
     {
-        public DataTemplate DropDownTemplate { get; set; }
-        public DataTemplate SelectedTemplate { get; set; }
+        public bool IsActive => Source?.IsTextTrimmed ?? false;
+        public string Text => Source?.Text;
 
-        protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
+        public event EventHandler TooltipChanged;
+
+        private TextBlock _source;
+        public TextBlock Source
         {
-            if (IsDropDownItem(container))
+            get { return _source; }
+            set
             {
-                return DropDownTemplate;
-            }
-            else
-            {
-                return SelectedTemplate;
+                if (_source != null)
+                {
+                    _source.IsTextTrimmedChanged -= OnIsTextTrimmedChanged;
+                }
+
+                _source = value;
+
+                if (_source != null)
+                {
+                    _source.IsTextTrimmedChanged += OnIsTextTrimmedChanged;
+                }
             }
         }
 
-        private static bool IsDropDownItem(DependencyObject container)
+        private void OnIsTextTrimmedChanged(TextBlock sender, IsTextTrimmedChangedEventArgs args)
         {
-            DependencyObject current = container;
-
-            while (current != null)
-            {
-                if (current is ComboBoxItem)
-                {
-                    return true;
-                }
-
-                if (current is ComboBox)
-                {
-                    return false;
-                }
-
-                current = VisualTreeHelper.GetParent(current);
-            }
-
-            return false;
+            TooltipChanged?.Invoke(this, EventArgs.Empty);
         }
     }
+
+    public class TextBlockTooltipBehavior : TooltipBehavior<TextBlock, TextBlockTooltipSource>
+    { }
 }

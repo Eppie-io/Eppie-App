@@ -108,7 +108,7 @@
                            Text="{x:Bind FileName, Mode=OneWay}"
                            TextTrimming="CharacterEllipsis">
                     <interactivity:Interaction.Behaviors>
-                        <behaviors:TrimmedTextBlockTooltipBehavior />
+                        <behaviors:TextBlockTooltipBehavior />
                     </interactivity:Interaction.Behaviors>
                 </TextBlock>
 
