@@ -19,51 +19,33 @@
 using System;
 
 #if WINDOWS_UWP
-using Windows.UI.Xaml.Controls;
-#else 
-using Microsoft.UI.Xaml.Controls;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Media;
+#else
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Media;
 #endif
 
-namespace Eppie.App.UI.Behaviors
+namespace Eppie.App.UI.Extensions
 {
-    public interface ITrimmedTextSource
+    public static class DependencyObjectExtension
     {
-        bool IsTextTrimmed { get; }
-        string Text { get; }
-
-        event EventHandler<IsTextTrimmedChangedEventArgs> IsTextTrimmedChanged;
-    }
-
-    public class TrimmedTextBlockSource : ITrimmedTextSource
-    {
-        public bool IsTextTrimmed => Source?.IsTextTrimmed ?? false;
-        public string Text => Source?.Text;
-
-        public event EventHandler<IsTextTrimmedChangedEventArgs> IsTextTrimmedChanged;
-
-        private TextBlock _source;
-        public TextBlock Source
+        public static DependencyObject FindChildByName(this DependencyObject parent, string childName)
         {
-            get { return _source; }
-            set
+            int count = VisualTreeHelper.GetChildrenCount(parent);
+            for (int i = 0; i < count; i++)
             {
-                if (_source != null)
+                DependencyObject child = VisualTreeHelper.GetChild(parent, i);
+
+                if (child is FrameworkElement element && element.Name == childName)
                 {
-                    _source.IsTextTrimmedChanged -= OnIsTextTrimmedChanged;
+                    return child;
                 }
 
-                _source = value;
-
-                if (_source != null)
-                {
-                    _source.IsTextTrimmedChanged += OnIsTextTrimmedChanged;
-                }
+                DependencyObject result = FindChildByName(child, childName);
+                if (result != null) return result;
             }
-        }
-
-        private void OnIsTextTrimmedChanged(TextBlock sender, IsTextTrimmedChangedEventArgs args)
-        {
-            IsTextTrimmedChanged?.Invoke(this, args);
+            return null;
         }
     }
 }

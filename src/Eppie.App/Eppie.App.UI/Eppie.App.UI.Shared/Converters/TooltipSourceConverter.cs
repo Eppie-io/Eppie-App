@@ -29,13 +29,13 @@ using Microsoft.UI.Xaml.Data;
 
 namespace Eppie.App.UI.Converters
 {
-    public partial class TextBlockToTrimmedTextSourceConverter : IValueConverter
+    public partial class TextBlockToTooltipSourceConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             if (value is TextBlock textblock)
             {
-                return new TrimmedTextBlockSource() { Source = textblock };
+                return new TextBlockTooltipSource() { Source = textblock };
             }
 
             return null;

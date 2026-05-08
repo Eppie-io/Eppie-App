@@ -29,29 +29,47 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace Eppie.App.UI.Behaviors
 {
-    public class TrimmedTextTooltipBehavior : Behavior<DependencyObject>
+    public interface ITooltipSource
     {
-        public ITrimmedTextSource Source
+        bool IsActive { get; }
+        string Text { get; }
+
+        event EventHandler TooltipChanged;
+    }
+
+    public interface ITooltipSource<T> : ITooltipSource
+#if HAS_UNO
+        where T : class, DependencyObject
+#else
+        where T : DependencyObject
+#endif
+    {
+        T Source { get; set; }
+    }
+
+    public class TooltipBehavior : Behavior<DependencyObject>
+    {
+        public ITooltipSource Source
         {
-            get { return (ITrimmedTextSource)GetValue(SourceProperty); }
+            get { return (ITooltipSource)GetValue(SourceProperty); }
             set { SetValue(SourceProperty, value); }
         }
 
         public static readonly DependencyProperty SourceProperty =
-            DependencyProperty.Register(nameof(Source), typeof(ITrimmedTextSource), typeof(TrimmedTextTooltipBehavior), new PropertyMetadata(null, OnPropertyChanged));
+            DependencyProperty.Register(nameof(Source), typeof(ITooltipSource), typeof(TooltipBehavior), new PropertyMetadata(null, OnPropertyChanged));
 
         private static void OnPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is TrimmedTextTooltipBehavior behavior)
+            if (d is TooltipBehavior behavior)
             {
-                if (e.OldValue is ITrimmedTextSource oldSource)
+                if (e.OldValue is ITooltipSource oldSource)
                 {
-                    oldSource.IsTextTrimmedChanged -= behavior.OnSourceIsTextTrimmedChanged;
+                    oldSource.TooltipChanged -= behavior.OnTooltipChanged;
                 }
 
-                if (e.NewValue is ITrimmedTextSource newSource)
+                if (e.NewValue is ITooltipSource newSource)
                 {
-                    newSource.IsTextTrimmedChanged += behavior.OnSourceIsTextTrimmedChanged;
+                    newSource.TooltipChanged += behavior.OnTooltipChanged;
                 }
             }
         }
@@ -62,7 +80,8 @@ namespace Eppie.App.UI.Behaviors
 
             if (Source != null)
             {
-                Source.IsTextTrimmedChanged += OnSourceIsTextTrimmedChanged;
+                Source.TooltipChanged += OnTooltipChanged;
+                UpdateToolTip();
             }
         }
 
@@ -72,11 +91,11 @@ namespace Eppie.App.UI.Behaviors
 
             if (Source != null)
             {
-                Source.IsTextTrimmedChanged -= OnSourceIsTextTrimmedChanged;
+                Source.TooltipChanged -= OnTooltipChanged;
             }
         }
 
-        private void OnSourceIsTextTrimmedChanged(object sender, IsTextTrimmedChangedEventArgs args)
+        private void OnTooltipChanged(object sender, EventArgs args)
         {
             UpdateToolTip();
         }
@@ -85,7 +104,7 @@ namespace Eppie.App.UI.Behaviors
         {
             string tooltip = Source.Text;
 
-            if (!Source.IsTextTrimmed || string.IsNullOrEmpty(tooltip))
+            if (!Source.IsActive || string.IsNullOrEmpty(tooltip))
             {
                 ToolTipService.SetToolTip(AssociatedObject, null);
             }
@@ -96,17 +115,25 @@ namespace Eppie.App.UI.Behaviors
         }
     }
 
-    public class TrimmedTextBlockTooltipBehavior : Behavior<TextBlock>
+
+    public class TooltipBehavior<T, TSource> : Behavior<T>
+#if HAS_UNO
+        where T : class, DependencyObject
+#else
+        where T : DependencyObject
+#endif
+        where TSource : ITooltipSource<T>, new()
+
     {
-        private TrimmedTextTooltipBehavior _behavior;
+        private TooltipBehavior _behavior;
 
         protected override void OnAttached()
         {
             base.OnAttached();
 
-            _behavior = new TrimmedTextTooltipBehavior()
+            _behavior = new TooltipBehavior()
             {
-                Source = new TrimmedTextBlockSource() { Source = AssociatedObject }
+                Source = new TSource() { Source = AssociatedObject }
             };
 
             _behavior.Attach(AssociatedObject);
