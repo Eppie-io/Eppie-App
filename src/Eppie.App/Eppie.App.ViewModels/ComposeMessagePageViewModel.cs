@@ -244,8 +244,14 @@ namespace Tuvi.App.ViewModels
         public bool IsAdvancedSettingsVisible
         {
             get { return _isAdvancedSettingsVisible; }
-            set { SetProperty(ref _isAdvancedSettingsVisible, value); }
+            set
+            {
+                SetProperty(ref _isAdvancedSettingsVisible, value);
+                OnPropertyChanged(nameof(IsExtraSettingsVisible));
+            }
         }
+
+        public bool IsExtraSettingsVisible => IsAdvancedSettingsVisible || IsLocalAIAvailable;
 
         private bool _isHiddenCopyVisible;
         public bool IsHiddenCopyVisible

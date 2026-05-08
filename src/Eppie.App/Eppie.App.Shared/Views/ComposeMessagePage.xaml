@@ -25,13 +25,41 @@
 
         <x:Double x:Key="MessageEditorMinHeight">160</x:Double>
 
-        <x:Double x:Key="SymbolButtonWidth">32</x:Double>
-        <x:Double x:Key="SymbolButtonHeigth">32</x:Double>
         <x:Double x:Key="SymbolSize">16</x:Double>
         <x:Double x:Key="ProgressRingSize">48</x:Double>
 
         <Thickness x:Key="HorizontalMargin">0,0,12,0</Thickness>
         <Thickness x:Key="BlindCarbonCopyMargin">0,8,0,0</Thickness>
+
+        <XamlUICommand x:Key="DraftAndBackUICommand"
+                       x:Uid="DraftAndBackUICommand"
+                       Command="{x:Bind ViewModel.GoBackCommand}">
+            <XamlUICommand.IconSource>
+                <SymbolIconSource Symbol="Back" />
+            </XamlUICommand.IconSource>
+        </XamlUICommand>
+
+        <XamlUICommand x:Key="MoreUICommand" x:Uid="MoreUICommand">
+            <XamlUICommand.IconSource>
+                <SymbolIconSource Symbol="More" />
+            </XamlUICommand.IconSource>
+        </XamlUICommand>
+
+        <XamlUICommand x:Key="AttachUICommand"
+                       x:Uid="AttachUICommand"
+                       Command="{x:Bind ViewModel.AttachFilesCommand}">
+            <XamlUICommand.IconSource>
+                <SymbolIconSource Symbol="Attach" />
+            </XamlUICommand.IconSource>
+        </XamlUICommand>
+
+        <XamlUICommand x:Key="DeleteMessageUICommand"
+                       x:Uid="DeleteMessageUICommand"
+                       Command="{x:Bind ViewModel.DeleteMessageAndGoBackCommand}">
+            <XamlUICommand.IconSource>
+                <SymbolIconSource Symbol="Delete" />
+            </XamlUICommand.IconSource>
+        </XamlUICommand>
 
         <DataTemplate x:Key="RemovableAttachmentItemTemplate" x:DataType="viewmodels:RemovableAttachment">
             <controls:AttachmentFileControl DeleteFileCommand="{x:Bind RemoveCommand}"
@@ -91,34 +119,19 @@
                           Style="{StaticResource AddressComboBoxStyle}"
                           ToolTipService.ToolTip="{x:Bind local:ComposeMessagePage.GetSenderToolTip(Account), Mode=OneWay}" />
 
-                <!--  ToDo: Hide text if page width is less than 800  -->
-                <Button Grid.Column="1"
-                        Margin="4,0"
-                        VerticalAlignment="Center"
-                        Command="{x:Bind AttachFilesCommand}"
-                        CommandParameter="{StaticResource FileOperationProvider}"
-                        Style="{StaticResource ThinButtonStyle}">
-                    <StackPanel Orientation="Horizontal">
-                        <Viewbox Width="{StaticResource SymbolSize}" Height="{StaticResource SymbolSize}">
-                            <SymbolIcon Symbol="Attach" />
-                        </Viewbox>
-                        <TextBlock x:Uid="AttachFileButton" Margin="4,0,0,0" />
-                    </StackPanel>
-                </Button>
+                <!--  ToDo: Switch to compact mode if the page width is not enough.  -->
+                <controls:CommandButton Grid.Column="1"
+                                        Margin="4,0"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Center"
+                                        Command="{StaticResource AttachUICommand}"
+                                        CommandParameter="{StaticResource FileOperationProvider}" />
 
-                <!--  ToDo: Hide text if page width is less than 800  -->
-                <Button Grid.Column="2"
-                        Margin="4,0"
-                        VerticalAlignment="Center"
-                        Command="{x:Bind DeleteMessageAndGoBackCommand}"
-                        Style="{StaticResource ThinButtonStyle}">
-                    <StackPanel Orientation="Horizontal">
-                        <Viewbox Width="{StaticResource SymbolSize}" Height="{StaticResource SymbolSize}">
-                            <SymbolIcon Symbol="Delete" />
-                        </Viewbox>
-                        <TextBlock x:Uid="DeleteDraftMessageButton" Margin="4,0,0,0" />
-                    </StackPanel>
-                </Button>
+                <controls:CommandButton Grid.Column="2"
+                                        Margin="4,0"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Center"
+                                        Command="{StaticResource DeleteMessageUICommand}" />
 
                 <Button x:Uid="SendMessageButton"
                         Grid.Column="4"
@@ -308,22 +321,14 @@
         </ScrollViewer>
 
         <!--  Header  -->
-
-        <Button x:Uid="BackButton"
-                Grid.Row="0"
-                Grid.Column="1"
-                Width="{StaticResource SymbolButtonWidth}"
-                Height="{StaticResource SymbolButtonHeigth}"
-                Margin="0,24,8,20"
-                Padding="0"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Center"
-                Command="{x:Bind ViewModel.GoBackCommand}"
-                Style="{StaticResource ThinButtonStyle}">
-            <Viewbox Width="{StaticResource SymbolSize}" Height="{StaticResource SymbolSize}">
-                <SymbolIcon Symbol="Back" />
-            </Viewbox>
-        </Button>
+        <!--  Save Draft and Back  -->
+        <controls:CommandButton Grid.Row="0"
+                                Grid.Column="1"
+                                Margin="0,24,8,20"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Command="{StaticResource DraftAndBackUICommand}"
+                                IsCompact="True" />
 
         <Grid Grid.Row="0"
               Grid.Column="2"
@@ -332,6 +337,7 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
+
             <!--  Title  -->
             <TextBlock x:Uid="ComposeEmailTitle"
                        HorizontalAlignment="Stretch"
@@ -340,56 +346,49 @@
                        FontWeight="Medium" />
 
             <!--  More options  -->
-            <Button Grid.Column="1"
-                    Width="{StaticResource SymbolButtonWidth}"
-                    Height="{StaticResource SymbolButtonHeigth}"
-                    Margin="8,0,0,0"
-                    Padding="0"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Center"
-                    Style="{StaticResource ThinButtonStyle}">
-                <Viewbox Width="{StaticResource SymbolSize}" Height="{StaticResource SymbolSize}">
-                    <SymbolIcon Symbol="More" />
-                </Viewbox>
-                <Button.Flyout>
+            <controls:CommandButton Grid.Column="1"
+                                    Margin="8,0,0,0"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    Command="{StaticResource MoreUICommand}"
+                                    IsCompact="True">
+                <controls:CommandButton.Flyout>
                     <MenuFlyout>
+
+                        <MenuFlyoutItem Command="{StaticResource AttachUICommand}" CommandParameter="{StaticResource FileOperationProvider}" />
+
+                        <MenuFlyoutItem Command="{StaticResource DeleteMessageUICommand}" />
+
+                        <MenuFlyoutSeparator Visibility="{x:Bind ViewModel.IsExtraSettingsVisible, Mode=OneWay}" />
+
+                        <MenuFlyoutSubItem x:Uid="SecurityMenuSection" Visibility="{x:Bind ViewModel.IsAdvancedSettingsVisible, Mode=OneWay}">
+                            <MenuFlyoutSubItem.Icon>
+                                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE72E;" />
+                            </MenuFlyoutSubItem.Icon>
+                            <MenuFlyoutSubItem.Items>
+                                <ToggleMenuFlyoutItem x:Uid="MessageEncryptedMenuItem"
+                                                      IsChecked="{x:Bind ViewModel.IsEncrypted, Mode=TwoWay}"
+                                                      IsEnabled="{x:Bind ViewModel.IsChangeCryptographyEnabled, Mode=OneWay}" />
+
+                                <ToggleMenuFlyoutItem x:Uid="MessageSignedMenuItem"
+                                                      IsChecked="{x:Bind ViewModel.IsSigned, Mode=TwoWay}"
+                                                      IsEnabled="{x:Bind ViewModel.IsChangeCryptographyEnabled, Mode=OneWay}" />
+                                <MenuFlyoutItem x:Uid="PgpKeysMenuItem" Command="{x:Bind ViewModel.OpenAllPgpKeysCommand}" />
+                            </MenuFlyoutSubItem.Items>
+                        </MenuFlyoutSubItem>
+
                         <MenuFlyoutSubItem x:Name="AIAgentMenu"
-                                           x:Uid="AIAgentProcessMessageMenu"
+                                           x:Uid="AIAgentMenuSection"
                                            IsEnabled="{x:Bind ViewModel.IsLocalAIEnabled, Mode=OneWay}"
                                            Visibility="{x:Bind ViewModel.IsLocalAIAvailable, Mode=OneWay}">
                             <MenuFlyoutSubItem.Icon>
-                                <FontIcon Glyph="&#xE99A;" />
+                                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE99A;" />
                             </MenuFlyoutSubItem.Icon>
                         </MenuFlyoutSubItem>
 
-                        <MenuFlyoutSeparator Visibility="{x:Bind ViewModel.IsLocalAIAvailable, Mode=OneWay}" />
-
-                        <ToggleMenuFlyoutItem x:Uid="MessageEncryptedMenuItem"
-                                              IsChecked="{x:Bind ViewModel.IsEncrypted, Mode=TwoWay}"
-                                              IsEnabled="{x:Bind ViewModel.IsChangeCryptographyEnabled, Mode=OneWay}"
-                                              Visibility="{x:Bind ViewModel.IsAdvancedSettingsVisible, Mode=OneWay}" />
-                        <ToggleMenuFlyoutItem x:Uid="MessageSignedMenuItem"
-                                              IsChecked="{x:Bind ViewModel.IsSigned, Mode=TwoWay}"
-                                              IsEnabled="{x:Bind ViewModel.IsChangeCryptographyEnabled, Mode=OneWay}"
-                                              Visibility="{x:Bind ViewModel.IsAdvancedSettingsVisible, Mode=OneWay}" />
-                        <MenuFlyoutItem x:Uid="PgpKeysMenuItem"
-                                        Command="{x:Bind ViewModel.OpenAllPgpKeysCommand}"
-                                        Visibility="{x:Bind ViewModel.IsAdvancedSettingsVisible, Mode=OneWay}" />
-
-                        <MenuFlyoutSeparator Visibility="{x:Bind ViewModel.IsAdvancedSettingsVisible, Mode=OneWay}" />
-
-                        <MenuFlyoutItem x:Uid="AttachFileMenu"
-                                        Command="{x:Bind ViewModel.AttachFilesCommand}"
-                                        CommandParameter="{StaticResource FileOperationProvider}"
-                                        Icon="Attach" />
-
-                        <MenuFlyoutItem x:Uid="DeleteMenu"
-                                        Command="{x:Bind ViewModel.DeleteMessageAndGoBackCommand}"
-                                        Icon="Delete"
-                                        Text="Delete" />
                     </MenuFlyout>
-                </Button.Flyout>
-            </Button>
+                </controls:CommandButton.Flyout>
+            </controls:CommandButton>
         </Grid>
 
         <!--  End Header  -->

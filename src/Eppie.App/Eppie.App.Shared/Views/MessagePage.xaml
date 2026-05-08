@@ -107,7 +107,7 @@
             <Button.Flyout>
                 <MenuFlyout>
                     <MenuFlyoutSubItem x:Name="AIAgentMenu"
-                                       x:Uid="AIAgentProcessMessageMenu"
+                                       x:Uid="AIAgentMenuSection"
                                        IsEnabled="{x:Bind ViewModel.IsLocalAIEnabled, Mode=OneWay}"
                                        Visibility="{x:Bind ViewModel.IsLocalAIAvailable, Mode=OneWay}">
                         <MenuFlyoutSubItem.Icon>

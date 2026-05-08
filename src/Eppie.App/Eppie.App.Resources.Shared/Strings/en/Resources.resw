@@ -1786,10 +1786,6 @@ Eppie
     <value>Attach</value>
     <comment>Text for the button that attaches a file to a message</comment>
   </data>
-  <data name="AttachFileMenu.Text" xml:space="preserve">
-    <value>Attach</value>
-    <comment>Text for the menu that attaches a file to a message</comment>
-  </data>
   <data name="AttachButton.Label" xml:space="preserve">
     <value>Attach files</value>
     <comment>Text for attach button</comment>
@@ -1986,7 +1982,11 @@ Eppie
     <value>Select All</value>
     <comment>The tooltip for Select All button</comment>
   </data>
-  <data name="AIAgentProcessMessageMenu.Text" xml:space="preserve">
+  <data name="SecurityMenuSection.Text" xml:space="preserve">
+    <value>Security</value>
+    <comment>Text on Security section menu.</comment>
+  </data>
+  <data name="AIAgentMenuSection.Text" xml:space="preserve">
     <value>AI Agent</value>
     <comment>Text on AI Agent process menu.</comment>
   </data>
@@ -2017,5 +2017,25 @@ Eppie
   <data name="SenderToolTip.Format" xml:space="preserve">
     <value>From: {0}</value>
     <comment>Tooltip for message sender. {0} - sender's address</comment>
+  </data>
+  <data name="DraftAndBackUICommand.Description" xml:space="preserve">
+    <value>Save draft and go back</value>
+    <comment>Tooltip for the command that saves the message to drafts and returns to the previous page</comment>
+  </data>
+  <data name="MoreUICommand.Description" xml:space="preserve">
+    <value>More options</value>
+    <comment>Tooltip for the command that shows more options</comment>
+  </data>
+  <data name="AttachUICommand.Label" xml:space="preserve">
+    <value>Attach</value>
+    <comment>Label for the command that attaches files to the message</comment>
+  </data>
+  <data name="DeleteMessageUICommand.Label" xml:space="preserve">
+    <value>Delete</value>
+    <comment>Label for the command that deletes messages and returns to the previous page</comment>
+  </data>
+  <data name="DeleteMessageUICommand.Description" xml:space="preserve">
+    <value>Delete and go back</value>
+    <comment>Tooltip for the command that deletes messages and returns to the previous page</comment>
   </data>
 </root>

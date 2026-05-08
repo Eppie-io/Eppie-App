@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="Eppie.App.UI.Controls.CommandButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:behaviour="using:Eppie.App.UI.Behaviors"
+             xmlns:converters="using:Tuvi.App.Converters"
+             xmlns:converters1="using:Eppie.App.UI.Converters"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+             xmlns:local="using:Eppie.App.UI.Controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DesignHeight="300"
+             d:DesignWidth="400"
+             mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <Thickness x:Key="LabelMargin">4,0,0,0</Thickness>
+        <Thickness x:Key="CompactButtonPadding">0,0,0,0</Thickness>
+        <x:Double x:Key="CommandButtonIconWidth">16</x:Double>
+        <x:Double x:Key="CommandButtonIconHeight">16</x:Double>
+        <x:Double x:Key="CommandButtonMinWidth">32</x:Double>
+        <x:Double x:Key="CommandButtonMinHeight">32</x:Double>
+
+        <converters:BoolToThicknessConverter x:Key="BoolToPaddingConverter"
+                                             FalseValue="{StaticResource ButtonPadding}"
+                                             TrueValue="{StaticResource CompactButtonPadding}" />
+    </UserControl.Resources>
+
+    <Button MinWidth="{StaticResource CommandButtonMinWidth}"
+            MinHeight="{StaticResource CommandButtonMinHeight}"
+            Padding="{x:Bind IsCompact, Mode=OneWay, Converter={StaticResource BoolToPaddingConverter}}"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Click="OnClick"
+            Command="{x:Bind local:CommandButton.GetCommand(Command), Mode=OneWay}"
+            CommandParameter="{x:Bind CommandParameter, Mode=OneWay}"
+            Flyout="{x:Bind Flyout, Mode=OneWay}"
+            Style="{StaticResource ThinButtonStyle}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Viewbox Grid.Column="0"
+                     Width="{ThemeResource CommandButtonIconWidth}"
+                     Height="{ThemeResource CommandButtonIconHeight}"
+                     HorizontalAlignment="Center"
+                     VerticalAlignment="Center">
+                <ContentPresenter Content="{x:Bind local:CommandButton.GetIcon(Icon, Command), Mode=OneWay}" />
+            </Viewbox>
+            <TextBlock x:Name="LabelTextBlock"
+                       Grid.Column="1"
+                       Margin="{StaticResource LabelMargin}"
+                       HorizontalAlignment="Stretch"
+                       VerticalAlignment="Center"
+                       Text="{x:Bind local:CommandButton.GetLabel(Label, Command), Mode=OneWay}"
+                       TextTrimming="CharacterEllipsis"
+                       TextWrapping="NoWrap"
+                       Visibility="{x:Bind IsCompact, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+        </Grid>
+    </Button>
+</UserControl>
