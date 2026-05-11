@@ -17,8 +17,8 @@
 // ---------------------------------------------------------------------------- //
 
 using System;
+using CommunityToolkit.WinUI;
 using Eppie.App.UI.Controls;
-using Eppie.App.UI.Extensions;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -47,38 +47,14 @@ namespace Eppie.App.UI.Behaviors
             {
                 if (_source != null)
                 {
-                    if (_compactToken.HasValue)
-                    {
-                        _source.UnregisterPropertyChangedCallback(CommandButton.IsCompactProperty, _compactToken.Value);
-                        _compactToken = null;
-                    }
-
-                    if (_label != null)
-                    {
-                        if (_labelToken.HasValue)
-                        {
-                            _label?.UnregisterPropertyChangedCallback(TextBlock.TextProperty, _labelToken.Value);
-                            _labelToken = null;
-                        }
-
-                        _label.IsTextTrimmedChanged -= OnIsTextTrimmedChanged;
-                        _label = null;
-                    }
+                    Unregister();
                 }
 
                 _source = value;
 
                 if (_source != null)
                 {
-                    _compactToken = _source.RegisterPropertyChangedCallback(CommandButton.IsCompactProperty, OnPropertyChanged);
-
-                    _label = GetLabelTextBlock();
-                    if (_label != null)
-                    {
-                        _labelToken = _label.RegisterPropertyChangedCallback(TextBlock.TextProperty, OnPropertyChanged);
-                        _label.IsTextTrimmedChanged += OnIsTextTrimmedChanged;
-                    }
-
+                    Register();
                     UpdateTooltip();
                 }
             }
@@ -88,6 +64,39 @@ namespace Eppie.App.UI.Behaviors
         private long? _labelToken;
 
         private TextBlock _label;
+
+        private void Register()
+        {
+            _compactToken = _source?.RegisterPropertyChangedCallback(CommandButton.IsCompactProperty, OnPropertyChanged);
+
+            _label = GetLabelTextBlock();
+            if (_label != null)
+            {
+                _labelToken = _label.RegisterPropertyChangedCallback(TextBlock.TextProperty, OnPropertyChanged);
+                _label.IsTextTrimmedChanged += OnIsTextTrimmedChanged;
+            }
+        }
+
+        private void Unregister()
+        {
+            if (_compactToken.HasValue)
+            {
+                _source?.UnregisterPropertyChangedCallback(CommandButton.IsCompactProperty, _compactToken.Value);
+                _compactToken = null;
+            }
+
+            if (_labelToken.HasValue)
+            {
+                _label?.UnregisterPropertyChangedCallback(TextBlock.TextProperty, _labelToken.Value);
+                _labelToken = null;
+            }
+
+            if (_label != null)
+            {
+                _label.IsTextTrimmedChanged -= OnIsTextTrimmedChanged;
+                _label = null;
+            }
+        }
 
         private void OnIsTextTrimmedChanged(TextBlock sender, IsTextTrimmedChangedEventArgs args)
         {
@@ -106,10 +115,8 @@ namespace Eppie.App.UI.Behaviors
 
         private TextBlock GetLabelTextBlock()
         {
-            Button button = _source?.Content as Button;
-            Grid grid = button?.Content as Grid;
-
-            return grid?.FindChildByName("LabelTextBlock") as TextBlock;
+            // FindChild method can be used on controls that aren't yet connected or rendered in the visual tree.
+            return _source?.FindChild<TextBlock>((text) => text.Name?.Equals(CommandButton.LabelElementName, StringComparison.Ordinal) ?? false);
         }
     }
 

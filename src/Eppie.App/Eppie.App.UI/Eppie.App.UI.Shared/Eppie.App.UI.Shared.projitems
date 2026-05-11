@@ -102,7 +102,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ValueToBoolConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\VisibilityConverters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\AttachedCommands.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Extensions\DependencyObjectExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\HyperlinkExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\TextDocumentExtension.Uno.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\TextDocumentExtension.UWP.cs" />

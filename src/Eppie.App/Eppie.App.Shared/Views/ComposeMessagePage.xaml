@@ -94,7 +94,7 @@
         </DataTemplate>
 
         <uitools:ComboBoxDataTemplateSelector x:Key="ComboBoxDataTemplateSelector"
-                                              DropDownTemplate="{StaticResource AddressComboBoxItemTemplate}"
+                                              ItemTemplate="{StaticResource AddressComboBoxItemTemplate}"
                                               SelectedTemplate="{StaticResource AddressComboBoxSelectedItemTemplate}" />
 
         <DataTemplate x:Key="FooterTemplate" x:DataType="viewmodels:ComposeMessagePageViewModel">
