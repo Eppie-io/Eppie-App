@@ -16,28 +16,28 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
+using CommunityToolkit.WinUI;
+
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
 #else
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media;
 #endif
 
 namespace Eppie.App.UI.Tools
 {
     public partial class ComboBoxDataTemplateSelector : DataTemplateSelector
     {
-        public DataTemplate DropDownTemplate { get; set; }
+        public DataTemplate ItemTemplate { get; set; }
         public DataTemplate SelectedTemplate { get; set; }
 
         protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
         {
-            if (IsDropDownItem(container))
+            if (IsComboBoxItem(container))
             {
-                return DropDownTemplate;
+                return ItemTemplate;
             }
             else
             {
@@ -45,26 +45,9 @@ namespace Eppie.App.UI.Tools
             }
         }
 
-        private static bool IsDropDownItem(DependencyObject container)
+        private static bool IsComboBoxItem(DependencyObject container)
         {
-            DependencyObject current = container;
-
-            while (current != null)
-            {
-                if (current is ComboBoxItem)
-                {
-                    return true;
-                }
-
-                if (current is ComboBox)
-                {
-                    return false;
-                }
-
-                current = VisualTreeHelper.GetParent(current);
-            }
-
-            return false;
+            return container.FindAscendantOrSelf<Control>(control => control is ComboBox || control is ComboBoxItem) is ComboBoxItem;
         }
     }
 }

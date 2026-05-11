@@ -37,6 +37,8 @@ namespace Eppie.App.UI.Controls
     [SuppressMessage("Design", "CA1010:Generic collections should implement generic interface", Justification = "ContentControl implements IEnumerable for XAML infrastructure")]
     public sealed partial class CommandButton : UserControl
     {
+        public static readonly string LabelElementName = "LabelTextBlock";
+
         public string Label
         {
             get { return (string)GetValue(LabelProperty); }
