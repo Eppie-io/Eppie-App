@@ -35,33 +35,22 @@
 
         <XamlUICommand x:Key="DraftAndBackUICommand"
                        x:Uid="DraftAndBackUICommand"
-                       Command="{x:Bind ViewModel.GoBackCommand}">
-            <XamlUICommand.IconSource>
-                <SymbolIconSource Symbol="Back" />
-            </XamlUICommand.IconSource>
-        </XamlUICommand>
+                       Command="{x:Bind ViewModel.GoBackCommand}"
+                       IconSource="{StaticResource BackIconSource}" />
 
-        <XamlUICommand x:Key="MoreUICommand" x:Uid="MoreUICommand">
-            <XamlUICommand.IconSource>
-                <SymbolIconSource Symbol="More" />
-            </XamlUICommand.IconSource>
-        </XamlUICommand>
+        <XamlUICommand x:Key="MoreUICommand"
+                       x:Uid="MoreUICommand"
+                       IconSource="{StaticResource MoreIconSource}" />
 
         <XamlUICommand x:Key="AttachUICommand"
                        x:Uid="AttachUICommand"
-                       Command="{x:Bind ViewModel.AttachFilesCommand}">
-            <XamlUICommand.IconSource>
-                <SymbolIconSource Symbol="Attach" />
-            </XamlUICommand.IconSource>
-        </XamlUICommand>
+                       Command="{x:Bind ViewModel.AttachFilesCommand}"
+                       IconSource="{StaticResource AttachIconSource}" />
 
         <XamlUICommand x:Key="DeleteMessageUICommand"
                        x:Uid="DeleteMessageUICommand"
-                       Command="{x:Bind ViewModel.DeleteMessageAndGoBackCommand}">
-            <XamlUICommand.IconSource>
-                <SymbolIconSource Symbol="Delete" />
-            </XamlUICommand.IconSource>
-        </XamlUICommand>
+                       Command="{x:Bind ViewModel.DeleteMessageAndGoBackCommand}"
+                       IconSource="{StaticResource DeleteIconSource}" />
 
         <DataTemplate x:Key="RemovableAttachmentItemTemplate" x:DataType="viewmodels:RemovableAttachment">
             <controls:AttachmentFileControl DeleteFileCommand="{x:Bind RemoveCommand}"
@@ -228,11 +217,9 @@
                                                      SelectedContacts="{x:Bind ViewModel.To, Mode=OneWay}"
                                                      UntokenizedContact="{x:Bind ViewModel.UntokenizedContactTo, Mode=TwoWay}">
                             <controls:EmailsInputControl.ExtraButtonContent>
-                                <FontIcon HorizontalAlignment="Center"
-                                          VerticalAlignment="Center"
-                                          FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                          FontSize="{StaticResource SymbolSize}"
-                                          Glyph="&#xE8D4;" />
+                                <Viewbox HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <IconSourceElement IconSource="{StaticResource HiddenCopyIconSource}" />
+                                </Viewbox>
                             </controls:EmailsInputControl.ExtraButtonContent>
                         </controls:EmailsInputControl>
 
@@ -240,12 +227,10 @@
                               Grid.Column="0"
                               Margin="{StaticResource BlindCarbonCopyMargin}"
                               Visibility="{x:Bind ViewModel.IsHiddenCopyVisible, Mode=OneWay}">
-                            <Viewbox Width="{StaticResource SymbolSize}"
-                                     Height="{StaticResource SymbolSize}"
-                                     Margin="{StaticResource HorizontalMargin}"
+                            <Viewbox Margin="{StaticResource HorizontalMargin}"
                                      HorizontalAlignment="Left"
                                      VerticalAlignment="Center">
-                                <SymbolIcon Symbol="Contact2" />
+                                <IconSourceElement IconSource="{StaticResource HiddenCopyIconSource}" />
                             </Viewbox>
                         </Grid>
 
@@ -369,7 +354,7 @@
 
                         <MenuFlyoutSubItem x:Uid="SecurityMenuSection" Visibility="{x:Bind ViewModel.IsAdvancedSettingsVisible, Mode=OneWay}">
                             <MenuFlyoutSubItem.Icon>
-                                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE72E;" />
+                                <IconSourceElement IconSource="{StaticResource SecurityIconSource}" />
                             </MenuFlyoutSubItem.Icon>
                             <MenuFlyoutSubItem.Items>
                                 <ToggleMenuFlyoutItem x:Uid="MessageEncryptedMenuItem"
@@ -388,10 +373,9 @@
                                            IsEnabled="{x:Bind ViewModel.IsLocalAIEnabled, Mode=OneWay}"
                                            Visibility="{x:Bind ViewModel.IsLocalAIAvailable, Mode=OneWay}">
                             <MenuFlyoutSubItem.Icon>
-                                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE99A;" />
+                                <IconSourceElement IconSource="{StaticResource AIAgentIconSource}" />
                             </MenuFlyoutSubItem.Icon>
                         </MenuFlyoutSubItem>
-
                     </MenuFlyout>
                 </controls:CommandButton.Flyout>
             </controls:CommandButton>

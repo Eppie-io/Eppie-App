@@ -2018,6 +2018,10 @@ Eppie
     <value>From: {0}</value>
     <comment>Tooltip for message sender. {0} - sender's address</comment>
   </data>
+  <data name="BackUICommand.Description" xml:space="preserve">
+    <value>Go back</value>
+    <comment>Tooltip for the command that returns to the previous page</comment>
+  </data>
   <data name="DraftAndBackUICommand.Description" xml:space="preserve">
     <value>Save draft and go back</value>
     <comment>Tooltip for the command that saves the message to drafts and returns to the previous page</comment>
@@ -2037,5 +2041,45 @@ Eppie
   <data name="DeleteMessageUICommand.Description" xml:space="preserve">
     <value>Delete and go back</value>
     <comment>Tooltip for the command that deletes messages and returns to the previous page</comment>
+  </data>
+  <data name="ReplyAllUICommand.Label" xml:space="preserve">
+    <value>Reply all</value>
+    <comment>Label for the command that replies to all recipients of the message</comment>
+  </data>
+  <data name="ForwardUICommand.Label" xml:space="preserve">
+    <value>Forward</value>
+    <comment>Label for the command that forwards the message</comment>
+  </data>
+  <data name="MarkMessageAsReadUICommand.Label" xml:space="preserve">
+    <value>Mark as read</value>
+    <comment>Label for the command that marks the message as read</comment>
+  </data>
+  <data name="MarkMessageAsUnreadUICommand.Label" xml:space="preserve">
+    <value>Mark as unread</value>
+    <comment>Label for the command that marks the message as unread</comment>
+  </data>
+  <data name="ReadStatusUICommand.Description" xml:space="preserve">
+    <value>Read</value>
+    <comment>Description for the status that indicates the message is read</comment>
+  </data>
+    <data name="UnreadStatusUICommand.Description" xml:space="preserve">
+    <value>Unread</value>
+    <comment>Description for the status that indicates the message is unread</comment>
+  </data>
+  <data name="FlagMessageUICommand.Label" xml:space="preserve">
+    <value>Set a flag</value>
+    <comment>Label for the command that flags the message</comment>
+  </data>
+  <data name="UnflagMessageUICommand.Label" xml:space="preserve">
+    <value>Clear flag</value>
+    <comment>Label for the command that unflags the message</comment>
+  </data>
+  <data name="FlaggedStatusUICommand.Description" xml:space="preserve">
+    <value>Flagged</value>
+    <comment>Description for the status that indicates the message is flagged</comment>
+  </data>
+  <data name="UnflaggedStatusUICommand.Description" xml:space="preserve">
+    <value>Unflagged</value>
+    <comment>Description for the status that indicates the message is unflagged</comment>
   </data>
 </root>
