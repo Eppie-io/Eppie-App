@@ -138,6 +138,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Page Include="$(MSBuildThisFileDirectory)StaticResources\IconResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="$(MSBuildThisFileDirectory)StaticResources\StaticResources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -101,10 +101,10 @@ namespace Tuvi.App.ViewModels
         private Task<MessageInfo> _messageLoadTask;
 
         public ICommand ReplyCommand => new RelayCommand(Reply);
-        public ICommand ReplyCommandAll => new RelayCommand(ReplyAll);
+        public ICommand ReplyAllCommand => new RelayCommand(ReplyAll);
         public ICommand ForwardCommand => new RelayCommand(Forward);
         public ICommand MarkMessageAsReadCommand => new AsyncRelayCommand(MarkMessageAsReadAsync);
-        public ICommand MarkMessageAsUnReadCommand => new AsyncRelayCommand(MarkMessageAsUnReadAsync);
+        public ICommand MarkMessageAsUnreadCommand => new AsyncRelayCommand(MarkMessageAsUnreadAsync);
         public ICommand FlagMessageCommand => new AsyncRelayCommand(FlagMessageAsync);
         public ICommand UnflagMessageCommand => new AsyncRelayCommand(UnflagMessageAsync);
 
@@ -173,7 +173,7 @@ namespace Tuvi.App.ViewModels
             return ApplyMessageCommandAsync(MessageInfo, m => m.MarkAsRead(), Core.MarkMessagesAsReadAsync);
         }
 
-        private Task MarkMessageAsUnReadAsync()
+        private Task MarkMessageAsUnreadAsync()
         {
             return ApplyMessageCommandAsync(MessageInfo, m => m.MarkAsUnread(), Core.MarkMessagesAsUnReadAsync);
         }
