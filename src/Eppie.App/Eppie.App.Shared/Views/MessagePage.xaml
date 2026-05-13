@@ -9,6 +9,7 @@
                        xmlns:local="using:Eppie.App.Views"
                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                        xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+                       xmlns:ui="using:CommunityToolkit.WinUI"
                        xmlns:viewmodels="using:Tuvi.App.ViewModels"
                        xmlns:win="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                        Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
@@ -39,67 +40,68 @@
         <XamlUICommand x:Key="BackUICommand"
                        x:Uid="BackUICommand"
                        Command="{x:Bind ViewModel.GoBackCommand}"
-                       IconSource="{StaticResource BackIconSource}" />
+                       IconSource="{ui:SymbolIconSource Symbol=Back}" />
 
         <XamlUICommand x:Key="MoreUICommand"
                        x:Uid="MoreUICommand"
-                       IconSource="{StaticResource MoreIconSource}" />
+                       IconSource="{ui:SymbolIconSource Symbol=More}" />
 
         <XamlUICommand x:Key="ReplyAllUICommand"
                        x:Uid="ReplyAllUICommand"
                        Command="{x:Bind ViewModel.ReplyAllCommand}"
-                       IconSource="{StaticResource MailReplyAllIconSource}" />
+                       IconSource="{ui:SymbolIconSource Symbol=MailReplyAll}" />
 
         <XamlUICommand x:Key="ForwardUICommand"
                        x:Uid="ForwardUICommand"
                        Command="{x:Bind ViewModel.ForwardCommand}"
-                       IconSource="{StaticResource MailForwardIconSource}" />
+                       IconSource="{ui:SymbolIconSource Symbol=MailForward}" />
 
         <XamlUICommand x:Key="MarkMessageAsReadUICommand"
                        x:Uid="MarkMessageAsReadUICommand"
                        Command="{x:Bind ViewModel.MarkMessageAsReadCommand}"
-                       IconSource="{StaticResource MarkAsReadIconSource}" />
+                       IconSource="{ui:FontIconSource Glyph={StaticResource MarkAsReadGlyph}}" />
 
         <XamlUICommand x:Key="MarkMessageAsUnreadUICommand"
                        x:Uid="MarkMessageAsUnreadUICommand"
                        Command="{x:Bind ViewModel.MarkMessageAsUnreadCommand}"
-                       IconSource="{StaticResource MarkAsUnreadIconSource}" />
+                       IconSource="{ui:FontIconSource Glyph={StaticResource MarkAsUnreadGlyph}}" />
 
         <XamlUICommand x:Key="ReadStatusUICommand"
                        x:Uid="ReadStatusUICommand"
                        Command="{x:Bind ViewModel.MarkMessageAsUnreadCommand}"
-                       IconSource="{StaticResource ReadStatusIconSource}" />
+                       IconSource="{ui:FontIconSource Glyph={StaticResource ReadStatusGlyph}}" />
 
         <!--  Todo: Add MailFilled back layer  -->
         <XamlUICommand x:Key="UnreadStatusUICommand"
                        x:Uid="UnreadStatusUICommand"
                        Command="{x:Bind ViewModel.MarkMessageAsReadCommand}"
-                       IconSource="{StaticResource UnreadStatusIconSource}" />
+                       IconSource="{ui:FontIconSource Glyph={StaticResource UnreadStatusGlyph}}" />
 
         <XamlUICommand x:Key="FlagMessageUICommand"
                        x:Uid="FlagMessageUICommand"
                        Command="{x:Bind ViewModel.FlagMessageCommand}"
-                       IconSource="{StaticResource SetFlagIconSource}" />
+                       IconSource="{ui:FontIconSource Glyph={StaticResource SetFlagGlyph}}" />
 
         <XamlUICommand x:Key="UnflagMessageUICommand"
                        x:Uid="UnflagMessageUICommand"
                        Command="{x:Bind ViewModel.UnflagMessageCommand}"
-                       IconSource="{StaticResource ClearFlagIconSource}" />
+                       IconSource="{ui:FontIconSource Glyph={StaticResource ClearFlagGlyph}}" />
 
         <XamlUICommand x:Key="FlaggedStatusUICommand"
                        x:Uid="FlaggedStatusUICommand"
                        Command="{x:Bind ViewModel.UnflagMessageCommand}"
-                       IconSource="{StaticResource FlaggedIconSource}" />
+                       IconSource="{ui:FontIconSource Glyph={StaticResource ActiveFlagGlyph}}" />
 
         <XamlUICommand x:Key="UnflaggedStatusUICommand"
                        x:Uid="UnflaggedStatusUICommand"
                        Command="{x:Bind ViewModel.FlagMessageCommand}"
-                       IconSource="{StaticResource UnflaggedIconSource}" />
+                       IconSource="{ui:FontIconSource Foreground={StaticResource InactiveFlagBrush},
+                                                      Glyph={StaticResource InactiveFlagGlyph}}" />
 
         <XamlUICommand x:Key="DeleteMessageUICommand"
                        x:Uid="DeleteMessageUICommand"
                        Command="{x:Bind ViewModel.DeleteMessageAndGoBackCommand}"
-                       IconSource="{StaticResource DeleteIconSource}" />
+                       IconSource="{ui:SymbolIconSource Symbol=Delete}" />
 
     </local:MessagePageBase.Resources>
 
@@ -190,12 +192,9 @@
 
                         <MenuFlyoutSubItem x:Name="AIAgentMenu"
                                            x:Uid="AIAgentMenuSection"
+                                           Icon="{ui:FontIcon Glyph={StaticResource AIAgentGlyph}}"
                                            IsEnabled="{x:Bind ViewModel.IsLocalAIEnabled, Mode=OneWay}"
-                                           Visibility="{x:Bind ViewModel.IsLocalAIAvailable, Mode=OneWay}">
-                            <MenuFlyoutSubItem.Icon>
-                                <IconSourceElement IconSource="{StaticResource AIAgentIconSource}" />
-                            </MenuFlyoutSubItem.Icon>
-                        </MenuFlyoutSubItem>
+                                           Visibility="{x:Bind ViewModel.IsLocalAIAvailable, Mode=OneWay}" />
                     </MenuFlyout>
                 </controls:CommandButton.Flyout>
             </controls:CommandButton>

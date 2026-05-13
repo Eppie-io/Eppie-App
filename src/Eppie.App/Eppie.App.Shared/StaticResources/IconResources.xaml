@@ -1,46 +1,46 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
+    <!--
+        Note: We can't use FontIconSource or SymbolIconSource as resources in UWP projects
+        because icons may disappear or turn into emoji after a page reload.
+        (same as https://github.com/microsoft/microsoft-ui-xaml/issues/7550)
+    -->
+
     <x:Double x:Key="DefaultSymbolSize">16</x:Double>
 
+    <x:String x:Key="BackGlyph">&#xE72B;</x:String>
+    <x:String x:Key="MoreGlyph">&#xE712;</x:String>
+    <x:String x:Key="DeleteGlyph">&#xE74D;</x:String>
+    <x:String x:Key="AttachGlyph">&#xE723;</x:String>
+
+    <x:String x:Key="MailReplyAllGlyph">&#xE8C2;</x:String>
+    <x:String x:Key="MailForwardGlyph">&#xE89C;</x:String>
+    <x:String x:Key="ReadGlyph">&#xE8C3;</x:String>
+    <x:String x:Key="MailGlyph">&#xE715;</x:String>
+    <x:String x:Key="MailFilledGlyph">&#xE8A8;</x:String>
+
+    <x:String x:Key="Contact2Glyph">&#xE8D4;</x:String>
+
+    <x:String x:Key="FlagGlyph">&#xE7C1;</x:String>
     <x:String x:Key="BlackFlagGlyph">&#xEB4B;</x:String>
+
     <x:String x:Key="RobotGlyph">&#xE99A;</x:String>
     <x:String x:Key="LockGlyph">&#xE72E;</x:String>
 
-    <SymbolIconSource x:Key="BackIconSource" Symbol="Back" />
-    <SymbolIconSource x:Key="MoreIconSource" Symbol="More" />
-    <SymbolIconSource x:Key="AttachIconSource" Symbol="Attach" />
-    <SymbolIconSource x:Key="DeleteIconSource" Symbol="Delete" />
-    <SymbolIconSource x:Key="MailReplyAllIconSource" Symbol="MailReplyAll" />
-    <SymbolIconSource x:Key="MailForwardIconSource" Symbol="MailForward" />
-    <SymbolIconSource x:Key="MarkAsReadIconSource" Symbol="Read" />
-    <SymbolIconSource x:Key="MarkAsUnreadIconSource" Symbol="Mail" />
-    <SymbolIconSource x:Key="ReadStatusIconSource" Symbol="Read" />
-    <SymbolIconSource x:Key="UnreadStatusIconSource" Symbol="Mail" />
-    <SymbolIconSource x:Key="MailFillIconSource" Symbol="MailFilled" />
-    <SymbolIconSource x:Key="HiddenCopyIconSource" Symbol="Contact2" />
-    <SymbolIconSource x:Key="ClearFlagIconSource" Symbol="Flag" />
+    <StaticResource x:Key="MarkAsReadGlyph" ResourceKey="ReadGlyph" />
+    <StaticResource x:Key="MarkAsUnreadGlyph" ResourceKey="MailGlyph" />
+    <StaticResource x:Key="ReadStatusGlyph" ResourceKey="ReadGlyph" />
+    <StaticResource x:Key="UnreadStatusGlyph" ResourceKey="MailGlyph" />
 
-    <FontIconSource x:Key="SetFlagIconSource"
-                    FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                    Glyph="{StaticResource BlackFlagGlyph}" />
+    <StaticResource x:Key="ActiveFlagGlyph" ResourceKey="BlackFlagGlyph" />
+    <StaticResource x:Key="InactiveFlagGlyph" ResourceKey="BlackFlagGlyph" />
+    <StaticResource x:Key="SetFlagGlyph" ResourceKey="BlackFlagGlyph" />
+    <StaticResource x:Key="ClearFlagGlyph" ResourceKey="FlagGlyph" />
 
-    <FontIconSource x:Key="FlaggedIconSource"
-                    FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                    Glyph="{StaticResource BlackFlagGlyph}" />
-
-    <FontIconSource x:Key="UnflaggedIconSource"
-                    FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                    Foreground="{ThemeResource TextFillColorDisabledBrush}"
-                    Glyph="{StaticResource BlackFlagGlyph}" />
-
-    <FontIconSource x:Key="AIAgentIconSource"
-                    FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                    Glyph="{StaticResource RobotGlyph}" />
-
-    <FontIconSource x:Key="SecurityIconSource"
-                    FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                    Glyph="{StaticResource LockGlyph}" />
+    <StaticResource x:Key="HiddenCopyGlyph" ResourceKey="Contact2Glyph" />
+    <StaticResource x:Key="AIAgentGlyph" ResourceKey="RobotGlyph" />
+    <StaticResource x:Key="SecurityGlyph" ResourceKey="LockGlyph" />
 
     <Style x:Key="DefaultFontIconStyle" TargetType="FontIcon">
         <Setter Property="FontSize" Value="{StaticResource DefaultSymbolSize}" />
@@ -55,5 +55,7 @@
     </Style>
 
     <Style BasedOn="{StaticResource DefaultViewboxStyle}" TargetType="Viewbox" />
+
+    <StaticResource x:Key="InactiveFlagBrush" ResourceKey="TextFillColorDisabledBrush" />
 
 </ResourceDictionary>

@@ -9,6 +9,7 @@
                               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                               xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
                               xmlns:triggers="using:Eppie.App.UI.Triggers"
+                              xmlns:ui="using:CommunityToolkit.WinUI"
                               xmlns:uitools="using:Eppie.App.UI.Tools"
                               xmlns:viewmodels="using:Tuvi.App.ViewModels"
                               Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
@@ -36,21 +37,21 @@
         <XamlUICommand x:Key="DraftAndBackUICommand"
                        x:Uid="DraftAndBackUICommand"
                        Command="{x:Bind ViewModel.GoBackCommand}"
-                       IconSource="{StaticResource BackIconSource}" />
+                       IconSource="{ui:SymbolIconSource Symbol=Back}" />
 
         <XamlUICommand x:Key="MoreUICommand"
                        x:Uid="MoreUICommand"
-                       IconSource="{StaticResource MoreIconSource}" />
+                       IconSource="{ui:SymbolIconSource Symbol=More}" />
 
         <XamlUICommand x:Key="AttachUICommand"
                        x:Uid="AttachUICommand"
                        Command="{x:Bind ViewModel.AttachFilesCommand}"
-                       IconSource="{StaticResource AttachIconSource}" />
+                       IconSource="{ui:SymbolIconSource Symbol=Attach}" />
 
         <XamlUICommand x:Key="DeleteMessageUICommand"
                        x:Uid="DeleteMessageUICommand"
                        Command="{x:Bind ViewModel.DeleteMessageAndGoBackCommand}"
-                       IconSource="{StaticResource DeleteIconSource}" />
+                       IconSource="{ui:SymbolIconSource Symbol=Delete}" />
 
         <DataTemplate x:Key="RemovableAttachmentItemTemplate" x:DataType="viewmodels:RemovableAttachment">
             <controls:AttachmentFileControl DeleteFileCommand="{x:Bind RemoveCommand}"
@@ -218,7 +219,7 @@
                                                      UntokenizedContact="{x:Bind ViewModel.UntokenizedContactTo, Mode=TwoWay}">
                             <controls:EmailsInputControl.ExtraButtonContent>
                                 <Viewbox HorizontalAlignment="Center" VerticalAlignment="Center">
-                                    <IconSourceElement IconSource="{StaticResource HiddenCopyIconSource}" />
+                                    <IconSourceElement IconSource="{ui:FontIconSource Glyph={StaticResource HiddenCopyGlyph}}" />
                                 </Viewbox>
                             </controls:EmailsInputControl.ExtraButtonContent>
                         </controls:EmailsInputControl>
@@ -230,7 +231,7 @@
                             <Viewbox Margin="{StaticResource HorizontalMargin}"
                                      HorizontalAlignment="Left"
                                      VerticalAlignment="Center">
-                                <IconSourceElement IconSource="{StaticResource HiddenCopyIconSource}" />
+                                <IconSourceElement IconSource="{ui:FontIconSource Glyph={StaticResource HiddenCopyGlyph}}" />
                             </Viewbox>
                         </Grid>
 
@@ -352,10 +353,9 @@
 
                         <MenuFlyoutSeparator Visibility="{x:Bind ViewModel.IsExtraSettingsVisible, Mode=OneWay}" />
 
-                        <MenuFlyoutSubItem x:Uid="SecurityMenuSection" Visibility="{x:Bind ViewModel.IsAdvancedSettingsVisible, Mode=OneWay}">
-                            <MenuFlyoutSubItem.Icon>
-                                <IconSourceElement IconSource="{StaticResource SecurityIconSource}" />
-                            </MenuFlyoutSubItem.Icon>
+                        <MenuFlyoutSubItem x:Uid="SecurityMenuSection"
+                                           Icon="{ui:FontIcon Glyph={StaticResource SecurityGlyph}}"
+                                           Visibility="{x:Bind ViewModel.IsAdvancedSettingsVisible, Mode=OneWay}">
                             <MenuFlyoutSubItem.Items>
                                 <ToggleMenuFlyoutItem x:Uid="MessageEncryptedMenuItem"
                                                       IsChecked="{x:Bind ViewModel.IsEncrypted, Mode=TwoWay}"
@@ -370,12 +370,9 @@
 
                         <MenuFlyoutSubItem x:Name="AIAgentMenu"
                                            x:Uid="AIAgentMenuSection"
+                                           Icon="{ui:FontIcon Glyph={StaticResource AIAgentGlyph}}"
                                            IsEnabled="{x:Bind ViewModel.IsLocalAIEnabled, Mode=OneWay}"
-                                           Visibility="{x:Bind ViewModel.IsLocalAIAvailable, Mode=OneWay}">
-                            <MenuFlyoutSubItem.Icon>
-                                <IconSourceElement IconSource="{StaticResource AIAgentIconSource}" />
-                            </MenuFlyoutSubItem.Icon>
-                        </MenuFlyoutSubItem>
+                                           Visibility="{x:Bind ViewModel.IsLocalAIAvailable, Mode=OneWay}" />
                     </MenuFlyout>
                 </controls:CommandButton.Flyout>
             </controls:CommandButton>
