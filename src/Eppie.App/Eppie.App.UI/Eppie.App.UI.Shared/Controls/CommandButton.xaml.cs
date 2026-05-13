@@ -58,6 +58,15 @@ namespace Eppie.App.UI.Controls
         public static readonly DependencyProperty IconProperty =
             DependencyProperty.Register(nameof(Icon), typeof(IconElement), typeof(CommandButton), new PropertyMetadata(null));
 
+        public IconElement FilledIcon
+        {
+            get { return (IconElement)GetValue(FilledIconProperty); }
+            set { SetValue(FilledIconProperty, value); }
+        }
+
+        public static readonly DependencyProperty FilledIconProperty =
+            DependencyProperty.Register(nameof(FilledIcon), typeof(IconElement), typeof(CommandButton), new PropertyMetadata(null));
+
 
         public bool IsCompact
         {

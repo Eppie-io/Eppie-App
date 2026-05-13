@@ -23,7 +23,7 @@
     <x:String x:Key="Contact2Glyph">&#xE8D4;</x:String>
 
     <x:String x:Key="FlagGlyph">&#xE7C1;</x:String>
-    <x:String x:Key="BlackFlagGlyph">&#xEB4B;</x:String>
+    <x:String x:Key="FlagFilledGlyph">&#xEB4B;</x:String>
 
     <x:String x:Key="RobotGlyph">&#xE99A;</x:String>
     <x:String x:Key="LockGlyph">&#xE72E;</x:String>
@@ -33,9 +33,8 @@
     <StaticResource x:Key="ReadStatusGlyph" ResourceKey="ReadGlyph" />
     <StaticResource x:Key="UnreadStatusGlyph" ResourceKey="MailGlyph" />
 
-    <StaticResource x:Key="ActiveFlagGlyph" ResourceKey="BlackFlagGlyph" />
-    <StaticResource x:Key="InactiveFlagGlyph" ResourceKey="BlackFlagGlyph" />
-    <StaticResource x:Key="SetFlagGlyph" ResourceKey="BlackFlagGlyph" />
+    <StaticResource x:Key="ActiveFlagGlyph" ResourceKey="FlagFilledGlyph" />
+    <StaticResource x:Key="SetFlagGlyph" ResourceKey="FlagFilledGlyph" />
     <StaticResource x:Key="ClearFlagGlyph" ResourceKey="FlagGlyph" />
 
     <StaticResource x:Key="HiddenCopyGlyph" ResourceKey="Contact2Glyph" />
@@ -56,6 +55,31 @@
 
     <Style BasedOn="{StaticResource DefaultViewboxStyle}" TargetType="Viewbox" />
 
-    <StaticResource x:Key="InactiveFlagBrush" ResourceKey="TextFillColorDisabledBrush" />
+    <ResourceDictionary.ThemeDictionaries>
+        <ResourceDictionary x:Key="Default">
+            <StaticResource x:Key="InactiveFlagGlyph" ResourceKey="FlagFilledGlyph" />
+            <StaticResource x:Key="UnreadFilledStatusGlyph" ResourceKey="MailFilledGlyph" />
+
+            <StaticResource x:Key="InactiveFlagBrush" ResourceKey="TextFillColorDisabledBrush" />
+            <StaticResource x:Key="UnreadBrush" ResourceKey="TextOnAccentFillColorPrimaryBrush" />
+            <StaticResource x:Key="UnreadFilledBrush" ResourceKey="TextFillColorPrimaryBrush" />
+        </ResourceDictionary>
+        <ResourceDictionary x:Key="HighContrast">
+            <StaticResource x:Key="InactiveFlagGlyph" ResourceKey="FlagGlyph" />
+            <StaticResource x:Key="UnreadFilledStatusGlyph" ResourceKey="MailGlyph" />
+
+            <StaticResource x:Key="InactiveFlagBrush" ResourceKey="SystemColorButtonTextColor" />
+            <StaticResource x:Key="UnreadBrush" ResourceKey="SystemColorButtonTextColor" />
+            <StaticResource x:Key="UnreadFilledBrush" ResourceKey="SystemColorButtonTextColor" />
+        </ResourceDictionary>
+        <ResourceDictionary x:Key="Light">
+            <StaticResource x:Key="InactiveFlagGlyph" ResourceKey="FlagFilledGlyph" />
+            <StaticResource x:Key="UnreadFilledStatusGlyph" ResourceKey="MailFilledGlyph" />
+
+            <StaticResource x:Key="InactiveFlagBrush" ResourceKey="TextFillColorDisabledBrush" />
+            <StaticResource x:Key="UnreadBrush" ResourceKey="TextOnAccentFillColorPrimaryBrush" />
+            <StaticResource x:Key="UnreadFilledBrush" ResourceKey="TextFillColorPrimaryBrush" />
+        </ResourceDictionary>
+    </ResourceDictionary.ThemeDictionaries>
 
 </ResourceDictionary>

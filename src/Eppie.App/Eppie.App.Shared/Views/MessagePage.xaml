@@ -71,11 +71,9 @@
                        Command="{x:Bind ViewModel.MarkMessageAsUnreadCommand}"
                        IconSource="{ui:FontIconSource Glyph={StaticResource ReadStatusGlyph}}" />
 
-        <!--  Todo: Add MailFilled back layer  -->
         <XamlUICommand x:Key="UnreadStatusUICommand"
                        x:Uid="UnreadStatusUICommand"
-                       Command="{x:Bind ViewModel.MarkMessageAsReadCommand}"
-                       IconSource="{ui:FontIconSource Glyph={StaticResource UnreadStatusGlyph}}" />
+                       Command="{x:Bind ViewModel.MarkMessageAsReadCommand}" />
 
         <XamlUICommand x:Key="FlagMessageUICommand"
                        x:Uid="FlagMessageUICommand"
@@ -94,9 +92,7 @@
 
         <XamlUICommand x:Key="UnflaggedStatusUICommand"
                        x:Uid="UnflaggedStatusUICommand"
-                       Command="{x:Bind ViewModel.FlagMessageCommand}"
-                       IconSource="{ui:FontIconSource Foreground={StaticResource InactiveFlagBrush},
-                                                      Glyph={StaticResource InactiveFlagGlyph}}" />
+                       Command="{x:Bind ViewModel.FlagMessageCommand}" />
 
         <XamlUICommand x:Key="DeleteMessageUICommand"
                        x:Uid="DeleteMessageUICommand"
@@ -215,7 +211,14 @@
                                     VerticalAlignment="Center"
                                     Command="{StaticResource UnreadStatusUICommand}"
                                     IsCompact="True"
-                                    Visibility="{x:Bind ViewModel.MessageInfo.IsMarkedAsRead, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+                                    Visibility="{x:Bind ViewModel.MessageInfo.IsMarkedAsRead, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                <controls:CommandButton.Icon>
+                    <FontIcon Foreground="{ThemeResource UnreadBrush}" Glyph="{StaticResource UnreadStatusGlyph}" />
+                </controls:CommandButton.Icon>
+                <controls:CommandButton.FilledIcon>
+                    <FontIcon Foreground="{ThemeResource UnreadFilledBrush}" Glyph="{ThemeResource UnreadFilledStatusGlyph}" />
+                </controls:CommandButton.FilledIcon>
+            </controls:CommandButton>
 
             <controls:CommandButton Margin="0,8,0,0"
                                     HorizontalAlignment="Center"
@@ -223,7 +226,11 @@
                                     Command="{StaticResource UnflaggedStatusUICommand}"
                                     CommandParameter="{x:Bind ViewModel.MessageInfo, Mode=OneWay}"
                                     IsCompact="True"
-                                    Visibility="{x:Bind ViewModel.MessageInfo.IsFlagged, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+                                    Visibility="{x:Bind ViewModel.MessageInfo.IsFlagged, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                <controls:CommandButton.Icon>
+                    <FontIcon Foreground="{ThemeResource InactiveFlagBrush}" Glyph="{ThemeResource InactiveFlagGlyph}" />
+                </controls:CommandButton.Icon>
+            </controls:CommandButton>
 
             <controls:CommandButton Margin="0,8,0,0"
                                     HorizontalAlignment="Center"
