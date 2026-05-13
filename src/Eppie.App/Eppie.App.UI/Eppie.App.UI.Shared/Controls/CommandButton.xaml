@@ -45,7 +45,10 @@
                      Height="{ThemeResource CommandButtonIconHeight}"
                      HorizontalAlignment="Center"
                      VerticalAlignment="Center">
-                <ContentPresenter Content="{x:Bind local:CommandButton.GetIcon(Icon, Command), Mode=OneWay}" />
+                <Grid>
+                    <ContentPresenter Content="{x:Bind FilledIcon, Mode=OneWay}" Visibility="{x:Bind FilledIcon, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}" />
+                    <ContentPresenter Content="{x:Bind local:CommandButton.GetIcon(Icon, Command), Mode=OneWay}" />
+                </Grid>
             </Viewbox>
             <TextBlock x:Name="LabelTextBlock"
                        Grid.Column="1"
