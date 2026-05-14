@@ -3,6 +3,7 @@
                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                        xmlns:behaviors="using:Eppie.App.UI.Behaviors"
                        xmlns:controls="using:Eppie.App.UI.Controls"
+                       xmlns:converters="using:Tuvi.App.Converters"
                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                        xmlns:extensions="using:Eppie.App.UI.Extensions"
                        xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
@@ -98,6 +99,9 @@
                        x:Uid="DeleteMessageUICommand"
                        Command="{x:Bind ViewModel.DeleteMessageAndGoBackCommand}"
                        IconSource="{ui:SymbolIconSource Symbol=Delete}" />
+
+        <converters:RecipientConverter x:Key="RecipientConverter" />
+        <converters:ListRecipientsConverter x:Key="ListRecipientsConverter" />
 
     </local:MessagePageBase.Resources>
 
@@ -300,7 +304,6 @@
                 <!--  ToDo: Add P2P and encryption labels.  -->
 
                 <!--  Receiver  -->
-                <!--  ToDo: Combine receivers and copy receivers  -->
                 <StackPanel Grid.Row="0"
                             Grid.Column="1"
                             Margin="16,0,8,0"
@@ -311,24 +314,11 @@
                                VerticalAlignment="Center"
                                Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
 
-                    <!--  ToDo: Create Control; Add tooltip; Add flyout with recipients  -->
-                    <Border Height="32"
-                            Padding="2,0,12,0"
-                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                            BorderThickness="1"
-                            CornerRadius="16">
-                        <StackPanel Orientation="Horizontal">
-                            <controls:AddressPresenter VerticalAlignment="Center"
-                                                       DisplayName="{x:Bind ViewModel.MessageInfo.Account.DisplayEmail.Name, Mode=OneWay}"
-                                                       Mode="Compact" />
-                            <TextBlock Margin="8,0,0,0"
-                                       VerticalAlignment="Center"
-                                       Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                       Visibility="{x:Bind ViewModel.MessageInfo.AdditionalRecipientCount, Mode=OneWay, Converter={StaticResource IntToVisibilityConverter}}">
-                                <Run Text="+" /><Run Text="{x:Bind ViewModel.MessageInfo.AdditionalRecipientCount, Mode=OneWay}" />
-                            </TextBlock>
-                        </StackPanel>
-                    </Border>
+                    <!--  ToDo: Add tooltip;  -->
+                    <controls:RecipientControl VerticalAlignment="Center"
+                                               BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                               ItemsSource="{x:Bind ViewModel.MessageInfo.AllRecipients, Mode=OneWay, Converter={StaticResource ListRecipientsConverter}}"
+                                               PrimaryRecepient="{x:Bind ViewModel.MessageInfo.Account, Mode=OneWay, Converter={StaticResource RecipientConverter}}" />
                 </StackPanel>
 
                 <TextBlock Grid.Row="0"

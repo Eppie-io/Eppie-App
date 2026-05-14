@@ -47,7 +47,6 @@ namespace Tuvi.App.ViewModels
         string PreviewText { get; }
         bool HasAttachments { get; }
         int AttachmentCount { get; }
-        int AdditionalRecipientCount { get; }
         string SenderEmail { get; }
         string FirstRecipientDisplayName { get; }
         bool IsMarkedAsRead { get; }
@@ -140,6 +139,16 @@ namespace Tuvi.App.ViewModels
             }
         }
 
+        public List<EmailAddress> AllRecipients
+        {
+            get
+            {
+                return _message.To?.Concat(_message.Cc ?? new List<EmailAddress>())
+                                   .Concat(_message.Bcc ?? new List<EmailAddress>())
+                                   .ToList() ?? new List<EmailAddress>();
+            }
+        }
+
         static private string EmailAddressesToString(IEnumerable<EmailAddress> values)
         {
             var result = values.Where(m => !string.IsNullOrWhiteSpace(m?.Address)).Select(m => m.DisplayName);
@@ -207,16 +216,6 @@ namespace Tuvi.App.ViewModels
         public int AttachmentCount
         {
             get { return _message.Attachments?.Count ?? 0; }
-        }
-
-        public int AdditionalRecipientCount
-        {
-            get
-            {
-                var count = _message.To?.Count ?? 0;
-                // Return count minus 1 since one recipient is shown as avatar
-                return count > 0 ? count - 1 : 0;
-            }
         }
 
         public string SenderEmail
@@ -380,7 +379,6 @@ namespace Tuvi.App.ViewModels
             OnPropertyChanged(nameof(Attachments));
             OnPropertyChanged(nameof(HasAttachments));
             OnPropertyChanged(nameof(AttachmentCount));
-            OnPropertyChanged(nameof(AdditionalRecipientCount));
             OnPropertyChanged(nameof(SenderEmail));
             OnPropertyChanged(nameof(FirstRecipientDisplayName));
             OnPropertyChanged(nameof(IsMarkedAsRead));
@@ -390,6 +388,7 @@ namespace Tuvi.App.ViewModels
             OnPropertyChanged(nameof(IsSigned));
             OnPropertyChanged(nameof(IsEncrypted));
             OnPropertyChanged(nameof(AIAgentProcessedBody));
+            OnPropertyChanged(nameof(AllRecipients));
         }
 
         private void SetFlaged(bool value)
