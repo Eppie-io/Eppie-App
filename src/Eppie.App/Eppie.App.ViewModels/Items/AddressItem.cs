@@ -26,7 +26,7 @@ namespace Tuvi.App.ViewModels
         internal Account Account { get; }
 
         public string Address => Account?.DisplayEmail.Address;
-        public string DisplayName => GetDisplayName(Account?.DisplayEmail);
+        public string DisplayName => Account?.DisplayEmail?.Name;
         public bool IsDecentralized => Account?.DisplayEmail?.IsDecentralized ?? false;
 
         public ImageInfo AvatarInfo { get; internal set; }
@@ -34,29 +34,6 @@ namespace Tuvi.App.ViewModels
         public AddressItem(Account account)
         {
             Account = account ?? throw new ArgumentNullException(nameof(account));
-        }
-
-        private static string GetDisplayName(EmailAddress email)
-        {
-            if (email is null)
-            {
-                throw new ArgumentNullException(nameof(email));
-            }
-
-            if (!string.IsNullOrWhiteSpace(email.Name))
-            {
-                return email.Name;
-            }
-
-            string displayAddress = email.Address;
-            int idx = displayAddress?.IndexOfAny(new char[] { '+', '@' }) ?? 0;
-
-            if (idx >= 0)
-            {
-                displayAddress = displayAddress.Substring(0, idx);
-            }
-
-            return displayAddress;
         }
     }
 }
