@@ -477,7 +477,11 @@ namespace Tuvi.App.ViewModels
         private void RefreshContacts()
         {
             SelectedContact = null;
-            _ = Contacts.RefreshAsync();
+
+            if (Contacts != null)
+            {
+                _ = Contacts.RefreshAsync();
+            }
         }
 
         public async Task<IEnumerable<ContactItem>> LoadMoreItemsAsync(int count, CancellationToken cancellationToken)
