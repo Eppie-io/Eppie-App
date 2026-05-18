@@ -45,12 +45,6 @@ namespace Tuvi.App.ViewModels
         private Contact _lastContact;
         private Func<Task<byte[]>> _avatarProvider;
 
-        public string SearchText
-        {
-            get => _searchFilter.SearchText;
-            set => _searchFilter.SearchText = value;
-        }
-
         private ContactsSortOrder _sortOrder;
         public ContactsSortOrder SortOrder
         {
@@ -274,8 +268,8 @@ namespace Tuvi.App.ViewModels
                 throw new ArgumentNullException(nameof(collection));
             }
 
-            collection.SearchFilter = _searchFilter;
             Contacts = collection;
+            Contacts.SearchFilter = _searchFilter;
         }
 
         private void AddContact()

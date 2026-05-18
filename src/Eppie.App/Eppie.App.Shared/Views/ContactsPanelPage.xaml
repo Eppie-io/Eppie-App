@@ -46,7 +46,7 @@
                             Grid.Row="1"
                             Margin="4,4,0,0"
                             QueryIcon="Find"
-                            Text="{x:Bind ViewModel.SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            Text="{x:Bind ViewModel.Contacts.SearchFilter.SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
             <sharedControls:ContactsListControl Grid.Row="2"
                                                 Margin="0,4,0,0"
