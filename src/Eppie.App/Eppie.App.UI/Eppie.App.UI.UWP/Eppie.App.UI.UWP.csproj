@@ -105,8 +105,10 @@
     <EmbeddedResource Include="Properties\Eppie.App.UI.UWP.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" />
     <PackageReference Include="CommunityToolkit.Uwp.Controls.TokenizingTextBox" />
+    <PackageReference Include="CommunityToolkit.Uwp.Extensions" />
+    <PackageReference Include="CommunityToolkit.Uwp.Triggers" />
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" />
     <PackageReference Include="Microsoft.UI.Xaml" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Uwp.Managed" />
   </ItemGroup>

@@ -54,6 +54,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\RecipientControl.xaml.cs">
       <DependentUpon>RecipientControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\SimpleExpander.xaml.cs">
+      <DependentUpon>SimpleExpander.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ToolTipProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\EmailValidityToBoolConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\SupportDevelopmentControl.xaml.cs">
@@ -170,6 +173,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Controls\RecipientControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Controls\SimpleExpander.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
