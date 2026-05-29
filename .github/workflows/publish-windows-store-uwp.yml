@@ -188,26 +188,6 @@ jobs:
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@30375c66a4eea26614e0d39710365f22f8b0af57 # v3
 
-      - name: Prepare package version
-        shell: pwsh
-        run: |
-          $numericVersion = '${{ steps.assign-version.outputs.numeric-version }}'
-          $projectPath = '${{ env.project-path }}'
-          $projectDirectory = Split-Path -Parent $projectPath
-          $assemblyInfoPath = Join-Path $projectDirectory 'Properties\AssemblyInfo.cs'
-          $manifestPath = Join-Path $projectDirectory 'Package.appxmanifest'
-
-          $assemblyInfoContent = Get-Content $assemblyInfoPath -Raw
-          $assemblyInfoContent = $assemblyInfoContent -replace '\[assembly: AssemblyVersion\("[^"]+"\)\]', "[assembly: AssemblyVersion(\"$numericVersion\")]"
-          $assemblyInfoContent = $assemblyInfoContent -replace '\[assembly: AssemblyFileVersion\("[^"]+"\)\]', "[assembly: AssemblyFileVersion(\"$numericVersion\")]"
-          Set-Content -Path $assemblyInfoPath -Value $assemblyInfoContent
-
-          $manifestXml = New-Object System.Xml.XmlDocument
-          $manifestXml.PreserveWhitespace = $true
-          $manifestXml.Load($manifestPath)
-          $manifestXml.Package.Identity.Version = $numericVersion
-          $manifestXml.Save($manifestPath)
-
       - name: Restore
         shell: pwsh
         run: |
@@ -223,6 +203,7 @@ jobs:
         shell: pwsh
         run: |
           $configuration = '${{ matrix.publish.configuration }}'
+          $numericVersion = '${{ steps.assign-version.outputs.numeric-version }}'
           $projectPath = '${{ env.project-path }}'
           $publishPath = '${{ env.publish-path }}'
           $platforms = '${{ join(matrix.publish.platforms, ',') }}'.Split(',', [System.StringSplitOptions]::RemoveEmptyEntries)
@@ -240,6 +221,10 @@ jobs:
             "/p:AppxBundlePlatforms=$bundlePlatforms"
             '/p:AppxPackageSigningEnabled=false'
             "/p:AppxPackageDir=$publishPath\\"
+            "/p:AppxPackageVersion=$numericVersion"
+            "/p:AssemblyVersion=$numericVersion"
+            "/p:FileVersion=$numericVersion"
+            "/p:Version=$numericVersion"
             '/p:NuGetAudit=false'
             '/verbosity:${{ inputs.dotnet-verbosity }}'
           )
