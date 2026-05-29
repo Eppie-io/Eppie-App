@@ -6,6 +6,7 @@
              xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
              xmlns:local="using:Eppie.App.UI.Controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ui="using:CommunityToolkit.WinUI"
              d:DesignHeight="300"
              d:DesignWidth="400"
              mc:Ignorable="d">
@@ -22,29 +23,32 @@
             <Setter Property="Foreground" Value="{ThemeResource TextFillColorSecondaryBrush}" />
         </Style>
 
-        <XamlUICommand x:Key="MoreUICommand" x:Uid="MoreUICommand">
-            <XamlUICommand.IconSource>
-                <SymbolIconSource Symbol="More" />
-            </XamlUICommand.IconSource>
-        </XamlUICommand>
+        <XamlUICommand x:Key="SaveAttachedFileUICommand"
+                       x:Uid="/Eppie.App.UI/Controls/SaveAttachedFileUICommand"
+                       Command="{x:Bind SaveFileCommand}"
+                       IconSource="{ui:SymbolIconSource Symbol=Save}" />
+
+        <XamlUICommand x:Key="OpenAttachedFileUICommand"
+                       x:Uid="/Eppie.App.UI/Controls/OpenAttachedFileUICommand"
+                       Command="{x:Bind OpenFileCommand}"
+                       IconSource="{ui:SymbolIconSource Symbol=OpenFile}" />
+
+        <XamlUICommand x:Key="DeleteAttachedFileUICommand"
+                       x:Uid="/Eppie.App.UI/Controls/DeleteAttachedFileUICommand"
+                       Command="{x:Bind DeleteFileCommand}"
+                       IconSource="{ui:SymbolIconSource Symbol=Delete}" />
 
         <MenuFlyout x:Key="CommandMenu">
-            <MenuFlyoutItem x:Uid="/Eppie.App.UI/Controls/SaveAttachedFileMenuItem"
-                            Command="{x:Bind SaveFileCommand}"
-                            CommandParameter="{x:Bind SaveFileCommandParameter}"
-                            Icon="Save"
-                            IsEnabled="{x:Bind IsFileEmpty, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
-                            Visibility="{x:Bind SaveFileCommand, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}" />
-            <MenuFlyoutItem x:Uid="/Eppie.App.UI/Controls/OpenAttachedFileMenuItem"
-                            Command="{x:Bind OpenFileCommand}"
+            <MenuFlyoutItem Command="{StaticResource OpenAttachedFileUICommand}"
                             CommandParameter="{x:Bind OpenFileCommandParameter}"
-                            Icon="OpenFile"
                             IsEnabled="{x:Bind IsFileEmpty, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
                             Visibility="{x:Bind OpenFileCommand, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}" />
-            <MenuFlyoutItem x:Uid="/Eppie.App.UI/Controls/DeleteAttachedFileMenuItem"
-                            Command="{x:Bind DeleteFileCommand, Mode=OneWay}"
+            <MenuFlyoutItem Command="{StaticResource SaveAttachedFileUICommand}"
+                            CommandParameter="{x:Bind SaveFileCommandParameter}"
+                            IsEnabled="{x:Bind IsFileEmpty, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
+                            Visibility="{x:Bind SaveFileCommand, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}" />
+            <MenuFlyoutItem Command="{StaticResource DeleteAttachedFileUICommand}"
                             CommandParameter="{x:Bind DeleteFileCommandParameter}"
-                            Icon="Delete"
                             Visibility="{x:Bind DeleteFileCommand, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}" />
         </MenuFlyout>
     </UserControl.Resources>
@@ -131,9 +135,30 @@
             <local:CommandButton Grid.RowSpan="2"
                                  Grid.Column="5"
                                  VerticalAlignment="Center"
-                                 Command="{StaticResource MoreUICommand}"
-                                 Flyout="{StaticResource CommandMenu}"
-                                 IsCompact="True" />
+                                 Command="{StaticResource SaveAttachedFileUICommand}"
+                                 CommandParameter="{x:Bind SaveFileCommandParameter}"
+                                 IsCompact="True"
+                                 IsEnabled="{x:Bind IsFileEmpty, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
+                                 Visibility="{x:Bind SaveFileCommand, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}">
+                <interactivity:Interaction.Behaviors>
+                    <behaviors:CommandButtonTooltipBehavior />
+                </interactivity:Interaction.Behaviors>
+            </local:CommandButton>
+
+            <Border Grid.RowSpan="2"
+                    Grid.Column="5"
+                    Visibility="{x:Bind SaveFileCommand, Mode=OneWay, Converter={StaticResource InverseObjectToVisibilityConverter}}">
+                <local:CommandButton VerticalAlignment="Center"
+                                     Command="{StaticResource DeleteAttachedFileUICommand}"
+                                     CommandParameter="{x:Bind DeleteFileCommandParameter}"
+                                     Icon="Cancel"
+                                     IsCompact="True"
+                                     Visibility="{x:Bind DeleteFileCommand, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}">
+                    <interactivity:Interaction.Behaviors>
+                        <behaviors:CommandButtonTooltipBehavior />
+                    </interactivity:Interaction.Behaviors>
+                </local:CommandButton>
+            </Border>
         </Grid>
     </local:ItemContainer>
 </UserControl>

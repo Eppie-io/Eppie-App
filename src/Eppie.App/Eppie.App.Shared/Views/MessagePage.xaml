@@ -10,11 +10,12 @@
                        xmlns:local="using:Eppie.App.Views"
                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                        xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+                       xmlns:not_win="http://uno.ui/not_win"
                        xmlns:ui="using:CommunityToolkit.WinUI"
                        xmlns:viewmodels="using:Tuvi.App.ViewModels"
                        xmlns:win="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                        Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-                       mc:Ignorable="d">
+                       mc:Ignorable="d not_win">
 
     <local:MessagePageBase.DataContext>
         <viewmodels:MessagePageViewModel />
@@ -27,15 +28,27 @@
         <x:Double x:Key="ProgressRingSize">48</x:Double>
 
         <DataTemplate x:Key="DownloadableAttachmentItemTemplate" x:DataType="viewmodels:DownloadableAttachment">
-            <controls:AttachmentFileControl FileExtension="{x:Bind FileExtension, Mode=OneWay}"
-                                            FileName="{x:Bind FileName, Mode=OneWay}"
-                                            FileSize="{x:Bind FileSize, Mode=OneWay}"
-                                            FileThumbnail="{x:Bind FileThumbnail, Mode=OneWay}"
-                                            IsFileEmpty="{x:Bind IsEmpty, Mode=OneWay}"
-                                            OpenFileCommand="{x:Bind OpenCommand}"
-                                            OpenFileCommandParameter="{x:Bind Converter={StaticResource AttachmentConverter}}"
-                                            SaveFileCommand="{x:Bind DownloadCommand}"
-                                            SaveFileCommandParameter="{x:Bind Converter={StaticResource AttachmentConverter}}" />
+            <win:Border>
+                <controls:AttachmentFileControl FileExtension="{x:Bind FileExtension, Mode=OneWay}"
+                                                FileName="{x:Bind FileName, Mode=OneWay}"
+                                                FileSize="{x:Bind FileSize, Mode=OneWay}"
+                                                FileThumbnail="{x:Bind FileThumbnail, Mode=OneWay}"
+                                                IsFileEmpty="{x:Bind IsEmpty, Mode=OneWay}"
+                                                OpenFileCommand="{x:Bind OpenCommand}"
+                                                OpenFileCommandParameter="{x:Bind Converter={StaticResource AttachmentConverter}}"
+                                                SaveFileCommand="{x:Bind DownloadCommand}"
+                                                SaveFileCommandParameter="{x:Bind Converter={StaticResource AttachmentConverter}}" />
+            </win:Border>
+            <not_win:Border>
+                <!--  UnoBug: OpenCommand uses Launcher.LaunchFileAsync that is not supported by the Uno Platform  -->
+                <controls:AttachmentFileControl FileExtension="{x:Bind FileExtension, Mode=OneWay}"
+                                                FileName="{x:Bind FileName, Mode=OneWay}"
+                                                FileSize="{x:Bind FileSize, Mode=OneWay}"
+                                                FileThumbnail="{x:Bind FileThumbnail, Mode=OneWay}"
+                                                IsFileEmpty="{x:Bind IsEmpty, Mode=OneWay}"
+                                                SaveFileCommand="{x:Bind DownloadCommand}"
+                                                SaveFileCommandParameter="{x:Bind Converter={StaticResource AttachmentConverter}}" />
+            </not_win:Border>
         </DataTemplate>
 
         <XamlUICommand x:Key="BackUICommand"

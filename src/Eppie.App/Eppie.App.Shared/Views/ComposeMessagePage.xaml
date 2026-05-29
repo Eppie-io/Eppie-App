@@ -8,12 +8,14 @@
                               xmlns:local="using:Eppie.App.Views"
                               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                               xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+                              xmlns:not_win="http://uno.ui/not_win"
                               xmlns:triggers="using:Eppie.App.UI.Triggers"
                               xmlns:ui="using:CommunityToolkit.WinUI"
                               xmlns:uitools="using:Eppie.App.UI.Tools"
                               xmlns:viewmodels="using:Tuvi.App.ViewModels"
+                              xmlns:win="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                               Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-                              mc:Ignorable="d">
+                              mc:Ignorable="d not_win">
 
     <local:ComposeMessagePageBase.DataContext>
         <viewmodels:ComposeMessagePageViewModel />
@@ -54,17 +56,27 @@
                        IconSource="{ui:SymbolIconSource Symbol=Delete}" />
 
         <DataTemplate x:Key="RemovableAttachmentItemTemplate" x:DataType="viewmodels:RemovableAttachment">
-            <controls:AttachmentFileControl DeleteFileCommand="{x:Bind RemoveCommand}"
-                                            DeleteFileCommandParameter="{x:Bind}"
-                                            FileExtension="{x:Bind FileExtension, Mode=OneWay}"
-                                            FileName="{x:Bind FileName, Mode=OneWay}"
-                                            FileSize="{x:Bind FileSize, Mode=OneWay}"
-                                            FileThumbnail="{x:Bind FileThumbnail, Mode=OneWay}"
-                                            IsFileEmpty="{x:Bind IsEmpty, Mode=OneWay}"
-                                            OpenFileCommand="{x:Bind OpenCommand}"
-                                            OpenFileCommandParameter="{x:Bind Converter={StaticResource AttachmentConverter}}"
-                                            SaveFileCommand="{x:Bind DownloadCommand}"
-                                            SaveFileCommandParameter="{x:Bind Converter={StaticResource AttachmentConverter}}" />
+            <win:Border>
+                <controls:AttachmentFileControl DeleteFileCommand="{x:Bind RemoveCommand}"
+                                                DeleteFileCommandParameter="{x:Bind}"
+                                                FileExtension="{x:Bind FileExtension, Mode=OneWay}"
+                                                FileName="{x:Bind FileName, Mode=OneWay}"
+                                                FileSize="{x:Bind FileSize, Mode=OneWay}"
+                                                FileThumbnail="{x:Bind FileThumbnail, Mode=OneWay}"
+                                                IsFileEmpty="{x:Bind IsEmpty, Mode=OneWay}"
+                                                OpenFileCommand="{x:Bind OpenCommand}"
+                                                OpenFileCommandParameter="{x:Bind Converter={StaticResource AttachmentConverter}}" />
+            </win:Border>
+            <not_win:Border>
+                <!--  UnoBug: OpenCommand uses Launcher.LaunchFileAsync that is not supported by the Uno Platform  -->
+                <controls:AttachmentFileControl DeleteFileCommand="{x:Bind RemoveCommand}"
+                                                DeleteFileCommandParameter="{x:Bind}"
+                                                FileExtension="{x:Bind FileExtension, Mode=OneWay}"
+                                                FileName="{x:Bind FileName, Mode=OneWay}"
+                                                FileSize="{x:Bind FileSize, Mode=OneWay}"
+                                                FileThumbnail="{x:Bind FileThumbnail, Mode=OneWay}"
+                                                IsFileEmpty="{x:Bind IsEmpty, Mode=OneWay}" />
+            </not_win:Border>
         </DataTemplate>
 
 
