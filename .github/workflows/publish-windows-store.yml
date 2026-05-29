@@ -1,6 +1,6 @@
 ################################################################################
 #                                                                              #
-#   Copyright 2025 Eppie(https://eppie.io)                                     #
+#   Copyright 2026 Eppie(https://eppie.io)                                     #
 #                                                                              #
 #   Licensed under the Apache License, Version 2.0 (the "License");            #
 #   you may not use this file except in compliance with the License.           #
@@ -95,64 +95,100 @@ jobs:
         uses: ./.github/actions/assign-version
 
       - name: Validate Store secrets
+        id: validate-store-secrets
         shell: pwsh
         run: |
           $identityName = '${{ secrets.WINDOWS_STORE_IDENTITY_NAME }}'
           $identityPublisher = '${{ secrets.WINDOWS_STORE_IDENTITY_PUBLISHER }}'
           $publisherDisplayName = '${{ secrets.WINDOWS_STORE_PUBLISHER_DISPLAY_NAME }}'
+          $gmailClientId = '${{ secrets.GMAIL_CLIENT_ID }}'
+          $gmailClientSecret = '${{ secrets.GMAIL_CLIENT_SECRET }}'
+          $outlookClientId = '${{ secrets.OUTLOOK_CLIENT_ID }}'
+          $missingSecrets = @()
 
           if ([string]::IsNullOrWhiteSpace($identityName)) {
-            throw "GitHub secret 'WINDOWS_STORE_IDENTITY_NAME' is empty."
+            $missingSecrets += 'WINDOWS_STORE_IDENTITY_NAME'
           }
 
           if ([string]::IsNullOrWhiteSpace($identityPublisher)) {
-            throw "GitHub secret 'WINDOWS_STORE_IDENTITY_PUBLISHER' is empty."
+            $missingSecrets += 'WINDOWS_STORE_IDENTITY_PUBLISHER'
           }
 
           if ([string]::IsNullOrWhiteSpace($publisherDisplayName)) {
-            throw "GitHub secret 'WINDOWS_STORE_PUBLISHER_DISPLAY_NAME' is empty."
+            $missingSecrets += 'WINDOWS_STORE_PUBLISHER_DISPLAY_NAME'
+          }
+
+          if ([string]::IsNullOrWhiteSpace($gmailClientId)) {
+            $missingSecrets += 'GMAIL_CLIENT_ID'
+          }
+
+          if ([string]::IsNullOrWhiteSpace($gmailClientSecret)) {
+            $missingSecrets += 'GMAIL_CLIENT_SECRET'
+          }
+
+          if ([string]::IsNullOrWhiteSpace($outlookClientId)) {
+            $missingSecrets += 'OUTLOOK_CLIENT_ID'
+          }
+
+          if ($missingSecrets.Count -gt 0) {
+            foreach ($secretName in $missingSecrets) {
+              Write-Host "::warning::GitHub secret '$secretName' is empty."
+            }
+
+            'has-missing-secrets=true' >> $env:GITHUB_OUTPUT
+          }
+          else {
+            'has-missing-secrets=false' >> $env:GITHUB_OUTPUT
           }
 
       - uses: finebits/github-actions/toolset/file/replace-text@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1
+        if: steps.validate-store-secrets.outputs.has-missing-secrets != 'true'
         with:
           file: ./src/Eppie.App/Eppie.App.Shared/Authorization/AuthConfig.Uno.cs
           find-what: '\"<Gmail-ClientId>\"'
           replace-with: "${{ secrets.GMAIL_CLIENT_ID }}"
 
       - uses: finebits/github-actions/toolset/file/replace-text@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1
+        if: steps.validate-store-secrets.outputs.has-missing-secrets != 'true'
         with:
           file: ./src/Eppie.App/Eppie.App.Shared/Authorization/AuthConfig.Uno.cs
           find-what: '\"<Gmail-ClientSecret>\"'
           replace-with: "${{ secrets.GMAIL_CLIENT_SECRET }}"
 
       - uses: finebits/github-actions/toolset/file/replace-text@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1
+        if: steps.validate-store-secrets.outputs.has-missing-secrets != 'true'
         with:
           file: ./src/Eppie.App/Eppie.App.Shared/Authorization/AuthConfig.Uno.cs
           find-what: '\"<Outlook-ClientId>\"'
           replace-with: "${{ secrets.OUTLOOK_CLIENT_ID }}"
 
       - uses: finebits/github-actions/toolset/file/replace-text@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1
+        if: steps.validate-store-secrets.outputs.has-missing-secrets != 'true'
         with:
           file: ./src/Eppie.App/Eppie.App/Package.appxmanifest
           find-what: 'Identity.Name'
           replace-with: "${{ secrets.WINDOWS_STORE_IDENTITY_NAME }}"
 
       - uses: finebits/github-actions/toolset/file/replace-text@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1
+        if: steps.validate-store-secrets.outputs.has-missing-secrets != 'true'
         with:
           file: ./src/Eppie.App/Eppie.App/Package.appxmanifest
           find-what: 'Identity.Publisher'
           replace-with: "${{ secrets.WINDOWS_STORE_IDENTITY_PUBLISHER }}"
 
       - uses: finebits/github-actions/toolset/file/replace-text@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1
+        if: steps.validate-store-secrets.outputs.has-missing-secrets != 'true'
         with:
           file: ./src/Eppie.App/Eppie.App/Package.appxmanifest
           find-what: 'Properties.PublisherDisplayName'
           replace-with: "${{ secrets.WINDOWS_STORE_PUBLISHER_DISPLAY_NAME }}"
 
       - name: Setup MSBuild
+        if: steps.validate-store-secrets.outputs.has-missing-secrets != 'true'
         uses: microsoft/setup-msbuild@30375c66a4eea26614e0d39710365f22f8b0af57 # v3
 
       - name: Ensure Windows packaging tools
+        if: steps.validate-store-secrets.outputs.has-missing-secrets != 'true'
         id: ensure-tools
         shell: pwsh
         run: |
@@ -210,6 +246,7 @@ jobs:
           "makeappx-path=$makeAppxPath" >> $env:GITHUB_OUTPUT
 
       - name: Prepare package version
+        if: steps.validate-store-secrets.outputs.has-missing-secrets != 'true'
         shell: pwsh
         working-directory: ./src/Eppie.App/Eppie.App
         run: |
@@ -223,6 +260,7 @@ jobs:
           }
 
       - name: Restore
+        if: steps.validate-store-secrets.outputs.has-missing-secrets != 'true'
         shell: pwsh
         working-directory: ./src/Eppie.App/Eppie.App
         run: |
@@ -235,6 +273,7 @@ jobs:
           }
 
       - name: Build Store packages
+        if: steps.validate-store-secrets.outputs.has-missing-secrets != 'true'
         shell: pwsh
         working-directory: ./src/Eppie.App/Eppie.App
         run: |
@@ -276,6 +315,7 @@ jobs:
           }
 
       - name: Bundle Store packages
+        if: steps.validate-store-secrets.outputs.has-missing-secrets != 'true'
         shell: pwsh
         run: |
           $makeAppxPath = '${{ steps.ensure-tools.outputs.makeappx-path }}'
@@ -310,6 +350,7 @@ jobs:
           }
 
       - name: Prepare Artifacts
+        if: steps.validate-store-secrets.outputs.has-missing-secrets != 'true'
         shell: pwsh
         run: |
           $artifactPath = '${{ env.artifacts-path }}'
@@ -320,6 +361,7 @@ jobs:
           Get-ChildItem $publishPath -Filter *.msixbundle | Copy-Item -Destination $artifactPath -Force
 
       - name: Upload Artifacts
+        if: steps.validate-store-secrets.outputs.has-missing-secrets != 'true'
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: Eppie.WindowsStore [${{ steps.assign-version.outputs.artifact-version }}]

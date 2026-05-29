@@ -37,6 +37,7 @@ on: # yamllint disable-line rule:truthy
         options:
           - all
           - desktop
+          - winui
       os:
         type: choice
         default: all
