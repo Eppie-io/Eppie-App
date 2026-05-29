@@ -3,13 +3,14 @@
                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                        xmlns:behaviors="using:Eppie.App.UI.Behaviors"
                        xmlns:controls="using:Eppie.App.UI.Controls"
+                       xmlns:converters="using:Tuvi.App.Converters"
                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                       xmlns:eppie_controls="using:Eppie.App.UI.Controls"
                        xmlns:extensions="using:Eppie.App.UI.Extensions"
                        xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
                        xmlns:local="using:Eppie.App.Views"
                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                        xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+                       xmlns:ui="using:CommunityToolkit.WinUI"
                        xmlns:viewmodels="using:Tuvi.App.ViewModels"
                        xmlns:win="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                        Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
@@ -20,24 +21,10 @@
     </local:MessagePageBase.DataContext>
 
     <local:MessagePageBase.Resources>
-        <x:Double x:Key="SymbolButtonWidth">32</x:Double>
-        <x:Double x:Key="SymbolButtonHeigth">32</x:Double>
-        <x:Double x:Key="SymbolSize">16</x:Double>
-
-        <x:String x:Key="FlagGlyph">&#xEB4B;</x:String>
-
         <x:Double x:Key="MainAreaMaxWidth">960</x:Double>
-        <x:Double x:Key="SideAreaMinWidth">20</x:Double>
-
         <x:Double x:Key="AvatarSize">44</x:Double>
-
         <x:Double x:Key="MessageViewMinHeight">120</x:Double>
-
-        <x:Double x:Key="FileSymbolSize">36</x:Double>
-        <x:Double x:Key="FileThumbnailSize">48</x:Double>
         <x:Double x:Key="ProgressRingSize">48</x:Double>
-
-        <x:Double x:Key="AttachmentItemWidth">282</x:Double>
 
         <DataTemplate x:Key="DownloadableAttachmentItemTemplate" x:DataType="viewmodels:DownloadableAttachment">
             <controls:AttachmentFileControl FileExtension="{x:Bind FileExtension, Mode=OneWay}"
@@ -51,15 +38,79 @@
                                             SaveFileCommandParameter="{x:Bind Converter={StaticResource AttachmentConverter}}" />
         </DataTemplate>
 
+        <XamlUICommand x:Key="BackUICommand"
+                       x:Uid="BackUICommand"
+                       Command="{x:Bind ViewModel.GoBackCommand}"
+                       IconSource="{ui:SymbolIconSource Symbol=Back}" />
+
+        <XamlUICommand x:Key="MoreUICommand"
+                       x:Uid="MoreUICommand"
+                       IconSource="{ui:SymbolIconSource Symbol=More}" />
+
+        <XamlUICommand x:Key="ReplyAllUICommand"
+                       x:Uid="ReplyAllUICommand"
+                       Command="{x:Bind ViewModel.ReplyAllCommand}"
+                       IconSource="{ui:SymbolIconSource Symbol=MailReplyAll}" />
+
+        <XamlUICommand x:Key="ForwardUICommand"
+                       x:Uid="ForwardUICommand"
+                       Command="{x:Bind ViewModel.ForwardCommand}"
+                       IconSource="{ui:SymbolIconSource Symbol=MailForward}" />
+
+        <XamlUICommand x:Key="MarkMessageAsReadUICommand"
+                       x:Uid="MarkMessageAsReadUICommand"
+                       Command="{x:Bind ViewModel.MarkMessageAsReadCommand}"
+                       IconSource="{ui:FontIconSource Glyph={StaticResource MarkAsReadGlyph}}" />
+
+        <XamlUICommand x:Key="MarkMessageAsUnreadUICommand"
+                       x:Uid="MarkMessageAsUnreadUICommand"
+                       Command="{x:Bind ViewModel.MarkMessageAsUnreadCommand}"
+                       IconSource="{ui:FontIconSource Glyph={StaticResource MarkAsUnreadGlyph}}" />
+
+        <XamlUICommand x:Key="ReadStatusUICommand"
+                       x:Uid="ReadStatusUICommand"
+                       Command="{x:Bind ViewModel.MarkMessageAsUnreadCommand}"
+                       IconSource="{ui:FontIconSource Glyph={StaticResource ReadStatusGlyph}}" />
+
+        <XamlUICommand x:Key="UnreadStatusUICommand"
+                       x:Uid="UnreadStatusUICommand"
+                       Command="{x:Bind ViewModel.MarkMessageAsReadCommand}" />
+
+        <XamlUICommand x:Key="FlagMessageUICommand"
+                       x:Uid="FlagMessageUICommand"
+                       Command="{x:Bind ViewModel.FlagMessageCommand}"
+                       IconSource="{ui:FontIconSource Glyph={StaticResource SetFlagGlyph}}" />
+
+        <XamlUICommand x:Key="UnflagMessageUICommand"
+                       x:Uid="UnflagMessageUICommand"
+                       Command="{x:Bind ViewModel.UnflagMessageCommand}"
+                       IconSource="{ui:FontIconSource Glyph={StaticResource ClearFlagGlyph}}" />
+
+        <XamlUICommand x:Key="FlaggedStatusUICommand"
+                       x:Uid="FlaggedStatusUICommand"
+                       Command="{x:Bind ViewModel.UnflagMessageCommand}"
+                       IconSource="{ui:FontIconSource Glyph={StaticResource ActiveFlagGlyph}}" />
+
+        <XamlUICommand x:Key="UnflaggedStatusUICommand"
+                       x:Uid="UnflaggedStatusUICommand"
+                       Command="{x:Bind ViewModel.FlagMessageCommand}" />
+
+        <XamlUICommand x:Key="DeleteMessageUICommand"
+                       x:Uid="DeleteMessageUICommand"
+                       Command="{x:Bind ViewModel.DeleteMessageAndGoBackCommand}"
+                       IconSource="{ui:SymbolIconSource Symbol=Delete}" />
+
+        <converters:RecipientConverter x:Key="RecipientConverter" />
+        <converters:ListRecipientsConverter x:Key="ListRecipientsConverter" />
+
     </local:MessagePageBase.Resources>
 
-    <Grid>
+    <Grid Margin="24,0">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*" MinWidth="{StaticResource SideAreaMinWidth}" />
+            <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="100*" MaxWidth="{StaticResource MainAreaMaxWidth}" />
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="1*" MinWidth="{StaticResource SideAreaMinWidth}" />
+            <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="24" />
@@ -69,169 +120,133 @@
             <RowDefinition Height="24" />
         </Grid.RowDefinitions>
 
+        <!--  Header  -->
+        <!--  Back  -->
+        <controls:CommandButton Grid.Row="1"
+                                Grid.Column="1"
+                                Margin="0,0,8,0"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Command="{StaticResource BackUICommand}"
+                                IsCompact="True" />
 
-        <Button x:Uid="BackButton"
-                Grid.Row="1"
-                Grid.Column="1"
-                Width="{StaticResource SymbolButtonWidth}"
-                Height="{StaticResource SymbolButtonHeigth}"
-                Margin="0,0,8,0"
-                Padding="0"
-                VerticalAlignment="Center"
-                Command="{x:Bind ViewModel.GoBackCommand}"
-                Style="{StaticResource ThinButtonStyle}">
-            <Viewbox Width="{StaticResource SymbolSize}" Height="{StaticResource SymbolSize}">
-                <SymbolIcon Symbol="Back" />
-            </Viewbox>
-        </Button>
+        <Grid Grid.Row="1"
+              Grid.Column="2"
+              HorizontalAlignment="Stretch"
+              VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
 
-        <!--  Subject  -->
-        <TextBlock Grid.Row="1"
-                   Grid.Column="2"
-                   HorizontalAlignment="Stretch"
-                   VerticalAlignment="Center"
-                   FontSize="16"
-                   FontWeight="Medium"
-                   Text="{x:Bind ViewModel.MessageInfo.MessageSubject, Mode=OneWay}" />
+            <!--  Subject  -->
+            <TextBlock HorizontalAlignment="Stretch"
+                       VerticalAlignment="Center"
+                       FontSize="16"
+                       FontWeight="Medium"
+                       IsTextSelectionEnabled="True"
+                       Text="{x:Bind ViewModel.MessageInfo.MessageSubject, Mode=OneWay}"
+                       TextTrimming="CharacterEllipsis"
+                       TextWrapping="NoWrap">
+                <interactivity:Interaction.Behaviors>
+                    <behaviors:TextBlockTooltipBehavior />
+                </interactivity:Interaction.Behaviors>
+            </TextBlock>
 
-        <Button Grid.Row="1"
-                Grid.Column="3"
-                Width="{StaticResource SymbolButtonWidth}"
-                Height="{StaticResource SymbolButtonHeigth}"
-                Margin="8,0,0,0"
-                Padding="0"
-                VerticalAlignment="Center"
-                Style="{StaticResource ThinButtonStyle}">
-            <Viewbox Width="{StaticResource SymbolSize}" Height="{StaticResource SymbolSize}">
-                <SymbolIcon Symbol="More" />
-            </Viewbox>
-            <Button.Flyout>
-                <MenuFlyout>
-                    <MenuFlyoutSubItem x:Name="AIAgentMenu"
-                                       x:Uid="AIAgentProcessMessageMenu"
-                                       IsEnabled="{x:Bind ViewModel.IsLocalAIEnabled, Mode=OneWay}"
-                                       Visibility="{x:Bind ViewModel.IsLocalAIAvailable, Mode=OneWay}">
-                        <MenuFlyoutSubItem.Icon>
-                            <FontIcon Glyph="&#xE99A;" />
-                        </MenuFlyoutSubItem.Icon>
-                    </MenuFlyoutSubItem>
+            <!--  Several options  -->
 
-                    <MenuFlyoutItem x:Uid="MarkAsReadMenu"
-                                    Command="{x:Bind ViewModel.MarkMessageAsReadCommand}"
-                                    Icon="Read"
-                                    Visibility="{x:Bind ViewModel.MessageInfo.IsMarkedAsRead, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+            <controls:CommandButton Grid.Column="1"
+                                    Margin="8,0,0,0"
+                                    VerticalAlignment="Center"
+                                    Command="{StaticResource ReplyAllUICommand}">
+                <interactivity:Interaction.Behaviors>
+                    <behaviors:CommandButtonTooltipBehavior />
+                </interactivity:Interaction.Behaviors>
+            </controls:CommandButton>
 
-                    <MenuFlyoutItem x:Uid="MarkAsUnreadMenu"
-                                    Command="{x:Bind ViewModel.MarkMessageAsUnReadCommand}"
-                                    Icon="Mail"
-                                    Visibility="{x:Bind ViewModel.MessageInfo.IsMarkedAsRead, Mode=OneWay}" />
+            <controls:CommandButton Grid.Column="2"
+                                    Margin="8,0,0,0"
+                                    VerticalAlignment="Center"
+                                    Command="{StaticResource DeleteMessageUICommand}" />
 
-                    <MenuFlyoutItem x:Uid="SetFlagMenu"
-                                    Command="{x:Bind ViewModel.FlagMessageCommand}"
-                                    Visibility="{x:Bind ViewModel.MessageInfo.IsFlagged, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}">
-                        <MenuFlyoutItem.Icon>
-                            <FontIcon Glyph="{StaticResource FlagGlyph}" />
-                        </MenuFlyoutItem.Icon>
-                    </MenuFlyoutItem>
+            <!--  More options  -->
+            <controls:CommandButton Grid.Column="3"
+                                    Margin="8,0,0,0"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    Command="{StaticResource MoreUICommand}"
+                                    IsCompact="True">
+                <controls:CommandButton.Flyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem Command="{StaticResource ReplyAllUICommand}" />
+                        <MenuFlyoutItem Command="{StaticResource ForwardUICommand}" />
+                        <MenuFlyoutItem Command="{StaticResource MarkMessageAsReadUICommand}" Visibility="{x:Bind ViewModel.MessageInfo.IsMarkedAsRead, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+                        <MenuFlyoutItem Command="{StaticResource MarkMessageAsUnreadUICommand}" Visibility="{x:Bind ViewModel.MessageInfo.IsMarkedAsRead, Mode=OneWay}" />
+                        <MenuFlyoutItem Command="{StaticResource FlagMessageUICommand}" Visibility="{x:Bind ViewModel.MessageInfo.IsFlagged, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+                        <MenuFlyoutItem Command="{StaticResource UnflagMessageUICommand}" Visibility="{x:Bind ViewModel.MessageInfo.IsFlagged, Mode=OneWay}" />
+                        <MenuFlyoutItem Command="{StaticResource DeleteMessageUICommand}" ToolTipService.ToolTip="{x:Null}" />
 
-                    <MenuFlyoutItem x:Uid="ClearFlagMenu"
-                                    Command="{x:Bind ViewModel.UnflagMessageCommand}"
-                                    Visibility="{x:Bind ViewModel.MessageInfo.IsFlagged, Mode=OneWay}">
-                        <MenuFlyoutItem.Icon>
-                            <FontIcon Foreground="{ThemeResource TextFillColorDisabledBrush}" Glyph="{StaticResource FlagGlyph}" />
-                        </MenuFlyoutItem.Icon>
-                    </MenuFlyoutItem>
+                        <MenuFlyoutSeparator Visibility="{x:Bind ViewModel.IsLocalAIAvailable, Mode=OneWay}" />
 
-                    <MenuFlyoutItem x:Uid="DeleteMenu"
-                                    Command="{x:Bind ViewModel.DeleteMessageAndGoBackCommand}"
-                                    Icon="Delete" />
-
-                    <MenuFlyoutItem x:Uid="ForwardMenu"
-                                    Command="{x:Bind ViewModel.ForwardCommand}"
-                                    Icon="MailForward" />
-
-                    <MenuFlyoutItem x:Uid="ReplyMenu"
-                                    Command="{x:Bind ViewModel.ReplyCommand}"
-                                    Icon="MailReply" />
-
-                    <MenuFlyoutItem x:Uid="ReplyAllMenu"
-                                    Command="{x:Bind ViewModel.ReplyCommandAll}"
-                                    Icon="MailReplyAll" />
-                </MenuFlyout>
-            </Button.Flyout>
-        </Button>
+                        <MenuFlyoutSubItem x:Name="AIAgentMenu"
+                                           x:Uid="AIAgentMenuSection"
+                                           Icon="{ui:FontIcon Glyph={StaticResource AIAgentGlyph}}"
+                                           IsEnabled="{x:Bind ViewModel.IsLocalAIEnabled, Mode=OneWay}"
+                                           Visibility="{x:Bind ViewModel.IsLocalAIAvailable, Mode=OneWay}" />
+                    </MenuFlyout>
+                </controls:CommandButton.Flyout>
+            </controls:CommandButton>
+        </Grid>
 
         <StackPanel Grid.Row="3"
                     Grid.Column="1"
                     Margin="0,20,8,20"
                     Orientation="Vertical">
 
-            <Button x:Uid="MarkAsReadItemButton"
-                    Width="{StaticResource SymbolButtonWidth}"
-                    Height="{StaticResource SymbolButtonHeigth}"
-                    Padding="0"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Command="{x:Bind ViewModel.MarkMessageAsReadCommand}"
-                    Style="{StaticResource ThinButtonStyle}"
-                    Visibility="{x:Bind ViewModel.MessageInfo.IsMarkedAsRead, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}">
-                <Viewbox Width="{StaticResource SymbolSize}" Height="{StaticResource SymbolSize}">
-                    <SymbolIcon Symbol="Mail" />
-                </Viewbox>
-            </Button>
+            <controls:CommandButton HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Command="{StaticResource ReadStatusUICommand}"
+                                    IsCompact="True"
+                                    Visibility="{x:Bind ViewModel.MessageInfo.IsMarkedAsRead, Mode=OneWay}" />
 
-            <Button x:Uid="MarkAsUnreadItemButton"
-                    Width="{StaticResource SymbolButtonWidth}"
-                    Height="{StaticResource SymbolButtonHeigth}"
-                    Padding="0"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Command="{x:Bind ViewModel.MarkMessageAsUnReadCommand}"
-                    Style="{StaticResource ThinButtonStyle}"
-                    Visibility="{x:Bind ViewModel.MessageInfo.IsMarkedAsRead, Mode=OneWay}">
-                <Viewbox Width="{StaticResource SymbolSize}" Height="{StaticResource SymbolSize}">
-                    <SymbolIcon Symbol="Read" />
-                </Viewbox>
-            </Button>
+            <controls:CommandButton HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Command="{StaticResource UnreadStatusUICommand}"
+                                    IsCompact="True"
+                                    Visibility="{x:Bind ViewModel.MessageInfo.IsMarkedAsRead, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                <controls:CommandButton.Icon>
+                    <FontIcon Foreground="{ThemeResource UnreadBrush}" Glyph="{StaticResource UnreadStatusGlyph}" />
+                </controls:CommandButton.Icon>
+                <controls:CommandButton.FilledIcon>
+                    <FontIcon Foreground="{ThemeResource UnreadFilledBrush}" Glyph="{ThemeResource UnreadFilledStatusGlyph}" />
+                </controls:CommandButton.FilledIcon>
+            </controls:CommandButton>
 
-            <Button x:Uid="SetFlagItemButton"
-                    Width="{StaticResource SymbolButtonWidth}"
-                    Height="{StaticResource SymbolButtonHeigth}"
-                    Margin="0,8,0,0"
-                    Padding="0"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Command="{x:Bind ViewModel.FlagMessageCommand}"
-                    CommandParameter="{x:Bind ViewModel.MessageInfo, Mode=OneWay}"
-                    Style="{StaticResource ThinButtonStyle}"
-                    Visibility="{x:Bind ViewModel.MessageInfo.IsFlagged, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}">
-                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                          FontSize="{StaticResource SymbolSize}"
-                          Foreground="{ThemeResource TextFillColorDisabledBrush}"
-                          Glyph="{StaticResource FlagGlyph}" />
-            </Button>
+            <controls:CommandButton Margin="0,8,0,0"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Command="{StaticResource UnflaggedStatusUICommand}"
+                                    CommandParameter="{x:Bind ViewModel.MessageInfo, Mode=OneWay}"
+                                    IsCompact="True"
+                                    Visibility="{x:Bind ViewModel.MessageInfo.IsFlagged, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                <controls:CommandButton.Icon>
+                    <FontIcon Foreground="{ThemeResource InactiveFlagBrush}" Glyph="{ThemeResource InactiveFlagGlyph}" />
+                </controls:CommandButton.Icon>
+            </controls:CommandButton>
 
-            <Button x:Uid="ClearFlagItemButton"
-                    Width="{StaticResource SymbolButtonWidth}"
-                    Height="{StaticResource SymbolButtonHeigth}"
-                    Margin="0,8,0,0"
-                    Padding="0"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Command="{x:Bind ViewModel.UnflagMessageCommand}"
-                    CommandParameter="{x:Bind ViewModel.MessageInfo, Mode=OneWay}"
-                    Style="{StaticResource ThinButtonStyle}"
-                    Visibility="{x:Bind ViewModel.MessageInfo.IsFlagged, Mode=OneWay}">
-                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                          FontSize="{StaticResource SymbolSize}"
-                          Glyph="{StaticResource FlagGlyph}" />
-            </Button>
-
+            <controls:CommandButton Margin="0,8,0,0"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Command="{StaticResource FlaggedStatusUICommand}"
+                                    CommandParameter="{x:Bind ViewModel.MessageInfo, Mode=OneWay}"
+                                    IsCompact="True"
+                                    Visibility="{x:Bind ViewModel.MessageInfo.IsFlagged, Mode=OneWay}" />
         </StackPanel>
 
         <Grid Grid.Row="3"
               Grid.Column="2"
-              Grid.ColumnSpan="2"
               Padding="28,16,24,20"
               HorizontalAlignment="Stretch"
               VerticalAlignment="Stretch"
@@ -289,7 +304,6 @@
                 <!--  ToDo: Add P2P and encryption labels.  -->
 
                 <!--  Receiver  -->
-                <!--  ToDo: Combine receivers and copy receivers  -->
                 <StackPanel Grid.Row="0"
                             Grid.Column="1"
                             Margin="16,0,8,0"
@@ -300,29 +314,11 @@
                                VerticalAlignment="Center"
                                Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
 
-                    <!--  ToDo: Create Control  -->
-                    <Border Height="32"
-                            Padding="0,0,8,0"
-                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                            BorderThickness="1"
-                            CornerRadius="16">
-                        <StackPanel Orientation="Horizontal">
-                            <muxc:PersonPicture Width="28"
-                                                Height="28"
-                                                Margin="0,0,8,0"
-                                                DisplayName="{x:Bind ViewModel.MessageInfo.Account.DisplayEmail.Name, Mode=OneWay}" />
-                            <TextBlock Margin="0,0,8,0"
-                                       VerticalAlignment="Center"
-                                       Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                       Text="{x:Bind ViewModel.MessageInfo.Account.DisplayEmail.Name, Mode=OneWay}" />
-                            <TextBlock Margin="0,0,8,0"
-                                       VerticalAlignment="Center"
-                                       Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                       Visibility="{x:Bind ViewModel.MessageInfo.AdditionalRecipientCount, Mode=OneWay, Converter={StaticResource IntToVisibilityConverter}}">
-                                <Run Text="+" /><Run Text="{x:Bind ViewModel.MessageInfo.AdditionalRecipientCount, Mode=OneWay}" />
-                            </TextBlock>
-                        </StackPanel>
-                    </Border>
+                    <!--  ToDo: Add tooltip;  -->
+                    <controls:RecipientControl VerticalAlignment="Center"
+                                               BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                               ItemsSource="{x:Bind ViewModel.MessageInfo.AllRecipients, Mode=OneWay, Converter={StaticResource ListRecipientsConverter}}"
+                                               PrimaryRecepient="{x:Bind ViewModel.MessageInfo.Account, Mode=OneWay, Converter={StaticResource RecipientConverter}}" />
                 </StackPanel>
 
                 <TextBlock Grid.Row="0"
@@ -341,12 +337,12 @@
                   HorizontalAlignment="Stretch"
                   VerticalAlignment="Stretch">
 
-                <eppie_controls:MessageControl AIAgentProcessedBody="{x:Bind ViewModel.MessageInfo.AIAgentProcessedBody, Mode=OneWay}"
-                                               ExternalContentDecider="{x:Bind ViewModel.ExternalContentDecider, Mode=OneWay}"
-                                               HasHtmlBody="{x:Bind ViewModel.MessageInfo.HasHtmlBody, Mode=OneWay}"
-                                               HtmlBody="{x:Bind ViewModel.MessageInfo.MessageHtmlBody, Mode=OneWay}"
-                                               TextBody="{x:Bind ViewModel.MessageInfo.MessageTextBody, Mode=OneWay}"
-                                               Visibility="{x:Bind ViewModel.LoadingContent, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+                <controls:MessageControl AIAgentProcessedBody="{x:Bind ViewModel.MessageInfo.AIAgentProcessedBody, Mode=OneWay}"
+                                         ExternalContentDecider="{x:Bind ViewModel.ExternalContentDecider, Mode=OneWay}"
+                                         HasHtmlBody="{x:Bind ViewModel.MessageInfo.HasHtmlBody, Mode=OneWay}"
+                                         HtmlBody="{x:Bind ViewModel.MessageInfo.MessageHtmlBody, Mode=OneWay}"
+                                         TextBody="{x:Bind ViewModel.MessageInfo.MessageTextBody, Mode=OneWay}"
+                                         Visibility="{x:Bind ViewModel.LoadingContent, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
 
                 <!--  Wrapped to Grid because Android doesn't have Visibility=Collapsed for ProgressRing  -->
                 <!--  ToDo: Check it on new Uno  -->

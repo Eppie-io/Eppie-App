@@ -64,21 +64,6 @@
                                      FalseValue="{StaticResource AccentTextStyle}"
                                      TrueValue="{StaticResource BodyTextBlockStyle}" />
 
-    <Style x:Key="ValidEmailTextBlockStyle"
-           BasedOn="{StaticResource BodyTextBlockStyle}"
-           TargetType="TextBlock">
-        <Setter Property="Foreground" Value="{ThemeResource TextFillColorPrimaryBrush}" />
-    </Style>
-    <Style x:Key="InvalidEmailTextBlockStyle"
-           BasedOn="{StaticResource BodyTextBlockStyle}"
-           TargetType="TextBlock">
-        <Setter Property="Foreground" Value="{ThemeResource SystemControlErrorTextForegroundBrush}" />
-    </Style>
-
-    <converters:EmailValidityToStyleConverter x:Key="EmailValidityToStyleConverter"
-                                              InvalidEmailStyle="{StaticResource InvalidEmailTextBlockStyle}"
-                                              ValidEmailStyle="{StaticResource ValidEmailTextBlockStyle}" />
-
     <converters:DoubleToGridLengthConverter x:Key="DoubleToGridLengthConverter" />
 
     <converters:AppScaleToStringConverter x:Key="UIScaleToStringConverter" />
@@ -100,5 +85,7 @@
     <converters:BoolToStyleConverter x:Key="ActivationErrorToStyle"
                                      FalseValue="{StaticResource ActivationStatusNormalTextStyle}"
                                      TrueValue="{StaticResource ActivationStatusErrorTextStyle}" />
+
+    <converters:EmailValidityToBoolConverter x:Key="EmailValidityToBoolConverter" />
 
 </ResourceDictionary>

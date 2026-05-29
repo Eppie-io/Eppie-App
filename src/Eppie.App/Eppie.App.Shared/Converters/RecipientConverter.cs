@@ -16,39 +16,80 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
+
 using System;
-using EmailValidation;
+using System.Collections.Generic;
+using System.Linq;
+using Eppie.App.UI.Controls;
 using Tuvi.Core.Entities;
 
 #if WINDOWS_UWP
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Media;
 #else
-using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Data;
+using Microsoft.UI.Xaml.Media;
 #endif
 
-// ToDo: Change namespace
 namespace Tuvi.App.Converters
 {
-    public class EmailValidityToStyleConverter : IValueConverter
+    public class RecipientConverter : IValueConverter
     {
-        public Style ValidEmailStyle { get; set; }
-        public Style InvalidEmailStyle { get; set; }
-
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if (value is EmailAddress email && EmailValidator.Validate(email.StandardAddress, allowTopLevelDomains: true))
+            if (value is Account account)
             {
-                return ValidEmailStyle;
+                return RecipientCreator.CreateRecipientItem(account.DisplayEmail);
             }
 
-            return InvalidEmailStyle;
+            return null;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            return DependencyProperty.UnsetValue;
+            throw new NotImplementedException();
+        }
+    }
+
+    public class ListRecipientsConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            if (value is IEnumerable<EmailAddress> source)
+            {
+                return new List<IRecipientItem>(source.Select(item => RecipientCreator.CreateRecipientItem(item)));
+            }
+
+            return null;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    internal class RecipientCreator
+    {
+        public class RecipientItem : IRecipientItem
+        {
+            public string Address { get; set; }
+            public string DisplayName { get; set; }
+            public bool IsSecure { get; set; }
+            public ImageSource Avatar { get; set; }
+        }
+
+        public static IRecipientItem CreateRecipientItem(EmailAddress emailAddress)
+        {
+            return new RecipientItem
+            {
+                Address = emailAddress?.Address,
+                DisplayName = emailAddress?.Name,
+                IsSecure = emailAddress?.IsDecentralized ?? false,
+
+                // ToDo: add avatar
+                Avatar = null,
+            };
         }
     }
 }

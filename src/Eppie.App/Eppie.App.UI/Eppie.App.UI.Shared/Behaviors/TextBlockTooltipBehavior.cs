@@ -17,23 +17,48 @@
 // ---------------------------------------------------------------------------- //
 
 using System;
-using Tuvi.Core.Entities;
 
-namespace Tuvi.App.ViewModels
+#if WINDOWS_UWP
+using Windows.UI.Xaml.Controls;
+#else 
+using Microsoft.UI.Xaml.Controls;
+#endif
+
+namespace Eppie.App.UI.Behaviors
 {
-    public class AddressItem
+    public class TextBlockTooltipSource : ITooltipSource<TextBlock>
     {
-        internal Account Account { get; }
+        public bool IsActive => Source?.IsTextTrimmed ?? false;
+        public string Text => Source?.Text;
 
-        public string Address => Account?.DisplayEmail.Address;
-        public string DisplayName => Account?.DisplayEmail?.Name;
-        public bool IsDecentralized => Account?.DisplayEmail?.IsDecentralized ?? false;
+        public event EventHandler TooltipChanged;
 
-        public ImageInfo AvatarInfo { get; internal set; }
-
-        public AddressItem(Account account)
+        private TextBlock _source;
+        public TextBlock Source
         {
-            Account = account ?? throw new ArgumentNullException(nameof(account));
+            get { return _source; }
+            set
+            {
+                if (_source != null)
+                {
+                    _source.IsTextTrimmedChanged -= OnIsTextTrimmedChanged;
+                }
+
+                _source = value;
+
+                if (_source != null)
+                {
+                    _source.IsTextTrimmedChanged += OnIsTextTrimmedChanged;
+                }
+            }
+        }
+
+        private void OnIsTextTrimmedChanged(TextBlock sender, IsTextTrimmedChangedEventArgs args)
+        {
+            TooltipChanged?.Invoke(this, EventArgs.Empty);
         }
     }
+
+    public class TextBlockTooltipBehavior : TooltipBehavior<TextBlock, TextBlockTooltipSource>
+    { }
 }

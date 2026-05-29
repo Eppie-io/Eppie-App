@@ -17,23 +17,33 @@
 // ---------------------------------------------------------------------------- //
 
 using System;
-using Tuvi.Core.Entities;
+using Eppie.App.UI.Behaviors;
 
-namespace Tuvi.App.ViewModels
+#if WINDOWS_UWP
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Data;
+#else
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Data;
+#endif
+
+namespace Eppie.App.UI.Converters
 {
-    public class AddressItem
+    public partial class TextBlockToTooltipSourceConverter : IValueConverter
     {
-        internal Account Account { get; }
-
-        public string Address => Account?.DisplayEmail.Address;
-        public string DisplayName => Account?.DisplayEmail?.Name;
-        public bool IsDecentralized => Account?.DisplayEmail?.IsDecentralized ?? false;
-
-        public ImageInfo AvatarInfo { get; internal set; }
-
-        public AddressItem(Account account)
+        public object Convert(object value, Type targetType, object parameter, string language)
         {
-            Account = account ?? throw new ArgumentNullException(nameof(account));
+            if (value is TextBlock textblock)
+            {
+                return new TextBlockTooltipSource() { Source = textblock };
+            }
+
+            return null;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            throw new NotImplementedException();
         }
     }
 }

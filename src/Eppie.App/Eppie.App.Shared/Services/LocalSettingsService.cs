@@ -87,7 +87,7 @@ namespace Eppie.App.Services
 
         private static AppScale GetDefaultUIScale()
         {
-            return PlatformTools.IsXbox ? AppScale.Scale200 : AppScale.SystemDefault;
+            return PlatformTools.IsXbox ? AppScale.Scale150 : AppScale.SystemDefault;
         }
 
         /// <summary>

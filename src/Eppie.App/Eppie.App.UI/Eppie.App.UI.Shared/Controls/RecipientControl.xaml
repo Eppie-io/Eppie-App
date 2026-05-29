@@ -1,0 +1,69 @@
+﻿<UserControl x:Class="Eppie.App.UI.Controls.RecipientControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="using:Eppie.App.UI.Controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+             d:DesignHeight="300"
+             d:DesignWidth="400"
+             mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <CornerRadius x:Key="RecipientControlCornerRadius">16</CornerRadius>
+        <Thickness x:Key="RecipientControlPadding">2,2,12,2</Thickness>
+        <Thickness x:Key="RecipientControlBorderThickness">1</Thickness>
+
+        <DataTemplate x:Key="RecipientTemplate" x:DataType="local:IRecipientItem">
+            <!--  ToDo: Add Tooltip when trimmed  -->
+            <local:AddressPresenter HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    Address="{x:Bind Address, Mode=OneWay}"
+                                    Avatar="{x:Bind Avatar, Mode=OneWay}"
+                                    DisplayName="{x:Bind DisplayName, Mode=OneWay}"
+                                    IsSecure="{x:Bind IsSecure, Mode=OneWay}" />
+        </DataTemplate>
+
+    </UserControl.Resources>
+
+    <Button Padding="{StaticResource RecipientControlPadding}"
+            BorderBrush="{x:Bind BorderBrush, Mode=OneWay}"
+            BorderThickness="{StaticResource RecipientControlBorderThickness}"
+            CornerRadius="{StaticResource RecipientControlCornerRadius}"
+            Style="{StaticResource ThinButtonStyle}">
+        <StackPanel Margin="0"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal">
+            <local:AddressPresenter VerticalAlignment="Center"
+                                    Address="{x:Bind local:RecipientControl.GetPrimaryRecepientAddress(PrimaryRecepient, ItemsSource), Mode=OneWay}"
+                                    Avatar="{x:Bind local:RecipientControl.GetPrimaryRecepientAvatar(PrimaryRecepient, ItemsSource), Mode=OneWay}"
+                                    DisplayName="{x:Bind local:RecipientControl.GetPrimaryRecepientName(PrimaryRecepient, ItemsSource), Mode=OneWay}"
+                                    IsSecure="{x:Bind local:RecipientControl.IsPrimaryRecepientSecure(PrimaryRecepient, ItemsSource), Mode=OneWay}"
+                                    Mode="Compact" />
+            <TextBlock Margin="8,0,0,0"
+                       VerticalAlignment="Center"
+                       Visibility="{x:Bind local:RecipientControl.GetAdditionalRecipientVisibility(ItemsSource), Mode=OneWay}">
+                <Run Text="+" /><Run Text="{x:Bind local:RecipientControl.GetAdditionalRecipientCount(ItemsSource), Mode=OneWay}" />
+            </TextBlock>
+        </StackPanel>
+        <Button.Flyout>
+            <Flyout>
+                <Flyout.FlyoutPresenterStyle>
+                    <Style BasedOn="{StaticResource DefaultFlyoutPresenterStyle}" TargetType="FlyoutPresenter">
+                        <Setter Property="Padding" Value="0" />
+                        <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled" />
+                        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+                        <Setter Property="ScrollViewer.VerticalScrollMode" Value="Disabled" />
+                        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled" />
+                        <Setter Property="ScrollViewer.ZoomMode" Value="Disabled" />
+                    </Style>
+                </Flyout.FlyoutPresenterStyle>
+                <ListView HorizontalAlignment="Stretch"
+                          IsItemClickEnabled="False"
+                          ItemTemplate="{StaticResource RecipientTemplate}"
+                          ItemsSource="{x:Bind ItemsSource, Mode=OneWay}"
+                          SelectionMode="None" />
+            </Flyout>
+        </Button.Flyout>
+    </Button>
+</UserControl>

@@ -162,6 +162,12 @@ namespace Tuvi.App.ViewModels
 
         protected async Task UpdateSupportDevelopmentButtonAsync()
         {
+            if (string.IsNullOrWhiteSpace(BrandService.GetDevelopmentSupport()))
+            {
+                IsSupportDevelopmentButtonVisible = false;
+                return;
+            }
+
             try
             {
                 IsSupportDevelopmentButtonVisible = !await AppStoreService.IsSubscriptionEnabledAsync().ConfigureAwait(true);

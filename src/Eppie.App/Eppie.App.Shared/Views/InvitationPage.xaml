@@ -21,57 +21,30 @@
         <Thickness x:Key="ScrollContentPadding">24,0,24,24</Thickness>
         <Thickness x:Key="ScrollMargin">0,56,0,0</Thickness>
         <Thickness x:Key="TitlePadding">24,18,24,24</Thickness>
-        <x:Double x:Key="PictureSize">28</x:Double>
         <x:Double x:Key="EppiePictureSize">48</x:Double>
-        <x:Double x:Key="RemoveButtonSize">28</x:Double>
+        <x:Double x:Key="RemoveButtonSize">26</x:Double>
+        <CornerRadius x:Key="RemoveButtonRadius">16</CornerRadius>
+        <x:Double x:Key="RemoveButtonIconSize">14</x:Double>
         <x:Double x:Key="NameMaxWidth">72</x:Double>
         <x:Double x:Key="EppieAddressComboBoxHeight">86</x:Double>
         <Thickness x:Key="HorizontalMargin">0,0,12,0</Thickness>
 
         <DataTemplate x:Key="ContactComboboxItemTemplate" x:DataType="viewmodels:ContactItem">
-            <Grid HorizontalAlignment="Stretch">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="10*" MaxWidth="{StaticResource NameMaxWidth}" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <muxc:PersonPicture Width="{StaticResource PictureSize}"
-                                    Height="{StaticResource PictureSize}"
-                                    Margin="{StaticResource HorizontalMargin}"
-                                    VerticalAlignment="Center"
-                                    DisplayName="{x:Bind DisplayName, Mode=OneWay}"
-                                    ProfilePicture="{x:Bind AvatarInfo, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}" />
-
-                <TextBlock Grid.Column="1"
-                           VerticalAlignment="Center"
-                           Text="{x:Bind DisplayName, Mode=OneWay}" />
-                <TextBlock Grid.Column="2"
-                           VerticalAlignment="Center"
-                           Text="{x:Bind Email.Address, Mode=OneWay}" />
-            </Grid>
+            <controls:AddressPresenter HorizontalAlignment="Stretch"
+                                       VerticalAlignment="Center"
+                                       Address="{x:Bind Email.Address, Mode=OneWay}"
+                                       Avatar="{x:Bind AvatarInfo, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}"
+                                       DisplayName="{x:Bind DisplayName, Mode=OneWay}"
+                                       IsSecure="{x:Bind Email.IsDecentralized, Mode=OneWay}" />
         </DataTemplate>
 
         <DataTemplate x:Key="AddressComboboxItemTemplate" x:DataType="viewmodels:AddressItem">
-            <Grid HorizontalAlignment="Stretch">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="10*" MaxWidth="{StaticResource NameMaxWidth}" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <muxc:PersonPicture Width="{StaticResource PictureSize}"
-                                    Height="{StaticResource PictureSize}"
-                                    Margin="{StaticResource HorizontalMargin}"
-                                    VerticalAlignment="Center"
-                                    DisplayName="{x:Bind DisplayName, Mode=OneWay}"
-                                    ProfilePicture="{x:Bind AvatarInfo, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}" />
-
-                <TextBlock Grid.Column="1"
-                           VerticalAlignment="Center"
-                           Text="{x:Bind DisplayName, Mode=OneWay}" />
-                <TextBlock Grid.Column="2"
-                           VerticalAlignment="Center"
-                           Text="{x:Bind Address, Mode=OneWay}" />
-            </Grid>
+            <controls:AddressPresenter HorizontalAlignment="Stretch"
+                                       VerticalAlignment="Center"
+                                       Address="{x:Bind Address, Mode=OneWay}"
+                                       Avatar="{x:Bind AvatarInfo, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}"
+                                       DisplayName="{x:Bind DisplayName, Mode=OneWay}"
+                                       IsSecure="{x:Bind IsDecentralized, Mode=OneWay}" />
         </DataTemplate>
 
         <DataTemplate x:Key="EppieAddressComboboxItemTemplate" x:DataType="viewmodels:AddressItem">
@@ -130,16 +103,19 @@
                                          NameColumnMaxWidth="{StaticResource NameMaxWidth}">
                 <Button Width="{StaticResource RemoveButtonSize}"
                         Height="{StaticResource RemoveButtonSize}"
-                        Margin="2"
                         Padding="0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
                         Click="OnRecipientRemoved"
+                        CornerRadius="{StaticResource RemoveButtonRadius}"
                         Style="{StaticResource ThinButtonStyle}"
                         Tag="{x:Bind}">
-                    <FontIcon HorizontalAlignment="Center"
-                              VerticalAlignment="Center"
-                              FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                              FontSize="16"
-                              Glyph="&#xE894;" />
+                    <Viewbox Width="{StaticResource RemoveButtonIconSize}"
+                             Height="{StaticResource RemoveButtonIconSize}"
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Center">
+                        <SymbolIcon Symbol="Cancel" />
+                    </Viewbox>
                 </Button>
             </controls:AddressItemControl>
         </DataTemplate>

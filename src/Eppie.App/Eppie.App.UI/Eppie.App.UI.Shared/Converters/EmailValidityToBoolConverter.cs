@@ -17,23 +17,30 @@
 // ---------------------------------------------------------------------------- //
 
 using System;
+using EmailValidation;
 using Tuvi.Core.Entities;
 
-namespace Tuvi.App.ViewModels
+#if WINDOWS_UWP
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Data;
+#else
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Data;
+#endif
+
+// ToDo: Change namespace
+namespace Tuvi.App.Converters
 {
-    public class AddressItem
+    public class EmailValidityToBoolConverter : IValueConverter
     {
-        internal Account Account { get; }
-
-        public string Address => Account?.DisplayEmail.Address;
-        public string DisplayName => Account?.DisplayEmail?.Name;
-        public bool IsDecentralized => Account?.DisplayEmail?.IsDecentralized ?? false;
-
-        public ImageInfo AvatarInfo { get; internal set; }
-
-        public AddressItem(Account account)
+        public object Convert(object value, Type targetType, object parameter, string language)
         {
-            Account = account ?? throw new ArgumentNullException(nameof(account));
+            return (value is EmailAddress email && EmailValidator.Validate(email.StandardAddress, allowTopLevelDomains: true));
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            return DependencyProperty.UnsetValue;
         }
     }
 }

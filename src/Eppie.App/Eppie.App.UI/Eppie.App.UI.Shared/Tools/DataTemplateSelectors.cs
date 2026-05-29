@@ -16,24 +16,38 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-using System;
-using Tuvi.Core.Entities;
+using CommunityToolkit.WinUI;
 
-namespace Tuvi.App.ViewModels
+#if WINDOWS_UWP
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+#else
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+#endif
+
+namespace Eppie.App.UI.Tools
 {
-    public class AddressItem
+    public partial class ComboBoxDataTemplateSelector : DataTemplateSelector
     {
-        internal Account Account { get; }
+        public DataTemplate ItemTemplate { get; set; }
+        public DataTemplate SelectedTemplate { get; set; }
 
-        public string Address => Account?.DisplayEmail.Address;
-        public string DisplayName => Account?.DisplayEmail?.Name;
-        public bool IsDecentralized => Account?.DisplayEmail?.IsDecentralized ?? false;
-
-        public ImageInfo AvatarInfo { get; internal set; }
-
-        public AddressItem(Account account)
+        protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
         {
-            Account = account ?? throw new ArgumentNullException(nameof(account));
+            if (IsComboBoxItem(container))
+            {
+                return ItemTemplate;
+            }
+            else
+            {
+                return SelectedTemplate;
+            }
+        }
+
+        private static bool IsComboBoxItem(DependencyObject container)
+        {
+            return container.FindAscendantOrSelf<Control>(control => control is ComboBox || control is ComboBoxItem) is ComboBoxItem;
         }
     }
 }
