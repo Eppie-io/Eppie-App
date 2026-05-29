@@ -177,7 +177,7 @@ jobs:
   publish-windows-store:
     name: Publish Windows Store
     needs: prepare
-    if: ${{ needs.prepare.outputs.publish-store == 'true' }}
+    if: ${{ needs.prepare.outputs.publish-store == 'true' && (needs.prepare.outputs.publish-framework == 'all' || needs.prepare.outputs.publish-framework == 'winui') }}
     uses: ./.github/workflows/publish-windows-store.yml
     with:
       dotnet-verbosity: ${{ needs.prepare.outputs.dotnet-verbosity }}
@@ -186,7 +186,7 @@ jobs:
   publish-windows-store-uwp:
     name: Publish Windows Store UWP
     needs: prepare
-    if: ${{ needs.prepare.outputs.publish-store == 'true' }}
+    if: ${{ needs.prepare.outputs.publish-store == 'true' && (needs.prepare.outputs.publish-framework == 'all' || needs.prepare.outputs.publish-framework == 'uwp') }}
     uses: ./.github/workflows/publish-windows-store-uwp.yml
     with:
       dotnet-verbosity: ${{ needs.prepare.outputs.dotnet-verbosity }}
