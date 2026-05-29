@@ -94,7 +94,10 @@ namespace Eppie.App.Services
                     await fileStream.WriteAsync(data.AsBuffer());
                 }
 
-                await Launcher.LaunchFileAsync(file); // ToDo: Uno0001
+                // UnoBug: (Uno0001) Implement Uno platform-specific file launch logic
+                // look at https://github.com/unoplatform/uno/pull/23082/changes#diff-9a822cbcc08341821b59501b53c602d4e1dab140bc68df3d04a8dca9239551c6
+                // look at https://github.com/unoplatform/uno/issues/5910
+                await Launcher.LaunchFileAsync(file);
             }
         }
 
