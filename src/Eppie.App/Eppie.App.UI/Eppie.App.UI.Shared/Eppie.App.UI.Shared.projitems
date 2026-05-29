@@ -54,6 +54,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\RecipientControl.xaml.cs">
       <DependentUpon>RecipientControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\SimpleExpander.xaml.cs">
+      <DependentUpon>SimpleExpander.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ToolTipProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\EmailValidityToBoolConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\SupportDevelopmentControl.xaml.cs">
@@ -97,6 +100,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BitmapSourceConverters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BoolToValueConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ConverterChain.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\InvertDoubleConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\NullToDefaultConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\StringConverters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\JoinConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\GridConverters.cs" />
@@ -171,6 +176,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Controls\SimpleExpander.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="$(MSBuildThisFileDirectory)Controls\SupportDevelopmentControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -219,11 +228,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Styles\TokenizingTextBoxStyle.xaml">
+    <Page Include="$(MSBuildThisFileDirectory)Styles\SimpleButtonStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Styles\SimpleToggleButtonStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Styles\ThinButtonStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Styles\TokenizingTextBoxStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

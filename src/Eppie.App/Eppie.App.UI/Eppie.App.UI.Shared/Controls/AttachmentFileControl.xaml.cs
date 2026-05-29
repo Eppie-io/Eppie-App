@@ -151,9 +151,9 @@ namespace Eppie.App.UI.Controls
 
         private void OnInvoked(object sender, EventArgs e)
         {
-            if (Resources.TryGetValue("CommandMenu", out object resource) && resource is MenuFlyout menuFlyout)
+            if (OpenFileCommand?.CanExecute(OpenFileCommandParameter) == true)
             {
-                menuFlyout.ShowAt(this);
+                OpenFileCommand?.Execute(OpenFileCommandParameter);
             }
         }
     }

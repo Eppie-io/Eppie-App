@@ -10,8 +10,12 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageVersion Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-    <PackageVersion Include="CommunityToolkit.Uwp.Controls.TokenizingTextBox" Version="8.2.250402" />
-    <PackageVersion Include="CommunityToolkit.WinUI.Controls.TokenizingTextBox" Version="8.2.250402" />
+    <PackageVersion Include="CommunityToolkit.Uwp.Controls.TokenizingTextBox" Version="8.2.251219" />
+    <PackageVersion Include="CommunityToolkit.Uwp.Extensions" Version="8.2.251219" />
+    <PackageVersion Include="CommunityToolkit.Uwp.Triggers" Version="8.2.251219" />
+    <PackageVersion Include="CommunityToolkit.WinUI.Controls.TokenizingTextBox" Version="8.2.251219" />
+    <PackageVersion Include="CommunityToolkit.WinUI.Extensions" Version="8.2.251219" />
+    <PackageVersion Include="CommunityToolkit.WinUI.Triggers" Version="8.2.251219" />
     <PackageVersion Include="EmailValidation" Version="1.3.0" />
     <PackageVersion Include="Finebits.Authorization.OAuth2" Version="0.4.0-preview.1" />
     <PackageVersion Include="Finebits.Authorization.OAuth2.AuthenticationBroker.Desktop" Version="0.4.0-preview.1" />
