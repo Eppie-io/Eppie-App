@@ -182,10 +182,19 @@ jobs:
       dotnet-verbosity: ${{ needs.prepare.outputs.dotnet-verbosity }}
     secrets: inherit
 
+  publish-windows-store-uwp:
+    name: Publish Windows Store UWP
+    needs: prepare
+    if: ${{ needs.prepare.outputs.publish-store == 'true' }}
+    uses: ./.github/workflows/publish-windows-store-uwp.yml
+    with:
+      dotnet-verbosity: ${{ needs.prepare.outputs.dotnet-verbosity }}
+    secrets: inherit
+
   upload-assets:
     name: Upload Assets
     if: ${{ github.event_name == 'release' && !cancelled() && !failure() }}
-    needs: [ publish-desktop-binaries, publish-desktop-snap, publish-desktop-app, publish-windows-store ]
+    needs: [ publish-desktop-binaries, publish-desktop-snap, publish-desktop-app, publish-windows-store, publish-windows-store-uwp ]
     runs-on: ubuntu-latest
     permissions:
       contents: write

@@ -1,0 +1,266 @@
+################################################################################
+#                                                                              #
+#   Copyright 2026 Eppie(https://eppie.io)                                     #
+#                                                                              #
+#   Licensed under the Apache License, Version 2.0 (the "License");            #
+#   you may not use this file except in compliance with the License.           #
+#   You may obtain a copy of the License at                                    #
+#                                                                              #
+#       http://www.apache.org/licenses/LICENSE-2.0                             #
+#                                                                              #
+#   Unless required by applicable law or agreed to in writing, software        #
+#   distributed under the License is distributed on an "AS IS" BASIS,          #
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.   #
+#   See the License for the specific language governing permissions and        #
+#   limitations under the License.                                             #
+#                                                                              #
+################################################################################
+
+---
+
+name: Publish Windows Store UWP
+
+on: # yamllint disable-line rule:truthy
+  workflow_dispatch:
+    inputs:
+      dotnet-verbosity:
+        type: choice
+        default: minimal
+        options:
+          - quiet
+          - minimal
+          - normal
+          - detailed
+          - diagnostic
+  workflow_call:
+    inputs:
+      dotnet-verbosity:
+        type: string
+        required: true
+
+jobs:
+  prepare:
+    name: Prepare
+    runs-on: ubuntu-latest
+
+    outputs:
+      matrix: ${{ steps.publish-config.outputs.matrix }}
+      interrupt-publication: ${{ steps.publish-config.outputs.is-empty }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+
+      - name: Read the Windows Store publication configuration
+        id: publish-config
+        uses: finebits/github-actions/toolset/select-configuration@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1
+        with:
+          json-file: ./.github/configurations/publish-windows-store.json
+          keywords: |
+            windows
+            uwp
+
+  publish:
+    name: Publish uwp ${{ matrix.publish.framework }} [store]
+    needs: prepare
+    if: needs.prepare.outputs.interrupt-publication == 'false'
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.prepare.outputs.matrix) }}
+
+    runs-on: ${{ matrix.os }}
+
+    env:
+      project-path: '${{ matrix.publish.project }}'
+      publish-path: '${{ github.workspace }}/.publish/${{ matrix.publish.configuration }}/${{ matrix.publish.framework }}/store-uwp'
+      artifacts-path: '${{ github.workspace }}/.artifacts/${{ matrix.publish.configuration }}/${{ matrix.publish.framework }}/store-uwp'
+
+    steps:
+      - name: Support longpaths
+        run: git config --system core.longpaths true
+
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+          submodules: recursive
+
+      - name: Install Prerequisites
+        uses: ./.github/actions/install-prerequisites
+        with:
+          uno-platform: true
+
+      - name: Assign version
+        id: assign-version
+        uses: ./.github/actions/assign-version
+
+      - name: Validate Store secrets
+        id: validate-store-secrets
+        shell: pwsh
+        run: |
+          $identityName = '${{ secrets.WINDOWS_STORE_IDENTITY_NAME }}'
+          $identityPublisher = '${{ secrets.WINDOWS_STORE_IDENTITY_PUBLISHER }}'
+          $publisherDisplayName = '${{ secrets.WINDOWS_STORE_PUBLISHER_DISPLAY_NAME }}'
+          $protocolName = '${{ secrets.WINDOWS_STORE_PROTOCOL_NAME }}'
+          $gmailClientId = '${{ secrets.GMAIL_CLIENT_ID }}'
+          $outlookClientId = '${{ secrets.OUTLOOK_CLIENT_ID }}'
+          $missingSecrets = @()
+
+          if ([string]::IsNullOrWhiteSpace($identityName)) {
+            $missingSecrets += 'WINDOWS_STORE_IDENTITY_NAME'
+          }
+
+          if ([string]::IsNullOrWhiteSpace($identityPublisher)) {
+            $missingSecrets += 'WINDOWS_STORE_IDENTITY_PUBLISHER'
+          }
+
+          if ([string]::IsNullOrWhiteSpace($publisherDisplayName)) {
+            $missingSecrets += 'WINDOWS_STORE_PUBLISHER_DISPLAY_NAME'
+          }
+
+          if ([string]::IsNullOrWhiteSpace($protocolName)) {
+            $missingSecrets += 'WINDOWS_STORE_PROTOCOL_NAME'
+          }
+
+          if ([string]::IsNullOrWhiteSpace($gmailClientId)) {
+            $missingSecrets += 'GMAIL_CLIENT_ID'
+          }
+
+          if ([string]::IsNullOrWhiteSpace($outlookClientId)) {
+            $missingSecrets += 'OUTLOOK_CLIENT_ID'
+          }
+
+          foreach ($secretName in $missingSecrets) {
+            Write-Host "::warning::GitHub secret '$secretName' is empty."
+          }
+
+          "identity-name-set=$(-not [string]::IsNullOrWhiteSpace($identityName))" >> $env:GITHUB_OUTPUT
+          "identity-publisher-set=$(-not [string]::IsNullOrWhiteSpace($identityPublisher))" >> $env:GITHUB_OUTPUT
+          "publisher-display-name-set=$(-not [string]::IsNullOrWhiteSpace($publisherDisplayName))" >> $env:GITHUB_OUTPUT
+          "protocol-name-set=$(-not [string]::IsNullOrWhiteSpace($protocolName))" >> $env:GITHUB_OUTPUT
+          "gmail-client-id-set=$(-not [string]::IsNullOrWhiteSpace($gmailClientId))" >> $env:GITHUB_OUTPUT
+          "outlook-client-id-set=$(-not [string]::IsNullOrWhiteSpace($outlookClientId))" >> $env:GITHUB_OUTPUT
+
+      - uses: finebits/github-actions/toolset/file/replace-text@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1
+        if: steps.validate-store-secrets.outputs.gmail-client-id-set == 'True'
+        with:
+          file: ./src/Eppie.App/Eppie.App.UWP/Authorization/AuthConfig.UWP.cs
+          find-what: '\"<Gmail-ClientId>\"'
+          replace-with: "${{ secrets.GMAIL_CLIENT_ID }}"
+
+      - uses: finebits/github-actions/toolset/file/replace-text@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1
+        if: steps.validate-store-secrets.outputs.outlook-client-id-set == 'True'
+        with:
+          file: ./src/Eppie.App/Eppie.App.UWP/Authorization/AuthConfig.UWP.cs
+          find-what: '\"<Outlook-ClientId>\"'
+          replace-with: "${{ secrets.OUTLOOK_CLIENT_ID }}"
+
+      - uses: finebits/github-actions/toolset/file/replace-text@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1
+        if: steps.validate-store-secrets.outputs.identity-name-set == 'True'
+        with:
+          file: ./src/Eppie.App/Eppie.App.UWP/Package.appxmanifest
+          find-what: 'Identity.Name'
+          replace-with: "${{ secrets.WINDOWS_STORE_IDENTITY_NAME }}"
+
+      - uses: finebits/github-actions/toolset/file/replace-text@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1
+        if: steps.validate-store-secrets.outputs.identity-publisher-set == 'True'
+        with:
+          file: ./src/Eppie.App/Eppie.App.UWP/Package.appxmanifest
+          find-what: 'CN=IdentityPublisher'
+          replace-with: "${{ secrets.WINDOWS_STORE_IDENTITY_PUBLISHER }}"
+
+      - uses: finebits/github-actions/toolset/file/replace-text@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1
+        if: steps.validate-store-secrets.outputs.publisher-display-name-set == 'True'
+        with:
+          file: ./src/Eppie.App/Eppie.App.UWP/Package.appxmanifest
+          find-what: 'Properties.PublisherDisplayName'
+          replace-with: "${{ secrets.WINDOWS_STORE_PUBLISHER_DISPLAY_NAME }}"
+
+      - uses: finebits/github-actions/toolset/file/replace-text@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1
+        if: steps.validate-store-secrets.outputs.protocol-name-set == 'True'
+        with:
+          file: ./src/Eppie.App/Eppie.App.UWP/Package.appxmanifest
+          find-what: 'io.eppie'
+          replace-with: "${{ secrets.WINDOWS_STORE_PROTOCOL_NAME }}"
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@30375c66a4eea26614e0d39710365f22f8b0af57 # v3
+
+      - name: Prepare package version
+        shell: pwsh
+        run: |
+          $numericVersion = '${{ steps.assign-version.outputs.numeric-version }}'
+          $projectPath = '${{ env.project-path }}'
+          $projectDirectory = Split-Path -Parent $projectPath
+          $assemblyInfoPath = Join-Path $projectDirectory 'Properties\AssemblyInfo.cs'
+          $manifestPath = Join-Path $projectDirectory 'Package.appxmanifest'
+
+          $assemblyInfoContent = Get-Content $assemblyInfoPath -Raw
+          $assemblyInfoContent = $assemblyInfoContent -replace '\[assembly: AssemblyVersion\("[^"]+"\)\]', "[assembly: AssemblyVersion(\"$numericVersion\")]"
+          $assemblyInfoContent = $assemblyInfoContent -replace '\[assembly: AssemblyFileVersion\("[^"]+"\)\]', "[assembly: AssemblyFileVersion(\"$numericVersion\")]"
+          Set-Content -Path $assemblyInfoPath -Value $assemblyInfoContent
+
+          $manifestXml = New-Object System.Xml.XmlDocument
+          $manifestXml.PreserveWhitespace = $true
+          $manifestXml.Load($manifestPath)
+          $manifestXml.Package.Identity.Version = $numericVersion
+          $manifestXml.Save($manifestPath)
+
+      - name: Restore
+        shell: pwsh
+        run: |
+          $configuration = '${{ matrix.publish.configuration }}'
+          $projectPath = '${{ env.project-path }}'
+
+          msbuild $projectPath /r /t:Restore /p:Configuration=$configuration /p:NuGetAudit=false /p:TreatWarningsAsErrors=false '/p:RestoreNoWarn=NU1510' /verbosity:${{ inputs.dotnet-verbosity }}
+          if ($LASTEXITCODE -ne 0) {
+            exit $LASTEXITCODE
+          }
+
+      - name: Build Store packages
+        shell: pwsh
+        run: |
+          $configuration = '${{ matrix.publish.configuration }}'
+          $projectPath = '${{ env.project-path }}'
+          $publishPath = '${{ env.publish-path }}'
+          $platforms = '${{ join(matrix.publish.platforms, ',') }}'.Split(',', [System.StringSplitOptions]::RemoveEmptyEntries)
+          $bundlePlatforms = [string]::Join('|', $platforms)
+
+          New-Item -ItemType Directory -Path $publishPath -Force | Out-Null
+
+          $arguments = @(
+            $projectPath
+            "/p:Configuration=$configuration"
+            '/p:Platform=x86'
+            '/p:GenerateAppxPackageOnBuild=true'
+            '/p:UapAppxPackageBuildMode=StoreUpload'
+            '/p:AppxBundle=Always'
+            "/p:AppxBundlePlatforms=$bundlePlatforms"
+            '/p:AppxPackageSigningEnabled=false'
+            "/p:AppxPackageDir=$publishPath\\"
+            '/p:NuGetAudit=false'
+            '/verbosity:${{ inputs.dotnet-verbosity }}'
+          )
+
+          msbuild @arguments
+          if ($LASTEXITCODE -ne 0) {
+            exit $LASTEXITCODE
+          }
+
+      - name: Prepare Artifacts
+        shell: pwsh
+        run: |
+          $artifactPath = '${{ env.artifacts-path }}'
+          $publishPath = '${{ env.publish-path }}'
+
+          New-Item -ItemType Directory -Path $artifactPath -Force | Out-Null
+
+          Get-ChildItem $publishPath -Recurse -Include *.appxbundle,*.appxupload | Copy-Item -Destination $artifactPath -Force
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: Eppie.WindowsStore.UWP [${{ steps.assign-version.outputs.artifact-version }}]
+          path: ${{ env.artifacts-path }}

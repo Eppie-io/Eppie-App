@@ -60,6 +60,7 @@ jobs:
           json-file: ./.github/configurations/publish-windows-store.json
           keywords: |
             windows
+            winui
 
   publish:
     name: Publish ${{ matrix.publish.framework }} [store]

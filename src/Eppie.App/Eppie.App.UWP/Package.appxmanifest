@@ -7,15 +7,15 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="Tuvisoft.Eppie"
-    Publisher="CN=DAC4344D-4C49-4539-938D-A1947B946DCD"
+    Name="Identity.Name"
+    Publisher="CN=IdentityPublisher"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="d0dcdbce-b73c-4b0f-8253-32ee2bcf4831" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="c1d5b609-9d06-45c4-b86f-e8ebd1c33d8c" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>Eppie</DisplayName>
-    <PublisherDisplayName>Finebits</PublisherDisplayName>
+    <PublisherDisplayName>Properties.PublisherDisplayName</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
