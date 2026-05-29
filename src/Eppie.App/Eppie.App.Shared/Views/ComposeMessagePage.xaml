@@ -265,8 +265,7 @@
                                                          Text="{x:Bind ViewModel.TextBody, Mode=TwoWay}"
                                                          Visibility="{x:Bind ViewModel.LoadingContent, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
 
-                            <!--  Wrapped to Grid because Android doesn't have Visibility=Collapsed for ProgressRing  -->
-                            <!--  ToDo: Check it on new Uno  -->
+                            <!--  UnoBug: Android doesn't have Visibility=Collapsed for ProgressRing.  -->
                             <Grid Visibility="{x:Bind ViewModel.LoadingContent, Mode=OneWay}">
                                 <ProgressRing Width="{StaticResource ProgressRingSize}"
                                               Height="{StaticResource ProgressRingSize}"
@@ -277,25 +276,25 @@
                         </Grid>
 
                         <!--  Attachments  -->
-                        <StackPanel Grid.Row="3"
-                                    Grid.ColumnSpan="2"
-                                    Orientation="Vertical"
-                                    Visibility="{x:Bind ViewModel.LoadingContent, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}">
-
-                            <TextBlock x:Uid="AttachedFilesTitle"
-                                       Margin="0,24,0,16"
-                                       FontSize="12"
-                                       FontWeight="Medium"
-                                       Foreground="{StaticResource TextFillColorSecondaryBrush}"
-                                       Visibility="{x:Bind ViewModel.HasAttachments, Mode=OneWay}" />
-
-                            <controls:AttachmentRepeaterControl AllowDrop="True"
-                                                                DragOver="OnDragOver"
-                                                                Drop="OnDrop"
-                                                                ItemTemplate="{StaticResource RemovableAttachmentItemTemplate}"
-                                                                Items="{x:Bind ViewModel.Attachments, Mode=OneWay}"
-                                                                Visibility="{x:Bind ViewModel.HasAttachments, Mode=OneWay}" />
-                        </StackPanel>
+                        <!--  Note: Background="Transparent" is used to allow drag and drop operations on the entire Border element  -->
+                        <Border Grid.Row="3"
+                                Grid.ColumnSpan="2"
+                                AllowDrop="True"
+                                Background="Transparent"
+                                DragOver="OnDragOver"
+                                Drop="OnDrop"
+                                Visibility="{x:Bind ViewModel.LoadingContent, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                            <controls:SimpleExpander x:Uid="AttachedFilesTitle"
+                                                     Margin="0,24,0,0"
+                                                     GlyphPosition="Left"
+                                                     IsExpanded="True"
+                                                     Visibility="{x:Bind ViewModel.HasAttachments, Mode=OneWay}">
+                                <controls:AttachmentRepeaterControl Margin="0,16,0,0"
+                                                                    VerticalAlignment="Top"
+                                                                    ItemTemplate="{StaticResource RemovableAttachmentItemTemplate}"
+                                                                    Items="{x:Bind ViewModel.Attachments, Mode=OneWay}" />
+                            </controls:SimpleExpander>
+                        </Border>
 
                         <ContentControl x:Name="Footer"
                                         Grid.Row="4"

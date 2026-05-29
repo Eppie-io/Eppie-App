@@ -225,8 +225,8 @@
     <value>Attached files:</value>
     <comment>Title for list of attached files</comment>
   </data>
-  <data name="AttachedFilesTitle.Text" xml:space="preserve">
-    <value>ATTACHMENTS</value>
+  <data name="AttachedFilesTitle.Header" xml:space="preserve">
+    <value>Attachments</value>
     <comment>Title for list of attached files</comment>
   </data>
   <data name="ComposeEmailTitle.Text" xml:space="preserve">
