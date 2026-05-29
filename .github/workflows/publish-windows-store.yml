@@ -180,7 +180,7 @@ jobs:
         if: steps.validate-store-secrets.outputs.identity-publisher-set == 'True'
         with:
           file: ./src/Eppie.App/Eppie.App/Package.appxmanifest
-          find-what: 'Identity.Publisher'
+          find-what: 'CN=IdentityPublisher'
           replace-with: "${{ secrets.WINDOWS_STORE_IDENTITY_PUBLISHER }}"
 
       - uses: finebits/github-actions/toolset/file/replace-text@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1

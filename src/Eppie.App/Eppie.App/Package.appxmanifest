@@ -7,7 +7,7 @@
 
   <Identity
     Name="Identity.Name"
-    Publisher="Identity.Publisher"
+    Publisher="CN=IdentityPublisher"
     Version="1.2.2.0"/>
 
   <Properties>
