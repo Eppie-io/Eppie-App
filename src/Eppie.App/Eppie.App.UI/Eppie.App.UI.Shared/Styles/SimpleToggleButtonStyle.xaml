@@ -3,10 +3,7 @@
                     xmlns:controls="using:Microsoft.UI.Xaml.Controls"
                     xmlns:extensions="using:Eppie.App.UI.Extensions"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                    xmlns:not_win="http://uno.ui/not_win"
-                    xmlns:triggers="using:CommunityToolkit.WinUI"
-                    xmlns:win="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    mc:Ignorable="not_win">
+                    xmlns:triggers="using:CommunityToolkit.WinUI">
 
     <ResourceDictionary.MergedDictionaries>
         <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
