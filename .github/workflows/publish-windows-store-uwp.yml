@@ -203,7 +203,6 @@ jobs:
         shell: pwsh
         run: |
           $configuration = '${{ matrix.publish.configuration }}'
-          $numericVersion = '${{ steps.assign-version.outputs.numeric-version }}'
           $projectPath = '${{ env.project-path }}'
           $publishPath = '${{ env.publish-path }}'
           $platforms = '${{ join(matrix.publish.platforms, ',') }}'.Split(',', [System.StringSplitOptions]::RemoveEmptyEntries)
@@ -221,10 +220,6 @@ jobs:
             "/p:AppxBundlePlatforms=$bundlePlatforms"
             '/p:AppxPackageSigningEnabled=false'
             "/p:AppxPackageDir=$publishPath\\"
-            "/p:AppxPackageVersion=$numericVersion"
-            "/p:AssemblyVersion=$numericVersion"
-            "/p:FileVersion=$numericVersion"
-            "/p:Version=$numericVersion"
             '/p:NuGetAudit=false'
             '/verbosity:${{ inputs.dotnet-verbosity }}'
           )
