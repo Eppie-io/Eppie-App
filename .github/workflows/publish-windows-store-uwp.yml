@@ -213,12 +213,9 @@ jobs:
           $arguments = @(
             $projectPath
             "/p:Configuration=$configuration"
-            '/p:Platform=x86'
-            '/p:GenerateAppxPackageOnBuild=true'
             '/p:UapAppxPackageBuildMode=StoreUpload'
             '/p:AppxBundle=Always'
             "/p:AppxBundlePlatforms=$bundlePlatforms"
-            '/p:AppxPackageSigningEnabled=false'
             "/p:AppxPackageDir=$publishPath\\"
             '/p:NuGetAudit=false'
             '/verbosity:${{ inputs.dotnet-verbosity }}'
