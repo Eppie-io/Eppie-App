@@ -218,8 +218,9 @@ jobs:
             '/p:AppxBundle=Always'
             "/p:AppxBundlePlatforms=$bundlePlatforms"
             "/p:AppxPackageDir=$publishPath\\"
-            "/p:AppxPackageVersion=$numericVersion"
+            "/p:PackageVersion=$numericVersion"
             '/p:NuGetAudit=false'
+            '/t:PackageVersioning;Build'
             '/verbosity:${{ inputs.dotnet-verbosity }}'
           )
 
