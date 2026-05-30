@@ -233,7 +233,7 @@ jobs:
         run: |
           $artifactPath = '${{ env.artifacts-path }}'
           $publishPath = '${{ env.publish-path }}'
-          $packagePatterns = @('*.appxbundle', '*.appxupload', '*.msixbundle', '*.msixupload')
+          $packagePatterns = @('*.appxupload', '*.msixupload')
 
           New-Item -ItemType Directory -Path $artifactPath -Force | Out-Null
 
