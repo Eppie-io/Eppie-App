@@ -217,6 +217,7 @@ jobs:
             '/p:AppxBundle=Always'
             "/p:AppxBundlePlatforms=$bundlePlatforms"
             "/p:AppxPackageDir=$publishPath\\"
+            "/p:AppxPackageVersion=$numericVersion"
             '/p:NuGetAudit=false'
             '/verbosity:${{ inputs.dotnet-verbosity }}'
           )
