@@ -203,6 +203,7 @@ jobs:
         shell: pwsh
         run: |
           $configuration = '${{ matrix.publish.configuration }}'
+          $numericVersion = '${{ steps.assign-version.outputs.numeric-version }}'
           $projectPath = '${{ env.project-path }}'
           $publishPath = '${{ env.publish-path }}'
           $platforms = '${{ join(matrix.publish.platforms, ',') }}'.Split(',', [System.StringSplitOptions]::RemoveEmptyEntries)
