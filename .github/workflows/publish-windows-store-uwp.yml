@@ -105,7 +105,11 @@ jobs:
           $publisherDisplayName = '${{ secrets.WINDOWS_STORE_PUBLISHER_DISPLAY_NAME }}'
           $protocolName = '${{ secrets.WINDOWS_STORE_PROTOCOL_NAME }}'
           $gmailClientId = '${{ secrets.GMAIL_CLIENT_ID }}'
+          $gmailRedirectUri = '${{ secrets.GMAIL_REDIRECT_URI }}'
           $outlookClientId = '${{ secrets.OUTLOOK_CLIENT_ID }}'
+          $outlookRedirectUri = '${{ secrets.OUTLOOK_REDIRECT_URI }}'
+          $protonAppVersion = '${{ secrets.PROTON_APP_VERSION }}'
+          $protonUserAgent = '${{ secrets.PROTON_USER_AGENT }}'
           $missingSecrets = @()
 
           if ([string]::IsNullOrWhiteSpace($identityName)) {
@@ -128,8 +132,24 @@ jobs:
             $missingSecrets += 'GMAIL_CLIENT_ID'
           }
 
+          if ([string]::IsNullOrWhiteSpace($gmailRedirectUri)) {
+            $missingSecrets += 'GMAIL_REDIRECT_URI'
+          }
+
           if ([string]::IsNullOrWhiteSpace($outlookClientId)) {
             $missingSecrets += 'OUTLOOK_CLIENT_ID'
+          }
+
+          if ([string]::IsNullOrWhiteSpace($outlookRedirectUri)) {
+            $missingSecrets += 'OUTLOOK_REDIRECT_URI'
+          }
+
+          if ([string]::IsNullOrWhiteSpace($protonAppVersion)) {
+            $missingSecrets += 'PROTON_APP_VERSION'
+          }
+
+          if ([string]::IsNullOrWhiteSpace($protonUserAgent)) {
+            $missingSecrets += 'PROTON_USER_AGENT'
           }
 
           foreach ($secretName in $missingSecrets) {
@@ -141,7 +161,11 @@ jobs:
           "publisher-display-name-set=$(-not [string]::IsNullOrWhiteSpace($publisherDisplayName))" >> $env:GITHUB_OUTPUT
           "protocol-name-set=$(-not [string]::IsNullOrWhiteSpace($protocolName))" >> $env:GITHUB_OUTPUT
           "gmail-client-id-set=$(-not [string]::IsNullOrWhiteSpace($gmailClientId))" >> $env:GITHUB_OUTPUT
+          "gmail-redirect-uri-set=$(-not [string]::IsNullOrWhiteSpace($gmailRedirectUri))" >> $env:GITHUB_OUTPUT
           "outlook-client-id-set=$(-not [string]::IsNullOrWhiteSpace($outlookClientId))" >> $env:GITHUB_OUTPUT
+          "outlook-redirect-uri-set=$(-not [string]::IsNullOrWhiteSpace($outlookRedirectUri))" >> $env:GITHUB_OUTPUT
+          "proton-app-version-set=$(-not [string]::IsNullOrWhiteSpace($protonAppVersion))" >> $env:GITHUB_OUTPUT
+          "proton-user-agent-set=$(-not [string]::IsNullOrWhiteSpace($protonUserAgent))" >> $env:GITHUB_OUTPUT
 
       - uses: finebits/github-actions/toolset/file/replace-text@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1
         if: steps.validate-store-secrets.outputs.gmail-client-id-set == 'True'
@@ -151,11 +175,46 @@ jobs:
           replace-with: "${{ secrets.GMAIL_CLIENT_ID }}"
 
       - uses: finebits/github-actions/toolset/file/replace-text@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1
+        if: steps.validate-store-secrets.outputs.gmail-redirect-uri-set == 'True'
+        with:
+          file: ./src/Eppie.App/Eppie.App.UWP/Authorization/AuthConfig.UWP.cs
+          find-what: '\"<Gmail-RedirectUri>\"'
+          replace-with: "${{ secrets.GMAIL_REDIRECT_URI }}"
+
+      - uses: finebits/github-actions/toolset/file/replace-text@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1
         if: steps.validate-store-secrets.outputs.outlook-client-id-set == 'True'
         with:
           file: ./src/Eppie.App/Eppie.App.UWP/Authorization/AuthConfig.UWP.cs
           find-what: '\"<Outlook-ClientId>\"'
           replace-with: "${{ secrets.OUTLOOK_CLIENT_ID }}"
+
+      - uses: finebits/github-actions/toolset/file/replace-text@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1
+        if: steps.validate-store-secrets.outputs.outlook-redirect-uri-set == 'True'
+        with:
+          file: ./src/Eppie.App/Eppie.App.UWP/Authorization/AuthConfig.UWP.cs
+          find-what: '\"<Outlook-RedirectUri>\"'
+          replace-with: "${{ secrets.OUTLOOK_REDIRECT_URI }}"
+
+      - uses: finebits/github-actions/toolset/file/replace-text@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1
+        if: steps.validate-store-secrets.outputs.protocol-name-set == 'True'
+        with:
+          file: ./src/Eppie.App/Eppie.App.UWP/Authorization/AuthConfig.UWP.cs
+          find-what: '<UriScheme>'
+          replace-with: "${{ secrets.WINDOWS_STORE_PROTOCOL_NAME }}"
+
+      - uses: finebits/github-actions/toolset/file/replace-text@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1
+        if: steps.validate-store-secrets.outputs.proton-app-version-set == 'True'
+        with:
+          file: ./src/Eppie.App/Eppie.App.UWP/Authorization/AuthConfig.UWP.cs
+          find-what: '<Proton-AppVersion>'
+          replace-with: "${{ secrets.PROTON_APP_VERSION }}"
+
+      - uses: finebits/github-actions/toolset/file/replace-text@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1
+        if: steps.validate-store-secrets.outputs.proton-user-agent-set == 'True'
+        with:
+          file: ./src/Eppie.App/Eppie.App.UWP/Authorization/AuthConfig.UWP.cs
+          find-what: '<Proton-UserAgent>'
+          replace-with: "${{ secrets.PROTON_USER_AGENT }}"
 
       - uses: finebits/github-actions/toolset/file/replace-text@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1
         if: steps.validate-store-secrets.outputs.identity-name-set == 'True'

@@ -6,7 +6,6 @@
         ],
         "os": "windows-2025-vs2026",
         "publish": {
-            "kind": "winui",
             "tool": "msbuild",
             "project": "./src/Eppie.App/Eppie.App/Eppie.App.csproj",
             "configuration": "release",
@@ -28,7 +27,6 @@
         ],
         "os": "windows-2022",
         "publish": {
-            "kind": "uwp",
             "tool": "msbuild",
             "project": "./src/Eppie.App/Eppie.App.UWP/Eppie.App.UWP.csproj",
             "configuration": "release",
