@@ -107,6 +107,8 @@ jobs:
           $outlookClientId = '${{ secrets.OUTLOOK_CLIENT_ID }}'
           $protonAppVersion = '${{ secrets.PROTON_APP_VERSION }}'
           $protonUserAgent = '${{ secrets.PROTON_USER_AGENT }}'
+          $inAppOfferToken = '${{ secrets.IN_APP_OFFER_TOKEN }}'
+          $appOfferProductId = '${{ secrets.APP_OFFER_PRODUCT_ID }}'
           $missingSecrets = @()
 
           if ([string]::IsNullOrWhiteSpace($identityName)) {
@@ -141,6 +143,14 @@ jobs:
             $missingSecrets += 'PROTON_USER_AGENT'
           }
 
+          if ([string]::IsNullOrWhiteSpace($inAppOfferToken)) {
+            $missingSecrets += 'IN_APP_OFFER_TOKEN'
+          }
+
+          if ([string]::IsNullOrWhiteSpace($appOfferProductId)) {
+            $missingSecrets += 'APP_OFFER_PRODUCT_ID'
+          }
+
           if ($missingSecrets.Count -gt 0) {
             foreach ($secretName in $missingSecrets) {
               Write-Host "::warning::GitHub secret '$secretName' is empty."
@@ -160,6 +170,8 @@ jobs:
           "outlook-client-id-set=$(-not [string]::IsNullOrWhiteSpace($outlookClientId))" >> $env:GITHUB_OUTPUT
           "proton-app-version-set=$(-not [string]::IsNullOrWhiteSpace($protonAppVersion))" >> $env:GITHUB_OUTPUT
           "proton-user-agent-set=$(-not [string]::IsNullOrWhiteSpace($protonUserAgent))" >> $env:GITHUB_OUTPUT
+          "in-app-offer-token-set=$(-not [string]::IsNullOrWhiteSpace($inAppOfferToken))" >> $env:GITHUB_OUTPUT
+          "app-offer-product-id-set=$(-not [string]::IsNullOrWhiteSpace($appOfferProductId))" >> $env:GITHUB_OUTPUT
 
       - uses: finebits/github-actions/toolset/file/replace-text@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1
         if: steps.validate-store-secrets.outputs.gmail-client-id-set == 'True'
@@ -195,6 +207,20 @@ jobs:
           file: ./src/Eppie.App/Eppie.App/Authorization/AuthConfig.Win.cs
           find-what: '<Proton-UserAgent>'
           replace-with: "${{ secrets.PROTON_USER_AGENT }}"
+
+      - uses: finebits/github-actions/toolset/file/replace-text@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1
+        if: steps.validate-store-secrets.outputs.in-app-offer-token-set == 'True'
+        with:
+          file: ./src/Eppie.App/Eppie.App/Services/AppStoreService.cs
+          find-what: '<InAppOfferToken>'
+          replace-with: "${{ secrets.IN_APP_OFFER_TOKEN }}"
+
+      - uses: finebits/github-actions/toolset/file/replace-text@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1
+        if: steps.validate-store-secrets.outputs.app-offer-product-id-set == 'True'
+        with:
+          file: ./src/Eppie.App/Eppie.App/Services/AppStoreService.cs
+          find-what: '<AppOfferProductId>'
+          replace-with: "${{ secrets.APP_OFFER_PRODUCT_ID }}"
 
       - uses: finebits/github-actions/toolset/file/replace-text@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1
         if: steps.validate-store-secrets.outputs.identity-name-set == 'True'
