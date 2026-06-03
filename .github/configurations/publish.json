@@ -13,6 +13,6 @@
     },
     "windows-store":{
         "os":["windows","all"],
-        "framework":["winui","all"]
+        "framework":["winui","uwp","all"]
     }
 }

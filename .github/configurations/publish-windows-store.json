@@ -1,7 +1,8 @@
 [
     {
         "keywords": [
-            "windows"
+            "windows",
+            "winui"
         ],
         "os": "windows-2025-vs2026",
         "publish": {
@@ -13,6 +14,27 @@
                 "x86",
                 "x64",
                 "arm64"
+            ]
+        },
+        "artifact": {
+            "tool": "cp"
+        }
+    },
+    {
+        "keywords": [
+            "windows",
+            "uwp"
+        ],
+        "os": "windows-2022",
+        "publish": {
+            "tool": "msbuild",
+            "project": "./src/Eppie.App/Eppie.App.UWP/Eppie.App.UWP.csproj",
+            "configuration": "release",
+            "framework": "uap10.0.19041",
+            "platforms": [
+                "x86",
+                "x64",
+                "ARM64"
             ]
         },
         "artifact": {
