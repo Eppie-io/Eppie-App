@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Tuvi.Core.Entities;
 
+// ToDo: Rename project and this namespace to Eppie.App.Authorization
 namespace Tuvi.OAuth2
 {
     public static class DefaultAccountConfig

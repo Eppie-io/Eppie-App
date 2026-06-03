@@ -63,13 +63,6 @@ namespace Tuvi.App.ViewModels
             set => SetProperty(ref _shouldAutoExpandIncomingServer, value);
         }
 
-        public AuthorizationProvider AuthProvider { get; private set; }
-
-        public void SetAuthProvider(AuthorizationProvider authProvider)
-        {
-            AuthProvider = authProvider;
-        }
-
         private EmailAddressSettingsModel _addressSettingsModel;
         [CustomValidation(typeof(EmailAddressSettingsPageViewModel), nameof(ClearValidationErrors))]
         [CustomValidation(typeof(EmailAddressSettingsPageViewModel), nameof(ValidateOutgoingServerAddressIsNotEmpty))]

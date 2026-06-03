@@ -152,21 +152,21 @@ jobs:
       - uses: finebits/github-actions/toolset/file/replace-text@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1
         if: steps.validate-store-secrets.outputs.gmail-client-id-set == 'True'
         with:
-          file: ./src/Eppie.App/Eppie.App.Shared/Authorization/AuthConfig.Uno.cs
+          file: ./src/Eppie.App/Eppie.App/Authorization/AuthConfig.Win.cs
           find-what: '\"<Gmail-ClientId>\"'
           replace-with: "${{ secrets.GMAIL_CLIENT_ID }}"
 
       - uses: finebits/github-actions/toolset/file/replace-text@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1
         if: steps.validate-store-secrets.outputs.gmail-client-secret-set == 'True'
         with:
-          file: ./src/Eppie.App/Eppie.App.Shared/Authorization/AuthConfig.Uno.cs
+          file: ./src/Eppie.App/Eppie.App/Authorization/AuthConfig.Win.cs
           find-what: '\"<Gmail-ClientSecret>\"'
           replace-with: "${{ secrets.GMAIL_CLIENT_SECRET }}"
 
       - uses: finebits/github-actions/toolset/file/replace-text@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1
         if: steps.validate-store-secrets.outputs.outlook-client-id-set == 'True'
         with:
-          file: ./src/Eppie.App/Eppie.App.Shared/Authorization/AuthConfig.Uno.cs
+          file: ./src/Eppie.App/Eppie.App/Authorization/AuthConfig.Win.cs
           find-what: '\"<Outlook-ClientId>\"'
           replace-with: "${{ secrets.OUTLOOK_CLIENT_ID }}"
 

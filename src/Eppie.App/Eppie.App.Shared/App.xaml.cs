@@ -35,6 +35,7 @@ using Tuvi.App.ViewModels.Services;
 using Tuvi.Core;
 using Tuvi.Core.Entities;
 using Tuvi.OAuth2;
+using Tuvi.Proton;
 using Windows.Globalization;
 using Windows.Storage;
 using Windows.System;
@@ -80,9 +81,10 @@ namespace Eppie.App
         public ITuviMail Core { get; private set; }
         public ILocalSettingsService LocalSettingsService { get; private set; }
         public IPendingMailtoService PendingMailtoService { get; private set; }
+        public IProtonLoginHelper ProtonLoginHelper { get; private set; }
+        public IAIService AIService { get; private set; }
         public AuthorizationProvider AuthProvider { get; private set; }
         private NotificationManager _notificationManager { get; set; }
-        public IAIService AIService { get; private set; }
 
         public static Window MainWindow { get; private set; }
         public static XamlRoot XamlRoot => MainWindow?.Content?.XamlRoot;
@@ -193,6 +195,7 @@ namespace Eppie.App
         private void CreateAuth()
         {
             AuthProvider = AuthorizationFactory.GetAuthorizationProvider(Eppie.App.Authorization.AuthConfig.GetAuthorizationConfiguration());
+            ProtonLoginHelper = ComponentBuilder.Components.GetProtonLoginHelper(AuthProvider.GetProtonConfiguration());
         }
 
         private void CreateCore()
@@ -201,6 +204,7 @@ namespace Eppie.App
             Core = ComponentBuilder.Components.CreateTuviMailCore(Path.Combine(DataFolder, DataBaseFileName),
                                                                   new Tuvi.Core.ImplementationDetailsProvider("Tuvi seed", "Tuvi.Package", "backup@system.service.tuvi.com"),
                                                                   tokenRefresher,
+                                                                  AuthProvider.GetProtonConfiguration(),
                                                                   LoggerFactory);
             _notificationManager = new NotificationManager(Core, OnError);
             Core.WipeAllDataNeeded += OnWipeAllDataNeeded;
