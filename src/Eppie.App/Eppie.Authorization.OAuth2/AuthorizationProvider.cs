@@ -22,13 +22,16 @@ using Finebits.Authorization.OAuth2.Abstractions;
 using Finebits.Authorization.OAuth2.Google;
 using Finebits.Authorization.OAuth2.Outlook;
 
+using Tuvi.Proton;
+
+// ToDo: Rename project and this namespace to Eppie.App.Authorization
 namespace Tuvi.OAuth2
 {
     public class AuthorizationProvider
     {
-        public static AuthorizationProvider Create(HttpClient httpClient, Func<IAuthenticationBroker> brokerCreator, Func<GoogleConfiguration> googleConfigCreator, Func<OutlookConfiguration> outlookConfigCreator)
+        internal static AuthorizationProvider Create(HttpClient httpClient, Func<IAuthenticationBroker> brokerCreator, Func<GoogleConfiguration> googleConfigCreator, Func<OutlookConfiguration> outlookConfigCreator, Func<ProtonConfiguration> protonConfigCreator)
         {
-            return new AuthorizationProvider(httpClient, brokerCreator, googleConfigCreator, outlookConfigCreator);
+            return new AuthorizationProvider(httpClient, brokerCreator, googleConfigCreator, outlookConfigCreator, protonConfigCreator);
         }
 
         private static readonly Func<MailService, string> UnknownAuthClientExceptionString = (client) => $"'{client}' is an unknown authorization client.";
@@ -37,8 +40,9 @@ namespace Tuvi.OAuth2
         private readonly Func<IAuthenticationBroker> _brokerCreator;
         private readonly Func<GoogleConfiguration> _googleConfigurationCreator;
         private readonly Func<OutlookConfiguration> _outlookConfigurationCreator;
+        private readonly Func<ProtonConfiguration> _protonConfigurationCreator;
 
-        private AuthorizationProvider(HttpClient httpClient, Func<IAuthenticationBroker> brokerCreator, Func<GoogleConfiguration> googleConfigCreator, Func<OutlookConfiguration> outlookConfigCreator)
+        private AuthorizationProvider(HttpClient httpClient, Func<IAuthenticationBroker> brokerCreator, Func<GoogleConfiguration> googleConfigCreator, Func<OutlookConfiguration> outlookConfigCreator, Func<ProtonConfiguration> protonConfigCreator)
         {
             if (httpClient is null)
             {
@@ -60,10 +64,16 @@ namespace Tuvi.OAuth2
                 throw new ArgumentNullException(nameof(outlookConfigCreator));
             }
 
+            if (protonConfigCreator is null)
+            {
+                throw new ArgumentNullException(nameof(protonConfigCreator));
+            }
+
             _httpClient = httpClient;
             _brokerCreator = brokerCreator;
             _googleConfigurationCreator = googleConfigCreator;
             _outlookConfigurationCreator = outlookConfigCreator;
+            _protonConfigurationCreator = protonConfigCreator;
         }
 
         public IAuthorizationClient CreateAuthorizationClient(MailService mailService)
@@ -86,6 +96,11 @@ namespace Tuvi.OAuth2
                 default:
                     throw new ArgumentException(UnknownAuthClientExceptionString(mailService), nameof(mailService));
             }
+        }
+
+        public ProtonConfiguration GetProtonConfiguration()
+        {
+            return _protonConfigurationCreator();
         }
 
         private GoogleAuthClient CreateGoogleAuthClient()

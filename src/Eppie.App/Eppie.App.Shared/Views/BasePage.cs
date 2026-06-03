@@ -70,6 +70,8 @@ namespace Eppie.App.Views
             ViewModel.SetNavigationService(app.NavigationService);
             ViewModel.SetPendingMailtoService(app.PendingMailtoService);
             ViewModel.SetLocalSettingsService(app.LocalSettingsService);
+            ViewModel.SetAuthProvider(app.AuthProvider);
+            ViewModel.SetProtonLoginHelper(app.ProtonLoginHelper);
             ViewModel.SetLocalizationService(new LocalizationService(app.Host?.Services));
             ViewModel.SetMessageService(new MessageService(() => App.XamlRoot));
             ViewModel.SetErrorHandler(new ErrorHandler());

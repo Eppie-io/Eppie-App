@@ -24,6 +24,7 @@
     <Project Path="Eppie.App/Eppie.App.csproj">
       <Deploy />
     </Project>
+    <Project Path="Eppie.Authorization.OAuth2/Eppie.Authorization.OAuth2.csproj" />
   </Folder>
   <Folder Name="/Application/Eppie.App.UI/">
     <Project Path="Eppie.App.UI/Eppie.App.UI.Shared/Eppie.App.UI.Shared.shproj" />
@@ -59,9 +60,7 @@
     <Project Path="../../gitmodules/TuviCore/Sources/Tuvi.Proton.Impl/Tuvi.Proton.Impl.csproj" />
     <Project Path="../../gitmodules/TuviCore/Sources/Tuvi.Proton/Tuvi.Proton.csproj" />
   </Folder>
-  <Folder Name="/Modules/">
-    <Project Path="Eppie.Authorization.OAuth2/Eppie.Authorization.OAuth2.csproj" />
-  </Folder>
+  <Folder Name="/Modules/" />
   <Folder Name="/Modules/Crypto/">
     <Project Path="../../gitmodules/TuviCore/gitmodules/TuviBase32EConverterLib/TuviBytesToEmailConverterLib/TuviBase32EConverterLib/TuviBase32EConverterLib.csproj" />
     <Project Path="../../gitmodules/TuviCore/gitmodules/TuviPgpLib/gitmodules/TuviKeyDerivationLib/KeyDerivationInterface/KeyDerivation.csproj" />

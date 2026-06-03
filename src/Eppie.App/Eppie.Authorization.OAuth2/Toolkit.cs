@@ -20,6 +20,7 @@ using System;
 using System.Collections.Specialized;
 using System.Web;
 
+// ToDo: Rename project and this namespace to Eppie.App.Authorization
 namespace Tuvi.OAuth2
 {
     public static class Toolkit

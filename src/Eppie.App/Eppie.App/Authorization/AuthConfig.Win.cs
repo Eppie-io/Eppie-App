@@ -24,6 +24,7 @@ using Finebits.Authorization.OAuth2.Google;
 using Finebits.Authorization.OAuth2.Outlook;
 
 using Tuvi.OAuth2;
+using Tuvi.Proton;
 
 namespace Eppie.App.Authorization
 {
@@ -36,16 +37,22 @@ namespace Eppie.App.Authorization
                 AuthenticationBrokerCreator = GetAuthenticationBroker,
                 GoogleConfigurationCreator = () => new GoogleConfiguration
                 {
-                    ClientId = "<ClientId>",
-                    ClientSecret = "<ClientSecret>",
+                    ClientId = "<Gmail-ClientId>",
+                    ClientSecret = "<Gmail-ClientSecret>",
                     RedirectUri = DesktopAuthenticationBroker.GetLoopbackUri(),
                     ScopeList = GmailScope
                 },
                 OutlookConfigurationCreator = () => new OutlookConfiguration
                 {
-                    ClientId = "<ClientId>",
+                    ClientId = "<Outlook-ClientId>",
                     RedirectUri = DesktopAuthenticationBroker.GetLoopbackUri(),
                     ScopeList = OutlookScope
+                },
+                ProtonConfigurationCreator = () => new ProtonConfiguration
+                {
+                    AppVersion = "<Proton-AppVersion>",
+                    RedirectUri = new Uri("https://protonmail.ch"),
+                    UserAgent = "<Proton-UserAgent>"
                 }
             };
         }

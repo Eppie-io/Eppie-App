@@ -35,8 +35,6 @@ namespace Eppie.App.Views
         public EmailAddressSettingsPage()
         {
             this.InitializeComponent();
-
-            ViewModel.SetAuthProvider((Application.Current as Eppie.App.App)?.AuthProvider);
         }
     }
 }
