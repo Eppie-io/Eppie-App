@@ -167,7 +167,7 @@ namespace Tuvi.App.ViewModels
             return Task.CompletedTask;
         }
 
-        private Task OpenAttachmentFileAsync(Tuple<Attachment, IFileOperationProvider> pair)
+        private async Task OpenAttachmentFileAsync(Tuple<Attachment, IFileOperationProvider> pair)
         {
             try
             {
@@ -184,14 +184,12 @@ namespace Tuvi.App.ViewModels
                     throw new ArgumentNullException(nameof(pair), nameof(attachment));
                 }
 
-                return fileOperationsProvider.SaveToTempFileAndOpenAsync(attachment.Data, attachment.FileName);
+                await fileOperationsProvider.SaveToTempFileAndOpenAsync(attachment.Data, attachment.FileName).ConfigureAwait(true);
             }
             catch (Exception e)
             {
                 OnError(e);
             }
-
-            return Task.CompletedTask;
         }
 
         protected void AddAttachments(IEnumerable<Attachment> attachments)

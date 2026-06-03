@@ -1,0 +1,250 @@
+﻿<UserControl x:Class="Eppie.App.UI.Controls.SimpleExpander"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:behaviors="using:Eppie.App.UI.Behaviors"
+             xmlns:converters="using:Tuvi.App.Converters"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+             xmlns:local="using:Eppie.App.UI.Controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:toolkit="using:CommunityToolkit.WinUI"
+             d:DesignHeight="300"
+             d:DesignWidth="400"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Default">
+                    <StaticResource x:Key="SimpleExpanderHeaderForeground" ResourceKey="TextFillColorSecondaryBrush" />
+                    <StaticResource x:Key="SimpleExpanderHeaderForegroundPointerOver" ResourceKey="TextFillColorPrimaryBrush" />
+                    <StaticResource x:Key="SimpleExpanderHeaderForegroundPressed" ResourceKey="TextFillColorTertiaryBrush" />
+                    <StaticResource x:Key="SimpleExpanderHeaderForegroundDisabled" ResourceKey="TextFillColorDisabledBrush" />
+                    <StaticResource x:Key="SimpleExpanderHeaderForegroundChecked" ResourceKey="TextFillColorSecondaryBrush" />
+                    <StaticResource x:Key="SimpleExpanderHeaderForegroundCheckedPointerOver" ResourceKey="TextFillColorPrimaryBrush" />
+                    <StaticResource x:Key="SimpleExpanderHeaderForegroundCheckedPressed" ResourceKey="TextFillColorTertiaryBrush" />
+                    <StaticResource x:Key="SimpleExpanderHeaderForegroundCheckedDisabled" ResourceKey="TextFillColorDisabledBrush" />
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="HighContrast">
+                    <!--  ToDo: Check High Contrast colors  -->
+                    <StaticResource x:Key="SimpleExpanderHeaderForeground" ResourceKey="SystemControlForegroundBaseHighBrush" />
+                    <StaticResource x:Key="SimpleExpanderHeaderForegroundPointerOver" ResourceKey="SystemControlHighlightBaseHighBrush" />
+                    <StaticResource x:Key="SimpleExpanderHeaderForegroundPressed" ResourceKey="SystemControlHighlightBaseHighBrush" />
+                    <StaticResource x:Key="SimpleExpanderHeaderForegroundDisabled" ResourceKey="SystemControlDisabledBaseMediumLowBrush" />
+                    <StaticResource x:Key="SimpleExpanderHeaderForegroundChecked" ResourceKey="SystemControlHighlightAltChromeWhiteBrush" />
+                    <StaticResource x:Key="SimpleExpanderHeaderForegroundCheckedPointerOver" ResourceKey="SystemColorButtonFaceColorBrush" />
+                    <StaticResource x:Key="SimpleExpanderHeaderForegroundCheckedPressed" ResourceKey="SystemColorHighlightColorBrush" />
+                    <StaticResource x:Key="SimpleExpanderHeaderForegroundCheckedDisabled" ResourceKey="SystemControlDisabledBaseMediumLowBrush" />
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Light">
+                    <StaticResource x:Key="SimpleExpanderHeaderForeground" ResourceKey="TextFillColorSecondaryBrush" />
+                    <StaticResource x:Key="SimpleExpanderHeaderForegroundPointerOver" ResourceKey="TextFillColorPrimaryBrush" />
+                    <StaticResource x:Key="SimpleExpanderHeaderForegroundPressed" ResourceKey="TextFillColorTertiaryBrush" />
+                    <StaticResource x:Key="SimpleExpanderHeaderForegroundDisabled" ResourceKey="TextFillColorDisabledBrush" />
+                    <StaticResource x:Key="SimpleExpanderHeaderForegroundChecked" ResourceKey="TextFillColorSecondaryBrush" />
+                    <StaticResource x:Key="SimpleExpanderHeaderForegroundCheckedPointerOver" ResourceKey="TextFillColorPrimaryBrush" />
+                    <StaticResource x:Key="SimpleExpanderHeaderForegroundCheckedPressed" ResourceKey="TextFillColorTertiaryBrush" />
+                    <StaticResource x:Key="SimpleExpanderHeaderForegroundCheckedDisabled" ResourceKey="TextFillColorDisabledBrush" />
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+
+            <x:String x:Key="ChevronDownGlyph">&#xE70D;</x:String>
+            <x:String x:Key="CaretDownSolid8Glyph">&#xEDDC;</x:String>
+            <!--  UnoBug: `CaretSolidDown` is missing from the Uno platform font (uno-fluentui-assets.ttf)  -->
+            <x:String x:Key="CaretSolidDown">&#xF08E;</x:String>
+
+            <StaticResource x:Key="SimpleExpanderGlyph" ResourceKey="CaretDownSolid8Glyph" />
+            <converters:NullToDefaultConverter x:Key="GlyphConverter" DefaultValue="{StaticResource SimpleExpanderGlyph}" />
+            <converters:InvertDoubleConverter x:Key="InvertDoubleConverter" />
+
+            <local:StringContentTemplateSelector x:Key="HeaderContentSelector">
+                <local:StringContentTemplateSelector.StringTemplate>
+                    <DataTemplate x:DataType="x:String">
+                        <TextBlock Text="{x:Bind}"
+                                   TextTrimming="CharacterEllipsis"
+                                   TextWrapping="NoWrap">
+                            <interactivity:Interaction.Behaviors>
+                                <behaviors:TextBlockTooltipBehavior />
+                            </interactivity:Interaction.Behaviors>
+                        </TextBlock>
+                    </DataTemplate>
+                </local:StringContentTemplateSelector.StringTemplate>
+            </local:StringContentTemplateSelector>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <ToggleButton x:Name="ExpanderHeader"
+                      Padding="0"
+                      FontWeight="Normal"
+                      IsChecked="{x:Bind IsExpanded, Mode=TwoWay}"
+                      Style="{StaticResource SimpleToggleButtonStyle}">
+            <ToggleButton.Resources>
+                <ResourceDictionary>
+                    <ResourceDictionary.ThemeDictionaries>
+                        <ResourceDictionary x:Key="Default">
+                            <StaticResource x:Key="SimpleToggleButtonForeground" ResourceKey="SimpleExpanderHeaderForeground" />
+                            <StaticResource x:Key="SimpleToggleButtonForegroundPointerOver" ResourceKey="SimpleExpanderHeaderForegroundPointerOver" />
+                            <StaticResource x:Key="SimpleToggleButtonForegroundPressed" ResourceKey="SimpleExpanderHeaderForegroundPressed" />
+                            <StaticResource x:Key="SimpleToggleButtonForegroundDisabled" ResourceKey="SimpleExpanderHeaderForegroundDisabled" />
+                            <StaticResource x:Key="SimpleToggleButtonForegroundChecked" ResourceKey="SimpleExpanderHeaderForegroundChecked" />
+                            <StaticResource x:Key="SimpleToggleButtonForegroundCheckedPointerOver" ResourceKey="SimpleExpanderHeaderForegroundCheckedPointerOver" />
+                            <StaticResource x:Key="SimpleToggleButtonForegroundCheckedPressed" ResourceKey="SimpleExpanderHeaderForegroundCheckedPressed" />
+                            <StaticResource x:Key="SimpleToggleButtonForegroundCheckedDisabled" ResourceKey="SimpleExpanderHeaderForegroundCheckedDisabled" />
+                        </ResourceDictionary>
+                        <ResourceDictionary x:Key="HighContrast">
+                            <StaticResource x:Key="SimpleToggleButtonForeground" ResourceKey="SimpleExpanderHeaderForeground" />
+                            <StaticResource x:Key="SimpleToggleButtonForegroundPointerOver" ResourceKey="SimpleExpanderHeaderForegroundPointerOver" />
+                            <StaticResource x:Key="SimpleToggleButtonForegroundPressed" ResourceKey="SimpleExpanderHeaderForegroundPressed" />
+                            <StaticResource x:Key="SimpleToggleButtonForegroundDisabled" ResourceKey="SimpleExpanderHeaderForegroundDisabled" />
+                            <StaticResource x:Key="SimpleToggleButtonForegroundChecked" ResourceKey="SimpleExpanderHeaderForegroundChecked" />
+                            <StaticResource x:Key="SimpleToggleButtonForegroundCheckedPointerOver" ResourceKey="SimpleExpanderHeaderForegroundCheckedPointerOver" />
+                            <StaticResource x:Key="SimpleToggleButtonForegroundCheckedPressed" ResourceKey="SimpleExpanderHeaderForegroundCheckedPressed" />
+                            <StaticResource x:Key="SimpleToggleButtonForegroundCheckedDisabled" ResourceKey="SimpleExpanderHeaderForegroundCheckedDisabled" />
+                        </ResourceDictionary>
+                        <ResourceDictionary x:Key="Light">
+                            <StaticResource x:Key="SimpleToggleButtonForeground" ResourceKey="SimpleExpanderHeaderForeground" />
+                            <StaticResource x:Key="SimpleToggleButtonForegroundPointerOver" ResourceKey="SimpleExpanderHeaderForegroundPointerOver" />
+                            <StaticResource x:Key="SimpleToggleButtonForegroundPressed" ResourceKey="SimpleExpanderHeaderForegroundPressed" />
+                            <StaticResource x:Key="SimpleToggleButtonForegroundDisabled" ResourceKey="SimpleExpanderHeaderForegroundDisabled" />
+                            <StaticResource x:Key="SimpleToggleButtonForegroundChecked" ResourceKey="SimpleExpanderHeaderForegroundChecked" />
+                            <StaticResource x:Key="SimpleToggleButtonForegroundCheckedPointerOver" ResourceKey="SimpleExpanderHeaderForegroundCheckedPointerOver" />
+                            <StaticResource x:Key="SimpleToggleButtonForegroundCheckedPressed" ResourceKey="SimpleExpanderHeaderForegroundCheckedPressed" />
+                            <StaticResource x:Key="SimpleToggleButtonForegroundCheckedDisabled" ResourceKey="SimpleExpanderHeaderForegroundCheckedDisabled" />
+                        </ResourceDictionary>
+                    </ResourceDictionary.ThemeDictionaries>
+                </ResourceDictionary>
+            </ToggleButton.Resources>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <FontIcon Grid.Column="0"
+                          Margin="0,0,8,0"
+                          VerticalAlignment="Center"
+                          FontSize="{x:Bind GlyphSize, Mode=OneWay}"
+                          Glyph="{x:Bind Glyph, Converter={StaticResource GlyphConverter}, Mode=OneWay}"
+                          RenderTransformOrigin="0.5,0.5"
+                          Visibility="{x:Bind local:SimpleExpander.GetGlyphVisibility(GlyphPosition, local:ExpanderGlyphPosition.Left), Mode=OneWay}">
+                    <FontIcon.RenderTransform>
+                        <RotateTransform x:Name="LeftGlyphTransform" />
+                    </FontIcon.RenderTransform>
+                </FontIcon>
+
+                <ContentControl Grid.Column="1"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                Content="{x:Bind Header, Mode=OneWay}"
+                                ContentTemplateSelector="{StaticResource HeaderContentSelector}" />
+
+                <FontIcon Grid.Column="2"
+                          Margin="8,0,0,0"
+                          VerticalAlignment="Center"
+                          FontSize="{x:Bind GlyphSize, Mode=OneWay}"
+                          Glyph="{x:Bind Glyph, Converter={StaticResource GlyphConverter}, Mode=OneWay}"
+                          RenderTransformOrigin="0.5,0.5"
+                          Visibility="{x:Bind local:SimpleExpander.GetGlyphVisibility(GlyphPosition, local:ExpanderGlyphPosition.Right), Mode=OneWay}">
+                    <FontIcon.RenderTransform>
+                        <RotateTransform x:Name="RightGlyphTransform" />
+                    </FontIcon.RenderTransform>
+                </FontIcon>
+            </Grid>
+
+        </ToggleButton>
+
+        <Border Grid.Row="1" toolkit:UIElementExtensions.ClipToBounds="True">
+            <Border x:Name="ExpanderContentBorder"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    toolkit:FrameworkElementExtensions.EnableActualSizeBinding="true">
+                <ContentPresenter HorizontalAlignment="Stretch"
+                                  VerticalAlignment="Stretch"
+                                  Content="{x:Bind ExpanderContent, Mode=OneWay}" />
+                <Border.RenderTransform>
+                    <TranslateTransform x:Name="ContentTransform" />
+                </Border.RenderTransform>
+            </Border>
+        </Border>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="ExpandStates">
+                <VisualState x:Name="Collapse">
+                    <VisualState.StateTriggers>
+                        <toolkit:IsNotEqualStateTrigger Value="{x:Bind IsExpanded, Mode=OneWay}" To="True" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Storyboard>
+                        <Storyboard>
+                            <!--  Glyphs Animation  -->
+                            <DoubleAnimation Storyboard.TargetName="LeftGlyphTransform"
+                                             Storyboard.TargetProperty="Angle"
+                                             From="180"
+                                             To="0"
+                                             Duration="0:0:0.2" />
+                            <DoubleAnimation Storyboard.TargetName="RightGlyphTransform"
+                                             Storyboard.TargetProperty="Angle"
+                                             From="-180"
+                                             To="0"
+                                             Duration="0:0:0.2" />
+
+                            <!--  Content Animation  -->
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ExpanderContentBorder" Storyboard.TargetProperty="Visibility">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
+                                <DiscreteObjectKeyFrame KeyTime="0:0:0.3" Value="Collapsed" />
+                            </ObjectAnimationUsingKeyFrames>
+                            <!--  UnoBug: x:Bind doesn't work with Uno Platform (look at https://github.com/unoplatform/uno/issues/13551)  -->
+                            <DoubleAnimation Storyboard.TargetName="ContentTransform"
+                                             Storyboard.TargetProperty="Y"
+                                             From="0"
+                                             To="{Binding ElementName=ExpanderContentBorder, Path=(toolkit:FrameworkElementExtensions.ActualHeight), Mode=OneWay, Converter={StaticResource InvertDoubleConverter}}"
+                                             Duration="0:0:0.2">
+                                <DoubleAnimation.EasingFunction>
+                                    <QuadraticEase EasingMode="EaseIn" />
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                        </Storyboard>
+                    </VisualState.Storyboard>
+                </VisualState>
+                <VisualState x:Name="Expand">
+                    <VisualState.StateTriggers>
+                        <toolkit:IsEqualStateTrigger Value="{x:Bind IsExpanded, Mode=OneWay}" To="True" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Storyboard>
+                        <Storyboard>
+                            <!--  Glyphs Animation  -->
+                            <DoubleAnimation Storyboard.TargetName="LeftGlyphTransform"
+                                             Storyboard.TargetProperty="Angle"
+                                             To="180"
+                                             Duration="0:0:0.2" />
+                            <DoubleAnimation Storyboard.TargetName="RightGlyphTransform"
+                                             Storyboard.TargetProperty="Angle"
+                                             To="-180"
+                                             Duration="0:0:0.2" />
+
+                            <!--  Content Animation  -->
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ExpanderContentBorder" Storyboard.TargetProperty="Visibility">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed" />
+                                <DiscreteObjectKeyFrame KeyTime="0:0:0.050" Value="Visible" />
+                            </ObjectAnimationUsingKeyFrames>
+                            <!--  UnoBug: x:Bind doesn't work with Uno Platform (look at https://github.com/unoplatform/uno/issues/13551)  -->
+                            <DoubleAnimation Storyboard.TargetName="ContentTransform"
+                                             Storyboard.TargetProperty="Y"
+                                             From="{Binding ElementName=ExpanderContentBorder, Path=(toolkit:FrameworkElementExtensions.ActualHeight), Mode=OneWay, Converter={StaticResource InvertDoubleConverter}}"
+                                             To="0"
+                                             Duration="0:0:0.3">
+                                <DoubleAnimation.EasingFunction>
+                                    <QuadraticEase EasingMode="EaseOut" />
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                        </Storyboard>
+                    </VisualState.Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </Grid>
+</UserControl>

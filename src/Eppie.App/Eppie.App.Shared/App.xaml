@@ -13,6 +13,8 @@
                 <ResourceDictionary Source="ms-appx:///StaticResources/StaticResources.xaml" />
                 <ResourceDictionary Source="ms-appx:///StaticResources/IconResources.xaml" />
                 <ResourceDictionary Source="ms-appx:///Eppie.App.UI/Styles/ThinButtonStyle.xaml" />
+                <ResourceDictionary Source="ms-appx:///Eppie.App.UI/Styles/SimpleButtonStyle.xaml" />
+                <ResourceDictionary Source="ms-appx:///Eppie.App.UI/Styles/SimpleToggleButtonStyle.xaml" />
                 <ResourceDictionary Source="ms-appx:///Eppie.App.UI/Styles/TuviMailStyles.xaml" />
                 <ResourceDictionary Source="ms-appx:///Eppie.App.UI/Converters/ConvertersDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>

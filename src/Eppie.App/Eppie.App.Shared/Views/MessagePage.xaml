@@ -12,7 +12,6 @@
                        xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
                        xmlns:ui="using:CommunityToolkit.WinUI"
                        xmlns:viewmodels="using:Tuvi.App.ViewModels"
-                       xmlns:win="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                        Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
                        mc:Ignorable="d">
 
@@ -344,8 +343,7 @@
                                          TextBody="{x:Bind ViewModel.MessageInfo.MessageTextBody, Mode=OneWay}"
                                          Visibility="{x:Bind ViewModel.LoadingContent, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
 
-                <!--  Wrapped to Grid because Android doesn't have Visibility=Collapsed for ProgressRing  -->
-                <!--  ToDo: Check it on new Uno  -->
+                <!--  UnoBug: Android doesn't have Visibility=Collapsed for ProgressRing.  -->
                 <Grid Visibility="{x:Bind ViewModel.LoadingContent, Mode=OneWay}">
                     <ProgressRing Width="{StaticResource ProgressRingSize}"
                                   Height="{StaticResource ProgressRingSize}"
@@ -356,33 +354,29 @@
             </Grid>
 
             <!--  Attachments  -->
-            <StackPanel Grid.Row="2"
-                        Grid.ColumnSpan="2"
-                        Orientation="Vertical"
-                        Visibility="{x:Bind ViewModel.LoadingContent, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}">
-
-                <TextBlock x:Uid="AttachedFilesTitle"
-                           Margin="0,24,0,0"
-                           FontSize="12"
-                           FontWeight="Medium"
-                           Foreground="{StaticResource TextFillColorSecondaryBrush}"
-                           Visibility="{x:Bind ViewModel.MessageInfo.HasAttachments, Mode=OneWay}" />
-
-                <ScrollViewer MinHeight="56"
-                              MaxHeight="124"
-                              Margin="0,16,0,0"
-                              VerticalAlignment="Top"
-                              HorizontalScrollBarVisibility="Disabled"
-                              HorizontalScrollMode="Disabled"
-                              VerticalScrollBarVisibility="Auto"
-                              VerticalScrollMode="Auto"
-                              Visibility="{x:Bind ViewModel.MessageInfo.HasAttachments, Mode=OneWay}"
-                              ZoomMode="Disabled">
-                    <controls:AttachmentRepeaterControl VerticalAlignment="Top"
-                                                        ItemTemplate="{StaticResource DownloadableAttachmentItemTemplate}"
-                                                        Items="{x:Bind ViewModel.Attachments, Mode=OneWay}" />
-                </ScrollViewer>
-            </StackPanel>
+            <Border Grid.Row="2"
+                    Grid.ColumnSpan="2"
+                    Visibility="{x:Bind ViewModel.LoadingContent, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                <controls:SimpleExpander x:Uid="AttachedFilesTitle"
+                                         Margin="0,24,0,0"
+                                         GlyphPosition="Left"
+                                         IsExpanded="False"
+                                         Visibility="{x:Bind ViewModel.MessageInfo.HasAttachments, Mode=OneWay}">
+                    <ScrollViewer MinHeight="56"
+                                  MaxHeight="124"
+                                  Margin="0,16,0,0"
+                                  VerticalAlignment="Top"
+                                  HorizontalScrollBarVisibility="Disabled"
+                                  HorizontalScrollMode="Disabled"
+                                  VerticalScrollBarVisibility="Auto"
+                                  VerticalScrollMode="Auto"
+                                  ZoomMode="Disabled">
+                        <controls:AttachmentRepeaterControl VerticalAlignment="Top"
+                                                            ItemTemplate="{StaticResource DownloadableAttachmentItemTemplate}"
+                                                            Items="{x:Bind ViewModel.Attachments, Mode=OneWay}" />
+                    </ScrollViewer>
+                </controls:SimpleExpander>
+            </Border>
         </Grid>
     </Grid>
 
