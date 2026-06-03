@@ -254,6 +254,10 @@
       <Project>{93c3844c-03b2-4c24-9070-16ba1971758e}</Project>
       <Name>TuviPgpLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\Tuvi.Proton\Tuvi.Proton.csproj">
+      <Project>{6c549054-2521-15d2-283b-cfae28c027f8}</Project>
+      <Name>Tuvi.Proton</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Eppie.AI\Eppie.AI.csproj">
       <Project>{60575cc5-1bdf-48c5-af2c-6cfa3989f5fa}</Project>
       <Name>Eppie.AI</Name>

@@ -24,6 +24,7 @@ using Finebits.Authorization.OAuth2.Types;
 using Tuvi.Core;
 using Tuvi.Core.Entities;
 
+// ToDo: Rename project and this namespace to Eppie.App.Authorization
 namespace Tuvi.OAuth2
 {
     public class TokenRefresher : ITokenRefresher

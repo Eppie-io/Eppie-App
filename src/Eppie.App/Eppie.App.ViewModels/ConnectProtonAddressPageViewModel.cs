@@ -247,17 +247,14 @@ namespace Tuvi.App.ViewModels
 
         private async Task<Account> LoginAsync()
         {
-            var (userId, refreshToken, saltedKeyPass) = await Proton.ClientAuth.LoginFullAsync
-            (
-                Email.Value,
-                Password.Value,
-                ProvideTwoFactorCode,
-                ProvideMailboxPassword,
-                null, // Todo: Issue #479 add human verification page
-                default
-            ).ConfigureAwait(true);
+            ProtonCredentials protonCredentials = await ProtonLoginHelper.LoginAsync(Email.Value,
+                                                                                     Password.Value,
+                                                                                     ProvideTwoFactorCode,
+                                                                                     ProvideMailboxPassword,
+                                                                                     null, // Todo: Issue #479 add human verification page
+                                                                                     default).ConfigureAwait(true);
 
-            return CreateOrUpdateProtonAccount(userId, refreshToken, saltedKeyPass);
+            return CreateOrUpdateProtonAccount(protonCredentials);
         }
 
         private Task<(bool completed, string code)> ProvideTwoFactorCode(Exception previousAttemptException, CancellationToken cancellationToken)
@@ -356,7 +353,7 @@ namespace Tuvi.App.ViewModels
             { }
         }
 
-        private Account CreateOrUpdateProtonAccount(string userId, string refreshToken, string saltedKeyPass)
+        private Account CreateOrUpdateProtonAccount(ProtonCredentials credentials)
         {
             if (AccountData is null)
             {
@@ -367,9 +364,9 @@ namespace Tuvi.App.ViewModels
 
             AccountData.AuthData = new ProtonAuthData()
             {
-                UserId = userId,
-                RefreshToken = refreshToken,
-                SaltedPassword = saltedKeyPass
+                UserId = credentials.UserId,
+                RefreshToken = credentials.RefreshToken,
+                SaltedPassword = credentials.SaltedPassword
             };
 
             return AccountData;

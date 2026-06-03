@@ -29,6 +29,8 @@ using CommunityToolkit.Mvvm.Input;
 using Eppie.App.ViewModels.Services;
 using Tuvi.App.ViewModels.Services;
 using Tuvi.Core.Entities;
+using Tuvi.OAuth2;
+using Tuvi.Proton;
 
 namespace Tuvi.App.ViewModels
 {
@@ -69,6 +71,18 @@ namespace Tuvi.App.ViewModels
         public void SetAIServiceProvider(Func<IAIService> provider)
         {
             AIServiceProvider = provider;
+        }
+
+        protected AuthorizationProvider AuthProvider { get; private set; }
+        public void SetAuthProvider(AuthorizationProvider authProvider)
+        {
+            AuthProvider = authProvider;
+        }
+
+        protected IProtonLoginHelper ProtonLoginHelper { get; private set; }
+        public void SetProtonLoginHelper(IProtonLoginHelper protonLoginHelper)
+        {
+            ProtonLoginHelper = protonLoginHelper;
         }
 
         protected INavigationService NavigationService { get; private set; }

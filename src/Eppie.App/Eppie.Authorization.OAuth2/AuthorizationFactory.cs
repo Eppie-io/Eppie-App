@@ -21,8 +21,11 @@ using System.Net.Http;
 using Finebits.Authorization.OAuth2.Abstractions;
 using Finebits.Authorization.OAuth2.Google;
 using Finebits.Authorization.OAuth2.Outlook;
-using Tuvi.Core;
 
+using Tuvi.Core;
+using Tuvi.Proton;
+
+// ToDo: Rename project and this namespace to Eppie.App.Authorization
 namespace Tuvi.OAuth2
 {
     public static class AuthorizationFactory
@@ -39,7 +42,11 @@ namespace Tuvi.OAuth2
                 throw new ArgumentNullException(nameof(configuration));
             }
 
-            return AuthorizationProvider.Create(httpClient, configuration.AuthenticationBrokerCreator, configuration.GoogleConfigurationCreator, configuration.OutlookConfigurationCreator);
+            return AuthorizationProvider.Create(httpClient,
+                                                configuration.AuthenticationBrokerCreator,
+                                                configuration.GoogleConfigurationCreator,
+                                                configuration.OutlookConfigurationCreator,
+                                                configuration.ProtonConfigurationCreator);
         }
 
         public static ITokenRefresher GetTokenRefresher(AuthorizationProvider authProvider)
@@ -51,6 +58,16 @@ namespace Tuvi.OAuth2
 
             return TokenRefresher.CreateTokenRefresher(authProvider);
         }
+
+        public static ProtonConfiguration GetProtonMailConfiguration(AuthorizationProvider authProvider)
+        {
+            if (authProvider is null)
+            {
+                throw new ArgumentNullException(nameof(authProvider));
+            }
+
+            return authProvider.GetProtonConfiguration();
+        }
     }
 
     public class AuthorizationConfiguration
@@ -58,5 +75,6 @@ namespace Tuvi.OAuth2
         public Func<IAuthenticationBroker> AuthenticationBrokerCreator { get; set; }
         public Func<GoogleConfiguration> GoogleConfigurationCreator { get; set; }
         public Func<OutlookConfiguration> OutlookConfigurationCreator { get; set; }
+        public Func<ProtonConfiguration> ProtonConfigurationCreator { get; set; }
     }
 }

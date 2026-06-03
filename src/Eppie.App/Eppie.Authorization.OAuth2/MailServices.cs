@@ -19,6 +19,7 @@
 using System;
 using Tuvi.Core.Entities;
 
+// ToDo: Rename project and this namespace to Eppie.App.Authorization
 namespace Tuvi.OAuth2
 {
     public enum MailService
