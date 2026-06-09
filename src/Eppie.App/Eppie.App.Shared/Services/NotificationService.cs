@@ -18,6 +18,7 @@
 
 using System;
 using System.Globalization;
+using System.Threading.Tasks;
 using Windows.Data.Xml.Dom;
 using Windows.UI.Notifications;
 
@@ -88,6 +89,10 @@ namespace Eppie.App.Services
 
             // Create the badge updater for the application
             var badgeUpdater = BadgeUpdateManager.CreateBadgeUpdaterForApplication(); // ToDo: Uno0001
+
+            // TODO: Workaround. Remove this after the bug is fixed in Windows 11.
+            badgeUpdater.Clear();
+            Task.Delay(200).GetAwaiter().GetResult();
 
             // And update the badge
             badgeUpdater.Update(badge); // ToDo: Uno0001
