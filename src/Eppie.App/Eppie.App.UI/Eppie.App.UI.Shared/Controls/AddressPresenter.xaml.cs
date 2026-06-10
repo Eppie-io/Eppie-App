@@ -42,6 +42,9 @@ namespace Eppie.App.UI.Controls
     [SuppressMessage("Design", "CA1010:Generic collections should implement generic interface", Justification = "ContentControl implements IEnumerable for XAML infrastructure")]
     public sealed partial class AddressPresenter : UserControl
     {
+        public static readonly string AddressElementName = nameof(AddressTextBlock);
+        public static readonly string DisplayNameElementName = nameof(DisplayNameTextBlock);
+
         public AddressPresenterMode Mode
         {
             get { return (AddressPresenterMode)GetValue(ModeProperty); }
@@ -117,38 +120,11 @@ namespace Eppie.App.UI.Controls
         }
     }
 
-    public static class DataBinding
+    public static partial class DataBinding
     {
-        public static GridLength GetNameColumnWidth(AddressPresenterMode mode)
-        {
-            switch (mode)
-            {
-                case AddressPresenterMode.Normal:
-                    return GridLength.Auto;
-                case AddressPresenterMode.Compact:
-                    return new GridLength(1.0, GridUnitType.Star);
-                case AddressPresenterMode.Structured:
-                    return new GridLength(10.0, GridUnitType.Star);
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(mode), mode, null);
-            }
-        }
-
         public static double GetNameColumnMaxWidth(AddressPresenterMode mode, double maxWidth)
         {
             return mode == AddressPresenterMode.Structured ? maxWidth : double.PositiveInfinity;
-        }
-
-        public static string GetSecureIconGlyph(bool isVisible)
-        {
-            const string LockCodeGlyph = "\uE72E"; // Unicode for the "Lock" symbol
-
-            return isVisible ? LockCodeGlyph : string.Empty;
-        }
-
-        public static Visibility GetAddressVisibility(AddressPresenterMode mode)
-        {
-            return mode == AddressPresenterMode.Compact ? Visibility.Collapsed : Visibility.Visible;
         }
     }
 }

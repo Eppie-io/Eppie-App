@@ -37,6 +37,11 @@ namespace Eppie.App.UI.Behaviors
         event EventHandler TooltipChanged;
     }
 
+    public interface IFormattedTooltipSource : ITooltipSource
+    {
+        string GetFormattedTooltipText(string format);
+    }
+
     public interface ITooltipSource<T> : ITooltipSource
 #if HAS_UNO
         where T : class, DependencyObject
@@ -49,6 +54,20 @@ namespace Eppie.App.UI.Behaviors
 
     public class TooltipBehavior : Behavior<DependencyObject>
     {
+        public static string GetTooltipFormat(DependencyObject obj)
+        {
+            return (string)obj.GetValue(TooltipFormatProperty);
+        }
+
+        public static void SetTooltipFormat(DependencyObject obj, string value)
+        {
+            obj.SetValue(TooltipFormatProperty, value);
+        }
+
+        public static readonly DependencyProperty TooltipFormatProperty =
+            DependencyProperty.RegisterAttached("TooltipFormat", typeof(string), typeof(TooltipBehavior), new PropertyMetadata(null));
+
+
         public ITooltipSource Source
         {
             get { return (ITooltipSource)GetValue(SourceProperty); }
@@ -102,7 +121,12 @@ namespace Eppie.App.UI.Behaviors
 
         private void UpdateToolTip()
         {
-            string tooltip = Source.Text;
+            if (AssociatedObject is null)
+            {
+                return;
+            }
+
+            string tooltip = GetTooltipText();
 
             if (!Source.IsActive || string.IsNullOrEmpty(tooltip))
             {
@@ -112,6 +136,16 @@ namespace Eppie.App.UI.Behaviors
             {
                 ToolTipService.SetToolTip(AssociatedObject, tooltip);
             }
+        }
+
+        protected virtual string GetTooltipText()
+        {
+            if (Source is IFormattedTooltipSource formattedSource)
+            {
+                return formattedSource.GetFormattedTooltipText(GetTooltipFormat(AssociatedObject));
+            }
+
+            return Source?.Text;
         }
     }
 

@@ -42,6 +42,7 @@
                                     Mode="Compact" />
             <TextBlock Margin="8,0,0,0"
                        VerticalAlignment="Center"
+                       TextLineBounds="Tight"
                        Visibility="{x:Bind local:RecipientControl.GetAdditionalRecipientVisibility(ItemsSource), Mode=OneWay}">
                 <Run Text="+" /><Run Text="{x:Bind local:RecipientControl.GetAdditionalRecipientCount(ItemsSource), Mode=OneWay}" />
             </TextBlock>
