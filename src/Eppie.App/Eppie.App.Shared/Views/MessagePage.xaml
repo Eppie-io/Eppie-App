@@ -127,7 +127,7 @@
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Center"
                                 Command="{StaticResource BackUICommand}"
-                                IsCompact="True" />
+                                Mode="IconOnly" />
 
         <Grid Grid.Row="1"
               Grid.Column="2"
@@ -176,7 +176,7 @@
                                     HorizontalAlignment="Right"
                                     VerticalAlignment="Center"
                                     Command="{StaticResource MoreUICommand}"
-                                    IsCompact="True">
+                                    Mode="IconOnly">
                 <controls:CommandButton.Flyout>
                     <MenuFlyout>
                         <MenuFlyoutItem Command="{StaticResource ReplyAllUICommand}" />
@@ -207,13 +207,13 @@
             <controls:CommandButton HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
                                     Command="{StaticResource ReadStatusUICommand}"
-                                    IsCompact="True"
+                                    Mode="IconOnly"
                                     Visibility="{x:Bind ViewModel.MessageInfo.IsMarkedAsRead, Mode=OneWay}" />
 
             <controls:CommandButton HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
                                     Command="{StaticResource UnreadStatusUICommand}"
-                                    IsCompact="True"
+                                    Mode="IconOnly"
                                     Visibility="{x:Bind ViewModel.MessageInfo.IsMarkedAsRead, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                 <controls:CommandButton.Icon>
                     <FontIcon Foreground="{ThemeResource UnreadBrush}" Glyph="{StaticResource UnreadStatusGlyph}" />
@@ -228,7 +228,7 @@
                                     VerticalAlignment="Center"
                                     Command="{StaticResource UnflaggedStatusUICommand}"
                                     CommandParameter="{x:Bind ViewModel.MessageInfo, Mode=OneWay}"
-                                    IsCompact="True"
+                                    Mode="IconOnly"
                                     Visibility="{x:Bind ViewModel.MessageInfo.IsFlagged, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                 <controls:CommandButton.Icon>
                     <FontIcon Foreground="{ThemeResource InactiveFlagBrush}" Glyph="{ThemeResource InactiveFlagGlyph}" />
@@ -240,7 +240,7 @@
                                     VerticalAlignment="Center"
                                     Command="{StaticResource FlaggedStatusUICommand}"
                                     CommandParameter="{x:Bind ViewModel.MessageInfo, Mode=OneWay}"
-                                    IsCompact="True"
+                                    Mode="IconOnly"
                                     Visibility="{x:Bind ViewModel.MessageInfo.IsFlagged, Mode=OneWay}" />
         </StackPanel>
 

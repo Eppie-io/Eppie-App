@@ -32,8 +32,8 @@ namespace Eppie.App.UI.Behaviors
 {
     public class CommandButtonTooltipSource : ITooltipSource<CommandButton>
     {
-        // The tooltip should be active if the button is in compact mode or if the label text is trimmed
-        public bool IsActive => Source?.IsCompact == true || _label?.IsTextTrimmed == true;
+        // The tooltip should be active if the button is in IconOnly mode or if the label text is trimmed
+        public bool IsActive => Source?.Mode == CommandButtonDisplayMode.IconOnly || _label?.IsTextTrimmed == true;
 
         public string Text => _label?.Text;
 
@@ -60,14 +60,14 @@ namespace Eppie.App.UI.Behaviors
             }
         }
 
-        private long? _compactToken;
+        private long? _modeToken;
         private long? _labelToken;
 
         private TextBlock _label;
 
         private void Register()
         {
-            _compactToken = _source?.RegisterPropertyChangedCallback(CommandButton.IsCompactProperty, OnPropertyChanged);
+            _modeToken = _source?.RegisterPropertyChangedCallback(CommandButton.ModeProperty, OnPropertyChanged);
 
             _label = GetLabelTextBlock();
             if (_label != null)
@@ -79,10 +79,10 @@ namespace Eppie.App.UI.Behaviors
 
         private void Unregister()
         {
-            if (_compactToken.HasValue)
+            if (_modeToken.HasValue)
             {
-                _source?.UnregisterPropertyChangedCallback(CommandButton.IsCompactProperty, _compactToken.Value);
-                _compactToken = null;
+                _source?.UnregisterPropertyChangedCallback(CommandButton.ModeProperty, _modeToken.Value);
+                _modeToken = null;
             }
 
             if (_labelToken.HasValue)

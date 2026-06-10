@@ -317,7 +317,7 @@
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Center"
                                 Command="{StaticResource DraftAndBackUICommand}"
-                                IsCompact="True" />
+                                Mode="IconOnly" />
 
         <Grid Grid.Row="0"
               Grid.Column="2"
@@ -340,7 +340,7 @@
                                     HorizontalAlignment="Right"
                                     VerticalAlignment="Center"
                                     Command="{StaticResource MoreUICommand}"
-                                    IsCompact="True">
+                                    Mode="IconOnly">
                 <controls:CommandButton.Flyout>
                     <MenuFlyout>
 

@@ -8,6 +8,7 @@
              xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
              xmlns:local="using:Eppie.App.UI.Controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:toolkit="using:CommunityToolkit.WinUI"
              d:DesignHeight="300"
              d:DesignWidth="400"
              mc:Ignorable="d">
@@ -20,27 +21,27 @@
         <x:Double x:Key="CommandButtonMinWidth">32</x:Double>
         <x:Double x:Key="CommandButtonMinHeight">32</x:Double>
 
-        <converters:BoolToThicknessConverter x:Key="BoolToPaddingConverter"
-                                             FalseValue="{StaticResource ButtonPadding}"
-                                             TrueValue="{StaticResource CompactButtonPadding}" />
+        <local:CommandButtonDisplayMode x:Key="TextOnlyMode">TextOnly</local:CommandButtonDisplayMode>
+        <local:CommandButtonDisplayMode x:Key="IconOnlyMode">IconOnly</local:CommandButtonDisplayMode>
+
+        <converters:NullToDefaultConverter x:Key="StyleConverter" DefaultValue="{StaticResource ThinButtonStyle}" />
     </UserControl.Resources>
 
-    <Button MinWidth="{StaticResource CommandButtonMinWidth}"
-            MinHeight="{StaticResource CommandButtonMinHeight}"
-            Padding="{x:Bind IsCompact, Mode=OneWay, Converter={StaticResource BoolToPaddingConverter}}"
+    <Button x:Name="ButtonRoot"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
             Click="OnClick"
             Command="{x:Bind local:CommandButton.GetCommand(Command), Mode=OneWay}"
             CommandParameter="{x:Bind CommandParameter, Mode=OneWay}"
             Flyout="{x:Bind Flyout, Mode=OneWay}"
-            Style="{StaticResource ThinButtonStyle}">
+            Style="{x:Bind ButtonBaseStyle, Mode=OneWay, Converter={StaticResource StyleConverter}}">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Viewbox Grid.Column="0"
+            <Viewbox x:Name="IconViewbox"
+                     Grid.Column="0"
                      Width="{ThemeResource CommandButtonIconWidth}"
                      Height="{ThemeResource CommandButtonIconHeight}"
                      HorizontalAlignment="Center"
@@ -57,8 +58,32 @@
                        VerticalAlignment="Center"
                        Text="{x:Bind local:CommandButton.GetLabel(Label, Command), Mode=OneWay}"
                        TextTrimming="CharacterEllipsis"
-                       TextWrapping="NoWrap"
-                       Visibility="{x:Bind IsCompact, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+                       TextWrapping="NoWrap" />
         </Grid>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="DisplayStates">
+                <VisualState x:Name="Normal" />
+                <VisualState x:Name="IconOnlyState">
+                    <VisualState.StateTriggers>
+                        <toolkit:IsEqualStateTrigger Value="{x:Bind Mode, Mode=OneWay}" To="{StaticResource IconOnlyMode}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ButtonRoot.Padding" Value="{StaticResource CompactButtonPadding}" />
+                        <Setter Target="ButtonRoot.MinWidth" Value="{StaticResource CommandButtonMinWidth}" />
+                        <Setter Target="ButtonRoot.MinHeight" Value="{StaticResource CommandButtonMinHeight}" />
+                        <Setter Target="LabelTextBlock.Visibility" Value="Collapsed" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="TextOnlyState">
+                    <VisualState.StateTriggers>
+                        <toolkit:IsEqualStateTrigger Value="{x:Bind Mode, Mode=OneWay}" To="{StaticResource TextOnlyMode}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="IconViewbox.Visibility" Value="Collapsed" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
     </Button>
 </UserControl>
