@@ -54,6 +54,8 @@ namespace Eppie.App.UI.Behaviors
 
     public class TooltipBehavior : Behavior<DependencyObject>
     {
+        private static readonly string TooltipFormatPropertyName = "TooltipFormat";
+
         public static string GetTooltipFormat(DependencyObject obj)
         {
             return (string)obj.GetValue(TooltipFormatProperty);
@@ -65,7 +67,7 @@ namespace Eppie.App.UI.Behaviors
         }
 
         public static readonly DependencyProperty TooltipFormatProperty =
-            DependencyProperty.RegisterAttached("TooltipFormat", typeof(string), typeof(TooltipBehavior), new PropertyMetadata(null));
+            DependencyProperty.RegisterAttached(TooltipFormatPropertyName, typeof(string), typeof(TooltipBehavior), new PropertyMetadata(null));
 
 
         public ITooltipSource Source

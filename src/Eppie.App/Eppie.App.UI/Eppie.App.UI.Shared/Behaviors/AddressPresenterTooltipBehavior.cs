@@ -17,7 +17,6 @@
 // ---------------------------------------------------------------------------- //
 
 using System;
-using System.Diagnostics;
 using System.Globalization;
 using CommunityToolkit.WinUI;
 using Eppie.App.UI.Controls;
@@ -75,18 +74,7 @@ namespace Eppie.App.UI.Behaviors
 
         public string GetFormattedTooltipText(string format)
         {
-            try
-            {
-                return string.Format(CultureInfo.CurrentCulture, format ?? DefaultTooltipFormat, Source?.DisplayName, Source?.Address);
-            }
-            catch (FormatException ex)
-            {
-                if (Debugger.IsAttached)
-                {
-                    Debug.Assert(false, ex.Message);
-                }
-            }
-            return null;
+            return string.Format(CultureInfo.CurrentCulture, format ?? DefaultTooltipFormat, Source?.DisplayName, Source?.Address);
         }
 
         private void Register()
