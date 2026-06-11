@@ -1774,10 +1774,6 @@ Eppie
     <value>Enter new folder name</value>
     <comment>The textbox header for the rename folder dialog</comment>
   </data>
-  <data name="SendMessageButton.Content" xml:space="preserve">
-    <value>Send</value>
-    <comment>Text for the send message button</comment>
-  </data>
   <data name="DeleteDraftMessageButton.Text" xml:space="preserve">
     <value>Delete</value>
     <comment>Text for the delete draft message button</comment>
@@ -2029,6 +2025,10 @@ Eppie
   <data name="MoreUICommand.Description" xml:space="preserve">
     <value>More options</value>
     <comment>Tooltip for the command that shows more options</comment>
+  </data>
+  <data name="SendMessageUICommand.Label" xml:space="preserve">
+    <value>Send</value>
+    <comment>Label for the command that sends the message</comment>
   </data>
   <data name="AttachUICommand.Label" xml:space="preserve">
     <value>Attach</value>

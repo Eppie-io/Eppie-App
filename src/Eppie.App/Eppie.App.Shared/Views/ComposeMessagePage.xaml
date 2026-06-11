@@ -8,6 +8,7 @@
                               xmlns:local="using:Eppie.App.Views"
                               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                               xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+                              xmlns:toolkit="using:CommunityToolkit.WinUI"
                               xmlns:triggers="using:Eppie.App.UI.Triggers"
                               xmlns:ui="using:CommunityToolkit.WinUI"
                               xmlns:uitools="using:Eppie.App.UI.Tools"
@@ -23,13 +24,24 @@
         <x:Double x:Key="MainAreaMaxWidth">960</x:Double>
         <x:Double x:Key="SideAreaMinWidth">20</x:Double>
 
-        <x:Double x:Key="SenderAddressBoxMinWidth">40</x:Double>
-        <x:Double x:Key="SenderAddressBoxMaxWidth">360</x:Double>
+        <x:Double x:Key="SenderAddressBoxMinWidth">72</x:Double>
+        <x:Double x:Key="SenderAddressBoxMaxWidth">232</x:Double>
+
+        <x:Double x:Key="SendButtonMinWidth">112</x:Double>
+        <x:Double x:Key="SendButtonMaxWidth">200</x:Double>
+        <x:Double x:Key="SendButtonCompactWidth">32</x:Double>
+
+        <x:Double x:Key="CommandButtonAreaMinWidth">40</x:Double>
+        <x:Double x:Key="CommandsAreaMinWidth">80</x:Double>
 
         <x:Double x:Key="MessageEditorMinHeight">160</x:Double>
 
-        <x:Double x:Key="SymbolSize">16</x:Double>
         <x:Double x:Key="ProgressRingSize">48</x:Double>
+        <x:Double x:Key="AddressItemMaxWidth">500</x:Double>
+
+        <x:Double x:Key="FooterMiniWidth">280</x:Double>
+        <x:Double x:Key="FooterCompactWidth">460</x:Double>
+        <x:Double x:Key="FooterNarrowWidth">600</x:Double>
 
         <Thickness x:Key="HorizontalMargin">0,0,12,0</Thickness>
         <Thickness x:Key="BlindCarbonCopyMargin">0,8,0,0</Thickness>
@@ -53,6 +65,11 @@
                        Command="{x:Bind ViewModel.DeleteMessageAndGoBackCommand}"
                        IconSource="{ui:SymbolIconSource Symbol=Delete}" />
 
+        <XamlUICommand x:Key="SendMessageUICommand"
+                       x:Uid="SendMessageUICommand"
+                       Command="{x:Bind ViewModel.SendMessageAndGoBackCommand}"
+                       IconSource="{ui:SymbolIconSource Symbol=Send}" />
+
         <DataTemplate x:Key="RemovableAttachmentItemTemplate" x:DataType="viewmodels:RemovableAttachment">
             <controls:AttachmentFileControl DeleteFileCommand="{x:Bind RemoveCommand}"
                                             DeleteFileCommandParameter="{x:Bind}"
@@ -75,10 +92,15 @@
         </DataTemplate>
 
         <DataTemplate x:Key="AddressComboBoxItemTemplate" x:DataType="viewmodels:AddressItem">
-            <controls:AddressPresenter Address="{x:Bind Address, Mode=OneWay}"
+            <controls:AddressPresenter MaxWidth="{StaticResource AddressItemMaxWidth}"
+                                       Address="{x:Bind Address, Mode=OneWay}"
                                        Avatar="{x:Bind AvatarInfo, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}"
                                        DisplayName="{x:Bind DisplayName, Mode=OneWay}"
-                                       IsSecure="{x:Bind IsDecentralized, Mode=OneWay}" />
+                                       IsSecure="{x:Bind IsDecentralized, Mode=OneWay}">
+                <interactivity:Interaction.Behaviors>
+                    <behaviors:AddressPresenterTooltipBehavior />
+                </interactivity:Interaction.Behaviors>
+            </controls:AddressPresenter>
         </DataTemplate>
 
         <uitools:ComboBoxDataTemplateSelector x:Key="ComboBoxDataTemplateSelector"
@@ -86,55 +108,122 @@
                                               SelectedTemplate="{StaticResource AddressComboBoxSelectedItemTemplate}" />
 
         <DataTemplate x:Key="FooterTemplate" x:DataType="viewmodels:ComposeMessagePageViewModel">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="10*"
-                                      MinWidth="{StaticResource SenderAddressBoxMinWidth}"
-                                      MaxWidth="{StaticResource SenderAddressBoxMaxWidth}" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
+            <!--
+                Note: VisualStateManager cannot be applied directly to a DataTemplate because
+                DataTemplate elements are not Control subclasses, which are required for the VisualStateManager.
+            -->
+            <!--  ToDo: Place this code in a separate control and replace Binding with x:Bind in the VisualStateManager.  -->
+            <UserControl>
+                <Grid x:Name="ParentGrid">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
 
-                <ComboBox Grid.Column="0"
-                          MinWidth="{StaticResource SenderAddressBoxMinWidth}"
-                          MaxWidth="{StaticResource SenderAddressBoxMaxWidth}"
-                          Margin="{StaticResource HorizontalMargin}"
-                          HorizontalAlignment="Stretch"
-                          VerticalAlignment="Center"
-                          ItemTemplateSelector="{StaticResource ComboBoxDataTemplateSelector}"
-                          ItemsSource="{x:Bind SenderAddresses, Mode=OneWay}"
-                          SelectedIndex="{x:Bind SenderAddressIndex, Mode=TwoWay}"
-                          Style="{StaticResource AddressComboBoxStyle}"
-                          ToolTipService.ToolTip="{x:Bind local:ComposeMessagePage.GetSenderToolTip(Account), Mode=OneWay}" />
+                    <Grid HorizontalAlignment="Left">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*" MaxWidth="{StaticResource SenderAddressBoxMaxWidth}" />
+                            <ColumnDefinition Width="*" MinWidth="{StaticResource CommandsAreaMinWidth}" />
+                        </Grid.ColumnDefinitions>
 
-                <!--  ToDo: Switch to compact mode if the page width is not enough.  -->
-                <controls:CommandButton Grid.Column="1"
-                                        Margin="4,0"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        Command="{StaticResource AttachUICommand}"
-                                        CommandParameter="{StaticResource FileOperationProvider}">
-                    <interactivity:Interaction.Behaviors>
-                        <behaviors:CommandButtonTooltipBehavior />
-                    </interactivity:Interaction.Behaviors>
-                </controls:CommandButton>
+                        <ComboBox MinWidth="{StaticResource SenderAddressBoxMinWidth}"
+                                  Margin="{StaticResource HorizontalMargin}"
+                                  VerticalAlignment="Center"
+                                  ItemTemplateSelector="{StaticResource ComboBoxDataTemplateSelector}"
+                                  ItemsSource="{x:Bind SenderAddresses, Mode=OneWay}"
+                                  SelectedIndex="{x:Bind SenderAddressIndex, Mode=TwoWay}"
+                                  Style="{StaticResource AddressComboBoxStyle}"
+                                  ToolTipService.ToolTip="{x:Bind local:ComposeMessagePage.GetSenderToolTip(Account), Mode=OneWay}" />
 
-                <controls:CommandButton Grid.Column="2"
-                                        Margin="4,0"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        Command="{StaticResource DeleteMessageUICommand}" />
+                        <Grid x:Name="Commands"
+                              Grid.Column="1"
+                              HorizontalAlignment="Left">
 
-                <Button x:Uid="SendMessageButton"
-                        Grid.Column="4"
-                        MinWidth="112"
-                        Margin="4,0,0,0"
-                        VerticalAlignment="Center"
-                        Command="{x:Bind SendMessageAndGoBackCommand}"
-                        Style="{StaticResource AccentButtonStyle}" />
-            </Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" MinWidth="{StaticResource CommandButtonAreaMinWidth}" />
+                                <ColumnDefinition Width="*" MinWidth="{StaticResource CommandButtonAreaMinWidth}" />
+                            </Grid.ColumnDefinitions>
+
+                            <controls:CommandButton x:Name="AttachButton"
+                                                    Grid.Column="0"
+                                                    Margin="4,0"
+                                                    HorizontalAlignment="Stretch"
+                                                    VerticalAlignment="Center"
+                                                    Command="{StaticResource AttachUICommand}"
+                                                    CommandParameter="{StaticResource FileOperationProvider}">
+                                <interactivity:Interaction.Behaviors>
+                                    <behaviors:CommandButtonTooltipBehavior />
+                                </interactivity:Interaction.Behaviors>
+                            </controls:CommandButton>
+
+                            <controls:CommandButton x:Name="DeleteMessageButton"
+                                                    Grid.Column="1"
+                                                    Margin="4,0"
+                                                    HorizontalAlignment="Stretch"
+                                                    VerticalAlignment="Center"
+                                                    Command="{StaticResource DeleteMessageUICommand}" />
+                        </Grid>
+                    </Grid>
+
+                    <controls:CommandButton x:Name="SendMessageButton"
+                                            Grid.Column="2"
+                                            MinWidth="{StaticResource SendButtonMinWidth}"
+                                            MaxWidth="{StaticResource SendButtonMaxWidth}"
+                                            Margin="4,0,0,0"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Center"
+                                            ButtonBaseStyle="{StaticResource AccentButtonStyle}"
+                                            Command="{StaticResource SendMessageUICommand}"
+                                            Mode="TextOnly">
+                        <interactivity:Interaction.Behaviors>
+                            <behaviors:CommandButtonTooltipBehavior />
+                        </interactivity:Interaction.Behaviors>
+                    </controls:CommandButton>
+
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal" />
+                            <VisualState x:Name="Narrow">
+                                <VisualState.StateTriggers>
+                                    <toolkit:ControlSizeTrigger MinWidth="{StaticResource FooterCompactWidth}"
+                                                                MaxWidth="{StaticResource FooterNarrowWidth}"
+                                                                TargetElement="{Binding ElementName=ParentGrid}" />
+                                </VisualState.StateTriggers>
+                                <VisualState.Setters>
+                                    <Setter Target="AttachButton.Mode" Value="IconOnly" />
+                                    <Setter Target="DeleteMessageButton.Mode" Value="IconOnly" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Compact">
+                                <VisualState.StateTriggers>
+                                    <toolkit:ControlSizeTrigger MinWidth="{StaticResource FooterMiniWidth}"
+                                                                MaxWidth="{StaticResource FooterCompactWidth}"
+                                                                TargetElement="{Binding ElementName=ParentGrid}" />
+                                </VisualState.StateTriggers>
+                                <VisualState.Setters>
+                                    <Setter Target="AttachButton.Mode" Value="IconOnly" />
+                                    <Setter Target="DeleteMessageButton.Mode" Value="IconOnly" />
+                                    <Setter Target="SendMessageButton.Mode" Value="IconOnly" />
+                                    <Setter Target="SendMessageButton.MinWidth" Value="{StaticResource SendButtonCompactWidth}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Mini">
+                                <VisualState.StateTriggers>
+                                    <toolkit:ControlSizeTrigger MaxWidth="{StaticResource FooterMiniWidth}" TargetElement="{Binding ElementName=ParentGrid}" />
+                                </VisualState.StateTriggers>
+                                <VisualState.Setters>
+                                    <Setter Target="AttachButton.Mode" Value="IconOnly" />
+                                    <Setter Target="DeleteMessageButton.Mode" Value="IconOnly" />
+                                    <Setter Target="SendMessageButton.Mode" Value="IconOnly" />
+                                    <Setter Target="SendMessageButton.MinWidth" Value="{StaticResource SendButtonCompactWidth}" />
+                                    <Setter Target="Commands.Visibility" Value="Collapsed" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateManager.VisualStateGroups>
+                </Grid>
+            </UserControl>
         </DataTemplate>
     </local:ComposeMessagePageBase.Resources>
 
@@ -392,7 +481,6 @@
                                 VerticalContentAlignment="Stretch"
                                 Content="{x:Bind ViewModel}"
                                 ContentTemplate="{StaticResource FooterTemplate}" />
-
             </Border>
         </Grid>
 
