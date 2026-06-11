@@ -34,10 +34,18 @@ using Microsoft.UI.Xaml.Input;
 
 namespace Eppie.App.UI.Controls
 {
+    [Flags]
+    public enum CommandButtonDisplayMode : uint
+    {
+        TextOnly = 0x1,
+        IconOnly = 0x2,
+        Normal = TextOnly | IconOnly
+    }
+
     [SuppressMessage("Design", "CA1010:Generic collections should implement generic interface", Justification = "ContentControl implements IEnumerable for XAML infrastructure")]
     public sealed partial class CommandButton : UserControl
     {
-        public static readonly string LabelElementName = "LabelTextBlock";
+        public static readonly string LabelElementName = nameof(LabelTextBlock);
 
         public string Label
         {
@@ -58,6 +66,7 @@ namespace Eppie.App.UI.Controls
         public static readonly DependencyProperty IconProperty =
             DependencyProperty.Register(nameof(Icon), typeof(IconElement), typeof(CommandButton), new PropertyMetadata(null));
 
+
         public IconElement FilledIcon
         {
             get { return (IconElement)GetValue(FilledIconProperty); }
@@ -68,14 +77,24 @@ namespace Eppie.App.UI.Controls
             DependencyProperty.Register(nameof(FilledIcon), typeof(IconElement), typeof(CommandButton), new PropertyMetadata(null));
 
 
-        public bool IsCompact
+        public CommandButtonDisplayMode Mode
         {
-            get { return (bool)GetValue(IsCompactProperty); }
-            set { SetValue(IsCompactProperty, value); }
+            get { return (CommandButtonDisplayMode)GetValue(ModeProperty); }
+            set { SetValue(ModeProperty, value); }
         }
 
-        public static readonly DependencyProperty IsCompactProperty =
-            DependencyProperty.Register(nameof(IsCompact), typeof(bool), typeof(CommandButton), new PropertyMetadata(false));
+        public static readonly DependencyProperty ModeProperty =
+            DependencyProperty.Register(nameof(Mode), typeof(CommandButtonDisplayMode), typeof(CommandButton), new PropertyMetadata(CommandButtonDisplayMode.Normal));
+
+
+        public Style ButtonBaseStyle
+        {
+            get { return (Style)GetValue(ButtonBaseStyleProperty); }
+            set { SetValue(ButtonBaseStyleProperty, value); }
+        }
+
+        public static readonly DependencyProperty ButtonBaseStyleProperty =
+            DependencyProperty.Register(nameof(ButtonBaseStyle), typeof(Style), typeof(CommandButton), new PropertyMetadata(null));
 
 
         public ICommand Command

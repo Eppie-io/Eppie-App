@@ -137,8 +137,8 @@
                                  VerticalAlignment="Center"
                                  Command="{StaticResource SaveAttachedFileUICommand}"
                                  CommandParameter="{x:Bind SaveFileCommandParameter}"
-                                 IsCompact="True"
                                  IsEnabled="{x:Bind IsFileEmpty, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
+                                 Mode="IconOnly"
                                  Visibility="{x:Bind SaveFileCommand, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}">
                 <interactivity:Interaction.Behaviors>
                     <behaviors:CommandButtonTooltipBehavior />
@@ -152,7 +152,7 @@
                                      Command="{StaticResource DeleteAttachedFileUICommand}"
                                      CommandParameter="{x:Bind DeleteFileCommandParameter}"
                                      Icon="Cancel"
-                                     IsCompact="True"
+                                     Mode="IconOnly"
                                      Visibility="{x:Bind DeleteFileCommand, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}">
                     <interactivity:Interaction.Behaviors>
                         <behaviors:CommandButtonTooltipBehavior />
