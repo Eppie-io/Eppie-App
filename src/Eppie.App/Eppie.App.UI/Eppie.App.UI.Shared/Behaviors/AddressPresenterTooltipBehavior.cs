@@ -31,6 +31,13 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace Eppie.App.UI.Behaviors
 {
+    public enum AddressPresenterTooltipMode
+    {
+        Formatted = 0,
+        Name,
+        Address,
+    }
+
     public class AddressPresenterTooltipSource : ITooltipSource<AddressPresenter>, IFormattedTooltipSource
     {
         // {0} = DisplayName, {1} = Address
@@ -65,6 +72,9 @@ namespace Eppie.App.UI.Behaviors
             }
         }
 
+        internal AddressPresenterTooltipMode Mode { get; set; } = AddressPresenterTooltipMode.Formatted;
+        internal string Format { get; set; }
+
         private long? _modeToken;
         private long? _nameToken;
         private long? _addressToken;
@@ -74,24 +84,32 @@ namespace Eppie.App.UI.Behaviors
 
         public string GetFormattedTooltipText(string format)
         {
-            return string.Format(CultureInfo.CurrentCulture, format ?? DefaultTooltipFormat, Source?.DisplayName, Source?.Address);
+            switch (Mode)
+            {
+                case AddressPresenterTooltipMode.Name:
+                    return Source?.DisplayName;
+                case AddressPresenterTooltipMode.Address:
+                    return Source?.Address;
+                default:
+                    return string.Format(CultureInfo.CurrentCulture, format ?? Format ?? DefaultTooltipFormat, Source?.DisplayName, Source?.Address);
+            }
         }
 
         private void Register()
         {
             _modeToken = _source?.RegisterPropertyChangedCallback(AddressPresenter.ModeProperty, OnPropertyChanged);
+            _nameToken = _source?.RegisterPropertyChangedCallback(AddressPresenter.DisplayNameProperty, OnPropertyChanged);
+            _addressToken = _source?.RegisterPropertyChangedCallback(AddressPresenter.AddressProperty, OnPropertyChanged);
 
             _nameBlock = GetTextBlock(AddressPresenter.DisplayNameElementName);
             if (_nameBlock != null)
             {
-                _nameToken = _nameBlock.RegisterPropertyChangedCallback(TextBlock.TextProperty, OnPropertyChanged);
                 _nameBlock.IsTextTrimmedChanged += OnIsTextTrimmedChanged;
             }
 
             _addressBlock = GetTextBlock(AddressPresenter.AddressElementName);
             if (_addressBlock != null)
             {
-                _addressToken = _addressBlock.RegisterPropertyChangedCallback(TextBlock.TextProperty, OnPropertyChanged);
                 _addressBlock.IsTextTrimmedChanged += OnIsTextTrimmedChanged;
             }
         }
@@ -106,13 +124,13 @@ namespace Eppie.App.UI.Behaviors
 
             if (_nameToken.HasValue)
             {
-                _nameBlock?.UnregisterPropertyChangedCallback(TextBlock.TextProperty, _nameToken.Value);
+                _source?.UnregisterPropertyChangedCallback(AddressPresenter.DisplayNameProperty, _nameToken.Value);
                 _nameToken = null;
             }
 
             if (_addressToken.HasValue)
             {
-                _addressBlock?.UnregisterPropertyChangedCallback(TextBlock.TextProperty, _addressToken.Value);
+                _source?.UnregisterPropertyChangedCallback(AddressPresenter.AddressProperty, _addressToken.Value);
                 _addressToken = null;
             }
 
@@ -152,5 +170,16 @@ namespace Eppie.App.UI.Behaviors
     }
 
     public class AddressPresenterTooltipBehavior : TooltipBehavior<AddressPresenter, AddressPresenterTooltipSource>
-    { }
+    {
+        public AddressPresenterTooltipMode Mode { get; set; } = AddressPresenterTooltipMode.Formatted;
+        public string Format { get; set; }
+
+        protected override void InitializeTooltipSource(AddressPresenterTooltipSource tooltipSource)
+        {
+            base.InitializeTooltipSource(tooltipSource);
+
+            tooltipSource.Mode = Mode;
+            tooltipSource.Format = Format;
+        }
+    }
 }

@@ -167,9 +167,12 @@ namespace Eppie.App.UI.Behaviors
         {
             base.OnAttached();
 
+            TSource source = new TSource() { Source = AssociatedObject };
+            InitializeTooltipSource(source);
+
             _behavior = new TooltipBehavior()
             {
-                Source = new TSource() { Source = AssociatedObject }
+                Source = source
             };
 
             _behavior.Attach(AssociatedObject);
@@ -182,5 +185,8 @@ namespace Eppie.App.UI.Behaviors
             _behavior.Detach();
             _behavior = null;
         }
+
+        protected virtual void InitializeTooltipSource(TSource tooltipSource)
+        { }
     }
 }
