@@ -20,12 +20,12 @@
             </ResourceDictionary.MergedDictionaries>
 
             <!--
-                CRITICAL: This dummy instance forces the WinUI XAML compiler to generate
-                metadata for ToolTipProvider. Without a concrete reference in XAML, the
-                x:Uid system cannot resolve custom attached properties,
-                resulting in a XamlParseException at runtime.
+                CRITICAL: These dummy instances force the WinUI XAML compiler to generate metadata.
+                Without a specific reference in XAML, the x:Uid system cannot resolve
+                custom attached properties, resulting in a XamlParseException at runtime.
             -->
-            <ToolTipProvider xmlns="using:Eppie.App.UI.Controls" x:Key="DummyToolTip" />
+            <ToolTipProvider xmlns="using:Eppie.App.UI.Controls" x:Key="DummyToolTipProvider" />
+            <TooltipBehavior xmlns="using:Eppie.App.UI.Behaviors" x:Key="DummyTooltipBehavior" />
 
         </ResourceDictionary>
     </Application.Resources>

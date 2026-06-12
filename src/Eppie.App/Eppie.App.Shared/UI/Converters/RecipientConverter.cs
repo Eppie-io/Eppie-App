@@ -31,7 +31,7 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Media;
 #endif
 
-namespace Tuvi.App.Converters
+namespace Eppie.App.UI.Converters
 {
     public class RecipientConverter : IValueConverter
     {

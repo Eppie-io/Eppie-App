@@ -91,19 +91,5 @@ namespace Eppie.App.Views
                 e.AcceptedOperation = DataPackageOperation.Copy;
             }
         }
-
-        public static string GetSenderToolTip(Account account)
-        {
-            string address = account?.DisplayEmail?.Address;
-
-            if (string.IsNullOrEmpty(address))
-            {
-                // ToDo: Perhaps we should return something like "No sender selected" instead of null.
-                // null will just show no tooltip at all.
-                return null;
-            }
-
-            return string.Format(CultureInfo.CurrentCulture, StringProvider.GetInstance().GetString("SenderToolTip/Format"), address);
-        }
     }
 }
