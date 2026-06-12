@@ -14,8 +14,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Authorization\AuthenticationBroker.Uno.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Authorization\AuthenticationBroker.UWP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Authorization\ProtocolAuthenticationBroker.UWP.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Converters\RecipientConverter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Converters\AttachmentConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UI\Converters\RecipientConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UI\Converters\AttachmentConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\BitmapTools.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\EppieHost.UWP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\EppieHost.Uno.cs" />
@@ -25,7 +25,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Logging\LogConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Logging\LoggingExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\PendingMailtoService.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)StaticResources\BrandResource.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\BrandResource.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\NotificationManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\AIService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\AppStoreService.cs" />
