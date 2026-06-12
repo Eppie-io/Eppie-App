@@ -2010,9 +2010,12 @@ Eppie
     <value>If Sampling is disabled, a greedy approach will be used and the model will select the most likely token every time. If enabled, tokens will be selected based on the token probability distribution. The Top K, Top P, and Temperature parameters only apply if sampling is enabled.</value>
     <comment>The tooltip for Sampling toggle.</comment>
   </data>
-  <data name="SenderToolTip.Format" xml:space="preserve">
-    <value>From: {0}</value>
-    <comment>Tooltip for message sender. {0} - sender's address</comment>
+  <data name="SelectedSenderAddress.[using:Eppie.App.UI.Behaviors]TooltipBehavior.TooltipFormat" xml:space="preserve">
+    <value>From: {1}</value>
+    <comment>Tooltip format for message sender.
+{0},{1} - placeholders should not be changed or removed.
+{0} - sender's name (This is now ignored), {1} - sender's address.
+Example tooltip: "From: alice@example.com"</comment>
   </data>
   <data name="BackUICommand.Description" xml:space="preserve">
     <value>Go back</value>

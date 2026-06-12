@@ -14,6 +14,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Authorization\AuthenticationBroker.Uno.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Authorization\AuthenticationBroker.UWP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Authorization\ProtocolAuthenticationBroker.UWP.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UI\Components\ComposeMessageFooter.xaml.cs">
+      <DependentUpon>ComposeMessageFooter.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)UI\Converters\RecipientConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\Converters\AttachmentConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\BitmapTools.cs" />
@@ -148,6 +151,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)StaticResources\StaticStringResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)UI\Components\ComposeMessageFooter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

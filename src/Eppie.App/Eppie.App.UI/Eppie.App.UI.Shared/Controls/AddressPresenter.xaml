@@ -48,7 +48,10 @@
 
     </UserControl.Resources>
 
-    <Grid x:Name="RootGrid" HorizontalAlignment="Left">
+    <!--  Note: The Background="Transparent" property allows the tooltip to appear on the entire control.  -->
+    <Grid x:Name="RootGrid"
+          HorizontalAlignment="Left"
+          Background="Transparent">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition x:Name="NameColumn"
