@@ -34,12 +34,11 @@ using Microsoft.UI.Xaml.Input;
 
 namespace Eppie.App.UI.Controls
 {
-    [Flags]
-    public enum CommandButtonDisplayMode : uint
+    public enum CommandButtonDisplayMode
     {
-        TextOnly = 0x1,
-        IconOnly = 0x2,
-        Normal = TextOnly | IconOnly
+        Normal,
+        TextOnly,
+        IconOnly
     }
 
     [SuppressMessage("Design", "CA1010:Generic collections should implement generic interface", Justification = "ContentControl implements IEnumerable for XAML infrastructure")]
