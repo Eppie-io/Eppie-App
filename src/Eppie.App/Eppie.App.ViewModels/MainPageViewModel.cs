@@ -441,6 +441,7 @@ namespace Tuvi.App.ViewModels
         {
             _timeBriefString = null;
             _dateBriefString = null;
+            _isDateToday = false;
         }
 
         private void SetFlaged(bool value)
