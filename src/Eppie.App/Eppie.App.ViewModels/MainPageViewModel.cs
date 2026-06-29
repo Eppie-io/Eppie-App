@@ -42,8 +42,10 @@ namespace Tuvi.App.ViewModels
         string MessageSender { get; }
         string MessageReceiver { get; }
         string MessageSubject { get; }
+        string TimeBriefString { get; }
         string DateBriefString { get; }
         string DateFullString { get; }
+        bool IsDateToday { get; }
         string PreviewText { get; }
         bool HasAttachments { get; }
         int AttachmentCount { get; }
@@ -208,15 +210,8 @@ namespace Tuvi.App.ViewModels
             get { return _message.Attachments ?? new AttachmentsCollection(); }
         }
 
-        public bool HasAttachments
-        {
-            get { return _message.Attachments != null && _message.Attachments.Count > 0; }
-        }
-
-        public int AttachmentCount
-        {
-            get { return _message.Attachments?.Count ?? 0; }
-        }
+        public bool HasAttachments => AttachmentCount > 0;
+        public int AttachmentCount => _message?.Attachments?.Count ?? 0;
 
         public string SenderEmail
         {
@@ -262,33 +257,73 @@ namespace Tuvi.App.ViewModels
             get { return _message.IsDecentralized; }
         }
 
+        public bool IsDateToday { get; private set; }
+
+        private DateTimeOffset _dateBriefStringTimestamp;
+
         private string _dateBriefString;
         public string DateBriefString
         {
             get
             {
-                if (!string.IsNullOrEmpty(_dateBriefString))
+                DateTimeOffset now = DateTimeOffset.Now;
+
+                if (!string.IsNullOrEmpty(_dateBriefString) && IsSame(_dateBriefStringTimestamp, now))
                 {
+                    // return cached value if the date is the same as the last time it was calculated
                     return _dateBriefString;
                 }
-                var date = _message.Date.ToLocalTime();
 
-                if (date.Day == DateTimeOffset.Now.Day &&
-                    date.Month == DateTimeOffset.Now.Month &&
-                    date.Year == DateTimeOffset.Now.Year)
+                var date = _message.Date.ToLocalTime();
+                IsDateToday = false;
+
+                if (IsSame(date, now)) // today
                 {
-                    _dateBriefString = date.ToString("t", CultureInfo.CurrentCulture);
+                    // Abbreviated weekday name
+                    _dateBriefString = date.ToString("ddd", CultureInfo.CurrentCulture);
+                    IsDateToday = true;
                 }
-                else if (_message.Date.Year != DateTimeOffset.Now.Year)
+                else if (date > now.AddDays(-5)) // recently: last 5 days
                 {
-                    _dateBriefString = date.ToString("d", CultureInfo.CurrentCulture);
+                    // Abbreviated weekday name
+                    _dateBriefString = date.ToString("ddd", CultureInfo.CurrentCulture);
+                }
+                else if (_message.Date.Year == now.Year) // this year
+                {
+                    _dateBriefString = date.ToString(CultureInfo.CurrentCulture.DateTimeFormat.MonthDayPattern,
+                                                     CultureInfo.CurrentCulture);
                 }
                 else
                 {
-                    _dateBriefString = date.ToString("M", CultureInfo.CurrentCulture);
+                    _dateBriefString = date.ToString(CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern,
+                                                     CultureInfo.CurrentCulture);
                 }
 
+                _dateBriefStringTimestamp = now;
                 return _dateBriefString;
+
+                bool IsSame(DateTimeOffset dateTime1, DateTimeOffset dateTime2)
+                {
+                    return dateTime1.Day == dateTime2.Day && dateTime1.Month == dateTime2.Month && dateTime1.Year == dateTime2.Year;
+                }
+            }
+        }
+
+        private string _timeBriefString;
+        public string TimeBriefString
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(_timeBriefString))
+                {
+                    return _timeBriefString;
+                }
+                var date = _message.Date.ToLocalTime();
+
+                _timeBriefString = date.ToString(CultureInfo.CurrentCulture.DateTimeFormat.ShortTimePattern,
+                                                 CultureInfo.CurrentCulture);
+
+                return _timeBriefString;
             }
         }
 
@@ -385,6 +420,8 @@ namespace Tuvi.App.ViewModels
             OnPropertyChanged(nameof(IsFlagged));
             OnPropertyChanged(nameof(DateBriefString));
             OnPropertyChanged(nameof(DateFullString));
+            OnPropertyChanged(nameof(TimeBriefString));
+            OnPropertyChanged(nameof(IsDateToday));
             OnPropertyChanged(nameof(IsSigned));
             OnPropertyChanged(nameof(IsEncrypted));
             OnPropertyChanged(nameof(AIAgentProcessedBody));

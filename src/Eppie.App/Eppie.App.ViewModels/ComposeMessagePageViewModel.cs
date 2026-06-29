@@ -260,7 +260,7 @@ namespace Tuvi.App.ViewModels
             set { SetProperty(ref _isHiddenCopyVisible, value); }
         }
 
-        public bool HasAttachments => Attachments.Any();
+        public bool HasAttachments => Attachments?.Count > 0;
 
         private bool _loadingContent;
         public bool LoadingContent
