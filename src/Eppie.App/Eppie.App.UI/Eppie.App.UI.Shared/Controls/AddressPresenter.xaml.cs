@@ -55,6 +55,26 @@ namespace Eppie.App.UI.Controls
             DependencyProperty.Register(nameof(Mode), typeof(AddressPresenterMode), typeof(AddressPresenter), new PropertyMetadata(AddressPresenterMode.Normal));
 
 
+        public bool IsAvatarVisible
+        {
+            get { return (bool)GetValue(IsAvatarVisibleProperty); }
+            set { SetValue(IsAvatarVisibleProperty, value); }
+        }
+
+        public static readonly DependencyProperty IsAvatarVisibleProperty =
+            DependencyProperty.Register(nameof(IsAvatarVisible), typeof(bool), typeof(AddressPresenter), new PropertyMetadata(true));
+
+
+        public bool IsTextSelectionEnabled
+        {
+            get { return (bool)GetValue(IsTextSelectionEnabledProperty); }
+            set { SetValue(IsTextSelectionEnabledProperty, value); }
+        }
+
+        public static readonly DependencyProperty IsTextSelectionEnabledProperty =
+            DependencyProperty.Register(nameof(IsTextSelectionEnabled), typeof(bool), typeof(AddressPresenter), new PropertyMetadata(false));
+
+
         public string DisplayName
         {
             get { return (string)GetValue(DisplayNameProperty); }
@@ -84,6 +104,7 @@ namespace Eppie.App.UI.Controls
         public static readonly DependencyProperty IsAddressValidProperty =
             DependencyProperty.Register(nameof(IsAddressValid), typeof(bool), typeof(AddressPresenter), new PropertyMetadata(true));
 
+
         public bool IsSecure
         {
             get { return (bool)GetValue(IsSecureProperty); }
@@ -104,6 +125,16 @@ namespace Eppie.App.UI.Controls
             DependencyProperty.Register(nameof(Avatar), typeof(ImageSource), typeof(AddressPresenter), new PropertyMetadata(null));
 
 
+        public bool IsAvatarHighlighted
+        {
+            get { return (bool)GetValue(IsAvatarHighlightedProperty); }
+            set { SetValue(IsAvatarHighlightedProperty, value); }
+        }
+
+        public static readonly DependencyProperty IsAvatarHighlightedProperty =
+            DependencyProperty.Register(nameof(IsAvatarHighlighted), typeof(bool), typeof(AddressPresenter), new PropertyMetadata(false));
+
+
         public double NameColumnMaxWidth
         {
             get { return (double)GetValue(NameColumnMaxWidthProperty); }
@@ -114,9 +145,49 @@ namespace Eppie.App.UI.Controls
             DependencyProperty.Register(nameof(NameColumnMaxWidth), typeof(double), typeof(AddressPresenter), new PropertyMetadata(144.0));
 
 
+        public Style DisplayNameTextStyle
+        {
+            get { return (Style)GetValue(DisplayNameTextStyleProperty); }
+            set { SetValue(DisplayNameTextStyleProperty, value); }
+        }
+
+        public static readonly DependencyProperty DisplayNameTextStyleProperty =
+            DependencyProperty.Register(nameof(DisplayNameTextStyle), typeof(Style), typeof(AddressPresenter), new PropertyMetadata(null));
+
+
+        public Style SecureTextStyle
+        {
+            get { return (Style)GetValue(SecureTextStyleProperty); }
+            set { SetValue(SecureTextStyleProperty, value); }
+        }
+
+        public static readonly DependencyProperty SecureTextStyleProperty =
+            DependencyProperty.Register(nameof(SecureTextStyle), typeof(Style), typeof(AddressPresenter), new PropertyMetadata(null));
+
+
+        public Style AddressTextStyle
+        {
+            get { return (Style)GetValue(AddressTextStyleProperty); }
+            set { SetValue(AddressTextStyleProperty, value); }
+        }
+
+        public static readonly DependencyProperty AddressTextStyleProperty =
+            DependencyProperty.Register(nameof(AddressTextStyle), typeof(Style), typeof(AddressPresenter), new PropertyMetadata(null));
+
+
         public AddressPresenter()
         {
             this.InitializeComponent();
+        }
+
+        public Style GetTextBlockStyle(bool isAddressValid, Style customValidStyle, string defaultValidStyleKey, string defaultInvalidStyleKey)
+        {
+            if (!isAddressValid)
+            {
+                return Resources[defaultInvalidStyleKey] as Style;
+            }
+
+            return customValidStyle ?? Resources[defaultValidStyleKey] as Style;
         }
     }
 
