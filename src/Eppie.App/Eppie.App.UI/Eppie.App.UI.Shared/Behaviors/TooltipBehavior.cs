@@ -158,7 +158,7 @@ namespace Eppie.App.UI.Behaviors
 #else
         where T : DependencyObject
 #endif
-        where TSource : ITooltipSource<T>, new()
+        where TSource : class, ITooltipSource<T>, new()
 
     {
         private TooltipBehavior _behavior;
@@ -186,7 +186,18 @@ namespace Eppie.App.UI.Behaviors
             _behavior = null;
         }
 
+        protected void OnChanged()
+        {
+            if (_behavior?.Source is TSource source)
+            {
+                UpdateTooltipSource(source);
+            }
+        }
+
         protected virtual void InitializeTooltipSource(TSource tooltipSource)
+        { }
+
+        protected virtual void UpdateTooltipSource(TSource tooltipSource)
         { }
     }
 }
