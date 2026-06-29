@@ -1,9 +1,12 @@
 ﻿<UserControl x:Class="Eppie.App.Views.MessageItemView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:behaviors="using:Eppie.App.UI.Behaviors"
+             xmlns:components="using:Eppie.App.UI.Components"
              xmlns:controls="using:Eppie.App.UI.Controls"
              xmlns:converters="using:Eppie.App.UI.Converters"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
              xmlns:win="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -78,10 +81,6 @@
                 </XamlUICommand.KeyboardAccelerators>
                 -->
             </XamlUICommand>
-
-            <converters:RecipientConverter x:Key="RecipientConverter" />
-            <converters:ListRecipientsConverter x:Key="ListRecipientsConverter" />
-
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -196,8 +195,8 @@
                   CornerRadius="4">
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
                 <Grid.RowDefinitions>
@@ -206,116 +205,52 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <muxc:PersonPicture Width="44"
-                                    Height="44"
-                                    Margin="0,4,0,0"
-                                    VerticalAlignment="Center"
-                                    DisplayName="{x:Bind MessageInfo.MessageSender, Mode=OneWay}" />
+                <components:MessageInfoBlock Address="{x:Bind MessageInfo.SenderEmail, Mode=OneWay}"
+                                             AttachmentCount="{x:Bind MessageInfo.AttachmentCount, Mode=OneWay}"
+                                             Date="{x:Bind MessageInfo.DateBriefString, Mode=OneWay}"
+                                             DisplayName="{x:Bind MessageInfo.SenderName, Mode=OneWay}"
+                                             FullDateTime="{x:Bind MessageInfo.DateFullString, Mode=OneWay}"
+                                             HasAttachments="{x:Bind MessageInfo.HasAttachments, Mode=OneWay}"
+                                             IsDecentralized="{x:Bind MessageInfo.IsDecentralized, Mode=OneWay}"
+                                             IsEncrypted="{x:Bind MessageInfo.IsEncrypted, Mode=OneWay}"
+                                             IsRead="{x:Bind MessageInfo.IsMarkedAsRead, Mode=OneWay}"
+                                             IsSigned="{x:Bind MessageInfo.IsSigned, Mode=OneWay}"
+                                             IsToday="{x:Bind MessageInfo.IsDateToday, Mode=OneWay}"
+                                             PrimaryRecepient="{x:Bind MessageInfo.Account, Mode=OneWay}"
+                                             Recipients="{x:Bind MessageInfo.AllRecipients, Mode=OneWay}"
+                                             Subject="{x:Bind MessageInfo.MessageSubject, Mode=OneWay}"
+                                             Time="{x:Bind MessageInfo.TimeBriefString, Mode=OneWay}" />
 
-                <Grid Grid.Column="1" Margin="16,0,0,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-
-                    <TextBlock Grid.Row="0"
-                               Grid.Column="0"
-                               VerticalAlignment="Center"
-                               Style="{x:Bind MessageInfo.IsMarkedAsRead, Mode=OneWay, Converter={StaticResource InverseBoolToAccentTextBlockStyleConverter}}"
-                               Text="{x:Bind MessageInfo.SenderName, Mode=OneWay}"
-                               TextTrimming="CharacterEllipsis"
-                               TextWrapping="NoWrap" />
-
-                    <TextBlock Grid.Row="1"
-                               Grid.Column="0"
-                               VerticalAlignment="Top"
-                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                               Text="{x:Bind MessageInfo.SenderEmail, Mode=OneWay}"
-                               TextTrimming="CharacterEllipsis"
-                               TextWrapping="NoWrap" />
-
-                    <Border Grid.Row="0"
-                            Grid.Column="1"
-                            Height="32"
-                            Margin="16,0,8,0"
-                            Padding="12,0"
-                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                            BorderThickness="1"
-                            CornerRadius="16"
-                            Visibility="{x:Bind MessageInfo.HasAttachments, Mode=OneWay}">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Viewbox Width="16"
-                                     Height="16"
-                                     VerticalAlignment="Center">
-                                <SymbolIcon Symbol="Attach" />
-                            </Viewbox>
-                            <TextBlock VerticalAlignment="Center" Text="{x:Bind MessageInfo.AttachmentCount, Mode=OneWay}" />
-                        </StackPanel>
-                    </Border>
-
-                    <StackPanel Grid.Row="0"
-                                Grid.Column="2"
-                                Margin="16,0,8,0"
-                                Orientation="Horizontal"
-                                Spacing="8">
-                        <TextBlock x:Uid="MessageTo"
-                                   VerticalAlignment="Center"
-                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-
-                        <!--  ToDo: Add tooltip;  -->
-                        <controls:RecipientControl VerticalAlignment="Center"
-                                                   BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                                                   ItemsSource="{x:Bind MessageInfo.AllRecipients, Mode=OneWay, Converter={StaticResource ListRecipientsConverter}}"
-                                                   PrimaryRecepient="{x:Bind MessageInfo.Account, Mode=OneWay, Converter={StaticResource RecipientConverter}}" />
-                    </StackPanel>
-
-                    <TextBlock Grid.Row="0"
-                               Grid.Column="3"
-                               MinWidth="96"
-                               VerticalAlignment="Center"
-                               Foreground="{ThemeResource TextFillColorPrimaryBrush}"
-                               Text="{x:Bind MessageInfo.DateBriefString, Mode=OneWay}"
-                               TextAlignment="Right" />
-
-                    <Button Grid.Row="0"
-                            Grid.Column="4"
-                            Width="32"
-                            Height="32"
-                            Margin="16,0,0,0"
-                            Padding="0"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Style="{StaticResource ThinButtonStyle}">
-                        <Viewbox Width="16" Height="16">
-                            <SymbolIcon Symbol="More" />
-                        </Viewbox>
-                        <Button.Flyout>
-                            <MenuFlyout>
-                                <MenuFlyoutItem Command="{StaticResource MarkAsReadUICommand}"
-                                                CommandParameter="{x:Bind MessageInfo, Mode=OneWay}"
-                                                Visibility="{x:Bind MessageInfo.IsMarkedAsRead, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
-                                <MenuFlyoutItem Command="{StaticResource MarkAsUnreadUICommand}"
-                                                CommandParameter="{x:Bind MessageInfo, Mode=OneWay}"
-                                                Visibility="{x:Bind MessageInfo.IsMarkedAsRead, Mode=OneWay}" />
-                                <MenuFlyoutItem Command="{StaticResource FlagUICommand}"
-                                                CommandParameter="{x:Bind MessageInfo, Mode=OneWay}"
-                                                Visibility="{x:Bind MessageInfo.IsFlagged, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
-                                <MenuFlyoutItem Command="{StaticResource UnflagUICommand}"
-                                                CommandParameter="{x:Bind MessageInfo, Mode=OneWay}"
-                                                Visibility="{x:Bind MessageInfo.IsFlagged, Mode=OneWay}" />
-                                <MenuFlyoutItem Command="{StaticResource DeleteUICommand}" CommandParameter="{x:Bind MessageInfo, Mode=OneWay}" />
-                            </MenuFlyout>
-                        </Button.Flyout>
-                    </Button>
-                </Grid>
+                <Button Grid.Row="0"
+                        Grid.Column="1"
+                        Width="32"
+                        Height="32"
+                        Margin="16,0,0,0"
+                        Padding="0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Style="{StaticResource ThinButtonStyle}">
+                    <Viewbox Width="16" Height="16">
+                        <SymbolIcon Symbol="More" />
+                    </Viewbox>
+                    <Button.Flyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem Command="{StaticResource MarkAsReadUICommand}"
+                                            CommandParameter="{x:Bind MessageInfo, Mode=OneWay}"
+                                            Visibility="{x:Bind MessageInfo.IsMarkedAsRead, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+                            <MenuFlyoutItem Command="{StaticResource MarkAsUnreadUICommand}"
+                                            CommandParameter="{x:Bind MessageInfo, Mode=OneWay}"
+                                            Visibility="{x:Bind MessageInfo.IsMarkedAsRead, Mode=OneWay}" />
+                            <MenuFlyoutItem Command="{StaticResource FlagUICommand}"
+                                            CommandParameter="{x:Bind MessageInfo, Mode=OneWay}"
+                                            Visibility="{x:Bind MessageInfo.IsFlagged, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+                            <MenuFlyoutItem Command="{StaticResource UnflagUICommand}"
+                                            CommandParameter="{x:Bind MessageInfo, Mode=OneWay}"
+                                            Visibility="{x:Bind MessageInfo.IsFlagged, Mode=OneWay}" />
+                            <MenuFlyoutItem Command="{StaticResource DeleteUICommand}" CommandParameter="{x:Bind MessageInfo, Mode=OneWay}" />
+                        </MenuFlyout>
+                    </Button.Flyout>
+                </Button>
 
                 <Grid Grid.Row="2"
                       Grid.Column="0"
@@ -351,13 +286,21 @@
                                Style="{x:Bind MessageInfo.IsMarkedAsRead, Mode=OneWay, Converter={StaticResource InverseBoolToAccentTextBlockStyleConverter}}"
                                Text="{x:Bind MessageInfo.MessageSubject, Mode=OneWay}"
                                TextTrimming="CharacterEllipsis"
-                               TextWrapping="NoWrap" />
+                               TextWrapping="NoWrap">
+                        <interactivity:Interaction.Behaviors>
+                            <behaviors:TextBlockTooltipBehavior />
+                        </interactivity:Interaction.Behaviors>
+                    </TextBlock>
                     <TextBlock Grid.Column="2"
                                VerticalAlignment="Center"
                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                Text="{x:Bind MessageInfo.PreviewText, Mode=OneWay}"
                                TextTrimming="CharacterEllipsis"
-                               TextWrapping="NoWrap" />
+                               TextWrapping="NoWrap">
+                        <interactivity:Interaction.Behaviors>
+                            <behaviors:TextBlockTooltipBehavior />
+                        </interactivity:Interaction.Behaviors>
+                    </TextBlock>
                 </Grid>
 
                 <Grid.ContextFlyout>
