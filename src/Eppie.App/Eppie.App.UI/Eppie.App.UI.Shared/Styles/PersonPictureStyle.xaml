@@ -9,7 +9,6 @@
         The style WinUI 3 can be found here: https://github.com/microsoft/microsoft-ui-xaml/blob/main/controls/dev/PersonPicture/PersonPicture.xaml
     -->
 
-    <Style BasedOn="{StaticResource DefaultPersonPictureStyle}" TargetType="muxc:PersonPicture" />
     <Style x:Key="DefaultPersonPictureStyle" TargetType="muxc:PersonPicture">
         <Setter Property="Foreground" Value="{ThemeResource PersonPictureForegroundThemeBrush}" />
         <Setter Property="Background" Value="{ThemeResource PersonPictureEllipseFillThemeBrush}" />
@@ -132,4 +131,5 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <Style BasedOn="{StaticResource DefaultPersonPictureStyle}" TargetType="muxc:PersonPicture" />
 </ResourceDictionary>
