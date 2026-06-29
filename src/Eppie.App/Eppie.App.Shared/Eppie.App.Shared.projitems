@@ -17,6 +17,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)UI\Components\ComposeMessageFooter.xaml.cs">
       <DependentUpon>ComposeMessageFooter.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)UI\Components\MessageInfoBlock.xaml.cs">
+      <DependentUpon>MessageInfoBlock.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)UI\Converters\RecipientConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\Converters\AttachmentConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\BitmapTools.cs" />
@@ -159,6 +162,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)UI\Components\ComposeMessageFooter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)UI\Components\MessageInfoBlock.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -2085,4 +2085,24 @@ Example tooltip: "From: alice@example.com"</comment>
     <value>Unflagged</value>
     <comment>Description for the status that indicates the message is unflagged</comment>
   </data>
+  <data name="MessageEncryptedAndSigned.Tooltip" xml:space="preserve">
+    <value>Message encrypted and signed</value>
+    <comment>Tooltip when message is both encrypted and signed</comment>
+  </data>
+  <data name="MessageEncrypted.Tooltip" xml:space="preserve">
+    <value>Message encrypted</value>
+    <comment>Tooltip when message is encrypted</comment>
+  </data>
+  <data name="MessageSigned.Tooltip" xml:space="preserve">
+    <value>Message signed</value>
+    <comment>Tooltip when message is signed</comment>
+  </data>
+  <data name="MessageNotSecure.Tooltip" xml:space="preserve">
+    <value>Message not encrypted</value>
+    <comment>Tooltip when message is not encrypted and not signed</comment>
+  </data>
+  <data name="MessageAttachmentInfo.[using:Eppie.App.UI.Controls]ToolTipProvider.ToolTip" xml:space="preserve">
+    <value>Message includes attachments</value>
+    <comment>Tooltip for attachments in the message information block</comment>
+  </data>
 </root>
