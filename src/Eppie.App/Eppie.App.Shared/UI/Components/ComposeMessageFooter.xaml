@@ -39,6 +39,7 @@
                                        Address="{x:Bind Address, Mode=OneWay}"
                                        Avatar="{x:Bind AvatarInfo, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}"
                                        DisplayName="{x:Bind DisplayName, Mode=OneWay}"
+                                       IsAvatarHighlighted="{x:Bind IsDecentralized, Mode=OneWay}"
                                        IsSecure="{x:Bind IsDecentralized, Mode=OneWay}"
                                        Mode="Compact">
                 <interactivity:Interaction.Behaviors>
@@ -52,6 +53,7 @@
                                        Address="{x:Bind Address, Mode=OneWay}"
                                        Avatar="{x:Bind AvatarInfo, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}"
                                        DisplayName="{x:Bind DisplayName, Mode=OneWay}"
+                                       IsAvatarHighlighted="{x:Bind IsDecentralized, Mode=OneWay}"
                                        IsSecure="{x:Bind IsDecentralized, Mode=OneWay}">
                 <interactivity:Interaction.Behaviors>
                     <behaviors:AddressPresenterTooltipBehavior />
