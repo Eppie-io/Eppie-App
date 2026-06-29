@@ -411,6 +411,8 @@ namespace Tuvi.App.ViewModels
 
         private void UpdateMessageProperties()
         {
+            ResetCacheValues();
+
             OnPropertyChanged(nameof(MessageSender));
             OnPropertyChanged(nameof(MessageReceiver));
             OnPropertyChanged(nameof(MessageSubject));
@@ -433,6 +435,12 @@ namespace Tuvi.App.ViewModels
             OnPropertyChanged(nameof(IsEncrypted));
             OnPropertyChanged(nameof(AIAgentProcessedBody));
             OnPropertyChanged(nameof(AllRecipients));
+        }
+
+        private void ResetCacheValues()
+        {
+            _timeBriefString = null;
+            _dateBriefString = null;
         }
 
         private void SetFlaged(bool value)
