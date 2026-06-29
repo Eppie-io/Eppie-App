@@ -13,7 +13,6 @@
     <UserControl.Resources>
         <x:Double x:Key="AvatarSize">26</x:Double>
         <x:Double x:Key="SecureIconSize">10</x:Double>
-        <Thickness x:Key="ColumnSpaceMargin">12,0,0,0</Thickness>
         <local:AddressPresenterMode x:Key="NormalMode">Normal</local:AddressPresenterMode>
         <local:AddressPresenterMode x:Key="CompactMode">Compact</local:AddressPresenterMode>
         <local:AddressPresenterMode x:Key="StructuredMode">Structured</local:AddressPresenterMode>
@@ -38,13 +37,15 @@
             <Setter Property="Foreground" Value="{ThemeResource SystemControlErrorTextForegroundBrush}" />
         </Style>
 
-        <converters:BoolToStyleConverter x:Key="ValidityToPrimaryStyleConverter"
-                                         FalseValue="{StaticResource InvalidTextBlockStyle}"
-                                         TrueValue="{StaticResource ValidPrimaryTextBlockStyle}" />
+        <Style x:Key="AvatarHighlightedStyle"
+               BasedOn="{StaticResource DefaultPersonPictureStyle}"
+               TargetType="muxc:PersonPicture">
+            <Setter Property="BorderBrush" Value="{ThemeResource AvatarHighlightedBrush}" />
+        </Style>
 
-        <converters:BoolToStyleConverter x:Key="ValidityToSecondaryStyleConverter"
-                                         FalseValue="{StaticResource InvalidTextBlockStyle}"
-                                         TrueValue="{StaticResource ValidSecondaryTextBlockStyle}" />
+        <converters:BoolToStyleConverter x:Key="BoolToAvatarStyleConverter"
+                                         FalseValue="{StaticResource DefaultPersonPictureStyle}"
+                                         TrueValue="{StaticResource AvatarHighlightedStyle}" />
 
     </UserControl.Resources>
 
@@ -62,9 +63,12 @@
 
         <muxc:PersonPicture Width="{StaticResource AvatarSize}"
                             Height="{StaticResource AvatarSize}"
+                            Margin="0,0,12,0"
                             VerticalAlignment="Center"
                             DisplayName="{x:Bind DisplayName, Mode=OneWay}"
-                            ProfilePicture="{x:Bind Avatar, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}" />
+                            ProfilePicture="{x:Bind Avatar, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}"
+                            Style="{x:Bind IsAvatarHighlighted, Mode=OneWay, Converter={StaticResource BoolToAvatarStyleConverter}}"
+                            Visibility="{x:Bind IsAvatarVisible, Mode=OneWay}" />
 
         <Grid x:Name="NameGrid"
               Grid.Column="1"
@@ -74,10 +78,10 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <TextBlock x:Name="DisplayNameTextBlock"
-                       Margin="{StaticResource ColumnSpaceMargin}"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Center"
-                       Style="{x:Bind IsAddressValid, Mode=OneWay, Converter={StaticResource ValidityToPrimaryStyleConverter}}"
+                       IsTextSelectionEnabled="{x:Bind IsTextSelectionEnabled, Mode=OneWay}"
+                       Style="{x:Bind GetTextBlockStyle(IsAddressValid, DisplayNameTextStyle, 'ValidPrimaryTextBlockStyle','InvalidTextBlockStyle'), Mode=OneWay}"
                        Text="{x:Bind DisplayName, Mode=OneWay}"
                        TextLineBounds="Tight"
                        TextTrimming="CharacterEllipsis"
@@ -90,7 +94,7 @@
                        VerticalAlignment="Center"
                        FontFamily="{StaticResource SymbolThemeFontFamily}"
                        FontSize="{StaticResource SecureIconSize}"
-                       Style="{x:Bind IsAddressValid, Mode=OneWay, Converter={StaticResource ValidityToPrimaryStyleConverter}}"
+                       Style="{x:Bind GetTextBlockStyle(IsAddressValid, SecureTextStyle, 'ValidPrimaryTextBlockStyle','InvalidTextBlockStyle'), Mode=OneWay}"
                        Text="{StaticResource SecureGlyph}"
                        TextLineBounds="Tight"
                        Visibility="{x:Bind IsSecure, Mode=OneWay}" />
@@ -98,10 +102,11 @@
 
         <TextBlock x:Name="AddressTextBlock"
                    Grid.Column="2"
-                   Margin="{StaticResource ColumnSpaceMargin}"
+                   Margin="12,0,0,0"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Center"
-                   Style="{x:Bind IsAddressValid, Mode=OneWay, Converter={StaticResource ValidityToSecondaryStyleConverter}}"
+                   IsTextSelectionEnabled="{x:Bind IsTextSelectionEnabled, Mode=OneWay}"
+                   Style="{x:Bind GetTextBlockStyle(IsAddressValid, AddressTextStyle, 'ValidSecondaryTextBlockStyle','InvalidTextBlockStyle'), Mode=OneWay}"
                    Text="{x:Bind Address, Mode=OneWay}"
                    TextLineBounds="Tight"
                    TextTrimming="CharacterEllipsis"

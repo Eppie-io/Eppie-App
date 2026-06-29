@@ -33,7 +33,7 @@ namespace Eppie.App.UI.Behaviors
 {
     public enum AddressPresenterTooltipMode
     {
-        Formatted = 0,
+        Formatted,
         Name,
         Address,
     }
@@ -43,10 +43,11 @@ namespace Eppie.App.UI.Behaviors
         // {0} = DisplayName, {1} = Address
         private static readonly string DefaultTooltipFormat = "{0} <{1}>";
 
-        // The tooltip should be active if the presenter is in compact mode or if the text is trimmed
-        public bool IsActive => Source?.Mode == AddressPresenterMode.Compact
-                                             || _addressBlock?.IsTextTrimmed == true
-                                             || _nameBlock?.IsTextTrimmed == true;
+        // The tooltip is active if the text is trimmed or
+        // if the tooltip displays more than just the name when the presenter is in compact mode.
+        public bool IsActive => _addressBlock?.IsTextTrimmed == true ||
+                                _nameBlock?.IsTextTrimmed == true ||
+                                (Source?.Mode == AddressPresenterMode.Compact && Mode != AddressPresenterTooltipMode.Name);
         public string Text => null;
 
         public event EventHandler TooltipChanged;
@@ -171,12 +172,46 @@ namespace Eppie.App.UI.Behaviors
 
     public class AddressPresenterTooltipBehavior : TooltipBehavior<AddressPresenter, AddressPresenterTooltipSource>
     {
-        public AddressPresenterTooltipMode Mode { get; set; } = AddressPresenterTooltipMode.Formatted;
-        public string Format { get; set; }
+        public AddressPresenterTooltipMode Mode
+        {
+            get { return (AddressPresenterTooltipMode)GetValue(ModeProperty); }
+            set { SetValue(ModeProperty, value); }
+        }
+
+        public static readonly DependencyProperty ModeProperty =
+            DependencyProperty.Register(nameof(Mode), typeof(AddressPresenterTooltipMode), typeof(AddressPresenterTooltipBehavior), new PropertyMetadata(AddressPresenterTooltipMode.Formatted, OnPropertyChanged));
+
+
+        // {0} = DisplayName, {1} = Address
+        public string Format
+        {
+            get { return (string)GetValue(FormatProperty); }
+            set { SetValue(FormatProperty, value); }
+        }
+
+        public static readonly DependencyProperty FormatProperty =
+            DependencyProperty.Register(nameof(Format), typeof(string), typeof(AddressPresenterTooltipBehavior), new PropertyMetadata(null, OnPropertyChanged));
+
+
+        private static void OnPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        {
+            if (dependencyObject is AddressPresenterTooltipBehavior behavior)
+            {
+                behavior.OnChanged();
+            }
+        }
 
         protected override void InitializeTooltipSource(AddressPresenterTooltipSource tooltipSource)
         {
             base.InitializeTooltipSource(tooltipSource);
+
+            tooltipSource.Mode = Mode;
+            tooltipSource.Format = Format;
+        }
+
+        protected override void UpdateTooltipSource(AddressPresenterTooltipSource tooltipSource)
+        {
+            base.UpdateTooltipSource(tooltipSource);
 
             tooltipSource.Mode = Mode;
             tooltipSource.Format = Format;

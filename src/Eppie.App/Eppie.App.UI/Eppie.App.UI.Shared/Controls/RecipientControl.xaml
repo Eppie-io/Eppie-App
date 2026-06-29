@@ -23,6 +23,7 @@
                                     Address="{x:Bind Address, Mode=OneWay}"
                                     Avatar="{x:Bind Avatar, Mode=OneWay}"
                                     DisplayName="{x:Bind DisplayName, Mode=OneWay}"
+                                    IsAvatarHighlighted="{x:Bind IsSecure, Mode=OneWay}"
                                     IsSecure="{x:Bind IsSecure, Mode=OneWay}">
                 <interactivity:Interaction.Behaviors>
                     <behaviors:AddressPresenterTooltipBehavior />
@@ -37,26 +38,31 @@
             BorderThickness="{StaticResource RecipientControlBorderThickness}"
             CornerRadius="{StaticResource RecipientControlCornerRadius}"
             Style="{StaticResource ThinButtonStyle}">
-        <StackPanel Margin="0"
-                    VerticalAlignment="Center"
-                    Orientation="Horizontal">
-            <local:AddressPresenter VerticalAlignment="Center"
+        <Grid Margin="0" VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <local:AddressPresenter Grid.Column="0"
+                                    VerticalAlignment="Center"
                                     Address="{x:Bind local:RecipientControl.GetPrimaryRecepientAddress(PrimaryRecepient, ItemsSource), Mode=OneWay}"
                                     Avatar="{x:Bind local:RecipientControl.GetPrimaryRecepientAvatar(PrimaryRecepient, ItemsSource), Mode=OneWay}"
                                     DisplayName="{x:Bind local:RecipientControl.GetPrimaryRecepientName(PrimaryRecepient, ItemsSource), Mode=OneWay}"
+                                    IsAvatarHighlighted="{x:Bind local:RecipientControl.IsPrimaryRecepientSecure(PrimaryRecepient, ItemsSource), Mode=OneWay}"
                                     IsSecure="{x:Bind local:RecipientControl.IsPrimaryRecepientSecure(PrimaryRecepient, ItemsSource), Mode=OneWay}"
                                     Mode="Compact">
                 <interactivity:Interaction.Behaviors>
                     <behaviors:AddressPresenterTooltipBehavior />
                 </interactivity:Interaction.Behaviors>
             </local:AddressPresenter>
-            <TextBlock Margin="8,0,0,0"
+            <TextBlock Grid.Column="1"
+                       Margin="8,0,0,0"
                        VerticalAlignment="Center"
                        TextLineBounds="Tight"
                        Visibility="{x:Bind local:RecipientControl.GetAdditionalRecipientVisibility(ItemsSource), Mode=OneWay}">
                 <Run Text="+" /><Run Text="{x:Bind local:RecipientControl.GetAdditionalRecipientCount(ItemsSource), Mode=OneWay}" />
             </TextBlock>
-        </StackPanel>
+        </Grid>
         <Button.Flyout>
             <!--
                 ToDo: Replace this Flyout with a popup similar to the one used in ComboBox.

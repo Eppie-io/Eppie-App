@@ -28,6 +28,7 @@
                                                Avatar="{x:Bind AvatarInfo, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}"
                                                DisplayName="{x:Bind DisplayName, Mode=OneWay}"
                                                IsAddressValid="{x:Bind Email, Converter={StaticResource EmailValidityToBoolConverter}}"
+                                               IsAvatarHighlighted="{x:Bind Email.IsDecentralized, Mode=OneWay}"
                                                IsSecure="{x:Bind Email.IsDecentralized, Mode=OneWay}">
                         <interactivity:Interaction.Behaviors>
                             <behaviors:AddressPresenterTooltipBehavior />
@@ -45,6 +46,7 @@
                                                Avatar="{x:Bind AvatarInfo, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}"
                                                DisplayName="{x:Bind DisplayName, Mode=OneWay}"
                                                IsAddressValid="{x:Bind Email, Converter={StaticResource EmailValidityToBoolConverter}}"
+                                               IsAvatarHighlighted="{x:Bind Email.IsDecentralized, Mode=OneWay}"
                                                IsSecure="{x:Bind Email.IsDecentralized, Mode=OneWay}"
                                                Mode="Compact">
                         <interactivity:Interaction.Behaviors>
