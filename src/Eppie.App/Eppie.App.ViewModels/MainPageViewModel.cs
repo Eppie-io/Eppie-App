@@ -257,7 +257,13 @@ namespace Tuvi.App.ViewModels
             get { return _message.IsDecentralized; }
         }
 
-        public bool IsDateToday { get; private set; }
+
+        private bool _isDateToday;
+        public bool IsDateToday
+        {
+            get => _isDateToday;
+            private set => SetProperty(ref _isDateToday, value);
+        }
 
         private DateTimeOffset _dateBriefStringTimestamp;
 
@@ -288,7 +294,7 @@ namespace Tuvi.App.ViewModels
                     // Abbreviated weekday name
                     _dateBriefString = date.ToString("ddd", CultureInfo.CurrentCulture);
                 }
-                else if (_message.Date.Year == now.Year) // this year
+                else if (date.Year == now.Year) // this year
                 {
                     _dateBriefString = date.ToString(CultureInfo.CurrentCulture.DateTimeFormat.MonthDayPattern,
                                                      CultureInfo.CurrentCulture);
@@ -300,12 +306,13 @@ namespace Tuvi.App.ViewModels
                 }
 
                 _dateBriefStringTimestamp = now;
-                return _dateBriefString;
 
                 bool IsSame(DateTimeOffset dateTime1, DateTimeOffset dateTime2)
                 {
                     return dateTime1.Day == dateTime2.Day && dateTime1.Month == dateTime2.Month && dateTime1.Year == dateTime2.Year;
                 }
+
+                return _dateBriefString;
             }
         }
 
