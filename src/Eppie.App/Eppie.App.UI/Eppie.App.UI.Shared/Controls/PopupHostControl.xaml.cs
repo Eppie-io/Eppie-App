@@ -105,10 +105,7 @@ namespace Eppie.App.UI.Controls
                     PopupPage.ClosePopupRequested += (s, a) => { ClosePopup(false); };
                 }
 
-                if (PopupPage is Page page)
-                {
-                    TitlePresenter.Content = PopupHostExtensions.GetTitleContent(page);
-                }
+                TitlePresenter.Content = PopupPage is DependencyObject obj ? PopupHostExtensions.GetTitleContent(obj) : null;
             }
         }
 
