@@ -104,6 +104,8 @@ namespace Eppie.App.UI.Controls
                 {
                     PopupPage.ClosePopupRequested += (s, a) => { ClosePopup(false); };
                 }
+
+                TitlePresenter.Content = PopupPage is DependencyObject obj ? PopupHostExtensions.GetTitleContent(obj) : null;
             }
         }
 
@@ -126,5 +128,23 @@ namespace Eppie.App.UI.Controls
         {
             Navigate(typeof(TPage));
         }
+    }
+
+    public static class PopupHostExtensions
+    {
+        private const string TitleContentPropertyName = "TitleContent";
+
+        public static UIElement GetTitleContent(DependencyObject obj)
+        {
+            return (UIElement)obj.GetValue(TitleContentProperty);
+        }
+
+        public static void SetTitleContent(DependencyObject obj, UIElement value)
+        {
+            obj.SetValue(TitleContentProperty, value);
+        }
+
+        public static readonly DependencyProperty TitleContentProperty =
+            DependencyProperty.RegisterAttached(TitleContentPropertyName, typeof(UIElement), typeof(PopupHostExtensions), new PropertyMetadata(null));
     }
 }
