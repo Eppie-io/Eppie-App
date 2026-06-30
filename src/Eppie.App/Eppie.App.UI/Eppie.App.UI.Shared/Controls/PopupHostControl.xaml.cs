@@ -135,7 +135,7 @@ namespace Eppie.App.UI.Controls
 
     public static class PopupHostExtensions
     {
-        public static readonly string TitleContentPropertyName = "TitleContent";
+        private const string TitleContentPropertyName = "TitleContent";
 
         public static UIElement GetTitleContent(DependencyObject obj)
         {
