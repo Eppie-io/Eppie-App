@@ -1,0 +1,42 @@
+﻿// ---------------------------------------------------------------------------- //
+//                                                                              //
+//   Copyright 2026 Eppie (https://eppie.io)                                    //
+//                                                                              //
+//   Licensed under the Apache License, Version 2.0 (the "License"),            //
+//   you may not use this file except in compliance with the License.           //
+//   You may obtain a copy of the License at                                    //
+//                                                                              //
+//       http://www.apache.org/licenses/LICENSE-2.0                             //
+//                                                                              //
+//   Unless required by applicable law or agreed to in writing, software        //
+//   distributed under the License is distributed on an "AS IS" BASIS,          //
+//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.   //
+//   See the License for the specific language governing permissions and        //
+//   limitations under the License.                                             //
+//                                                                              //
+// ---------------------------------------------------------------------------- //
+
+using Tuvi.App.ViewModels;
+
+#if WINDOWS_UWP
+using Windows.UI.Xaml;
+#else
+using Microsoft.UI.Xaml;
+#endif
+
+namespace Eppie.App.Views
+{
+    internal partial class PopupBasePage<TViewModel, TViewModelBase> : BasePage<TViewModel, TViewModelBase>
+            where TViewModel : TViewModelBase
+            where TViewModelBase : BaseViewModel
+    {
+        public UIElement TitleContent
+        {
+            get { return (UIElement)GetValue(TitleContentProperty); }
+            set { SetValue(TitleContentProperty, value); }
+        }
+
+        public static readonly DependencyProperty TitleContentProperty =
+            DependencyProperty.Register(nameof(TitleContent), typeof(UIElement), typeof(InvitationPage), new PropertyMetadata(null));
+    }
+}

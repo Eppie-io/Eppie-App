@@ -38,6 +38,7 @@ namespace Eppie.App.UI.Controls
     {
         event EventHandler ClosePopupRequested;
         void OnCloseClicked();
+        UIElement TitleContent { get; }
     }
 
     [SuppressMessage("Design", "CA1010:Generic collections should implement generic interface", Justification = "ContentControl implements IEnumerable for XAML infrastructure")]
@@ -102,6 +103,7 @@ namespace Eppie.App.UI.Controls
 
                 if (PopupPage != null)
                 {
+                    TitlePresenter.Content = PopupPage.TitleContent;
                     PopupPage.ClosePopupRequested += (s, a) => { ClosePopup(false); };
                 }
             }

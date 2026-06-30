@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:toolkit="using:CommunityToolkit.WinUI"
              d:DesignHeight="300"
              d:DesignWidth="400"
              Loaded="OnLoaded"
@@ -11,13 +12,37 @@
     <UserControl.Resources>
         <x:Double x:Key="CloseButtonSize">32</x:Double>
         <Thickness x:Key="CloseButtonMargin">12,12,12,12</Thickness>
+        <Thickness x:Key="TitleMargin">24,0,24,0</Thickness>
         <Thickness x:Key="CloseButtonPadding">4,4,4,4</Thickness>
         <x:Double x:Key="CloseButtonFontSize">20</x:Double>
     </UserControl.Resources>
 
     <Grid Margin="-24">
-        <Frame x:Name="PopupHostFrame" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <ContentPresenter x:Name="TitlePresenter"
+                          Grid.Row="0"
+                          Grid.Column="0"
+                          Margin="{StaticResource TitleMargin}"
+                          VerticalAlignment="Center"
+                          Visibility="Collapsed" />
+
+        <Frame x:Name="PopupHostFrame"
+               Grid.Row="0"
+               Grid.RowSpan="2"
+               Grid.Column="0"
+               Grid.ColumnSpan="2" />
+
         <Button x:Name="CloseButton"
+                Grid.Row="0"
+                Grid.Column="1"
                 Width="{StaticResource CloseButtonSize}"
                 Height="{StaticResource CloseButtonSize}"
                 Margin="{StaticResource CloseButtonMargin}"
@@ -32,5 +57,29 @@
                       FontSize="{StaticResource CloseButtonFontSize}"
                       Glyph="&#xE894;" />
         </Button>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="CommonStates">
+                <VisualState x:Name="Normal">
+                    <VisualState.StateTriggers>
+                        <toolkit:IsNotEqualStateTrigger Value="{x:Bind TitlePresenter.Content, Mode=OneWay}" To="{x:Null}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="TitlePresenter.Visibility" Value="Visible" />
+                        <Setter Target="PopupHostFrame.(Grid.Row)" Value="1" />
+                        <Setter Target="PopupHostFrame.(Grid.RowSpan)" Value="1" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Untitled">
+                    <VisualState.StateTriggers>
+                        <toolkit:IsEqualStateTrigger Value="{x:Bind TitlePresenter.Content, Mode=OneWay}" To="{x:Null}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="TitlePresenter.Visibility" Value="Collapsed" />
+                        <Setter Target="PopupHostFrame.(Grid.Row)" Value="0" />
+                        <Setter Target="PopupHostFrame.(Grid.RowSpan)" Value="2" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
     </Grid>
 </UserControl>

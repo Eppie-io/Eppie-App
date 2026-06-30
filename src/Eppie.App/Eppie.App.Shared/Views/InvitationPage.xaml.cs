@@ -23,18 +23,16 @@ using Tuvi.App.ViewModels;
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 #else
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 #endif
 
 namespace Eppie.App.Views
 {
-    internal partial class InvitationPageBase : BasePage<InvitationPageViewModel, BaseViewModel>
+    internal partial class InvitationPageBase : PopupBasePage<InvitationPageViewModel, BaseViewModel>
     { }
 
     internal sealed partial class InvitationPage : InvitationPageBase, IPopupPage

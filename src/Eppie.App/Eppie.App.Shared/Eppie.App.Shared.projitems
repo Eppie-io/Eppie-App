@@ -49,6 +49,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\AppSettingsPage.xaml.cs">
       <DependentUpon>AppSettingsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\PopupBasePage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\BasePage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\ComposeMessagePage.xaml.cs">
       <DependentUpon>ComposeMessagePage.xaml</DependentUpon>

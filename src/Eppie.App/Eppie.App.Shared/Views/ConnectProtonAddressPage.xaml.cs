@@ -24,17 +24,14 @@ using Tuvi.App.ViewModels;
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Navigation;
 #else
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Input;
 #endif
 
 namespace Eppie.App.Views
 {
-    internal partial class ConnectProtonAddressPageBase : BasePage<ConnectProtonAddressPageViewModel, BaseViewModel>
+    internal partial class ConnectProtonAddressPageBase : PopupBasePage<ConnectProtonAddressPageViewModel, BaseViewModel>
     { }
 
     internal sealed partial class ConnectProtonAddressPage : ConnectProtonAddressPageBase, IPopupPage
