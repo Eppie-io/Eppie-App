@@ -155,12 +155,6 @@
     <!-- https://github.com/unoplatform/Uno.XamlBehaviors?tab=readme-ov-file#uno-platform-port-of-xaml-behaviors -->
     <PackageReference Include="Uno.Microsoft.Xaml.Behaviors.WinUI.Managed" Condition="!$(TargetFramework.Contains('windows10'))"/>
   </ItemGroup>
-  <ItemGroup>
-    <!--
-      Update transitive packages containing known high severity vulnerabilities here.
-      Please check this again in newer SDK versions.
-    -->
-  </ItemGroup>
 
   <!-- Enable WSL support in VS 17.13 and later, when a desktop target is present -->
   <ItemGroup Condition="$([MSBuild]::VersionGreaterThanOrEquals($(MSBuildVersion), 17.13.0)) AND '$(TargetFrameworks)' != '' AND $(TargetFrameworks.Contains('desktop')) ">

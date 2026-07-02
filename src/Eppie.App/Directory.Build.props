@@ -1,7 +1,11 @@
 <Project>
+  <!-- Define global properties across all projects. -->
   <PropertyGroup>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
+
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
 
     <!--
       Adding NoWarn to remove build warnings
@@ -11,4 +15,10 @@
     -->
     <NoWarn>$(NoWarn);NU1507;NETSDK1201;PRI257</NoWarn>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- Overrides global SDK properties here. -->
+    <MicrosoftLoggingVersion>10.0.9</MicrosoftLoggingVersion>
+  </PropertyGroup>
+
 </Project>
