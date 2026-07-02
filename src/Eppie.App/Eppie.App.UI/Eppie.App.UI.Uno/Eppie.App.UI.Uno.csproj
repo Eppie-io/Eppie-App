@@ -64,16 +64,21 @@
     <ProjectReference Include="..\..\Eppie.App.ViewModels\Eppie.App.ViewModels.csproj" />
   </ItemGroup>
 
-  <!-- https://github.com/unoplatform/Uno.XamlBehaviors?tab=readme-ov-file#uno-platform-port-of-xaml-behaviors -->
-  <ItemGroup Condition="$(TargetFramework.Contains('windows10'))">
-    <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" />
-  </ItemGroup>
-  <ItemGroup Condition="!$(TargetFramework.Contains('windows10'))">
-    <PackageReference Include="Uno.Microsoft.Xaml.Behaviors.WinUI.Managed" />
-  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.WinUI.Controls.TokenizingTextBox" />
     <PackageReference Include="CommunityToolkit.WinUI.Extensions" />
     <PackageReference Include="CommunityToolkit.WinUI.Triggers" />
+  </ItemGroup>
+  <ItemGroup >
+    <!-- Add packages with conditions here. -->
+    <!-- https://github.com/unoplatform/Uno.XamlBehaviors?tab=readme-ov-file#uno-platform-port-of-xaml-behaviors -->
+    <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Condition="$(TargetFramework.Contains('windows10'))"/>
+    <PackageReference Include="Uno.Microsoft.Xaml.Behaviors.WinUI.Managed" Condition="!$(TargetFramework.Contains('windows10'))"/>
+  </ItemGroup>
+  <ItemGroup>
+    <!--
+      Update transitive packages containing known high severity vulnerabilities here.
+      Please check this again in newer SDK versions.
+    -->
   </ItemGroup>
 </Project>

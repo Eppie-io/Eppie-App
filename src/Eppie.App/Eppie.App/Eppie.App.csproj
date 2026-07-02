@@ -1,4 +1,4 @@
-<Project Sdk="Uno.Sdk">
+﻿<Project Sdk="Uno.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net10.0-android;net10.0-ios;net10.0-windows10.0.19041;net10.0-browserwasm;net10.0-desktop</TargetFrameworks>
     <!-- Workaround for https://github.com/unoplatform/uno/issues/19377 -->
@@ -130,13 +130,6 @@
   </ItemGroup>
   -->
 
-  <!-- https://github.com/unoplatform/Uno.XamlBehaviors?tab=readme-ov-file#uno-platform-port-of-xaml-behaviors -->
-  <ItemGroup Condition="$(TargetFramework.Contains('windows10'))">
-    <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" />
-  </ItemGroup>
-  <ItemGroup Condition="!$(TargetFramework.Contains('windows10'))">
-    <PackageReference Include="Uno.Microsoft.Xaml.Behaviors.WinUI.Managed" />
-  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.WinUI.Controls.TokenizingTextBox" />
     <PackageReference Include="Microsoft.Extensions.Hosting" />
@@ -155,16 +148,18 @@
     <PackageReference Include="Serilog.Sinks.Debug" />
     <PackageReference Include="Serilog.Sinks.File" />
   </ItemGroup>
-
-  <ItemGroup Condition="$(TargetFramework.Contains('android')) OR $(TargetFramework.Contains('ios'))">
-    <PackageReference Include="Serilog.Sinks.Xamarin" />
-  </ItemGroup>
-  
-  <!-- Force upgrade of transitive packages with known high severity vulnerabilities. -->
-  <!-- Todo: Please check this again on the new version of Uno SDK. -->
   <ItemGroup>
-    <PackageReference Include="System.Security.Cryptography.Xml" />
-    <PackageReference Include="Tmds.DBus.Protocol" />
+    <!-- Add packages with conditions here. -->
+    <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Condition="$(TargetFramework.Contains('windows10'))"/>
+    <PackageReference Include="Serilog.Sinks.Xamarin" Condition="$(TargetFramework.Contains('android')) OR $(TargetFramework.Contains('ios'))"/>
+    <!-- https://github.com/unoplatform/Uno.XamlBehaviors?tab=readme-ov-file#uno-platform-port-of-xaml-behaviors -->
+    <PackageReference Include="Uno.Microsoft.Xaml.Behaviors.WinUI.Managed" Condition="!$(TargetFramework.Contains('windows10'))"/>
+  </ItemGroup>
+  <ItemGroup>
+    <!--
+      Update transitive packages containing known high severity vulnerabilities here.
+      Please check this again in newer SDK versions.
+    -->
   </ItemGroup>
 
   <!-- Enable WSL support in VS 17.13 and later, when a desktop target is present -->
