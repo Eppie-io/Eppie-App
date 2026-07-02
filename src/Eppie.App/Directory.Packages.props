@@ -1,4 +1,5 @@
 <Project ToolsVersion="15.0">
+  <!-- Define package versions centrally. -->
   <!--
     To update the version of Uno, you should instead update the Sdk version in the global.json file.
 
@@ -6,17 +7,8 @@
     See https://aka.platform.uno/using-uno-sdk#implicit-packages for more information regarding the Implicit Packages.
   -->
 
-  <PropertyGroup>
-    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <!-- Override third-party packages provided by Uno SDK here. -->
-    <MicrosoftLoggingVersion>10.0.9</MicrosoftLoggingVersion>
-  </PropertyGroup>
- 
   <ItemGroup>
-    <PackageVersion Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageVersion Include="CommunityToolkit.Mvvm" Version="8.4.2" />
     <PackageVersion Include="CommunityToolkit.Uwp.Controls.TokenizingTextBox" Version="8.2.251219" />
     <PackageVersion Include="CommunityToolkit.Uwp.Extensions" Version="8.2.251219" />
     <PackageVersion Include="CommunityToolkit.Uwp.Triggers" Version="8.2.251219" />
@@ -39,14 +31,14 @@
     <PackageVersion Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="3.0.0" />
     <PackageVersion Include="NUnit" Version="4.4.0" />
     <PackageVersion Include="NUnit3TestAdapter" Version="6.0.0" />
-    <PackageVersion Include="Serilog" Version="4.3.0" />
+    <PackageVersion Include="Serilog" Version="4.3.1" />
     <PackageVersion Include="Serilog.Enrichers.Environment" Version="3.0.1" />
     <PackageVersion Include="Serilog.Enrichers.Process" Version="3.0.0" />
     <PackageVersion Include="Serilog.Enrichers.Sensitive" Version="2.1.0" />
     <PackageVersion Include="Serilog.Enrichers.Thread" Version="4.0.0" />
     <PackageVersion Include="Serilog.Exceptions" Version="8.4.0" />
     <PackageVersion Include="Serilog.Expressions" Version="5.0.0" />
-    <PackageVersion Include="Serilog.Extensions.Hosting" Version="9.0.0" />
+    <PackageVersion Include="Serilog.Extensions.Hosting" Version="10.0.0" />
     <PackageVersion Include="Serilog.Extensions.Logging" Version="10.0.0" />
     <PackageVersion Include="Serilog.Formatting.Compact" Version="3.0.0" />
     <PackageVersion Include="Serilog.Sinks.Async" Version="2.1.0" />
@@ -61,8 +53,11 @@
   <ItemGroup>
     <!--
       Update transitive packages containing known high severity vulnerabilities here.
-      Please check this again in newer SDK versions.
+      Please check this again in newer versions of the SDK and packages.
     -->
+
+    <!-- The `Microsoft.NETCore.UniversalWindowsPlatform` package -->
+    <PackageVersion Include="System.Private.Uri" Version="4.3.2" />
   </ItemGroup>
 
 </Project>

@@ -75,10 +75,4 @@
     <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Condition="$(TargetFramework.Contains('windows10'))"/>
     <PackageReference Include="Uno.Microsoft.Xaml.Behaviors.WinUI.Managed" Condition="!$(TargetFramework.Contains('windows10'))"/>
   </ItemGroup>
-  <ItemGroup>
-    <!--
-      Update transitive packages containing known high severity vulnerabilities here.
-      Please check this again in newer SDK versions.
-    -->
-  </ItemGroup>
 </Project>
