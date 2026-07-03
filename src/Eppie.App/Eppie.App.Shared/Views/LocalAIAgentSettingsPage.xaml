@@ -29,7 +29,6 @@
     <controls:AddressSettingsView x:Uid="AIAgentSettingsView"
                                   ApplyCommand="{x:Bind ViewModel.ApplySettingsCommand}"
                                   CancelCommand="{x:Bind ViewModel.CancelSettingsCommand}"
-                                  IsApplyButtonEnabled="{x:Bind ViewModel.CanApply, Mode=OneWay}"
                                   IsApplying="{x:Bind ViewModel.IsWaitingResponse, Mode=OneWay}"
                                   IsRemoveButtonVisible="{x:Bind ViewModel.IsCreatingAgentMode, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
                                   RemoveCommand="{x:Bind ViewModel.RemoveAgentCommand}">
