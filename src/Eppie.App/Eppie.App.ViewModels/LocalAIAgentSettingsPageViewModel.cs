@@ -353,10 +353,25 @@ namespace Tuvi.App.ViewModels
             set
             {
                 SetProperty(ref _isWaitingResponse, value);
-                ApplySettingsCommand.NotifyCanExecuteChanged();
+                NotifyApplyStateChanged();
                 RemoveAgentCommand.NotifyCanExecuteChanged();
             }
         }
+
+        private bool _isLocalAIModelImported;
+        public bool IsLocalAIModelImported
+        {
+            get => _isLocalAIModelImported;
+            private set
+            {
+                if (SetProperty(ref _isLocalAIModelImported, value))
+                {
+                    NotifyApplyStateChanged();
+                }
+            }
+        }
+
+        public bool CanApply => IsLocalAIModelImported && !IsWaitingResponse && !HasErrors;
 
         private bool _isCreatingAgentMode = true;
         public bool IsCreatingAgentMode
@@ -425,12 +440,18 @@ namespace Tuvi.App.ViewModels
 
         public LocalAIAgentSettingsPageViewModel()
         {
-            ApplySettingsCommand = new AsyncRelayCommand(ApplySettingsAndGoBackAsync, () => !IsWaitingResponse);
+            ApplySettingsCommand = new AsyncRelayCommand(ApplySettingsAndGoBackAsync, () => CanApply);
             RemoveAgentCommand = new AsyncRelayCommand(RemoveAgentAndGoBackAsync, () => !IsWaitingResponse);
             ImportLocalAIModelCommand = new AsyncRelayCommand(ImportLocalAIModelAsync, () => !IsWaitingResponse);
             DeleteLocalAIModelCommand = new AsyncRelayCommand(DeleteLocalAIModelAsync, () => !IsWaitingResponse);
 
-            ErrorsChanged += (sender, e) => ApplySettingsCommand.NotifyCanExecuteChanged();
+            ErrorsChanged += (sender, e) => NotifyApplyStateChanged();
+        }
+
+        private void NotifyApplyStateChanged()
+        {
+            OnPropertyChanged(nameof(CanApply));
+            ApplySettingsCommand.NotifyCanExecuteChanged();
         }
 
         public override async void OnNavigatedTo(object data)
@@ -507,7 +528,9 @@ namespace Tuvi.App.ViewModels
 
         private async Task ToggleAIButtonsAsync()
         {
-            if (await AIService.IsLocalAIModelImportedAsync().ConfigureAwait(true))
+            IsLocalAIModelImported = await AIService.IsLocalAIModelImportedAsync().ConfigureAwait(true);
+
+            if (IsLocalAIModelImported)
             {
                 IsImportAIModelButtonVisible = false;
                 IsDeleteAIModelButtonVisible = true;

@@ -239,11 +239,10 @@ namespace Eppie.AI
             }
 
             generatorParams.SetSearchOption("max_length", (options?.MaxOutputTokens ?? DefaultMaxLength) + sequences[0].Length);
-            generatorParams.SetInputSequences(sequences);
-            generatorParams.TryGraphCaptureWithMaxBatchSize(1);
 
             using var tokenizerStream = _tokenizer.CreateStream();
             using var generator = new Generator(_model, generatorParams);
+            generator.AppendTokenSequences(sequences);
             StringBuilder stringBuilder = new();
             bool stopTokensAvailable = _template != null && _template.Stop != null && _template.Stop.Length > 0;
             while (!generator.IsDone())
@@ -258,7 +257,6 @@ namespace Eppie.AI
 
                     await Task.Delay(0, ct).ConfigureAwait(false);
 
-                    generator.ComputeLogits();
                     generator.GenerateNextToken();
                     var sequence = generator.GetSequence(0);
                     part = tokenizerStream.Decode(sequence[sequence.Length - 1]);
