@@ -3,19 +3,23 @@
     <TargetFrameworks>net10.0;net10.0-ios;net10.0-android;net10.0-windows10.0.19041;net10.0-browserwasm;net10.0-desktop</TargetFrameworks>
     <!-- Workaround for https://github.com/unoplatform/uno/issues/19377 -->
     <TargetFrameworks Condition="'$(OverrideTargetFrameworks)'!=''">$(OverrideTargetFrameworks)</TargetFrameworks>
-    <UnoSingleProject>true</UnoSingleProject>
-    <OutputType>Library</OutputType>
+
     <!-- Ensures the .xr.xml files are generated in a proper layout folder -->
     <GenerateLibraryLayout>true</GenerateLibraryLayout>
-    <ImplicitUsings>disable</ImplicitUsings>
-    <Nullable>disable</Nullable>
+    <OutputType>Library</OutputType>
+    <UnoSingleProject>true</UnoSingleProject>
+
     <AssemblyName>Eppie.App.UI</AssemblyName>
     <RootNamespace>Eppie.App.UI</RootNamespace>
 
-    <EmitCompilerGeneratedFiles>false</EmitCompilerGeneratedFiles>
     <CompilerGeneratedFilesOutputPath>generated</CompilerGeneratedFilesOutputPath>
+    <EmitCompilerGeneratedFiles>false</EmitCompilerGeneratedFiles>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+
     <AnalysisLevel>6.0-recommended</AnalysisLevel>
-    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningLevel>9999</WarningLevel>
+    <WarningsNotAsErrors>Uno0001</WarningsNotAsErrors>
 
     <!--
       UnoFeatures let's you quickly add and manage implicit package references based on the features you want to use.
@@ -31,12 +35,6 @@
   <PropertyGroup Condition="'$(RuntimeIdentifier)'==''">
     <!-- Default values for command line builds -->
     <RuntimeIdentifier Condition="$(TargetFramework.Contains('ios'))">iossimulator-x64</RuntimeIdentifier>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-    <WarningLevel>9999</WarningLevel>
-    <WarningsNotAsErrors>Uno0001</WarningsNotAsErrors>
   </PropertyGroup>
 
   <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">
@@ -69,10 +67,10 @@
     <PackageReference Include="CommunityToolkit.WinUI.Extensions" />
     <PackageReference Include="CommunityToolkit.WinUI.Triggers" />
   </ItemGroup>
-  <ItemGroup >
+  <ItemGroup>
     <!-- Add packages with conditions here. -->
     <!-- https://github.com/unoplatform/Uno.XamlBehaviors?tab=readme-ov-file#uno-platform-port-of-xaml-behaviors -->
-    <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Condition="$(TargetFramework.Contains('windows10'))"/>
-    <PackageReference Include="Uno.Microsoft.Xaml.Behaviors.WinUI.Managed" Condition="!$(TargetFramework.Contains('windows10'))"/>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Condition="$(TargetFramework.Contains('windows10'))" />
+    <PackageReference Include="Uno.Microsoft.Xaml.Behaviors.WinUI.Managed" Condition="!$(TargetFramework.Contains('windows10'))" />
   </ItemGroup>
 </Project>

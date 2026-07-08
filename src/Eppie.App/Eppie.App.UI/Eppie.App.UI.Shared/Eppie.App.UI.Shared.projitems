@@ -10,12 +10,46 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\AddressPresenterTooltipBehavior.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\TooltipBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\CommandButtonTooltipBehavior.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\TextBlockTooltipBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\DialogBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\ListViewItemClickBehavior.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\TextBlockTooltipBehavior.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\TooltipBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\TreeViewItemInvokeBehavior.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\AIAgentUserControl.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\BaseUserControl.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\RichTextEditor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\ToolTipProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\BitmapSourceConverters.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\BoolToValueConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\ConverterChain.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\EmailValidityToBoolConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\GridConverters.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\InvertDoubleConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\JoinConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\NullToDefaultConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\StringConverters.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\TimeConverters.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\TooltipSourceConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\ValueToBoolConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\VisibilityConverters.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\AttachedCommands.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\HyperlinkExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\TextDocumentExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\TextDocumentExtension.Uno.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\TextDocumentExtension.UWP.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\TextDocumentExtension.Win.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Resources\StringProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Selectors\ComboBoxDataTemplateSelector.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Selectors\DataTemplateConditions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Selectors\DataTemplateExtendedSelector.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Tools\ElementHierarchyTools.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Tools\IncrementalLoadingCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Tools\ItemPickerBuilder.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Tools\UITools.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Triggers\VerticalScrollVisibilityTrigger.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\AddressHeaderControl.xaml.cs">
       <DependentUpon>AddressHeaderControl.xaml</DependentUpon>
     </Compile>
@@ -40,40 +74,21 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\CommandButton.xaml.cs">
       <DependentUpon>CommandButton.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\ItemContainer.xaml.cs">
-      <DependentUpon>ItemContainer.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\OptionControl.xaml.cs">
-      <DependentUpon>OptionControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\PopupHostControl.xaml.cs">
-      <DependentUpon>PopupHostControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\ProtonSettingsControl.xaml.cs">
-      <DependentUpon>ProtonSettingsControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\RecipientControl.xaml.cs">
-      <DependentUpon>RecipientControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\SimpleExpander.xaml.cs">
-      <DependentUpon>SimpleExpander.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\ToolTipProvider.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Converters\EmailValidityToBoolConverter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\SupportDevelopmentControl.xaml.cs">
-      <DependentUpon>SupportDevelopmentControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\AIAgentUserControl.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\BaseUserControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ContactsListControl.xaml.cs">
       <DependentUpon>ContactsListControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\EditMessageControl.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\EmailSettingsControl.xaml.cs">
+      <DependentUpon>EmailSettingsControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\EmailsInputControl.xaml.cs">
       <DependentUpon>EmailsInputControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ErrorControl.xaml.cs">
       <DependentUpon>ErrorControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\ItemContainer.xaml.cs">
+      <DependentUpon>ItemContainer.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\LanguageSelectionControl.xaml.cs">
       <DependentUpon>LanguageSelectionControl.xaml</DependentUpon>
@@ -85,46 +100,33 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\MessageListControl.xaml.cs">
       <DependentUpon>MessageListControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\EmailSettingsControl.xaml.cs">
-      <DependentUpon>EmailSettingsControl.xaml</DependentUpon>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\OptionControl.xaml.cs">
+      <DependentUpon>OptionControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\PasswordControl.xaml.cs">
       <DependentUpon>PasswordControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\PopupHostControl.xaml.cs">
+      <DependentUpon>PopupHostControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\PromptTextInputControl.xaml.cs">
       <DependentUpon>PromptTextInputControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\RichTextEditor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\ProtonSettingsControl.xaml.cs">
+      <DependentUpon>ProtonSettingsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\RecipientControl.xaml.cs">
+      <DependentUpon>RecipientControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\SimpleExpander.xaml.cs">
+      <DependentUpon>SimpleExpander.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\SupportDevelopmentControl.xaml.cs">
+      <DependentUpon>SupportDevelopmentControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\WhatsNewControl.xaml.cs">
       <DependentUpon>WhatsNewControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Converters\BitmapSourceConverters.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Converters\BoolToValueConverter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Converters\ConverterChain.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Converters\InvertDoubleConverter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Converters\NullToDefaultConverter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Converters\StringConverters.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Converters\JoinConverter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Converters\GridConverters.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Converters\TimeConverters.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Converters\TooltipSourceConverter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Converters\ValueToBoolConverter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Converters\VisibilityConverters.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Extensions\AttachedCommands.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Extensions\HyperlinkExtension.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Extensions\TextDocumentExtension.Uno.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Extensions\TextDocumentExtension.UWP.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Extensions\TextDocumentExtension.Win.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Extensions\TextDocumentExtension.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Resources\StringProvider.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Selectors\DataTemplateConditions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Selectors\ComboBoxDataTemplateSelector.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Selectors\DataTemplateExtendedSelector.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Tools\ElementHierarchyTools.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Tools\ItemPickerBuilder.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Tools\IncrementalLoadingCollection.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Tools\UITools.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Triggers\VerticalScrollVisibilityTrigger.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)Controls\AddressHeaderControl.xaml">
@@ -159,7 +161,35 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Controls\ContactsListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Controls\EmailSettingsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Controls\EmailsInputControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Controls\ErrorControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="$(MSBuildThisFileDirectory)Controls\ItemContainer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Controls\LanguageSelectionControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Controls\MailBoxesListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Controls\MessageListControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -167,7 +197,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Controls\PasswordControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="$(MSBuildThisFileDirectory)Controls\PopupHostControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Controls\PromptTextInputControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -184,42 +222,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Controls\SupportDevelopmentControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Controls\ContactsListControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Controls\EmailsInputControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Controls\ErrorControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Controls\LanguageSelectionControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Controls\MailBoxesListControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Controls\MessageListControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Controls\EmailSettingsControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Controls\PasswordControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Controls\PromptTextInputControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -243,15 +245,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Styles\ThemeResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="$(MSBuildThisFileDirectory)Styles\ThinButtonStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Styles\TokenizingTextBoxStyle.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Styles\ThemeResources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

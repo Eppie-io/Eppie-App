@@ -9,28 +9,19 @@
     <Import_RootNamespace>Eppie.App.Shared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)Authorization\AuthConfig.Uno.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Authorization\AuthConfig.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Authorization\AuthConfig.Uno.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Authorization\AuthenticationBroker.Uno.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Authorization\AuthenticationBroker.UWP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Authorization\ProtocolAuthenticationBroker.UWP.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Components\ComposeMessageFooter.xaml.cs">
-      <DependentUpon>ComposeMessageFooter.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Components\MessageInfoBlock.xaml.cs">
-      <DependentUpon>MessageInfoBlock.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Converters\RecipientConverter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Converters\AttachmentConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\BitmapTools.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Helpers\EppieHost.UWP.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Helpers\EppieHost.Uno.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\EppieHost.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\EppieHost.Uno.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\EppieHost.UWP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\PlatformTools.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Logging\HashTransformOperator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Logging\LogConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Logging\LoggingExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\PendingMailtoService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\BrandResource.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\NotificationManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\AIService.cs" />
@@ -45,32 +36,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\MessageService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\NavigationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\NotificationService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\PendingMailtoService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\StorageItemsService.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Views\AddressManagerPage.xaml.cs">
-      <DependentUpon>AddressManagerPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Views\AppSettingsPage.xaml.cs">
-      <DependentUpon>AppSettingsPage.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)UI\Converters\AttachmentConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UI\Converters\RecipientConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\BasePage.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Views\ComposeMessagePage.xaml.cs">
-      <DependentUpon>ComposeMessagePage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Views\ConnectProtonAddressPage.xaml.cs">
-      <DependentUpon>ConnectProtonAddressPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Views\ContactsPanelPage.xaml.cs">
-      <DependentUpon>ContactsPanelPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Views\InvitationPage.xaml.cs">
-      <DependentUpon>InvitationPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Views\MailboxesPanelPage.xaml.cs">
-      <DependentUpon>MailboxesPanelPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Views\MessageItemView.xaml.cs">
-      <DependentUpon>MessageItemView.xaml</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)App.Uno.xaml.cs">
@@ -82,20 +52,44 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)UI\Components\ComposeMessageFooter.xaml.cs">
+      <DependentUpon>ComposeMessageFooter.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)UI\Components\MessageInfoBlock.xaml.cs">
+      <DependentUpon>MessageInfoBlock.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)UI\DataTemplates\AddressDataTemplates.xaml.cs">
       <DependentUpon>AddressDataTemplates.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\AddressManagerPage.xaml.cs">
+      <DependentUpon>AddressManagerPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\AIAgentsManagerPage.xaml.cs">
+      <DependentUpon>AIAgentsManagerPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\AllMessagesPage.xaml.cs">
       <DependentUpon>AllMessagesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\AppSettingsPage.xaml.cs">
+      <DependentUpon>AppSettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\BitcoinAddressSettingsPage.xaml.cs">
       <DependentUpon>BitcoinAddressSettingsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\ComposeMessagePage.xaml.cs">
+      <DependentUpon>ComposeMessagePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\ConnectProtonAddressPage.xaml.cs">
+      <DependentUpon>ConnectProtonAddressPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\ContactMessagesPage.xaml.cs">
       <DependentUpon>ContactMessagesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\ContactsPanelPage.xaml.cs">
+      <DependentUpon>ContactsPanelPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\EmailAddressSettingsPage.xaml.cs">
       <DependentUpon>EmailAddressSettingsPage.xaml</DependentUpon>
@@ -109,14 +103,20 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\FolderMessagesPage.xaml.cs">
       <DependentUpon>FolderMessagesPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Views\AIAgentsManagerPage.xaml.cs">
-      <DependentUpon>AIAgentsManagerPage.xaml</DependentUpon>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\InvitationPage.xaml.cs">
+      <DependentUpon>InvitationPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\LocalAIAgentSettingsPage.xaml.cs">
       <DependentUpon>LocalAIAgentSettingsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\MailboxesPanelPage.xaml.cs">
+      <DependentUpon>MailboxesPanelPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\MessageItemView.xaml.cs">
+      <DependentUpon>MessageItemView.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\MessagePage.xaml.cs">
       <DependentUpon>MessagePage.xaml</DependentUpon>
@@ -148,22 +148,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
-    <Page Include="$(MSBuildThisFileDirectory)StaticResources\ThemeResources.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="$(MSBuildThisFileDirectory)StaticResources\IconResources.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="$(MSBuildThisFileDirectory)StaticResources\StaticResources.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="$(MSBuildThisFileDirectory)StaticResources\StaticStringResources.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="$(MSBuildThisFileDirectory)UI\Components\ComposeMessageFooter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -176,6 +160,30 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="$(MSBuildThisFileDirectory)UI\Resources\DummyResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)UI\Resources\EppieResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)UI\Resources\IconResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)UI\Resources\StaticResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)UI\Resources\StringResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)UI\Resources\ThemeResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="$(MSBuildThisFileDirectory)Views\AboutPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -184,15 +192,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\AIAgentsManagerPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="$(MSBuildThisFileDirectory)Views\AllMessagesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Views\BitcoinAddressSettingsPage.xaml">
+    <Page Include="$(MSBuildThisFileDirectory)Views\AppSettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Views\AppSettingsPage.xaml">
+    <Page Include="$(MSBuildThisFileDirectory)Views\BitcoinAddressSettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -208,7 +220,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Views\ContactsPanelPage.xaml" />
+    <Page Include="$(MSBuildThisFileDirectory)Views\ContactsPanelPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="$(MSBuildThisFileDirectory)Views\EmailAddressSettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -225,10 +240,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Views\AIAgentsManagerPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="$(MSBuildThisFileDirectory)Views\InvitationPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -237,7 +248,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Views\MailboxesPanelPage.xaml" />
+    <Page Include="$(MSBuildThisFileDirectory)Views\MailboxesPanelPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="$(MSBuildThisFileDirectory)Views\MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

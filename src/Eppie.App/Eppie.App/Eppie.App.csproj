@@ -6,9 +6,8 @@
     <OutputType>Exe</OutputType>
     <UnoSingleProject>true</UnoSingleProject>
 
-    <EmitCompilerGeneratedFiles>false</EmitCompilerGeneratedFiles>
-    <CompilerGeneratedFilesOutputPath>generated</CompilerGeneratedFilesOutputPath>
-
+    <!-- This renames the assembly to publish the macos app package correctly -->
+    <AssemblyName>Eppie</AssemblyName>
     <!-- Display name -->
     <ApplicationTitle>Eppie</ApplicationTitle>
     <!-- App Identifier -->
@@ -21,8 +20,17 @@
     <!-- Package Description -->
     <Description>Eppie.App powered by Uno Platform.</Description>
 
-    <!-- This renames the assembly to publish the macos app package correctly -->
-    <AssemblyName>Eppie</AssemblyName>
+    <DefaultLanguage>en</DefaultLanguage>
+
+    <CompilerGeneratedFilesOutputPath>generated</CompilerGeneratedFilesOutputPath>
+    <EmitCompilerGeneratedFiles>false</EmitCompilerGeneratedFiles>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+
+    <AnalysisLevel>6.0-recommended</AnalysisLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningLevel>9999</WarningLevel>
+    <WarningsNotAsErrors>Uno0001</WarningsNotAsErrors>
+
     <!--
       If you encounter this error message:
 
@@ -59,10 +67,6 @@
       WebView;
     </UnoFeatures>
 
-    <DefaultLanguage>en</DefaultLanguage>
-
-    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
-    <AnalysisLevel>6.0-recommended</AnalysisLevel>
   </PropertyGroup>
 
   <!-- Android signing configuration for Release mode -->
@@ -89,13 +93,7 @@
     <UnoMacOSCustomInfoPlist>Platforms\Desktop\Info.plist</UnoMacOSCustomInfoPlist>
     <UnoMacOSEntitlements>Platforms\Desktop\Entitlements.plist</UnoMacOSEntitlements>
   </PropertyGroup>
-  
-  <PropertyGroup>
-    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-    <WarningsNotAsErrors>Uno0001</WarningsNotAsErrors>
-    <WarningLevel>9999</WarningLevel>
-  </PropertyGroup>
-  
+
   <ItemGroup>
     <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\ComponentBuilder\ComponentBuilder.csproj" />
     <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\Tuvi.Core.Backup\Tuvi.Core.Backup.csproj" />
@@ -117,18 +115,6 @@
   <ItemGroup>
     <None Include="..\Eppie.App.Shared\Views\*.xaml" Visible="false" />
   </ItemGroup>
-
-  <!-- ToDo: Try include assets from the gitmodule -->
-  <!--
-  <ItemGroup>
-    <Content Include="..\..\..\gitmodules\Assets\**\*.*">
-      <Link>Assets\%(RecursiveDir)%(Filename)%(Extension)</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Pack>true</Pack>
-      <PackagePath>Assets\%(RecursiveDir)</PackagePath>
-    </Content>
-  </ItemGroup>
-  -->
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.WinUI.Controls.TokenizingTextBox" />
