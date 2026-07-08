@@ -17,23 +17,10 @@
                 <ResourceDictionary Source="ms-appx:///Eppie.App.UI/Styles/PersonPictureStyle.xaml" />
                 <ResourceDictionary Source="ms-appx:///Eppie.App.UI/Styles/TuviMailStyles.xaml" />
 
-                <ResourceDictionary Source="ms-appx:///StaticResources/ThemeResources.xaml" />
-                <ResourceDictionary Source="ms-appx:///StaticResources/StaticStringResources.xaml" />
-                <ResourceDictionary Source="ms-appx:///StaticResources/StaticResources.xaml" />
-                <ResourceDictionary Source="ms-appx:///StaticResources/IconResources.xaml" />
-
-                <AddressDataTemplates xmlns="using:Eppie.App.UI.DataTemplates" />
+                <ResourceDictionary Source="ms-appx:///UI/Resources/EppieResources.xaml" />
+                <ResourceDictionary Source="ms-appx:///UI/Resources/DummyResources.xaml" />
 
             </ResourceDictionary.MergedDictionaries>
-
-            <!--
-                CRITICAL: These dummy instances force the WinUI XAML compiler to generate metadata.
-                Without a specific reference in XAML, the x:Uid system cannot resolve
-                custom attached properties, resulting in a XamlParseException at runtime.
-            -->
-            <ToolTipProvider xmlns="using:Eppie.App.UI.Controls" x:Key="DummyToolTipProvider" />
-            <TooltipBehavior xmlns="using:Eppie.App.UI.Behaviors" x:Key="DummyTooltipBehavior" />
-
         </ResourceDictionary>
     </Application.Resources>
 
