@@ -16,7 +16,8 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-using CommunityToolkit.WinUI;
+using System.Collections.Generic;
+using System.Linq;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -26,28 +27,36 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 #endif
 
-namespace Eppie.App.UI.Tools
+namespace Eppie.App.UI.Selectors
 {
-    public partial class ComboBoxDataTemplateSelector : DataTemplateSelector
+    public class DataTemplateRule
     {
-        public DataTemplate ItemTemplate { get; set; }
-        public DataTemplate SelectedTemplate { get; set; }
+        public IDataTemplateCondition Condition { get; set; }
+        public DataTemplate DataTemplate { get; set; }
+
+        public bool IsCorrect(object item, DependencyObject container, object options)
+        {
+            return Condition?.IsTrue(item, container, options) ?? false;
+        }
+    }
+
+    public partial class DataTemplateExtendedSelector : DataTemplateSelector
+    {
+        public DataTemplate DefaultTemplate { get; set; }
+
+        public ICollection<DataTemplateRule> Rules { get; set; } = new List<DataTemplateRule>();
 
         protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
         {
-            if (IsComboBoxItem(container))
-            {
-                return ItemTemplate;
-            }
-            else
-            {
-                return SelectedTemplate;
-            }
+            object options = GetOptions(item, container);
+            DataTemplateRule correctRule = Rules.FirstOrDefault(rule => rule.IsCorrect(item, container, options));
+
+            return correctRule?.DataTemplate ?? DefaultTemplate ?? base.SelectTemplateCore(item, container);
         }
 
-        private static bool IsComboBoxItem(DependencyObject container)
+        protected virtual object GetOptions(object item, DependencyObject container)
         {
-            return container.FindAscendantOrSelf<Control>(control => control is ComboBox || control is ComboBoxItem) is ComboBoxItem;
+            return null;
         }
     }
 }

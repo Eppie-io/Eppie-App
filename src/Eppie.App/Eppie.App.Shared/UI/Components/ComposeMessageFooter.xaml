@@ -8,7 +8,6 @@
              xmlns:local="using:Eppie.App.UI.Components"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:toolkit="using:CommunityToolkit.WinUI"
-             xmlns:tools="using:Eppie.App.UI.Tools"
              xmlns:viewmodels="using:Tuvi.App.ViewModels"
              d:DesignHeight="300"
              d:DesignWidth="400"
@@ -33,38 +32,6 @@
         <x:Double x:Key="FooterNarrowWidth">600</x:Double>
 
         <Thickness x:Key="HorizontalMargin">0,0,12,0</Thickness>
-
-        <DataTemplate x:Key="AddressComboBoxSelectedItemTemplate" x:DataType="viewmodels:AddressItem">
-            <controls:AddressPresenter x:Uid="SelectedSenderAddress"
-                                       Address="{x:Bind Address, Mode=OneWay}"
-                                       Avatar="{x:Bind AvatarInfo, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}"
-                                       DisplayName="{x:Bind DisplayName, Mode=OneWay}"
-                                       IsAvatarHighlighted="{x:Bind IsDecentralized, Mode=OneWay}"
-                                       IsSecure="{x:Bind IsDecentralized, Mode=OneWay}"
-                                       Mode="Compact">
-                <interactivity:Interaction.Behaviors>
-                    <behaviors:AddressPresenterTooltipBehavior />
-                </interactivity:Interaction.Behaviors>
-            </controls:AddressPresenter>
-        </DataTemplate>
-
-        <DataTemplate x:Key="AddressComboBoxItemTemplate" x:DataType="viewmodels:AddressItem">
-            <controls:AddressPresenter MaxWidth="{StaticResource AddressItemMaxWidth}"
-                                       Address="{x:Bind Address, Mode=OneWay}"
-                                       Avatar="{x:Bind AvatarInfo, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}"
-                                       DisplayName="{x:Bind DisplayName, Mode=OneWay}"
-                                       IsAvatarHighlighted="{x:Bind IsDecentralized, Mode=OneWay}"
-                                       IsSecure="{x:Bind IsDecentralized, Mode=OneWay}">
-                <interactivity:Interaction.Behaviors>
-                    <behaviors:AddressPresenterTooltipBehavior />
-                </interactivity:Interaction.Behaviors>
-            </controls:AddressPresenter>
-        </DataTemplate>
-
-        <tools:ComboBoxDataTemplateSelector x:Key="ComboBoxDataTemplateSelector"
-                                            ItemTemplate="{StaticResource AddressComboBoxItemTemplate}"
-                                            SelectedTemplate="{StaticResource AddressComboBoxSelectedItemTemplate}" />
-
     </UserControl.Resources>
 
     <Grid x:Name="ParentGrid">
@@ -83,7 +50,7 @@
             <ComboBox MinWidth="{StaticResource SenderAddressBoxMinWidth}"
                       Margin="{StaticResource HorizontalMargin}"
                       VerticalAlignment="Center"
-                      ItemTemplateSelector="{StaticResource ComboBoxDataTemplateSelector}"
+                      ItemTemplateSelector="{StaticResource SenderComboBoxDataTemplateSelector}"
                       ItemsSource="{x:Bind SenderItemsSource, Mode=OneWay}"
                       SelectedIndex="{x:Bind SenderSelectedIndex, Mode=TwoWay}"
                       Style="{StaticResource AddressComboBoxStyle}" />
