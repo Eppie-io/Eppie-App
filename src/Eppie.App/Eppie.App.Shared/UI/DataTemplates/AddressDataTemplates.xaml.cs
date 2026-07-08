@@ -16,8 +16,6 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-using System;
-
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;

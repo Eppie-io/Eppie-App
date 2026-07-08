@@ -9,8 +9,8 @@
 
     <x:Double x:Key="AddressItemMaxWidth">500</x:Double>
 
-    <selectors:ComboBoxDataTemplateCondition x:Key="ComboBoxSelectedItemCondition" IsComboBoxItem="False" />
-    <selectors:ComboBoxDataTemplateCondition x:Key="ComboBoxItemCondition" IsComboBoxItem="True" />
+    <selectors:ComboBoxDataTemplateCondition x:Key="ComboBoxSelectedItemCondition" ItemType="SelectedItem" />
+    <selectors:ComboBoxDataTemplateCondition x:Key="ComboBoxItemCondition" ItemType="ListItem" />
 
     <DataTemplate x:Key="AddressComboBoxSelectedItemTemplate" x:DataType="viewmodels:AddressItem">
         <controls:AddressPresenter x:Uid="SelectedSenderAddress"
