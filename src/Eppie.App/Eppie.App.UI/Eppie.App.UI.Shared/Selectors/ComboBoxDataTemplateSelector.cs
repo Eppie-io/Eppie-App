@@ -26,23 +26,29 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 #endif
 
-namespace Eppie.App.UI.Tools
+namespace Eppie.App.UI.Selectors
 {
-    public partial class ComboBoxDataTemplateSelector : DataTemplateSelector
+    public enum ComboBoxItemType
     {
-        public DataTemplate ItemTemplate { get; set; }
-        public DataTemplate SelectedTemplate { get; set; }
+        ListItem,
+        SelectedItem
+    }
 
-        protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
+    public class ComboBoxDataTemplateCondition : IDataTemplateCondition
+    {
+        public ComboBoxItemType ItemType { get; set; }
+
+        public bool IsTrue(object item, DependencyObject container, object options)
         {
-            if (IsComboBoxItem(container))
-            {
-                return ItemTemplate;
-            }
-            else
-            {
-                return SelectedTemplate;
-            }
+            return options is ComboBoxItemType comboBoxItemType && comboBoxItemType == ItemType;
+        }
+    }
+
+    public partial class ComboBoxDataTemplateSelector : DataTemplateExtendedSelector
+    {
+        protected override object GetOptions(object item, DependencyObject container)
+        {
+            return IsComboBoxItem(container) ? ComboBoxItemType.ListItem : ComboBoxItemType.SelectedItem;
         }
 
         private static bool IsComboBoxItem(DependencyObject container)

@@ -22,6 +22,8 @@
                 <ResourceDictionary Source="ms-appx:///StaticResources/StaticResources.xaml" />
                 <ResourceDictionary Source="ms-appx:///StaticResources/IconResources.xaml" />
 
+                <AddressDataTemplates xmlns="using:Eppie.App.UI.DataTemplates" />
+
             </ResourceDictionary.MergedDictionaries>
 
             <!--
