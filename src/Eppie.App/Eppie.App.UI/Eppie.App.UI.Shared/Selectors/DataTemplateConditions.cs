@@ -39,7 +39,7 @@ namespace Eppie.App.UI.Selectors
 
         public bool IsTrue(object item, DependencyObject container, object options)
         {
-            return item?.GetType() == ItemType;
+            return ItemType?.IsInstanceOfType(item) == true;
         }
     }
 
@@ -53,7 +53,7 @@ namespace Eppie.App.UI.Selectors
 
     public class CompositeDataTemplateCondition : IDataTemplateCondition
     {
-        public ICollection<IDataTemplateCondition> Conditions { get; set; } = new List<IDataTemplateCondition>();
+        public ICollection<IDataTemplateCondition> Conditions { get; } = new List<IDataTemplateCondition>();
 
         public bool IsTrue(object item, DependencyObject container, object options)
         {

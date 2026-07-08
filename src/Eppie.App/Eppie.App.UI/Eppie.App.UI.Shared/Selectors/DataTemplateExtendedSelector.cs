@@ -44,7 +44,7 @@ namespace Eppie.App.UI.Selectors
     {
         public DataTemplate DefaultTemplate { get; set; }
 
-        public ICollection<DataTemplateRule> Rules { get; set; } = new List<DataTemplateRule>();
+        public ICollection<DataTemplateRule> Rules { get; } = new List<DataTemplateRule>();
 
         protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
         {
