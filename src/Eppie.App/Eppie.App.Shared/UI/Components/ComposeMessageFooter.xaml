@@ -48,7 +48,7 @@
             <ComboBox MinWidth="{StaticResource SenderAddressBoxMinWidth}"
                       Margin="{StaticResource HorizontalMargin}"
                       VerticalAlignment="Center"
-                      ItemTemplateSelector="{StaticResource SenderComboBoxDataTemplateSelector}"
+                      ItemTemplateSelector="{StaticResource SenderAddressDataTemplateSelector}"
                       ItemsSource="{x:Bind SenderItemsSource, Mode=OneWay}"
                       SelectedIndex="{x:Bind SenderSelectedIndex, Mode=TwoWay}"
                       Style="{StaticResource AddressComboBoxStyle}" />

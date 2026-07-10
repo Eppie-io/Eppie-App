@@ -30,7 +30,7 @@ namespace Eppie.App.UI.Selectors
 {
     public enum ComboBoxItemType
     {
-        ListItem,
+        DropDownItem,
         SelectedItem
     }
 
@@ -40,20 +40,13 @@ namespace Eppie.App.UI.Selectors
 
         public bool IsTrue(object item, DependencyObject container, object options)
         {
-            return options is ComboBoxItemType comboBoxItemType && comboBoxItemType == ItemType;
-        }
-    }
-
-    public partial class ComboBoxDataTemplateSelector : DataTemplateExtendedSelector
-    {
-        protected override object GetOptions(object item, DependencyObject container)
-        {
-            return IsComboBoxItem(container) ? ComboBoxItemType.ListItem : ComboBoxItemType.SelectedItem;
+            return GetItemType(container) == ItemType;
         }
 
-        private static bool IsComboBoxItem(DependencyObject container)
+        private static ComboBoxItemType GetItemType(DependencyObject container)
         {
-            return container.FindAscendantOrSelf<Control>(control => control is ComboBox || control is ComboBoxItem) is ComboBoxItem;
+            Control control = container.FindAscendantOrSelf<Control>(element => element is ComboBox || element is ComboBoxItem);
+            return control is ComboBoxItem ? ComboBoxItemType.DropDownItem : ComboBoxItemType.SelectedItem;
         }
     }
 }

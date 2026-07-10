@@ -10,7 +10,7 @@
     <x:Double x:Key="AddressItemMaxWidth">500</x:Double>
 
     <selectors:ComboBoxDataTemplateCondition x:Key="ComboBoxSelectedItemCondition" ItemType="SelectedItem" />
-    <selectors:ComboBoxDataTemplateCondition x:Key="ComboBoxItemCondition" ItemType="ListItem" />
+    <selectors:ComboBoxDataTemplateCondition x:Key="ComboBoxDropDownItemCondition" ItemType="DropDownItem" />
 
     <DataTemplate x:Key="AddressComboBoxSelectedItemTemplate" x:DataType="viewmodels:AddressItem">
         <controls:AddressPresenter x:Uid="SelectedSenderAddress"
@@ -26,7 +26,7 @@
         </controls:AddressPresenter>
     </DataTemplate>
 
-    <DataTemplate x:Key="AddressComboBoxItemTemplate" x:DataType="viewmodels:AddressItem">
+    <DataTemplate x:Key="AddressComboBoxDropDownItemTemplate" x:DataType="viewmodels:AddressItem">
         <controls:AddressPresenter MaxWidth="{StaticResource AddressItemMaxWidth}"
                                    Address="{x:Bind Address, Mode=OneWay}"
                                    Avatar="{x:Bind AvatarInfo, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}"
@@ -40,11 +40,9 @@
     </DataTemplate>
 
 
-    <selectors:ComboBoxDataTemplateSelector x:Key="SenderComboBoxDataTemplateSelector">
-        <selectors:ComboBoxDataTemplateSelector.Rules>
-            <selectors:DataTemplateRule Condition="{StaticResource ComboBoxItemCondition}" DataTemplate="{StaticResource AddressComboBoxItemTemplate}" />
-            <selectors:DataTemplateRule Condition="{StaticResource ComboBoxSelectedItemCondition}" DataTemplate="{StaticResource AddressComboBoxSelectedItemTemplate}" />
-        </selectors:ComboBoxDataTemplateSelector.Rules>
-    </selectors:ComboBoxDataTemplateSelector>
+    <selectors:DataTemplateExtendedSelector x:Key="SenderAddressDataTemplateSelector">
+        <selectors:DataTemplateRule Condition="{StaticResource ComboBoxDropDownItemCondition}" DataTemplate="{StaticResource AddressComboBoxDropDownItemTemplate}" />
+        <selectors:DataTemplateRule Condition="{StaticResource ComboBoxSelectedItemCondition}" DataTemplate="{StaticResource AddressComboBoxSelectedItemTemplate}" />
+    </selectors:DataTemplateExtendedSelector>
 
 </ResourceDictionary>

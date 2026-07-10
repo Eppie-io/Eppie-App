@@ -22,8 +22,10 @@ using System.Linq;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Markup;
 #else
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Markup;
 #endif
 
 namespace Eppie.App.UI.Selectors
@@ -35,22 +37,25 @@ namespace Eppie.App.UI.Selectors
 
     public class CommonTypeDataTemplateCondition : IDataTemplateCondition
     {
+        public bool IsInverted { get; set; }
         public Type ItemType { get; set; }
 
         public bool IsTrue(object item, DependencyObject container, object options)
         {
-            return ItemType?.IsInstanceOfType(item) == true;
+            return ItemType?.IsInstanceOfType(item) == true ? !IsInverted : IsInverted;
         }
     }
 
     public class GenericTypeDataTemplateCondition<T> : IDataTemplateCondition
     {
+        public bool IsInverted { get; set; }
         public bool IsTrue(object item, DependencyObject container, object options)
         {
-            return item is T;
+            return item is T ? !IsInverted : IsInverted;
         }
     }
 
+    [ContentProperty(Name = nameof(Conditions))]
     public class CompositeDataTemplateCondition : IDataTemplateCondition
     {
         public ICollection<IDataTemplateCondition> Conditions { get; } = new List<IDataTemplateCondition>();
