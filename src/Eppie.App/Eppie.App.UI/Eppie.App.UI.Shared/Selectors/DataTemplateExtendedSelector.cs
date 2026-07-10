@@ -22,9 +22,11 @@ using System.Linq;
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Markup;
 #else
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Markup;
 #endif
 
 namespace Eppie.App.UI.Selectors
@@ -40,6 +42,7 @@ namespace Eppie.App.UI.Selectors
         }
     }
 
+    [ContentProperty(Name = nameof(Rules))]
     public partial class DataTemplateExtendedSelector : DataTemplateSelector
     {
         public DataTemplate DefaultTemplate { get; set; }

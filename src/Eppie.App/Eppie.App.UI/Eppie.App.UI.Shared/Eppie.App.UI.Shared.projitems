@@ -40,7 +40,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\TextDocumentExtension.UWP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\TextDocumentExtension.Win.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Resources\StringProvider.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Selectors\ComboBoxDataTemplateSelector.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Selectors\ComboBoxDataTemplateCondition.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Selectors\DataTemplateConditions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Selectors\DataTemplateExtendedSelector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Tools\ElementHierarchyTools.cs" />
