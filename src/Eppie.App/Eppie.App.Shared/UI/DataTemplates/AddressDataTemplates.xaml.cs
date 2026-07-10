@@ -16,6 +16,9 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
+using Eppie.App.UI.Selectors;
+using Tuvi.App.ViewModels;
+
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -33,4 +36,10 @@ namespace Eppie.App.UI.DataTemplates
             InitializeComponent();
         }
     }
+
+    public sealed partial class CreateEppieAddressDataTemplateCondition : GenericTypeDataTemplateCondition<CreateEppieAddressItem>
+    { }
+
+    public sealed partial class AddressDataTemplateCondition : GenericTypeDataTemplateCondition<AddressItem>
+    { }
 }

@@ -28,6 +28,8 @@
     <x:String x:Key="RobotGlyph">&#xE99A;</x:String>
     <x:String x:Key="LockGlyph">&#xE72E;</x:String>
 
+    <x:String x:Key="AddGlyph">&#xE710;</x:String>
+
     <StaticResource x:Key="MarkAsReadGlyph" ResourceKey="ReadGlyph" />
     <StaticResource x:Key="MarkAsUnreadGlyph" ResourceKey="MailGlyph" />
     <StaticResource x:Key="ReadStatusGlyph" ResourceKey="ReadGlyph" />
