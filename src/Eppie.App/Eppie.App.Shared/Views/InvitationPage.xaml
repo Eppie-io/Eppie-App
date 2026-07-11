@@ -185,8 +185,7 @@
 
                     <TextBlock x:Uid="InvitationPreviewAreaHeader"
                                Margin="0,0,0,16"
-                               HorizontalAlignment="Stretch"
-                               Text="Invitation preview" />
+                               HorizontalAlignment="Stretch" />
 
                     <Border Margin="0,0,0,20"
                             HorizontalAlignment="Stretch"

@@ -1684,7 +1684,7 @@ Subject: {3}
     <comment>The text of the item that creates a new Eppie address on the invitation page</comment>
   </data>
   <data name="CreateNewEppieAddressRemark.Text" xml:space="preserve">
-    <value>Created after invitation is sent</value>
+    <value>Created when the invite is sent</value>
     <comment>The remark text of the item that creates a new Eppie address on the invitation page</comment>
   </data>
   <data name="InvitationSubjectText" xml:space="preserve">

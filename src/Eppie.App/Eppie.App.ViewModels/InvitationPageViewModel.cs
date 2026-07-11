@@ -366,7 +366,7 @@ namespace Tuvi.App.ViewModels
 
         private async Task PreviewInviteAsync()
         {
-            // Todo: review this code
+            // Todo: implement a preview feature for the invitation message.
             try
             {
                 OnPreviewInvite();
