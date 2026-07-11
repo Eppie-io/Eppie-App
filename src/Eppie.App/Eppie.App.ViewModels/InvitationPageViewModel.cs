@@ -371,7 +371,6 @@ namespace Tuvi.App.ViewModels
             {
                 OnPreviewInvite();
 
-                // old code
                 //var context = await BuildInviteMessageAsync().ConfigureAwait(true);
                 //if (context is null)
                 //{

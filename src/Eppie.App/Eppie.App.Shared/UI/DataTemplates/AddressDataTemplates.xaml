@@ -140,22 +140,22 @@
     <selectors:ComboBoxDataTemplateCondition x:Key="ComboBoxSelectedItemCondition" ItemType="SelectedItem" />
     <selectors:ComboBoxDataTemplateCondition x:Key="ComboBoxDropDownItemCondition" ItemType="DropDownItem" />
 
-    <selectors:CompositeDataTemplateCondition x:Key="CreateEppieAddressComboBoxSelectedItemTemplate">
+    <selectors:CompositeDataTemplateCondition x:Key="CreateEppieAddressComboBoxSelectedItemCondition">
         <selectors:ComboBoxDataTemplateCondition ItemType="SelectedItem" />
         <templates:CreateEppieAddressDataTemplateCondition />
     </selectors:CompositeDataTemplateCondition>
 
-    <selectors:CompositeDataTemplateCondition x:Key="CreateEppieAddressComboBoxDropDownItemTemplate">
+    <selectors:CompositeDataTemplateCondition x:Key="CreateEppieAddressComboBoxDropDownItemCondition">
         <selectors:ComboBoxDataTemplateCondition ItemType="DropDownItem" />
         <templates:CreateEppieAddressDataTemplateCondition />
     </selectors:CompositeDataTemplateCondition>
 
-    <selectors:CompositeDataTemplateCondition x:Key="EppieAddressComboBoxSelectedItemTemplate">
+    <selectors:CompositeDataTemplateCondition x:Key="EppieAddressComboBoxSelectedItemCondition">
         <selectors:ComboBoxDataTemplateCondition ItemType="SelectedItem" />
         <templates:AddressDataTemplateCondition />
     </selectors:CompositeDataTemplateCondition>
 
-    <selectors:CompositeDataTemplateCondition x:Key="EppieAddressComboBoxDropDownItemTemplate">
+    <selectors:CompositeDataTemplateCondition x:Key="EppieAddressComboBoxDropDownItemCondition">
         <selectors:ComboBoxDataTemplateCondition ItemType="DropDownItem" />
         <templates:AddressDataTemplateCondition />
     </selectors:CompositeDataTemplateCondition>
@@ -166,10 +166,10 @@
     </selectors:DataTemplateExtendedSelector>
 
     <selectors:DataTemplateExtendedSelector x:Key="EppieAddressDataTemplateSelector">
-        <selectors:DataTemplateRule Condition="{StaticResource EppieAddressComboBoxDropDownItemTemplate}" DataTemplate="{StaticResource AddressComboBoxDropDownItemTemplate}" />
-        <selectors:DataTemplateRule Condition="{StaticResource EppieAddressComboBoxSelectedItemTemplate}" DataTemplate="{StaticResource EppieAddressComboboxSelectedItemTemplate}" />
-        <selectors:DataTemplateRule Condition="{StaticResource CreateEppieAddressComboBoxDropDownItemTemplate}" DataTemplate="{StaticResource CreateEppieAddressComboboxDropDownItemTemplate}" />
-        <selectors:DataTemplateRule Condition="{StaticResource CreateEppieAddressComboBoxSelectedItemTemplate}" DataTemplate="{StaticResource CreateEppieAddressComboboxSelectedItemTemplate}" />
+        <selectors:DataTemplateRule Condition="{StaticResource EppieAddressComboBoxDropDownItemCondition}" DataTemplate="{StaticResource AddressComboBoxDropDownItemTemplate}" />
+        <selectors:DataTemplateRule Condition="{StaticResource EppieAddressComboBoxSelectedItemCondition}" DataTemplate="{StaticResource EppieAddressComboboxSelectedItemTemplate}" />
+        <selectors:DataTemplateRule Condition="{StaticResource CreateEppieAddressComboBoxDropDownItemCondition}" DataTemplate="{StaticResource CreateEppieAddressComboboxDropDownItemTemplate}" />
+        <selectors:DataTemplateRule Condition="{StaticResource CreateEppieAddressComboBoxSelectedItemCondition}" DataTemplate="{StaticResource CreateEppieAddressComboboxSelectedItemTemplate}" />
     </selectors:DataTemplateExtendedSelector>
 
 </ResourceDictionary>
