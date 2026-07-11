@@ -166,10 +166,10 @@
     </selectors:DataTemplateExtendedSelector>
 
     <selectors:DataTemplateExtendedSelector x:Key="EppieAddressDataTemplateSelector">
-        <selectors:DataTemplateRule Condition="{StaticResource CreateEppieAddressComboBoxSelectedItemTemplate}" DataTemplate="{StaticResource CreateEppieAddressComboboxSelectedItemTemplate}" />
-        <selectors:DataTemplateRule Condition="{StaticResource CreateEppieAddressComboBoxDropDownItemTemplate}" DataTemplate="{StaticResource CreateEppieAddressComboboxDropDownItemTemplate}" />
-        <selectors:DataTemplateRule Condition="{StaticResource EppieAddressComboBoxSelectedItemTemplate}" DataTemplate="{StaticResource EppieAddressComboboxSelectedItemTemplate}" />
         <selectors:DataTemplateRule Condition="{StaticResource EppieAddressComboBoxDropDownItemTemplate}" DataTemplate="{StaticResource AddressComboBoxDropDownItemTemplate}" />
+        <selectors:DataTemplateRule Condition="{StaticResource EppieAddressComboBoxSelectedItemTemplate}" DataTemplate="{StaticResource EppieAddressComboboxSelectedItemTemplate}" />
+        <selectors:DataTemplateRule Condition="{StaticResource CreateEppieAddressComboBoxDropDownItemTemplate}" DataTemplate="{StaticResource CreateEppieAddressComboboxDropDownItemTemplate}" />
+        <selectors:DataTemplateRule Condition="{StaticResource CreateEppieAddressComboBoxSelectedItemTemplate}" DataTemplate="{StaticResource CreateEppieAddressComboboxSelectedItemTemplate}" />
     </selectors:DataTemplateExtendedSelector>
 
 </ResourceDictionary>
