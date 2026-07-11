@@ -4,13 +4,19 @@
                     xmlns:behaviors="using:Eppie.App.UI.Behaviors"
                     xmlns:controls="using:Eppie.App.UI.Controls"
                     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+                    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
                     xmlns:selectors="using:Eppie.App.UI.Selectors"
+                    xmlns:templates="using:Eppie.App.UI.DataTemplates"
                     xmlns:viewmodels="using:Tuvi.App.ViewModels">
 
-    <x:Double x:Key="AddressItemMaxWidth">500</x:Double>
+    <x:Double x:Key="AddressItemMaxWidth">500.0</x:Double>
+    <x:Double x:Key="EppiePictureSize">44.0</x:Double>
+    <x:Double x:Key="CreateEppieBorderSize">48.0</x:Double>
+    <x:Double x:Key="AvatarBorderThickness">2.0</x:Double>
 
-    <selectors:ComboBoxDataTemplateCondition x:Key="ComboBoxSelectedItemCondition" ItemType="SelectedItem" />
-    <selectors:ComboBoxDataTemplateCondition x:Key="ComboBoxDropDownItemCondition" ItemType="DropDownItem" />
+    <Thickness x:Key="HorizontalMargin">0,0,12,0</Thickness>
+    <Thickness x:Key="CreateEppieBorderThickness">1,1,1,1</Thickness>
+    <CornerRadius x:Key="CreateEppieBorderCornerRadius">4,4,4,4</CornerRadius>
 
     <DataTemplate x:Key="AddressComboBoxSelectedItemTemplate" x:DataType="viewmodels:AddressItem">
         <controls:AddressPresenter x:Uid="SelectedSenderAddress"
@@ -39,10 +45,131 @@
         </controls:AddressPresenter>
     </DataTemplate>
 
+    <DataTemplate x:Key="EppieAddressComboboxSelectedItemTemplate" x:DataType="viewmodels:AddressItem">
+        <!--  Todo: Add tooltip  -->
+        <Grid HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <muxc:PersonPicture Grid.RowSpan="2"
+                                Grid.Column="0"
+                                Width="{StaticResource EppiePictureSize}"
+                                Height="{StaticResource EppiePictureSize}"
+                                Margin="4,0,12,0"
+                                VerticalAlignment="Center"
+                                BorderBrush="{ThemeResource AvatarHighlightedBrush}"
+                                DisplayName="{x:Bind DisplayName, Mode=OneWay}"
+                                ProfilePicture="{x:Bind AvatarInfo, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}">
+                <muxc:PersonPicture.Resources>
+                    <StaticResource x:Key="PersonPictureEllipseStrokeThickness" ResourceKey="AvatarBorderThickness" />
+                </muxc:PersonPicture.Resources>
+            </muxc:PersonPicture>
+
+            <TextBlock Grid.Row="0"
+                       Grid.Column="1"
+                       VerticalAlignment="Center"
+                       Text="{x:Bind DisplayName, Mode=OneWay}"
+                       TextTrimming="CharacterEllipsis" />
+            <TextBlock Grid.Row="1"
+                       Grid.Column="1"
+                       VerticalAlignment="Center"
+                       Text="{x:Bind Address, Mode=OneWay}"
+                       TextTrimming="CharacterEllipsis" />
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="CreateEppieAddressComboboxSelectedItemTemplate" x:DataType="viewmodels:CreateEppieAddressItem">
+
+        <Grid HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Border Grid.RowSpan="2"
+                    Grid.Column="0"
+                    Width="{StaticResource CreateEppieBorderSize}"
+                    Height="{StaticResource CreateEppieBorderSize}"
+                    Margin="{StaticResource HorizontalMargin}"
+                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                    BorderThickness="{StaticResource CreateEppieBorderThickness}"
+                    CornerRadius="{StaticResource CreateEppieBorderCornerRadius}">
+                <FontIcon HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                          FontSize="16"
+                          Glyph="{StaticResource AddGlyph}" />
+            </Border>
+
+            <TextBlock x:Uid="CreateNewEppieAddress"
+                       Grid.Row="0"
+                       Grid.Column="1"
+                       VerticalAlignment="Center"
+                       TextTrimming="CharacterEllipsis"
+                       TextWrapping="NoWrap" />
+
+            <TextBlock x:Uid="CreateNewEppieAddressRemark"
+                       Grid.Row="1"
+                       Grid.Column="1"
+                       VerticalAlignment="Center"
+                       Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                       TextTrimming="CharacterEllipsis"
+                       TextWrapping="NoWrap" />
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="CreateEppieAddressComboboxDropDownItemTemplate" x:DataType="viewmodels:CreateEppieAddressItem">
+        <StackPanel Orientation="Horizontal">
+            <FontIcon Margin="{StaticResource HorizontalMargin}"
+                      VerticalAlignment="Center"
+                      FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                      FontSize="16"
+                      Glyph="{StaticResource AddGlyph}" />
+            <TextBlock x:Uid="CreateNewEppieAddress" VerticalAlignment="Center" />
+        </StackPanel>
+    </DataTemplate>
+
+    <selectors:ComboBoxDataTemplateCondition x:Key="ComboBoxSelectedItemCondition" ItemType="SelectedItem" />
+    <selectors:ComboBoxDataTemplateCondition x:Key="ComboBoxDropDownItemCondition" ItemType="DropDownItem" />
+
+    <selectors:CompositeDataTemplateCondition x:Key="CreateEppieAddressComboBoxSelectedItemCondition">
+        <selectors:ComboBoxDataTemplateCondition ItemType="SelectedItem" />
+        <templates:CreateEppieAddressDataTemplateCondition />
+    </selectors:CompositeDataTemplateCondition>
+
+    <selectors:CompositeDataTemplateCondition x:Key="CreateEppieAddressComboBoxDropDownItemCondition">
+        <selectors:ComboBoxDataTemplateCondition ItemType="DropDownItem" />
+        <templates:CreateEppieAddressDataTemplateCondition />
+    </selectors:CompositeDataTemplateCondition>
+
+    <selectors:CompositeDataTemplateCondition x:Key="EppieAddressComboBoxSelectedItemCondition">
+        <selectors:ComboBoxDataTemplateCondition ItemType="SelectedItem" />
+        <templates:AddressDataTemplateCondition />
+    </selectors:CompositeDataTemplateCondition>
+
+    <selectors:CompositeDataTemplateCondition x:Key="EppieAddressComboBoxDropDownItemCondition">
+        <selectors:ComboBoxDataTemplateCondition ItemType="DropDownItem" />
+        <templates:AddressDataTemplateCondition />
+    </selectors:CompositeDataTemplateCondition>
 
     <selectors:DataTemplateExtendedSelector x:Key="SenderAddressDataTemplateSelector">
         <selectors:DataTemplateRule Condition="{StaticResource ComboBoxDropDownItemCondition}" DataTemplate="{StaticResource AddressComboBoxDropDownItemTemplate}" />
         <selectors:DataTemplateRule Condition="{StaticResource ComboBoxSelectedItemCondition}" DataTemplate="{StaticResource AddressComboBoxSelectedItemTemplate}" />
+    </selectors:DataTemplateExtendedSelector>
+
+    <selectors:DataTemplateExtendedSelector x:Key="EppieAddressDataTemplateSelector">
+        <selectors:DataTemplateRule Condition="{StaticResource EppieAddressComboBoxDropDownItemCondition}" DataTemplate="{StaticResource AddressComboBoxDropDownItemTemplate}" />
+        <selectors:DataTemplateRule Condition="{StaticResource EppieAddressComboBoxSelectedItemCondition}" DataTemplate="{StaticResource EppieAddressComboboxSelectedItemTemplate}" />
+        <selectors:DataTemplateRule Condition="{StaticResource CreateEppieAddressComboBoxDropDownItemCondition}" DataTemplate="{StaticResource CreateEppieAddressComboboxDropDownItemTemplate}" />
+        <selectors:DataTemplateRule Condition="{StaticResource CreateEppieAddressComboBoxSelectedItemCondition}" DataTemplate="{StaticResource CreateEppieAddressComboboxSelectedItemTemplate}" />
     </selectors:DataTemplateExtendedSelector>
 
 </ResourceDictionary>

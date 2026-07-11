@@ -49,7 +49,6 @@ namespace Eppie.App.Views
         public void OnCloseClicked()
         { }
 
-
         private void OnRecipientRemoved(object sender, RoutedEventArgs e)
         {
             if (sender is FrameworkElement element && element.Tag is ContactItem item)
@@ -71,54 +70,6 @@ namespace Eppie.App.Views
             ViewModel?.OnContactQuerySubmitted(args.ChosenSuggestion as ContactItem, args.QueryText);
             ViewModel?.OnContactQueryChanged(string.Empty);
             sender.Text = string.Empty;
-        }
-    }
-
-    public class EppieAddressesDataTemplateSelector : DataTemplateSelector
-    {
-        public DataTemplate DropDownTemplate { get; set; }
-        public DataTemplate SelectedTemplate { get; set; }
-        public DataTemplate CreateAddressTemplate { get; set; }
-
-        protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
-        {
-            if (item is CreateEppieAddressItem) return CreateAddressTemplate;
-
-            if (item is AddressItem)
-            {
-                if (IsDropDownItem(container))
-                {
-                    return DropDownTemplate;
-                }
-                else
-                {
-                    if (item is AddressItem) return SelectedTemplate;
-                }
-            }
-
-            return base.SelectTemplateCore(item, container);
-        }
-
-        private static bool IsDropDownItem(DependencyObject container)
-        {
-            var current = container;
-
-            while (current != null)
-            {
-                if (current is ComboBoxItem)
-                {
-                    return true;
-                }
-
-                if (current is ComboBox)
-                {
-                    return false;
-                }
-
-                current = VisualTreeHelper.GetParent(current);
-            }
-
-            return false;
         }
     }
 }

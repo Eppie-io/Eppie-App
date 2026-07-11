@@ -8,6 +8,8 @@
                           xmlns:local="using:Eppie.App.Views"
                           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                           xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+                          xmlns:toolkit="using:CommunityToolkit.WinUI"
+                          xmlns:ui="using:CommunityToolkit.WinUI"
                           xmlns:viewmodels="using:Tuvi.App.ViewModels"
                           Background="Transparent"
                           mc:Ignorable="d">
@@ -17,18 +19,35 @@
     </local:InvitationPageBase.DataContext>
 
     <local:InvitationPageBase.Resources>
-        <x:Double x:Key="PageWidth">428</x:Double>
-        <Thickness x:Key="ScrollContentPadding">24,0,24,24</Thickness>
-        <Thickness x:Key="ScrollMargin">0,56,0,0</Thickness>
-        <Thickness x:Key="TitlePadding">24,18,24,24</Thickness>
-        <x:Double x:Key="EppiePictureSize">48</x:Double>
-        <x:Double x:Key="RemoveButtonSize">26</x:Double>
-        <CornerRadius x:Key="RemoveButtonRadius">16</CornerRadius>
-        <x:Double x:Key="RemoveButtonIconSize">14</x:Double>
-        <x:Double x:Key="NameMaxWidth">72</x:Double>
-        <x:Double x:Key="EppieAddressComboBoxHeight">86</x:Double>
-        <Thickness x:Key="HorizontalMargin">0,0,12,0</Thickness>
 
+        <viewmodels:InvitationArea x:Key="InvitationContactArea">ContactArea</viewmodels:InvitationArea>
+        <viewmodels:InvitationArea x:Key="InvitationPreviewArea">PreviewArea</viewmodels:InvitationArea>
+
+        <x:Double x:Key="PageWidth">428.0</x:Double>
+        <x:Double x:Key="RemoveButtonSize">26.0</x:Double>
+        <x:Double x:Key="RemoveButtonIconSize">14.0</x:Double>
+        <x:Double x:Key="NameMaxWidth">72.0</x:Double>
+        <x:Double x:Key="EppieAddressComboBoxHeight">86.0</x:Double>
+
+        <x:Double x:Key="BackButtonMaxWidth">216.0</x:Double>
+        <x:Double x:Key="SenderAddressMinWidth">72.0</x:Double>
+        <x:Double x:Key="SenderAddressMaxWidth">216.0</x:Double>
+        <x:Double x:Key="SendInviteButtonMinWidth">136.0</x:Double>
+        <x:Double x:Key="SendInviteButtonMaxWidth">200.0</x:Double>
+
+        <Thickness x:Key="InvitationContentPadding">24,0,24,24</Thickness>
+        <CornerRadius x:Key="RemoveButtonRadius">16</CornerRadius>
+
+        <XamlUICommand x:Key="BackUICommand"
+                       x:Uid="BackUICommand"
+                       Command="{x:Bind ViewModel.GoBackCommand}"
+                       IconSource="{ui:SymbolIconSource Symbol=Back}" />
+
+        <XamlUICommand x:Key="SendInviteUICommand"
+                       x:Uid="SendInviteUICommand"
+                       Command="{x:Bind ViewModel.SendInviteCommand}" />
+
+        <!--  Todo: Move to UI.DataTemplates  -->
         <DataTemplate x:Key="ContactComboboxItemTemplate" x:DataType="viewmodels:ContactItem">
             <controls:AddressPresenter HorizontalAlignment="Stretch"
                                        VerticalAlignment="Center"
@@ -38,64 +57,7 @@
                                        IsSecure="{x:Bind Email.IsDecentralized, Mode=OneWay}" />
         </DataTemplate>
 
-        <DataTemplate x:Key="AddressComboboxItemTemplate" x:DataType="viewmodels:AddressItem">
-            <controls:AddressPresenter HorizontalAlignment="Stretch"
-                                       VerticalAlignment="Center"
-                                       Address="{x:Bind Address, Mode=OneWay}"
-                                       Avatar="{x:Bind AvatarInfo, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}"
-                                       DisplayName="{x:Bind DisplayName, Mode=OneWay}"
-                                       IsSecure="{x:Bind IsDecentralized, Mode=OneWay}" />
-        </DataTemplate>
-
-        <DataTemplate x:Key="EppieAddressComboboxItemTemplate" x:DataType="viewmodels:AddressItem">
-            <Grid HorizontalAlignment="Stretch">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <muxc:PersonPicture Grid.RowSpan="2"
-                                    Grid.Column="0"
-                                    Width="{StaticResource EppiePictureSize}"
-                                    Height="{StaticResource EppiePictureSize}"
-                                    Margin="{StaticResource HorizontalMargin}"
-                                    VerticalAlignment="Center"
-                                    DisplayName="{x:Bind DisplayName, Mode=OneWay}"
-                                    ProfilePicture="{x:Bind AvatarInfo, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}" />
-
-                <TextBlock Grid.Row="0"
-                           Grid.Column="1"
-                           VerticalAlignment="Center"
-                           Text="{x:Bind DisplayName, Mode=OneWay}"
-                           TextTrimming="CharacterEllipsis" />
-                <TextBlock Grid.Row="1"
-                           Grid.Column="1"
-                           VerticalAlignment="Center"
-                           Text="{x:Bind Address, Mode=OneWay}"
-                           TextTrimming="CharacterEllipsis" />
-            </Grid>
-        </DataTemplate>
-
-        <DataTemplate x:Key="CreateEppieAddressComboboxItemTemplate" x:DataType="viewmodels:CreateEppieAddressItem">
-            <StackPanel Orientation="Horizontal">
-                <FontIcon Margin="{StaticResource HorizontalMargin}"
-                          VerticalAlignment="Center"
-                          FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                          FontSize="16"
-                          Glyph="&#xE710;" />
-                <TextBlock x:Uid="CreateNewEppieAddressItem" VerticalAlignment="Center" />
-            </StackPanel>
-
-        </DataTemplate>
-
-        <local:EppieAddressesDataTemplateSelector x:Key="EppieAddressDataTemplateSelector"
-                                                  CreateAddressTemplate="{StaticResource CreateEppieAddressComboboxItemTemplate}"
-                                                  DropDownTemplate="{StaticResource AddressComboboxItemTemplate}"
-                                                  SelectedTemplate="{StaticResource EppieAddressComboboxItemTemplate}" />
-
+        <!--  Todo: Move to UI.DataTemplates  -->
         <DataTemplate x:Key="RecipientTemplate" x:DataType="viewmodels:ContactItem">
             <controls:AddressItemControl Address="{x:Bind Email.Address, Mode=OneWay}"
                                          Avatar="{x:Bind AvatarInfo, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}"
@@ -122,84 +84,174 @@
 
     </local:InvitationPageBase.Resources>
 
-    <Grid Width="{StaticResource PageWidth}">
+    <controls:PopupHostExtensions.TitleContent>
         <TextBlock x:Uid="InvitationPageTitle"
-                   Padding="{StaticResource TitlePadding}"
-                   HorizontalAlignment="Left" />
-        <ScrollViewer Margin="{StaticResource ScrollMargin}"
-                      HorizontalScrollBarVisibility="Disabled"
+                   HorizontalAlignment="Left"
+                   FontSize="12"
+                   Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                   TextTrimming="CharacterEllipsis"
+                   TextWrapping="NoWrap" />
+    </controls:PopupHostExtensions.TitleContent>
+
+    <Grid Width="{StaticResource PageWidth}">
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                       HorizontalScrollMode="Disabled"
                       VerticalScrollBarVisibility="Auto"
                       VerticalScrollMode="Auto"
                       ZoomMode="Disabled">
-            <StackPanel Padding="{StaticResource ScrollContentPadding}" Orientation="Vertical">
-                <TextBlock x:Uid="InvitationPageHeader"
-                           Margin="0,0,0,16"
-                           FontSize="20"
-                           FontWeight="Medium" />
-                <TextBlock x:Uid="InvitationPageNote"
-                           Margin="0,0,0,20"
-                           TextWrapping="WrapWholeWords" />
-                <Grid Margin="0,0,0,32">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" MaxWidth="112" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock x:Uid="InvitationSenderAddressComboBoxHeader"
-                               Margin="{StaticResource HorizontalMargin}"
-                               VerticalAlignment="Center"
-                               TextTrimming="CharacterEllipsis" />
-                    <ComboBox Grid.Column="1"
-                              Padding="2,2,0,2"
-                              HorizontalAlignment="Stretch"
-                              VerticalAlignment="Center"
-                              CornerRadius="16"
-                              ItemTemplate="{StaticResource AddressComboboxItemTemplate}"
-                              ItemsSource="{x:Bind ViewModel.SenderAddresses, Mode=OneWay}"
-                              SelectedIndex="{x:Bind ViewModel.SenderAddressIndex, Mode=TwoWay}" />
-                </Grid>
-                <TextBlock x:Uid="InvitationRecipientAddressHeader"
-                           Margin="0,0,0,8"
-                           FontSize="16" />
-                <AutoSuggestBox x:Uid="InvitationContactSuggestBox"
-                                HorizontalAlignment="Stretch"
-                                ItemTemplate="{StaticResource ContactComboboxItemTemplate}"
-                                ItemsSource="{x:Bind ViewModel.SuitableContacts, Mode=OneWay}"
-                                QueryIcon="PhoneBook"
-                                QuerySubmitted="OnContactQuerySubmitted"
-                                TextChanged="OnContactQueryChanged" />
 
-                <muxc:ItemsRepeater Margin="0,12,0,0"
+            <Grid Padding="{StaticResource InvitationContentPadding}">
+                <StackPanel x:Name="ContactArea"
+                            HorizontalAlignment="Stretch"
+                            Orientation="Vertical">
+                    <TextBlock x:Uid="InvitationContactAreaHeader"
+                               Margin="0,0,0,12"
+                               HorizontalAlignment="Stretch"
+                               FontSize="16"
+                               FontWeight="Medium" />
+                    <TextBlock x:Uid="InvitationContactAreaNote"
+                               Margin="0,0,0,16"
+                               HorizontalAlignment="Stretch"
+                               TextWrapping="WrapWholeWords" />
+
+                    <AutoSuggestBox x:Uid="InvitationContactSuggestBox"
                                     HorizontalAlignment="Stretch"
-                                    ItemTemplate="{StaticResource RecipientTemplate}"
-                                    ItemsSource="{x:Bind ViewModel.Recipients, Mode=OneWay}"
-                                    Visibility="{x:Bind ViewModel.IsAnyRecipient, Mode=OneWay}">
-                    <muxc:ItemsRepeater.Layout>
-                        <muxc:StackLayout Orientation="Vertical" Spacing="4" />
-                    </muxc:ItemsRepeater.Layout>
-                </muxc:ItemsRepeater>
+                                    ItemTemplate="{StaticResource ContactComboboxItemTemplate}"
+                                    ItemsSource="{x:Bind ViewModel.SuitableContacts, Mode=OneWay}"
+                                    QueryIcon="Find"
+                                    QuerySubmitted="OnContactQuerySubmitted"
+                                    TextChanged="OnContactQueryChanged" />
 
-                <ComboBox x:Uid="InvitationEppieAddressComboBox"
-                          Height="{StaticResource EppieAddressComboBoxHeight}"
-                          Margin="0,32,0,0"
-                          HorizontalAlignment="Stretch"
-                          ItemTemplateSelector="{StaticResource EppieAddressDataTemplateSelector}"
-                          ItemsSource="{x:Bind ViewModel.EppieAddresses, Mode=OneWay}"
-                          SelectedIndex="{x:Bind ViewModel.EppieAddressIndex, Mode=TwoWay}" />
+                    <!--  ToDo: Try use CommunityToolkit.WinUI.Controls.WrapLayout  -->
+                    <muxc:ItemsRepeater Margin="0,12,0,0"
+                                        HorizontalAlignment="Stretch"
+                                        ItemTemplate="{StaticResource RecipientTemplate}"
+                                        ItemsSource="{x:Bind ViewModel.Recipients, Mode=OneWay}"
+                                        Visibility="{x:Bind ViewModel.IsAnyRecipient, Mode=OneWay}">
+                        <muxc:ItemsRepeater.Layout>
+                            <muxc:StackLayout Orientation="Vertical" Spacing="4" />
+                        </muxc:ItemsRepeater.Layout>
+                    </muxc:ItemsRepeater>
 
-                <Button x:Uid="PreviewButton"
-                        Margin="0,28,0,12"
-                        HorizontalAlignment="Stretch"
-                        Command="{x:Bind ViewModel.PreviewCommand, Mode=OneWay}"
-                        IsEnabled="{x:Bind ViewModel.CanInvite, Mode=OneWay}" />
+                    <ComboBox x:Uid="InvitationEppieAddressComboBox"
+                              Height="{StaticResource EppieAddressComboBoxHeight}"
+                              Margin="0,36,0,0"
+                              Padding="4"
+                              HorizontalAlignment="Stretch"
+                              ItemTemplateSelector="{StaticResource EppieAddressDataTemplateSelector}"
+                              ItemsSource="{x:Bind ViewModel.EppieAddresses, Mode=OneWay}"
+                              SelectedIndex="{x:Bind ViewModel.EppieAddressIndex, Mode=TwoWay}" />
 
-                <Button x:Uid="SendInviteButton"
-                        HorizontalAlignment="Stretch"
-                        Command="{x:Bind ViewModel.SendInviteCommand, Mode=OneWay}"
-                        IsEnabled="{x:Bind ViewModel.CanInvite, Mode=OneWay}"
-                        Style="{StaticResource AccentButtonStyle}" />
+                    <CheckBox x:Name="PreviewCheckBox"
+                              x:Uid="PreviewCheckBox"
+                              Margin="0,36,0,0"
+                              HorizontalAlignment="Stretch" />
 
-            </StackPanel>
+                    <Grid Margin="0,36,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <ComboBox MinWidth="{StaticResource SenderAddressMinWidth}"
+                                  MaxWidth="{StaticResource SenderAddressMaxWidth}"
+                                  Margin="0,0,12,0"
+                                  VerticalAlignment="Center"
+                                  ItemTemplateSelector="{StaticResource SenderAddressDataTemplateSelector}"
+                                  ItemsSource="{x:Bind ViewModel.SenderAddresses, Mode=OneWay}"
+                                  SelectedIndex="{x:Bind ViewModel.SenderAddressIndex, Mode=TwoWay}"
+                                  Style="{StaticResource AddressComboBoxStyle}" />
+
+                        <controls:CommandButton Grid.Column="1"
+                                                MinWidth="{StaticResource SendInviteButtonMinWidth}"
+                                                MaxWidth="{StaticResource SendInviteButtonMaxWidth}"
+                                                HorizontalAlignment="Right"
+                                                VerticalAlignment="Center"
+                                                ButtonBaseStyle="{StaticResource AccentButtonStyle}"
+                                                Command="{StaticResource SendInviteUICommand}"
+                                                CommandParameter="{x:Bind PreviewCheckBox.IsChecked, Mode=OneWay}"
+                                                Mode="TextOnly">
+                            <interactivity:Interaction.Behaviors>
+                                <behaviors:CommandButtonTooltipBehavior />
+                            </interactivity:Interaction.Behaviors>
+                        </controls:CommandButton>
+                    </Grid>
+                </StackPanel>
+
+                <StackPanel x:Name="PreviewArea"
+                            HorizontalAlignment="Stretch"
+                            Orientation="Vertical"
+                            Visibility="Collapsed">
+
+                    <TextBlock x:Uid="InvitationPreviewAreaHeader"
+                               Margin="0,0,0,16"
+                               HorizontalAlignment="Stretch" />
+
+                    <Border Margin="0,0,0,20"
+                            HorizontalAlignment="Stretch"
+                            Background="{ThemeResource CardBackgroundFillColorSecondaryBrush}"
+                            CornerRadius="4">
+
+                        <TextBlock Margin="20,16,20,24"
+                                   HorizontalAlignment="Stretch"
+                                   IsTextSelectionEnabled="True"
+                                   LineHeight="24"
+                                   Text="{x:Bind ViewModel.InvitationPreviewText, Mode=OneWay}"
+                                   TextWrapping="WrapWholeWords" />
+                    </Border>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <controls:CommandButton MaxWidth="{StaticResource BackButtonMaxWidth}"
+                                                Margin="0,0,12,0"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Center"
+                                                Command="{StaticResource BackUICommand}" />
+
+                        <controls:CommandButton Grid.Column="2"
+                                                MinWidth="{StaticResource SendInviteButtonMinWidth}"
+                                                MaxWidth="{StaticResource SendInviteButtonMaxWidth}"
+                                                HorizontalAlignment="Right"
+                                                VerticalAlignment="Center"
+                                                ButtonBaseStyle="{StaticResource AccentButtonStyle}"
+                                                Command="{StaticResource SendInviteUICommand}"
+                                                CommandParameter="{StaticResource FalseValue}"
+                                                Mode="TextOnly">
+                            <interactivity:Interaction.Behaviors>
+                                <behaviors:CommandButtonTooltipBehavior />
+                            </interactivity:Interaction.Behaviors>
+                        </controls:CommandButton>
+                    </Grid>
+                </StackPanel>
+            </Grid>
         </ScrollViewer>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="PageStates">
+                <VisualState x:Name="ContactState">
+                    <VisualState.StateTriggers>
+                        <toolkit:IsEqualStateTrigger Value="{x:Bind ViewModel.InvitationArea, Mode=OneWay}" To="{StaticResource InvitationContactArea}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ContactArea.Visibility" Value="Visible" />
+                        <Setter Target="PreviewArea.Visibility" Value="Collapsed" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="PreviewState">
+                    <VisualState.StateTriggers>
+                        <toolkit:IsEqualStateTrigger Value="{x:Bind ViewModel.InvitationArea, Mode=OneWay}" To="{StaticResource InvitationPreviewArea}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ContactArea.Visibility" Value="Collapsed" />
+                        <Setter Target="PreviewArea.Visibility" Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
     </Grid>
 </local:InvitationPageBase>

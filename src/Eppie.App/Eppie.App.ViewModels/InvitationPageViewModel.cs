@@ -28,9 +28,14 @@ using Tuvi.Core.Entities;
 
 namespace Tuvi.App.ViewModels
 {
-
     public class CreateEppieAddressItem
     { }
+
+    public enum InvitationArea
+    {
+        ContactArea,
+        PreviewArea
+    }
 
     public class InvitationPageViewModel : BaseViewModel
     {
@@ -54,7 +59,6 @@ namespace Tuvi.App.ViewModels
                 {
                     OnPropertyChanged(nameof(CanInvite));
                     SendInviteCommand.NotifyCanExecuteChanged();
-                    PreviewCommand.NotifyCanExecuteChanged();
                 }
             }
         }
@@ -69,22 +73,35 @@ namespace Tuvi.App.ViewModels
                 {
                     OnPropertyChanged(nameof(CanInvite));
                     SendInviteCommand.NotifyCanExecuteChanged();
-                    PreviewCommand.NotifyCanExecuteChanged();
                 }
             }
+        }
+
+        private string _invitationPreviewText;
+        public string InvitationPreviewText
+        {
+            get => _invitationPreviewText;
+            private set => SetProperty(ref _invitationPreviewText, value);
+        }
+
+        private InvitationArea _invitationArea;
+        public InvitationArea InvitationArea
+        {
+            get => _invitationArea;
+            private set => SetProperty(ref _invitationArea, value);
         }
 
         public bool IsAnyRecipient => Recipients.Count > 0;
         public bool CanInvite => IsAnyRecipient && SenderAddressIndex != -1 && EppieAddressIndex != -1;
 
         public IRelayCommand SendInviteCommand { get; }
-        public IRelayCommand PreviewCommand { get; }
+        public IRelayCommand GoBackCommand { get; }
         public Action ClosePopupAction { get; set; }
 
         public InvitationPageViewModel() : base()
         {
-            SendInviteCommand = new AsyncRelayCommand(SendInviteAsync, () => CanInvite);
-            PreviewCommand = new AsyncRelayCommand(PreviewInviteAsync, () => CanInvite);
+            SendInviteCommand = new AsyncRelayCommand<bool?>(SendInviteAsync, preview => CanInvite);
+            GoBackCommand = new RelayCommand(GoBackToContact);
 
             SenderAddressIndex = -1;
             EppieAddressIndex = -1;
@@ -92,6 +109,8 @@ namespace Tuvi.App.ViewModels
             SuitableContacts.SearchFilter = _contactsSearchFilter;
             _contactsSearchFilter.IncludeItemsOnEmptySearch = false;
             _contactsSearchFilter.SearchText = string.Empty;
+
+            InvitationArea = InvitationArea.ContactArea;
         }
 
         public override void OnNavigatedTo(object data)
@@ -204,7 +223,6 @@ namespace Tuvi.App.ViewModels
             OnPropertyChanged(nameof(IsAnyRecipient));
             OnPropertyChanged(nameof(CanInvite));
             SendInviteCommand.NotifyCanExecuteChanged();
-            PreviewCommand.NotifyCanExecuteChanged();
         }
 
         public void OnContactQueryChanged(string queryText)
@@ -242,7 +260,6 @@ namespace Tuvi.App.ViewModels
             OnPropertyChanged(nameof(IsAnyRecipient));
             OnPropertyChanged(nameof(CanInvite));
             SendInviteCommand.NotifyCanExecuteChanged();
-            PreviewCommand.NotifyCanExecuteChanged();
         }
 
         private static ContactItem CreateAddressItemFromText(string queryText)
@@ -266,6 +283,18 @@ namespace Tuvi.App.ViewModels
                 {
                     yield return item;
                 }
+            }
+        }
+
+        private async Task SendInviteAsync(bool? preview)
+        {
+            if (preview == true)
+            {
+                await PreviewInviteAsync().ConfigureAwait(true);
+            }
+            else
+            {
+                await SendInviteAsync().ConfigureAwait(true);
             }
         }
 
@@ -303,26 +332,63 @@ namespace Tuvi.App.ViewModels
             OnPropertyChanged(nameof(IsAnyRecipient));
             OnPropertyChanged(nameof(CanInvite));
             SendInviteCommand.NotifyCanExecuteChanged();
-            PreviewCommand.NotifyCanExecuteChanged();
+        }
+
+        private void OnPreviewInvite()
+        {
+            // ToDo: Implement a preview feature for the invitation message.
+            // 1. Load the invitation message template.
+            // 2. Create a new eppie address if the user has selected to create one.
+            // 3. Replace placeholders with actual values (e.g., sender name, Eppie address, download link).
+            // 4. Update InvitationPreviewText property with the generated message.
+            // 5. Navigate to the invitation preview page.
+
+            // Sample invitation message template:
+            // You’re invited to Eppie!
+            // Hi there,
+            // Join me on Eppie.
+            // It lets you send messages peer-to - peer, without relying on email providers, while still working with regular email.
+            // My Eppie address:
+            // <eppie-address>
+            // Install it here: <download-link>
+            // – <sender-name>
+
+            // Note: The font of the text 'You’re invited to Eppie!' is (Medium, 16px) by design.
+
+            string eppieAddressString = EppieAddresses[EppieAddressIndex] is AddressItem eppieAddressItem ? eppieAddressItem.Account.DisplayEmail.Address : "<new eppie address>";
+            string downloadLink = BrandService.GetHomepage();
+            string senderName = SenderAddresses[SenderAddressIndex].DisplayName;
+
+            InvitationPreviewText = $"You’re invited to Eppie!\n\nHi there,\n\nJoin me on Eppie. It lets you send messages peer-to-peer, without relying on email providers, while still working with regular email.\n\nMy Eppie address:\n{eppieAddressString}\n\nInstall it here: {downloadLink}\n\n– {senderName}";
+
+            InvitationArea = InvitationArea.PreviewArea;
         }
 
         private async Task PreviewInviteAsync()
         {
+            // Todo: implement a preview feature for the invitation message.
             try
             {
-                var context = await BuildInviteMessageAsync().ConfigureAwait(true);
-                if (context is null)
-                {
-                    return;
-                }
+                OnPreviewInvite();
 
-                NavigationService?.NavigateContent(nameof(ComposeMessagePageViewModel), context.MessageData);
-                ClosePopupAction?.Invoke();
+                //var context = await BuildInviteMessageAsync().ConfigureAwait(true);
+                //if (context is null)
+                //{
+                //    return;
+                //}
+
+                //NavigationService?.NavigateContent(nameof(ComposeMessagePageViewModel), context.MessageData);
+                //ClosePopupAction?.Invoke();
             }
             catch (Exception ex)
             {
                 OnError(ex);
             }
+        }
+
+        private void GoBackToContact()
+        {
+            InvitationArea = InvitationArea.ContactArea;
         }
 
         private async Task<InviteMessageContext> BuildInviteMessageAsync()
