@@ -9,7 +9,7 @@
                           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                           xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
                           xmlns:toolkit="using:CommunityToolkit.WinUI"
-                          xmlns:ui="using:CommunityToolkit.WinUI"
+                          xmlns:toolkitcontrols="using:CommunityToolkit.WinUI.Controls"
                           xmlns:viewmodels="using:Tuvi.App.ViewModels"
                           Background="Transparent"
                           mc:Ignorable="d">
@@ -24,9 +24,8 @@
         <viewmodels:InvitationArea x:Key="InvitationPreviewArea">PreviewArea</viewmodels:InvitationArea>
 
         <x:Double x:Key="PageWidth">428.0</x:Double>
-        <x:Double x:Key="RemoveButtonSize">26.0</x:Double>
+        <x:Double x:Key="RemoveButtonSize">22.0</x:Double>
         <x:Double x:Key="RemoveButtonIconSize">14.0</x:Double>
-        <x:Double x:Key="NameMaxWidth">72.0</x:Double>
         <x:Double x:Key="EppieAddressComboBoxHeight">86.0</x:Double>
 
         <x:Double x:Key="BackButtonMaxWidth">216.0</x:Double>
@@ -36,50 +35,51 @@
         <x:Double x:Key="SendInviteButtonMaxWidth">200.0</x:Double>
 
         <Thickness x:Key="InvitationContentPadding">24,0,24,24</Thickness>
-        <CornerRadius x:Key="RemoveButtonRadius">16</CornerRadius>
+        <CornerRadius x:Key="RemoveButtonRadius">11</CornerRadius>
 
         <XamlUICommand x:Key="BackUICommand"
                        x:Uid="BackUICommand"
                        Command="{x:Bind ViewModel.GoBackCommand}"
-                       IconSource="{ui:SymbolIconSource Symbol=Back}" />
+                       IconSource="{toolkit:SymbolIconSource Symbol=Back}" />
 
         <XamlUICommand x:Key="SendInviteUICommand"
                        x:Uid="SendInviteUICommand"
                        Command="{x:Bind ViewModel.SendInviteCommand}" />
 
-        <!--  Todo: Move to UI.DataTemplates  -->
-        <DataTemplate x:Key="ContactComboboxItemTemplate" x:DataType="viewmodels:ContactItem">
-            <controls:AddressPresenter HorizontalAlignment="Stretch"
-                                       VerticalAlignment="Center"
-                                       Address="{x:Bind Email.Address, Mode=OneWay}"
-                                       Avatar="{x:Bind AvatarInfo, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}"
-                                       DisplayName="{x:Bind DisplayName, Mode=OneWay}"
-                                       IsSecure="{x:Bind Email.IsDecentralized, Mode=OneWay}" />
-        </DataTemplate>
+        <DataTemplate x:Key="InviteContactItemTemplate" x:DataType="viewmodels:ContactItem">
+            <controls:ItemContainer CornerRadius="16">
+                <Grid VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
 
-        <!--  Todo: Move to UI.DataTemplates  -->
-        <DataTemplate x:Key="RecipientTemplate" x:DataType="viewmodels:ContactItem">
-            <controls:AddressItemControl Address="{x:Bind Email.Address, Mode=OneWay}"
-                                         Avatar="{x:Bind AvatarInfo, Mode=OneWay, Converter={StaticResource ImageInfoToBitmapConverter}}"
-                                         DisplayName="{x:Bind DisplayName, Mode=OneWay}"
-                                         NameColumnMaxWidth="{StaticResource NameMaxWidth}">
-                <Button Width="{StaticResource RemoveButtonSize}"
-                        Height="{StaticResource RemoveButtonSize}"
-                        Padding="0"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Click="OnRecipientRemoved"
-                        CornerRadius="{StaticResource RemoveButtonRadius}"
-                        Style="{StaticResource ThinButtonStyle}"
-                        Tag="{x:Bind}">
-                    <Viewbox Width="{StaticResource RemoveButtonIconSize}"
-                             Height="{StaticResource RemoveButtonIconSize}"
-                             HorizontalAlignment="Center"
-                             VerticalAlignment="Center">
-                        <SymbolIcon Symbol="Cancel" />
-                    </Viewbox>
-                </Button>
-            </controls:AddressItemControl>
+                    <ContentControl Grid.Column="0"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    Content="{x:Bind}"
+                                    ContentTemplate="{StaticResource TokenContactItemTemplate}" />
+
+                    <Button Grid.Column="1"
+                            Width="{StaticResource RemoveButtonSize}"
+                            Height="{StaticResource RemoveButtonSize}"
+                            Margin="4"
+                            Padding="0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Click="OnRecipientRemoved"
+                            CornerRadius="{StaticResource RemoveButtonRadius}"
+                            Style="{StaticResource ThinButtonStyle}"
+                            Tag="{x:Bind}">
+                        <Viewbox Width="{StaticResource RemoveButtonIconSize}"
+                                 Height="{StaticResource RemoveButtonIconSize}"
+                                 HorizontalAlignment="Center"
+                                 VerticalAlignment="Center">
+                            <SymbolIcon Symbol="Cancel" />
+                        </Viewbox>
+                    </Button>
+                </Grid>
+            </controls:ItemContainer>
         </DataTemplate>
 
     </local:InvitationPageBase.Resources>
@@ -116,20 +116,21 @@
 
                     <AutoSuggestBox x:Uid="InvitationContactSuggestBox"
                                     HorizontalAlignment="Stretch"
-                                    ItemTemplate="{StaticResource ContactComboboxItemTemplate}"
+                                    ItemTemplate="{StaticResource SuggestContactItemTemplate}"
                                     ItemsSource="{x:Bind ViewModel.SuitableContacts, Mode=OneWay}"
                                     QueryIcon="Find"
                                     QuerySubmitted="OnContactQuerySubmitted"
                                     TextChanged="OnContactQueryChanged" />
 
-                    <!--  ToDo: Try use CommunityToolkit.WinUI.Controls.WrapLayout  -->
                     <muxc:ItemsRepeater Margin="0,12,0,0"
                                         HorizontalAlignment="Stretch"
-                                        ItemTemplate="{StaticResource RecipientTemplate}"
+                                        ItemTemplate="{StaticResource InviteContactItemTemplate}"
                                         ItemsSource="{x:Bind ViewModel.Recipients, Mode=OneWay}"
                                         Visibility="{x:Bind ViewModel.IsAnyRecipient, Mode=OneWay}">
                         <muxc:ItemsRepeater.Layout>
-                            <muxc:StackLayout Orientation="Vertical" Spacing="4" />
+                            <toolkitcontrols:WrapLayout HorizontalSpacing="4"
+                                                        Orientation="Horizontal"
+                                                        VerticalSpacing="4" />
                         </muxc:ItemsRepeater.Layout>
                     </muxc:ItemsRepeater>
 

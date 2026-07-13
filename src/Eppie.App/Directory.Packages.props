@@ -9,9 +9,11 @@
 
   <ItemGroup>
     <PackageVersion Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+    <PackageVersion Include="CommunityToolkit.Uwp.Controls.Primitives" Version="8.2.251219" />
     <PackageVersion Include="CommunityToolkit.Uwp.Controls.TokenizingTextBox" Version="8.2.251219" />
     <PackageVersion Include="CommunityToolkit.Uwp.Extensions" Version="8.2.251219" />
     <PackageVersion Include="CommunityToolkit.Uwp.Triggers" Version="8.2.251219" />
+    <PackageVersion Include="CommunityToolkit.WinUI.Controls.Primitives" Version="8.2.251219" />
     <PackageVersion Include="CommunityToolkit.WinUI.Controls.TokenizingTextBox" Version="8.2.251219" />
     <PackageVersion Include="CommunityToolkit.WinUI.Extensions" Version="8.2.251219" />
     <PackageVersion Include="CommunityToolkit.WinUI.Triggers" Version="8.2.251219" />
