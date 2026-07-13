@@ -347,7 +347,7 @@ namespace Tuvi.App.ViewModels
             // You’re invited to Eppie!
             // Hi there,
             // Join me on Eppie.
-            // It lets you send messages peer-to - peer, without relying on email providers, while still working with regular email.
+            // It lets you send messages peer-to-peer, without relying on email providers, while still working with regular email.
             // My Eppie address:
             // <eppie-address>
             // Install it here: <download-link>
@@ -359,6 +359,7 @@ namespace Tuvi.App.ViewModels
             string downloadLink = BrandService.GetHomepage();
             string senderName = SenderAddresses[SenderAddressIndex].DisplayName;
 
+            // Todo: Move template to resource
             InvitationPreviewText = $"You’re invited to Eppie!\n\nHi there,\n\nJoin me on Eppie. It lets you send messages peer-to-peer, without relying on email providers, while still working with regular email.\n\nMy Eppie address:\n{eppieAddressString}\n\nInstall it here: {downloadLink}\n\n– {senderName}";
 
             InvitationArea = InvitationArea.PreviewArea;
