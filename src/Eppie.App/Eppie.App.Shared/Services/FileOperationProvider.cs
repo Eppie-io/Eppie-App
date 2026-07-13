@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+using Eppie.App.Common;
 using Eppie.App.UI.Tools;
 using Tuvi.App.ViewModels.Services;
 using Windows.Storage;
@@ -54,12 +55,14 @@ namespace Eppie.App.Services
 
         private static async Task SaveDataToFileAsync(string fileName, byte[] data)
         {
+            var normalizedFileName = AttachmentFileNameNormalizer.Normalize(fileName);
+
             FileSavePicker fileSavePicker = FileSavePickerBuilder.CreateBuilder(App.MainWindow)
                                                                  .Configure((picker) =>
                                                                  {
                                                                      picker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
 
-                                                                     var extension = Path.GetExtension(fileName);
+                                                                     var extension = Path.GetExtension(normalizedFileName);
                                                                      if (string.IsNullOrEmpty(extension))
                                                                      {
                                                                          picker.FileTypeChoices.Add("", new List<string>() { "." });
@@ -69,7 +72,7 @@ namespace Eppie.App.Services
                                                                          picker.FileTypeChoices.Add(extension, new List<string>() { extension });
                                                                      }
 
-                                                                     picker.SuggestedFileName = fileName;
+                                                                     picker.SuggestedFileName = normalizedFileName;
                                                                  })
                                                                  .Build();
 
@@ -86,7 +89,8 @@ namespace Eppie.App.Services
         private static async Task SaveDataToTempFileAndOpenAsync(string fileName, byte[] data)
         {
             var tempFolder = ApplicationData.Current.TemporaryFolder;
-            var file = await tempFolder.CreateFileAsync(fileName, CreationCollisionOption.GenerateUniqueName);
+            var normalizedFileName = AttachmentFileNameNormalizer.Normalize(fileName);
+            var file = await tempFolder.CreateFileAsync(normalizedFileName, CreationCollisionOption.GenerateUniqueName);
             if (file != null)
             {
                 using (var fileStream = await file.OpenAsync(FileAccessMode.ReadWrite))

@@ -37,6 +37,9 @@
       <Platform Solution="*|x86" Project="x86" />
     </Project>
   </Folder>
+  <Folder Name="/Common/">
+    <Project Path="Eppie.App.Common/Eppie.App.Common.csproj" />
+  </Folder>
   <Folder Name="/Core/">
     <Project Path="../../gitmodules/TuviCore/Sources/ComponentBuilder/ComponentBuilder.csproj" />
     <Project Path="../../gitmodules/TuviCore/Sources/Tuvi.Core.Backup.Impl/Tuvi.Core.Backup.Impl.csproj" />

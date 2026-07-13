@@ -28,6 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Eppie.App.Common\Eppie.App.Common.csproj" />
     <ProjectReference Include="..\..\Eppie.App.UI\Eppie.App.UI.Uno\Eppie.App.UI.Uno.csproj" />
   </ItemGroup>
 
