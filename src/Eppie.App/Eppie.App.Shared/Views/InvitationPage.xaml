@@ -26,7 +26,6 @@
         <x:Double x:Key="PageWidth">428.0</x:Double>
         <x:Double x:Key="RemoveButtonSize">22.0</x:Double>
         <x:Double x:Key="RemoveButtonIconSize">14.0</x:Double>
-        <x:Double x:Key="NameMaxWidth">72.0</x:Double>
         <x:Double x:Key="EppieAddressComboBoxHeight">86.0</x:Double>
 
         <x:Double x:Key="BackButtonMaxWidth">216.0</x:Double>
