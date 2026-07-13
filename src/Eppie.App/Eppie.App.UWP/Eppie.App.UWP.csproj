@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -265,6 +265,10 @@
     <ProjectReference Include="..\Eppie.AI\Eppie.AI.csproj">
       <Project>{60575cc5-1bdf-48c5-af2c-6cfa3989f5fa}</Project>
       <Name>Eppie.AI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Eppie.App.Common\Eppie.App.Common.csproj">
+      <Project>{236870f9-6721-3ed8-9ed6-9e32a857bc07}</Project>
+      <Name>Eppie.App.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Eppie.App.UI\Eppie.App.UI.UWP\Eppie.App.UI.UWP.csproj">
       <Project>{a6c30ed1-6213-427e-b255-e5e8c69e6d0e}</Project>
