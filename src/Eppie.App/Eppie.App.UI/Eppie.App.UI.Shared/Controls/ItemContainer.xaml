@@ -9,28 +9,29 @@
              mc:Ignorable="d">
     <Grid x:Name="RootGrid"
           Background="{ThemeResource ControlFillColorDefaultBrush}"
-          BorderBrush="{ThemeResource ControlElevationBorderBrush}"
+          BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
           BorderThickness="1"
           CornerRadius="{x:Bind CornerRadius}"
           Tapped="OnTapped">
-        <ContentPresenter x:Name="ItemContentPresenter"
-                          HorizontalAlignment="Stretch"
-                          VerticalAlignment="Stretch"
-                          Content="{x:Bind ItemContent}" />
+        <ContentControl x:Name="ItemContentControl"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        Content="{x:Bind ItemContent, Mode=OneWay}"
+                        ContentTemplate="{x:Bind ItemTemplate, Mode=OneWay}" />
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="CommonStates">
                 <VisualState x:Name="Normal" />
                 <VisualState x:Name="PointerOver">
                     <VisualState.Setters>
                         <Setter Target="RootGrid.Background" Value="{ThemeResource ControlFillColorSecondaryBrush}" />
-                        <Setter Target="RootGrid.BorderBrush" Value="{ThemeResource ControlElevationBorderBrush}" />
+                        <Setter Target="RootGrid.BorderBrush" Value="{ThemeResource ControlStrokeColorDefaultBrush}" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Pressed">
                     <VisualState.Setters>
                         <Setter Target="RootGrid.Background" Value="{ThemeResource ControlFillColorTertiaryBrush}" />
                         <Setter Target="RootGrid.BorderBrush" Value="{ThemeResource ControlStrokeColorDefaultBrush}" />
-                        <Setter Target="ItemContentPresenter.Foreground" Value="{ThemeResource TextFillColorTertiaryBrush}" />
+                        <Setter Target="ItemContentControl.Foreground" Value="{ThemeResource TextFillColorTertiaryBrush}" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
