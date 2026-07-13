@@ -9,6 +9,7 @@
         <ResourceDictionary Source="ms-appx:///UI/Resources/ThemeResources.xaml" />
 
         <templates:AddressDataTemplates />
+        <templates:ContactDataTemplates />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>
