@@ -38,7 +38,7 @@ using Microsoft.UI.Xaml.Controls;
 namespace Eppie.App.UI.Controls
 {
     [SuppressMessage("Design", "CA1010:Generic collections should implement generic interface", Justification = "ContentControl implements IEnumerable for XAML infrastructure")]
-    public sealed partial class EmailsInputControl : UserControl
+    public sealed partial class TokenizingEmailBox : UserControl
     {
         public ObservableCollection<ContactItem> SelectedContacts
         {
@@ -46,7 +46,7 @@ namespace Eppie.App.UI.Controls
             set { SetValue(SelectedContactsProperty, value); }
         }
         public static readonly DependencyProperty SelectedContactsProperty =
-            DependencyProperty.Register(nameof(SelectedContacts), typeof(object), typeof(EmailsInputControl), new PropertyMetadata(new ObservableCollection<ContactItem>()));
+            DependencyProperty.Register(nameof(SelectedContacts), typeof(object), typeof(TokenizingEmailBox), new PropertyMetadata(new ObservableCollection<ContactItem>()));
 
         public ContactItem UntokenizedContact
         {
@@ -54,7 +54,7 @@ namespace Eppie.App.UI.Controls
             set { SetValue(UntokenizedContactProperty, value); }
         }
         public static readonly DependencyProperty UntokenizedContactProperty =
-            DependencyProperty.Register(nameof(UntokenizedContact), typeof(ContactItem), typeof(EmailsInputControl), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(UntokenizedContact), typeof(ContactItem), typeof(TokenizingEmailBox), new PropertyMetadata(null));
 
 
         public ObservableCollection<ContactItem> Contacts
@@ -63,7 +63,7 @@ namespace Eppie.App.UI.Controls
             set { SetValue(ContactsProperty, value); }
         }
         public static readonly DependencyProperty ContactsProperty =
-            DependencyProperty.Register(nameof(Contacts), typeof(object), typeof(EmailsInputControl), new PropertyMetadata(new ObservableCollection<ContactItem>()));
+            DependencyProperty.Register(nameof(Contacts), typeof(object), typeof(TokenizingEmailBox), new PropertyMetadata(new ObservableCollection<ContactItem>()));
 
 
         public string PlaceholderText
@@ -73,7 +73,7 @@ namespace Eppie.App.UI.Controls
         }
 
         public static readonly DependencyProperty PlaceholderTextProperty =
-            DependencyProperty.Register(nameof(PlaceholderText), typeof(string), typeof(EmailsInputControl), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(PlaceholderText), typeof(string), typeof(TokenizingEmailBox), new PropertyMetadata(null));
 
 
         public bool IsExtraButtonVisible
@@ -83,7 +83,7 @@ namespace Eppie.App.UI.Controls
         }
 
         public static readonly DependencyProperty IsExtraButtonVisibleProperty =
-            DependencyProperty.Register(nameof(IsExtraButtonVisible), typeof(bool), typeof(EmailsInputControl), new PropertyMetadata(false));
+            DependencyProperty.Register(nameof(IsExtraButtonVisible), typeof(bool), typeof(TokenizingEmailBox), new PropertyMetadata(false));
 
 
         public object ExtraButtonContent
@@ -93,7 +93,7 @@ namespace Eppie.App.UI.Controls
         }
 
         public static readonly DependencyProperty ExtraButtonContentProperty =
-            DependencyProperty.Register(nameof(ExtraButtonContent), typeof(object), typeof(EmailsInputControl), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(ExtraButtonContent), typeof(object), typeof(TokenizingEmailBox), new PropertyMetadata(null));
 
 
         public ICommand ExtraCommand
@@ -103,7 +103,27 @@ namespace Eppie.App.UI.Controls
         }
 
         public static readonly DependencyProperty ExtraCommandProperty =
-            DependencyProperty.Register(nameof(ExtraCommand), typeof(ICommand), typeof(EmailsInputControl), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(ExtraCommand), typeof(ICommand), typeof(TokenizingEmailBox), new PropertyMetadata(null));
+
+
+        public DataTemplate SuggestedItemTemplate
+        {
+            get { return (DataTemplate)GetValue(SuggestedItemTemplateProperty); }
+            set { SetValue(SuggestedItemTemplateProperty, value); }
+        }
+
+        public static readonly DependencyProperty SuggestedItemTemplateProperty =
+            DependencyProperty.Register(nameof(SuggestedItemTemplate), typeof(DataTemplate), typeof(TokenizingEmailBox), new PropertyMetadata(null));
+
+
+        public DataTemplate TokenItemTemplate
+        {
+            get { return (DataTemplate)GetValue(TokenItemTemplateProperty); }
+            set { SetValue(TokenItemTemplateProperty, value); }
+        }
+
+        public static readonly DependencyProperty TokenItemTemplateProperty =
+            DependencyProperty.Register(nameof(TokenItemTemplate), typeof(DataTemplate), typeof(TokenizingEmailBox), new PropertyMetadata(null));
 
 
         private string _oldUserInputText = string.Empty;
@@ -268,7 +288,7 @@ namespace Eppie.App.UI.Controls
             }
         }
 
-        public EmailsInputControl()
+        public TokenizingEmailBox()
         {
             InitializeComponent();
         }

@@ -6,8 +6,8 @@
                               xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                               xmlns:local="using:Eppie.App.Views"
                               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                              xmlns:toolkit="using:CommunityToolkit.WinUI"
                               xmlns:triggers="using:Eppie.App.UI.Triggers"
-                              xmlns:ui="using:CommunityToolkit.WinUI"
                               xmlns:viewmodels="using:Tuvi.App.ViewModels"
                               Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
                               mc:Ignorable="d">
@@ -28,26 +28,26 @@
         <XamlUICommand x:Key="DraftAndBackUICommand"
                        x:Uid="DraftAndBackUICommand"
                        Command="{x:Bind ViewModel.GoBackCommand}"
-                       IconSource="{ui:SymbolIconSource Symbol=Back}" />
+                       IconSource="{toolkit:SymbolIconSource Symbol=Back}" />
 
         <XamlUICommand x:Key="MoreUICommand"
                        x:Uid="MoreUICommand"
-                       IconSource="{ui:SymbolIconSource Symbol=More}" />
+                       IconSource="{toolkit:SymbolIconSource Symbol=More}" />
 
         <XamlUICommand x:Key="AttachUICommand"
                        x:Uid="AttachUICommand"
                        Command="{x:Bind ViewModel.AttachFilesCommand}"
-                       IconSource="{ui:SymbolIconSource Symbol=Attach}" />
+                       IconSource="{toolkit:SymbolIconSource Symbol=Attach}" />
 
         <XamlUICommand x:Key="DeleteMessageUICommand"
                        x:Uid="DeleteMessageUICommand"
                        Command="{x:Bind ViewModel.DeleteMessageAndGoBackCommand}"
-                       IconSource="{ui:SymbolIconSource Symbol=Delete}" />
+                       IconSource="{toolkit:SymbolIconSource Symbol=Delete}" />
 
         <XamlUICommand x:Key="SendMessageUICommand"
                        x:Uid="SendMessageUICommand"
                        Command="{x:Bind ViewModel.SendMessageAndGoBackCommand}"
-                       IconSource="{ui:SymbolIconSource Symbol=Send}" />
+                       IconSource="{toolkit:SymbolIconSource Symbol=Send}" />
 
         <DataTemplate x:Key="RemovableAttachmentItemTemplate" x:DataType="viewmodels:RemovableAttachment">
             <controls:AttachmentFileControl DeleteFileCommand="{x:Bind RemoveCommand}"
@@ -129,7 +129,7 @@
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center" />
 
-                        <controls:EmailsInputControl x:Uid="MessageReceiverBox"
+                        <controls:TokenizingEmailBox x:Uid="MessageReceiverBox"
                                                      Grid.Row="0"
                                                      Grid.Column="1"
                                                      HorizontalAlignment="Stretch"
@@ -138,13 +138,15 @@
                                                      ExtraCommand="{x:Bind ViewModel.ToggleHiddenCopyCommand, Mode=OneWay}"
                                                      IsExtraButtonVisible="True"
                                                      SelectedContacts="{x:Bind ViewModel.To, Mode=OneWay}"
+                                                     SuggestedItemTemplate="{StaticResource SuggestContactItemTemplate}"
+                                                     TokenItemTemplate="{StaticResource TokenContactItemTemplate}"
                                                      UntokenizedContact="{x:Bind ViewModel.UntokenizedContactTo, Mode=TwoWay}">
-                            <controls:EmailsInputControl.ExtraButtonContent>
+                            <controls:TokenizingEmailBox.ExtraButtonContent>
                                 <Viewbox HorizontalAlignment="Center" VerticalAlignment="Center">
-                                    <IconSourceElement IconSource="{ui:FontIconSource Glyph={StaticResource HiddenCopyGlyph}}" />
+                                    <IconSourceElement IconSource="{toolkit:FontIconSource Glyph={StaticResource HiddenCopyGlyph}}" />
                                 </Viewbox>
-                            </controls:EmailsInputControl.ExtraButtonContent>
-                        </controls:EmailsInputControl>
+                            </controls:TokenizingEmailBox.ExtraButtonContent>
+                        </controls:TokenizingEmailBox>
 
                         <Grid Grid.Row="1"
                               Grid.Column="0"
@@ -153,12 +155,12 @@
                             <Viewbox Margin="{StaticResource HorizontalMargin}"
                                      HorizontalAlignment="Left"
                                      VerticalAlignment="Center">
-                                <IconSourceElement IconSource="{ui:FontIconSource Glyph={StaticResource HiddenCopyGlyph}}" />
+                                <IconSourceElement IconSource="{toolkit:FontIconSource Glyph={StaticResource HiddenCopyGlyph}}" />
                             </Viewbox>
                         </Grid>
 
                         <!--  Hidden copy (BCC)  -->
-                        <controls:EmailsInputControl x:Uid="BlindCarbonCopyBox"
+                        <controls:TokenizingEmailBox x:Uid="BlindCarbonCopyBox"
                                                      Grid.Row="1"
                                                      Grid.Column="1"
                                                      Margin="{StaticResource BlindCarbonCopyMargin}"
@@ -167,6 +169,8 @@
                                                      Contacts="{x:Bind ViewModel.Contacts, Mode=OneWay}"
                                                      IsExtraButtonVisible="False"
                                                      SelectedContacts="{x:Bind ViewModel.HiddenCopy, Mode=OneWay}"
+                                                     SuggestedItemTemplate="{StaticResource SuggestContactItemTemplate}"
+                                                     TokenItemTemplate="{StaticResource TokenContactItemTemplate}"
                                                      UntokenizedContact="{x:Bind ViewModel.UntokenizedContactHiddenCopy, Mode=TwoWay}"
                                                      Visibility="{x:Bind ViewModel.IsHiddenCopyVisible, Mode=OneWay}" />
 
@@ -278,7 +282,7 @@
                         <MenuFlyoutSeparator Visibility="{x:Bind ViewModel.IsExtraSettingsVisible, Mode=OneWay}" />
 
                         <MenuFlyoutSubItem x:Uid="SecurityMenuSection"
-                                           Icon="{ui:FontIcon Glyph={StaticResource SecurityGlyph}}"
+                                           Icon="{toolkit:FontIcon Glyph={StaticResource SecurityGlyph}}"
                                            Visibility="{x:Bind ViewModel.IsAdvancedSettingsVisible, Mode=OneWay}">
                             <MenuFlyoutSubItem.Items>
                                 <ToggleMenuFlyoutItem x:Uid="MessageEncryptedMenuItem"
@@ -294,7 +298,7 @@
 
                         <MenuFlyoutSubItem x:Name="AIAgentMenu"
                                            x:Uid="AIAgentMenuSection"
-                                           Icon="{ui:FontIcon Glyph={StaticResource AIAgentGlyph}}"
+                                           Icon="{toolkit:FontIcon Glyph={StaticResource AIAgentGlyph}}"
                                            IsEnabled="{x:Bind ViewModel.IsLocalAIEnabled, Mode=OneWay}"
                                            Visibility="{x:Bind ViewModel.IsLocalAIAvailable, Mode=OneWay}" />
                     </MenuFlyout>

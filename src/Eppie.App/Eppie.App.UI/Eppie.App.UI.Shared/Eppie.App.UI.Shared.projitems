@@ -81,9 +81,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\EmailSettingsControl.xaml.cs">
       <DependentUpon>EmailSettingsControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\EmailsInputControl.xaml.cs">
-      <DependentUpon>EmailsInputControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ErrorControl.xaml.cs">
       <DependentUpon>ErrorControl.xaml</DependentUpon>
     </Compile>
@@ -123,6 +120,9 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\SupportDevelopmentControl.xaml.cs">
       <DependentUpon>SupportDevelopmentControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\TokenizingEmailBox.xaml.cs">
+      <DependentUpon>TokenizingEmailBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\WhatsNewControl.xaml.cs">
       <DependentUpon>WhatsNewControl.xaml</DependentUpon>
@@ -166,10 +166,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Controls\EmailSettingsControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Controls\EmailsInputControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -222,6 +218,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Controls\SupportDevelopmentControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Controls\TokenizingEmailBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
