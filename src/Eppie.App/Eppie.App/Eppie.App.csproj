@@ -1,4 +1,4 @@
-﻿<Project Sdk="Uno.Sdk">
+<Project Sdk="Uno.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net10.0-android;net10.0-ios;net10.0-windows10.0.19041;net10.0-browserwasm;net10.0-desktop</TargetFrameworks>
     <!-- Workaround for https://github.com/unoplatform/uno/issues/19377 -->
@@ -106,6 +106,7 @@
     <ProjectReference Include="..\Eppie.App.UI\Eppie.App.UI.Uno\Eppie.App.UI.Uno.csproj" />
     <ProjectReference Include="..\Eppie.App.ViewModels\Eppie.App.ViewModels.csproj" />
     <ProjectReference Include="..\Eppie.Authorization.OAuth2\Eppie.Authorization.OAuth2.csproj" />
+    <ProjectReference Include="..\Eppie.App.Common\Eppie.App.Common.csproj" />
   </ItemGroup>
 
   <Import Project="..\Eppie.App.Shared\Eppie.App.Shared.projitems" Label="Shared" />
