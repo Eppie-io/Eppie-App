@@ -42,14 +42,25 @@ namespace Eppie.App.UI.Controls
     {
         public event EventHandler Invoked;
 
-        public UIElement ItemContent
+        public object ItemContent
         {
-            get { return (UIElement)GetValue(ItemContentProperty); }
+            get { return GetValue(ItemContentProperty); }
             set { SetValue(ItemContentProperty, value); }
         }
 
         public static readonly DependencyProperty ItemContentProperty =
-            DependencyProperty.Register(nameof(ItemContent), typeof(UIElement), typeof(ItemContainer), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(ItemContent), typeof(object), typeof(ItemContainer), new PropertyMetadata(null));
+
+
+        public DataTemplate ItemTemplate
+        {
+            get { return (DataTemplate)GetValue(ItemTemplateProperty); }
+            set { SetValue(ItemTemplateProperty, value); }
+        }
+
+        public static readonly DependencyProperty ItemTemplateProperty =
+            DependencyProperty.Register(nameof(ItemTemplate), typeof(DataTemplate), typeof(ItemContainer), new PropertyMetadata(null));
+
 
 
         private bool _canInvoke;
