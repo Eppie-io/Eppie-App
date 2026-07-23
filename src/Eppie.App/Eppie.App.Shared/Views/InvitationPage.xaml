@@ -193,12 +193,22 @@
                             Background="{ThemeResource CardBackgroundFillColorSecondaryBrush}"
                             CornerRadius="4">
 
-                        <TextBlock Margin="20,16,20,24"
-                                   HorizontalAlignment="Stretch"
-                                   IsTextSelectionEnabled="True"
-                                   LineHeight="24"
-                                   Text="{x:Bind ViewModel.InvitationPreviewText, Mode=OneWay}"
-                                   TextWrapping="WrapWholeWords" />
+                        <StackPanel Margin="20,16,20,24"
+                                    HorizontalAlignment="Stretch"
+                                    Orientation="Vertical">
+                            <TextBlock Margin="0,0,0,16"
+                                       HorizontalAlignment="Stretch"
+                                       FontSize="16"
+                                       FontWeight="SemiBold"
+                                       IsTextSelectionEnabled="True"
+                                       Text="{x:Bind ViewModel.InvitationPreviewTitle, Mode=OneWay}"
+                                       TextWrapping="WrapWholeWords" />
+                            <TextBlock HorizontalAlignment="Stretch"
+                                       IsTextSelectionEnabled="True"
+                                       LineHeight="24"
+                                       Text="{x:Bind ViewModel.InvitationPreviewText, Mode=OneWay}"
+                                       TextWrapping="WrapWholeWords" />
+                        </StackPanel>
                     </Border>
 
                     <Grid>
