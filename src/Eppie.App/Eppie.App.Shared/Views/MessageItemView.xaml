@@ -283,6 +283,7 @@
                     <TextBlock Grid.Column="1"
                                Margin="0,0,16,0"
                                VerticalAlignment="Center"
+                               MaxLines="1"
                                Style="{x:Bind MessageInfo.IsMarkedAsRead, Mode=OneWay, Converter={StaticResource InverseBoolToAccentTextBlockStyleConverter}}"
                                Text="{x:Bind MessageInfo.MessageSubject, Mode=OneWay}"
                                TextTrimming="CharacterEllipsis"
@@ -294,6 +295,7 @@
                     <TextBlock Grid.Column="2"
                                VerticalAlignment="Center"
                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                               MaxLines="1"
                                Text="{x:Bind MessageInfo.PreviewText, Mode=OneWay}"
                                TextTrimming="CharacterEllipsis"
                                TextWrapping="NoWrap">
