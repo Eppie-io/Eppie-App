@@ -78,6 +78,14 @@ namespace Tuvi.App.ViewModels
         }
 
         private string _invitationPreviewText;
+        private string _invitationPreviewTitle;
+
+        public string InvitationPreviewTitle
+        {
+            get => _invitationPreviewTitle;
+            private set => SetProperty(ref _invitationPreviewTitle, value);
+        }
+
         public string InvitationPreviewText
         {
             get => _invitationPreviewText;
@@ -286,16 +294,15 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        private async Task SendInviteAsync(bool? preview)
+        private Task SendInviteAsync(bool? preview)
         {
             if (preview == true)
             {
-                await PreviewInviteAsync().ConfigureAwait(true);
+                PreviewInvite();
+                return Task.CompletedTask;
             }
-            else
-            {
-                await SendInviteAsync().ConfigureAwait(true);
-            }
+
+            return SendInviteAsync();
         }
 
         private async Task SendInviteAsync()
@@ -334,58 +341,22 @@ namespace Tuvi.App.ViewModels
             SendInviteCommand.NotifyCanExecuteChanged();
         }
 
-        private void OnPreviewInvite()
+        private void PreviewInvite()
         {
-            // ToDo: Implement a preview feature for the invitation message.
-            // 1. Load the invitation message template.
-            // 2. Create a new eppie address if the user has selected to create one.
-            // 3. Replace placeholders with actual values (e.g., sender name, Eppie address, download link).
-            // 4. Update InvitationPreviewText property with the generated message.
-            // 5. Navigate to the invitation preview page.
-
-            // Sample invitation message template:
-            // You’re invited to Eppie!
-            // Hi there,
-            // Join me on Eppie.
-            // It lets you send messages peer-to-peer, without relying on email providers, while still working with regular email.
-            // My Eppie address:
-            // <eppie-address>
-            // Install it here: <download-link>
-            // – <sender-name>
-
-            // Note: The font of the text 'You’re invited to Eppie!' is (Medium, 16px) by design.
-
             string eppieAddressString = EppieAddresses[EppieAddressIndex] is AddressItem eppieAddressItem ? eppieAddressItem.Account.DisplayEmail.Address : "<new eppie address>";
             string downloadLink = BrandService.GetHomepage();
             string senderName = SenderAddresses[SenderAddressIndex].DisplayName;
-
-            // Todo: Move template to resource
-            InvitationPreviewText = $"You’re invited to Eppie!\n\nHi there,\n\nJoin me on Eppie. It lets you send messages peer-to-peer, without relying on email providers, while still working with regular email.\n\nMy Eppie address:\n{eppieAddressString}\n\nInstall it here: {downloadLink}\n\n– {senderName}";
+            InvitationPreviewTitle = GetLocalizedString("InvitationSubjectText");
+            InvitationPreviewText = string.Format(
+                System.Globalization.CultureInfo.InvariantCulture,
+                GetLocalizedString("InvitationBodyText"),
+                senderName,
+                eppieAddressString,
+                downloadLink);
 
             InvitationArea = InvitationArea.PreviewArea;
         }
 
-        private async Task PreviewInviteAsync()
-        {
-            // Todo: implement a preview feature for the invitation message.
-            try
-            {
-                OnPreviewInvite();
-
-                //var context = await BuildInviteMessageAsync().ConfigureAwait(true);
-                //if (context is null)
-                //{
-                //    return;
-                //}
-
-                //NavigationService?.NavigateContent(nameof(ComposeMessagePageViewModel), context.MessageData);
-                //ClosePopupAction?.Invoke();
-            }
-            catch (Exception ex)
-            {
-                OnError(ex);
-            }
-        }
 
         private void GoBackToContact()
         {
@@ -416,7 +387,7 @@ namespace Tuvi.App.ViewModels
             var senderAddress = SenderAddresses[SenderAddressIndex];
             var senderName = senderAddress.DisplayName;
             var downloadLink = BrandService.GetHomepage();
-            var subject = string.Format(System.Globalization.CultureInfo.InvariantCulture, GetLocalizedString("InvitationSubjectText"), senderName);
+            var subject = GetLocalizedString("InvitationSubjectText");
             var body = string.Format(System.Globalization.CultureInfo.InvariantCulture, GetLocalizedString("InvitationBodyText"), senderName, eppieAddressString, downloadLink);
 
             var recipients = Recipients.ToList();

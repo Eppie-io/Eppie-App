@@ -1688,27 +1688,22 @@ Subject: {3}
     <comment>The remark text of the item that creates a new Eppie address on the invitation page</comment>
   </data>
   <data name="InvitationSubjectText" xml:space="preserve">
-    <value>{0} invited you to Eppie</value>
-    <comment>The text of the invitation email subject. {0} - Sender name.</comment>
+    <value>You’re invited to Eppie!</value>
+    <comment>The text of the invitation email subject.</comment>
   </data>
   <data name="InvitationBodyText" xml:space="preserve">
-    <value>Hi, {0} invited you to try Eppie.
+    <value>Hi there,
 
-I'm Eppie, and I do email differently.
+Join me on Eppie. It lets you send messages peer-to-peer, without relying on email providers, while still working with regular email.
 
-Instead of storing your messages on corporate servers, I connect you directly to the people you email. Your messages are encrypted on your device and stay that way until they reach the other person. No middlemen, no data mining, no ads.
-You don't have to abandon your current email either. I work seamlessly with Gmail, Outlook, and Proton accounts, so privacy and convenience finally stop being enemies.
+My Eppie address:
+{1}
 
-{0} trusts me with their communications. If you're curious:
-1. Download me from {2}
-2. Add {0} as a contact: {1}
+Install it here: {2}
 
-That's literally it. No forced account creation. No personal information required. No tracking.
-I believe email should be private by default. If you agree, I'm ready when you are.
-
-Eppie
+– {0}
     </value>
-    <comment>The text of the invitation email. {0} - Sender name. {1} - Sender email. {2} - Downloading url.</comment>
+    <comment>The text of the invitation email and preview. {0} - Sender name. {1} - Eppie address. {2} - Download link.</comment>
   </data>
   <data name="RemoveMailboxDialogTitle" xml:space="preserve">
     <value>Remove mailbox?</value>
