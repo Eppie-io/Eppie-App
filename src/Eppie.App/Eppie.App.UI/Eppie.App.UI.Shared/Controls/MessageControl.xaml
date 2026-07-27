@@ -5,6 +5,7 @@
                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                            xmlns:local="using:Eppie.App.UI.Controls"
                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                           xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
                            xmlns:shared="using:Eppie.App.UI.Controls"
                            d:DesignHeight="300"
                            d:DesignWidth="400"
@@ -39,12 +40,15 @@
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0">
-                <controls:WebView2 x:Name="HtmlView" Visibility="{x:Bind HasHtmlBody, Mode=OneWay}" />
+                <!--  To use WebView2 on Linux, you'll need to install libraries https://platform.uno/docs/articles/controls/WebView.html#x11-specifics  -->
+                <muxc:WebView2 x:Name="HtmlView" Visibility="{x:Bind HasHtmlBody, Mode=OneWay}" />
 
                 <ScrollViewer Padding="4" Visibility="{x:Bind HasHtmlBody, Converter={StaticResource InverseBoolToVisibilityConverter}, Mode=OneWay}">
+
                     <TextBlock IsTextSelectionEnabled="True"
                                Style="{StaticResource MessageTextStyle}"
                                Text="{x:Bind TextBody, Mode=OneWay}" />
+
                 </ScrollViewer>
             </Grid>
 

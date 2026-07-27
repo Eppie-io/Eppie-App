@@ -93,7 +93,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\MailBoxesListControl.xaml.cs">
       <DependentUpon>MailBoxesListControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\MessageControl.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\MessageControl.xaml.cs">
+      <DependentUpon>MessageControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\MessageListControl.xaml.cs">
       <DependentUpon>MessageListControl.xaml</DependentUpon>
     </Compile>
@@ -182,6 +184,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Controls\MailBoxesListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Controls\MessageControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
