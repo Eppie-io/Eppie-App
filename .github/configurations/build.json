@@ -252,6 +252,54 @@
         "keywords": [
             "uwp",
             "windows",
+            "all"
+        ],
+        "os": "windows-2022",
+        "prerequisites": {
+            "msbuild": "true",
+            "uno-platform": "false"
+        },
+        "restore": {
+            "tool": "msbuild",
+            "project": "./src/Eppie.App/Eppie.App.UWP/Eppie.App.UWP.csproj",
+            "extra": "-verbosity:minimal -consoleLoggerParameters:Summary -maxCpuCount"
+        },
+        "build": {
+            "tool": "msbuild",
+            "project": "./src/Eppie.App/Eppie.App.UWP/Eppie.App.UWP.csproj",
+            "configuration": "release",
+            "extra": "-property:Platform=ARM64 -verbosity:minimal -consoleLoggerParameters:Summary -maxCpuCount"
+        }
+    },
+
+    {
+        "keywords": [
+            "uwp",
+            "windows",
+            "all"
+        ],
+        "os": "windows-2022",
+        "prerequisites": {
+            "msbuild": "true",
+            "uno-platform": "false"
+        },
+        "restore": {
+            "tool": "msbuild",
+            "project": "./src/Eppie.App/Eppie.App.UWP/Eppie.App.UWP.csproj",
+            "extra": "-verbosity:minimal -consoleLoggerParameters:Summary -maxCpuCount"
+        },
+        "build": {
+            "tool": "msbuild",
+            "project": "./src/Eppie.App/Eppie.App.UWP/Eppie.App.UWP.csproj",
+            "configuration": "release",
+            "extra": "-property:Platform=x64 -verbosity:minimal -consoleLoggerParameters:Summary -maxCpuCount"
+        }
+    },
+
+    {
+        "keywords": [
+            "uwp",
+            "windows",
             "all",
             "autobuild"
         ],
