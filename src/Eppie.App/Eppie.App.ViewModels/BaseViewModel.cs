@@ -23,12 +23,12 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using BackupServiceClientLibrary;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Eppie.App.ViewModels.Services;
 using Tuvi.App.ViewModels.Services;
 using Tuvi.Core.Entities;
+using Tuvi.Core.Web.BackupService.Client;
 using Tuvi.OAuth2;
 using Tuvi.Proton;
 
