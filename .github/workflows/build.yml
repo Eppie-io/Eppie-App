@@ -108,7 +108,10 @@ jobs:
           exit 1
 
   build:
-    name: ${{ matrix.build.framework }} ${{ matrix.os }} '${{ matrix.build.project }}'
+    name: >-
+      ${{ matrix.name != '' && matrix.name || format('{0} {1}', matrix.build.framework, matrix.os ) }}
+      '${{ matrix.build.project }}'
+
     needs: prepare
     strategy:
       fail-fast: false
