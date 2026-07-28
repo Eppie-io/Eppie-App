@@ -181,10 +181,11 @@
             "uno",
             "all"
         ],
-        "os": "macos-latest",
+        "os": "macos-15",
         "prerequisites": {
             "msbuild": "false",
-            "uno-platform": "true"
+            "uno-platform": "true",
+            "xcode": "/Applications/Xcode_26.1.1.app"
         },
         "build": {
             "tool": "dotnet",
