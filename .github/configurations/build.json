@@ -181,7 +181,7 @@
             "uno",
             "all"
         ],
-        "os": "macos-latest",
+        "os": "macos-15",
         "prerequisites": {
             "msbuild": "false",
             "uno-platform": "true",
