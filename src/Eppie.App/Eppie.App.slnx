@@ -57,8 +57,9 @@
     <Project Path="../../gitmodules/TuviCore/Sources/Tuvi.Core.Logging/Tuvi.Core.Logging.csproj" />
     <Project Path="../../gitmodules/TuviCore/Sources/Tuvi.Core.Mail.Impl/Tuvi.Core.Mail.Impl.csproj" />
     <Project Path="../../gitmodules/TuviCore/Sources/Tuvi.Core.Mail/Tuvi.Core.Mail.csproj" />
+    <Project Path="../../gitmodules/TuviCore/Sources/Tuvi.Core.Web.BackupService.Client/Tuvi.Core.Web.BackupService.Client.csproj" />
+    <Project Path="../../gitmodules/TuviCore/Sources/Tuvi.Core.Web.BackupService.Shared/Tuvi.Core.Web.BackupService.Shared.shproj" />
     <Project Path="../../gitmodules/TuviCore/Sources/Tuvi.Core.Web.BackupService/Tuvi.Core.Web.BackupService.csproj" />
-    <Project Path="../../gitmodules/TuviCore/Sources/Tuvi.Core.Web.BackupServiceClient/Tuvi.Core.Web.BackupServiceClient.csproj" />
     <Project Path="../../gitmodules/TuviCore/Sources/Tuvi.Core/Tuvi.Core.csproj" />
     <Project Path="../../gitmodules/TuviCore/Sources/Tuvi.Proton.Impl/Tuvi.Proton.Impl.csproj" />
     <Project Path="../../gitmodules/TuviCore/Sources/Tuvi.Proton/Tuvi.Proton.csproj" />
