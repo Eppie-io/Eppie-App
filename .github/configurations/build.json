@@ -254,6 +254,7 @@
             "windows",
             "all"
         ],
+        "name": "UWP (ARM64)",
         "os": "windows-2022",
         "prerequisites": {
             "msbuild": "true",
@@ -278,6 +279,7 @@
             "windows",
             "all"
         ],
+        "name": "UWP (x64)",
         "os": "windows-2022",
         "prerequisites": {
             "msbuild": "true",
@@ -303,6 +305,7 @@
             "all",
             "autobuild"
         ],
+        "name": "UWP",
         "os": "windows-2022",
         "prerequisites": {
             "msbuild": "true",
@@ -325,6 +328,7 @@
         "keywords": [
             "autobuild"
         ],
+        "name": "Uno Platform",
         "os": "windows-2025-vs2026",
         "prerequisites": {
             "msbuild": "true",
