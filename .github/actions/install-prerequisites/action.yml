@@ -35,7 +35,6 @@ inputs:
 
   xcode-app:
     type: string
-    default: '/Applications/Xcode_26.0.1.app' # https://github.com/actions/runner-images/blob/main/images/macos/macos-15-Readme.md#xcode
 
 runs:
   using: "composite"
