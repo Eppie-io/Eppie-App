@@ -90,7 +90,7 @@ jobs:
       - name: Install Prerequisites
         uses: ./.github/actions/install-prerequisites
         with:
-          uno-platform: true
+          msbuild: true
 
       - name: Assign version
         id: assign-version
@@ -269,9 +269,6 @@ jobs:
           file: ./src/Eppie.App/Eppie.App.UWP/Package.appxmanifest
           find-what: 'io.eppie'
           replace-with: "${{ secrets.WINDOWS_STORE_PROTOCOL_NAME }}"
-
-      - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@30375c66a4eea26614e0d39710365f22f8b0af57 # v3
 
       - name: Restore
         shell: pwsh

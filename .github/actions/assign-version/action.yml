@@ -1,6 +1,6 @@
 ################################################################################
 #                                                                              #
-#   Copyright 2025 Eppie(https://eppie.io)                                     #
+#   Copyright 2025-2026 Eppie(https://eppie.io)                                #
 #                                                                              #
 #   Licensed under the Apache License, Version 2.0 (the "License");            #
 #   you may not use this file except in compliance with the License.           #
@@ -19,18 +19,24 @@
 ---
 
 name: Provide Version
+description: Provides different version formats for the application based on the git tag.
 
 outputs:
-  semantic-version: 
+  semantic-version:
+    description: 'Version format: `{major}.{minor}.{patch}[-{suffix}]+{today}.{run-number}.{run-attempt}.{commit-hash}`. It contains detailed information about the build.'
     value: ${{ steps.provide-version.outputs.semantic-version }}
-  numeric-version: 
+  numeric-version:
+    description: 'Version format: `{major}.{minor}.{build}.0`. It can be used for Windows Store applications.'
     value: ${{ steps.provide-version.outputs.numeric-version }}
-  app-version: 
+  app-version:
+    description: 'The major version of the application.'
     value: ${{ steps.provide-version.outputs.app-version }}
-  app-display-version: 
+  app-display-version:
+    description: 'Version format: `{major}.{minor}.{patch}`. It can be used for displaying the version to users.'
     value: ${{ steps.provide-version.outputs.app-display-version }}
-  artifact-version: 
-    value: ${{ steps.provide-version.outputs.artifact-version}}
+  artifact-version:
+    description: 'Version format: `{major}.{minor}.{patch}[-{suffix}]+{today}.{run-number}`. It can be used for artifacts.'
+    value: ${{ steps.provide-version.outputs.artifact-version }}
 
 runs:
   using: "composite"

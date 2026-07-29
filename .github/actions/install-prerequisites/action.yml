@@ -1,6 +1,6 @@
 ################################################################################
 #                                                                              #
-#   Copyright 2025 Eppie(https://eppie.io)                                     #
+#   Copyright 2024-2026 Eppie(https://eppie.io)                                #
 #                                                                              #
 #   Licensed under the Apache License, Version 2.0 (the "License");            #
 #   you may not use this file except in compliance with the License.           #
@@ -19,22 +19,37 @@
 ---
 
 name: Install Eppie Prerequisites
+description: Installs prerequisites for Eppie projects, including the Uno Platform, MSBuild, MakeAppx, and it can switch the Xcode version on macOS.
 
 inputs:
   uno-platform:
+    description: Whether to install the Uno Platform.
     type: boolean
     default: false
 
   uno-check-skip:
+    description: A space-separated list of Uno Platform checks to skip.
     type: string
     default: 'git xcode vswin vsmac windowshyperv edgewebview2 openjdk androidsdk androidemulator dotnetnewunotemplates'
 
   msbuild:
+    description: Whether to install MSBuild.
+    type: boolean
+    default: false
+
+  makeappx:
+    description: Whether to install MakeAppx.
     type: boolean
     default: false
 
   xcode-app:
+    description: The Xcode version to use.
     type: string
+
+outputs:
+  makeappx-path:
+    description: The path to the MakeAppx executable file.
+    value: ${{ steps.ensure-makeappx.outputs.makeappx-path }}
 
 runs:
   using: "composite"
@@ -43,6 +58,64 @@ runs:
     - name: Setup msbuild
       if: inputs.msbuild == 'true'
       uses: microsoft/setup-msbuild@30375c66a4eea26614e0d39710365f22f8b0af57 # v3.0.0
+
+    - name: Ensure Windows packaging tools
+      if: inputs.makeappx == 'true'
+      id: ensure-makeappx
+      shell: pwsh
+      run: |
+          $makeAppxCommand = Get-Command makeappx.exe -ErrorAction SilentlyContinue
+          if ($null -eq $makeAppxCommand) {
+            $vsWherePath = Join-Path ${env:ProgramFiles(x86)} 'Microsoft Visual Studio\Installer\vswhere.exe'
+            $vsInstallerPath = Join-Path ${env:ProgramFiles(x86)} 'Microsoft Visual Studio\Installer\vs_installer.exe'
+
+            if (-not (Test-Path $vsWherePath)) {
+              throw 'vswhere.exe not found.'
+            }
+
+            if (-not (Test-Path $vsInstallerPath)) {
+              throw 'vs_installer.exe not found.'
+            }
+
+            $installationPath = & $vsWherePath -latest -property installationPath
+            if ([string]::IsNullOrWhiteSpace($installationPath)) {
+              throw 'Visual Studio installation path not found.'
+            }
+
+            & $vsInstallerPath modify --installPath "$installationPath" --add Microsoft.VisualStudio.Component.Windows11SDK.26100 --quiet --norestart --wait
+            if ($LASTEXITCODE -ne 0) {
+              exit $LASTEXITCODE
+            }
+
+            $makeAppxCommand = Get-Command makeappx.exe -ErrorAction SilentlyContinue
+          }
+
+          $makeAppxPath = $makeAppxCommand.Source
+
+          if ([string]::IsNullOrWhiteSpace($makeAppxPath)) {
+            $searchRoots = @(
+              (Join-Path ${env:ProgramFiles(x86)} 'Windows Kits\10\bin'),
+              (Join-Path ${env:ProgramFiles} 'Windows Kits\10\bin'),
+              (Join-Path ${env:ProgramFiles(x86)} 'Windows Kits\10\App Certification Kit'),
+              (Join-Path ${env:ProgramFiles} 'Windows Kits\10\App Certification Kit')
+            ) | Where-Object { -not [string]::IsNullOrWhiteSpace($_) -and (Test-Path $_) }
+
+            $makeAppxCandidates = foreach ($searchRoot in $searchRoots) {
+              Get-ChildItem $searchRoot -Recurse -Filter makeappx.exe -ErrorAction SilentlyContinue
+            }
+
+            $makeAppxPath = $makeAppxCandidates |
+              Sort-Object @{ Expression = { if ($_.FullName -like '*\\x64\\makeappx.exe') { 0 } elseif ($_.FullName -like '*\\x86\\makeappx.exe') { 1 } else { 2 } } }, FullName -Descending |
+              Select-Object -ExpandProperty FullName -First 1
+          }
+
+          if ([string]::IsNullOrWhiteSpace($makeAppxPath)) {
+            throw 'makeappx.exe not found in PATH or common Windows SDK locations.'
+          }
+
+          Write-Host "makeappx path: $makeAppxPath"
+
+          "makeappx-path=$makeAppxPath" >> $env:GITHUB_OUTPUT
 
     - name: Switch Xcode version 
       if: runner.os == 'macOS' && inputs.xcode-app != ''
