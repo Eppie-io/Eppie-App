@@ -302,7 +302,29 @@
         "keywords": [
             "uwp",
             "windows",
-            "all",
+            "all"
+        ],
+        "name": "UWP (x86)",
+        "os": "windows-2022",
+        "prerequisites": {
+            "msbuild": "true",
+            "uno-platform": "false"
+        },
+        "restore": {
+            "tool": "msbuild",
+            "project": "./src/Eppie.App/Eppie.App.UWP/Eppie.App.UWP.csproj",
+            "extra": "-verbosity:minimal -consoleLoggerParameters:Summary -maxCpuCount"
+        },
+        "build": {
+            "tool": "msbuild",
+            "project": "./src/Eppie.App/Eppie.App.UWP/Eppie.App.UWP.csproj",
+            "configuration": "release",
+            "extra": "-property:Platform=x86 -verbosity:minimal -consoleLoggerParameters:Summary -maxCpuCount"
+        }
+    },
+
+    {
+        "keywords": [
             "autobuild"
         ],
         "name": "UWP",
