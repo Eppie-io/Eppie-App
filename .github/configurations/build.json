@@ -146,6 +146,7 @@
             "uno",
             "all"
         ],
+        "name": "WinUI (x86)",
         "os": "windows-2025-vs2026",
         "prerequisites": {
             "msbuild": "true",
@@ -161,7 +162,79 @@
             "project": "./src/Eppie.App/Eppie.App/Eppie.App.csproj",
             "configuration": "release",
             "framework": "net10.0-windows10.0.19041",
+            "extra": "-property:Platform=x86 -verbosity:minimal -consoleLoggerParameters:Summary -maxCpuCount"
+        },
+        "test": {
+            "tool": "dotnet",
+            "projects": [
+                "./src/Eppie.App/Tests/Eppie.App.ViewModels.Tests/Eppie.App.ViewModels.Tests.csproj",
+                "./src/Eppie.App/Tests/Eppie.App.UI.Tests/Eppie.App.UI.Tests.csproj"
+            ],
+            "configuration": "release",
+            "extra": "--nologo --verbosity=minimal"
+        }
+    },
+
+    {
+        "keywords": [
+            "winui",
+            "windows",
+            "uno",
+            "all"
+        ],
+        "name": "WinUI (x64)",
+        "os": "windows-2025-vs2026",
+        "prerequisites": {
+            "msbuild": "true",
+            "uno-platform": "false"
+        },
+        "restore": {
+            "tool": "msbuild",
+            "project": "./src/Eppie.App/Eppie.App.slnx",
             "extra": "-verbosity:minimal -consoleLoggerParameters:Summary -maxCpuCount"
+        },
+        "build": {
+            "tool": "msbuild",
+            "project": "./src/Eppie.App/Eppie.App/Eppie.App.csproj",
+            "configuration": "release",
+            "framework": "net10.0-windows10.0.19041",
+            "extra": "-property:Platform=x64 -verbosity:minimal -consoleLoggerParameters:Summary -maxCpuCount"
+        },
+        "test": {
+            "tool": "dotnet",
+            "projects": [
+                "./src/Eppie.App/Tests/Eppie.App.ViewModels.Tests/Eppie.App.ViewModels.Tests.csproj",
+                "./src/Eppie.App/Tests/Eppie.App.UI.Tests/Eppie.App.UI.Tests.csproj"
+            ],
+            "configuration": "release",
+            "extra": "--nologo --verbosity=minimal"
+        }
+    },
+
+    {
+        "keywords": [
+            "winui",
+            "windows",
+            "uno",
+            "all"
+        ],
+        "name": "WinUI (ARM64)",
+        "os": "windows-2025-vs2026",
+        "prerequisites": {
+            "msbuild": "true",
+            "uno-platform": "false"
+        },
+        "restore": {
+            "tool": "msbuild",
+            "project": "./src/Eppie.App/Eppie.App.slnx",
+            "extra": "-verbosity:minimal -consoleLoggerParameters:Summary -maxCpuCount"
+        },
+        "build": {
+            "tool": "msbuild",
+            "project": "./src/Eppie.App/Eppie.App/Eppie.App.csproj",
+            "configuration": "release",
+            "framework": "net10.0-windows10.0.19041",
+            "extra": "-property:Platform=ARM64 -verbosity:minimal -consoleLoggerParameters:Summary -maxCpuCount"
         },
         "test": {
             "tool": "dotnet",
