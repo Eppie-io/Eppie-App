@@ -71,7 +71,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM64'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\ARM64\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP;AI_ENABLED</DefineConstants>
     <NoWarn>;2008</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>ARM64</PlatformTarget>
@@ -82,7 +82,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM64'">
     <OutputPath>bin\ARM64\Release\</OutputPath>
-    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP;AI_ENABLED</DefineConstants>
     <Optimize>true</Optimize>
     <NoWarn>;2008</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -95,7 +95,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP;AI_ENABLED</DefineConstants>
     <NoWarn>;2008</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -105,7 +105,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP;AI_ENABLED</DefineConstants>
     <Optimize>true</Optimize>
     <NoWarn>;2008</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -117,9 +117,6 @@
   </PropertyGroup>
   <PropertyGroup>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
-  </PropertyGroup>
-  <PropertyGroup>
-    <DefineConstants>$(DefineConstants);AI_ENABLED</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Authorization\AuthConfig.UWP.cs" />
@@ -201,7 +198,6 @@
     <PackageReference Include="CommunityToolkit.Uwp.Triggers" />
     <PackageReference Include="Microsoft.Extensions.AI.Abstractions" />
     <PackageReference Include="Microsoft.Extensions.Hosting" />
-    <PackageReference Include="Microsoft.ML.OnnxRuntimeGenAI.DirectML" />
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" />
     <PackageReference Include="Microsoft.Services.Store.Engagement" />
     <PackageReference Include="Microsoft.UI.Xaml" />
@@ -262,10 +258,6 @@
       <Project>{6c549054-2521-15d2-283b-cfae28c027f8}</Project>
       <Name>Tuvi.Proton</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Eppie.AI\Eppie.AI.csproj">
-      <Project>{60575cc5-1bdf-48c5-af2c-6cfa3989f5fa}</Project>
-      <Name>Eppie.AI</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Eppie.App.Common\Eppie.App.Common.csproj">
       <Project>{236870f9-6721-3ed8-9ed6-9e32a857bc07}</Project>
       <Name>Eppie.App.Common</Name>
@@ -283,6 +275,20 @@
       <Name>Eppie.Authorization.OAuth2</Name>
     </ProjectReference>
   </ItemGroup>
+
+  <!-- Using <Choose><When> forces the legacy Visual Studio project system to correctly evaluate 
+       the conditional block during initial project loading and NuGet package restoration. -->
+  <Choose>
+    <When Condition=" '$(DefineConstants)' != '' And $(DefineConstants.Contains('AI_ENABLED')) ">
+      <ItemGroup>
+        <ProjectReference Include="..\Eppie.AI\Eppie.AI.csproj">
+          <Project>{60575cc5-1bdf-48c5-af2c-6cfa3989f5fa}</Project>
+          <Name>Eppie.AI</Name>
+        </ProjectReference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  
   <ItemGroup>
     <SDKReference Include="Microsoft.Services.Store.Engagement, Version=10.0">
       <Name>Microsoft Engagement Framework</Name>
