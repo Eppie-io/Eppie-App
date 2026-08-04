@@ -31,13 +31,13 @@ namespace Eppie.App.WebViewHelper
 
             return "function postWebViewMessage(message) {" + Environment.NewLine +
                    "  try {" + Environment.NewLine +
-                   "    if (window.hasOwnProperty(\"chrome\") && typeof chrome.webview !== undefined) {" + Environment.NewLine +
+                   "    if (window.hasOwnProperty(\"chrome\") && typeof chrome.webview !== \"undefined\") {" + Environment.NewLine +
                    "      // Windows" + Environment.NewLine +
                    "      chrome.webview.postMessage(message);" + Environment.NewLine +
                    "    } else if (window.hasOwnProperty(\"unoWebView\")) {" + Environment.NewLine +
                    "      // Android" + Environment.NewLine +
                    "      unoWebView.postMessage(message);" + Environment.NewLine +
-                   "    } else if (window.hasOwnProperty(\"webkit\") && typeof webkit.messageHandlers !== undefined) {" + Environment.NewLine +
+                   "    } else if (window.hasOwnProperty(\"webkit\") && typeof webkit.messageHandlers !== \"undefined\" && typeof webkit.messageHandlers.unoWebView !== \"undefined\" ) {" + Environment.NewLine +
                    "      // linux, macOS, iOS" + Environment.NewLine +
                    "      webkit.messageHandlers.unoWebView.postMessage(message);" + Environment.NewLine +
                    "    } else {" + Environment.NewLine +
