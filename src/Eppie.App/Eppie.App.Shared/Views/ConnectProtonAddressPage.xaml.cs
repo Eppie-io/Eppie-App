@@ -22,7 +22,6 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Eppie.App.UI.Controls;
 using Eppie.App.WebViewHelper;
-using Microsoft.UI.Xaml.Controls;
 using Microsoft.Web.WebView2.Core;
 using Tuvi.App.ViewModels;
 using Windows.Web.Http;
@@ -101,7 +100,7 @@ namespace Eppie.App.Views
             }
         }
 
-        private async void OnNavigationCompleted(WebView2 sender, CoreWebView2NavigationCompletedEventArgs args)
+        private async void OnNavigationCompleted(Microsoft.UI.Xaml.Controls.WebView2 sender, CoreWebView2NavigationCompletedEventArgs args)
         {
             if (!args.IsSuccess || args.HttpStatusCode == (int)HttpStatusCode.None)
             {
@@ -120,7 +119,7 @@ namespace Eppie.App.Views
             }
         }
 
-        private void OnWebMessageReceived(WebView2 sender, CoreWebView2WebMessageReceivedEventArgs args)
+        private void OnWebMessageReceived(Microsoft.UI.Xaml.Controls.WebView2 sender, CoreWebView2WebMessageReceivedEventArgs args)
         {
             if (!string.IsNullOrEmpty(args.WebMessageAsJson) &&
                 HumanVerificationResponse.TryDeserialize(args.WebMessageAsJson, out HumanVerificationResponse response))
