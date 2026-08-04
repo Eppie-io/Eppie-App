@@ -73,11 +73,11 @@ namespace Tuvi.App.ViewModels
             private set => SetProperty(ref _humanVerifierUri, value);
         }
 
-        public IRelayCommand HumanVerificationCompletedCommand => new RelayCommand<(string type, string token)>(OnHumanVerificationCompleted);
+        public IRelayCommand HumanVerificationCompletedCommand { get; }
         public IRelayCommand ContinueCommand { get; }
-        public IAsyncRelayCommand OpenSettingsCommand => new AsyncRelayCommand(OnOpenSettings);
-        public IRelayCommand ClosedCommand => new RelayCommand(OnClosed);
-        public IRelayCommand DoneCommand => new RelayCommand(OnDone);
+        public IAsyncRelayCommand OpenSettingsCommand { get; }
+        public IRelayCommand ClosedCommand { get; }
+        public IRelayCommand DoneCommand { get; }
 
         public Action ClosePopupAction { get; set; }
         public bool IsMacOS { get; set; }
@@ -93,6 +93,10 @@ namespace Tuvi.App.ViewModels
             Step = ProtonConnectionStep.Unknown;
 
             ContinueCommand = new RelayCommand(OnContinue, CanContinue);
+            HumanVerificationCompletedCommand = new RelayCommand<(string type, string token)>(OnHumanVerificationCompleted);
+            OpenSettingsCommand = new AsyncRelayCommand(OnOpenSettings);
+            ClosedCommand = new RelayCommand(OnClosed);
+            DoneCommand = new RelayCommand(OnDone);
 
             Email.Errors.CollectionChanged += (s, e) => ContinueCommand.NotifyCanExecuteChanged();
             Password.Errors.CollectionChanged += (s, e) => ContinueCommand.NotifyCanExecuteChanged();
