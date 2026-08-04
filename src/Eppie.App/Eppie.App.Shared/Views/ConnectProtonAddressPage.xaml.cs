@@ -17,9 +17,14 @@
 // ---------------------------------------------------------------------------- //
 
 using System;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Eppie.App.UI.Controls;
+using Eppie.App.WebViewHelper;
+using Microsoft.Web.WebView2.Core;
 using Tuvi.App.ViewModels;
+using Windows.Web.Http;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -41,6 +46,11 @@ namespace Eppie.App.Views
         public ConnectProtonAddressPage()
         {
             this.InitializeComponent();
+
+            // Todo: Remove this piece of code when MacOS will be fixed.
+#if HAS_UNO
+            ViewModel.IsMacOS = OperatingSystem.IsMacOS();
+#endif
 
             ViewModel.ClosePopupAction = ClosePopup;
 
@@ -76,6 +86,65 @@ namespace Eppie.App.Views
             {
                 UpdateFocus();
             };
+        }
+
+        private async void OnStateChanged(object sender, VisualStateChangedEventArgs e)
+        {
+            try
+            {
+                await UpdateHumanVerifierPage().ConfigureAwait(true);
+            }
+            catch (Exception ex)
+            {
+                ViewModel.OnError(ex);
+            }
+        }
+
+        private async void OnNavigationCompleted(Microsoft.UI.Xaml.Controls.WebView2 sender, CoreWebView2NavigationCompletedEventArgs args)
+        {
+            if (!args.IsSuccess || args.HttpStatusCode == (int)HttpStatusCode.None)
+            {
+                return;
+            }
+
+            try
+            {
+                await HumanVerifierWebView.EnsureCoreWebView2Async();
+                string script = ScriptLoader.GetProtonCaptchaScript();
+                await HumanVerifierWebView.ExecuteScriptAsync(script);
+            }
+            catch (Exception ex)
+            {
+                ViewModel.OnError(ex);
+            }
+        }
+
+        private void OnWebMessageReceived(Microsoft.UI.Xaml.Controls.WebView2 sender, CoreWebView2WebMessageReceivedEventArgs args)
+        {
+            if (!string.IsNullOrEmpty(args.WebMessageAsJson) &&
+                HumanVerificationResponse.TryDeserialize(args.WebMessageAsJson, out HumanVerificationResponse response))
+            {
+                if (response?.IsCaptcha() is true)
+                {
+                    ViewModel.HumanVerificationCompletedCommand?.Execute((HumanVerificationResponse.HumanVerificationType, response.Token));
+                }
+            }
+        }
+
+        private async Task UpdateHumanVerifierPage()
+        {
+            const string blankPage = "about:blank";
+
+            await HumanVerifierWebView.EnsureCoreWebView2Async();
+            if (ViewModel.Step == ProtonConnectionStep.HumanVerifier)
+            {
+                string uri = ViewModel.HumanVerifierUri?.ToString() ?? blankPage;
+                HumanVerifierWebView.CoreWebView2.Navigate(uri);
+            }
+            else
+            {
+                HumanVerifierWebView.CoreWebView2.Navigate(blankPage);
+            }
         }
 
         private void ClosePopup()
@@ -130,15 +199,51 @@ namespace Eppie.App.Views
                 control.Focus(FocusState.Programmatic);
             }
         }
+    }
 
-        public static Visibility HideOnStep(ProtonConnectionStep target, ProtonConnectionStep step)
+    internal class HumanVerificationResponse
+    {
+        public static readonly string HumanVerificationType = "captcha";
+        private static readonly string PostMessageCaptchaTypeKey = "pm_captcha";
+
+        [JsonPropertyName("type")]
+        public string PostMessageType { get; set; }
+
+        [JsonPropertyName("token")]
+        public string Token { get; set; }
+
+        public bool IsCaptcha()
         {
-            return target != step ? Visibility.Visible : Visibility.Collapsed;
+            return !string.IsNullOrEmpty(PostMessageType) && PostMessageType == PostMessageCaptchaTypeKey;
         }
 
-        public static Visibility ShowOnStep(ProtonConnectionStep target, ProtonConnectionStep step)
+        public static bool TryDeserialize(string json, out HumanVerificationResponse response)
         {
-            return target == step ? Visibility.Visible : Visibility.Collapsed;
+            response = null;
+            try
+            {
+#if WINDOWS_UWP
+                response = JsonSerializer.Deserialize<HumanVerificationResponse>(json);
+#else
+                response = JsonSerializer.Deserialize<HumanVerificationResponse>(json, ConnectProtonJsonContext.Default.HumanVerificationResponse);
+#endif
+                return true;
+            }
+            catch (ArgumentNullException)
+            { }
+            catch (JsonException)
+            { }
+            catch (NotSupportedException)
+            { }
+
+            return false;
         }
     }
+
+#if !WINDOWS_UWP
+    [JsonSerializable(typeof(HumanVerificationResponse))]
+    internal partial class ConnectProtonJsonContext : JsonSerializerContext
+    {
+    }
+#endif
 }

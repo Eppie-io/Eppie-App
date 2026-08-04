@@ -7,6 +7,8 @@
                                     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
                                     xmlns:local="using:Eppie.App.Views"
                                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                                    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+                                    xmlns:toolkit="using:CommunityToolkit.WinUI"
                                     xmlns:viewmodels="using:Tuvi.App.ViewModels"
                                     Background="Transparent"
                                     Loaded="OnLoaded"
@@ -24,18 +26,30 @@
 
     <local:ConnectProtonAddressPageBase.Resources>
         <x:Double x:Key="PageWidth">428</x:Double>
-        <x:Double x:Key="PageMinHeight">560</x:Double>
+        <x:Double x:Key="PageMinHeight">500</x:Double>
+        <x:Double x:Key="HumanVerifierHeight">592</x:Double>
         <x:Double x:Key="ProgressSize">18</x:Double>
         <x:Double x:Key="IconSize">48</x:Double>
         <x:Double x:Key="IconBorderSize">92</x:Double>
         <CornerRadius x:Key="IconBorderRadius">46</CornerRadius>
         <Thickness x:Key="ControlMargin">0,12,0,12</Thickness>
         <Thickness x:Key="DoneButtonMargin">0,12,0,0</Thickness>
-        <Thickness x:Key="PageContentPadding">24,48,24,24</Thickness>
+        <Thickness x:Key="PageContentPadding">24,0,24,24</Thickness>
+
+        <viewmodels:ProtonConnectionStep x:Key="CredentialsStepKey">Credentials</viewmodels:ProtonConnectionStep>
+        <viewmodels:ProtonConnectionStep x:Key="HumanVerifierStepKey">HumanVerifier</viewmodels:ProtonConnectionStep>
+        <viewmodels:ProtonConnectionStep x:Key="TwoFactorCodeStepKey">TwoFactorCode</viewmodels:ProtonConnectionStep>
+        <viewmodels:ProtonConnectionStep x:Key="UnlockMailboxStepKey">UnlockMailbox</viewmodels:ProtonConnectionStep>
+        <viewmodels:ProtonConnectionStep x:Key="DoneStepKey">Done</viewmodels:ProtonConnectionStep>
     </local:ConnectProtonAddressPageBase.Resources>
 
+    <controls:PopupHostExtensions.TitleContent>
+        <Border x:Name="Empty" />
+    </controls:PopupHostExtensions.TitleContent>
+
     <Grid Width="{StaticResource PageWidth}">
-        <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+        <ScrollViewer x:Name="PageScrollViewer"
+                      HorizontalScrollBarVisibility="Disabled"
                       HorizontalScrollMode="Disabled"
                       VerticalScrollBarVisibility="Auto"
                       VerticalScrollMode="Auto"
@@ -49,7 +63,6 @@
                 <Border Grid.Row="0"
                         Width="{StaticResource IconBorderSize}"
                         Height="{StaticResource IconBorderSize}"
-                        Margin="0,8"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         BorderBrush="{ThemeResource SolidBackgroundFillColorBaseAltBrush}"
@@ -62,11 +75,11 @@
                            Source="ms-appx:///Assets/Svg/Proton.svg" />
                 </Border>
 
-                <Grid Grid.Row="1" Margin="0,20">
+                <Grid Grid.Row="1" Margin="0,28">
 
                     <StackPanel x:Name="CredentialsStep"
                                 Orientation="Vertical"
-                                Visibility="{x:Bind local:ConnectProtonAddressPage.ShowOnStep(viewmodels:ProtonConnectionStep.Credentials, ViewModel.Step), Mode=OneWay}">
+                                Visibility="Collapsed">
                         <TextBlock x:Uid="ConnectProtonAddressCredentialsStepTitle"
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Top"
@@ -109,7 +122,7 @@
 
                     <StackPanel x:Name="TwoFactorCodeStep"
                                 Orientation="Vertical"
-                                Visibility="{x:Bind local:ConnectProtonAddressPage.ShowOnStep(viewmodels:ProtonConnectionStep.TwoFactorCode, ViewModel.Step), Mode=OneWay}">
+                                Visibility="Collapsed">
                         <TextBlock x:Uid="ConnectProtonAddressTwoFactorStepTitle"
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Top"
@@ -139,10 +152,9 @@
                         </controls:ErrorControl>
                     </StackPanel>
 
-
                     <StackPanel x:Name="UnlockMailboxStep"
                                 Orientation="Vertical"
-                                Visibility="{x:Bind local:ConnectProtonAddressPage.ShowOnStep(viewmodels:ProtonConnectionStep.UnlockMailbox, ViewModel.Step), Mode=OneWay}">
+                                Visibility="Collapsed">
                         <TextBlock x:Uid="ConnectProtonAddressUnlockStepTitle"
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Top"
@@ -171,10 +183,9 @@
                         </controls:ErrorControl>
                     </StackPanel>
 
-
                     <StackPanel x:Name="DoneStep"
                                 Orientation="Vertical"
-                                Visibility="{x:Bind local:ConnectProtonAddressPage.ShowOnStep(viewmodels:ProtonConnectionStep.Done, ViewModel.Step), Mode=OneWay}">
+                                Visibility="Collapsed">
                         <TextBlock x:Uid="ConnectProtonAddressDoneStepTitle"
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Top"
@@ -195,13 +206,14 @@
 
                 </Grid>
 
-                <Button Grid.Row="2"
+                <Button x:Name="ContinueButton"
+                        Grid.Row="2"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Bottom"
                         Command="{x:Bind ViewModel.ContinueCommand, Mode=OneWay}"
                         IsEnabled="{x:Bind ViewModel.IsProcess, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
                         Style="{StaticResource AccentButtonStyle}"
-                        Visibility="{x:Bind local:ConnectProtonAddressPage.HideOnStep(viewmodels:ProtonConnectionStep.Done, ViewModel.Step), Mode=OneWay}">
+                        Visibility="Collapsed">
                     <Grid>
                         <ProgressRing Width="{StaticResource ProgressSize}"
                                       Height="{StaticResource ProgressSize}"
@@ -211,11 +223,12 @@
                     </Grid>
                 </Button>
 
-                <StackPanel Grid.Row="2"
+                <StackPanel x:Name="DoneButtonPanel"
+                            Grid.Row="2"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Bottom"
                             Orientation="Vertical"
-                            Visibility="{x:Bind local:ConnectProtonAddressPage.ShowOnStep(viewmodels:ProtonConnectionStep.Done, ViewModel.Step), Mode=OneWay}">
+                            Visibility="Collapsed">
                     <Button x:Uid="ConnectProtonAddressSettingsButton"
                             HorizontalAlignment="Stretch"
                             Command="{x:Bind ViewModel.OpenSettingsCommand, Mode=OneWay}" />
@@ -230,13 +243,111 @@
             </Grid>
         </ScrollViewer>
 
-        <Grid x:Name="HumanVerifierStep" Visibility="{x:Bind local:ConnectProtonAddressPage.ShowOnStep(viewmodels:ProtonConnectionStep.HumanVerifier, ViewModel.Step), Mode=OneWay}">
+        <Grid x:Name="HumanVerifierStep"
+              Height="{StaticResource HumanVerifierHeight}"
+              Visibility="Collapsed">
             <!--
-                ToDo: Implement Human Verifier step. Create WebView2Control that works in all platforms.
-                xmlns:euc="using:Eppie.App.UI.Controls"
-                <euc:WebView2Control WebMessageReceived="OnWebMessageReceived" Source="{x:Bind HumanVerifierUri, Mode=OneWay}"/>
+                ToDo: Add ScrollViewer.
+                Hide vertical scrollbar on WebView2.
+                Get body scrollHeight and set WebView2 height to that value.
             -->
+            <muxc:WebView2 x:Name="HumanVerifierWebView"
+                           HorizontalAlignment="Stretch"
+                           VerticalAlignment="Stretch"
+                           NavigationCompleted="OnNavigationCompleted"
+                           Visibility="Collapsed"
+                           WebMessageReceived="OnWebMessageReceived" />
         </Grid>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="Steps" CurrentStateChanged="OnStateChanged">
+                <VisualState x:Name="Credentials">
+                    <VisualState.StateTriggers>
+                        <toolkit:IsEqualStateTrigger Value="{x:Bind ViewModel.Step, Mode=OneWay}" To="{StaticResource CredentialsStepKey}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="HumanVerifierStep.Visibility" Value="Collapsed" />
+                        <Setter Target="HumanVerifierWebView.Visibility" Value="Collapsed" />
+                        <Setter Target="TwoFactorCodeStep.Visibility" Value="Collapsed" />
+                        <Setter Target="UnlockMailboxStep.Visibility" Value="Collapsed" />
+                        <Setter Target="DoneStep.Visibility" Value="Collapsed" />
+                        <Setter Target="DoneButtonPanel.Visibility" Value="Collapsed" />
+
+                        <Setter Target="PageScrollViewer.Visibility" Value="Visible" />
+                        <Setter Target="CredentialsStep.Visibility" Value="Visible" />
+                        <Setter Target="ContinueButton.Visibility" Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="HumanVerifier">
+                    <VisualState.StateTriggers>
+                        <toolkit:IsEqualStateTrigger Value="{x:Bind ViewModel.Step, Mode=OneWay}" To="{StaticResource HumanVerifierStepKey}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="PageScrollViewer.Visibility" Value="Collapsed" />
+                        <Setter Target="CredentialsStep.Visibility" Value="Collapsed" />
+                        <Setter Target="TwoFactorCodeStep.Visibility" Value="Collapsed" />
+                        <Setter Target="UnlockMailboxStep.Visibility" Value="Collapsed" />
+                        <Setter Target="DoneStep.Visibility" Value="Collapsed" />
+                        <Setter Target="DoneButtonPanel.Visibility" Value="Collapsed" />
+                        <Setter Target="ContinueButton.Visibility" Value="Collapsed" />
+
+                        <Setter Target="HumanVerifierStep.Visibility" Value="Visible" />
+                        <Setter Target="HumanVerifierWebView.Visibility" Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="TwoFactorCode">
+                    <VisualState.StateTriggers>
+                        <toolkit:IsEqualStateTrigger Value="{x:Bind ViewModel.Step, Mode=OneWay}" To="{StaticResource TwoFactorCodeStepKey}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="HumanVerifierStep.Visibility" Value="Collapsed" />
+                        <Setter Target="HumanVerifierWebView.Visibility" Value="Collapsed" />
+                        <Setter Target="CredentialsStep.Visibility" Value="Collapsed" />
+                        <Setter Target="UnlockMailboxStep.Visibility" Value="Collapsed" />
+                        <Setter Target="DoneStep.Visibility" Value="Collapsed" />
+                        <Setter Target="DoneButtonPanel.Visibility" Value="Collapsed" />
+
+                        <Setter Target="PageScrollViewer.Visibility" Value="Visible" />
+                        <Setter Target="TwoFactorCodeStep.Visibility" Value="Visible" />
+                        <Setter Target="ContinueButton.Visibility" Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="UnlockMailbox">
+                    <VisualState.StateTriggers>
+                        <toolkit:IsEqualStateTrigger Value="{x:Bind ViewModel.Step, Mode=OneWay}" To="{StaticResource UnlockMailboxStepKey}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="HumanVerifierStep.Visibility" Value="Collapsed" />
+                        <Setter Target="HumanVerifierWebView.Visibility" Value="Collapsed" />
+                        <Setter Target="CredentialsStep.Visibility" Value="Collapsed" />
+                        <Setter Target="TwoFactorCodeStep.Visibility" Value="Collapsed" />
+                        <Setter Target="DoneStep.Visibility" Value="Collapsed" />
+                        <Setter Target="DoneButtonPanel.Visibility" Value="Collapsed" />
+
+                        <Setter Target="PageScrollViewer.Visibility" Value="Visible" />
+                        <Setter Target="UnlockMailboxStep.Visibility" Value="Visible" />
+                        <Setter Target="ContinueButton.Visibility" Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Done">
+                    <VisualState.StateTriggers>
+                        <toolkit:IsEqualStateTrigger Value="{x:Bind ViewModel.Step, Mode=OneWay}" To="{StaticResource DoneStepKey}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="HumanVerifierStep.Visibility" Value="Collapsed" />
+                        <Setter Target="HumanVerifierWebView.Visibility" Value="Collapsed" />
+                        <Setter Target="CredentialsStep.Visibility" Value="Collapsed" />
+                        <Setter Target="TwoFactorCodeStep.Visibility" Value="Collapsed" />
+                        <Setter Target="UnlockMailboxStep.Visibility" Value="Collapsed" />
+                        <Setter Target="ContinueButton.Visibility" Value="Collapsed" />
+
+                        <Setter Target="PageScrollViewer.Visibility" Value="Visible" />
+                        <Setter Target="DoneStep.Visibility" Value="Visible" />
+                        <Setter Target="DoneButtonPanel.Visibility" Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
     </Grid>
 
 </local:ConnectProtonAddressPageBase>
