@@ -266,6 +266,14 @@
                         <toolkit:IsEqualStateTrigger Value="{x:Bind ViewModel.Step, Mode=OneWay}" To="{StaticResource CredentialsStepKey}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <Setter Target="HumanVerifierStep.Visibility" Value="Collapsed" />
+                        <Setter Target="HumanVerifierWebView.Visibility" Value="Collapsed" />
+                        <Setter Target="TwoFactorCodeStep.Visibility" Value="Collapsed" />
+                        <Setter Target="UnlockMailboxStep.Visibility" Value="Collapsed" />
+                        <Setter Target="DoneStep.Visibility" Value="Collapsed" />
+                        <Setter Target="DoneButtonPanel.Visibility" Value="Collapsed" />
+
+                        <Setter Target="PageScrollViewer.Visibility" Value="Visible" />
                         <Setter Target="CredentialsStep.Visibility" Value="Visible" />
                         <Setter Target="ContinueButton.Visibility" Value="Visible" />
                     </VisualState.Setters>
@@ -276,6 +284,13 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="PageScrollViewer.Visibility" Value="Collapsed" />
+                        <Setter Target="CredentialsStep.Visibility" Value="Collapsed" />
+                        <Setter Target="TwoFactorCodeStep.Visibility" Value="Collapsed" />
+                        <Setter Target="UnlockMailboxStep.Visibility" Value="Collapsed" />
+                        <Setter Target="DoneStep.Visibility" Value="Collapsed" />
+                        <Setter Target="DoneButtonPanel.Visibility" Value="Collapsed" />
+                        <Setter Target="ContinueButton.Visibility" Value="Collapsed" />
+
                         <Setter Target="HumanVerifierStep.Visibility" Value="Visible" />
                         <Setter Target="HumanVerifierWebView.Visibility" Value="Visible" />
                     </VisualState.Setters>
@@ -285,6 +300,14 @@
                         <toolkit:IsEqualStateTrigger Value="{x:Bind ViewModel.Step, Mode=OneWay}" To="{StaticResource TwoFactorCodeStepKey}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <Setter Target="HumanVerifierStep.Visibility" Value="Collapsed" />
+                        <Setter Target="HumanVerifierWebView.Visibility" Value="Collapsed" />
+                        <Setter Target="CredentialsStep.Visibility" Value="Collapsed" />
+                        <Setter Target="UnlockMailboxStep.Visibility" Value="Collapsed" />
+                        <Setter Target="DoneStep.Visibility" Value="Collapsed" />
+                        <Setter Target="DoneButtonPanel.Visibility" Value="Collapsed" />
+
+                        <Setter Target="PageScrollViewer.Visibility" Value="Visible" />
                         <Setter Target="TwoFactorCodeStep.Visibility" Value="Visible" />
                         <Setter Target="ContinueButton.Visibility" Value="Visible" />
                     </VisualState.Setters>
@@ -294,6 +317,14 @@
                         <toolkit:IsEqualStateTrigger Value="{x:Bind ViewModel.Step, Mode=OneWay}" To="{StaticResource UnlockMailboxStepKey}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <Setter Target="HumanVerifierStep.Visibility" Value="Collapsed" />
+                        <Setter Target="HumanVerifierWebView.Visibility" Value="Collapsed" />
+                        <Setter Target="CredentialsStep.Visibility" Value="Collapsed" />
+                        <Setter Target="TwoFactorCodeStep.Visibility" Value="Collapsed" />
+                        <Setter Target="DoneStep.Visibility" Value="Collapsed" />
+                        <Setter Target="DoneButtonPanel.Visibility" Value="Collapsed" />
+
+                        <Setter Target="PageScrollViewer.Visibility" Value="Visible" />
                         <Setter Target="UnlockMailboxStep.Visibility" Value="Visible" />
                         <Setter Target="ContinueButton.Visibility" Value="Visible" />
                     </VisualState.Setters>
@@ -303,6 +334,14 @@
                         <toolkit:IsEqualStateTrigger Value="{x:Bind ViewModel.Step, Mode=OneWay}" To="{StaticResource DoneStepKey}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <Setter Target="HumanVerifierStep.Visibility" Value="Collapsed" />
+                        <Setter Target="HumanVerifierWebView.Visibility" Value="Collapsed" />
+                        <Setter Target="CredentialsStep.Visibility" Value="Collapsed" />
+                        <Setter Target="TwoFactorCodeStep.Visibility" Value="Collapsed" />
+                        <Setter Target="UnlockMailboxStep.Visibility" Value="Collapsed" />
+                        <Setter Target="ContinueButton.Visibility" Value="Collapsed" />
+
+                        <Setter Target="PageScrollViewer.Visibility" Value="Visible" />
                         <Setter Target="DoneStep.Visibility" Value="Visible" />
                         <Setter Target="DoneButtonPanel.Visibility" Value="Visible" />
                     </VisualState.Setters>

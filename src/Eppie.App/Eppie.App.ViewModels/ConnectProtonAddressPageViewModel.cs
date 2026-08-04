@@ -247,6 +247,7 @@ namespace Tuvi.App.ViewModels
         {
             TwoFactorCodeProvided?.Invoke(this, new TwoFactorCodeEventArgs(true, string.Empty));
             MailboxPasswordProvided?.Invoke(this, new MailboxPasswordEventArgs(true, string.Empty));
+            HumanVerificationCompleted?.Invoke(this, new HumanVerificationEventArgs(true, string.Empty, string.Empty));
         }
 
         private async Task ConnectAccountAsync(bool reconnect)
@@ -389,7 +390,7 @@ namespace Tuvi.App.ViewModels
                     ClosePopupAction?.Invoke();
                     TwoFactorCodeProvided?.Invoke(this, new TwoFactorCodeEventArgs(true, string.Empty));
                     MailboxPasswordProvided?.Invoke(this, new MailboxPasswordEventArgs(true, string.Empty));
-                    HumanVerificationCompleted?.Invoke(this, new HumanVerificationEventArgs(false, string.Empty, string.Empty));
+                    HumanVerificationCompleted?.Invoke(this, new HumanVerificationEventArgs(true, string.Empty, string.Empty));
 
                 }).ConfigureAwait(false);
             }
