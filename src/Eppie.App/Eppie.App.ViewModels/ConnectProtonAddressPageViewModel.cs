@@ -23,6 +23,7 @@ using CommunityToolkit.Mvvm.Input;
 using Tuvi.App.ViewModels.Validation;
 using Tuvi.Auth.Proton.Exceptions;
 using Tuvi.Core.Entities;
+using Tuvi.Proton;
 using Tuvi.Proton.Primitive.Messages.Errors;
 
 namespace Tuvi.App.ViewModels
@@ -65,16 +66,26 @@ namespace Tuvi.App.ViewModels
             }
         }
 
+        private Uri _humanVerifierUri;
+        public Uri HumanVerifierUri
+        {
+            get => _humanVerifierUri;
+            private set => SetProperty(ref _humanVerifierUri, value);
+        }
+
+        public IRelayCommand HumanVerificationCompletedCommand => new RelayCommand<(string type, string token)>(OnHumanVerificationCompleted);
         public IRelayCommand ContinueCommand { get; }
         public IAsyncRelayCommand OpenSettingsCommand => new AsyncRelayCommand(OnOpenSettings);
         public IRelayCommand ClosedCommand => new RelayCommand(OnClosed);
         public IRelayCommand DoneCommand => new RelayCommand(OnDone);
 
         public Action ClosePopupAction { get; set; }
+        public bool IsMacOS { get; set; }
         private Account AccountData { get; set; }
 
         private event EventHandler<TwoFactorCodeEventArgs> TwoFactorCodeProvided;
         private event EventHandler<MailboxPasswordEventArgs> MailboxPasswordProvided;
+        private event EventHandler<HumanVerificationEventArgs> HumanVerificationCompleted;
 
         public ConnectProtonAddressPageViewModel() : base()
         {
@@ -99,6 +110,12 @@ namespace Tuvi.App.ViewModels
             ShowStep(ProtonConnectionStep.Credentials);
 
             base.OnNavigatedTo(data);
+        }
+
+        public override void OnError(Exception e)
+        {
+            ForceClosePopup();
+            base.OnError(e);
         }
 
         private async void OnContinue()
@@ -141,9 +158,6 @@ namespace Tuvi.App.ViewModels
                     case ProtonConnectionStep.Done:
                         OnDone();
                         break;
-                    case ProtonConnectionStep.HumanVerifier:
-                        // Todo: Issue #479 add human verification page
-                        throw new NotImplementedException();
                 }
             }
             catch (OperationCanceledException)
@@ -154,7 +168,6 @@ namespace Tuvi.App.ViewModels
             }
             catch (Exception ex)
             {
-                ForceClosePopup();
                 OnError(ex);
             }
 
@@ -213,6 +226,11 @@ namespace Tuvi.App.ViewModels
             return !property.HasErrors;
         }
 
+        private void OnHumanVerificationCompleted((string type, string token) result)
+        {
+            HumanVerificationCompleted?.Invoke(this, new HumanVerificationEventArgs(false, result.type, result.token));
+        }
+
         private async Task OnOpenSettings()
         {
             var account = await Core.GetAccountAsync(new EmailAddress(Email.Value)).ConfigureAwait(true);
@@ -247,11 +265,19 @@ namespace Tuvi.App.ViewModels
 
         private async Task<Account> LoginAsync()
         {
+            HumanVerifier humanVerifier = ProvideHumanVerificationToken;
+
+            // Todo: Remove this piece of code when MacOS will be fixed.
+            if (IsMacOS)
+            {
+                humanVerifier = null;
+            }
+
             ProtonCredentials protonCredentials = await ProtonLoginHelper.LoginAsync(Email.Value,
                                                                                      Password.Value,
                                                                                      ProvideTwoFactorCode,
                                                                                      ProvideMailboxPassword,
-                                                                                     null, // Todo: Issue #479 add human verification page
+                                                                                     humanVerifier,
                                                                                      default).ConfigureAwait(true);
 
             return CreateOrUpdateProtonAccount(protonCredentials);
@@ -291,7 +317,24 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        private async void ShowStep(ProtonConnectionStep step, bool error = false)
+        private Task<(bool completed, string verificationType, string token)> ProvideHumanVerificationToken(Uri verifierUrl, Exception previousAttemptException, CancellationToken cancellationToken)
+        {
+            var tcs = new TaskCompletionSource<(bool, string, string)>();
+
+            HumanVerificationCompleted += OnEvent;
+
+            ShowStep(ProtonConnectionStep.HumanVerifier, previousAttemptException != null, verifierUrl);
+
+            return tcs.Task;
+
+            void OnEvent(object sender, HumanVerificationEventArgs eventArgs)
+            {
+                HumanVerificationCompleted -= OnEvent;
+                tcs.SetResult((!eventArgs.IsCanceled, eventArgs.Type ?? string.Empty, eventArgs.Token ?? string.Empty));
+            }
+        }
+
+        private async void ShowStep(ProtonConnectionStep step, bool error = false, Uri humanVerifierUri = null)
         {
             try
             {
@@ -302,6 +345,7 @@ namespace Tuvi.App.ViewModels
                     TwoFactorCode.Value = string.Empty;
                     MailboxPassword.Value = string.Empty;
 
+                    HumanVerifierUri = humanVerifierUri;
                     Step = step;
 
                     if (Step == ProtonConnectionStep.OpenSettings)
@@ -315,7 +359,6 @@ namespace Tuvi.App.ViewModels
             }
             catch (Exception ex)
             {
-                ForceClosePopup();
                 OnError(ex);
             }
         }
@@ -346,6 +389,7 @@ namespace Tuvi.App.ViewModels
                     ClosePopupAction?.Invoke();
                     TwoFactorCodeProvided?.Invoke(this, new TwoFactorCodeEventArgs(true, string.Empty));
                     MailboxPasswordProvided?.Invoke(this, new MailboxPasswordEventArgs(true, string.Empty));
+                    HumanVerificationCompleted?.Invoke(this, new HumanVerificationEventArgs(false, string.Empty, string.Empty));
 
                 }).ConfigureAwait(false);
             }
@@ -403,6 +447,19 @@ namespace Tuvi.App.ViewModels
             {
                 IsCanceled = isCanceled;
                 Password = password;
+            }
+        }
+
+        private class HumanVerificationEventArgs
+        {
+            public bool IsCanceled { get; private set; }
+            public string Type { get; private set; }
+            public string Token { get; private set; }
+            public HumanVerificationEventArgs(bool isCanceled, string type, string token)
+            {
+                IsCanceled = isCanceled;
+                Type = type;
+                Token = token;
             }
         }
     }
