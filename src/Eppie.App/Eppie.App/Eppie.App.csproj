@@ -13,8 +13,8 @@
     <!-- App Identifier -->
     <ApplicationId>io.eppie.app</ApplicationId>
     <!-- Versions -->
-    <ApplicationDisplayVersion>1.2.26</ApplicationDisplayVersion>
-    <ApplicationVersion>9</ApplicationVersion>
+    <ApplicationDisplayVersion>1.2.30</ApplicationDisplayVersion>
+    <ApplicationVersion>10</ApplicationVersion>
     <!-- Package Publisher -->
     <ApplicationPublisher>Finebits OU</ApplicationPublisher>
     <!-- Package Description -->
