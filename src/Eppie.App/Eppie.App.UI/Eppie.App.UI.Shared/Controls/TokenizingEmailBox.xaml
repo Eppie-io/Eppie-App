@@ -45,11 +45,11 @@
                 Padding="0"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Bottom"
+                local:ToolTipProvider.ToolTip="{x:Bind ExtraButtonToolTip, Mode=OneWay}"
                 Command="{x:Bind ExtraCommand, Mode=OneWay}"
                 Content="{x:Bind ExtraButtonContent, Mode=OneWay}"
                 CornerRadius="{ThemeResource ControlCornerRadius}"
                 Style="{StaticResource TokenizingTextBoxQueryButtonStyle}"
-                local:ToolTipProvider.ToolTip="{x:Bind ExtraButtonToolTip, Mode=OneWay}"
                 Visibility="{x:Bind IsExtraButtonVisible, Mode=OneWay}" />
     </Grid>
 </UserControl>
