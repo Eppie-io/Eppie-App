@@ -755,7 +755,7 @@ namespace Eppie.App.ViewModels.Tests
         }
 
         [Test]
-        public void CopyContactAddressCommandWithFullNameAndEmailCopiesExtendedFormat()
+        public void CopyContactAddressCommandWithFullNameAndEmailCopiesEmailOnly()
         {
             // Arrange
             var contact = CreateContact("test@example.com", "John Doe");
@@ -769,7 +769,7 @@ namespace Eppie.App.ViewModels.Tests
                 ((RelayCommand<(ContactItem, IClipboardProvider)>)vm.CopyContactAddressCommand).Execute((contactItem, clipboard));
 
                 // Assert
-                Assert.That(clipboard.LastSetContent, Is.EqualTo("John Doe <test@example.com>"));
+                Assert.That(clipboard.LastSetContent, Is.EqualTo("test@example.com"));
             }
         }
 

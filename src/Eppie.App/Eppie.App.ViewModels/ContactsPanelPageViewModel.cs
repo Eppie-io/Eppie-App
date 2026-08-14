@@ -235,15 +235,15 @@ namespace Tuvi.App.ViewModels
                     return;
                 }
 
-                string formattedAddress = contactItem.GetFormattedAddress();
+                string emailAddress = contactItem.Email?.Address;
 
-                if (string.IsNullOrEmpty(formattedAddress))
+                if (string.IsNullOrEmpty(emailAddress))
                 {
                     OnError(new InvalidOperationException("Selected contact does not have an email address."));
                     return;
                 }
 
-                clipboard.SetClipboardContent(formattedAddress);
+                clipboard.SetClipboardContent(emailAddress);
             }
             catch (Exception ex)
             {
