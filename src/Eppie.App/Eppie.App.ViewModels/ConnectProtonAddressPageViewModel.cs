@@ -230,9 +230,23 @@ namespace Tuvi.App.ViewModels
             return !property.HasErrors;
         }
 
-        private void OnHumanVerificationCompleted((string type, string token) result)
+        private async void OnHumanVerificationCompleted((string type, string token) result)
         {
-            HumanVerificationCompleted?.Invoke(this, new HumanVerificationEventArgs(false, result.type, result.token));
+            try
+            {
+                await DispatcherService.RunAsync(() =>
+                {
+                    HumanVerifierUri = null;
+                    IsProcess = true;
+                    Step = ProtonConnectionStep.Credentials;
+                }).ConfigureAwait(true);
+
+                HumanVerificationCompleted?.Invoke(this, new HumanVerificationEventArgs(false, result.type, result.token));
+            }
+            catch (Exception ex)
+            {
+                OnError(ex);
+            }
         }
 
         private async Task OnOpenSettings()
