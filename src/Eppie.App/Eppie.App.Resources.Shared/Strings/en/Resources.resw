@@ -358,6 +358,10 @@ You need to enable IMAP for this account first and try again.</value>
     <value>Enter email address or name</value>
     <comment>Placeholder text for the message receiver</comment>
   </data>
+  <data name="MessageReceiverBox.ExtraButtonToolTip" xml:space="preserve">
+    <value>Hidden copy</value>
+    <comment>The tooltip for the toggle hidden copy (BCC) button</comment>
+  </data>
   <data name="BlindCarbonCopyBox.PlaceholderText" xml:space="preserve">
     <value>Add contacts to hidden copy</value>
     <comment>Placeholder text for a blind carbon copy (BCC) of message</comment>

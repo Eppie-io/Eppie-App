@@ -106,6 +106,16 @@ namespace Eppie.App.UI.Controls
             DependencyProperty.Register(nameof(ExtraCommand), typeof(ICommand), typeof(TokenizingEmailBox), new PropertyMetadata(null));
 
 
+        public string ExtraButtonToolTip
+        {
+            get { return (string)GetValue(ExtraButtonToolTipProperty); }
+            set { SetValue(ExtraButtonToolTipProperty, value); }
+        }
+
+        public static readonly DependencyProperty ExtraButtonToolTipProperty =
+            DependencyProperty.Register(nameof(ExtraButtonToolTip), typeof(string), typeof(TokenizingEmailBox), new PropertyMetadata(null));
+
+
         public DataTemplate SuggestedItemTemplate
         {
             get { return (DataTemplate)GetValue(SuggestedItemTemplateProperty); }
