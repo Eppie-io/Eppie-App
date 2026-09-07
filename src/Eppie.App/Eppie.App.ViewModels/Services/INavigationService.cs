@@ -16,12 +16,40 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
+using Tuvi.App.ViewModels.Common;
+using Tuvi.Core.Entities;
+using Tuvi.OAuth2;
+using TuviPgpLib.Entities;
+
 namespace Tuvi.App.ViewModels.Services
 {
     public interface INavigationService
     {
-        void Navigate(string pageKey, object parameter = null);
-        void NavigateContent(string pageKey, object parameter = null);
+        void NavigateToMainPage();
+        void NavigateToWelcomePage();
+
+        void NavigateToSeedGenerator();
+        void NavigateToSeedRestorer();
+        void NavigateToSeedRestorer(SeedRestoreActions action);
+
+        void NavigateToPasswordManager(PasswordActions action);
+        void NavigateToPasswordManager(PasswordStartContext context);
+
+        void NavigateToMessageComposer(NewMessageData messageData);
+        void NavigateToMessageViewer(MessageInfo messageInfo);
+
+        void NavigateToEppieAddressSettings(Account account = null);
+        void NavigateToBitcoinAddressSettings(Account account = null);
+        void NavigateToEthereumAddressSettings(Account account = null);
+        void NavigateToProtonAddressSettings(Account account = null);
+        void NavigateToEmailAddressSettings(Account account = null, bool isReloginNeeded = false);
+        void NavigateToEmailAddressSettings(MailService mailService);
+
+        void NavigateToLocalAIAgentSettings(LocalAIAgent agent = null);
+
+        void NavigateToListPgpKeys();
+        void NavigateToPgpKeyInformation(PgpKeyInfo info);
+
         bool CanGoBack();
         void GoBack();
         void ExitApplication();

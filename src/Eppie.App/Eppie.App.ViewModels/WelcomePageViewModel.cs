@@ -23,8 +23,8 @@ namespace Tuvi.App.ViewModels
 {
     public class WelcomePageViewModel : BaseViewModel
     {
-        public ICommand CreateAccountCommand => new RelayCommand(() => NavigationService?.Navigate(nameof(SeedGeneratePageViewModel)));
+        public ICommand CreateAccountCommand => new RelayCommand(() => NavigationService?.NavigateToSeedGenerator());
 
-        public ICommand RestoreAccountCommand => new RelayCommand(() => NavigationService?.Navigate(nameof(SeedRestorePageViewModel)));
+        public ICommand RestoreAccountCommand => new RelayCommand(() => NavigationService?.NavigateToSeedRestorer());
     }
 }

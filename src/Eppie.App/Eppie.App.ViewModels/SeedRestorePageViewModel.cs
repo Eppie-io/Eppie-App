@@ -139,7 +139,7 @@ namespace Tuvi.App.ViewModels
                     SeedPhrase = SeedPhrase.GetPhrase()
                 };
 
-                NavigationService?.Navigate(nameof(PasswordPageViewModel), context);
+                NavigationService?.NavigateToPasswordManager(context);
             }
             catch (Exception e)
             {

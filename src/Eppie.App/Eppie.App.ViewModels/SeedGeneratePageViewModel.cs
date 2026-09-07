@@ -65,7 +65,7 @@ namespace Tuvi.App.ViewModels
 
         public ICommand CopySeedCommand => new RelayCommand<IClipboardProvider>(CopySeed);
 
-        public ICommand AcceptSeedCommand => new RelayCommand(() => NavigationService?.Navigate(nameof(PasswordPageViewModel), PasswordActions.SetPassword));
+        public ICommand AcceptSeedCommand => new RelayCommand(() => NavigationService?.NavigateToPasswordManager(PasswordActions.SetPassword));
 
         public ICommand BackCommand => new RelayCommand(() => NavigationService?.GoBack());
 

@@ -47,7 +47,7 @@ namespace Tuvi.App.ViewModels
 
         public IReadOnlyList<string> ManifestLanguages => LocalizationService.ManifestLanguages;
 
-        public ICommand ChangeMasterPasswordCommand => new RelayCommand(() => NavigationService?.Navigate(nameof(PasswordPageViewModel), PasswordActions.ChangePassword));
+        public ICommand ChangeMasterPasswordCommand => new RelayCommand(() => NavigationService?.NavigateToPasswordManager(PasswordActions.ChangePassword));
 
         public ICommand ExportBackupCommand => new AsyncRelayCommand<IFileOperationProvider>(ExportBackupToFileAsync);
 
@@ -146,7 +146,7 @@ namespace Tuvi.App.ViewModels
                 if (isConfirmed)
                 {
                     await Core.ResetApplicationAsync().ConfigureAwait(true);
-                    NavigationService?.Navigate(nameof(WelcomePageViewModel));
+                    NavigationService?.NavigateToWelcomePage();
                 }
             }
             catch (Exception e)

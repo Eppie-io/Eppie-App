@@ -148,7 +148,7 @@ namespace Tuvi.App.ViewModels
         {
             if (MessageInfo != null)
             {
-                NavigationService?.NavigateContent(nameof(ComposeMessagePageViewModel), new ReplyMessageData(MessageInfo, GetLocalizedString("MessageHeadLines"), Core.GetTextUtils(), _messageLoadTask));
+                NavigationService?.NavigateToMessageComposer(new ReplyMessageData(MessageInfo, GetLocalizedString("MessageHeadLines"), Core.GetTextUtils(), _messageLoadTask));
             }
         }
 
@@ -156,7 +156,7 @@ namespace Tuvi.App.ViewModels
         {
             if (MessageInfo != null)
             {
-                NavigationService?.NavigateContent(nameof(ComposeMessagePageViewModel), new ReplyAllMessageData(MessageInfo, GetLocalizedString("MessageHeadLines"), Core.GetTextUtils(), _messageLoadTask));
+                NavigationService?.NavigateToMessageComposer(new ReplyAllMessageData(MessageInfo, GetLocalizedString("MessageHeadLines"), Core.GetTextUtils(), _messageLoadTask));
             }
         }
 
@@ -164,7 +164,7 @@ namespace Tuvi.App.ViewModels
         {
             if (MessageInfo != null)
             {
-                NavigationService?.NavigateContent(nameof(ComposeMessagePageViewModel), new ForwardMessageData(MessageInfo, GetLocalizedString("MessageHeadLines"), Core.GetTextUtils(), _messageLoadTask));
+                NavigationService?.NavigateToMessageComposer(new ForwardMessageData(MessageInfo, GetLocalizedString("MessageHeadLines"), Core.GetTextUtils(), _messageLoadTask));
             }
         }
 

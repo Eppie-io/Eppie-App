@@ -225,8 +225,7 @@ namespace Eppie.App
             frame.NavigationFailed += OnNavigationFailed;
             frame.Navigated += OnFrameNavigated;
 
-            // ToDo: use nameof(Eppie.App.Views) and add dot(.) inside NavigationService
-            NavigationService = new NavigationService(frame, "Eppie.App.Views.");
+            NavigationService = new NavigationService(frame);
 
             _errorHandler = new ErrorHandler();
             _errorHandler.SetMessageService(new MessageService(() => XamlRoot));

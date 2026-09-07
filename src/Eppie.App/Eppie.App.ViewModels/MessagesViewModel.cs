@@ -399,11 +399,11 @@ namespace Tuvi.App.ViewModels
             {
                 if (messageInfo.Folder.IsDraft)
                 {
-                    NavigationService?.NavigateContent(nameof(ComposeMessagePageViewModel), new DraftMessageData(messageInfo, Core.GetTextUtils(), messageInfo.IsEmptyBody ? GetMessageBodyAsync(messageInfo) : null));
+                    NavigationService?.NavigateToMessageComposer(new DraftMessageData(messageInfo, Core.GetTextUtils(), messageInfo.IsEmptyBody ? GetMessageBodyAsync(messageInfo) : null));
                 }
                 else
                 {
-                    NavigationService?.NavigateContent(nameof(MessagePageViewModel), messageInfo);
+                    NavigationService?.NavigateToMessageViewer(messageInfo);
                 }
             }
         }
