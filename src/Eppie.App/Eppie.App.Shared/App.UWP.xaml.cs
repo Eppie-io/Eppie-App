@@ -53,7 +53,7 @@ namespace Eppie.App
                 {
                     if (rootFrame.Content is null)
                     {
-                        await NavigateToStartPage(rootFrame).ConfigureAwait(true);
+                        await NavigateToStartPage().ConfigureAwait(true);
                     }
                     // Ensure the current window is active
                     Window.Current.Activate();
@@ -129,7 +129,7 @@ namespace Eppie.App
 
                 if (rootFrame.Content is null)
                 {
-                    await NavigateToStartPage(rootFrame).ConfigureAwait(true);
+                    await NavigateToStartPage().ConfigureAwait(true);
                 }
 
                 // Ensure the current window is active
@@ -161,19 +161,6 @@ namespace Eppie.App
             }
 
             return rootFrame;
-        }
-
-        private async System.Threading.Tasks.Task NavigateToStartPage(Frame rootFrame)
-        {
-            // does database exist
-            if (await Core.IsFirstApplicationStartAsync().ConfigureAwait(true))
-            {
-                rootFrame.Navigate(typeof(WelcomePage));
-            }
-            else
-            {
-                rootFrame.Navigate(typeof(PasswordPage), PasswordActions.EnterPassword);
-            }
         }
 
         private void HandleProtocolActivation(ProtocolActivatedEventArgs args)

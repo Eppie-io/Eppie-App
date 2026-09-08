@@ -57,15 +57,7 @@ namespace Eppie.App
 
                 if (rootFrame.Content == null)
                 {
-                    // does database exist
-                    if (await Core.IsFirstApplicationStartAsync().ConfigureAwait(true))
-                    {
-                        rootFrame.Navigate(typeof(WelcomePage));
-                    }
-                    else
-                    {
-                        rootFrame.Navigate(typeof(PasswordPage), PasswordActions.EnterPassword);
-                    }
+                    await NavigateToStartPage().ConfigureAwait(true);
                 }
                 // Ensure the current window is active
                 MainWindow.Activate();

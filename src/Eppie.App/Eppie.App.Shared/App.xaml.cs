@@ -237,6 +237,24 @@ namespace Eppie.App
             return frame;
         }
 
+        private async Task NavigateToStartPage()
+        {
+            if (NavigationService is null)
+            {
+                throw new InvalidOperationException("NavigationService is not initialized");
+            }
+
+            // does database exist
+            if (await Core.IsFirstApplicationStartAsync().ConfigureAwait(true))
+            {
+                NavigationService.NavigateToWelcomePage();
+            }
+            else
+            {
+                NavigationService.NavigateToPasswordManager(PasswordActions.EnterPassword);
+            }
+        }
+
         private async void OnWipeAllDataNeeded(object sender, EventArgs e)
         {
             try
