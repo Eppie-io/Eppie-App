@@ -473,13 +473,9 @@ namespace Tuvi.App.ViewModels
     {
         public MailBoxesModel MailBoxesModel { get; private set; }
 
-        public ICommand WriteNewMessageCommand
-        {
-            get
-            {
-                return new AsyncRelayCommand(() => WriteNewMessageAsync(null));
-            }
-        }
+        private ICommand _writeNewMessageCommand;
+        public ICommand WriteNewMessageCommand => _writeNewMessageCommand ?? (_writeNewMessageCommand = new AsyncRelayCommand(() => WriteNewMessageAsync()));
+
 
         public ObservableCollection<Problem> Problems { get; } = new ObservableCollection<Problem>();
 
@@ -497,7 +493,7 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        public async Task WriteNewMessageAsync(Action<object> navigateContentFrameAction)
+        public async Task WriteNewMessageAsync()
         {
             try
             {
@@ -520,14 +516,7 @@ namespace Tuvi.App.ViewModels
                         messageData = new SelectedAccountNewMessageData(MailBoxesModel.SelectedItem.Account.Accounts[0]);
                     }
 
-                    if (navigateContentFrameAction is null)
-                    {
-                        NavigationService?.NavigateToMessageComposer(messageData);
-                    }
-                    else
-                    {
-                        navigateContentFrameAction?.Invoke(messageData);
-                    }
+                    NavigationService?.NavigateToMessageComposer(messageData);
                 }
                 else
                 {
@@ -963,10 +952,39 @@ namespace Tuvi.App.ViewModels
             MailBoxesModel = new MailBoxesModel(mailBoxItemClick, mailBoxItemDrop);
         }
 
-        public void OnShowAllMessages()
+        public void ShowAllMessages(IErrorHandler errorHandler)
         {
             WeakReferenceMessenger.Default.Send(new ClearSelectedContactMessage());
             MailBoxesModel.SelectedItem = null;
+
+            NavigationService.NavigateToAllMessages(errorHandler);
+        }
+
+        public void ShowMailBoxMessages(MailBoxItem mailBoxItem, IErrorHandler errorHandler)
+        {
+            WeakReferenceMessenger.Default.Send(new ClearSelectedContactMessage());
+            NavigationService.NavigateToFolderMessages(mailBoxItem, errorHandler);
+        }
+
+        public void ShowContactMessages(ContactItem contactItem, IErrorHandler errorHandler)
+        {
+            MailBoxesModel.SelectedItem = null;
+            NavigationService.NavigateToContactMessages(contactItem, errorHandler);
+        }
+
+        public void ShowAbout()
+        {
+            NavigationService.NavigateToAbout();
+        }
+
+        public void ShowAddressManager()
+        {
+            NavigationService.NavigateToAddressManager();
+        }
+
+        public void ShowAppSettings()
+        {
+            NavigationService.NavigateToAppSettings();
         }
 
         public async void MailBoxItemDropMessages(MailBoxItem item)

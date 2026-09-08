@@ -43,7 +43,7 @@ namespace Eppie.App.Views
 
     internal sealed partial class MainPage : MainPageBase, IErrorHandler
     {
-        public ICommand OpenComposeMessageCommand => new RelayCommand(OpenComposeMessageC);
+        public ICommand OpenComposeMessageCommand => new RelayCommand(OpenComposeMessage);
 
         public ICommand ShowAllMessagesCommand => new RelayCommand(ShowAllMessages);
 
@@ -63,7 +63,7 @@ namespace Eppie.App.Views
 
         public ICommand ShowAboutPageCommand => new RelayCommand(ShowAboutPage);
 
-        public ICommand OpenAddressManagerCommand => new RelayCommand(ShowAddressManagerPane);
+        public ICommand ShowAddressManagerCommand => new RelayCommand(ShowAddressManager);
 
         public ICommand OpenContactsPanelCommand => new RelayCommand(ToggleContactsPanelPane);
 
@@ -147,7 +147,7 @@ namespace Eppie.App.Views
 
         private void ShowAboutPage()
         {
-            contentFrame.Navigate(typeof(AboutPage));
+            ViewModel.ShowAbout();
         }
 
         private void ShowPreview()
@@ -169,9 +169,9 @@ namespace Eppie.App.Views
             }
         }
 
-        private void ShowAddressManagerPane()
+        private void ShowAddressManager()
         {
-            contentFrame.Navigate(typeof(AddressManagerPage));
+            ViewModel.ShowAddressManager();
         }
 
         private void ToggleContactsPanelPane()
@@ -203,6 +203,8 @@ namespace Eppie.App.Views
             splitView.IsPaneOpen = true;
             _openedPane = kind;
 
+            // Todo: Move paneFrame to UI Component.
+
             switch (kind)
             {
                 case SidePaneKind.AIAgentsPanel:
@@ -228,7 +230,7 @@ namespace Eppie.App.Views
             {
                 if (await ViewModel.IsAccountListEmptyAsync())
                 {
-                    ShowAddressManagerPane();
+                    ShowAddressManager();
                 }
             }
             catch (Exception ex)
@@ -255,20 +257,19 @@ namespace Eppie.App.Views
         }
 
 
-        private void OpenComposeMessageC()
+        private void OpenComposeMessage()
         {
-            _ = ViewModel.WriteNewMessageAsync((messageData) => contentFrame.Navigate(typeof(ComposeMessagePage), messageData));
+            _ = ViewModel.WriteNewMessageAsync();
         }
 
         private void ShowAllMessages()
         {
-            ViewModel.OnShowAllMessages();
-            contentFrame.Navigate(typeof(AllMessagesPage), new AllMessagesPageViewModel.NavigationData() { ErrorHandler = this });
+            ViewModel.ShowAllMessages(this);
         }
 
         private void ShowAppSettings()
         {
-            contentFrame.Navigate(typeof(AppSettingsPage), new AllMessagesPageViewModel.NavigationData() { ErrorHandler = this });
+            ViewModel.ShowAppSettings();
         }
 
         [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Event handler is referenced from XAML and must be an instance method.")]
@@ -306,14 +307,12 @@ namespace Eppie.App.Views
 
         private void MailBoxItemClick(MailBoxItem mailBoxItem)
         {
-            WeakReferenceMessenger.Default.Send(new ClearSelectedContactMessage());
-            contentFrame.Navigate(typeof(FolderMessagesPage), new FolderMessagesPageViewModel.NavigationData() { MailBoxItem = mailBoxItem, ErrorHandler = this });
+            ViewModel.ShowMailBoxMessages(mailBoxItem, this);
         }
 
         private void OnContactSelected(object recipient, ContactSelectedMessage message)
         {
-            ViewModel.MailBoxesModel.SelectedItem = null;
-            contentFrame.Navigate(typeof(ContactMessagesPage), new ContactMessagesPageViewModel.NavigationData() { ContactItem = message.Value, ErrorHandler = this });
+            ViewModel.ShowContactMessages(message.Value, this);
         }
 
         private void NewFolder(MailBoxItem mailBoxItem)

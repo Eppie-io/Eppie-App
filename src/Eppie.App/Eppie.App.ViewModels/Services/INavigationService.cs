@@ -38,6 +38,13 @@ namespace Tuvi.App.ViewModels.Services
         void NavigateToMessageComposer(NewMessageData messageData);
         void NavigateToMessageViewer(MessageInfo messageInfo);
 
+        void NavigateToAllMessages(IErrorHandler errorHandler);
+        void NavigateToFolderMessages(MailBoxItem mailBoxItem, IErrorHandler errorHandler);
+        void NavigateToContactMessages(ContactItem contactItem, IErrorHandler errorHandler);
+        void NavigateToAbout();
+        void NavigateToAddressManager();
+        void NavigateToAppSettings();
+
         void NavigateToEppieAddressSettings(Account account = null);
         void NavigateToBitcoinAddressSettings(Account account = null);
         void NavigateToEthereumAddressSettings(Account account = null);

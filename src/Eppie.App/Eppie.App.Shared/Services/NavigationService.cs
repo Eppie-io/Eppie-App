@@ -50,7 +50,6 @@ namespace Eppie.App.Services
             ContentFrame = contentFrame;
         }
 
-
         public void NavigateToMainPage()
         {
             Navigate(typeof(MainPage));
@@ -95,6 +94,47 @@ namespace Eppie.App.Services
         public void NavigateToMessageViewer(MessageInfo messageInfo)
         {
             NavigateContent(typeof(MessagePage), messageInfo);
+        }
+
+        public void NavigateToAllMessages(IErrorHandler errorHandler)
+        {
+            NavigateContent(typeof(AllMessagesPage),
+                            new AllMessagesPageViewModel.NavigationData() { ErrorHandler = errorHandler });
+        }
+
+        public void NavigateToFolderMessages(MailBoxItem mailBoxItem, IErrorHandler errorHandler)
+        {
+            NavigateContent(typeof(FolderMessagesPage),
+                            new FolderMessagesPageViewModel.NavigationData()
+                            {
+                                MailBoxItem = mailBoxItem,
+                                ErrorHandler = errorHandler
+                            });
+        }
+
+        public void NavigateToContactMessages(ContactItem contactItem, IErrorHandler errorHandler)
+        {
+            NavigateContent(typeof(ContactMessagesPage),
+                            new ContactMessagesPageViewModel.NavigationData()
+                            {
+                                ContactItem = contactItem,
+                                ErrorHandler = errorHandler
+                            });
+        }
+
+        public void NavigateToAbout()
+        {
+            NavigateContent(typeof(AboutPage));
+        }
+
+        public void NavigateToAddressManager()
+        {
+            NavigateContent(typeof(AddressManagerPage));
+        }
+
+        public void NavigateToAppSettings()
+        {
+            NavigateContent(typeof(AppSettingsPage));
         }
 
         public void NavigateToEppieAddressSettings(Account account = null)
