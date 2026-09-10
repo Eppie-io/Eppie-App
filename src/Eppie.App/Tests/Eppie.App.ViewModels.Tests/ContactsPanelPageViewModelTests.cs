@@ -664,11 +664,11 @@ namespace Eppie.App.ViewModels.Tests
                 var contactItem = new ContactItem(contact);
                 await ((AsyncRelayCommand<ContactItem>)vm.ComposeEmailCommand).ExecuteAsync(contactItem).ConfigureAwait(false);
 
-                Assert.That(navService.LastNavigatedPage, Is.EqualTo(nameof(ComposeMessagePageViewModel)));
-                Assert.That(navService.LastNavigationData, Is.Not.Null);
-                Assert.That(navService.LastNavigationData, Is.TypeOf<SelectedContactNewMessageData>());
+                Assert.That(navService.LastContentPage, Is.EqualTo(TestNavigationService.Page.MessageComposer));
+                Assert.That(navService.LastContentData, Is.Not.Null);
+                Assert.That(navService.LastContentData, Is.TypeOf<SelectedContactNewMessageData>());
 
-                var messageData = (SelectedContactNewMessageData)navService.LastNavigationData!;
+                var messageData = (SelectedContactNewMessageData)navService.LastContentData!;
                 Assert.That(messageData.Account.Email.Address, Is.EqualTo("acc@local"));
                 Assert.That(messageData.To, Is.EqualTo(contact.Email.ToString()));
             }
@@ -693,7 +693,7 @@ namespace Eppie.App.ViewModels.Tests
                 await ((AsyncRelayCommand<ContactItem>)vm.ComposeEmailCommand).ExecuteAsync(contactItem).ConfigureAwait(false);
 
                 // Should not navigate when no accounts are available
-                Assert.That(navService.LastNavigatedPage, Is.Null);
+                Assert.That(navService.LastContentPage, Is.Null);
                 Assert.That(messageService.ShowAddAccountMessageCalled, Is.True);
             }
         }
@@ -714,7 +714,7 @@ namespace Eppie.App.ViewModels.Tests
                 await ((AsyncRelayCommand<ContactItem>)vm.ComposeEmailCommand).ExecuteAsync(contactItem).ConfigureAwait(false);
 
                 // Should not navigate when email is null
-                Assert.That(navService.LastNavigatedPage, Is.Null);
+                Assert.That(navService.LastContentPage, Is.Null);
 
                 // Should report error
                 Assert.That(errors.Errors.Count, Is.EqualTo(1));
