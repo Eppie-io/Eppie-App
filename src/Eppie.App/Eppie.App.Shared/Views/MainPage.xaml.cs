@@ -74,8 +74,6 @@ namespace Eppie.App.Views
 
         public ICommand ToggleLeftPaneCommand => new RelayCommand(ToggleLeftPane);
 
-        public ICommand ShowPreviewCommand => new RelayCommand(ShowPreview);
-
         public ICommand OpenInviteDialogCommand => new RelayCommand(OpenInvitationDialog);
 
         public ICommand ClosePaneCommand => new RelayCommand(ClosePane);
@@ -132,11 +130,6 @@ namespace Eppie.App.Views
         private void OpenInvitationDialog()
         {
             ViewModel.OpenInvitationDialog();
-        }
-
-        private void ShowPreview()
-        {
-            ViewModel.ShowPreview();
         }
 
         private SidePaneKind _openedPane = SidePaneKind.None;
