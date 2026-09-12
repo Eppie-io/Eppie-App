@@ -16,10 +16,14 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-using Tuvi.App.ViewModels.Services;
 using System;
-using System.Globalization;
-using System.Diagnostics.CodeAnalysis;
+using Eppie.App.Views;
+using Tuvi.App.ViewModels;
+using Tuvi.App.ViewModels.Common;
+using Tuvi.App.ViewModels.Services;
+using Tuvi.Core.Entities;
+using Tuvi.OAuth2;
+using TuviPgpLib.Entities;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -35,12 +39,10 @@ namespace Eppie.App.Services
     {
         protected Frame MainFrame { get; }
         protected Frame ContentFrame { get; private set; }
-        protected string PageTypePrefix { get; }
 
-        public NavigationService(Frame mainFrame, string pageTypePrefix)
+        public NavigationService(Frame mainFrame)
         {
             MainFrame = mainFrame;
-            PageTypePrefix = pageTypePrefix;
         }
 
         public void SetContentFrame(Frame contentFrame)
@@ -48,14 +50,143 @@ namespace Eppie.App.Services
             ContentFrame = contentFrame;
         }
 
-        private Frame GetGoBackFrame()
+        public void NavigateToMainPage()
         {
-            if (ContentFrame != null && ContentFrame.IsLoaded && ContentFrame.CanGoBack)
-            {
-                return ContentFrame;
-            }
+            Navigate(typeof(MainPage));
+        }
 
-            return MainFrame;
+        public void NavigateToWelcomePage()
+        {
+            Navigate(typeof(WelcomePage));
+        }
+
+        public void NavigateToSeedGenerator()
+        {
+            Navigate(typeof(SeedGeneratePage));
+        }
+
+        public void NavigateToSeedRestorer()
+        {
+            Navigate(typeof(SeedRestorePage));
+        }
+
+        public void NavigateToSeedRestorer(SeedRestoreActions action)
+        {
+            Navigate(typeof(SeedRestorePage), action);
+        }
+
+        public void NavigateToPasswordManager(PasswordActions action)
+        {
+            Navigate(typeof(PasswordPage), action);
+        }
+
+        public void NavigateToPasswordManager(PasswordStartContext context)
+        {
+            Navigate(typeof(PasswordPage), context);
+        }
+
+
+        public void NavigateToMessageComposer(NewMessageData messageData)
+        {
+            NavigateContent(typeof(ComposeMessagePage), messageData);
+        }
+
+        public void NavigateToMessageViewer(MessageInfo messageInfo)
+        {
+            NavigateContent(typeof(MessagePage), messageInfo);
+        }
+
+        public void NavigateToAllMessages(IErrorHandler errorHandler)
+        {
+            NavigateContent(typeof(AllMessagesPage),
+                            new AllMessagesPageViewModel.NavigationData() { ErrorHandler = errorHandler });
+        }
+
+        public void NavigateToFolderMessages(MailBoxItem mailBoxItem, IErrorHandler errorHandler)
+        {
+            NavigateContent(typeof(FolderMessagesPage),
+                            new FolderMessagesPageViewModel.NavigationData()
+                            {
+                                MailBoxItem = mailBoxItem,
+                                ErrorHandler = errorHandler
+                            });
+        }
+
+        public void NavigateToContactMessages(ContactItem contactItem, IErrorHandler errorHandler)
+        {
+            NavigateContent(typeof(ContactMessagesPage),
+                            new ContactMessagesPageViewModel.NavigationData()
+                            {
+                                ContactItem = contactItem,
+                                ErrorHandler = errorHandler
+                            });
+        }
+
+        public void NavigateToAbout()
+        {
+            NavigateContent(typeof(AboutPage));
+        }
+
+        public void NavigateToAddressManager()
+        {
+            NavigateContent(typeof(AddressManagerPage));
+        }
+
+        public void NavigateToAppSettings()
+        {
+            NavigateContent(typeof(AppSettingsPage));
+        }
+
+        public void NavigateToEppieAddressSettings(Account account = null)
+        {
+            NavigateContent(typeof(EppieAddressSettingsPage), account);
+        }
+
+        public void NavigateToBitcoinAddressSettings(Account account = null)
+        {
+            NavigateContent(typeof(BitcoinAddressSettingsPage), account);
+        }
+
+        public void NavigateToEthereumAddressSettings(Account account = null)
+        {
+            NavigateContent(typeof(EthereumAddressSettingsPage), account);
+        }
+
+        public void NavigateToProtonAddressSettings(Account account = null)
+        {
+            NavigateContent(typeof(ProtonAddressSettingsPage), account);
+        }
+
+        public void NavigateToEmailAddressSettings(Account account = null, bool isReloginNeeded = false)
+        {
+            if (isReloginNeeded)
+            {
+                NavigateContent(typeof(EmailAddressSettingsPage), new EmailAddressSettingsPageViewModel.NeedReloginData { Account = account });
+            }
+            else
+            {
+                NavigateContent(typeof(EmailAddressSettingsPage), account);
+            }
+        }
+
+        public void NavigateToEmailAddressSettings(MailService mailService)
+        {
+            NavigateContent(typeof(EmailAddressSettingsPage), mailService);
+        }
+
+        public void NavigateToLocalAIAgentSettings(LocalAIAgent agent = null)
+        {
+            NavigateContent(typeof(LocalAIAgentSettingsPage), agent);
+        }
+
+        public void NavigateToListPgpKeys()
+        {
+            NavigateContent(typeof(PgpKeysPage));
+        }
+
+        public void NavigateToPgpKeyInformation(PgpKeyInfo info)
+        {
+            NavigateContent(typeof(PgpKeyPage), info);
         }
 
         public bool CanGoBack()
@@ -73,53 +204,30 @@ namespace Eppie.App.Services
             }
         }
 
-        [SuppressMessage("ILLink", "IL2057:Unrecognized value passed to the parameter 'typeName' of method 'System.Type.GetType(System.String)'. It's not possible to guarantee the availability of the target type.", Justification = "Pages are located in the same assembly; resolving by name at runtime is intended and safe in this app.")]
-        // TODO: Need to change Navigation mechanism to avoid using Type.GetType
-        public void Navigate(string pageKey, object parameter = null)
-        {
-            string pageTypeName = GetPageTypeNameFromKey(pageKey);
-            Type pageType = Type.GetType(pageTypeName);
-            if (pageType != null)
-            {
-                MainFrame?.Navigate(pageType, parameter);
-            }
-        }
-
-        [SuppressMessage("ILLink", "IL2057:Unrecognized value passed to the parameter 'typeName' of method 'System.Type.GetType(System.String)'. It's not possible to guarantee the availability of the target type.", Justification = "Pages are located in the same assembly; resolving by name at runtime is intended and safe in this app.")]
-        public void NavigateContent(string pageKey, object parameter = null)
-        {
-            var frame = ContentFrame ?? MainFrame;
-            string pageTypeName = GetPageTypeNameFromKey(pageKey);
-            Type pageType = Type.GetType(pageTypeName);
-            if (pageType != null)
-            {
-                frame?.Navigate(pageType, parameter);
-            }
-        }
-
         public void ExitApplication()
         {
             Application.Current.Exit(); // ToDo: Uno0001
         }
 
-        protected string GetPageTypeNameFromKey(string pageKey)
+        private void Navigate(Type pageType, object parameter = null)
         {
-            if (pageKey == null)
+            MainFrame?.Navigate(pageType, parameter);
+        }
+
+        private void NavigateContent(Type pageType, object parameter = null)
+        {
+            var frame = ContentFrame ?? MainFrame;
+            frame?.Navigate(pageType, parameter);
+        }
+
+        private Frame GetGoBackFrame()
+        {
+            if (ContentFrame != null && ContentFrame.IsLoaded && ContentFrame.CanGoBack)
             {
-                throw new ArgumentNullException(nameof(pageKey));
+                return ContentFrame;
             }
 
-            const string ending = "viewmodel";
-
-            if (pageKey.ToLower(CultureInfo.InvariantCulture).EndsWith(ending, StringComparison.Ordinal))
-            {
-                int indexToRemoveFrom = pageKey.Length - ending.Length;
-                return PageTypePrefix + pageKey.Remove(indexToRemoveFrom);
-            }
-            else
-            {
-                return PageTypePrefix + pageKey;
-            }
+            return MainFrame;
         }
     }
 }

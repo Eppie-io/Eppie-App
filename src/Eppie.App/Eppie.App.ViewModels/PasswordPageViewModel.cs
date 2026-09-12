@@ -236,7 +236,7 @@ namespace Tuvi.App.ViewModels
                     }
                     else
                     {
-                        NavigationService?.Navigate(nameof(MainPageViewModel));
+                        NavigationService?.NavigateToMainPage();
                     }
                 }
             }
@@ -356,7 +356,7 @@ namespace Tuvi.App.ViewModels
 
         private void DoForgotPassword()
         {
-            NavigationService?.Navigate(nameof(SeedRestorePageViewModel), SeedRestoreActions.ResetPassword);
+            NavigationService?.NavigateToSeedRestorer(SeedRestoreActions.ResetPassword);
         }
 
         private void DoCancel()

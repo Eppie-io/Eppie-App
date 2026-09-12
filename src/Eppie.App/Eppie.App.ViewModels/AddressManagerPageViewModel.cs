@@ -74,23 +74,23 @@ namespace Tuvi.App.ViewModels
                         await MessageService.ShowProtonConnectAddressDialogAsync().ConfigureAwait(true);
                         return;
                     case AddressGroupType.Eppie:
-                        NavigationService?.NavigateContent(nameof(EppieAddressSettingsPageViewModel));
+                        NavigationService?.NavigateToEppieAddressSettings();
                         return;
                     case AddressGroupType.Bitcoin:
-                        NavigationService?.NavigateContent(nameof(BitcoinAddressSettingsPageViewModel));
+                        NavigationService?.NavigateToBitcoinAddressSettings();
                         return;
                     case AddressGroupType.Ethereum:
-                        NavigationService?.NavigateContent(nameof(EthereumAddressSettingsPageViewModel));
+                        NavigationService?.NavigateToEthereumAddressSettings();
                         return;
                     case AddressGroupType.Gmail:
-                        NavigationService?.NavigateContent(nameof(EmailAddressSettingsPageViewModel), MailService.Gmail);
+                        NavigationService?.NavigateToEmailAddressSettings(MailService.Gmail);
                         return;
                     case AddressGroupType.Outlook:
-                        NavigationService?.NavigateContent(nameof(EmailAddressSettingsPageViewModel), MailService.Outlook);
+                        NavigationService?.NavigateToEmailAddressSettings(MailService.Outlook);
                         return;
                     case AddressGroupType.OtherEmail:
                     default:
-                        NavigationService?.NavigateContent(nameof(EmailAddressSettingsPageViewModel), MailService.Unknown);
+                        NavigationService?.NavigateToEmailAddressSettings(MailService.Unknown);
                         return;
                 }
             }

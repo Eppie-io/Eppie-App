@@ -225,8 +225,7 @@ namespace Eppie.App
             frame.NavigationFailed += OnNavigationFailed;
             frame.Navigated += OnFrameNavigated;
 
-            // ToDo: use nameof(Eppie.App.Views) and add dot(.) inside NavigationService
-            NavigationService = new NavigationService(frame, "Eppie.App.Views.");
+            NavigationService = new NavigationService(frame);
 
             _errorHandler = new ErrorHandler();
             _errorHandler.SetMessageService(new MessageService(() => XamlRoot));
@@ -236,6 +235,24 @@ namespace Eppie.App
             ConfigurePreferredMinimumSize();
 
             return frame;
+        }
+
+        private async Task NavigateToStartPage()
+        {
+            if (NavigationService is null)
+            {
+                throw new InvalidOperationException("NavigationService is not initialized");
+            }
+
+            // does database exist
+            if (await Core.IsFirstApplicationStartAsync().ConfigureAwait(true))
+            {
+                NavigationService.NavigateToWelcomePage();
+            }
+            else
+            {
+                NavigationService.NavigateToPasswordManager(PasswordActions.EnterPassword);
+            }
         }
 
         private async void OnWipeAllDataNeeded(object sender, EventArgs e)

@@ -59,7 +59,7 @@ namespace Tuvi.App.ViewModels
         {
             if (item is PgpKeyInfo keyInformation)
             {
-                NavigationService?.NavigateContent(nameof(PgpKeyPageViewModel), keyInformation);
+                NavigationService?.NavigateToPgpKeyInformation(keyInformation);
             }
         }
 
