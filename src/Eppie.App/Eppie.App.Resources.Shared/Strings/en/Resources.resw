@@ -2108,4 +2108,48 @@ Example tooltip: "From: alice@example.com"</comment>
     <value>Message includes attachments</value>
     <comment>Tooltip for attachments in the message information block</comment>
   </data>
+  <data name="LeftPanelUICommand.Description" xml:space="preserve">
+    <value>Hide/Show sidebar</value>
+    <comment>Description for the command that hides or shows the sidebar</comment>
+  </data>
+  <data name="WhatsNewUICommand.Description" xml:space="preserve">
+    <value>What's new</value>
+    <comment>Description for the command that opens what's new popup window</comment>
+  </data>
+  <data name="SupportUICommand.Label" xml:space="preserve">
+    <value>Support Eppie</value>
+    <comment>Label for the command that opens popup window to support Eppie</comment>
+  </data>
+  <data name="InviteUICommand.Label" xml:space="preserve">
+    <value>Invite</value>
+    <comment>Label for the command that opens popup window to invite users</comment>
+  </data>
+  <data name="MainPageUICommand.Label" xml:space="preserve">
+    <value>Main page</value>
+    <comment>Label for the command that navigates to the main(home) page</comment>
+  </data>
+  <data name="MailboxesUICommand.Label" xml:space="preserve">
+    <value>Mailboxes</value>
+    <comment>Label for the command that opens the mailboxes pane</comment>
+  </data>
+  <data name="ContactsUICommand.Label" xml:space="preserve">
+    <value>Contacts</value>
+    <comment>Label for the command that opens the contacts pane</comment>
+  </data>
+  <data name="AddressManagerUICommand.Label" xml:space="preserve">
+    <value>Address manager</value>
+    <comment>Label for the command that navigates to the address manager page</comment>
+  </data>
+  <data name="AIAgentSettingsUICommand.Label" xml:space="preserve">
+    <value>AI agent settings</value>
+    <comment>Label for the command that navigates to the AI agent settings page</comment>
+  </data>
+  <data name="AboutUICommand.Label" xml:space="preserve">
+    <value>About</value>
+    <comment>Label for the command that navigates to the about page</comment>
+  </data>
+  <data name="AppSettingsUICommand.Label" xml:space="preserve">
+    <value>App settings</value>
+    <comment>Label for the command that navigates to the app settings page</comment>
+  </data>
 </root>

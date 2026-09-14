@@ -160,8 +160,6 @@ namespace Tuvi.App.ViewModels
 
         public bool IsLocalAIAvailable => AIService.IsAvailable();
 
-        public bool IsPreviewAvailable { get; }
-
         private async void UpdateSupportDevelopmentButton()
         {
             try
@@ -389,21 +387,6 @@ namespace Tuvi.App.ViewModels
         public virtual Task CreateAIAgentsMenuAsync(Action<string, Action> action)
         {
             return Task.CompletedTask;
-        }
-
-        public async void ShowPreview()
-        {
-            try
-            {
-                // ToDo: Here you can add a preview of your UI controls.
-                // And change the `IsPreviewAvailable` property to true.
-
-                await MessageService.ShowInvitationDialogAsync();
-            }
-            catch (Exception e)
-            {
-                OnError(e);
-            }
         }
     }
 }
