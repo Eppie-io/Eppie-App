@@ -2,6 +2,7 @@
                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:behaviors="using:Eppie.App.UI.Behaviors"
+                    xmlns:components="using:Eppie.App.UI.Components"
                     xmlns:controls="using:Eppie.App.UI.Controls"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:extensions="using:Eppie.App.UI.Extensions"
@@ -20,9 +21,49 @@
     <Grid x:Name="root">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+
+        <components:NavigationBar x:Name="NavigationBar"
+                                  Grid.Row="0"
+                                  AIAgentSettingsCommand="{x:Bind OpenAIAgentsPanelCommand}"
+                                  AIAgentSettingsVisibility="{x:Bind ViewModel.IsLocalAIAvailable}"
+                                  AboutCommand="{x:Bind ShowAboutPageCommand}"
+                                  AddressManagerCommand="{x:Bind ShowAddressManagerCommand}"
+                                  AppSettingsCommand="{x:Bind ShowAppSettingsCommand}"
+                                  ComposeMessageCommand="{x:Bind OpenComposeMessageCommand}"
+                                  ContactsCommand="{x:Bind OpenContactsPanelCommand}"
+                                  InviteCommand="{x:Bind OpenInviteDialogCommand}"
+                                  LeftPaneCommand="{x:Bind ToggleLeftPaneCommand}"
+                                  MailboxesCommand="{x:Bind OpenMailboxesPanelCommand}"
+                                  MainPageCommand="{x:Bind ShowAllMessagesCommand}"
+                                  SupportVisibility="{x:Bind ViewModel.IsSupportDevelopmentButtonVisible, Mode=OneWay}">
+            <components:NavigationBar.WhatsNewFlyout>
+                <Flyout x:Name="WhatsNewFlyout">
+                    <controls:WhatsNewControl CloseRequested="OnWhatsNewClose"
+                                              IsStorePaymentProcessor="{x:Bind ViewModel.IsStorePaymentProcessor, Mode=OneWay}"
+                                              IsSupportDevelopmentButtonVisible="{x:Bind ViewModel.IsSupportDevelopmentButtonVisible, Mode=OneWay}"
+                                              Price="{x:Bind ViewModel.SupportDevelopmentPrice, Mode=OneWay}"
+                                              SupportDevelopmentCommand="{x:Bind ViewModel.SupportDevelopmentCommand}"
+                                              TwitterUrl="{x:Bind ViewModel.TwitterPostLink, Mode=OneTime}"
+                                              Version="{Binding Source={StaticResource Brand}, Path=AppVersion}" />
+                </Flyout>
+            </components:NavigationBar.WhatsNewFlyout>
+            <components:NavigationBar.SupportFlyout>
+                <Flyout x:Name="SupportFlyout">
+                    <controls:SupportDevelopmentControl MaxWidth="320"
+                                                        Margin="24"
+                                                        IsIconVisible="True"
+                                                        IsStorePaymentProcessor="{x:Bind ViewModel.IsStorePaymentProcessor, Mode=OneWay}"
+                                                        Price="{x:Bind ViewModel.SupportDevelopmentPrice, Mode=OneWay}"
+                                                        SupportDevelopmentCommand="{x:Bind ViewModel.SupportDevelopmentCommand}" />
+                </Flyout>
+            </components:NavigationBar.SupportFlyout>
+        </components:NavigationBar>
+
         <winui:ItemsRepeater x:Name="ProblemsList"
+                             Grid.Row="1"
                              MaxHeight="150"
                              Margin="0,0,0,0"
                              ElementClearing="OnElementClearing"
@@ -49,125 +90,32 @@
             </winui:ItemsRepeater.ItemTemplate>
         </winui:ItemsRepeater>
 
-        <winui:NavigationView x:Name="NavigationMenu"
-                              Grid.Row="1"
-                              IsBackButtonVisible="Collapsed"
-                              ItemInvoked="OnNavigationViewItemInvoked">
-            <winui:NavigationView.MenuItems>
-                <winui:NavigationViewItem x:Uid="NewMessageNavigationItem"
-                                          extensions:AttachedCommands.ClickCommand="{x:Bind OpenComposeMessageCommand}"
-                                          Icon="Edit"
-                                          SelectsOnInvoked="False" />
-                <winui:NavigationViewItem x:Uid="AllMessagesNavigationItem" extensions:AttachedCommands.ClickCommand="{x:Bind ShowAllMessagesCommand}">
-                    <winui:NavigationViewItem.Icon>
-                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE715;" />
-                    </winui:NavigationViewItem.Icon>
-                </winui:NavigationViewItem>
-                <winui:NavigationViewItem x:Uid="AddressManagerNavigationItem" extensions:AttachedCommands.ClickCommand="{x:Bind ShowAddressManagerCommand}">
-                    <winui:NavigationViewItem.Icon>
-                        <SymbolIcon Symbol="ContactInfo" />
-                    </winui:NavigationViewItem.Icon>
-                </winui:NavigationViewItem>
-                <winui:NavigationViewItem x:Uid="ContactsPanelNavigationItem" extensions:AttachedCommands.ClickCommand="{x:Bind OpenContactsPanelCommand}">
-                    <winui:NavigationViewItem.Icon>
-                        <SymbolIcon Symbol="Contact" />
-                    </winui:NavigationViewItem.Icon>
-                </winui:NavigationViewItem>
-                <winui:NavigationViewItem x:Uid="MailboxesPanelNavigationItem" extensions:AttachedCommands.ClickCommand="{x:Bind OpenMailboxesPanelCommand}">
-                    <winui:NavigationViewItem.Icon>
-                        <SymbolIcon Symbol="Account" />
-                    </winui:NavigationViewItem.Icon>
-                </winui:NavigationViewItem>
-                <winui:NavigationViewItem x:Uid="AIAgentsPanelNavigationItem"
-                                          extensions:AttachedCommands.ClickCommand="{x:Bind OpenAIAgentsPanelCommand}"
-                                          Visibility="{x:Bind ViewModel.IsLocalAIAvailable}">
-                    <winui:NavigationViewItem.Icon>
-                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE99A;" />
-                    </winui:NavigationViewItem.Icon>
-                </winui:NavigationViewItem>
-                <!--  NOTE: We will not translate the term "Preview" for now.  -->
-                <winui:NavigationViewItem extensions:AttachedCommands.ClickCommand="{x:Bind ShowPreviewCommand}"
-                                          Content="Preview"
-                                          Visibility="{x:Bind ViewModel.IsPreviewAvailable}">
-                    <winui:NavigationViewItem.Icon>
-                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xEB3C;" />
-                    </winui:NavigationViewItem.Icon>
-                </winui:NavigationViewItem>
-            </winui:NavigationView.MenuItems>
-
-            <winui:NavigationView.PaneFooter>
+        <SplitView x:Name="splitView"
+                   Grid.Row="2"
+                   DisplayMode="Inline"
+                   IsPaneOpen="False"
+                   PaneBackground="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+            <SplitView.Pane>
                 <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Button Grid.Row="1"
-                            Height="36"
-                            Margin="4,8,4,0"
-                            HorizontalAlignment="Stretch"
-                            Style="{StaticResource BrandGradientButtonBaseStyle}"
-                            Visibility="{x:Bind ViewModel.IsSupportDevelopmentButtonVisible, Mode=OneWay}">
-                        <Button.Flyout>
-                            <Flyout>
-                                <controls:SupportDevelopmentControl MaxWidth="320"
-                                                                    Margin="24"
-                                                                    IsIconVisible="True"
-                                                                    IsStorePaymentProcessor="{x:Bind ViewModel.IsStorePaymentProcessor, Mode=OneWay}"
-                                                                    Price="{x:Bind ViewModel.SupportDevelopmentPrice, Mode=OneWay}"
-                                                                    SupportDevelopmentCommand="{x:Bind ViewModel.SupportDevelopmentCommand}" />
-                            </Flyout>
-                        </Button.Flyout>
-                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-                            <FontIcon Margin="1,0,0,0"
-                                      HorizontalAlignment="Center"
-                                      FontSize="15"
-                                      Foreground="Black"
-                                      Glyph="&#xEB52;" />
-                            <TextBlock x:Uid="SupportDevelopmentButton"
-                                       Margin="8,0,0,0"
-                                       Foreground="Black" />
-                        </StackPanel>
-                    </Button>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Frame x:Name="paneFrame" />
+
+                    <AppBarButton Grid.Column="1"
+                                  Width="48"
+                                  Height="48"
+                                  VerticalAlignment="Top"
+                                  Command="{x:Bind ClosePaneCommand}">
+                        <SymbolIcon Symbol="Cancel" />
+                    </AppBarButton>
+
                 </Grid>
-            </winui:NavigationView.PaneFooter>
-
-            <winui:NavigationView.FooterMenuItems>
-
-                <winui:NavigationViewItem x:Uid="AboutAppNavigationItem" extensions:AttachedCommands.ClickCommand="{x:Bind ShowAboutPageCommand}">
-                    <winui:NavigationViewItem.Icon>
-                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE946;" />
-                    </winui:NavigationViewItem.Icon>
-                </winui:NavigationViewItem>
-
-            </winui:NavigationView.FooterMenuItems>
-
-            <SplitView x:Name="splitView"
-                       DisplayMode="Inline"
-                       IsPaneOpen="False"
-                       PaneBackground="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-                <SplitView.Pane>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-
-                        <Frame x:Name="paneFrame" />
-
-                        <AppBarButton Grid.Column="1"
-                                      Width="48"
-                                      Height="48"
-                                      VerticalAlignment="Top"
-                                      Command="{x:Bind ClosePaneCommand}">
-                            <SymbolIcon Symbol="Cancel" />
-                        </AppBarButton>
-
-                    </Grid>
-                </SplitView.Pane>
-                <Frame x:Name="contentFrame" />
-            </SplitView>
-
-        </winui:NavigationView>
+            </SplitView.Pane>
+            <Frame x:Name="contentFrame" />
+        </SplitView>
 
     </Grid>
 </local:MainPageBase>

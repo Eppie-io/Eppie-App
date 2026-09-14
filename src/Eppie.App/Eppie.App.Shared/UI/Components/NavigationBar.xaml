@@ -1,0 +1,139 @@
+﻿<UserControl x:Class="Eppie.App.UI.Components.NavigationBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="using:Eppie.App.UI.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="using:Eppie.App.UI.Components"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ui="using:CommunityToolkit.WinUI"
+             d:DesignHeight="300"
+             d:DesignWidth="400"
+             mc:Ignorable="d">
+
+    <UserControl.Resources>
+
+        <Thickness x:Key="CommandButtonMargin">4,0,4,0</Thickness>
+
+        <XamlUICommand x:Key="LeftPanelUICommand"
+                       x:Uid="LeftPanelUICommand"
+                       Command="{x:Bind LeftPaneCommand}"
+                       IconSource="{ui:FontIconSource Glyph={StaticResource LeftPaneGlyph}}" />
+
+        <XamlUICommand x:Key="WhatsNewUICommand"
+                       x:Uid="WhatsNewUICommand"
+                       IconSource="{ui:FontIconSource Glyph={StaticResource WhatsNewGlyph}}" />
+        <XamlUICommand x:Key="SupportUICommand" x:Uid="SupportUICommand" />
+        <XamlUICommand x:Key="InviteUICommand"
+                       x:Uid="InviteUICommand"
+                       Command="{x:Bind InviteCommand}"
+                       IconSource="{ui:SymbolIconSource Symbol=AddFriend}" />
+        <XamlUICommand x:Key="MoreUICommand"
+                       x:Uid="MoreUICommand"
+                       IconSource="{ui:SymbolIconSource Symbol=More}" />
+
+        <XamlUICommand x:Key="MainPageUICommand"
+                       x:Uid="MainPageUICommand"
+                       Command="{x:Bind MainPageCommand}"
+                       IconSource="{ui:SymbolIconSource Symbol=Home}" />
+
+        <XamlUICommand x:Key="MailboxesUICommand"
+                       x:Uid="MailboxesUICommand"
+                       Command="{x:Bind MailboxesCommand}"
+                       IconSource="{ui:FontIconSource Glyph={StaticResource MailboxesGlyph}}" />
+        <XamlUICommand x:Key="ContactsUICommand"
+                       x:Uid="ContactsUICommand"
+                       Command="{x:Bind ContactsCommand}"
+                       IconSource="{ui:SymbolIconSource Symbol=People}" />
+        <XamlUICommand x:Key="AddressManagerUICommand"
+                       x:Uid="AddressManagerUICommand"
+                       Command="{x:Bind AddressManagerCommand}"
+                       IconSource="{ui:FontIconSource Glyph={StaticResource AddressManagerGlyph}}" />
+        <XamlUICommand x:Key="AIAgentSettingsUICommand"
+                       x:Uid="AIAgentSettingsUICommand"
+                       Command="{x:Bind AIAgentSettingsCommand}"
+                       IconSource="{ui:FontIconSource Glyph={StaticResource AIAgentGlyph}}" />
+        <XamlUICommand x:Key="AboutUICommand"
+                       x:Uid="AboutUICommand"
+                       Command="{x:Bind AboutCommand}"
+                       IconSource="{ui:FontIconSource Glyph={StaticResource AboutGlyph}}" />
+        <XamlUICommand x:Key="AppSettingsUICommand"
+                       x:Uid="AppSettingsUICommand"
+                       Command="{x:Bind AppSettingsCommand}"
+                       IconSource="{ui:SymbolIconSource Symbol=Setting}" />
+
+    </UserControl.Resources>
+
+    <Grid Padding="8,8,20,8">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <controls:CommandButton Grid.Column="0"
+                                Margin="{StaticResource CommandButtonMargin}"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Command="{StaticResource LeftPanelUICommand}"
+                                Mode="IconOnly" />
+
+        <!--  Todo: Remove it after the new UI of the Messages page is implemented  -->
+
+        <controls:CommandButton Grid.Column="1"
+                                Margin="{StaticResource CommandButtonMargin}"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                ButtonBaseStyle="{StaticResource AccentButtonStyle}"
+                                Command="{x:Bind ComposeMessageCommand}"
+                                Icon="{ui:FontIcon Glyph={StaticResource ComposeMessageGlyph}}"
+                                Label="Compose" />
+
+        <!--  Todo: Move "What's New" to center and add Search, Refresh  -->
+
+        <controls:CommandButton Grid.Column="2"
+                                Margin="{StaticResource CommandButtonMargin}"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Command="{StaticResource WhatsNewUICommand}"
+                                Flyout="{x:Bind WhatsNewFlyout}"
+                                Mode="IconOnly" />
+        <!--  Todo: Add CornerRadius=16  -->
+        <controls:CommandButton Grid.Column="3"
+                                Margin="{StaticResource CommandButtonMargin}"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                ButtonBaseStyle="{StaticResource BrandGradientButtonBaseStyle}"
+                                Command="{StaticResource SupportUICommand}"
+                                Flyout="{x:Bind SupportFlyout}"
+                                Mode="TextOnly"
+                                Visibility="{x:Bind SupportVisibility, Mode=OneWay}" />
+        <controls:CommandButton Grid.Column="4"
+                                Margin="{StaticResource CommandButtonMargin}"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Command="{StaticResource InviteUICommand}" />
+        <controls:CommandButton Grid.Column="5"
+                                Margin="{StaticResource CommandButtonMargin}"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Command="{StaticResource MoreUICommand}"
+                                Mode="IconOnly">
+            <controls:CommandButton.Flyout>
+                <MenuFlyout>
+                    <MenuFlyoutItem Command="{StaticResource MainPageUICommand}" />
+                    <MenuFlyoutSeparator />
+                    <MenuFlyoutItem Command="{StaticResource MailboxesUICommand}" />
+                    <MenuFlyoutItem Command="{StaticResource ContactsUICommand}" />
+                    <MenuFlyoutSeparator />
+                    <MenuFlyoutItem Command="{StaticResource AddressManagerUICommand}" />
+                    <MenuFlyoutItem Command="{StaticResource AIAgentSettingsUICommand}" Visibility="{x:Bind AIAgentSettingsVisibility, Mode=OneWay}" />
+                    <MenuFlyoutItem Command="{StaticResource AboutUICommand}" />
+                    <MenuFlyoutItem Command="{StaticResource AppSettingsUICommand}" />
+                </MenuFlyout>
+            </controls:CommandButton.Flyout>
+        </controls:CommandButton>
+    </Grid>
+</UserControl>

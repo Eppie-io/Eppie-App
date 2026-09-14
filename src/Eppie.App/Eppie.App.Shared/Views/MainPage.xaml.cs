@@ -21,18 +21,17 @@ using System.Diagnostics.CodeAnalysis;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using Microsoft.UI.Xaml.Controls;
-using Eppie.App.UI.Extensions;
+using Eppie.App.UI.Common;
 using Tuvi.App.ViewModels;
 using Tuvi.App.ViewModels.Messages;
 using Tuvi.App.ViewModels.Services;
-using Eppie.App.UI.Common;
 
 #if WINDOWS_UWP
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Navigation;
+using WinUI = Microsoft.UI.Xaml;
 #else
 using Microsoft.UI.Xaml.Navigation;
+using WinUI = Microsoft.UI.Xaml;
 #endif
 
 namespace Eppie.App.Views
@@ -46,6 +45,8 @@ namespace Eppie.App.Views
         public ICommand OpenComposeMessageCommand => new RelayCommand(OpenComposeMessage);
 
         public ICommand ShowAllMessagesCommand => new RelayCommand(ShowAllMessages);
+
+        public ICommand ShowAppSettingsCommand => new RelayCommand(ShowAppSettings);
 
         public ICommand MailBoxItemClickCommand => new RelayCommand<MailBoxItem>(MailBoxItemClick);
 
@@ -71,7 +72,9 @@ namespace Eppie.App.Views
 
         public ICommand OpenAIAgentsPanelCommand => new RelayCommand(ToggleAIAgentsPane);
 
-        public ICommand ShowPreviewCommand => new RelayCommand(ShowPreview);
+        public ICommand ToggleLeftPaneCommand => new RelayCommand(ToggleLeftPane);
+
+        public ICommand OpenInviteDialogCommand => new RelayCommand(OpenInvitationDialog);
 
         public ICommand ClosePaneCommand => new RelayCommand(ClosePane);
 
@@ -85,9 +88,6 @@ namespace Eppie.App.Views
             ViewModel.MailBoxesModel.RemoveMailboxCommand = RemoveMailboxCommand;
             ViewModel.MailBoxesModel.RenameFolderCommand = RenameFolderCommand;
             ViewModel.MailBoxesModel.DeleteFolderCommand = DeleteFolderCommand;
-
-            NavigationMenu.PaneOpened += OnNavigationPaneToggled;
-            NavigationMenu.PaneClosed += OnNavigationPaneToggled;
 
             WeakReferenceMessenger.Default.Register<ContactSelectedMessage>(this, OnContactSelected);
         }
@@ -107,14 +107,8 @@ namespace Eppie.App.Views
             {
                 ShowAllMessagesCommand.Execute(this);
 
-                var settings = app?.LocalSettingsService;
-
-                if (settings != null)
-                {
-                    NavigationMenu.IsPaneOpen = settings.IsNavigationPaneOpen;
-                }
-
-                if (settings != null && settings.LastSidePane != SidePaneKind.None)
+                // Todo: Restore the state of the left panel.
+                if (app?.LocalSettingsService is ILocalSettingsService settings && settings.LastSidePane != SidePaneKind.None)
                 {
                     OpenPane(settings.LastSidePane);
                 }
@@ -123,26 +117,9 @@ namespace Eppie.App.Views
             }
         }
 
-        private void OnNavigationViewItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
+        private void OnWhatsNewClose(object sender, EventArgs e)
         {
-            if (args.IsSettingsInvoked)
-            {
-                ShowAppSettings();
-            }
-            else if (args.InvokedItemContainer is DependencyObject dependencyObject)
-            {
-                AttachedCommands.GetClickCommand(dependencyObject)?.Execute(null);
-            }
-        }
-
-        private void OnNavigationPaneToggled(NavigationView sender, object args)
-        {
-            var app = Eppie.App.App.Current as Eppie.App.App;
-            var settings = app?.LocalSettingsService;
-            if (settings != null)
-            {
-                settings.IsNavigationPaneOpen = sender.IsPaneOpen;
-            }
+            WhatsNewFlyout.Hide();
         }
 
         private void ShowAboutPage()
@@ -150,12 +127,25 @@ namespace Eppie.App.Views
             ViewModel.ShowAbout();
         }
 
-        private void ShowPreview()
+        private void OpenInvitationDialog()
         {
-            ViewModel.ShowPreview();
+            ViewModel.OpenInvitationDialog();
         }
 
         private SidePaneKind _openedPane = SidePaneKind.None;
+        private void ToggleLeftPane()
+        {
+            // Todo: implement it
+            if (splitView.IsPaneOpen)
+            {
+                ClosePane();
+            }
+            else
+            {
+                OpenPane(SidePaneKind.MailboxesPanel);
+            }
+        }
+
 
         private void ToggleAIAgentsPane()
         {
@@ -273,10 +263,9 @@ namespace Eppie.App.Views
         }
 
         [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Event handler is referenced from XAML and must be an instance method.")]
-        private void OnElementClearing(ItemsRepeater sender, ItemsRepeaterElementClearingEventArgs args)
+        private void OnElementClearing(WinUI.Controls.ItemsRepeater sender, WinUI.Controls.ItemsRepeaterElementClearingEventArgs args)
         {
-            var infoBar = args.Element as InfoBar;
-            if (infoBar != null)
+            if (args.Element is WinUI.Controls.InfoBar infoBar)
             {
                 infoBar.IsOpen = true;
             }
