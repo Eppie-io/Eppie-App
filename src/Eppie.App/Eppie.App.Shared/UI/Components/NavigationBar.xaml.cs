@@ -110,6 +110,16 @@ namespace Eppie.App.UI.Components
             DependencyProperty.Register(nameof(AddressManagerCommand), typeof(ICommand), typeof(NavigationBar), new PropertyMetadata(null));
 
 
+        public Visibility AIAgentSettingsVisibility
+        {
+            get { return (Visibility)GetValue(AIAgentSettingsVisibilityProperty); }
+            set { SetValue(AIAgentSettingsVisibilityProperty, value); }
+        }
+
+        public static readonly DependencyProperty AIAgentSettingsVisibilityProperty =
+            DependencyProperty.Register(nameof(AIAgentSettingsVisibility), typeof(Visibility), typeof(NavigationBar), new PropertyMetadata(Visibility.Collapsed));
+
+
         public ICommand AIAgentSettingsCommand
         {
             get { return (ICommand)GetValue(AIAgentSettingsCommandProperty); }
@@ -140,8 +150,6 @@ namespace Eppie.App.UI.Components
             DependencyProperty.Register(nameof(AppSettingsCommand), typeof(ICommand), typeof(NavigationBar), new PropertyMetadata(null));
 
 
-
-
         public FlyoutBase WhatsNewFlyout
         {
             get { return (FlyoutBase)GetValue(WhatsNewFlyoutProperty); }
@@ -149,6 +157,16 @@ namespace Eppie.App.UI.Components
         }
         public static readonly DependencyProperty WhatsNewFlyoutProperty =
             DependencyProperty.Register(nameof(WhatsNewFlyout), typeof(FlyoutBase), typeof(NavigationBar), new PropertyMetadata(null));
+
+
+        public Visibility SupportVisibility
+        {
+            get { return (Visibility)GetValue(SupportVisibilityProperty); }
+            set { SetValue(SupportVisibilityProperty, value); }
+        }
+
+        public static readonly DependencyProperty SupportVisibilityProperty =
+            DependencyProperty.Register(nameof(SupportVisibility), typeof(Visibility), typeof(NavigationBar), new PropertyMetadata(Visibility.Collapsed));
 
 
         public FlyoutBase SupportFlyout

@@ -108,7 +108,8 @@
                                 ButtonBaseStyle="{StaticResource BrandGradientButtonBaseStyle}"
                                 Command="{StaticResource SupportUICommand}"
                                 Flyout="{x:Bind SupportFlyout}"
-                                Mode="TextOnly" />
+                                Mode="TextOnly"
+                                Visibility="{x:Bind SupportVisibility, Mode=OneWay}" />
         <controls:CommandButton Grid.Column="4"
                                 Margin="{StaticResource CommandButtonMargin}"
                                 HorizontalAlignment="Left"
@@ -128,7 +129,7 @@
                     <MenuFlyoutItem Command="{StaticResource ContactsUICommand}" />
                     <MenuFlyoutSeparator />
                     <MenuFlyoutItem Command="{StaticResource AddressManagerUICommand}" />
-                    <MenuFlyoutItem Command="{StaticResource AIAgentSettingsUICommand}" />
+                    <MenuFlyoutItem Command="{StaticResource AIAgentSettingsUICommand}" Visibility="{x:Bind AIAgentSettingsVisibility, Mode=OneWay}" />
                     <MenuFlyoutItem Command="{StaticResource AboutUICommand}" />
                     <MenuFlyoutItem Command="{StaticResource AppSettingsUICommand}" />
                 </MenuFlyout>
