@@ -17,6 +17,6 @@
 
 ### Modifications
 
-- Uno.Sdk: 6.7.22
+- Uno.Sdk: 6.7.30
 - Framework: .NET 10.0
 - Platforms: Android, iOS, WebAssembly, Windows, Desktop
