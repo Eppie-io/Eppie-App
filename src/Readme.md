@@ -1,4 +1,5 @@
-Uno platform (v5.3.21.31) Template configuration:
+### Project initialized via Uno platform template using the following configuration
+
 - Framework: .NET 8.0
 - Platforms: Android, iOS, WebAssembly, macOS (Catalyst), Windows, Desktop
 - Presentation: MVVM
@@ -10,3 +11,12 @@ Uno platform (v5.3.21.31) Template configuration:
 - Authentication: None
 - Testing: None
 - CI Pipeline: None
+
+> [!NOTE]
+> The project was initialized with Uno SDK version 5.4.10
+
+### Modifications
+
+- Uno.Sdk: 6.7.30
+- Framework: .NET 10.0
+- Platforms: Android, iOS, WebAssembly, Windows, Desktop

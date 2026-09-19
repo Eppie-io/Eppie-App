@@ -31,6 +31,9 @@
     <WarningLevel>9999</WarningLevel>
     <WarningsNotAsErrors>Uno0001</WarningsNotAsErrors>
 
+    <!-- Todo: Remove it when https://github.com/unoplatform/uno/issues/24438 is done. -->
+    <WarningsNotAsErrors>$(WarningsNotAsErrors);CA1016</WarningsNotAsErrors>
+
     <!--
       If you encounter this error message:
 
@@ -141,10 +144,10 @@
   </ItemGroup>
   <ItemGroup>
     <!-- Add packages with conditions here. -->
-    <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Condition="$(TargetFramework.Contains('windows10'))"/>
-    <PackageReference Include="Serilog.Sinks.Xamarin" Condition="$(TargetFramework.Contains('android')) OR $(TargetFramework.Contains('ios'))"/>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Condition="$(TargetFramework.Contains('windows10'))" />
+    <PackageReference Include="Serilog.Sinks.Xamarin" Condition="$(TargetFramework.Contains('android')) OR $(TargetFramework.Contains('ios'))" />
     <!-- https://github.com/unoplatform/Uno.XamlBehaviors?tab=readme-ov-file#uno-platform-port-of-xaml-behaviors -->
-    <PackageReference Include="Uno.Microsoft.Xaml.Behaviors.WinUI.Managed" Condition="!$(TargetFramework.Contains('windows10'))"/>
+    <PackageReference Include="Uno.Microsoft.Xaml.Behaviors.WinUI.Managed" Condition="!$(TargetFramework.Contains('windows10'))" />
   </ItemGroup>
 
   <!-- Enable WSL support in VS 17.13 and later, when a desktop target is present -->
