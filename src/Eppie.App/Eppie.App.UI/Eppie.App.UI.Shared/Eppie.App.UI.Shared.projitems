@@ -19,9 +19,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\AIAgentUserControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\BaseUserControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\RichTextEditor.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\SidePane.xaml.cs">
-      <DependentUpon>SidePane.xaml</DependentUpon>
-    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ToolTipProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BitmapSourceConverters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BoolToValueConverter.cs" />
@@ -119,6 +116,9 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\RecipientControl.xaml.cs">
       <DependentUpon>RecipientControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\SidePane.xaml.cs">
+      <DependentUpon>SidePane.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\SimpleExpander.xaml.cs">
       <DependentUpon>SimpleExpander.xaml</DependentUpon>
