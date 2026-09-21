@@ -90,32 +90,41 @@
             </winui:ItemsRepeater.ItemTemplate>
         </winui:ItemsRepeater>
 
-        <SplitView x:Name="splitView"
-                   Grid.Row="2"
-                   DisplayMode="Inline"
-                   IsPaneOpen="False"
-                   PaneBackground="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-            <SplitView.Pane>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
+        <controls:SidePane x:Name="LeftSidePane"
+                           Grid.Row="2"
+                           ChildMinWidth="360"
+                           OpenPaneMaxLength="360">
+            <controls:SidePane.Pane>
+                <Border Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                    <Frame x:Name="LeftSidePaneFrame" />
+                </Border>
+            </controls:SidePane.Pane>
+            <SplitView x:Name="splitView"
+                       Grid.Row="2"
+                       DisplayMode="Inline"
+                       IsPaneOpen="False"
+                       PaneBackground="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                <SplitView.Pane>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
 
-                    <Frame x:Name="paneFrame" />
+                        <Frame x:Name="paneFrame" />
 
-                    <AppBarButton Grid.Column="1"
-                                  Width="48"
-                                  Height="48"
-                                  VerticalAlignment="Top"
-                                  Command="{x:Bind ClosePaneCommand}">
-                        <SymbolIcon Symbol="Cancel" />
-                    </AppBarButton>
+                        <AppBarButton Grid.Column="1"
+                                      Width="48"
+                                      Height="48"
+                                      VerticalAlignment="Top"
+                                      Command="{x:Bind ClosePaneCommand}">
+                            <SymbolIcon Symbol="Cancel" />
+                        </AppBarButton>
 
-                </Grid>
-            </SplitView.Pane>
-            <Frame x:Name="contentFrame" />
-        </SplitView>
-
+                    </Grid>
+                </SplitView.Pane>
+                <Frame x:Name="contentFrame" />
+            </SplitView>
+        </controls:SidePane>
     </Grid>
 </local:MainPageBase>

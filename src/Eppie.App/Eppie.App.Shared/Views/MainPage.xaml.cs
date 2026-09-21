@@ -66,11 +66,11 @@ namespace Eppie.App.Views
 
         public ICommand ShowAddressManagerCommand => new RelayCommand(ShowAddressManager);
 
-        public ICommand OpenContactsPanelCommand => new RelayCommand(ToggleContactsPanelPane);
+        public ICommand OpenContactsPanelCommand => new RelayCommand(OpenContacts);
 
-        public ICommand OpenMailboxesPanelCommand => new RelayCommand(ToggleMailboxesPanelPane);
+        public ICommand OpenMailboxesPanelCommand => new RelayCommand(OpenMailboxes);
 
-        public ICommand OpenAIAgentsPanelCommand => new RelayCommand(ToggleAIAgentsPane);
+        public ICommand OpenAIAgentsPanelCommand => new RelayCommand(OpenAIAgents);
 
         public ICommand ToggleLeftPaneCommand => new RelayCommand(ToggleLeftPane);
 
@@ -107,11 +107,9 @@ namespace Eppie.App.Views
             {
                 ShowAllMessagesCommand.Execute(this);
 
-                // Todo: Restore the state of the left panel.
-                if (app?.LocalSettingsService is ILocalSettingsService settings && settings.LastSidePane != SidePaneKind.None)
-                {
-                    OpenPane(settings.LastSidePane);
-                }
+                // Todo: Restore the state of the left panel from the last session. For now, always open the mailboxes panel.
+                // Use LocalSettingsService to restore the last opened panel state and size.
+                OpenMailboxes();
 
                 OpenAddressManagerPaneIfNeeded();
             }
@@ -135,28 +133,15 @@ namespace Eppie.App.Views
         private SidePaneKind _openedPane = SidePaneKind.None;
         private void ToggleLeftPane()
         {
-            // Todo: implement it
-            if (splitView.IsPaneOpen)
-            {
-                ClosePane();
-            }
-            else
-            {
-                OpenPane(SidePaneKind.MailboxesPanel);
-            }
+            // Todo: Use LocalSettingsService to store the last opened panel state and size.
+            LeftSidePane.IsPaneOpen = !LeftSidePane.IsPaneOpen;
         }
 
 
-        private void ToggleAIAgentsPane()
+        private void OpenAIAgents()
         {
-            if (splitView.IsPaneOpen && _openedPane == SidePaneKind.AIAgentsPanel)
-            {
-                ClosePane();
-            }
-            else
-            {
-                OpenPane(SidePaneKind.AIAgentsPanel);
-            }
+            splitView.IsPaneOpen = true;
+            paneFrame.Navigate(typeof(AIAgentsManagerPage));
         }
 
         private void ShowAddressManager()
@@ -164,54 +149,23 @@ namespace Eppie.App.Views
             ViewModel.ShowAddressManager();
         }
 
-        private void ToggleContactsPanelPane()
+        private void OpenContacts()
         {
-            if (splitView.IsPaneOpen && _openedPane == SidePaneKind.ContactsPanel)
-            {
-                ClosePane();
-            }
-            else
-            {
-                OpenPane(SidePaneKind.ContactsPanel);
-            }
+            // Todo: Create UI component for ContactsPanelPage and add it to the left pane.
+            // In Compact mode, the left pane should be hidden when an item is selected,
+            // and the right pane should show corresponding content.
+            LeftSidePane.IsPaneOpen = true;
+            LeftSidePaneFrame.Navigate(typeof(ContactsPanelPage));
         }
 
-        private void ToggleMailboxesPanelPane()
+        private void OpenMailboxes()
         {
-            if (splitView.IsPaneOpen && _openedPane == SidePaneKind.MailboxesPanel)
-            {
-                ClosePane();
-            }
-            else
-            {
-                OpenPane(SidePaneKind.MailboxesPanel);
-            }
-        }
-
-        private void OpenPane(SidePaneKind kind)
-        {
-            splitView.IsPaneOpen = true;
-            _openedPane = kind;
-
-            // Todo: Move paneFrame to UI Component.
-
-            switch (kind)
-            {
-                case SidePaneKind.AIAgentsPanel:
-                    paneFrame.Navigate(typeof(AIAgentsManagerPage));
-                    break;
-                case SidePaneKind.ContactsPanel:
-                    paneFrame.Navigate(typeof(ContactsPanelPage));
-                    break;
-                case SidePaneKind.MailboxesPanel:
-                    paneFrame.Navigate(typeof(MailboxesPanelPage), ViewModel.MailBoxesModel);
-                    ViewModel.UpdateAccountsList();
-                    break;
-                default:
-                    break;
-            }
-
-            SavePaneState();
+            // Todo: Create UI component for MailboxesPanelPage and add it to the left pane.
+            // In Compact mode, the left pane should be hidden when an item is selected,
+            // and the right pane should show corresponding content.
+            LeftSidePane.IsPaneOpen = true;
+            LeftSidePaneFrame.Navigate(typeof(MailboxesPanelPage), ViewModel.MailBoxesModel);
+            ViewModel.UpdateAccountsList();
         }
 
         private async void OpenAddressManagerPaneIfNeeded()
