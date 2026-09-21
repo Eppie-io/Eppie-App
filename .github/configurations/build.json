@@ -395,7 +395,7 @@
             "tool": "msbuild",
             "project": "./src/Eppie.App/Eppie.App.UWP/Eppie.App.UWP.csproj",
             "configuration": "release",
-            "extra": "-restore:True -verbosity:minimal -consoleLoggerParameters:Summary -maxCpuCount"
+            "extra": "-restore:True -property:UseDotNetNativeToolchain=False -verbosity:minimal -consoleLoggerParameters:Summary -maxCpuCount"
         }
     },
 
