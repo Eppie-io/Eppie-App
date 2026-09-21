@@ -152,6 +152,8 @@ namespace Eppie.App.Views
         private void OpenContacts()
         {
             // Todo: Create UI component for ContactsPanelPage and add it to the left pane.
+            // In Compact mode, the left pane should be hidden when an item is selected,
+            // and the right pane should show corresponding content.
             LeftSidePane.IsPaneOpen = true;
             LeftSidePaneFrame.Navigate(typeof(ContactsPanelPage));
         }
@@ -159,6 +161,8 @@ namespace Eppie.App.Views
         private void OpenMailboxes()
         {
             // Todo: Create UI component for MailboxesPanelPage and add it to the left pane.
+            // In Compact mode, the left pane should be hidden when an item is selected,
+            // and the right pane should show corresponding content.
             LeftSidePane.IsPaneOpen = true;
             LeftSidePaneFrame.Navigate(typeof(MailboxesPanelPage), ViewModel.MailBoxesModel);
             ViewModel.UpdateAccountsList();

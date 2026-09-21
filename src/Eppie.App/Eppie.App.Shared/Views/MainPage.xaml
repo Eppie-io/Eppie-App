@@ -92,7 +92,8 @@
 
         <controls:SidePane x:Name="LeftSidePane"
                            Grid.Row="2"
-                           OpenPaneMaxLength="400">
+                           ChildMinWidth="360"
+                           OpenPaneMaxLength="360">
             <controls:SidePane.Pane>
                 <Border Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
                     <Frame x:Name="LeftSidePaneFrame" />
