@@ -221,6 +221,11 @@ namespace Eppie.App.UI.Controls
 
         private void OnSidePaneSizeChanged(object sender, SizeChangedEventArgs e)
         {
+            if (_currentState != LayoutState.Compact)
+            {
+                OpenPaneLength = SidePaneContent.Width;
+            }
+
             SidePaneSizeChanged?.Invoke(this, e);
         }
 

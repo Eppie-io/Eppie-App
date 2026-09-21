@@ -34,7 +34,7 @@
 
             <Border x:Name="SidePaneContent"
                     Grid.Column="0"
-                    Width="{x:Bind OpenPaneLength, Mode=TwoWay}"
+                    Width="{x:Bind OpenPaneLength, Mode=OneWay}"
                     MinWidth="{x:Bind OpenPaneMinLength, Mode=OneWay}"
                     Child="{x:Bind Pane, Mode=OneWay}"
                     SizeChanged="OnSidePaneSizeChanged" />
