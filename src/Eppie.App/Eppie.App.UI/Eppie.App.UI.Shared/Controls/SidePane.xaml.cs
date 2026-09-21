@@ -96,7 +96,7 @@ namespace Eppie.App.UI.Controls
         {
             if (d is SidePane sidePane)
             {
-                sidePane.OpenPaneLength = Math.Clamp(sidePane.OpenPaneLength, sidePane.OpenPaneMinLength, sidePane.OpenPaneMaxLength);
+                sidePane.OpenPaneLength = Clamp(sidePane.OpenPaneLength, sidePane.OpenPaneMinLength, sidePane.OpenPaneMaxLength);
             }
         }
 
@@ -323,6 +323,11 @@ namespace Eppie.App.UI.Controls
         {
             const double gap = 1.0;
             return openPaneMaxLength + childMinWidth + boundaryLineSize + gap;
+        }
+
+        private static double Clamp(double value, double min, double max)
+        {
+            return Math.Max(min, Math.Min(value, max));
         }
     }
 }
