@@ -157,18 +157,20 @@ jobs:
         shell: bash
         run: |
           project='${{ matrix.restore.project }}'
+          configuration='${{ env.EPPIE_BUILD_CONFIGURATION }}'
           extra_options='${{ matrix.restore.extra }}'
 
-          dotnet restore $extra_options $project
+          dotnet restore --property:Configuration=$configuration $extra_options $project
 
       - name: Restore via msbuild
         if: matrix.restore.tool == 'msbuild' && runner.os == 'Windows'
         shell: pwsh
         run: |
           $project='${{ matrix.restore.project }}'
+          $configuration='${{ env.EPPIE_BUILD_CONFIGURATION }}'
           $extra_options=$('${{ matrix.restore.extra }}' -split '\s+')
 
-          msbuild -target:Restore $extra_options $project
+          msbuild -target:Restore -property:Configuration=$configuration $extra_options $project
 
       - name: Build via dotnet (${{ env.EPPIE_BUILD_CONFIGURATION }})
         if: matrix.build.tool == 'dotnet'

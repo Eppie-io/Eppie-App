@@ -413,7 +413,7 @@
         "build": {
             "tool": "msbuild",
             "project": "./src/Eppie.App/Eppie.App.Uno.slnf",
-            "configuration": "debug",
+            "configuration": "release",
             "extra": "-restore:True -verbosity:minimal -consoleLoggerParameters:Summary -maxCpuCount"
         },
         "test": {
@@ -422,7 +422,7 @@
                 "./src/Eppie.App/Tests/Eppie.App.ViewModels.Tests/Eppie.App.ViewModels.Tests.csproj",
                 "./src/Eppie.App/Tests/Eppie.App.UI.Tests/Eppie.App.UI.Tests.csproj"
             ],
-            "configuration": "debug",
+            "configuration": "release",
             "extra": "--nologo --verbosity=minimal"
         }
     }
