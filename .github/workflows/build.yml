@@ -160,7 +160,7 @@ jobs:
           configuration='${{ env.EPPIE_BUILD_CONFIGURATION }}'
           extra_options='${{ matrix.restore.extra }}'
 
-          dotnet restore --configuration=$configuration $extra_options $project
+          dotnet restore --property:Configuration=$configuration $extra_options $project
 
       - name: Restore via msbuild
         if: matrix.restore.tool == 'msbuild' && runner.os == 'Windows'
