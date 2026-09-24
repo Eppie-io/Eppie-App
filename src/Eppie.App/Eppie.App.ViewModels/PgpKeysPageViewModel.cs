@@ -23,12 +23,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
+using Tuvi.App.ViewModels.Extensions;
 using Tuvi.App.ViewModels.Services;
 using TuviPgpLib.Entities;
 
 namespace Tuvi.App.ViewModels
 {
-    public class PgpKeysPageViewModel : BaseViewModel
+    public class PgpKeysPageViewModel : PageViewModel
     {
         private List<PgpKeyInfo> pgpKeys = new List<PgpKeyInfo>();
         public List<PgpKeyInfo> PgpKeys
@@ -82,7 +83,7 @@ namespace Tuvi.App.ViewModels
                 {
                     PgpKeys = (await GetPublicKeysAsync().ConfigureAwait(true)).ToList();
 
-                    await BackupIfNeededAsync().ConfigureAwait(true);
+                    await Core.BackupIfNeededAsync().ConfigureAwait(true);
                 }
             }
             catch (Exception e)

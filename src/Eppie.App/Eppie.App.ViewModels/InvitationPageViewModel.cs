@@ -24,6 +24,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using Tuvi.App.ViewModels.Common;
+using Tuvi.App.ViewModels.Extensions;
 using Tuvi.Core.Entities;
 
 namespace Tuvi.App.ViewModels
@@ -37,7 +38,7 @@ namespace Tuvi.App.ViewModels
         PreviewArea
     }
 
-    public class InvitationPageViewModel : BaseViewModel
+    public class InvitationPageViewModel : PageViewModel
     {
         public ObservableCollection<ContactItem> Recipients { get; } = new ObservableCollection<ContactItem>();
         public ManagedCollection<ContactItem> SuitableContacts { get; } = new ManagedCollection<ContactItem>();
@@ -405,7 +406,7 @@ namespace Tuvi.App.ViewModels
                     .ConfigureAwait(true);
 
                 await Core.AddAccountAsync(account, CancellationToken.None).ConfigureAwait(true);
-                _ = BackupIfNeededAsync();
+                _ = Core.BackupIfNeededAsync();
 
                 return account.DisplayEmail.Address;
             }

@@ -29,7 +29,7 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace Eppie.App.Views
 {
-    internal partial class MessagePageBase : BasePage<MessagePageViewModel, BaseViewModel>
+    internal partial class MessagePageBase : BasePage<MessagePageViewModel>
     {
     }
 

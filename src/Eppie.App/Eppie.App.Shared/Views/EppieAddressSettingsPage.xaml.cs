@@ -26,7 +26,7 @@ using Microsoft.UI.Xaml;
 
 namespace Eppie.App.Views
 {
-    internal partial class EppieAddressSettingsPageBase : BasePage<EppieAddressSettingsPageViewModel, BaseViewModel>
+    internal partial class EppieAddressSettingsPageBase : BasePage<EppieAddressSettingsPageViewModel>
     {
     }
 

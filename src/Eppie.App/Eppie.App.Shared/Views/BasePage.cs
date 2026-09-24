@@ -42,9 +42,8 @@ using Microsoft.UI.Input;
 
 namespace Eppie.App.Views
 {
-    internal partial class BasePage<TViewModel, TViewModelBase> : Page, INotifyPropertyChanged
-                 where TViewModel : TViewModelBase
-                 where TViewModelBase : BaseViewModel
+    internal partial class BasePage<TViewModel> : Page, INotifyPropertyChanged
+                 where TViewModel : PageViewModel
     {
         public TViewModel ViewModel { get; private set; }
 

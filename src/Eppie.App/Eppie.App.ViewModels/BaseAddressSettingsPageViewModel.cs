@@ -22,11 +22,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
+using Tuvi.App.ViewModels.Extensions;
 using Tuvi.Core.Entities;
 
 namespace Tuvi.App.ViewModels
 {
-    public abstract class BaseAddressSettingsPageViewModel : BaseViewModel, IDisposable
+    public abstract class BaseAddressSettingsPageViewModel : PageViewModel, IDisposable
     {
         /// <summary>
         /// All available external content policy values for UI binding
@@ -147,27 +148,6 @@ namespace Tuvi.App.ViewModels
             ErrorsChanged += (sender, e) => ApplySettingsCommand.NotifyCanExecuteChanged();
         }
 
-        protected async Task ProcessAccountDataAsync(Account account, CancellationToken cancellationToken = default)
-        {
-            if (account is null)
-            {
-                throw new ArgumentNullException(nameof(account));
-            }
-
-            bool existAccount = await Core.ExistsAccountWithEmailAddressAsync(account.Email, cancellationToken).ConfigureAwait(true);
-
-            if (!existAccount)
-            {
-                await Core.AddAccountAsync(account, cancellationToken).ConfigureAwait(true);
-            }
-            else
-            {
-                await Core.UpdateAccountAsync(account, cancellationToken).ConfigureAwait(true);
-            }
-
-            await BackupIfNeededAsync().ConfigureAwait(true);
-        }
-
         protected void NavigateFromCurrentPage()
         {
             NavigationService?.GoBack();
@@ -208,7 +188,7 @@ namespace Tuvi.App.ViewModels
             {
                 try
                 {
-                    await ProcessAccountDataAsync(accountData, Cts.Token).ConfigureAwait(true);
+                    await Core.ProcessAccountDataAsync(accountData, Cts.Token).ConfigureAwait(true);
                     return true;
                 }
                 catch (OperationCanceledException)
@@ -271,7 +251,7 @@ namespace Tuvi.App.ViewModels
                     var account = ApplySettingsToAccount();
                     await Core.DeleteAccountAsync(account).ConfigureAwait(true);
 
-                    await BackupIfNeededAsync().ConfigureAwait(true);
+                    await Core.BackupIfNeededAsync().ConfigureAwait(true);
 
                     GoBack();
                 }

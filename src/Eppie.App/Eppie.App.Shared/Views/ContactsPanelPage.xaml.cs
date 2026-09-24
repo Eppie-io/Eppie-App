@@ -35,7 +35,7 @@ using Microsoft.UI.Xaml.Navigation;
 
 namespace Eppie.App.Views
 {
-    internal partial class ContactsPanelPageBase : BasePage<ContactsPanelPageViewModel, BaseViewModel>
+    internal partial class ContactsPanelPageBase : BasePage<ContactsPanelPageViewModel>
     {
     }
 

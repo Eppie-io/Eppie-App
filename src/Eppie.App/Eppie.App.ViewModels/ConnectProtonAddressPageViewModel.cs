@@ -19,7 +19,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
+using Tuvi.App.ViewModels.Extensions;
 using Tuvi.App.ViewModels.Validation;
 using Tuvi.Auth.Proton.Exceptions;
 using Tuvi.Core.Entities;
@@ -39,7 +41,7 @@ namespace Tuvi.App.ViewModels
         OpenSettings,
     }
 
-    public class ConnectProtonAddressPageViewModel : ProtonAddressSettingsPageViewModel
+    public class ConnectProtonAddressPageViewModel : PageViewModel
     {
         private ProtonConnectionStep _step;
         public ProtonConnectionStep Step
@@ -78,6 +80,7 @@ namespace Tuvi.App.ViewModels
         public IAsyncRelayCommand OpenSettingsCommand { get; }
         public IRelayCommand ClosedCommand { get; }
         public IRelayCommand DoneCommand { get; }
+        public ICommand HandleErrorCommand { get; }
 
         public Action ClosePopupAction { get; set; }
         public bool IsMacOS { get; set; }
@@ -97,6 +100,7 @@ namespace Tuvi.App.ViewModels
             OpenSettingsCommand = new AsyncRelayCommand(OnOpenSettings);
             ClosedCommand = new RelayCommand(OnClosed);
             DoneCommand = new RelayCommand(OnDone);
+            HandleErrorCommand = new RelayCommand<object>(ex => OnError(ex as Exception));
 
             Email.Errors.CollectionChanged += (s, e) => ContinueCommand.NotifyCanExecuteChanged();
             Password.Errors.CollectionChanged += (s, e) => ContinueCommand.NotifyCanExecuteChanged();
@@ -252,7 +256,7 @@ namespace Tuvi.App.ViewModels
         private async Task OnOpenSettings()
         {
             var account = await Core.GetAccountAsync(new EmailAddress(Email.Value)).ConfigureAwait(true);
-            NavigateToMailboxSettingsPage(account, false);
+            NavigationService?.NavigateToProtonAddressSettings(account);
             DoneCommand.Execute(null);
         }
 
@@ -278,7 +282,7 @@ namespace Tuvi.App.ViewModels
             }
 
             var account = await LoginAsync().ConfigureAwait(false);
-            await ProcessAccountAsync(account).ConfigureAwait(false);
+            await Core.ProcessAccountDataAsync(account).ConfigureAwait(false);
             ShowStep(ProtonConnectionStep.Done);
         }
 
@@ -438,11 +442,6 @@ namespace Tuvi.App.ViewModels
         private Task<bool> IsAccountExistAsync(string email, CancellationToken cancellationToken = default)
         {
             return Core.ExistsAccountWithEmailAddressAsync(new EmailAddress(email), cancellationToken);
-        }
-
-        private Task ProcessAccountAsync(Account account, CancellationToken cancellationToken = default)
-        {
-            return ProcessAccountDataAsync(account, cancellationToken);
         }
 
         private class TwoFactorCodeEventArgs

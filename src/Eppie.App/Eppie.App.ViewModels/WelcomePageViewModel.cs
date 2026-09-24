@@ -21,7 +21,7 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace Tuvi.App.ViewModels
 {
-    public class WelcomePageViewModel : BaseViewModel
+    public class WelcomePageViewModel : PageViewModel
     {
         public ICommand CreateAccountCommand => new RelayCommand(() => NavigationService?.NavigateToSeedGenerator());
 

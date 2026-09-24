@@ -20,7 +20,7 @@ using Tuvi.App.ViewModels;
 
 namespace Eppie.App.Views
 {
-    internal partial class LocalAIAgentSettingsPageBase : BasePage<LocalAIAgentSettingsPageViewModel, BaseViewModel>
+    internal partial class LocalAIAgentSettingsPageBase : BasePage<LocalAIAgentSettingsPageViewModel>
     {
     }
 

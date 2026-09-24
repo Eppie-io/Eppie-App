@@ -9,7 +9,7 @@
                               mc:Ignorable="d">
 
     <local:MailboxesPanelPageBase.DataContext>
-        <viewmodels:BaseViewModel />
+        <viewmodels:PageViewModel />
     </local:MailboxesPanelPageBase.DataContext>
 
     <Grid Padding="12,0,-32,0">

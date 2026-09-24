@@ -337,7 +337,7 @@ namespace Tuvi.App.ViewModels
         }
     }
 
-    public class LocalAIAgentSettingsPageViewModel : BaseViewModel, IDisposable
+    public class LocalAIAgentSettingsPageViewModel : PageViewModel, IDisposable
     {
         private LocalAIAgentSettings _agentSettingsModel;
         public LocalAIAgentSettings AgentSettingsModel
@@ -652,7 +652,7 @@ namespace Tuvi.App.ViewModels
                 await AIService.UpdateAgentAsync(agent).ConfigureAwait(true);
             }
 
-            await BackupIfNeededAsync().ConfigureAwait(true);
+            await Core.BackupIfNeededAsync().ConfigureAwait(true);
         }
 
         private void NavigateFromCurrentPage()
@@ -694,7 +694,7 @@ namespace Tuvi.App.ViewModels
                 {
                     await AIService.RemoveAgentAsync(AgentSettingsModel.CurrentAgent).ConfigureAwait(true);
 
-                    await BackupIfNeededAsync().ConfigureAwait(true);
+                    await Core.BackupIfNeededAsync().ConfigureAwait(true);
 
                     GoBack();
                 }

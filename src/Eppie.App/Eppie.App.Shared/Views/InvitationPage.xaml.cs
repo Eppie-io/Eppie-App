@@ -32,7 +32,7 @@ using Microsoft.UI.Xaml.Media;
 
 namespace Eppie.App.Views
 {
-    internal partial class InvitationPageBase : BasePage<InvitationPageViewModel, BaseViewModel>
+    internal partial class InvitationPageBase : BasePage<InvitationPageViewModel>
     { }
 
     internal sealed partial class InvitationPage : InvitationPageBase, IPopupPage

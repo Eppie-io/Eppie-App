@@ -27,7 +27,7 @@ using Microsoft.UI.Xaml.Input;
 
 namespace Eppie.App.Views
 {
-    internal partial class AboutPageBase : BasePage<AboutPageViewModel, BaseViewModel>
+    internal partial class AboutPageBase : BasePage<AboutPageViewModel>
     {
     }
 
