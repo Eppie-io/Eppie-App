@@ -21,6 +21,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using EmailValidation;
+using Tuvi.App.ViewModels.Extensions;
 using Tuvi.App.ViewModels.Services;
 using Tuvi.Core.Entities;
 
@@ -174,7 +175,7 @@ namespace Tuvi.App.ViewModels
                 else
                 {
                     IsCreatingAccountMode = true;
-                    var account = await CreateDecentralizedAccountAsync(NetworkType.Eppie, CancellationToken.None).ConfigureAwait(true);
+                    var account = await Core.CreateDecentralizedAccountAsync(NetworkType.Eppie, CancellationToken.None).ConfigureAwait(true);
                     AddressSettingsModel = DecentralizedAddressSettingsModel.Create(account);
                 }
             }

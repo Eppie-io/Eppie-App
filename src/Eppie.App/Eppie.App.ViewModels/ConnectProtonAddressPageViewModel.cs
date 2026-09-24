@@ -256,7 +256,7 @@ namespace Tuvi.App.ViewModels
         private async Task OnOpenSettings()
         {
             var account = await Core.GetAccountAsync(new EmailAddress(Email.Value)).ConfigureAwait(true);
-            NavigationService?.NavigateToProtonAddressSettings(account);
+            NavigateToMailboxSettingsPage(account, isReloginNeeded: false);
             DoneCommand.Execute(null);
         }
 

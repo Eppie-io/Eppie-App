@@ -142,64 +142,6 @@ namespace Tuvi.App.ViewModels
         {
         }
 
-        protected async Task<Account> CreateDecentralizedAccountAsync(NetworkType networkType, CancellationToken cancellationToken)
-        {
-            var (publicKey, accountIndex) = await Core.GetSecurityManager()
-                .GetNextDecAccountPublicKeyAsync(networkType, cancellationToken)
-                .ConfigureAwait(true);
-
-            var email = EmailAddress.CreateDecentralizedAddress(networkType, publicKey);
-
-            return new Account()
-            {
-                Email = email,
-                IsBackupAccountSettingsEnabled = true,
-                IsBackupAccountMessagesEnabled = true,
-                Type = MailBoxType.Dec,
-                DecentralizedAccountIndex = accountIndex,
-                IsMessageFooterEnabled = false
-            };
-        }
-
-        protected void NavigateToMailboxSettingsPage(Account account, bool isReloginNeeded)
-        {
-            if (account is null)
-            {
-                throw new ArgumentNullException(nameof(account));
-            }
-
-            if (account.Email.IsDecentralized)
-            {
-                if (account.Email.Network == NetworkType.Eppie)
-                {
-                    NavigationService?.NavigateToEppieAddressSettings(account);
-                }
-                else if (account.Email.Network == NetworkType.Bitcoin)
-                {
-                    NavigationService?.NavigateToBitcoinAddressSettings(account);
-                }
-                else if (account.Email.Network == NetworkType.Ethereum)
-                {
-                    NavigationService?.NavigateToEthereumAddressSettings(account);
-                }
-            }
-            else if (Proton.Extensions.IsProton(account.Email))
-            {
-                if (isReloginNeeded)
-                {
-                    _ = MessageService.ShowProtonConnectAddressDialogAsync(account);
-                }
-                else
-                {
-                    NavigationService?.NavigateToProtonAddressSettings(account);
-                }
-            }
-            else
-            {
-                NavigationService?.NavigateToEmailAddressSettings(account, isReloginNeeded);
-            }
-        }
-
         protected async Task AIAgentProcessMessageAsync(LocalAIAgent agent, MessageInfo message)
         {
             if (agent is null)

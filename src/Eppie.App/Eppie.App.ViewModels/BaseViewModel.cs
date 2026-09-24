@@ -20,6 +20,7 @@ using System;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Eppie.App.ViewModels.Services;
 using Tuvi.App.ViewModels.Services;
+using Tuvi.Core.Entities;
 using Tuvi.OAuth2;
 using Tuvi.Proton;
 
@@ -132,5 +133,45 @@ namespace Tuvi.App.ViewModels
         {
             return LocalizationService?.GetString(resource) ?? string.Empty;
         }
+
+        protected void NavigateToMailboxSettingsPage(Account account, bool isReloginNeeded)
+        {
+            if (account is null)
+            {
+                throw new ArgumentNullException(nameof(account));
+            }
+
+            if (account.Email.IsDecentralized)
+            {
+                if (account.Email.Network == NetworkType.Eppie)
+                {
+                    NavigationService?.NavigateToEppieAddressSettings(account);
+                }
+                else if (account.Email.Network == NetworkType.Bitcoin)
+                {
+                    NavigationService?.NavigateToBitcoinAddressSettings(account);
+                }
+                else if (account.Email.Network == NetworkType.Ethereum)
+                {
+                    NavigationService?.NavigateToEthereumAddressSettings(account);
+                }
+            }
+            else if (account.Email.IsProton())
+            {
+                if (isReloginNeeded)
+                {
+                    _ = MessageService.ShowProtonConnectAddressDialogAsync(account);
+                }
+                else
+                {
+                    NavigationService?.NavigateToProtonAddressSettings(account);
+                }
+            }
+            else
+            {
+                NavigationService?.NavigateToEmailAddressSettings(account, isReloginNeeded);
+            }
+        }
+
     }
 }

@@ -21,6 +21,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
+using Tuvi.App.ViewModels.Extensions;
 using Tuvi.App.ViewModels.Services;
 using Tuvi.Core.Entities;
 
@@ -112,7 +113,7 @@ namespace Tuvi.App.ViewModels
                 {
                     IsCreatingAccountMode = true;
                     IsActivationSubmitted = false;
-                    var account = await CreateDecentralizedAccountAsync(NetworkType.Bitcoin, CancellationToken.None).ConfigureAwait(true);
+                    var account = await Core.CreateDecentralizedAccountAsync(NetworkType.Bitcoin, CancellationToken.None).ConfigureAwait(true);
                     AddressSettingsModel = DecentralizedAddressSettingsModel.Create(account);
                     AddressSettingsModel.SecretKeyWIF = await Core.GetSecurityManager().GetSecretKeyWIFAsync(account, CancellationToken.None).ConfigureAwait(true);
                 }

@@ -78,5 +78,24 @@ namespace Tuvi.App.ViewModels.Extensions
 
             await core.BackupIfNeededAsync().ConfigureAwait(true);
         }
+
+        internal static async Task<Account> CreateDecentralizedAccountAsync(this ITuviMail core, NetworkType networkType, CancellationToken cancellationToken)
+        {
+            var (publicKey, accountIndex) = await core.GetSecurityManager()
+                .GetNextDecAccountPublicKeyAsync(networkType, cancellationToken)
+                .ConfigureAwait(true);
+
+            var email = EmailAddress.CreateDecentralizedAddress(networkType, publicKey);
+
+            return new Account()
+            {
+                Email = email,
+                IsBackupAccountSettingsEnabled = true,
+                IsBackupAccountMessagesEnabled = true,
+                Type = MailBoxType.Dec,
+                DecentralizedAccountIndex = accountIndex,
+                IsMessageFooterEnabled = false
+            };
+        }
     }
 }
