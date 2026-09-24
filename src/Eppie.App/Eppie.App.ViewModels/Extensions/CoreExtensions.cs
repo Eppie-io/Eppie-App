@@ -47,13 +47,13 @@ namespace Tuvi.App.ViewModels.Extensions
                 var fingerprint = core.GetBackupManager().GetBackupKeyFingerprint();
 
                 using (var backup = new MemoryStream())
-                using (var deatachedSignatureData = new MemoryStream())
+                using (var detachedSignatureData = new MemoryStream())
                 using (var publicKey = new MemoryStream())
                 {
                     await core.GetBackupManager().CreateBackupAsync(backup).ConfigureAwait(true);
-                    await core.GetBackupManager().CreateDetachedSignatureDataAsync(backup, deatachedSignatureData, publicKey).ConfigureAwait(true);
+                    await core.GetBackupManager().CreateDetachedSignatureDataAsync(backup, detachedSignatureData, publicKey).ConfigureAwait(true);
 
-                    await BackupServiceClient.UploadAsync(new Uri(uploadUrl), fingerprint, publicKey, deatachedSignatureData, backup).ConfigureAwait(true);
+                    await BackupServiceClient.UploadAsync(new Uri(uploadUrl), fingerprint, publicKey, detachedSignatureData, backup).ConfigureAwait(true);
                 }
             }
         }
