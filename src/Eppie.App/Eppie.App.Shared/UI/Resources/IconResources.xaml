@@ -30,6 +30,16 @@
 
     <x:String x:Key="AddGlyph">&#xE710;</x:String>
 
+    <x:String x:Key="DockLeftGlyph">&#xE90C;</x:String>
+
+    <x:String x:Key="RingerGlyph">&#xEA8F;</x:String>
+
+    <x:String x:Key="AccountsGlyph">&#xE910;</x:String>
+    <x:String x:Key="PlayerSettingsGlyph">&#xEF58;</x:String>
+
+    <x:String x:Key="UnknownGlyph">&#xE9CE;</x:String>
+    <x:String x:Key="LabelGlyph">&#xE932;</x:String>
+
     <StaticResource x:Key="MarkAsReadGlyph" ResourceKey="ReadGlyph" />
     <StaticResource x:Key="MarkAsUnreadGlyph" ResourceKey="MailGlyph" />
     <StaticResource x:Key="ReadStatusGlyph" ResourceKey="ReadGlyph" />
@@ -42,6 +52,14 @@
     <StaticResource x:Key="HiddenCopyGlyph" ResourceKey="Contact2Glyph" />
     <StaticResource x:Key="AIAgentGlyph" ResourceKey="RobotGlyph" />
     <StaticResource x:Key="SecurityGlyph" ResourceKey="LockGlyph" />
+
+    <StaticResource x:Key="LeftPaneGlyph" ResourceKey="DockLeftGlyph" />
+
+    <StaticResource x:Key="WhatsNewGlyph" ResourceKey="RingerGlyph" />
+    <StaticResource x:Key="MailboxesGlyph" ResourceKey="AccountsGlyph" />
+    <StaticResource x:Key="AddressManagerGlyph" ResourceKey="PlayerSettingsGlyph" />
+    <StaticResource x:Key="AboutGlyph" ResourceKey="UnknownGlyph" />
+    <StaticResource x:Key="ComposeMessageGlyph" ResourceKey="LabelGlyph" />
 
     <Style x:Key="DefaultFontIconStyle" TargetType="FontIcon">
         <Setter Property="FontSize" Value="{StaticResource DefaultSymbolSize}" />

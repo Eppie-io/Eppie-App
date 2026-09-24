@@ -12,7 +12,7 @@
         <viewmodels:BaseViewModel />
     </local:MailboxesPanelPageBase.DataContext>
 
-    <Grid Padding="12,0,-32,0">
+    <Grid Padding="12,0,0,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
