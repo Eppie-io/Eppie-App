@@ -32,6 +32,11 @@ namespace Tuvi.App.ViewModels.Extensions
         {
             var accounts = await core.GetAccountsAsync().ConfigureAwait(true);
             var isSeedInitialized = await core.GetSecurityManager().IsSeedPhraseInitializedAsync().ConfigureAwait(true);
+
+            // ToDo: Check if we need to have a backup even if there are no accounts.
+            // `accounts.Count` should be greater than 0. If we can have a backup even if there are no accounts,
+            // then we can remove the check for accounts.Count >= 0. But if we want to have a backup
+            // only if there are accounts, then we should change the condition to accounts.Count > 0.
             if (accounts.Count >= 0 && isSeedInitialized)
             {
                 // Test node URI
