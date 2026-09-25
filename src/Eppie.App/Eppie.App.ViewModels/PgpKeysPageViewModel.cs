@@ -23,7 +23,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
-using Tuvi.App.ViewModels.Extensions;
 using Tuvi.App.ViewModels.Services;
 using TuviPgpLib.Entities;
 

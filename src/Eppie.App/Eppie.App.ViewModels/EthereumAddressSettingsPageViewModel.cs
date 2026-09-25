@@ -18,7 +18,6 @@
 
 using System;
 using System.Threading;
-using Tuvi.App.ViewModels.Extensions;
 using Tuvi.Core.Entities;
 
 namespace Tuvi.App.ViewModels

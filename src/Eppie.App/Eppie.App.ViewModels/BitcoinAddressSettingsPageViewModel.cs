@@ -21,7 +21,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
-using Tuvi.App.ViewModels.Extensions;
 using Tuvi.App.ViewModels.Services;
 using Tuvi.Core.Entities;
 
