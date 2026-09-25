@@ -83,7 +83,7 @@ namespace Tuvi.App.ViewModels
                 {
                     PgpKeys = (await GetPublicKeysAsync().ConfigureAwait(true)).ToList();
 
-                    await Core.BackupIfNeededAsync().ConfigureAwait(true);
+                    await BackupIfNeededAsync().ConfigureAwait(true);
                 }
             }
             catch (Exception e)

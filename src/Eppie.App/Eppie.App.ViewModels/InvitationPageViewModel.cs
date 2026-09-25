@@ -402,11 +402,11 @@ namespace Tuvi.App.ViewModels
         {
             try
             {
-                var account = await Core.CreateDecentralizedAccountAsync(NetworkType.Eppie, CancellationToken.None)
+                var account = await CreateDecentralizedAccountAsync(NetworkType.Eppie, CancellationToken.None)
                     .ConfigureAwait(true);
 
                 await Core.AddAccountAsync(account, CancellationToken.None).ConfigureAwait(true);
-                _ = Core.BackupIfNeededAsync();
+                _ = BackupIfNeededAsync();
 
                 return account.DisplayEmail.Address;
             }

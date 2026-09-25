@@ -41,7 +41,7 @@ namespace Tuvi.App.ViewModels
         OpenSettings,
     }
 
-    public class ConnectProtonAddressPageViewModel : PageViewModel
+    public class ConnectProtonAddressPageViewModel : ProtonAddressSettingsPageViewModel
     {
         private ProtonConnectionStep _step;
         public ProtonConnectionStep Step
@@ -80,7 +80,6 @@ namespace Tuvi.App.ViewModels
         public IAsyncRelayCommand OpenSettingsCommand { get; }
         public IRelayCommand ClosedCommand { get; }
         public IRelayCommand DoneCommand { get; }
-        public ICommand HandleErrorCommand { get; }
 
         public Action ClosePopupAction { get; set; }
         public bool IsMacOS { get; set; }
@@ -100,7 +99,6 @@ namespace Tuvi.App.ViewModels
             OpenSettingsCommand = new AsyncRelayCommand(OnOpenSettings);
             ClosedCommand = new RelayCommand(OnClosed);
             DoneCommand = new RelayCommand(OnDone);
-            HandleErrorCommand = new RelayCommand<object>(ex => OnError(ex as Exception));
 
             Email.Errors.CollectionChanged += (s, e) => ContinueCommand.NotifyCanExecuteChanged();
             Password.Errors.CollectionChanged += (s, e) => ContinueCommand.NotifyCanExecuteChanged();
@@ -282,7 +280,7 @@ namespace Tuvi.App.ViewModels
             }
 
             var account = await LoginAsync().ConfigureAwait(false);
-            await Core.ProcessAccountDataAsync(account).ConfigureAwait(false);
+            await ProcessAccountDataAsync(account).ConfigureAwait(false);
             ShowStep(ProtonConnectionStep.Done);
         }
 

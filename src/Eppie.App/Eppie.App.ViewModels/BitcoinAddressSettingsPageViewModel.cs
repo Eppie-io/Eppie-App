@@ -113,7 +113,7 @@ namespace Tuvi.App.ViewModels
                 {
                     IsCreatingAccountMode = true;
                     IsActivationSubmitted = false;
-                    var account = await Core.CreateDecentralizedAccountAsync(NetworkType.Bitcoin, CancellationToken.None).ConfigureAwait(true);
+                    var account = await CreateDecentralizedAccountAsync(NetworkType.Bitcoin, CancellationToken.None).ConfigureAwait(true);
                     AddressSettingsModel = DecentralizedAddressSettingsModel.Create(account);
                     AddressSettingsModel.SecretKeyWIF = await Core.GetSecurityManager().GetSecretKeyWIFAsync(account, CancellationToken.None).ConfigureAwait(true);
                 }

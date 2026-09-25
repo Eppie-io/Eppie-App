@@ -652,7 +652,7 @@ namespace Tuvi.App.ViewModels
                 await AIService.UpdateAgentAsync(agent).ConfigureAwait(true);
             }
 
-            await Core.BackupIfNeededAsync().ConfigureAwait(true);
+            await BackupIfNeededAsync().ConfigureAwait(true);
         }
 
         private void NavigateFromCurrentPage()
@@ -694,7 +694,7 @@ namespace Tuvi.App.ViewModels
                 {
                     await AIService.RemoveAgentAsync(AgentSettingsModel.CurrentAgent).ConfigureAwait(true);
 
-                    await Core.BackupIfNeededAsync().ConfigureAwait(true);
+                    await BackupIfNeededAsync().ConfigureAwait(true);
 
                     GoBack();
                 }

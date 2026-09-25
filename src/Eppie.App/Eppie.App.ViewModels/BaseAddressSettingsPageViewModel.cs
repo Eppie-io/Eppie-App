@@ -188,7 +188,7 @@ namespace Tuvi.App.ViewModels
             {
                 try
                 {
-                    await Core.ProcessAccountDataAsync(accountData, Cts.Token).ConfigureAwait(true);
+                    await ProcessAccountDataAsync(accountData, Cts.Token).ConfigureAwait(true);
                     return true;
                 }
                 catch (OperationCanceledException)
@@ -251,7 +251,7 @@ namespace Tuvi.App.ViewModels
                     var account = ApplySettingsToAccount();
                     await Core.DeleteAccountAsync(account).ConfigureAwait(true);
 
-                    await Core.BackupIfNeededAsync().ConfigureAwait(true);
+                    await BackupIfNeededAsync().ConfigureAwait(true);
 
                     GoBack();
                 }
