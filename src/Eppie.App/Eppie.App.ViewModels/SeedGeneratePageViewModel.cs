@@ -25,7 +25,7 @@ using Tuvi.App.ViewModels.Services;
 
 namespace Tuvi.App.ViewModels
 {
-    public class SeedGeneratePageViewModel : BaseViewModel
+    public class SeedGeneratePageViewModel : PageViewModel
     {
         private SeedPhraseModel seedPhrase;
         public SeedPhraseModel SeedPhrase

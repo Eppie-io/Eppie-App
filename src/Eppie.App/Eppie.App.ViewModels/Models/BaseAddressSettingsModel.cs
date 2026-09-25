@@ -39,7 +39,7 @@ namespace Tuvi.App.ViewModels
         public ExternalContentPolicy[] ExternalContentPolicyValues { get; } = (ExternalContentPolicy[])Enum.GetValues(typeof(ExternalContentPolicy));
 
         private Func<Tuvi.Core.ITuviMail> CoreProvider { get; set; }
-        private Tuvi.Core.ITuviMail Core => CoreProvider != null ? CoreProvider() : null;
+        private Tuvi.Core.ITuviMail Core => CoreProvider?.Invoke();
 
         private Services.INavigationService NavigationService { get; set; }
 

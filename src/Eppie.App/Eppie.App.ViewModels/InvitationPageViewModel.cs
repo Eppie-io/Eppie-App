@@ -37,7 +37,7 @@ namespace Tuvi.App.ViewModels
         PreviewArea
     }
 
-    public class InvitationPageViewModel : BaseViewModel
+    public class InvitationPageViewModel : PageViewModel
     {
         public ObservableCollection<ContactItem> Recipients { get; } = new ObservableCollection<ContactItem>();
         public ManagedCollection<ContactItem> SuitableContacts { get; } = new ManagedCollection<ContactItem>();

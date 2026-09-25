@@ -17,14 +17,10 @@
 // ---------------------------------------------------------------------------- //
 
 using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using Eppie.App.ViewModels.Services;
 using Tuvi.App.ViewModels.Services;
 using Tuvi.Core.Entities;
@@ -36,22 +32,6 @@ namespace Tuvi.App.ViewModels
 {
     public class BaseViewModel : ObservableValidator
     {
-        public string TwitterPostLink
-        {
-            get
-            {
-                var twitterHandle = BrandService.GetTwitterHandle();
-                var githubUrl = BrandService.GetGitHub();
-                var text = GetLocalizedString("WhatsNewTwitPostText");
-                text = string.Format(CultureInfo.InvariantCulture, text, twitterHandle);
-
-                var encodedText = Uri.EscapeDataString(text);
-                var encodedGithubUrl = Uri.EscapeDataString(githubUrl);
-
-                return $"https://twitter.com/intent/tweet?text={encodedText}&url={encodedGithubUrl}";
-            }
-        }
-
         protected IErrorHandler ErrorHandler { get; private set; }
         public void SetErrorHandler(IErrorHandler errorHandler)
         {
@@ -59,7 +39,7 @@ namespace Tuvi.App.ViewModels
             ErrorHandler?.SetMessageService(MessageService);
         }
 
-        protected Tuvi.Core.ITuviMail Core { get { return CoreProvider(); } }
+        protected Tuvi.Core.ITuviMail Core => CoreProvider?.Invoke();
         protected Func<Tuvi.Core.ITuviMail> CoreProvider { get; private set; }
         public void SetCoreProvider(Func<Tuvi.Core.ITuviMail> coreProvider)
         {
@@ -122,115 +102,6 @@ namespace Tuvi.App.ViewModels
             LauncherService = launcherService;
         }
 
-        public ICommand SupportDevelopmentCommand => new AsyncRelayCommand(SupportDevelopmentAsync);
-        public ICommand OpenAllPgpKeysCommand => new RelayCommand(() => NavigationService?.NavigateToListPgpKeys());
-
-        private bool _isStorePaymentProcessor = true;
-        public bool IsStorePaymentProcessor
-        {
-            get => _isStorePaymentProcessor;
-            private set
-            {
-                _isStorePaymentProcessor = value;
-                OnPropertyChanged(nameof(IsStorePaymentProcessor));
-            }
-        }
-
-        private string _supportDevelopmentPrice;
-        public string SupportDevelopmentPrice
-        {
-            get => _supportDevelopmentPrice;
-            private set
-            {
-                _supportDevelopmentPrice = value;
-                OnPropertyChanged(nameof(SupportDevelopmentPrice));
-            }
-        }
-
-        private bool _isSupportDevelopmentButtonVisible;
-        public bool IsSupportDevelopmentButtonVisible
-        {
-            get => _isSupportDevelopmentButtonVisible;
-            private set
-            {
-                _isSupportDevelopmentButtonVisible = value;
-                OnPropertyChanged(nameof(IsSupportDevelopmentButtonVisible));
-            }
-        }
-
-        public bool IsLocalAIAvailable => AIService.IsAvailable();
-
-        public bool IsPreviewAvailable { get; }
-
-        private async void UpdateSupportDevelopmentButton()
-        {
-            try
-            {
-                await UpdateSupportDevelopmentButtonAsync().ConfigureAwait(true);
-            }
-            catch (Exception e)
-            {
-                OnError(e);
-            }
-        }
-
-        protected async Task UpdateSupportDevelopmentButtonAsync()
-        {
-            if (string.IsNullOrWhiteSpace(BrandService.GetDevelopmentSupport()))
-            {
-                IsSupportDevelopmentButtonVisible = false;
-                return;
-            }
-
-            try
-            {
-                IsSupportDevelopmentButtonVisible = !await AppStoreService.IsSubscriptionEnabledAsync().ConfigureAwait(true);
-
-                if (IsSupportDevelopmentButtonVisible)
-                {
-                    SupportDevelopmentPrice = await AppStoreService.GetSubscriptionPriceAsync().ConfigureAwait(true);
-                }
-            }
-            catch (NotImplementedException)
-            {
-                IsSupportDevelopmentButtonVisible = true;
-                IsStorePaymentProcessor = false;
-                SupportDevelopmentPrice = "$3";
-            }
-        }
-
-        private async Task SupportDevelopmentAsync()
-        {
-            try
-            {
-                await AppStoreService.BuySubscriptionAsync().ConfigureAwait(true);
-                UpdateSupportDevelopmentButton();
-            }
-            catch
-            {
-                await LauncherService.LaunchAsync(new Uri(BrandService.GetDevelopmentSupport())).ConfigureAwait(true);
-            }
-        }
-
-        virtual public void OnNavigatedTo(object data)
-        {
-            UpdateSupportDevelopmentButton();
-        }
-
-        virtual public void OnNavigatedFrom()
-        {
-        }
-
-        public virtual void OnError(Exception e)
-        {
-            ErrorHandler?.OnError(e, false);
-        }
-
-        protected string GetLocalizedString(string resource)
-        {
-            return LocalizationService?.GetString(resource) ?? string.Empty;
-        }
-
         protected IDispatcherService DispatcherService { get; private set; }
         public void SetDispatcherService(IDispatcherService dispatcherService)
         {
@@ -255,48 +126,16 @@ namespace Tuvi.App.ViewModels
             DragAndDropService = dragAndDropService;
         }
 
-        protected async Task BackupIfNeededAsync()
+        public bool IsLocalAIAvailable => AIService.IsAvailable();
+
+        public virtual void OnError(Exception e)
         {
-            var accounts = await Core.GetAccountsAsync().ConfigureAwait(true);
-            var isSeedInitialized = await Core.GetSecurityManager().IsSeedPhraseInitializedAsync().ConfigureAwait(true);
-            if (accounts.Count >= 0 && isSeedInitialized)
-            {
-                // Test node URI
-                const string uploadUrl = "https://testnet.eppie.io/api/UploadBackupFunction?code=1";
-                // Local node URI
-                //const string uploadUrl = "http://localhost:7071/api/UploadBackupFunction";
-
-                var fingerprint = Core.GetBackupManager().GetBackupKeyFingerprint();
-
-                using (var backup = new MemoryStream())
-                using (var deatachedSignatureData = new MemoryStream())
-                using (var publicKey = new MemoryStream())
-                {
-                    await Core.GetBackupManager().CreateBackupAsync(backup).ConfigureAwait(true);
-                    await Core.GetBackupManager().CreateDetachedSignatureDataAsync(backup, deatachedSignatureData, publicKey).ConfigureAwait(true);
-
-                    await BackupServiceClient.UploadAsync(new Uri(uploadUrl), fingerprint, publicKey, deatachedSignatureData, backup).ConfigureAwait(true);
-                }
-            }
+            ErrorHandler?.OnError(e, false);
         }
 
-        protected async Task<Account> CreateDecentralizedAccountAsync(NetworkType networkType, CancellationToken cancellationToken)
+        protected string GetLocalizedString(string resource)
         {
-            var (publicKey, accountIndex) = await Core.GetSecurityManager()
-                .GetNextDecAccountPublicKeyAsync(networkType, cancellationToken)
-                .ConfigureAwait(true);
-
-            var email = EmailAddress.CreateDecentralizedAddress(networkType, publicKey);
-
-            return new Account()
-            {
-                Email = email,
-                IsBackupAccountSettingsEnabled = true,
-                IsBackupAccountMessagesEnabled = true,
-                Type = MailBoxType.Dec,
-                DecentralizedAccountIndex = accountIndex,
-                IsMessageFooterEnabled = false
-            };
+            return LocalizationService?.GetString(resource) ?? string.Empty;
         }
 
         protected void NavigateToMailboxSettingsPage(Account account, bool isReloginNeeded)
@@ -321,7 +160,7 @@ namespace Tuvi.App.ViewModels
                     NavigationService?.NavigateToEthereumAddressSettings(account);
                 }
             }
-            else if (Proton.Extensions.IsProton(account.Email))
+            else if (account.Email.IsProton())
             {
                 if (isReloginNeeded)
                 {
@@ -338,72 +177,69 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        protected async Task AIAgentProcessMessageAsync(LocalAIAgent agent, MessageInfo message)
+        protected async Task BackupIfNeededAsync()
         {
-            if (agent is null)
+            bool isSeedInitialized = await Core.GetSecurityManager().IsSeedPhraseInitializedAsync().ConfigureAwait(true);
+
+            if (isSeedInitialized)
             {
-                throw new ArgumentNullException(nameof(agent));
-            }
+                // Test node URI
+                const string uploadUrl = "https://testnet.eppie.io/api/UploadBackupFunction?code=1";
+                // Local node URI
+                //const string uploadUrl = "http://localhost:7071/api/UploadBackupFunction";
 
-            if (message is null)
-            {
-                throw new ArgumentNullException(nameof(message));
-            }
+                string fingerprint = Core.GetBackupManager().GetBackupKeyFingerprint();
 
-            var text = message.HasTextBody ? message.MessageTextBody : Core.GetTextUtils().GetTextFromHtml(message.MessageHtmlBody);
-
-            message.AIAgentProcessedBody = GetLocalizedString("ThinkingMessage");
-            var thinking = true;
-
-            message.AIAgentProcessedBody = await AIService.ProcessTextAsync
-            (
-                agent,
-                text,
-                CancellationToken.None,
-                textPart => DispatcherService.RunAsync(() =>
+                using (var backup = new MemoryStream())
+                using (var detachedSignatureData = new MemoryStream())
+                using (var publicKey = new MemoryStream())
                 {
-                    if (thinking)
-                    {
-                        message.AIAgentProcessedBody = string.Empty;
-                        thinking = false;
-                    }
-                    message.AIAgentProcessedBody += textPart;
-                })
-            ).ConfigureAwait(true);
+                    await Core.GetBackupManager().CreateBackupAsync(backup).ConfigureAwait(true);
+                    await Core.GetBackupManager().CreateDetachedSignatureDataAsync(backup, detachedSignatureData, publicKey).ConfigureAwait(true);
 
-            try
-            {
-                await Core.UpdateMessageProcessingResultAsync(message.MessageData, message.AIAgentProcessedBody).ConfigureAwait(true);
-            }
-            catch (MessageIsNotExistException)
-            {
-                // Message is deleted
+                    await BackupServiceClient.UploadAsync(new Uri(uploadUrl), fingerprint, publicKey, detachedSignatureData, backup).ConfigureAwait(true);
+                }
             }
         }
 
-        public virtual Task CreateAIAgentsMenuAsync(Action<string, Action<IList<object>>> action)
+        protected async Task ProcessAccountDataAsync(Account account, CancellationToken cancellationToken = default)
         {
-            return Task.CompletedTask;
+            if (account is null)
+            {
+                throw new ArgumentNullException(nameof(account));
+            }
+
+            bool existAccount = await Core.ExistsAccountWithEmailAddressAsync(account.Email, cancellationToken).ConfigureAwait(true);
+
+            if (!existAccount)
+            {
+                await Core.AddAccountAsync(account, cancellationToken).ConfigureAwait(true);
+            }
+            else
+            {
+                await Core.UpdateAccountAsync(account, cancellationToken).ConfigureAwait(true);
+            }
+
+            await BackupIfNeededAsync().ConfigureAwait(true);
         }
 
-        public virtual Task CreateAIAgentsMenuAsync(Action<string, Action> action)
+        protected async Task<Account> CreateDecentralizedAccountAsync(NetworkType networkType, CancellationToken cancellationToken)
         {
-            return Task.CompletedTask;
-        }
+            var (publicKey, accountIndex) = await Core.GetSecurityManager()
+                .GetNextDecAccountPublicKeyAsync(networkType, cancellationToken)
+                .ConfigureAwait(true);
 
-        public async void ShowPreview()
-        {
-            try
-            {
-                // ToDo: Here you can add a preview of your UI controls.
-                // And change the `IsPreviewAvailable` property to true.
+            var email = EmailAddress.CreateDecentralizedAddress(networkType, publicKey);
 
-                await MessageService.ShowInvitationDialogAsync();
-            }
-            catch (Exception e)
+            return new Account()
             {
-                OnError(e);
-            }
+                Email = email,
+                IsBackupAccountSettingsEnabled = true,
+                IsBackupAccountMessagesEnabled = true,
+                Type = MailBoxType.Dec,
+                DecentralizedAccountIndex = accountIndex,
+                IsMessageFooterEnabled = false
+            };
         }
     }
 }

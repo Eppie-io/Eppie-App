@@ -26,7 +26,7 @@ using Microsoft.UI.Xaml;
 
 namespace Eppie.App.Views
 {
-    internal partial class BitcoinAddressSettingsPageBase : BasePage<BitcoinAddressSettingsPageViewModel, BaseViewModel>
+    internal partial class BitcoinAddressSettingsPageBase : BasePage<BitcoinAddressSettingsPageViewModel>
     {
     }
 

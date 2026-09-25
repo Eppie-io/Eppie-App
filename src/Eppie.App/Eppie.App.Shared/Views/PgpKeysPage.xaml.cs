@@ -20,7 +20,7 @@ using Tuvi.App.ViewModels;
 
 namespace Eppie.App.Views
 {
-    internal partial class PgpKeysPageBase : BasePage<PgpKeysPageViewModel, BaseViewModel>
+    internal partial class PgpKeysPageBase : BasePage<PgpKeysPageViewModel>
     {
     }
 

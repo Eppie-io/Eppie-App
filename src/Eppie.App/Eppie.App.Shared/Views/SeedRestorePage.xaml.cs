@@ -26,7 +26,7 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace Eppie.App.Views
 {
-    internal partial class SeedRestorePageBase : BasePage<SeedRestorePageViewModel, BaseViewModel>
+    internal partial class SeedRestorePageBase : BasePage<SeedRestorePageViewModel>
     {
     }
 

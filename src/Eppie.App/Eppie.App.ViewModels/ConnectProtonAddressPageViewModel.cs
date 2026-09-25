@@ -252,7 +252,7 @@ namespace Tuvi.App.ViewModels
         private async Task OnOpenSettings()
         {
             var account = await Core.GetAccountAsync(new EmailAddress(Email.Value)).ConfigureAwait(true);
-            NavigateToMailboxSettingsPage(account, false);
+            NavigateToMailboxSettingsPage(account, isReloginNeeded: false);
             DoneCommand.Execute(null);
         }
 
@@ -278,7 +278,7 @@ namespace Tuvi.App.ViewModels
             }
 
             var account = await LoginAsync().ConfigureAwait(false);
-            await ProcessAccountAsync(account).ConfigureAwait(false);
+            await ProcessAccountDataAsync(account).ConfigureAwait(false);
             ShowStep(ProtonConnectionStep.Done);
         }
 
@@ -438,11 +438,6 @@ namespace Tuvi.App.ViewModels
         private Task<bool> IsAccountExistAsync(string email, CancellationToken cancellationToken = default)
         {
             return Core.ExistsAccountWithEmailAddressAsync(new EmailAddress(email), cancellationToken);
-        }
-
-        private Task ProcessAccountAsync(Account account, CancellationToken cancellationToken = default)
-        {
-            return ProcessAccountDataAsync(account, cancellationToken);
         }
 
         private class TwoFactorCodeEventArgs

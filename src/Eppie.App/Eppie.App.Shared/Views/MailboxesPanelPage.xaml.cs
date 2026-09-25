@@ -28,7 +28,7 @@ using Microsoft.UI.Xaml.Navigation;
 
 namespace Eppie.App.Views
 {
-    internal partial class MailboxesPanelPageBase : BasePage<BaseViewModel, BaseViewModel>
+    internal partial class MailboxesPanelPageBase : BasePage<PageViewModel>
     {
     }
 

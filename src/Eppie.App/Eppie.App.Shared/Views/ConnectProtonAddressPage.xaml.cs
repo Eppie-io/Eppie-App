@@ -36,7 +36,7 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace Eppie.App.Views
 {
-    internal partial class ConnectProtonAddressPageBase : BasePage<ConnectProtonAddressPageViewModel, BaseViewModel>
+    internal partial class ConnectProtonAddressPageBase : BasePage<ConnectProtonAddressPageViewModel>
     { }
 
     internal sealed partial class ConnectProtonAddressPage : ConnectProtonAddressPageBase, IPopupPage

@@ -34,7 +34,7 @@ using Microsoft.UI.Xaml.Media.Imaging;
 
 namespace Eppie.App.Views
 {
-    internal partial class AddressManagerPageBase : BasePage<AddressManagerPageViewModel, BaseViewModel>
+    internal partial class AddressManagerPageBase : BasePage<AddressManagerPageViewModel>
     {
     }
 

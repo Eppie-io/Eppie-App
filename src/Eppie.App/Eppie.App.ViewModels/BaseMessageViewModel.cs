@@ -28,7 +28,7 @@ using Tuvi.Core.Entities;
 
 namespace Tuvi.App.ViewModels
 {
-    public class BaseMessageViewModel : BaseViewModel
+    public class BaseMessageViewModel : PageViewModel
     {
         private MessageInfo _messageInfo;
         public MessageInfo MessageInfo
