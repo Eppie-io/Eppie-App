@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using EmailValidation;
 using Tuvi.Core.Entities;
 using Tuvi.Core.Utils;
 
@@ -89,7 +90,7 @@ namespace Tuvi.App.ViewModels.Common
             }
 
             var replyTo = messageInfo.MessageData.ReplyTo.FirstOrDefault();
-            return replyTo != null ? replyTo.Address : messageInfo.MessageData.From.FirstOrDefault()?.Address;
+            return replyTo != null && EmailValidator.Validate(replyTo.Address, allowTopLevelDomains: true) ? replyTo.Address : messageInfo.MessageData.From.FirstOrDefault()?.Address;
         }
 
         protected static string CreateReSubject(MessageInfo messageInfo)
