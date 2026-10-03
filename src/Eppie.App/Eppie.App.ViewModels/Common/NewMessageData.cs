@@ -90,7 +90,7 @@ namespace Tuvi.App.ViewModels.Common
             }
 
             var replyTo = messageInfo.MessageData.ReplyTo.FirstOrDefault();
-            return replyTo != null && EmailValidator.Validate(replyTo.Address, allowTopLevelDomains: true) ? replyTo.Address : messageInfo.MessageData.From.FirstOrDefault()?.Address;
+            return replyTo != null && EmailValidator.Validate(replyTo.StandardAddress, allowTopLevelDomains: true) ? replyTo.Address : messageInfo.MessageData.From.FirstOrDefault()?.Address;
         }
 
         protected static string CreateReSubject(MessageInfo messageInfo)
