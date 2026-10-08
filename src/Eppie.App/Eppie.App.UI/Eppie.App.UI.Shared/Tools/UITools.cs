@@ -338,5 +338,57 @@ namespace Eppie.App.UI.Common
                 }
             }
         }
+
+        /// <summary>
+        /// Shows an application dialog with the specified view.
+        /// </summary>
+        /// <typeparam name="TView">The type of the view. Dialog creates an instance of this type.</typeparam>
+        /// <param name="root">The XAML root.</param>
+        /// <returns>A task that represents the asynchronous operation.</returns>
+        public static async Task ShowAppDialogAsync<TView>(XamlRoot root)
+            where TView : UIElement, IAppDialogView, new()
+        {
+            await _mutex.WaitAsync().ConfigureAwait(true);
+            try
+            {
+                var dialog = new AppDialog()
+                {
+                    XamlRoot = root,
+                };
+
+                await dialog.ShowAsync<TView>();
+            }
+            finally
+            {
+                _mutex.Release();
+            }
+        }
+
+        /// <summary>
+        /// Shows an application dialog with the specified view and initialization data.
+        /// </summary>
+        /// <typeparam name="TView">The type of the view. Dialog creates an instance of this type.</typeparam>
+        /// <typeparam name="TData">The type of the initialization data.</typeparam>
+        /// <param name="root">The XAML root.</param>
+        /// <param name="data">The data to initialize the dialog with.</param>
+        /// <returns>A task that represents the asynchronous operation.</returns>
+        public static async Task ShowAppDialogAsync<TView, TData>(XamlRoot root, TData data)
+            where TView : UIElement, IAppDialogView, IAppDialogInitializer<TData>, new()
+        {
+            await _mutex.WaitAsync().ConfigureAwait(true);
+            try
+            {
+                var dialog = new AppDialog()
+                {
+                    XamlRoot = root,
+                };
+
+                await dialog.ShowAsync<TView, TData>(data);
+            }
+            finally
+            {
+                _mutex.Release();
+            }
+        }
     }
 }
