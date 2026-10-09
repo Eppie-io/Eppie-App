@@ -93,25 +93,27 @@ namespace Eppie.App.UI.Controls
 
             ContentElement.Child = view;
 
-            long backgroundToken = view.RegisterPropertyChangedCallback(BackgroundProperty, OnBackgroundPropertyChanged);
             long closeButtonVisibilityToken = view.RegisterPropertyChangedCallback(AppDialogExtensions.CloseButtonVisibilityProperty, OnCloseButtonVisibilityPropertyChanged);
             long titleToken = view.RegisterPropertyChangedCallback(AppDialogExtensions.TitleContentProperty, OnTitlePropertyChanged);
 
-            UpdateBackground();
-            UpdateCloseButton();
-            UpdateTitleContent();
+            try
+            {
+                UpdateCloseButton();
+                UpdateTitleContent();
 
-            await ShowAsync();
+                await ShowAsync();
+            }
+            finally
+            {
+                view.UnregisterPropertyChangedCallback(AppDialogExtensions.TitleContentProperty, titleToken);
+                view.UnregisterPropertyChangedCallback(AppDialogExtensions.CloseButtonVisibilityProperty, closeButtonVisibilityToken);
 
-            view.UnregisterPropertyChangedCallback(AppDialogExtensions.TitleContentProperty, titleToken);
-            view.UnregisterPropertyChangedCallback(AppDialogExtensions.CloseButtonVisibilityProperty, closeButtonVisibilityToken);
-            view.UnregisterPropertyChangedCallback(BackgroundProperty, backgroundToken);
+                view.CloseRequested -= OnCloseRequested;
 
-            view.CloseRequested -= OnCloseRequested;
-
-            Opened -= OnOpened;
-            Closing -= OnClosing;
-            Closed -= OnClosed;
+                Opened -= OnOpened;
+                Closing -= OnClosing;
+                Closed -= OnClosed;
+            }
         }
 
         private void OnCloseRequested(object sender, EventArgs e)
@@ -142,11 +144,6 @@ namespace Eppie.App.UI.Controls
             {
                 lifecycle.OnOpened();
             }
-        }
-
-        private void OnBackgroundPropertyChanged(DependencyObject sender, DependencyProperty dp)
-        {
-            UpdateBackground();
         }
 
         private void OnCloseButtonVisibilityPropertyChanged(DependencyObject sender, DependencyProperty dp)
@@ -193,14 +190,6 @@ namespace Eppie.App.UI.Controls
             else
             {
                 CloseButton.Visibility = Visibility.Collapsed;
-            }
-        }
-
-        private void UpdateBackground()
-        {
-            if (_appDialogView is Control control && control.Background != null)
-            {
-                Background = control.Background;
             }
         }
     }
