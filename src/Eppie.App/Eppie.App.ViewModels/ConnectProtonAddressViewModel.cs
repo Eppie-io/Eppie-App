@@ -39,7 +39,7 @@ namespace Tuvi.App.ViewModels
         OpenSettings,
     }
 
-    public class ConnectProtonAddressPageViewModel : ProtonAddressSettingsPageViewModel
+    public class ConnectProtonAddressViewModel : DialogViewModel<Account>
     {
         private ProtonConnectionStep _step;
         public ProtonConnectionStep Step
@@ -73,29 +73,24 @@ namespace Tuvi.App.ViewModels
             private set => SetProperty(ref _humanVerifierUri, value);
         }
 
-        public IRelayCommand HumanVerificationCompletedCommand { get; }
         public IRelayCommand ContinueCommand { get; }
         public IAsyncRelayCommand OpenSettingsCommand { get; }
-        public IRelayCommand ClosedCommand { get; }
         public IRelayCommand DoneCommand { get; }
 
-        public Action ClosePopupAction { get; set; }
-        public bool IsMacOS { get; set; }
+        public Action CloseAction { get; set; }
         private Account AccountData { get; set; }
 
         private event EventHandler<TwoFactorCodeEventArgs> TwoFactorCodeProvided;
         private event EventHandler<MailboxPasswordEventArgs> MailboxPasswordProvided;
         private event EventHandler<HumanVerificationEventArgs> HumanVerificationCompleted;
 
-        public ConnectProtonAddressPageViewModel() : base()
+        public ConnectProtonAddressViewModel() : base()
         {
             IsProcess = false;
             Step = ProtonConnectionStep.Unknown;
 
             ContinueCommand = new RelayCommand(OnContinue, CanContinue);
-            HumanVerificationCompletedCommand = new RelayCommand<(string type, string token)>(OnHumanVerificationCompleted);
             OpenSettingsCommand = new AsyncRelayCommand(OnOpenSettings);
-            ClosedCommand = new RelayCommand(OnClosed);
             DoneCommand = new RelayCommand(OnDone);
 
             Email.Errors.CollectionChanged += (s, e) => ContinueCommand.NotifyCanExecuteChanged();
@@ -104,22 +99,47 @@ namespace Tuvi.App.ViewModels
             MailboxPassword.Errors.CollectionChanged += (s, e) => ContinueCommand.NotifyCanExecuteChanged();
         }
 
-        public override void OnNavigatedTo(object data)
+        public override void InitializeData(Account data)
         {
-            if (data is Account accountData)
+            if (data != null)
             {
-                AccountData = accountData;
-                Email.SetInitialValue(accountData.Email?.Address);
+                AccountData = data;
+                Email.SetInitialValue(data.Email?.Address);
             }
             ShowStep(ProtonConnectionStep.Credentials);
 
-            base.OnNavigatedTo(data);
+            base.InitializeData(data);
+        }
+
+        public override void OnClosed(Result result)
+        {
+            TwoFactorCodeProvided?.Invoke(this, new TwoFactorCodeEventArgs(true, string.Empty));
+            MailboxPasswordProvided?.Invoke(this, new MailboxPasswordEventArgs(true, string.Empty));
+            HumanVerificationCompleted?.Invoke(this, new HumanVerificationEventArgs(true, string.Empty, string.Empty));
+
+            base.OnClosed(result);
         }
 
         public override void OnError(Exception e)
         {
-            ForceClosePopup();
+            ForceClose();
             base.OnError(e);
+        }
+
+        public void OnEnterKeyDown()
+        {
+            if (ContinueCommand.CanExecute(null))
+            {
+                ContinueCommand.Execute(null);
+            }
+        }
+
+        public void OnHumanVerificationResponse(string response)
+        {
+            if (ProtonLoginHelper.TryDeserializeHumanVerificationResponse(response, out IHumanVerificationData data))
+            {
+                PassHumanVerificationData(data.HumanVerificationType, data.Token);
+            }
         }
 
         private async void OnContinue()
@@ -230,7 +250,7 @@ namespace Tuvi.App.ViewModels
             return !property.HasErrors;
         }
 
-        private async void OnHumanVerificationCompleted((string type, string token) result)
+        private async void PassHumanVerificationData(string type, string token)
         {
             try
             {
@@ -241,7 +261,7 @@ namespace Tuvi.App.ViewModels
                     Step = ProtonConnectionStep.Credentials;
                 }).ConfigureAwait(true);
 
-                HumanVerificationCompleted?.Invoke(this, new HumanVerificationEventArgs(false, result.type, result.token));
+                HumanVerificationCompleted?.Invoke(this, new HumanVerificationEventArgs(false, type, token));
             }
             catch (Exception ex)
             {
@@ -258,14 +278,7 @@ namespace Tuvi.App.ViewModels
 
         private void OnDone()
         {
-            ClosePopupAction?.Invoke();
-        }
-
-        private void OnClosed()
-        {
-            TwoFactorCodeProvided?.Invoke(this, new TwoFactorCodeEventArgs(true, string.Empty));
-            MailboxPasswordProvided?.Invoke(this, new MailboxPasswordEventArgs(true, string.Empty));
-            HumanVerificationCompleted?.Invoke(this, new HumanVerificationEventArgs(true, string.Empty, string.Empty));
+            CloseAction?.Invoke();
         }
 
         private async Task ConnectAccountAsync(bool reconnect)
@@ -285,12 +298,6 @@ namespace Tuvi.App.ViewModels
         private async Task<Account> LoginAsync()
         {
             HumanVerifier humanVerifier = ProvideHumanVerificationToken;
-
-            // Todo: Remove this piece of code when MacOS will be fixed.
-            if (IsMacOS)
-            {
-                humanVerifier = null;
-            }
 
             ProtonCredentials protonCredentials = await ProtonLoginHelper.LoginAsync(Email.Value,
                                                                                      Password.Value,
@@ -399,13 +406,13 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        private async void ForceClosePopup()
+        private async void ForceClose()
         {
             try
             {
                 await DispatcherService.RunAsync(() =>
                 {
-                    ClosePopupAction?.Invoke();
+                    CloseAction?.Invoke();
                     TwoFactorCodeProvided?.Invoke(this, new TwoFactorCodeEventArgs(true, string.Empty));
                     MailboxPasswordProvided?.Invoke(this, new MailboxPasswordEventArgs(true, string.Empty));
                     HumanVerificationCompleted?.Invoke(this, new HumanVerificationEventArgs(true, string.Empty, string.Empty));

@@ -18,7 +18,7 @@
 
 using System;
 
-namespace Eppie.App.WebViewHelper
+namespace Eppie.App.Helpers
 {
     public class ScriptLoader
     {
@@ -29,25 +29,26 @@ namespace Eppie.App.WebViewHelper
 
             // Todo: Try to load the script from a embedded resource instead of hardcoding it here.
 
-            return "function postWebViewMessage(message) {" + Environment.NewLine +
-                   "  try {" + Environment.NewLine +
-                   "    if (window.hasOwnProperty(\"chrome\") && typeof chrome.webview !== \"undefined\") {" + Environment.NewLine +
-                   "      // Windows" + Environment.NewLine +
-                   "      chrome.webview.postMessage(message);" + Environment.NewLine +
-                   "    } else if (window.hasOwnProperty(\"unoWebView\")) {" + Environment.NewLine +
-                   "      // Android" + Environment.NewLine +
-                   "      unoWebView.postMessage(message);" + Environment.NewLine +
-                   "    } else if (window.hasOwnProperty(\"webkit\") && typeof webkit.messageHandlers !== \"undefined\" && typeof webkit.messageHandlers.unoWebView !== \"undefined\" ) {" + Environment.NewLine +
-                   "      // linux, macOS, iOS" + Environment.NewLine +
-                   "      webkit.messageHandlers.unoWebView.postMessage(message);" + Environment.NewLine +
-                   "    } else {" + Environment.NewLine +
-                   "      alert(\"Unknown message handler\");" + Environment.NewLine +
-                   "    }" + Environment.NewLine +
-                   "  } catch (ex) {" + Environment.NewLine +
-                   "    alert(\"Error occurred: \" + ex);" + Environment.NewLine +
-                   "  }" + Environment.NewLine +
-                   "}" + Environment.NewLine +
-                   "var postMessageToParent = postWebViewMessage;";
+            return @"
+                    function postWebViewMessage(message) {
+                        try {
+                            if (window.hasOwnProperty('chrome') && typeof chrome.webview !== 'undefined') {
+                                // Windows
+                                chrome.webview.postMessage(message);
+                            } else if (window.hasOwnProperty('unoWebView')) {
+                                // Android
+                                unoWebView.postMessage(typeof message === 'string' ? message : JSON.stringify(message));
+                            } else if (window.hasOwnProperty('webkit') && typeof webkit.messageHandlers !== 'undefined' && typeof webkit.messageHandlers.unoWebView !== 'undefined' ) {
+                                // linux, macOS, iOS
+                                webkit.messageHandlers.unoWebView.postMessage(typeof message === 'string' ? message : JSON.stringify(message));
+                            } else {
+                                alert('Unknown message handler');
+                            }
+                        } catch (ex) {
+                            alert('Error occurred: ' + ex);
+                        }
+                    }
+                    var postMessageToParent = postWebViewMessage;";
         }
     }
 }
