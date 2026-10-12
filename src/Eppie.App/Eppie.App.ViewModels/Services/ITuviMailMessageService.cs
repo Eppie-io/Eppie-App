@@ -18,6 +18,7 @@
 
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Tuvi.Core.Entities;
 
 namespace Tuvi.App.ViewModels.Services
 {
@@ -51,7 +52,7 @@ namespace Tuvi.App.ViewModels.Services
             string price,
             ICommand supportDevelopmentCommand);
 
-        Task ShowProtonConnectAddressDialogAsync(object data = null);
+        Task ShowProtonConnectAddressDialogAsync(Account account = null);
 
         Task ShowInvitationDialogAsync(object invitationData = null);
     }
