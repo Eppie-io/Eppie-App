@@ -24,15 +24,16 @@ using Tuvi.App.ViewModels;
 using Tuvi.Core.Entities;
 using Windows.Web.Http;
 
-
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using WebView2Control = Microsoft.UI.Xaml.Controls.WebView2;
 #else
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using WebView2Control = Microsoft.UI.Xaml.Controls.WebView2;
 #endif
 
 namespace Eppie.App.Views.Dialogs
@@ -42,8 +43,6 @@ namespace Eppie.App.Views.Dialogs
 
     internal sealed partial class ConnectProtonAddressView : ConnectProtonAddressViewBase
     {
-        private const string BlankPage = "about:blank";
-
         public ConnectProtonAddressView()
         {
             this.InitializeComponent();
@@ -103,19 +102,18 @@ namespace Eppie.App.Views.Dialogs
             }
         }
 
-        private async void OnNavigationCompleted(Microsoft.UI.Xaml.Controls.WebView2 sender, CoreWebView2NavigationCompletedEventArgs args)
+        private async void OnNavigationCompleted(WebView2Control sender, CoreWebView2NavigationCompletedEventArgs args)
         {
-            bool isAboutBlank = string.Equals(sender.Source?.AbsoluteUri, BlankPage, StringComparison.OrdinalIgnoreCase);
-            if (isAboutBlank || !args.IsSuccess || args.HttpStatusCode == (int)HttpStatusCode.None)
-            {
-                return;
-            }
-
             try
             {
-                await HumanVerifierWebView.EnsureCoreWebView2Async();
+                if (!args.IsSuccess)
+                {
+                    throw new InvalidOperationException($"Navigation to {sender.Source} failed with error code {args.WebErrorStatus}");
+                }
+
+                await sender.EnsureCoreWebView2Async();
                 string script = ScriptLoader.GetProtonCaptchaScript();
-                await HumanVerifierWebView.ExecuteScriptAsync(script);
+                await sender.ExecuteScriptAsync(script);
             }
             catch (Exception ex)
             {
@@ -123,25 +121,59 @@ namespace Eppie.App.Views.Dialogs
             }
         }
 
-        private void OnWebMessageReceived(Microsoft.UI.Xaml.Controls.WebView2 sender, CoreWebView2WebMessageReceivedEventArgs args)
+        private void OnWebMessageReceived(WebView2Control sender, CoreWebView2WebMessageReceivedEventArgs args)
         {
-            if (!string.IsNullOrEmpty(args.WebMessageAsJson))
+            // On Linux, the message might arrive as a raw text string representing JSON.
+            if (!TryGetWebMessageAsString(args, out string message))
             {
-                ViewModel.OnHumanVerificationResponse(args.WebMessageAsJson);
+                message = args.WebMessageAsJson;
             }
+
+            if (!string.IsNullOrEmpty(message))
+            {
+                ViewModel.OnHumanVerificationResponse(message);
+            }
+        }
+
+        private static bool TryGetWebMessageAsString(CoreWebView2WebMessageReceivedEventArgs args, out string message)
+        {
+            message = null;
+            try
+            {
+                message = args.TryGetWebMessageAsString();
+                return !string.IsNullOrEmpty(message);
+            }
+            catch
+            { }
+
+            return false;
         }
 
         private async Task UpdateHumanVerifierPage()
         {
-            await HumanVerifierWebView.EnsureCoreWebView2Async();
             if (ViewModel.Step == ProtonConnectionStep.HumanVerifier)
             {
-                string uri = ViewModel.HumanVerifierUri?.ToString() ?? BlankPage;
-                HumanVerifierWebView.CoreWebView2.Navigate(uri);
+                WebView2Control webView = new WebView2Control()
+                {
+                    HorizontalAlignment = HorizontalAlignment.Stretch,
+                    VerticalAlignment = VerticalAlignment.Stretch
+                };
+                WebViewParent.Child = webView;
+
+                await webView.EnsureCoreWebView2Async();
+                webView.NavigationCompleted += OnNavigationCompleted;
+                webView.WebMessageReceived += OnWebMessageReceived;
+                webView.CoreWebView2.Navigate(ViewModel.HumanVerifierUri?.ToString());
             }
             else
             {
-                HumanVerifierWebView.CoreWebView2.Navigate(BlankPage);
+                if (WebViewParent.Child is WebView2Control webView)
+                {
+                    webView.NavigationCompleted -= OnNavigationCompleted;
+                    webView.WebMessageReceived -= OnWebMessageReceived;
+                }
+
+                WebViewParent.Child = null;
             }
         }
 
