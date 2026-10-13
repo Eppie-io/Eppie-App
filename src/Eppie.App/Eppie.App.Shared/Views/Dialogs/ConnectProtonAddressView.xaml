@@ -13,7 +13,6 @@
     <local:ConnectProtonAddressViewBase.Resources>
         <x:Double x:Key="PageWidth">428</x:Double>
         <x:Double x:Key="PageMinHeight">500</x:Double>
-        <x:Double x:Key="HumanVerifierDefaultHeight">100</x:Double>
         <x:Double x:Key="HumanVerifierHeight">592</x:Double>
         <x:Double x:Key="ProgressSize">18</x:Double>
         <x:Double x:Key="IconSize">48</x:Double>
@@ -36,23 +35,16 @@
 
     <Grid Width="{StaticResource PageWidth}">
         <!--
-            1. We use `Opacity` instead of `Visibility` to hide the `HumanVerifierStep` and `HumanVerifierWebView` controls,
-            as this helps avoid issues with events `NavigationCompleted` and `WebMessageReceived` on macOS (Desktop platform).
-            
-            2. Don't remove the `Height` property, as this helps avoid issues with
-            the increased dialog box height (Desktop platform).
-            
-            3. This control is placed first, as it must not overlap other controls.
+            We create a `WebView2` control in code-behind and add it to the `WebViewParent` Border.
+            This helps avoid issues with events `NavigationCompleted` and `WebMessageReceived` in macOS
+            that occur when a `WebView2` control is created in XAML with its Visibility property set to Collapsed.
         -->
         <Grid x:Name="HumanVerifierStep"
-              Height="{StaticResource HumanVerifierDefaultHeight}"
-              Opacity="0">
-            <muxc:WebView2 x:Name="HumanVerifierWebView"
-                           HorizontalAlignment="Stretch"
-                           VerticalAlignment="Stretch"
-                           NavigationCompleted="OnNavigationCompleted"
-                           Opacity="0"
-                           WebMessageReceived="OnWebMessageReceived" />
+              Height="{StaticResource HumanVerifierHeight}"
+              Visibility="Collapsed">
+            <Border x:Name="WebViewParent"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch" />
         </Grid>
 
         <ScrollViewer x:Name="PageScrollViewer"
@@ -257,9 +249,7 @@
                         <toolkit:IsEqualStateTrigger Value="{x:Bind ViewModel.Step, Mode=OneWay}" To="{StaticResource CredentialsStepKey}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="HumanVerifierStep.Opacity" Value="0" />
-                        <Setter Target="HumanVerifierStep.Height" Value="{StaticResource HumanVerifierDefaultHeight}" />
-                        <Setter Target="HumanVerifierWebView.Opacity" Value="0" />
+                        <Setter Target="HumanVerifierStep.Visibility" Value="Collapsed" />
                         <Setter Target="TwoFactorCodeStep.Visibility" Value="Collapsed" />
                         <Setter Target="UnlockMailboxStep.Visibility" Value="Collapsed" />
                         <Setter Target="DoneStep.Visibility" Value="Collapsed" />
@@ -283,9 +273,7 @@
                         <Setter Target="DoneButtonPanel.Visibility" Value="Collapsed" />
                         <Setter Target="ContinueButton.Visibility" Value="Collapsed" />
 
-                        <Setter Target="HumanVerifierStep.Opacity" Value="1" />
-                        <Setter Target="HumanVerifierStep.Height" Value="{StaticResource HumanVerifierHeight}" />
-                        <Setter Target="HumanVerifierWebView.Opacity" Value="1" />
+                        <Setter Target="HumanVerifierStep.Visibility" Value="Visible" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="TwoFactorCode">
@@ -293,9 +281,7 @@
                         <toolkit:IsEqualStateTrigger Value="{x:Bind ViewModel.Step, Mode=OneWay}" To="{StaticResource TwoFactorCodeStepKey}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="HumanVerifierStep.Opacity" Value="0" />
-                        <Setter Target="HumanVerifierStep.Height" Value="{StaticResource HumanVerifierDefaultHeight}" />
-                        <Setter Target="HumanVerifierWebView.Opacity" Value="0" />
+                        <Setter Target="HumanVerifierStep.Visibility" Value="Collapsed" />
                         <Setter Target="CredentialsStep.Visibility" Value="Collapsed" />
                         <Setter Target="UnlockMailboxStep.Visibility" Value="Collapsed" />
                         <Setter Target="DoneStep.Visibility" Value="Collapsed" />
@@ -311,9 +297,7 @@
                         <toolkit:IsEqualStateTrigger Value="{x:Bind ViewModel.Step, Mode=OneWay}" To="{StaticResource UnlockMailboxStepKey}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="HumanVerifierStep.Opacity" Value="0" />
-                        <Setter Target="HumanVerifierStep.Height" Value="{StaticResource HumanVerifierDefaultHeight}" />
-                        <Setter Target="HumanVerifierWebView.Opacity" Value="0" />
+                        <Setter Target="HumanVerifierStep.Visibility" Value="Collapsed" />
                         <Setter Target="CredentialsStep.Visibility" Value="Collapsed" />
                         <Setter Target="TwoFactorCodeStep.Visibility" Value="Collapsed" />
                         <Setter Target="DoneStep.Visibility" Value="Collapsed" />
@@ -329,9 +313,7 @@
                         <toolkit:IsEqualStateTrigger Value="{x:Bind ViewModel.Step, Mode=OneWay}" To="{StaticResource DoneStepKey}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="HumanVerifierStep.Opacity" Value="0" />
-                        <Setter Target="HumanVerifierStep.Height" Value="{StaticResource HumanVerifierDefaultHeight}" />
-                        <Setter Target="HumanVerifierWebView.Opacity" Value="0" />
+                        <Setter Target="HumanVerifierStep.Visibility" Value="Collapsed" />
                         <Setter Target="CredentialsStep.Visibility" Value="Collapsed" />
                         <Setter Target="TwoFactorCodeStep.Visibility" Value="Collapsed" />
                         <Setter Target="UnlockMailboxStep.Visibility" Value="Collapsed" />
