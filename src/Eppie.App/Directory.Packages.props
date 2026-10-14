@@ -28,7 +28,7 @@
     <PackageVersion Include="Finebits.Authorization.OAuth2.Google" Version="0.4.0-preview.1" />
     <PackageVersion Include="Finebits.Authorization.OAuth2.Outlook" Version="0.4.0-preview.1" />
     <PackageVersion Include="Microsoft.Extensions.AI.Abstractions" Version="10.7.0" />
-    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="10.0.9" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="10.0.13" />
     <PackageVersion Include="Microsoft.ML.OnnxRuntimeGenAI.DirectML" Version="0.14.1" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
     <PackageVersion Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.2.14" />
@@ -63,8 +63,11 @@
       Please check this again in newer versions of the SDK and packages.
     -->
 
-    <!-- The `Microsoft.NETCore.UniversalWindowsPlatform` package -->
+    <!-- From The `Microsoft.NETCore.UniversalWindowsPlatform` package -->
     <PackageVersion Include="System.Private.Uri" Version="4.3.2" />
+
+    <!-- From The `MimeKit` package (from TuviCore and TuviPgpLib) -->
+    <PackageVersion Include="System.Security.Cryptography.Pkcs" Version="10.0.13" />
   </ItemGroup>
 
 </Project>
