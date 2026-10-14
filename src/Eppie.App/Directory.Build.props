@@ -15,7 +15,7 @@
 
   <PropertyGroup>
     <!-- Overrides global SDK properties here. -->
-    <MicrosoftLoggingVersion>10.0.9</MicrosoftLoggingVersion>
+    <MicrosoftLoggingVersion>10.0.13</MicrosoftLoggingVersion>
     <WindowsCompatibilityVersion>10.0.13</WindowsCompatibilityVersion>
   </PropertyGroup>
 
