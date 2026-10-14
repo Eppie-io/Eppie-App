@@ -63,8 +63,11 @@
       Please check this again in newer versions of the SDK and packages.
     -->
 
-    <!-- The `Microsoft.NETCore.UniversalWindowsPlatform` package -->
+    <!-- From The `Microsoft.NETCore.UniversalWindowsPlatform` package -->
     <PackageVersion Include="System.Private.Uri" Version="4.3.2" />
+
+    <!-- From The `MimeKit` package (from TuviCore and TuviPgpLib) -->
+    <PackageVersion Include="System.Security.Cryptography.Pkcs" Version="10.0.13" />
   </ItemGroup>
 
 </Project>
