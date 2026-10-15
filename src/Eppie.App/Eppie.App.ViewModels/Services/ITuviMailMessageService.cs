@@ -54,6 +54,6 @@ namespace Tuvi.App.ViewModels.Services
 
         Task ShowProtonConnectAddressDialogAsync(Account account = null);
 
-        Task ShowInvitationDialogAsync(object invitationData = null);
+        Task ShowInvitationDialogAsync(ContactItem contact = null);
     }
 }

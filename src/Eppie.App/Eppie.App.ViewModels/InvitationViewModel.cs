@@ -37,7 +37,7 @@ namespace Tuvi.App.ViewModels
         PreviewArea
     }
 
-    public class InvitationPageViewModel : PageViewModel
+    public class InvitationViewModel : DialogViewModel<ContactItem>
     {
         public ObservableCollection<ContactItem> Recipients { get; } = new ObservableCollection<ContactItem>();
         public ManagedCollection<ContactItem> SuitableContacts { get; } = new ManagedCollection<ContactItem>();
@@ -104,9 +104,8 @@ namespace Tuvi.App.ViewModels
 
         public IRelayCommand SendInviteCommand { get; }
         public IRelayCommand GoBackCommand { get; }
-        public Action ClosePopupAction { get; set; }
 
-        public InvitationPageViewModel() : base()
+        public InvitationViewModel() : base()
         {
             SendInviteCommand = new AsyncRelayCommand<bool?>(SendInviteAsync, preview => CanInvite);
             GoBackCommand = new RelayCommand(GoBackToContact);
@@ -121,11 +120,11 @@ namespace Tuvi.App.ViewModels
             InvitationArea = InvitationArea.ContactArea;
         }
 
-        public override void OnNavigatedTo(object data)
+        public override void InitializeData(ContactItem data)
         {
-            base.OnNavigatedTo(data);
+            base.InitializeData(data);
 
-            InitializeFromContact(data as ContactItem);
+            InitializeFromContact(data);
             LoadContacts();
         }
 
@@ -315,7 +314,7 @@ namespace Tuvi.App.ViewModels
 
             _ = SendEmailsAsync(Core, context).ConfigureAwait(true);
 
-            ClosePopupAction?.Invoke();
+            CloseDialog();
         }
 
         private static async Task SendEmailsAsync(Core.ITuviMail core, InviteMessageContext context)

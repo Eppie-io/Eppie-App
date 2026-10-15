@@ -568,10 +568,9 @@ namespace Eppie.App.Services
             return UITools.ShowAppDialogAsync<ConnectProtonAddressView, Account>(_xamlRootProvider(), account);
         }
 
-        public Task ShowInvitationDialogAsync(object invitationData)
+        public Task ShowInvitationDialogAsync(ContactItem contact = null)
         {
-            // Todo: migrate to new dialog system
-            return UITools.ShowPopupAsync<InvitationPage>(_xamlRootProvider(), invitationData);
+            return UITools.ShowAppDialogAsync<InvitationView, ContactItem>(_xamlRootProvider(), contact);
         }
     }
 }
