@@ -16,9 +16,10 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
+using System;
+
 namespace Tuvi.App.ViewModels
 {
-
     public class DialogViewModel : BaseViewModel
     {
         public enum Result
@@ -27,6 +28,8 @@ namespace Tuvi.App.ViewModels
             Primary,
             Secondary,
         }
+
+        private Action _closeAction;
 
         public virtual void OnOpened()
         { }
@@ -38,6 +41,22 @@ namespace Tuvi.App.ViewModels
 
         public virtual void OnClosed(Result result)
         { }
+
+        public void RegisterCloseAction(Action closeAction)
+        {
+            _closeAction = closeAction;
+        }
+
+        public void OnDialogClosed(Result result)
+        {
+            _closeAction = null;
+            OnClosed(result);
+        }
+
+        protected void CloseDialog()
+        {
+            _closeAction?.Invoke();
+        }
     }
 
     public class DialogViewModel<TData> : DialogViewModel
