@@ -77,7 +77,6 @@ namespace Tuvi.App.ViewModels
         public IAsyncRelayCommand OpenSettingsCommand { get; }
         public IRelayCommand DoneCommand { get; }
 
-        public Action CloseAction { get; set; }
         private Account AccountData { get; set; }
 
         private event EventHandler<TwoFactorCodeEventArgs> TwoFactorCodeProvided;
@@ -278,7 +277,7 @@ namespace Tuvi.App.ViewModels
 
         private void OnDone()
         {
-            CloseAction?.Invoke();
+            CloseDialog();
         }
 
         private async Task ConnectAccountAsync(bool reconnect)
@@ -412,7 +411,7 @@ namespace Tuvi.App.ViewModels
             {
                 await DispatcherService.RunAsync(() =>
                 {
-                    CloseAction?.Invoke();
+                    CloseDialog();
                     TwoFactorCodeProvided?.Invoke(this, new TwoFactorCodeEventArgs(true, string.Empty));
                     MailboxPasswordProvided?.Invoke(this, new MailboxPasswordEventArgs(true, string.Empty));
                     HumanVerificationCompleted?.Invoke(this, new HumanVerificationEventArgs(true, string.Empty, string.Empty));

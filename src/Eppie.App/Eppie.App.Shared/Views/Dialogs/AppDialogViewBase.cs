@@ -50,6 +50,7 @@ namespace Eppie.App.Views.Dialogs
         {
             ViewModel = new TViewModel();
             DataContext = ViewModel;
+            ViewModel.RegisterCloseAction(Close);
             ViewModel.Initialize();
         }
 
@@ -66,7 +67,7 @@ namespace Eppie.App.Views.Dialogs
 
         public virtual void OnClosed(ContentDialogResult result)
         {
-            ViewModel?.OnClosed(ConvertResult(result));
+            ViewModel?.OnDialogClosed(ConvertResult(result));
         }
 
         protected void Close()
