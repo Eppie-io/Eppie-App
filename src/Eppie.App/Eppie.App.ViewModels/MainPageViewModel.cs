@@ -987,6 +987,18 @@ namespace Tuvi.App.ViewModels
             NavigationService.NavigateToAppSettings();
         }
 
+        public async void OpenInvitationDialog()
+        {
+            try
+            {
+                await MessageService.ShowInvitationDialogAsync();
+            }
+            catch (Exception e)
+            {
+                OnError(e);
+            }
+        }
+
         public async void MailBoxItemDropMessages(MailBoxItem item)
         {
             try
