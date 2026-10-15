@@ -567,6 +567,7 @@ namespace Eppie.App.ViewModels.Tests
 
             Assert.That(closed, Is.True);
             Assert.That(_errorHandler.Errors, Has.Count.EqualTo(1));
+            Assert.That(_errorHandler.Errors[0], Is.TypeOf<InvalidOperationException>());
         }
 
         public void Dispose()

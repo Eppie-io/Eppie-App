@@ -128,6 +128,12 @@ namespace Tuvi.App.ViewModels
             LoadContacts();
         }
 
+        public override void OnError(Exception e)
+        {
+            ForceClose();
+            base.OnError(e);
+        }
+
         private async void InitializeFromContact(ContactItem contactItem)
         {
             try
@@ -182,12 +188,19 @@ namespace Tuvi.App.ViewModels
             EppieAddressIndex = EppieAddresses.Count > 0 ? 0 : -1;
         }
 
-        private void LoadContacts()
+        private async void LoadContacts()
         {
-            _allContacts.Clear();
-            SuitableContacts.Clear();
+            try
+            {
+                _allContacts.Clear();
+                SuitableContacts.Clear();
 
-            _ = LoadContactsInBackgroundAsync();
+                await LoadContactsInBackgroundAsync().ConfigureAwait(true);
+            }
+            catch (Exception ex)
+            {
+                OnError(ex);
+            }
         }
 
         private async Task LoadContactsInBackgroundAsync()
@@ -293,15 +306,22 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        private Task SendInviteAsync(bool? preview)
+        private async Task SendInviteAsync(bool? preview)
         {
-            if (preview == true)
+            try
             {
-                PreviewInvite();
-                return Task.CompletedTask;
-            }
+                if (preview == true)
+                {
+                    PreviewInvite();
+                    return;
+                }
 
-            return SendInviteAsync();
+                await SendInviteAsync().ConfigureAwait(true);
+            }
+            catch (Exception ex)
+            {
+                OnError(ex);
+            }
         }
 
         private async Task SendInviteAsync()
@@ -312,7 +332,7 @@ namespace Tuvi.App.ViewModels
                 return;
             }
 
-            _ = SendEmailsAsync(Core, context).ConfigureAwait(true);
+            await SendEmailsAsync(Core, context).ConfigureAwait(true);
 
             CloseDialog();
         }
@@ -413,6 +433,19 @@ namespace Tuvi.App.ViewModels
                 OnError(ex);
                 return string.Empty;
             }
+        }
+
+        private async void ForceClose()
+        {
+            try
+            {
+                await DispatcherService.RunAsync(() =>
+                {
+                    CloseDialog();
+                }).ConfigureAwait(false);
+            }
+            catch
+            { }
         }
 
         private sealed class InviteMessageContext
