@@ -64,7 +64,11 @@ At the moment, the stable channel provides the classic Eppie email client experi
   </a>
 </p>
 
-[![Get it from the Snap Store](https://snapcraft.io/en/light/install.svg)](https://snapcraft.io/eppie)
+<p align="left">
+  <a href="https://snapcraft.io/eppie">
+    <img src="https://snapcraft.io/en/light/install.svg" width="200" alt="Get it from the Snap Store" />
+  </a>
+</p>
 
 App Store and Google Play: WIP
 
