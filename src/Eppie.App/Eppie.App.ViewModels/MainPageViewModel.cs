@@ -469,7 +469,7 @@ namespace Tuvi.App.ViewModels
 
     }
 
-    public class MainPageViewModel : BaseViewModel
+    public class MainPageViewModel : PageViewModel
     {
         public MailBoxesModel MailBoxesModel { get; private set; }
 

@@ -26,7 +26,7 @@ using Tuvi.Core.Entities;
 
 namespace Tuvi.App.ViewModels
 {
-    public class AIAgentsManagerPageViewModel : BaseViewModel
+    public class AIAgentsManagerPageViewModel : PageViewModel
     {
         public ObservableCollection<LocalAIAgent> AIAgents { get; } = new ObservableCollection<LocalAIAgent>();
         public ICommand EditAIAgentCommand => new RelayCommand<object>(EditAIAgentInfo);

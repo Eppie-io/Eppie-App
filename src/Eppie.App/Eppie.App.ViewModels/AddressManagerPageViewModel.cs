@@ -26,7 +26,7 @@ using Tuvi.OAuth2;
 
 namespace Tuvi.App.ViewModels
 {
-    public class AddressManagerPageViewModel : BaseViewModel
+    public class AddressManagerPageViewModel : PageViewModel
     {
         public ObservableCollection<AddressGroupItem> GroupItems { get; } = new ObservableCollection<AddressGroupItem>();
 

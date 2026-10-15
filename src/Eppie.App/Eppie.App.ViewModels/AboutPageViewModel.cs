@@ -20,7 +20,7 @@ using System;
 
 namespace Tuvi.App.ViewModels
 {
-    public class AboutPageViewModel : BaseViewModel
+    public class AboutPageViewModel : PageViewModel
     {
         public async void RequestReview()
         {

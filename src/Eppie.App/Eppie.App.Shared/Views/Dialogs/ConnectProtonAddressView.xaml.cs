@@ -17,42 +17,37 @@
 // ---------------------------------------------------------------------------- //
 
 using System;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using Eppie.App.UI.Controls;
-using Eppie.App.WebViewHelper;
+using Eppie.App.Helpers;
 using Microsoft.Web.WebView2.Core;
 using Tuvi.App.ViewModels;
+using Tuvi.Core.Entities;
 using Windows.Web.Http;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
+using WebView2Control = Microsoft.UI.Xaml.Controls.WebView2;
 #else
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
+using WebView2Control = Microsoft.UI.Xaml.Controls.WebView2;
 #endif
 
-namespace Eppie.App.Views
+namespace Eppie.App.Views.Dialogs
 {
-    internal partial class ConnectProtonAddressPageBase : BasePage<ConnectProtonAddressPageViewModel, BaseViewModel>
+    internal partial class ConnectProtonAddressViewBase : AppDialogViewBase<ConnectProtonAddressViewModel, Account>
     { }
 
-    internal sealed partial class ConnectProtonAddressPage : ConnectProtonAddressPageBase, IPopupPage
+    internal sealed partial class ConnectProtonAddressView : ConnectProtonAddressViewBase
     {
-        public event EventHandler ClosePopupRequested;
-
-        public ConnectProtonAddressPage()
+        public ConnectProtonAddressView()
         {
             this.InitializeComponent();
 
-            // Todo: Remove this piece of code when MacOS will be fixed.
-#if HAS_UNO
-            ViewModel.IsMacOS = OperatingSystem.IsMacOS();
-#endif
-
-            ViewModel.ClosePopupAction = ClosePopup;
+            ViewModel.CloseAction = Close;
 
             ViewModel.PropertyChanged += (s, e) =>
             {
@@ -63,13 +58,10 @@ namespace Eppie.App.Views
             };
         }
 
-        public void OnCloseClicked()
+        public override void OnOpened()
         {
-            ViewModel.ClosedCommand?.Execute(null);
-        }
+            base.OnOpened();
 
-        private void OnLoaded(object sender, RoutedEventArgs args)
-        {
             UpdateFocus();
 
             AddressBox.IsEnabledChanged += (s, e) =>
@@ -87,6 +79,16 @@ namespace Eppie.App.Views
                 UpdateFocus();
             };
         }
+        protected override void OnKeyDown(KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Enter)
+            {
+                ViewModel.OnEnterKeyDown();
+                e.Handled = true;
+            }
+
+            base.OnKeyDown(e);
+        }
 
         private async void OnStateChanged(object sender, VisualStateChangedEventArgs e)
         {
@@ -100,18 +102,18 @@ namespace Eppie.App.Views
             }
         }
 
-        private async void OnNavigationCompleted(Microsoft.UI.Xaml.Controls.WebView2 sender, CoreWebView2NavigationCompletedEventArgs args)
+        private async void OnNavigationCompleted(WebView2Control sender, CoreWebView2NavigationCompletedEventArgs args)
         {
-            if (!args.IsSuccess || args.HttpStatusCode == (int)HttpStatusCode.None)
-            {
-                return;
-            }
-
             try
             {
-                await HumanVerifierWebView.EnsureCoreWebView2Async();
+                if (!args.IsSuccess)
+                {
+                    throw new InvalidOperationException($"Navigation to {sender.Source} failed with error code {args.WebErrorStatus}");
+                }
+
+                await sender.EnsureCoreWebView2Async();
                 string script = ScriptLoader.GetProtonCaptchaScript();
-                await HumanVerifierWebView.ExecuteScriptAsync(script);
+                await sender.ExecuteScriptAsync(script);
             }
             catch (Exception ex)
             {
@@ -119,37 +121,60 @@ namespace Eppie.App.Views
             }
         }
 
-        private void OnWebMessageReceived(Microsoft.UI.Xaml.Controls.WebView2 sender, CoreWebView2WebMessageReceivedEventArgs args)
+        private void OnWebMessageReceived(WebView2Control sender, CoreWebView2WebMessageReceivedEventArgs args)
         {
-            if (!string.IsNullOrEmpty(args.WebMessageAsJson) &&
-                HumanVerificationResponse.TryDeserialize(args.WebMessageAsJson, out HumanVerificationResponse response))
+            // On Linux, the message might arrive as a raw text string representing JSON.
+            if (!TryGetWebMessageAsString(args, out string message))
             {
-                if (response?.IsCaptcha() is true)
-                {
-                    ViewModel.HumanVerificationCompletedCommand?.Execute((HumanVerificationResponse.HumanVerificationType, response.Token));
-                }
+                message = args.WebMessageAsJson;
             }
+
+            if (!string.IsNullOrEmpty(message))
+            {
+                ViewModel.OnHumanVerificationResponse(message);
+            }
+        }
+
+        private static bool TryGetWebMessageAsString(CoreWebView2WebMessageReceivedEventArgs args, out string message)
+        {
+            message = null;
+            try
+            {
+                message = args.TryGetWebMessageAsString();
+                return !string.IsNullOrEmpty(message);
+            }
+            catch
+            { }
+
+            return false;
         }
 
         private async Task UpdateHumanVerifierPage()
         {
-            const string blankPage = "about:blank";
-
-            await HumanVerifierWebView.EnsureCoreWebView2Async();
             if (ViewModel.Step == ProtonConnectionStep.HumanVerifier)
             {
-                string uri = ViewModel.HumanVerifierUri?.ToString() ?? blankPage;
-                HumanVerifierWebView.CoreWebView2.Navigate(uri);
+                WebView2Control webView = new WebView2Control()
+                {
+                    HorizontalAlignment = HorizontalAlignment.Stretch,
+                    VerticalAlignment = VerticalAlignment.Stretch
+                };
+                WebViewParent.Child = webView;
+
+                await webView.EnsureCoreWebView2Async();
+                webView.NavigationCompleted += OnNavigationCompleted;
+                webView.WebMessageReceived += OnWebMessageReceived;
+                webView.CoreWebView2.Navigate(ViewModel.HumanVerifierUri?.ToString());
             }
             else
             {
-                HumanVerifierWebView.CoreWebView2.Navigate(blankPage);
-            }
-        }
+                if (WebViewParent.Child is WebView2Control webView)
+                {
+                    webView.NavigationCompleted -= OnNavigationCompleted;
+                    webView.WebMessageReceived -= OnWebMessageReceived;
+                }
 
-        private void ClosePopup()
-        {
-            ClosePopupRequested?.Invoke(this, EventArgs.Empty);
+                WebViewParent.Child = null;
+            }
         }
 
         private void UpdateFocus()
@@ -200,50 +225,4 @@ namespace Eppie.App.Views
             }
         }
     }
-
-    internal class HumanVerificationResponse
-    {
-        public static readonly string HumanVerificationType = "captcha";
-        private static readonly string PostMessageCaptchaTypeKey = "pm_captcha";
-
-        [JsonPropertyName("type")]
-        public string PostMessageType { get; set; }
-
-        [JsonPropertyName("token")]
-        public string Token { get; set; }
-
-        public bool IsCaptcha()
-        {
-            return !string.IsNullOrEmpty(PostMessageType) && PostMessageType == PostMessageCaptchaTypeKey;
-        }
-
-        public static bool TryDeserialize(string json, out HumanVerificationResponse response)
-        {
-            response = null;
-            try
-            {
-#if WINDOWS_UWP
-                response = JsonSerializer.Deserialize<HumanVerificationResponse>(json);
-#else
-                response = JsonSerializer.Deserialize<HumanVerificationResponse>(json, ConnectProtonJsonContext.Default.HumanVerificationResponse);
-#endif
-                return true;
-            }
-            catch (ArgumentNullException)
-            { }
-            catch (JsonException)
-            { }
-            catch (NotSupportedException)
-            { }
-
-            return false;
-        }
-    }
-
-#if !WINDOWS_UWP
-    [JsonSerializable(typeof(HumanVerificationResponse))]
-    internal partial class ConnectProtonJsonContext : JsonSerializerContext
-    {
-    }
-#endif
 }

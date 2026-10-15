@@ -29,7 +29,7 @@ using TuviPgpLib.Entities;
 
 namespace Tuvi.App.ViewModels
 {
-    public class PgpKeyPageViewModel : BaseViewModel
+    public class PgpKeyPageViewModel : PageViewModel
     {
         private PgpKeyInfo key;
 

@@ -28,7 +28,7 @@ using TuviPgpLib.Entities;
 
 namespace Tuvi.App.ViewModels
 {
-    public class PgpKeysPageViewModel : BaseViewModel
+    public class PgpKeysPageViewModel : PageViewModel
     {
         private List<PgpKeyInfo> pgpKeys = new List<PgpKeyInfo>();
         public List<PgpKeyInfo> PgpKeys

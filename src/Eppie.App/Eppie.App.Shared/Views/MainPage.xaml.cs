@@ -36,7 +36,7 @@ using WinUI = Microsoft.UI.Xaml;
 
 namespace Eppie.App.Views
 {
-    internal partial class MainPageBase : BasePage<MainPageViewModel, BaseViewModel>
+    internal partial class MainPageBase : BasePage<MainPageViewModel>
     {
     }
 

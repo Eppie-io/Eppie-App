@@ -386,7 +386,7 @@ namespace Eppie.App
                 var frame = MainWindow.Content as Frame;
                 if (frame != null)
                 {
-                    var page = frame.Content as BasePage<MainPageViewModel, BaseViewModel>;
+                    var page = frame.Content as BasePage<MainPageViewModel>;
                     if (page != null)
                     {
                         page.HandleBack();

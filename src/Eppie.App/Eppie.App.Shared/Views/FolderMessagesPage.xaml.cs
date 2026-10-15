@@ -30,7 +30,7 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace Eppie.App.Views
 {
-    internal partial class FolderMessagesPageBase : BasePage<FolderMessagesPageViewModel, BaseViewModel>
+    internal partial class FolderMessagesPageBase : BasePage<FolderMessagesPageViewModel>
     {
     }
 

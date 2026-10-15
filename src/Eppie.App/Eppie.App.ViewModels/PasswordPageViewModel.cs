@@ -103,7 +103,7 @@ namespace Tuvi.App.ViewModels
         }
     }
 
-    public class PasswordPageViewModel : BaseViewModel
+    public class PasswordPageViewModel : PageViewModel
     {
         private PasswordControlModel _passwordModel;
         [CustomValidation(typeof(PasswordPageViewModel), nameof(ClearValidationErrors))]

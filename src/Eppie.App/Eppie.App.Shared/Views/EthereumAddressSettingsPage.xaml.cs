@@ -26,7 +26,7 @@ using Microsoft.UI.Xaml;
 
 namespace Eppie.App.Views
 {
-    internal partial class EthereumAddressSettingsPageBase : BasePage<EthereumAddressSettingsPageViewModel, BaseViewModel>
+    internal partial class EthereumAddressSettingsPageBase : BasePage<EthereumAddressSettingsPageViewModel>
     {
     }
 

@@ -35,7 +35,7 @@ namespace Tuvi.App.ViewModels
         ResetPassword
     }
 
-    public class SeedRestorePageViewModel : BaseViewModel
+    public class SeedRestorePageViewModel : PageViewModel
     {
         private SeedRestoreActions _action = SeedRestoreActions.Restore;
 

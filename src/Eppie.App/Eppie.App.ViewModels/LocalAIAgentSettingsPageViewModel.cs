@@ -337,7 +337,7 @@ namespace Tuvi.App.ViewModels
         }
     }
 
-    public class LocalAIAgentSettingsPageViewModel : BaseViewModel, IDisposable
+    public class LocalAIAgentSettingsPageViewModel : PageViewModel, IDisposable
     {
         private LocalAIAgentSettings _agentSettingsModel;
         public LocalAIAgentSettings AgentSettingsModel

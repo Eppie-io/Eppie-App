@@ -20,7 +20,7 @@ using Tuvi.App.ViewModels;
 
 namespace Eppie.App.Views
 {
-    internal partial class ProtonAddressSettingsPageBase : BasePage<ProtonAddressSettingsPageViewModel, BaseViewModel>
+    internal partial class ProtonAddressSettingsPageBase : BasePage<ProtonAddressSettingsPageViewModel>
     {
     }
 

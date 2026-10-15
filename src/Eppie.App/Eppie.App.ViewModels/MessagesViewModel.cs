@@ -32,7 +32,7 @@ using Tuvi.Core.Entities;
 
 namespace Tuvi.App.ViewModels
 {
-    public class MessagesViewModel : BaseViewModel, IIncrementalSource<MessageInfo>, IDisposable
+    public class MessagesViewModel : PageViewModel, IIncrementalSource<MessageInfo>, IDisposable
     {
         public class BaseNavigationData
         {

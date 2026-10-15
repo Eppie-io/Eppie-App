@@ -29,7 +29,7 @@ using Microsoft.UI.Xaml.Controls;
 namespace Eppie.App.Views
 {
     // ToDo: Issue #840 - Rename SettingsPageViewModel or replace it with a new one
-    internal partial class AppSettingsPageBase : BasePage<SettingsPageViewModel, BaseViewModel>
+    internal partial class AppSettingsPageBase : BasePage<SettingsPageViewModel>
     {
     }
 

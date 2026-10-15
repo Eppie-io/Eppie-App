@@ -31,7 +31,7 @@ using Tuvi.Core.Entities;
 
 namespace Tuvi.App.ViewModels
 {
-    public class ContactsPanelPageViewModel : BaseViewModel, IControlModel, IIncrementalSource<ContactItem>, IDisposable
+    public class ContactsPanelPageViewModel : PageViewModel, IControlModel, IIncrementalSource<ContactItem>, IDisposable
     {
         public ManagedCollection<ContactItem> Contacts { get; private set; }
 

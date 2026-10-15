@@ -39,7 +39,7 @@ using Microsoft.UI.Xaml.Navigation;
 namespace Eppie.App.Views
 {
 
-    internal partial class ComposeMessagePageBase : BasePage<ComposeMessagePageViewModel, BaseViewModel>
+    internal partial class ComposeMessagePageBase : BasePage<ComposeMessagePageViewModel>
     {
     }
 

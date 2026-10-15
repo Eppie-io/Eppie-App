@@ -20,7 +20,7 @@ using Tuvi.App.ViewModels;
 
 namespace Eppie.App.Views
 {
-    internal partial class SeedGeneratePageBase : BasePage<SeedGeneratePageViewModel, BaseViewModel>
+    internal partial class SeedGeneratePageBase : BasePage<SeedGeneratePageViewModel>
     {
     }
 

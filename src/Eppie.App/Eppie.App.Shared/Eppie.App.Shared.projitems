@@ -19,6 +19,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\EppieHost.Uno.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\EppieHost.UWP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\PlatformTools.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ScriptLoader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ViewModelExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Logging\HashTransformOperator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Logging\LogConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Logging\LoggingExtensions.cs" />
@@ -41,7 +43,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)UI\Converters\AttachmentConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\Converters\RecipientConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\BasePage.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)WebViewHelper\ScriptLoader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Dialogs\AppDialogViewBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)App.Uno.xaml.cs">
@@ -89,14 +91,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\ComposeMessagePage.xaml.cs">
       <DependentUpon>ComposeMessagePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Views\ConnectProtonAddressPage.xaml.cs">
-      <DependentUpon>ConnectProtonAddressPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\ContactMessagesPage.xaml.cs">
       <DependentUpon>ContactMessagesPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\ContactsPanelPage.xaml.cs">
       <DependentUpon>ContactsPanelPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Dialogs\ConnectProtonAddressView.xaml.cs">
+      <DependentUpon>ConnectProtonAddressView.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\EmailAddressSettingsPage.xaml.cs">
       <DependentUpon>EmailAddressSettingsPage.xaml</DependentUpon>
@@ -227,15 +229,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Views\ConnectProtonAddressPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="$(MSBuildThisFileDirectory)Views\ContactMessagesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Views\ContactsPanelPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\Dialogs\ConnectProtonAddressView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
