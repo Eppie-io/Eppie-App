@@ -31,6 +31,16 @@ namespace Tuvi.App.ViewModels
 
         private Action _closeAction;
 
+
+        public virtual void OnLoaded()
+        { }
+
+        public virtual void OnLoading()
+        { }
+
+        public virtual void OnUnloaded()
+        { }
+
         public virtual void OnOpened()
         { }
 
@@ -53,9 +63,15 @@ namespace Tuvi.App.ViewModels
             OnClosed(result);
         }
 
-        protected void CloseDialog()
+        protected bool TryCloseDialog()
         {
-            _closeAction?.Invoke();
+            if (_closeAction is null)
+            {
+                return false;
+            }
+
+            _closeAction.Invoke();
+            return true;
         }
     }
 

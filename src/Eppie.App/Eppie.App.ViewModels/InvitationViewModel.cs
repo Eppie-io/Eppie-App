@@ -122,12 +122,12 @@ namespace Tuvi.App.ViewModels
             InvitationArea = InvitationArea.ContactArea;
         }
 
-        public override void OnOpened()
+        public override void OnLoaded()
         {
             InitializeFromContact(ContactItem);
             LoadContacts();
 
-            base.OnOpened();
+            base.OnLoaded();
         }
 
         public override void OnError(Exception e)
@@ -336,7 +336,7 @@ namespace Tuvi.App.ViewModels
 
             _ = SendEmailsAsync(Core, context, OnError).ConfigureAwait(true);
 
-            CloseDialog();
+            TryCloseDialog();
         }
 
         private static async Task SendEmailsAsync(Core.ITuviMail core, InviteMessageContext context, Action<Exception> onError)
@@ -450,7 +450,7 @@ namespace Tuvi.App.ViewModels
             {
                 await DispatcherService.RunAsync(() =>
                 {
-                    CloseDialog();
+                    TryCloseDialog();
                 }).ConfigureAwait(false);
             }
             catch

@@ -98,7 +98,7 @@ namespace Tuvi.App.ViewModels
             MailboxPassword.Errors.CollectionChanged += (s, e) => ContinueCommand.NotifyCanExecuteChanged();
         }
 
-        public override void OnOpened()
+        public override void OnLoading()
         {
             if (InitData != null)
             {
@@ -106,8 +106,13 @@ namespace Tuvi.App.ViewModels
                 Email.SetInitialValue(AccountData.Email?.Address);
             }
 
+            base.OnLoading();
+        }
+
+        public override void OnLoaded()
+        {
             ShowStep(ProtonConnectionStep.Credentials);
-            base.OnOpened();
+            base.OnLoaded();
         }
 
         public override void OnClosed(Result result)
@@ -277,7 +282,7 @@ namespace Tuvi.App.ViewModels
 
         private void OnDone()
         {
-            CloseDialog();
+            TryCloseDialog();
         }
 
         private async Task ConnectAccountAsync(bool reconnect)
@@ -411,7 +416,7 @@ namespace Tuvi.App.ViewModels
             {
                 await DispatcherService.RunAsync(() =>
                 {
-                    CloseDialog();
+                    TryCloseDialog();
                     TwoFactorCodeProvided?.Invoke(this, new TwoFactorCodeEventArgs(true, string.Empty));
                     MailboxPasswordProvided?.Invoke(this, new MailboxPasswordEventArgs(true, string.Empty));
                     HumanVerificationCompleted?.Invoke(this, new HumanVerificationEventArgs(true, string.Empty, string.Empty));

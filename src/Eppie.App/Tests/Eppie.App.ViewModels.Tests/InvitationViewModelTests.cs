@@ -257,7 +257,7 @@ namespace Eppie.App.ViewModels.Tests
             _vm.RegisterCloseAction(() => closed = true);
 
             _vm.InitializeData(null);
-            _vm.OnOpened();
+            _vm.OnLoaded();
 
             await WaitForAddressesAsync().ConfigureAwait(false);
 
@@ -292,7 +292,7 @@ namespace Eppie.App.ViewModels.Tests
             SeedAccounts(senderAcc, eppieAcc);
 
             _vm.InitializeData(null);
-            _vm.OnOpened();
+            _vm.OnLoaded();
             await WaitForAddressesAsync().ConfigureAwait(false);
 
             var c1 = CreateContact("a@x.test", "A");
@@ -326,7 +326,7 @@ namespace Eppie.App.ViewModels.Tests
             contact.LastMessageData = new LastMessageData { AccountId = senderAcc2.Id };
 
             _vm.InitializeData(contact);
-            _vm.OnOpened();
+            _vm.OnLoaded();
 
             await WaitForAddressesAsync().ConfigureAwait(false);
 
@@ -344,7 +344,7 @@ namespace Eppie.App.ViewModels.Tests
             contact.LastMessageData = new LastMessageData { AccountId = 9999 };
 
             _vm.InitializeData(contact);
-            _vm.OnOpened();
+            _vm.OnLoaded();
 
             await WaitForAddressesAsync(requireSender: true, requireEppie: false).ConfigureAwait(false);
 
@@ -429,7 +429,7 @@ namespace Eppie.App.ViewModels.Tests
             _core.SeedContacts(new[] { c1, c2 });
 
             _vm.InitializeData(null);
-            _vm.OnOpened();
+            _vm.OnLoaded();
 
             await WaitForSuitableContactsAsyncViaEvent(1).ConfigureAwait(false);
 
@@ -453,7 +453,7 @@ namespace Eppie.App.ViewModels.Tests
 
             // simulate navigation initialization that populates addresses
             _vm.InitializeData(null);
-            _vm.OnOpened();
+            _vm.OnLoaded();
 
             await WaitForAddressesAsync().ConfigureAwait(false);
 
@@ -487,7 +487,7 @@ namespace Eppie.App.ViewModels.Tests
             SeedAccounts(senderAcc, eppieAcc);
 
             _vm.InitializeData(null);
-            _vm.OnOpened();
+            _vm.OnLoaded();
             await WaitForAddressesAsync().ConfigureAwait(false);
 
             var good = new ContactItem(new EmailAddress("g@x.test", "G"));
@@ -508,7 +508,7 @@ namespace Eppie.App.ViewModels.Tests
             SeedAccounts(senderAcc);
 
             _vm.InitializeData(null);
-            _vm.OnOpened();
+            _vm.OnLoaded();
             await WaitForAddressesAsync(requireSender: true, requireEppie: true).ConfigureAwait(false);
 
             var contact = CreateContact("to@recipient.test", "Recipient");
@@ -539,7 +539,7 @@ namespace Eppie.App.ViewModels.Tests
             _core.SeedContacts(new[] { c1 });
 
             _vm.InitializeData(null);
-            _vm.OnOpened();
+            _vm.OnLoaded();
             await WaitForSuitableContactsAsyncViaEvent(1).ConfigureAwait(false);
 
             // Add new contact with same address
@@ -548,7 +548,7 @@ namespace Eppie.App.ViewModels.Tests
 
             _vm.OnContactQueryChanged(string.Empty); // trigger re-filter/load
             _vm.InitializeData(null);
-            _vm.OnOpened();
+            _vm.OnLoaded();
             await WaitForSuitableContactsAsyncViaEvent(1).ConfigureAwait(false);
             Assert.That(_vm.SuitableContacts.OriginalItems, Has.Count.EqualTo(1));
         }
@@ -566,7 +566,7 @@ namespace Eppie.App.ViewModels.Tests
             _vm.RegisterCloseAction(() => closed = true);
 
             _vm.InitializeData(null);
-            _vm.OnOpened();
+            _vm.OnLoaded();
             await WaitForAddressesAsync().ConfigureAwait(false);
 
             var contact = new ContactItem(new EmailAddress("to@recipient.test", "Recipient"));
