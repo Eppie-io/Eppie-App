@@ -105,6 +105,8 @@ namespace Tuvi.App.ViewModels
         public IRelayCommand SendInviteCommand { get; }
         public IRelayCommand GoBackCommand { get; }
 
+        private ContactItem ContactItem => InitData;
+
         public InvitationViewModel() : base()
         {
             SendInviteCommand = new AsyncRelayCommand<bool?>(SendInviteAsync, preview => CanInvite);
@@ -120,12 +122,12 @@ namespace Tuvi.App.ViewModels
             InvitationArea = InvitationArea.ContactArea;
         }
 
-        public override void InitializeData(ContactItem data)
+        public override void OnOpened()
         {
-            base.InitializeData(data);
-
-            InitializeFromContact(data);
+            InitializeFromContact(ContactItem);
             LoadContacts();
+
+            base.OnOpened();
         }
 
         public override void OnError(Exception e)
@@ -195,7 +197,7 @@ namespace Tuvi.App.ViewModels
                 _allContacts.Clear();
                 SuitableContacts.Clear();
 
-                await LoadContactsInBackgroundAsync().ConfigureAwait(true);
+                await LoadContactsAsync().ConfigureAwait(true);
             }
             catch (Exception ex)
             {
@@ -203,7 +205,7 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        private async Task LoadContactsInBackgroundAsync()
+        private async Task LoadContactsAsync()
         {
             var existingEmails = new HashSet<string>(
                 _allContacts.Select(c => c?.Email?.Address ?? string.Empty),
@@ -332,22 +334,29 @@ namespace Tuvi.App.ViewModels
                 return;
             }
 
-            await SendEmailsAsync(Core, context).ConfigureAwait(true);
+            _ = SendEmailsAsync(Core, context, OnError).ConfigureAwait(true);
 
             CloseDialog();
         }
 
-        private static async Task SendEmailsAsync(Core.ITuviMail core, InviteMessageContext context)
+        private static async Task SendEmailsAsync(Core.ITuviMail core, InviteMessageContext context, Action<Exception> onError)
         {
-            foreach (var recipient in context.Recipients.Where(r => r != null && r.Email != null))
+            try
             {
-                var message = new Message();
-                message.From.Add(context.MessageData.Account.Email);
-                message.To.Add(recipient.Email);
-                message.Subject = context.MessageData.Subject;
-                message.TextBody = context.MessageData.TextBody;
+                foreach (var recipient in context.Recipients.Where(r => r != null && r.Email != null))
+                {
+                    var message = new Message();
+                    message.From.Add(context.MessageData.Account.Email);
+                    message.To.Add(recipient.Email);
+                    message.Subject = context.MessageData.Subject;
+                    message.TextBody = context.MessageData.TextBody;
 
-                await core.SendMessageAsync(message, false, false).ConfigureAwait(false);
+                    await core.SendMessageAsync(message, false, false).ConfigureAwait(false);
+                }
+            }
+            catch (Exception ex)
+            {
+                onError?.Invoke(ex);
             }
         }
 

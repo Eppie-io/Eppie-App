@@ -61,7 +61,11 @@ namespace Tuvi.App.ViewModels
 
     public class DialogViewModel<TData> : DialogViewModel
     {
-        public virtual void InitializeData(TData data)
-        { }
+        protected TData InitData { get; private set; }
+
+        public void InitializeData(TData data)
+        {
+            InitData = data;
+        }
     }
 }

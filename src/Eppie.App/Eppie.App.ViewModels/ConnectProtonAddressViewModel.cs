@@ -98,16 +98,16 @@ namespace Tuvi.App.ViewModels
             MailboxPassword.Errors.CollectionChanged += (s, e) => ContinueCommand.NotifyCanExecuteChanged();
         }
 
-        public override void InitializeData(Account data)
+        public override void OnOpened()
         {
-            if (data != null)
+            if (InitData != null)
             {
-                AccountData = data;
-                Email.SetInitialValue(data.Email?.Address);
+                AccountData = InitData;
+                Email.SetInitialValue(AccountData.Email?.Address);
             }
-            ShowStep(ProtonConnectionStep.Credentials);
 
-            base.InitializeData(data);
+            ShowStep(ProtonConnectionStep.Credentials);
+            base.OnOpened();
         }
 
         public override void OnClosed(Result result)
