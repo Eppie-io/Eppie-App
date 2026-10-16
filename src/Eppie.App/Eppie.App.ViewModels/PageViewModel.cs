@@ -135,6 +135,8 @@ namespace Tuvi.App.ViewModels
 
         virtual public void OnNavigatedTo(object data)
         {
+            // ToDo: We shouldn't call this on every page, but for now we will do it here.
+            // We can move it to a more appropriate place later.
             UpdateSupportDevelopmentButton();
         }
 

@@ -31,6 +31,16 @@ namespace Tuvi.App.ViewModels
 
         private Action _closeAction;
 
+
+        public virtual void OnLoaded()
+        { }
+
+        public virtual void OnLoading()
+        { }
+
+        public virtual void OnUnloaded()
+        { }
+
         public virtual void OnOpened()
         { }
 
@@ -53,15 +63,25 @@ namespace Tuvi.App.ViewModels
             OnClosed(result);
         }
 
-        protected void CloseDialog()
+        protected bool TryCloseDialog()
         {
-            _closeAction?.Invoke();
+            if (_closeAction is null)
+            {
+                return false;
+            }
+
+            _closeAction.Invoke();
+            return true;
         }
     }
 
     public class DialogViewModel<TData> : DialogViewModel
     {
-        public virtual void InitializeData(TData data)
-        { }
+        protected TData InitData { get; private set; }
+
+        public void InitializeData(TData data)
+        {
+            InitData = data;
+        }
     }
 }

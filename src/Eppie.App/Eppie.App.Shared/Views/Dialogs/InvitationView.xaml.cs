@@ -17,37 +17,28 @@
 // ---------------------------------------------------------------------------- //
 
 using System;
-using Eppie.App.UI.Controls;
 using Tuvi.App.ViewModels;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
 #else
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media;
 #endif
 
-namespace Eppie.App.Views
+
+namespace Eppie.App.Views.Dialogs
 {
-    internal partial class InvitationPageBase : BasePage<InvitationPageViewModel>
+    internal partial class InvitationViewBase : AppDialogViewBase<InvitationViewModel, ContactItem>
     { }
 
-    internal sealed partial class InvitationPage : InvitationPageBase, IPopupPage
+    internal sealed partial class InvitationView : InvitationViewBase
     {
-        public event EventHandler ClosePopupRequested;
-
-        public InvitationPage()
+        public InvitationView()
         {
             this.InitializeComponent();
-
-            ViewModel.ClosePopupAction = () => ClosePopupRequested?.Invoke(this, EventArgs.Empty);
         }
-
-        public void OnCloseClicked()
-        { }
 
         private void OnRecipientRemoved(object sender, RoutedEventArgs e)
         {

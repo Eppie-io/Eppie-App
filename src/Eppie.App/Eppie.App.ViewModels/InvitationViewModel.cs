@@ -37,7 +37,7 @@ namespace Tuvi.App.ViewModels
         PreviewArea
     }
 
-    public class InvitationPageViewModel : PageViewModel
+    public class InvitationViewModel : DialogViewModel<ContactItem>
     {
         public ObservableCollection<ContactItem> Recipients { get; } = new ObservableCollection<ContactItem>();
         public ManagedCollection<ContactItem> SuitableContacts { get; } = new ManagedCollection<ContactItem>();
@@ -104,9 +104,10 @@ namespace Tuvi.App.ViewModels
 
         public IRelayCommand SendInviteCommand { get; }
         public IRelayCommand GoBackCommand { get; }
-        public Action ClosePopupAction { get; set; }
 
-        public InvitationPageViewModel() : base()
+        private ContactItem ContactItem => InitData;
+
+        public InvitationViewModel() : base()
         {
             SendInviteCommand = new AsyncRelayCommand<bool?>(SendInviteAsync, preview => CanInvite);
             GoBackCommand = new RelayCommand(GoBackToContact);
@@ -121,12 +122,18 @@ namespace Tuvi.App.ViewModels
             InvitationArea = InvitationArea.ContactArea;
         }
 
-        public override void OnNavigatedTo(object data)
+        public override void OnLoaded()
         {
-            base.OnNavigatedTo(data);
-
-            InitializeFromContact(data as ContactItem);
+            InitializeFromContact(ContactItem);
             LoadContacts();
+
+            base.OnLoaded();
+        }
+
+        public override void OnError(Exception e)
+        {
+            ForceClose();
+            base.OnError(e);
         }
 
         private async void InitializeFromContact(ContactItem contactItem)
@@ -183,15 +190,22 @@ namespace Tuvi.App.ViewModels
             EppieAddressIndex = EppieAddresses.Count > 0 ? 0 : -1;
         }
 
-        private void LoadContacts()
+        private async void LoadContacts()
         {
-            _allContacts.Clear();
-            SuitableContacts.Clear();
+            try
+            {
+                _allContacts.Clear();
+                SuitableContacts.Clear();
 
-            _ = LoadContactsInBackgroundAsync();
+                await LoadContactsAsync().ConfigureAwait(true);
+            }
+            catch (Exception ex)
+            {
+                OnError(ex);
+            }
         }
 
-        private async Task LoadContactsInBackgroundAsync()
+        private async Task LoadContactsAsync()
         {
             var existingEmails = new HashSet<string>(
                 _allContacts.Select(c => c?.Email?.Address ?? string.Empty),
@@ -294,15 +308,22 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        private Task SendInviteAsync(bool? preview)
+        private async Task SendInviteAsync(bool? preview)
         {
-            if (preview == true)
+            try
             {
-                PreviewInvite();
-                return Task.CompletedTask;
-            }
+                if (preview == true)
+                {
+                    PreviewInvite();
+                    return;
+                }
 
-            return SendInviteAsync();
+                await SendInviteAsync().ConfigureAwait(true);
+            }
+            catch (Exception ex)
+            {
+                OnError(ex);
+            }
         }
 
         private async Task SendInviteAsync()
@@ -313,22 +334,29 @@ namespace Tuvi.App.ViewModels
                 return;
             }
 
-            _ = SendEmailsAsync(Core, context).ConfigureAwait(true);
+            _ = SendEmailsAsync(Core, context, OnError).ConfigureAwait(true);
 
-            ClosePopupAction?.Invoke();
+            TryCloseDialog();
         }
 
-        private static async Task SendEmailsAsync(Core.ITuviMail core, InviteMessageContext context)
+        private static async Task SendEmailsAsync(Core.ITuviMail core, InviteMessageContext context, Action<Exception> onError)
         {
-            foreach (var recipient in context.Recipients.Where(r => r != null && r.Email != null))
+            try
             {
-                var message = new Message();
-                message.From.Add(context.MessageData.Account.Email);
-                message.To.Add(recipient.Email);
-                message.Subject = context.MessageData.Subject;
-                message.TextBody = context.MessageData.TextBody;
+                foreach (var recipient in context.Recipients.Where(r => r != null && r.Email != null))
+                {
+                    var message = new Message();
+                    message.From.Add(context.MessageData.Account.Email);
+                    message.To.Add(recipient.Email);
+                    message.Subject = context.MessageData.Subject;
+                    message.TextBody = context.MessageData.TextBody;
 
-                await core.SendMessageAsync(message, false, false).ConfigureAwait(false);
+                    await core.SendMessageAsync(message, false, false).ConfigureAwait(false);
+                }
+            }
+            catch (Exception ex)
+            {
+                onError?.Invoke(ex);
             }
         }
 
@@ -414,6 +442,19 @@ namespace Tuvi.App.ViewModels
                 OnError(ex);
                 return string.Empty;
             }
+        }
+
+        private async void ForceClose()
+        {
+            try
+            {
+                await DispatcherService.RunAsync(() =>
+                {
+                    TryCloseDialog();
+                }).ConfigureAwait(false);
+            }
+            catch
+            { }
         }
 
         private sealed class InviteMessageContext
