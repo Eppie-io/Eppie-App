@@ -162,33 +162,6 @@ namespace Eppie.App.UI.Common
             }
         }
 
-        public static async Task ShowPopupAsync<TPage>(XamlRoot root, object data = null)
-            where TPage : Page, IPopupPage
-        {
-            await _mutex.WaitAsync().ConfigureAwait(true);
-            try
-            {
-                var dialog = new ContentDialog()
-                {
-                    XamlRoot = root,
-                };
-
-                var popupControl = new Eppie.App.UI.Controls.PopupHostControl<TPage>()
-                {
-                    NavigationParameter = data
-                };
-
-                popupControl.CloseRequested += (s, e) => dialog.Hide();
-                dialog.Content = popupControl;
-
-                await dialog.ShowAsync();
-            }
-            finally
-            {
-                _mutex.Release();
-            }
-        }
-
         public static async Task ShowSupportDevelopmentDialogAsync(bool isStorePaymentProcessor,
                                                                    string price,
                                                                    System.Windows.Input.ICommand supportDevelopmentCommand,
