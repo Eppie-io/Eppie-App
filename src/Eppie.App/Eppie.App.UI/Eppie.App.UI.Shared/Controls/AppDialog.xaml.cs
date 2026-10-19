@@ -32,28 +32,27 @@ using Microsoft.UI.Xaml.Input;
 
 namespace Eppie.App.UI.Controls
 {
-    public interface IAppDialogView
-    {
-        event EventHandler CloseRequested;
-    }
-
-    public interface IAppDialogInitializer<TData>
-    {
-        void Initialize(TData data);
-    }
-
-    public interface IAppDialogLifecycle
-    {
-        void OnOpened();
-        void OnClosing(ContentDialogResult result, out bool cancel);
-        void OnClosed(ContentDialogResult result);
-    }
-
-
     [SuppressMessage("Design", "CA1010:Generic collections should implement generic interface", Justification = "ContentControl implements IEnumerable for XAML infrastructure")]
     public sealed partial class AppDialog : ContentDialog
     {
-        private IAppDialogView _appDialogView;
+        public interface IClosable
+        {
+            event EventHandler CloseRequested;
+        }
+
+        public interface IInitializer<TData>
+        {
+            void Initialize(TData data);
+        }
+
+        public interface ILifecycle
+        {
+            void OnOpened();
+            void OnClosing(ContentDialogResult result, out bool cancel);
+            void OnClosed(ContentDialogResult result);
+        }
+
+        private UIElement _child;
 
         public AppDialog()
         {
@@ -61,14 +60,14 @@ namespace Eppie.App.UI.Controls
         }
 
         public async Task ShowAsync<TView>()
-            where TView : UIElement, IAppDialogView, new()
+            where TView : UIElement, new()
         {
             TView view = new TView();
             await ShowAsync(view);
         }
 
         public async Task ShowAsync<TView, TData>(TData data)
-            where TView : UIElement, IAppDialogView, IAppDialogInitializer<TData>, new()
+            where TView : UIElement, IInitializer<TData>, new()
         {
             TView view = new TView();
             view.Initialize(data);
@@ -82,22 +81,15 @@ namespace Eppie.App.UI.Controls
         }
 
         private async Task ShowAsync<TView>(TView view)
-            where TView : UIElement, IAppDialogView
+            where TView : UIElement
         {
-            _appDialogView = view;
-            view.CloseRequested += OnCloseRequested;
-
-            Opened += OnOpened;
-            Closing += OnClosing;
-            Closed += OnClosed;
-
-            ContentElement.Child = view;
-
-            long closeButtonVisibilityToken = view.RegisterPropertyChangedCallback(AppDialogExtensions.CloseButtonVisibilityProperty, OnCloseButtonVisibilityPropertyChanged);
-            long titleToken = view.RegisterPropertyChangedCallback(AppDialogExtensions.TitleContentProperty, OnTitlePropertyChanged);
+            _child = view;
+            (long closeToken, long titleToken) = Subscribe(view);
 
             try
             {
+                ContentElement.Child = view;
+
                 UpdateCloseButton();
                 UpdateTitleContent();
 
@@ -105,14 +97,39 @@ namespace Eppie.App.UI.Controls
             }
             finally
             {
-                view.UnregisterPropertyChangedCallback(AppDialogExtensions.TitleContentProperty, titleToken);
-                view.UnregisterPropertyChangedCallback(AppDialogExtensions.CloseButtonVisibilityProperty, closeButtonVisibilityToken);
+                Unsubscribe(view, closeToken, titleToken);
+            }
+        }
 
-                view.CloseRequested -= OnCloseRequested;
+        private (long closeToken, long titleToken) Subscribe(UIElement view)
+        {
+            Opened += OnOpened;
+            Closing += OnClosing;
+            Closed += OnClosed;
 
-                Opened -= OnOpened;
-                Closing -= OnClosing;
-                Closed -= OnClosed;
+            long closeButtonVisibilityToken = view.RegisterPropertyChangedCallback(AppDialogExtensions.CloseButtonVisibilityProperty, OnCloseButtonVisibilityPropertyChanged);
+            long titleToken = view.RegisterPropertyChangedCallback(AppDialogExtensions.TitleContentProperty, OnTitlePropertyChanged);
+
+            if (view is IClosable closable)
+            {
+                closable.CloseRequested += OnCloseRequested;
+            }
+
+            return (closeButtonVisibilityToken, titleToken);
+        }
+
+        private void Unsubscribe(UIElement view, long closeToken, long titleToken)
+        {
+            Opened -= OnOpened;
+            Closing -= OnClosing;
+            Closed -= OnClosed;
+
+            view.UnregisterPropertyChangedCallback(AppDialogExtensions.TitleContentProperty, titleToken);
+            view.UnregisterPropertyChangedCallback(AppDialogExtensions.CloseButtonVisibilityProperty, closeToken);
+
+            if (view is IClosable closable)
+            {
+                closable.CloseRequested -= OnCloseRequested;
             }
         }
 
@@ -123,7 +140,7 @@ namespace Eppie.App.UI.Controls
 
         private void OnClosing(ContentDialog sender, ContentDialogClosingEventArgs args)
         {
-            if (_appDialogView is IAppDialogLifecycle lifecycle)
+            if (_child is ILifecycle lifecycle)
             {
                 lifecycle.OnClosing(args.Result, out bool cancel);
                 args.Cancel = cancel;
@@ -132,7 +149,7 @@ namespace Eppie.App.UI.Controls
 
         private void OnClosed(ContentDialog sender, ContentDialogClosedEventArgs args)
         {
-            if (_appDialogView is IAppDialogLifecycle lifecycle)
+            if (_child is ILifecycle lifecycle)
             {
                 lifecycle.OnClosed(args.Result);
             }
@@ -140,7 +157,7 @@ namespace Eppie.App.UI.Controls
 
         private void OnOpened(ContentDialog sender, ContentDialogOpenedEventArgs args)
         {
-            if (_appDialogView is IAppDialogLifecycle lifecycle)
+            if (_child is ILifecycle lifecycle)
             {
                 lifecycle.OnOpened();
             }
@@ -158,7 +175,7 @@ namespace Eppie.App.UI.Controls
 
         private void UpdateTitleContent()
         {
-            if (_appDialogView is DependencyObject obj)
+            if (_child is DependencyObject obj)
             {
                 TitlePresenter.Content = AppDialogExtensions.GetTitleContent(obj);
             }
@@ -183,7 +200,7 @@ namespace Eppie.App.UI.Controls
 
         private void UpdateCloseButton()
         {
-            if (_appDialogView is DependencyObject obj)
+            if (_child is DependencyObject obj)
             {
                 CloseButton.Visibility = AppDialogExtensions.GetCloseButtonVisibility(obj);
             }
