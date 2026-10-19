@@ -307,7 +307,7 @@
                 <controls:SimpleExpander x:Uid="AttachedFilesTitle"
                                          Margin="0,24,0,0"
                                          GlyphPosition="Left"
-                                         IsExpanded="False"
+                                         IsExpanded="True"
                                          Visibility="{x:Bind ViewModel.MessageInfo.HasAttachments, Mode=OneWay}">
                     <ScrollViewer MinHeight="56"
                                   MaxHeight="124"
