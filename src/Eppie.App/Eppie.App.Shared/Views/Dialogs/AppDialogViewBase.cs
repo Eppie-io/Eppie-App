@@ -34,7 +34,7 @@ namespace Eppie.App.Views.Dialogs
 {
     [SuppressMessage("Design", "CA1010:Generic collections should implement generic interface", Justification = "ContentControl implements IEnumerable for XAML infrastructure")]
 
-    public abstract partial class AppDialogViewBase<TViewModel> : UserControl, IAppDialogView, IAppDialogLifecycle
+    public abstract partial class AppDialogViewBase<TViewModel> : UserControl, AppDialog.IClosable, AppDialog.ILifecycle
         where TViewModel : DialogViewModel, new()
     {
         protected TViewModel ViewModel { get; } = new TViewModel();
@@ -108,7 +108,7 @@ namespace Eppie.App.Views.Dialogs
 
     [SuppressMessage("Design", "CA1010:Generic collections should implement generic interface", Justification = "ContentControl implements IEnumerable for XAML infrastructure")]
 
-    public abstract partial class AppDialogViewBase<TViewModel, TData> : AppDialogViewBase<TViewModel>, IAppDialogInitializer<TData>
+    public abstract partial class AppDialogViewBase<TViewModel, TData> : AppDialogViewBase<TViewModel>, AppDialog.IInitializer<TData>
         where TViewModel : DialogViewModel<TData>, new()
     {
         protected AppDialogViewBase() : base()
