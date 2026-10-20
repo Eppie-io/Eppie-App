@@ -1119,7 +1119,7 @@ Subject: {3}
     <comment>Caption on the 'Support Development' page</comment>
   </data>
     <data name="SupportDevelopmentText.Text" xml:space="preserve">
-    <value>Your subscribtion helps us keep development open, independent, and moving forward faster.</value>
+    <value>Your subscription helps us keep development open, independent, and moving forward faster.</value>
     <comment>Text on the 'Support Development' page</comment>
   </data>
     <data name="SupportDevelopmentStoreProvider.Text" xml:space="preserve">
