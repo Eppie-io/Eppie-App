@@ -37,6 +37,8 @@
 
     <x:String x:Key="OpenInNewWindowGlyph">&#xE8A7;</x:String>
 
+    <x:String x:Key="HeartFillGlyph">&#xEB52;</x:String>
+
     <StaticResource x:Key="MarkAsReadGlyph" ResourceKey="ReadGlyph" />
     <StaticResource x:Key="MarkAsUnreadGlyph" ResourceKey="MailGlyph" />
     <StaticResource x:Key="ReadStatusGlyph" ResourceKey="ReadGlyph" />

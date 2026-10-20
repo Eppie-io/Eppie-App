@@ -552,16 +552,17 @@ namespace Eppie.App.Services
             });
         }
 
-        public async Task ShowSupportDevelopmentDialogAsync(
+        public Task ShowSupportDevelopmentDialogAsync(
             bool isStorePaymentProcessor,
             string price,
-            System.Windows.Input.ICommand supportDevelopmentCommand)
+            ICommand supportDevelopmentCommand)
         {
-            await UITools.ShowSupportDevelopmentDialogAsync(
-                isStorePaymentProcessor,
-                price,
-                supportDevelopmentCommand,
-                _xamlRootProvider()).ConfigureAwait(true);
+            return UITools.ShowAppDialogAsync<SupportDevelopmentView, SupportDevelopmentViewData>(_xamlRootProvider(), new SupportDevelopmentViewData
+            {
+                IsStorePaymentProcessor = isStorePaymentProcessor,
+                Price = price,
+                SupportDevelopmentCommand = supportDevelopmentCommand
+            });
         }
 
         public Task ShowProtonConnectAddressDialogAsync(Account account = null)

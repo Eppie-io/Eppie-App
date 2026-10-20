@@ -1110,6 +1110,30 @@ Subject: {3}
     <value>Version</value>
     <comment>A label for the application version</comment>
   </data>
+  <data name="SupportDevelopmentShortButton.Content" xml:space="preserve">
+    <value>Subscribe</value>
+    <comment>Button to open 'Support Development' page</comment>
+  </data>
+    <data name="SupportDevelopmentCaption.Text" xml:space="preserve">
+    <value>Support the Eppie Team</value>
+    <comment>Caption on the 'Support Development' page</comment>
+  </data>
+    <data name="SupportDevelopmentText.Text" xml:space="preserve">
+    <value>Your subscribtion helps us keep development open, independent, and moving forward faster.</value>
+    <comment>Text on the 'Support Development' page</comment>
+  </data>
+    <data name="SupportDevelopmentStoreProvider.Text" xml:space="preserve">
+    <value>Payments are processed securely via the Microsoft Store.</value>
+    <comment>Text on the 'Support Development' page</comment>
+  </data>
+    <data name="SupportDevelopmentGitHubProvider.Text" xml:space="preserve">
+    <value>Payments are processed securely via GitHub Sponsors.</value>
+    <comment>Text on the 'Support Development' page</comment>
+  </data>
+    <data name="PricePerMonthText.Text" xml:space="preserve">
+    <value>per month</value>
+    <comment>Text after price on the 'Support Development' page</comment>
+  </data>
   <data name="MissionTitle.Text" xml:space="preserve">
     <value>Mission</value>
     <comment>A text for the title of Mission text.</comment>

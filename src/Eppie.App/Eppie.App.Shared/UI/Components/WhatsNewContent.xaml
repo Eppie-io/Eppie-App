@@ -1,6 +1,7 @@
 ﻿<UserControl x:Class="Eppie.App.UI.Components.WhatsNewContent"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:components="using:Eppie.App.UI.Components"
              xmlns:controls="using:Eppie.App.UI.Controls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="using:Eppie.App.UI.Components"
@@ -38,7 +39,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <!--  Header  -->
@@ -135,7 +135,7 @@
                     <TextBlock Text="Layout and sorting preferences are now saved between sessions, and folder management is more intuitive. The UI has also been polished with new Contacts and Mailboxes panels, redesigned message tiles, and a better Compose experience." TextWrapping="Wrap" />
                 </StackPanel>
 
-                <controls:SupportDevelopmentControl HorizontalAlignment="Left"
+                <components:SupportDevelopmentBlock HorizontalAlignment="Stretch"
                                                     IsIconVisible="False"
                                                     IsStorePaymentProcessor="{x:Bind IsStorePaymentProcessor, Mode=OneWay}"
                                                     Price="{x:Bind Price, Mode=OneWay}"

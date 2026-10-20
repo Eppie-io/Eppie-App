@@ -124,40 +124,6 @@ namespace Eppie.App.UI.Common
             }
         }
 
-        public static async Task ShowSupportDevelopmentDialogAsync(bool isStorePaymentProcessor,
-                                                                   string price,
-                                                                   System.Windows.Input.ICommand supportDevelopmentCommand,
-                                                                   XamlRoot root)
-        {
-            await _mutex.WaitAsync().ConfigureAwait(true);
-            try
-            {
-                var dialog = new ContentDialog()
-                {
-                    XamlRoot = root
-                };
-
-                var supportDevelopment = new Eppie.App.UI.Controls.SupportDevelopmentControl
-                {
-                    IsStorePaymentProcessor = isStorePaymentProcessor,
-                    Price = price,
-                    SupportDevelopmentCommand = supportDevelopmentCommand,
-                    IsIconVisible = true,
-                    IsCloseButtonVisible = true,
-                    Margin = new Thickness(-8)
-                };
-
-                supportDevelopment.CloseRequested += (s, e) => dialog.Hide();
-                dialog.Content = supportDevelopment;
-
-                await dialog.ShowAsync();
-            }
-            finally
-            {
-                _mutex.Release();
-            }
-        }
-
         public static async Task<Action> ShowAuthenticationDialogAsync(string title, string content, string closeButtonText, XamlRoot root, Action onClose = null)
         {
             if (title is null)

@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="Eppie.App.Views.Dialogs.SupportDevelopmentView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:components="using:Eppie.App.UI.Components"
+             xmlns:controls="using:Eppie.App.UI.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="using:Eppie.App.Views.Dialogs"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             controls:AppDialogExtensions.CloseButtonVisibility="Visible"
+             d:DesignHeight="300"
+             d:DesignWidth="400"
+             mc:Ignorable="d">
+    <components:SupportDevelopmentBlock x:Name="SupportDevelopmentBlock"
+                                        MaxWidth="360"
+                                        Margin="24"
+                                        IsIconVisible="True" />
+</UserControl>

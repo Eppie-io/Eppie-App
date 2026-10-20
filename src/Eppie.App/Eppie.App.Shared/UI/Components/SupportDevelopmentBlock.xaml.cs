@@ -17,10 +17,8 @@
 // ---------------------------------------------------------------------------- //
 
 using System;
-using System.Windows.Input;
 using System.Diagnostics.CodeAnalysis;
-
-
+using System.Windows.Input;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -32,10 +30,10 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 #endif
 
-namespace Eppie.App.UI.Controls
+namespace Eppie.App.UI.Components
 {
     [SuppressMessage("Design", "CA1010:Generic collections should implement generic interface", Justification = "ContentControl implements IEnumerable for XAML infrastructure")]
-    public sealed partial class SupportDevelopmentControl : UserControl
+    public sealed partial class SupportDevelopmentBlock : UserControl
     {
         public ICommand SupportDevelopmentCommand
         {
@@ -43,7 +41,7 @@ namespace Eppie.App.UI.Controls
             set { SetValue(SupportDevelopmentCommandProperty, value); }
         }
         public static readonly DependencyProperty SupportDevelopmentCommandProperty =
-            DependencyProperty.Register(nameof(SupportDevelopmentCommand), typeof(ICommand), typeof(SupportDevelopmentControl), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(SupportDevelopmentCommand), typeof(ICommand), typeof(SupportDevelopmentBlock), new PropertyMetadata(null));
 
         public bool IsStorePaymentProcessor
         {
@@ -51,7 +49,7 @@ namespace Eppie.App.UI.Controls
             set { SetValue(IsStorePaymentProcessorProperty, value); }
         }
         public static readonly DependencyProperty IsStorePaymentProcessorProperty =
-            DependencyProperty.Register(nameof(IsStorePaymentProcessor), typeof(bool), typeof(SupportDevelopmentControl), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(IsStorePaymentProcessor), typeof(bool), typeof(SupportDevelopmentBlock), new PropertyMetadata(null));
 
         public string Price
         {
@@ -59,7 +57,7 @@ namespace Eppie.App.UI.Controls
             set { SetValue(PriceProperty, value); }
         }
         public static readonly DependencyProperty PriceProperty =
-            DependencyProperty.Register(nameof(Price), typeof(string), typeof(SupportDevelopmentControl), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(Price), typeof(string), typeof(SupportDevelopmentBlock), new PropertyMetadata(null));
 
         public bool IsIconVisible
         {
@@ -67,26 +65,11 @@ namespace Eppie.App.UI.Controls
             set { SetValue(IsIconVisibleProperty, value); }
         }
         public static readonly DependencyProperty IsIconVisibleProperty =
-            DependencyProperty.Register(nameof(IsIconVisible), typeof(bool), typeof(SupportDevelopmentControl), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(IsIconVisible), typeof(bool), typeof(SupportDevelopmentBlock), new PropertyMetadata(null));
 
-        public bool IsCloseButtonVisible
-        {
-            get { return (bool)GetValue(IsCloseButtonVisibleProperty); }
-            set { SetValue(IsCloseButtonVisibleProperty, value); }
-        }
-        public static readonly DependencyProperty IsCloseButtonVisibleProperty =
-            DependencyProperty.Register(nameof(IsCloseButtonVisible), typeof(bool), typeof(SupportDevelopmentControl), new PropertyMetadata(false));
-
-        public SupportDevelopmentControl()
+        public SupportDevelopmentBlock()
         {
             this.InitializeComponent();
-        }
-
-        public event EventHandler CloseRequested;
-
-        private void CloseButton_Click(object sender, RoutedEventArgs e)
-        {
-            CloseRequested?.Invoke(this, EventArgs.Empty);
         }
     }
 }
