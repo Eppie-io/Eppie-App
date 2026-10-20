@@ -10,7 +10,7 @@
 
 ## Intro
 ![Eppie](/screenshots/Eppie.png)
-[Eppie](https://eppie.io) is a next-gen _providerless_ email that allows its users to own their accounts, addresses and data. In addition to its own p2p network Eppie can communicate with other popular decentralized networks, like Ethereum, and is capable of interacting with conventional IMAP/SMTP email. It is beautiful and easy to use, just like a normal email client.
+[Eppie](https://eppie.io) is a next-gen _providerless_ email that allows its users to own their accounts, addresses and data. In addition to its own p2p network Eppie can communicate with other popular decentralized networks, like Bitcoin and Ethereum, and is capable of interacting with conventional IMAP/SMTP email. It is beautiful and easy to use, just like a normal email client.
 
 ## Motivation
 
@@ -76,7 +76,7 @@ App Store and Google Play: WIP
 
 Testnet builds are distributed through GitHub Releases only and are intended for early adopters.
 
-They include the first decentralized version of Eppie running on testnet.
+They include the first decentralized version of Eppie running on testnet, with end-to-end encrypted email using Eppie and Bitcoin Testnet4 addresses.
 
 #### Windows
 
