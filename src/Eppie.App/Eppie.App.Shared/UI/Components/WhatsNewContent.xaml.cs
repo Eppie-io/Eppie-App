@@ -28,10 +28,10 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 #endif
 
-namespace Eppie.App.UI.Controls
+namespace Eppie.App.UI.Components
 {
     [SuppressMessage("Design", "CA1010:Generic collections should implement generic interface", Justification = "ContentControl implements IEnumerable for XAML infrastructure")]
-    public sealed partial class WhatsNewControl : UserControl
+    public sealed partial class WhatsNewContent : UserControl
     {
         public string Version
         {
@@ -39,7 +39,7 @@ namespace Eppie.App.UI.Controls
             set { SetValue(VersionProperty, value); }
         }
         public static readonly DependencyProperty VersionProperty =
-            DependencyProperty.Register(nameof(Version), typeof(string), typeof(WhatsNewControl), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(Version), typeof(string), typeof(WhatsNewContent), new PropertyMetadata(null));
 
         public ICommand SupportDevelopmentCommand
         {
@@ -47,7 +47,7 @@ namespace Eppie.App.UI.Controls
             set { SetValue(SupportDevelopmentCommandProperty, value); }
         }
         public static readonly DependencyProperty SupportDevelopmentCommandProperty =
-            DependencyProperty.Register(nameof(SupportDevelopmentCommand), typeof(ICommand), typeof(WhatsNewControl), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(SupportDevelopmentCommand), typeof(ICommand), typeof(WhatsNewContent), new PropertyMetadata(null));
 
         public bool IsStorePaymentProcessor
         {
@@ -55,7 +55,7 @@ namespace Eppie.App.UI.Controls
             set { SetValue(IsStorePaymentProcessorProperty, value); }
         }
         public static readonly DependencyProperty IsStorePaymentProcessorProperty =
-            DependencyProperty.Register(nameof(IsStorePaymentProcessor), typeof(bool), typeof(WhatsNewControl), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(IsStorePaymentProcessor), typeof(bool), typeof(WhatsNewContent), new PropertyMetadata(null));
 
         public string Price
         {
@@ -63,8 +63,7 @@ namespace Eppie.App.UI.Controls
             set { SetValue(PriceProperty, value); }
         }
         public static readonly DependencyProperty PriceProperty =
-            DependencyProperty.Register(nameof(Price), typeof(string), typeof(WhatsNewControl), new PropertyMetadata(null));
-
+            DependencyProperty.Register(nameof(Price), typeof(string), typeof(WhatsNewContent), new PropertyMetadata(null));
 
         public string TwitterUrl
         {
@@ -72,8 +71,7 @@ namespace Eppie.App.UI.Controls
             set { SetValue(TwitterUrlProperty, value); }
         }
         public static readonly DependencyProperty TwitterUrlProperty =
-            DependencyProperty.Register(nameof(TwitterUrl), typeof(string), typeof(WhatsNewControl), new PropertyMetadata(null));
-
+            DependencyProperty.Register(nameof(TwitterUrl), typeof(string), typeof(WhatsNewContent), new PropertyMetadata(null));
 
         public bool IsSupportDevelopmentButtonVisible
         {
@@ -81,19 +79,18 @@ namespace Eppie.App.UI.Controls
             set { SetValue(IsSupportDevelopmentButtonVisibleProperty, value); }
         }
         public static readonly DependencyProperty IsSupportDevelopmentButtonVisibleProperty =
-            DependencyProperty.Register(nameof(IsSupportDevelopmentButtonVisible), typeof(bool), typeof(WhatsNewControl), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(IsSupportDevelopmentButtonVisible), typeof(bool), typeof(WhatsNewContent), new PropertyMetadata(null));
 
 
         public event EventHandler CloseRequested;
 
-        private void CloseButton_Click(object sender, RoutedEventArgs e)
-        {
-            CloseRequested?.Invoke(this, EventArgs.Empty);
-        }
-
-        public WhatsNewControl()
+        public WhatsNewContent()
         {
             this.InitializeComponent();
+        }
+        private void OnCloseButtonClick(object sender, RoutedEventArgs e)
+        {
+            CloseRequested?.Invoke(this, EventArgs.Empty);
         }
     }
 }

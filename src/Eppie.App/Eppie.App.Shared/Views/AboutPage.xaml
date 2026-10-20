@@ -1,7 +1,7 @@
 ﻿<local:AboutPageBase x:Class="Eppie.App.Views.AboutPage"
                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                     xmlns:controls="using:Eppie.App.UI.Controls"
+                     xmlns:components="using:Eppie.App.UI.Components"
                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                      xmlns:local="using:Eppie.App.Views"
                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -41,13 +41,19 @@
                     VerticalAlignment="Center">
                 <Button.Flyout>
                     <Flyout x:Name="WhatsNewFlyout">
-                        <controls:WhatsNewControl CloseRequested="WhatsNewControl_CloseRequested"
-                                                  IsStorePaymentProcessor="{x:Bind ViewModel.IsStorePaymentProcessor, Mode=OneWay}"
-                                                  IsSupportDevelopmentButtonVisible="{x:Bind ViewModel.IsSupportDevelopmentButtonVisible, Mode=OneWay}"
-                                                  Price="{x:Bind ViewModel.SupportDevelopmentPrice, Mode=OneWay}"
-                                                  SupportDevelopmentCommand="{x:Bind ViewModel.SupportDevelopmentCommand}"
-                                                  TwitterUrl="{x:Bind ViewModel.TwitterPostLink, Mode=OneTime}"
-                                                  Version="{Binding Source={StaticResource Brand}, Path=AppVersion}" />
+                        <Flyout.FlyoutPresenterStyle>
+                            <Style BasedOn="{StaticResource DefaultFlyoutPresenterStyle}" TargetType="FlyoutPresenter">
+                                <Setter Property="Padding" Value="0" />
+                                <Setter Property="Margin" Value="0" />
+                            </Style>
+                        </Flyout.FlyoutPresenterStyle>
+                        <components:WhatsNewContent CloseRequested="WhatsNewControl_CloseRequested"
+                                                    IsStorePaymentProcessor="{x:Bind ViewModel.IsStorePaymentProcessor, Mode=OneWay}"
+                                                    IsSupportDevelopmentButtonVisible="{x:Bind ViewModel.IsSupportDevelopmentButtonVisible, Mode=OneWay}"
+                                                    Price="{x:Bind ViewModel.SupportDevelopmentPrice, Mode=OneWay}"
+                                                    SupportDevelopmentCommand="{x:Bind ViewModel.SupportDevelopmentCommand}"
+                                                    TwitterUrl="{x:Bind ViewModel.TwitterPostLink, Mode=OneTime}"
+                                                    Version="{Binding Source={StaticResource Brand}, Path=AppVersion}" />
                     </Flyout>
                 </Button.Flyout>
             </Button>
@@ -68,7 +74,7 @@
 
                     <TextBlock>
                         <Run Text="{Binding Source={StaticResource Brand}, Path=AppName}" />
-                        <Run x:Uid="Version" />
+                        <Run x:Uid="AboutPageVersion" />
                         <Run Text="{Binding Source={StaticResource Brand}, Path=AppVersion}" />
                     </TextBlock>
 
