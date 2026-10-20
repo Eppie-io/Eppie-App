@@ -27,6 +27,7 @@
 
     <SolidColorBrush x:Key="WarningBackgroundBrush" Color="Red" />
 
+    <!--  ToDo: Move all Gradient resources to Eppie.App.Shared.UI.Resources ThemeResources  -->
     <Color x:Key="BrandGradientStartColor">#FFD9EE</Color>
     <Color x:Key="BrandGradientCenterColor">#FFFFFF</Color>
     <Color x:Key="BrandGradientEndColor">#D9FFFF</Color>

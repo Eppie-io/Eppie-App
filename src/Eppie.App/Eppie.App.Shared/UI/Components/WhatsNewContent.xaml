@@ -1,9 +1,11 @@
-﻿<UserControl x:Class="Eppie.App.UI.Controls.WhatsNewControl"
+﻿<UserControl x:Class="Eppie.App.UI.Components.WhatsNewContent"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="using:Eppie.App.UI.Controls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="using:Eppie.App.UI.Controls"
+             xmlns:local="using:Eppie.App.UI.Components"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ui="using:CommunityToolkit.WinUI"
              MaxWidth="360"
              MaxHeight="480"
              d:DesignHeight="300"
@@ -18,9 +20,21 @@
             <Setter Property="TextWrapping" Value="Wrap" />
         </Style>
 
+        <x:Double x:Key="HeaderButtonFontSize">20</x:Double>
+        <x:Double x:Key="HeaderButtonSize">32</x:Double>
+        <Thickness x:Key="HeaderButtonMargin">12,12,12,12</Thickness>
+        <Thickness x:Key="HeaderButtonPadding">4,4,4,4</Thickness>
+
+        <x:Double x:Key="BodyTestnetBannerFontSize">20</x:Double>
+        <x:Double x:Key="BodyTestnetBannerHeight">150</x:Double>
+        <x:Double x:Key="BodySpace">20</x:Double>
+        <x:Double x:Key="BodySectionSpace">12</x:Double>
+        <x:Double x:Key="BodyVersionSpace">4</x:Double>
+        <x:Double x:Key="BodyHyperlinkButtonSpace">8</x:Double>
+        <Thickness x:Key="BodyHyperlinkButtonMargin">-12,0,0,0</Thickness>
     </UserControl.Resources>
 
-    <Grid Padding="0,-8,4,8">
+    <Grid Padding="0,0,0,24">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -37,61 +51,72 @@
 
             <!--  Share Button  -->
             <HyperlinkButton Grid.Column="0"
-                             Margin="-4,0,0,0"
-                             NavigateUri="{x:Bind TwitterUrl, Mode=OneTime}">
-                <SymbolIcon Symbol="Share" />
-            </HyperlinkButton>
+                             Width="{StaticResource HeaderButtonSize}"
+                             Height="{StaticResource HeaderButtonSize}"
+                             Margin="{StaticResource HeaderButtonMargin}"
+                             Padding="{StaticResource HeaderButtonPadding}"
+                             Content="{ui:SymbolIcon Symbol=Share,
+                                                     FontSize={StaticResource HeaderButtonFontSize}}"
+                             NavigateUri="{x:Bind TwitterUrl, Mode=OneTime}" />
+
 
             <!--  Title  -->
-            <TextBlock x:Uid="/Eppie.App.UI/Controls/WhatsNew"
+            <TextBlock x:Uid="WhatsNew"
                        Grid.Column="1"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center" />
 
-            <!--  Close Button  -->
-            <AppBarButton Grid.Column="2"
-                          Width="48"
-                          Height="48"
-                          Margin="0,0,-12,0"
-                          VerticalAlignment="Top"
-                          Click="CloseButton_Click">
-                <SymbolIcon Symbol="Cancel" />
-            </AppBarButton>
+            <Button Grid.Column="2"
+                    Width="{StaticResource HeaderButtonSize}"
+                    Height="{StaticResource HeaderButtonSize}"
+                    Margin="{StaticResource HeaderButtonMargin}"
+                    Padding="{StaticResource HeaderButtonPadding}"
+                    Click="OnCloseButtonClick"
+                    Content="{ui:SymbolIcon Symbol=Cancel,
+                                            FontSize={StaticResource HeaderButtonFontSize}}"
+                    Style="{StaticResource ThinButtonStyle}" />
         </Grid>
 
+        <!--  Body  -->
         <ScrollViewer Grid.Row="1"
-                      Margin="12,12,-23,0"
-                      Padding="0,0,23,0">
-            <StackPanel Spacing="20">
+                      Padding="0,0,24,0"
+                      HorizontalScrollBarVisibility="Disabled"
+                      HorizontalScrollMode="Disabled"
+                      VerticalScrollBarVisibility="Auto"
+                      VerticalScrollMode="Auto"
+                      ZoomMode="Disabled">
+            <StackPanel Margin="24,0,0,0"
+                        Orientation="Vertical"
+                        Spacing="{StaticResource BodySpace}">
 
                 <!--  Version  -->
                 <StackPanel HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             Orientation="Horizontal"
-                            Spacing="4">
-                    <TextBlock x:Uid="/Eppie.App.UI/Controls/Version" />
+                            Spacing="{StaticResource BodyVersionSpace}">
+                    <TextBlock x:Uid="WhatsNewVersion" />
                     <TextBlock Text="{x:Bind Version, Mode=OneWay}" />
                 </StackPanel>
 
-                <HyperlinkButton Height="150"
+                <HyperlinkButton Height="{StaticResource BodyTestnetBannerHeight}"
                                  HorizontalAlignment="Stretch"
                                  Content="Join the Testnet"
-                                 FontSize="20"
+                                 FontSize="{StaticResource BodyTestnetBannerFontSize}"
                                  FontWeight="SemiBold"
                                  Foreground="Black"
                                  NavigateUri="https://eppie.io"
                                  Style="{StaticResource BrandGradientButtonBaseStyle}" />
 
                 <!--  News 1 is in English only for now  -->
-                <StackPanel Spacing="12">
+                <StackPanel Spacing="{StaticResource BodySectionSpace}">
                     <TextBlock Style="{StaticResource WhatsNewSubtitleTextBlockStyle}" Text="Try decentralized addresses" />
                     <TextBlock Text="With Eppie Preview, you can already use decentralized Eppie and Bitcoin addresses for communication on Testnet. This feature will roll out to all versions after testing." TextWrapping="Wrap" />
-                    <HyperlinkButton Margin="-12,0,0,0"
+                    <HyperlinkButton Margin="{StaticResource BodyHyperlinkButtonMargin}"
                                      HorizontalAlignment="Left"
                                      NavigateUri="https://github.com/Eppie-io/Eppie-App/releases/tag/v1.2.0-preview">
                         <HyperlinkButton.Content>
-                            <StackPanel Orientation="Horizontal" Spacing="8">
-                                <FontIcon Glyph="&#xE8A7;" />
+                            <StackPanel Orientation="Horizontal" Spacing="{StaticResource BodyHyperlinkButtonSpace}">
+                                <FontIcon Glyph="{StaticResource OpenInNewWindowGlyph}" />
                                 <TextBlock Text="Download Preview" />
                             </StackPanel>
                         </HyperlinkButton.Content>
@@ -99,46 +124,45 @@
                 </StackPanel>
 
                 <!--  News 2 is in English only for now  -->
-                <StackPanel Spacing="12">
+                <StackPanel Spacing="{StaticResource BodySectionSpace}">
                     <TextBlock Style="{StaticResource WhatsNewSubtitleTextBlockStyle}" Text="Connection &amp; security improvements" />
                     <TextBlock Text="The Proton Mail connection flow is now simpler and more reliable. We’ve also added new protections for external content and embedded web resources to keep your communication safer." TextWrapping="Wrap" />
                 </StackPanel>
 
                 <!--  News 3 is in English only for now  -->
-                <StackPanel Spacing="12">
+                <StackPanel Spacing="{StaticResource BodySectionSpace}">
                     <TextBlock Style="{StaticResource WhatsNewSubtitleTextBlockStyle}" Text="Smoother experience across the app" />
                     <TextBlock Text="Layout and sorting preferences are now saved between sessions, and folder management is more intuitive. The UI has also been polished with new Contacts and Mailboxes panels, redesigned message tiles, and a better Compose experience." TextWrapping="Wrap" />
                 </StackPanel>
 
-                <local:SupportDevelopmentControl Margin="0"
-                                                 HorizontalAlignment="Left"
-                                                 IsIconVisible="False"
-                                                 IsStorePaymentProcessor="{x:Bind IsStorePaymentProcessor, Mode=OneWay}"
-                                                 Price="{x:Bind Price, Mode=OneWay}"
-                                                 SupportDevelopmentCommand="{x:Bind SupportDevelopmentCommand}"
-                                                 Visibility="{x:Bind IsSupportDevelopmentButtonVisible, Mode=OneWay}" />
+                <controls:SupportDevelopmentControl HorizontalAlignment="Left"
+                                                    IsIconVisible="False"
+                                                    IsStorePaymentProcessor="{x:Bind IsStorePaymentProcessor, Mode=OneWay}"
+                                                    Price="{x:Bind Price, Mode=OneWay}"
+                                                    SupportDevelopmentCommand="{x:Bind SupportDevelopmentCommand}"
+                                                    Visibility="{x:Bind IsSupportDevelopmentButtonVisible, Mode=OneWay}" />
 
                 <!--  Old Version  -->
                 <StackPanel HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             Orientation="Horizontal"
-                            Spacing="4">
-                    <TextBlock x:Uid="/Eppie.App.UI/Controls/Version" />
+                            Spacing="{StaticResource BodyVersionSpace}">
+                    <TextBlock x:Uid="WhatsNewVersion" />
                     <TextBlock Text="1.0.185.0" />
                 </StackPanel>
 
                 <!--  Old News  -->
 
                 <!--  News 1 is in English only for now  -->
-                <StackPanel Spacing="12">
+                <StackPanel Spacing="{StaticResource BodySectionSpace}">
                     <TextBlock Style="{StaticResource WhatsNewSubtitleTextBlockStyle}" Text="Eppie is now on Snap Store" />
                     <TextBlock Text="The full functionality app is now available for Linux users through Snap. You can install it with a single command on any Snap-enabled system. Other packages and app stores will be available soon." TextWrapping="Wrap" />
-                    <HyperlinkButton Margin="-12,0,0,0"
+                    <HyperlinkButton Margin="{StaticResource BodyHyperlinkButtonMargin}"
                                      HorizontalAlignment="Left"
                                      NavigateUri="https://snapcraft.io/eppie">
                         <HyperlinkButton.Content>
-                            <StackPanel Orientation="Horizontal" Spacing="8">
-                                <FontIcon Glyph="&#xE8A7;" />
+                            <StackPanel Orientation="Horizontal" Spacing="{StaticResource BodyHyperlinkButtonSpace}">
+                                <FontIcon Glyph="{StaticResource OpenInNewWindowGlyph}" />
                                 <TextBlock Text="Open Snap Store" />
                             </StackPanel>
                         </HyperlinkButton.Content>
@@ -146,15 +170,15 @@
                 </StackPanel>
 
                 <!--  News 2 is in English only for now  -->
-                <StackPanel Spacing="12">
+                <StackPanel Spacing="{StaticResource BodySectionSpace}">
                     <TextBlock Style="{StaticResource WhatsNewSubtitleTextBlockStyle}" Text="Le français est arrivé" />
                     <TextBlock Text="Thanks to our community, French is now available. Feel free to switch to it anytime in Settings. If you spot a mistake or want to help translate Eppie into your language, follow the link below." TextWrapping="Wrap" />
-                    <HyperlinkButton Margin="-12,0,0,0"
+                    <HyperlinkButton Margin="{StaticResource BodyHyperlinkButtonMargin}"
                                      HorizontalAlignment="Left"
                                      NavigateUri="https://eppie.crowdin.com/eppie">
                         <HyperlinkButton.Content>
-                            <StackPanel Orientation="Horizontal" Spacing="8">
-                                <FontIcon Glyph="&#xE8A7;" />
+                            <StackPanel Orientation="Horizontal" Spacing="{StaticResource BodyHyperlinkButtonSpace}">
+                                <FontIcon Glyph="{StaticResource OpenInNewWindowGlyph}" />
                                 <TextBlock Text="Open Crowdin" />
                             </StackPanel>
                         </HyperlinkButton.Content>
@@ -162,7 +186,7 @@
                 </StackPanel>
 
                 <!--  News 3 is in English only for now  -->
-                <StackPanel Spacing="12">
+                <StackPanel Spacing="{StaticResource BodySectionSpace}">
                     <TextBlock Style="{StaticResource WhatsNewSubtitleTextBlockStyle}" Text="Settings got a fresh new look" />
                     <TextBlock Text="We’ve redesigned and reorganized the settings to make them clearer and easier to navigate. You’ll also find new options in address settings and main app preferences." TextWrapping="Wrap" />
                 </StackPanel>

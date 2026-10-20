@@ -269,14 +269,6 @@
     <value>Password</value>
     <comment>Input field caption for server password</comment>
   </data>
-  <data name="Version.Text" xml:space="preserve">
-    <value>Version</value>
-    <comment>A label for the application version</comment>
-  </data>
-  <data name="WhatsNew.Text" xml:space="preserve">
-    <value>WHAT'S NEW</value>
-    <comment>A title for the What's new window.</comment>
-  </data>
   <data name="NetworkName.Header" xml:space="preserve">
     <value>Network</value>
     <comment>A title for the Network combobox</comment>
