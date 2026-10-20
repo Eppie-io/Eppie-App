@@ -61,6 +61,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)UI\Components\MessageInfoBlock.xaml.cs">
       <DependentUpon>MessageInfoBlock.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)UI\Components\SupportDevelopmentBlock.xaml.cs">
+      <DependentUpon>SupportDevelopmentBlock.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)UI\Components\WhatsNewContent.xaml.cs">
       <DependentUpon>WhatsNewContent.xaml</DependentUpon>
     </Compile>
@@ -102,6 +105,9 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\Dialogs\InvitationView.xaml.cs">
       <DependentUpon>InvitationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Dialogs\SupportDevelopmentView.xaml.cs">
+      <DependentUpon>SupportDevelopmentView.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\Dialogs\WhatsNewView.xaml.cs">
       <DependentUpon>WhatsNewView.xaml</DependentUpon>
@@ -165,6 +171,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)UI\Components\MessageInfoBlock.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)UI\Components\SupportDevelopmentBlock.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -245,6 +255,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Views\Dialogs\InvitationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\Dialogs\SupportDevelopmentView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
