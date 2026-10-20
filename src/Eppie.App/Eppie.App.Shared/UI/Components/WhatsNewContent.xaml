@@ -94,7 +94,7 @@
                             VerticalAlignment="Center"
                             Orientation="Horizontal"
                             Spacing="{StaticResource BodyVersionSpace}">
-                    <TextBlock x:Uid="Version" />
+                    <TextBlock x:Uid="WhatsNewVersion" />
                     <TextBlock Text="{x:Bind Version, Mode=OneWay}" />
                 </StackPanel>
 
@@ -147,7 +147,7 @@
                             VerticalAlignment="Center"
                             Orientation="Horizontal"
                             Spacing="{StaticResource BodyVersionSpace}">
-                    <TextBlock x:Uid="Version" />
+                    <TextBlock x:Uid="WhatsNewVersion" />
                     <TextBlock Text="1.0.185.0" />
                 </StackPanel>
 

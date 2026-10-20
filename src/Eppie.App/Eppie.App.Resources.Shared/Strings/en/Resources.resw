@@ -534,10 +534,6 @@ You need to enable IMAP for this account first and try again.</value>
     <value>Support:</value>
     <comment>A label for the support email</comment>
   </data>
-  <data name="Version.Text" xml:space="preserve">
-    <value>Version</value>
-    <comment>A label for the application version</comment>
-  </data>
   <data name="AboutPageVersion.Text" xml:space="preserve">
     <value>version</value>
     <comment>A label for the application version</comment>
@@ -1109,6 +1105,10 @@ Subject: {3}
   <data name="WhatsNew.Text" xml:space="preserve">
     <value>WHAT'S NEW</value>
     <comment>A title for the What's new window.</comment>
+  </data>
+  <data name="WhatsNewVersion.Text" xml:space="preserve">
+    <value>Version</value>
+    <comment>A label for the application version</comment>
   </data>
   <data name="MissionTitle.Text" xml:space="preserve">
     <value>Mission</value>
