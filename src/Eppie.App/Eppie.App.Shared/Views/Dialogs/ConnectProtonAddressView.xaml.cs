@@ -47,8 +47,6 @@ namespace Eppie.App.Views.Dialogs
         {
             this.InitializeComponent();
 
-            ViewModel.CloseAction = Close;
-
             ViewModel.PropertyChanged += (s, e) =>
             {
                 if (e.PropertyName == nameof(ViewModel.Step))

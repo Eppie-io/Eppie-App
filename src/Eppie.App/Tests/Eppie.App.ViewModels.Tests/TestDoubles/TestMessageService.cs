@@ -19,6 +19,7 @@
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Tuvi.App.ViewModels;
 using Tuvi.App.ViewModels.Services;
 using Tuvi.Core.Entities;
 
@@ -54,6 +55,6 @@ namespace Eppie.App.ViewModels.Tests.TestDoubles
         public Task ShowWhatsNewDialogAsync(string version, bool isStorePaymentProcessor, bool isSupportDevelopmentButtonVisible, string price, ICommand supportDevelopmentCommand, string twitterUrl) => throw new NotImplementedException();
         public Task ShowSupportDevelopmentDialogAsync(bool isStorePaymentProcessor, string price, ICommand supportDevelopmentCommand) => throw new NotImplementedException();
         public Task ShowProtonConnectAddressDialogAsync(Account? account = null) => throw new NotImplementedException();
-        public Task ShowInvitationDialogAsync(object? invitationData = null) => throw new NotImplementedException();
+        public Task ShowInvitationDialogAsync(ContactItem? contact = null) => throw new NotImplementedException();
     }
 }

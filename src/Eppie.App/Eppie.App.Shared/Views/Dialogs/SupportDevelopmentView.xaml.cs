@@ -16,60 +16,41 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Windows.Input;
 using Eppie.App.UI.Controls;
-using Tuvi.App.ViewModels;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
 #else
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media;
 #endif
 
-namespace Eppie.App.Views
+
+namespace Eppie.App.Views.Dialogs
 {
-    internal partial class InvitationPageBase : BasePage<InvitationPageViewModel>
-    { }
-
-    internal sealed partial class InvitationPage : InvitationPageBase, IPopupPage
+    internal struct SupportDevelopmentViewData
     {
-        public event EventHandler ClosePopupRequested;
+        public string Price { get; set; }
+        public bool IsStorePaymentProcessor { get; set; }
+        public ICommand SupportDevelopmentCommand { get; set; }
+    }
 
-        public InvitationPage()
+    [SuppressMessage("Design", "CA1010:Generic collections should implement generic interface", Justification = "ContentControl implements IEnumerable for XAML infrastructure")]
+    internal sealed partial class SupportDevelopmentView : UserControl, AppDialog.IInitializer<SupportDevelopmentViewData>
+    {
+        public SupportDevelopmentView()
         {
             this.InitializeComponent();
-
-            ViewModel.ClosePopupAction = () => ClosePopupRequested?.Invoke(this, EventArgs.Empty);
         }
 
-        public void OnCloseClicked()
-        { }
-
-        private void OnRecipientRemoved(object sender, RoutedEventArgs e)
+        public void Initialize(SupportDevelopmentViewData data)
         {
-            if (sender is FrameworkElement element && element.Tag is ContactItem item)
-            {
-                ViewModel?.OnRecipientRemoved(item);
-            }
-        }
-
-        private void OnContactQueryChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
-        {
-            if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
-            {
-                ViewModel?.OnContactQueryChanged(sender.Text);
-            }
-        }
-
-        private void OnContactQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
-        {
-            ViewModel?.OnContactQuerySubmitted(args.ChosenSuggestion as ContactItem, args.QueryText);
-            ViewModel?.OnContactQueryChanged(string.Empty);
-            sender.Text = string.Empty;
+            SupportDevelopmentBlock.Price = data.Price;
+            SupportDevelopmentBlock.IsStorePaymentProcessor = data.IsStorePaymentProcessor;
+            SupportDevelopmentBlock.SupportDevelopmentCommand = data.SupportDevelopmentCommand;
         }
     }
 }

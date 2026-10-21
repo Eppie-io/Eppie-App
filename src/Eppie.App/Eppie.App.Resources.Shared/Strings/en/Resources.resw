@@ -534,7 +534,7 @@ You need to enable IMAP for this account first and try again.</value>
     <value>Support:</value>
     <comment>A label for the support email</comment>
   </data>
-  <data name="Version.Text" xml:space="preserve">
+  <data name="AboutPageVersion.Text" xml:space="preserve">
     <value>version</value>
     <comment>A label for the application version</comment>
   </data>
@@ -1101,6 +1101,38 @@ Subject: {3}
   <data name="WhatsNewTwitPostText" xml:space="preserve">
     <value>New version of {0} available now. Check out what's new.</value>
     <comment>A text for the twitter post about new app version.</comment>
+  </data>
+  <data name="WhatsNew.Text" xml:space="preserve">
+    <value>WHAT'S NEW</value>
+    <comment>A title for the What's new window.</comment>
+  </data>
+  <data name="WhatsNewVersion.Text" xml:space="preserve">
+    <value>Version</value>
+    <comment>A label for the application version</comment>
+  </data>
+  <data name="SupportDevelopmentShortButton.Content" xml:space="preserve">
+    <value>Subscribe</value>
+    <comment>Button to open 'Support Development' page</comment>
+  </data>
+    <data name="SupportDevelopmentCaption.Text" xml:space="preserve">
+    <value>Support the Eppie Team</value>
+    <comment>Caption on the 'Support Development' page</comment>
+  </data>
+    <data name="SupportDevelopmentText.Text" xml:space="preserve">
+    <value>Your subscription helps us keep development open, independent, and moving forward faster.</value>
+    <comment>Text on the 'Support Development' page</comment>
+  </data>
+    <data name="SupportDevelopmentStoreProvider.Text" xml:space="preserve">
+    <value>Payments are processed securely via the Microsoft Store.</value>
+    <comment>Text on the 'Support Development' page</comment>
+  </data>
+    <data name="SupportDevelopmentGitHubProvider.Text" xml:space="preserve">
+    <value>Payments are processed securely via GitHub Sponsors.</value>
+    <comment>Text on the 'Support Development' page</comment>
+  </data>
+    <data name="PricePerMonthText.Text" xml:space="preserve">
+    <value>per month</value>
+    <comment>Text after price on the 'Support Development' page</comment>
   </data>
   <data name="MissionTitle.Text" xml:space="preserve">
     <value>Mission</value>

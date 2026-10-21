@@ -124,105 +124,6 @@ namespace Eppie.App.UI.Common
             }
         }
 
-        public static async Task ShowWhatsNewDialogAsync(string version,
-                                                         bool isStorePaymentProcessor,
-                                                         bool isSupportDevelopmentButtonVisible,
-                                                         string price,
-                                                         System.Windows.Input.ICommand supportDevelopmentCommand,
-                                                         string twitterUrl,
-                                                         XamlRoot root)
-        {
-            await _mutex.WaitAsync().ConfigureAwait(true);
-            try
-            {
-                var dialog = new ContentDialog()
-                {
-                    XamlRoot = root
-                };
-
-                var whatsNew = new Eppie.App.UI.Controls.WhatsNewControl
-                {
-                    Version = version,
-                    IsStorePaymentProcessor = isStorePaymentProcessor,
-                    IsSupportDevelopmentButtonVisible = isSupportDevelopmentButtonVisible,
-                    Price = price,
-                    SupportDevelopmentCommand = supportDevelopmentCommand,
-                    TwitterUrl = twitterUrl,
-                    Margin = new Thickness(-8)
-                };
-
-                whatsNew.CloseRequested += (s, e) => dialog.Hide();
-                dialog.Content = whatsNew;
-
-                await dialog.ShowAsync();
-            }
-            finally
-            {
-                _mutex.Release();
-            }
-        }
-
-        public static async Task ShowPopupAsync<TPage>(XamlRoot root, object data = null)
-            where TPage : Page, IPopupPage
-        {
-            await _mutex.WaitAsync().ConfigureAwait(true);
-            try
-            {
-                var dialog = new ContentDialog()
-                {
-                    XamlRoot = root,
-                };
-
-                var popupControl = new Eppie.App.UI.Controls.PopupHostControl<TPage>()
-                {
-                    NavigationParameter = data
-                };
-
-                popupControl.CloseRequested += (s, e) => dialog.Hide();
-                dialog.Content = popupControl;
-
-                await dialog.ShowAsync();
-            }
-            finally
-            {
-                _mutex.Release();
-            }
-        }
-
-        public static async Task ShowSupportDevelopmentDialogAsync(bool isStorePaymentProcessor,
-                                                                   string price,
-                                                                   System.Windows.Input.ICommand supportDevelopmentCommand,
-                                                                   XamlRoot root)
-        {
-            await _mutex.WaitAsync().ConfigureAwait(true);
-            try
-            {
-                var dialog = new ContentDialog()
-                {
-                    XamlRoot = root
-                };
-
-                var supportDevelopment = new Eppie.App.UI.Controls.SupportDevelopmentControl
-                {
-                    IsStorePaymentProcessor = isStorePaymentProcessor,
-                    Price = price,
-                    SupportDevelopmentCommand = supportDevelopmentCommand,
-                    IsIconVisible = true,
-                    IsCloseButtonVisible = true,
-                    Margin = new Thickness(-8)
-                };
-
-                supportDevelopment.CloseRequested += (s, e) => dialog.Hide();
-                dialog.Content = supportDevelopment;
-
-                await dialog.ShowAsync();
-            }
-            finally
-            {
-                _mutex.Release();
-            }
-        }
-
         public static async Task<Action> ShowAuthenticationDialogAsync(string title, string content, string closeButtonText, XamlRoot root, Action onClose = null)
         {
             if (title is null)
@@ -346,7 +247,7 @@ namespace Eppie.App.UI.Common
         /// <param name="root">The XAML root.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
         public static async Task ShowAppDialogAsync<TView>(XamlRoot root)
-            where TView : UIElement, IAppDialogView, new()
+            where TView : UIElement, new()
         {
             await _mutex.WaitAsync().ConfigureAwait(true);
             try
@@ -373,7 +274,7 @@ namespace Eppie.App.UI.Common
         /// <param name="data">The data to initialize the dialog with.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
         public static async Task ShowAppDialogAsync<TView, TData>(XamlRoot root, TData data)
-            where TView : UIElement, IAppDialogView, IAppDialogInitializer<TData>, new()
+            where TView : UIElement, AppDialog.IInitializer<TData>, new()
         {
             await _mutex.WaitAsync().ConfigureAwait(true);
             try

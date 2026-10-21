@@ -18,22 +18,22 @@
 
 using System;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Eppie.App.Models;
+using Eppie.App.UI.Common;
 using Eppie.App.UI.Resources;
+using Eppie.App.Views.Dialogs;
+using Tuvi.App.ViewModels;
+using Tuvi.App.ViewModels.Common;
+using Tuvi.App.ViewModels.Services;
 using Tuvi.Core.Backup;
 using Tuvi.Core.Entities;
 using Tuvi.Core.Entities.Exceptions;
 // ToDo: move file 'Exceptions.cs' from Tuvi.Core.Mail.Impl to Tuvi.Core.Mail
 using Tuvi.Core.Mail.Impl;
-using Tuvi.App.ViewModels;
-using Tuvi.App.ViewModels.Common;
-using Tuvi.App.ViewModels.Services;
 using TuviPgpLib.Entities;
-using Eppie.App.Models;
-using System.Runtime.InteropServices;
-using Eppie.App.Views;
-using Eppie.App.UI.Common;
-using Eppie.App.Views.Dialogs;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -533,34 +533,36 @@ namespace Eppie.App.Services
                 StringProvider.GetString("MsgBtnOk"));
         }
 
-        public async Task ShowWhatsNewDialogAsync(
+        public Task ShowWhatsNewDialogAsync(
             string version,
             bool isStorePaymentProcessor,
             bool isSupportDevelopmentButtonVisible,
             string price,
-            System.Windows.Input.ICommand supportDevelopmentCommand,
+            ICommand supportDevelopmentCommand,
             string twitterUrl)
         {
-            await UITools.ShowWhatsNewDialogAsync(
-                version,
-                isStorePaymentProcessor,
-                isSupportDevelopmentButtonVisible,
-                price,
-                supportDevelopmentCommand,
-                twitterUrl,
-                _xamlRootProvider()).ConfigureAwait(true);
+            return UITools.ShowAppDialogAsync<WhatsNewView, WhatsNewViewData>(_xamlRootProvider(), new WhatsNewViewData
+            {
+                IsStorePaymentProcessor = isStorePaymentProcessor,
+                IsSupportDevelopmentButtonVisible = isSupportDevelopmentButtonVisible,
+                Version = version,
+                Price = price,
+                TwitterUrl = twitterUrl,
+                SupportDevelopmentCommand = supportDevelopmentCommand
+            });
         }
 
-        public async Task ShowSupportDevelopmentDialogAsync(
+        public Task ShowSupportDevelopmentDialogAsync(
             bool isStorePaymentProcessor,
             string price,
-            System.Windows.Input.ICommand supportDevelopmentCommand)
+            ICommand supportDevelopmentCommand)
         {
-            await UITools.ShowSupportDevelopmentDialogAsync(
-                isStorePaymentProcessor,
-                price,
-                supportDevelopmentCommand,
-                _xamlRootProvider()).ConfigureAwait(true);
+            return UITools.ShowAppDialogAsync<SupportDevelopmentView, SupportDevelopmentViewData>(_xamlRootProvider(), new SupportDevelopmentViewData
+            {
+                IsStorePaymentProcessor = isStorePaymentProcessor,
+                Price = price,
+                SupportDevelopmentCommand = supportDevelopmentCommand
+            });
         }
 
         public Task ShowProtonConnectAddressDialogAsync(Account account = null)
@@ -568,10 +570,9 @@ namespace Eppie.App.Services
             return UITools.ShowAppDialogAsync<ConnectProtonAddressView, Account>(_xamlRootProvider(), account);
         }
 
-        public Task ShowInvitationDialogAsync(object invitationData)
+        public Task ShowInvitationDialogAsync(ContactItem contact = null)
         {
-            // Todo: migrate to new dialog system
-            return UITools.ShowPopupAsync<InvitationPage>(_xamlRootProvider(), invitationData);
+            return UITools.ShowAppDialogAsync<InvitationView, ContactItem>(_xamlRootProvider(), contact);
         }
     }
 }

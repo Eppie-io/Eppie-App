@@ -239,15 +239,16 @@ namespace Eppie.App.ViewModels.Tests.TestDoubles
             return Task.FromResult<IReadOnlyDictionary<EmailAddress, int>>(new Dictionary<EmailAddress, int>(_unreadCounts));
         }
 
-        public Task SendMessageAsync(Message message, bool encrypt, bool sign, CancellationToken cancellationToken = default)
+        public async Task SendMessageAsync(Message message, bool encrypt, bool sign, CancellationToken cancellationToken = default)
         {
+            await Task.Yield(); // Ensure this method is asynchronous
+
             if (ShouldThrowOnSend)
             {
                 throw new InvalidOperationException("Simulated send failure");
             }
             SentMessages.Add(message);
             MessageSent?.Invoke(this, EventArgs.Empty);
-            return Task.CompletedTask;
         }
 
         public event EventHandler? MessageSent;

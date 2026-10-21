@@ -34,39 +34,57 @@ namespace Eppie.App.Views.Dialogs
 {
     [SuppressMessage("Design", "CA1010:Generic collections should implement generic interface", Justification = "ContentControl implements IEnumerable for XAML infrastructure")]
 
-    public abstract partial class AppDialogViewBase<TViewModel> : UserControl, IAppDialogView, IAppDialogLifecycle
+    public abstract partial class AppDialogViewBase<TViewModel> : UserControl, AppDialog.IClosable, AppDialog.ILifecycle
         where TViewModel : DialogViewModel, new()
     {
-        protected TViewModel ViewModel { get; private set; }
+        protected TViewModel ViewModel { get; } = new TViewModel();
 
         public event EventHandler CloseRequested;
 
         protected AppDialogViewBase()
         {
-            InitializeViewModel();
-        }
-
-        private void InitializeViewModel()
-        {
-            ViewModel = new TViewModel();
             DataContext = ViewModel;
             ViewModel.Initialize();
+
+            Loaded += OnLoaded;
+            Unloaded += OnUnloaded;
+            Loading += OnLoading;
+        }
+
+        private void OnLoading(FrameworkElement sender, object args)
+        {
+            ViewModel.OnLoading();
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            ViewModel.RegisterCloseAction(Close);
+            ViewModel.OnLoaded();
+        }
+
+        private void OnUnloaded(object sender, RoutedEventArgs e)
+        {
+            ViewModel.OnUnloaded();
+
+            Loaded -= OnLoaded;
+            Unloaded -= OnUnloaded;
+            Loading -= OnLoading;
         }
 
         public virtual void OnOpened()
         {
-            ViewModel?.OnOpened();
+            ViewModel.OnOpened();
         }
 
         public virtual void OnClosing(ContentDialogResult result, out bool cancel)
         {
             cancel = false;
-            ViewModel?.OnClosing(ConvertResult(result), out cancel);
+            ViewModel.OnClosing(ConvertResult(result), out cancel);
         }
 
         public virtual void OnClosed(ContentDialogResult result)
         {
-            ViewModel?.OnClosed(ConvertResult(result));
+            ViewModel.OnDialogClosed(ConvertResult(result));
         }
 
         protected void Close()
@@ -90,7 +108,7 @@ namespace Eppie.App.Views.Dialogs
 
     [SuppressMessage("Design", "CA1010:Generic collections should implement generic interface", Justification = "ContentControl implements IEnumerable for XAML infrastructure")]
 
-    public abstract partial class AppDialogViewBase<TViewModel, TData> : AppDialogViewBase<TViewModel>, IAppDialogInitializer<TData>
+    public abstract partial class AppDialogViewBase<TViewModel, TData> : AppDialogViewBase<TViewModel>, AppDialog.IInitializer<TData>
         where TViewModel : DialogViewModel<TData>, new()
     {
         protected AppDialogViewBase() : base()
@@ -99,7 +117,7 @@ namespace Eppie.App.Views.Dialogs
 
         public void Initialize(TData data)
         {
-            ViewModel?.InitializeData(data);
+            ViewModel.InitializeData(data);
         }
     }
 }

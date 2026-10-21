@@ -9,6 +9,11 @@
 
     <x:Double x:Key="DefaultSymbolSize">16</x:Double>
 
+    <!--
+        Segoe Fluent Icons font
+        https://learn.microsoft.com/en-us/windows/apps/design/iconography/segoe-fluent-icons-font
+    -->
+
     <x:String x:Key="BackGlyph">&#xE72B;</x:String>
     <x:String x:Key="MoreGlyph">&#xE712;</x:String>
     <x:String x:Key="DeleteGlyph">&#xE74D;</x:String>
@@ -39,6 +44,9 @@
 
     <x:String x:Key="UnknownGlyph">&#xE9CE;</x:String>
     <x:String x:Key="LabelGlyph">&#xE932;</x:String>
+    <x:String x:Key="OpenInNewWindowGlyph">&#xE8A7;</x:String>
+
+    <x:String x:Key="HeartFillGlyph">&#xEB52;</x:String>
 
     <StaticResource x:Key="MarkAsReadGlyph" ResourceKey="ReadGlyph" />
     <StaticResource x:Key="MarkAsUnreadGlyph" ResourceKey="MailGlyph" />
