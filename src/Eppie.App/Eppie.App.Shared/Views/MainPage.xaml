@@ -41,19 +41,29 @@
                                   SupportVisibility="{x:Bind ViewModel.IsSupportDevelopmentButtonVisible, Mode=OneWay}">
             <components:NavigationBar.WhatsNewFlyout>
                 <Flyout x:Name="WhatsNewFlyout">
-                    <controls:WhatsNewControl CloseRequested="OnWhatsNewClose"
-                                              IsStorePaymentProcessor="{x:Bind ViewModel.IsStorePaymentProcessor, Mode=OneWay}"
-                                              IsSupportDevelopmentButtonVisible="{x:Bind ViewModel.IsSupportDevelopmentButtonVisible, Mode=OneWay}"
-                                              Price="{x:Bind ViewModel.SupportDevelopmentPrice, Mode=OneWay}"
-                                              SupportDevelopmentCommand="{x:Bind ViewModel.SupportDevelopmentCommand}"
-                                              TwitterUrl="{x:Bind ViewModel.TwitterPostLink, Mode=OneTime}"
-                                              Version="{Binding Source={StaticResource Brand}, Path=AppVersion}" />
+                    <Flyout.FlyoutPresenterStyle>
+                        <Style BasedOn="{StaticResource DefaultFlyoutPresenterStyle}" TargetType="FlyoutPresenter">
+                            <Setter Property="Padding" Value="0" />
+                            <Setter Property="Margin" Value="0" />
+                        </Style>
+                    </Flyout.FlyoutPresenterStyle>
+                    <components:WhatsNewContent CloseRequested="OnWhatsNewClose"
+                                                IsStorePaymentProcessor="{x:Bind ViewModel.IsStorePaymentProcessor, Mode=OneWay}"
+                                                IsSupportDevelopmentButtonVisible="{x:Bind ViewModel.IsSupportDevelopmentButtonVisible, Mode=OneWay}"
+                                                Price="{x:Bind ViewModel.SupportDevelopmentPrice, Mode=OneWay}"
+                                                SupportDevelopmentCommand="{x:Bind ViewModel.SupportDevelopmentCommand}"
+                                                TwitterUrl="{x:Bind ViewModel.TwitterPostLink, Mode=OneTime}"
+                                                Version="{Binding Source={StaticResource Brand}, Path=AppVersion}" />
                 </Flyout>
             </components:NavigationBar.WhatsNewFlyout>
             <components:NavigationBar.SupportFlyout>
                 <Flyout x:Name="SupportFlyout">
-                    <controls:SupportDevelopmentControl MaxWidth="320"
-                                                        Margin="24"
+                    <Flyout.FlyoutPresenterStyle>
+                        <Style BasedOn="{StaticResource DefaultFlyoutPresenterStyle}" TargetType="FlyoutPresenter">
+                            <Setter Property="Padding" Value="24" />
+                        </Style>
+                    </Flyout.FlyoutPresenterStyle>
+                    <components:SupportDevelopmentBlock MaxWidth="320"
                                                         IsIconVisible="True"
                                                         IsStorePaymentProcessor="{x:Bind ViewModel.IsStorePaymentProcessor, Mode=OneWay}"
                                                         Price="{x:Bind ViewModel.SupportDevelopmentPrice, Mode=OneWay}"
@@ -120,7 +130,6 @@
                                       Command="{x:Bind ClosePaneCommand}">
                             <SymbolIcon Symbol="Cancel" />
                         </AppBarButton>
-
                     </Grid>
                 </SplitView.Pane>
                 <Frame x:Name="contentFrame" />
