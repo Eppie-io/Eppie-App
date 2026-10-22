@@ -47,13 +47,9 @@ jobs:
     steps:
       - name: Support longpaths
         if: runner.os == 'Windows'
-        shell: powershell
+        shell: pwsh
         run: | 
-          New-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\FileSystem' `
-                           -Name 'LongPathsEnabled' -Value 1 -PropertyType DWord `
-                           -Force -ErrorAction Continue
           git config --system core.longpaths true
-          git config --global core.longpaths true          
 
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1

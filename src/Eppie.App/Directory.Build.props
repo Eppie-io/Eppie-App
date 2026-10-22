@@ -19,9 +19,4 @@
     <WindowsCompatibilityVersion>10.0.13</WindowsCompatibilityVersion>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <!-- Stops Microsoft.Build.Tasks.Git from querying Git for repository information -->
-    <EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
-  </PropertyGroup>
-
 </Project>
