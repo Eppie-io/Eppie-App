@@ -47,7 +47,9 @@ jobs:
     steps:
       - name: Support longpaths
         if: runner.os == 'Windows'
-        run: git config --system core.longpaths true
+        shell: pwsh
+        run: | 
+          git config --system core.longpaths true
 
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -78,7 +80,15 @@ jobs:
         if: matrix.language == 'csharp'
         shell: pwsh
         run: |
-          msbuild -target:Rebuild -restore:True -verbosity:minimal -consoleLoggerParameters:Summary -maxCpuCount ./src/Eppie.App/Eppie.App.Uno.slnf
+
+          # To disable Git Queries, use EnableSourceControlManagerQueries=false.
+          # This fixes the error related to Microsoft.Build.Tasks.Git.targets:
+          # Error reading git repository information: The specified path, file name, or both are too long.
+          # The fully qualified file name must be less than 260 characters, and the directory name must be less than 248 characters.
+          msbuild -target:Rebuild -restore:True -verbosity:minimal `
+                  -consoleLoggerParameters:Summary -maxCpuCount `
+                  -property:EnableSourceControlManagerQueries=false `
+                  ./src/Eppie.App/Eppie.App.Uno.slnf
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@24c54180a607b1449ed407dd24f251e4e9147c8d # v4.38.3
