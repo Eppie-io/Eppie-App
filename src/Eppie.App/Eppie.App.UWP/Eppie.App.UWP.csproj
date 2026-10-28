@@ -221,8 +221,6 @@
     <!--
       Update transitive packages containing known high severity vulnerabilities here.
     -->
-    <!-- From The `MimeKit` package (from TuviCore and TuviPgpLib) -->
-    <PackageReference Include="System.Security.Cryptography.Pkcs" VersionOverride="8.0.2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\gitmodules\TuviCore\Sources\ComponentBuilder\ComponentBuilder.csproj">

@@ -25,7 +25,15 @@
     
     
     <!-- Add your application specific runtime directives here. -->
-
+    
+    <!--
+      HACK: Prevents .NET Native Internal Compiler Error (NUTC300D).
+      Enabling 'Required Public' forces the compiler to use standard P/Invoke stubs 
+      for Microsoft.Bcl.Cryptography, bypassing a compiler bug related to 
+      marshaling ReadOnlySpan<T> to native code (BCryptSetProperty).
+      NOTE: Verify crypto functionality in Release build to ensure runtime safety.
+    -->
+    <Assembly Name="Microsoft.Bcl.Cryptography" Activate="Required Public" />
 
   </Application>
 </Directives>
