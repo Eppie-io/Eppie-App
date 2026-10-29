@@ -72,7 +72,6 @@ namespace Eppie.App.ViewModels.Models
             ErrorHandler = errorHandler;
         }
 
-
         internal async Task SupportDevelopmentAsync()
         {
             try
@@ -97,7 +96,6 @@ namespace Eppie.App.ViewModels.Models
                 ErrorHandler?.OnError(e, false);
             }
         }
-
 
         internal async Task UpdateAsync()
         {
