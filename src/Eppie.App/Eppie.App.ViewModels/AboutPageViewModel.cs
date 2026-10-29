@@ -54,7 +54,10 @@ namespace Tuvi.App.ViewModels
 
         private void InitializeSupportDevelopmentModel()
         {
-            SupportDevelopment = new SupportDevelopmentModel(AppStoreService, LauncherService, BrandService, ErrorHandler);
+            if (SupportDevelopment is null)
+            {
+                SupportDevelopment = new SupportDevelopmentModel(AppStoreService, LauncherService, BrandService, ErrorHandler);
+            }
             SupportDevelopment.Update();
         }
     }
