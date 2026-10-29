@@ -37,25 +37,25 @@ namespace Eppie.App.ViewModels.Models
             }
         }
 
-        private string _supportDevelopmentPrice;
-        public string SupportDevelopmentPrice
+        private string _price;
+        public string Price
         {
-            get => _supportDevelopmentPrice;
+            get => _price;
             private set
             {
-                _supportDevelopmentPrice = value;
-                OnPropertyChanged(nameof(SupportDevelopmentPrice));
+                _price = value;
+                OnPropertyChanged(nameof(Price));
             }
         }
 
-        private bool _isSupportDevelopmentAvailable;
-        public bool IsSupportDevelopmentAvailable
+        private bool _isAvailable;
+        public bool IsAvailable
         {
-            get => _isSupportDevelopmentAvailable;
+            get => _isAvailable;
             private set
             {
-                _isSupportDevelopmentAvailable = value;
-                OnPropertyChanged(nameof(IsSupportDevelopmentAvailable));
+                _isAvailable = value;
+                OnPropertyChanged(nameof(IsAvailable));
             }
         }
 
@@ -101,24 +101,24 @@ namespace Eppie.App.ViewModels.Models
         {
             if (string.IsNullOrWhiteSpace(BrandService.GetDevelopmentSupport()))
             {
-                IsSupportDevelopmentAvailable = false;
+                IsAvailable = false;
                 return;
             }
 
             try
             {
-                IsSupportDevelopmentAvailable = !await AppStoreService.IsSubscriptionEnabledAsync().ConfigureAwait(true);
+                IsAvailable = !await AppStoreService.IsSubscriptionEnabledAsync().ConfigureAwait(true);
 
-                if (IsSupportDevelopmentAvailable)
+                if (IsAvailable)
                 {
-                    SupportDevelopmentPrice = await AppStoreService.GetSubscriptionPriceAsync().ConfigureAwait(true);
+                    Price = await AppStoreService.GetSubscriptionPriceAsync().ConfigureAwait(true);
                 }
             }
             catch (NotImplementedException)
             {
-                IsSupportDevelopmentAvailable = true;
+                IsAvailable = true;
                 IsStorePaymentProcessor = false;
-                SupportDevelopmentPrice = "$3";
+                Price = "$3";
             }
         }
     }

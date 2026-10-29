@@ -49,8 +49,8 @@
                         </Flyout.FlyoutPresenterStyle>
                         <components:WhatsNewContent CloseRequested="WhatsNewControl_CloseRequested"
                                                     IsStorePaymentProcessor="{x:Bind ViewModel.SupportDevelopment.IsStorePaymentProcessor, Mode=OneWay}"
-                                                    IsSupportDevelopmentButtonVisible="{x:Bind ViewModel.SupportDevelopment.IsSupportDevelopmentAvailable, Mode=OneWay}"
-                                                    Price="{x:Bind ViewModel.SupportDevelopment.SupportDevelopmentPrice, Mode=OneWay}"
+                                                    IsSupportDevelopmentButtonVisible="{x:Bind ViewModel.SupportDevelopment.IsAvailable, Mode=OneWay}"
+                                                    Price="{x:Bind ViewModel.SupportDevelopment.Price, Mode=OneWay}"
                                                     SupportDevelopmentCommand="{x:Bind ViewModel.SupportDevelopmentCommand}"
                                                     TwitterUrl="{x:Bind ViewModel.TwitterPostLink, Mode=OneTime}"
                                                     Version="{Binding Source={StaticResource Brand}, Path=AppVersion}" />

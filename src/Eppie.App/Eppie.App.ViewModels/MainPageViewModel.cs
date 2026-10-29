@@ -644,8 +644,8 @@ namespace Tuvi.App.ViewModels
                 await MessageService.ShowWhatsNewDialogAsync(
                     version: BrandService.GetAppVersion(),
                     isStorePaymentProcessor: SupportDevelopment.IsStorePaymentProcessor,
-                    isSupportDevelopmentButtonVisible: SupportDevelopment.IsSupportDevelopmentAvailable,
-                    price: SupportDevelopment.SupportDevelopmentPrice,
+                    isSupportDevelopmentButtonVisible: SupportDevelopment.IsAvailable,
+                    price: SupportDevelopment.Price,
                     supportDevelopmentCommand: SupportDevelopmentCommand,
                     twitterUrl: TwitterPostLink
                 ).ConfigureAwait(true);
@@ -697,13 +697,13 @@ namespace Tuvi.App.ViewModels
 
             var count = LocalSettingsService.DevelopmentSupportRequestCount;
 
-            if (count >= DevelopmentSupportThreshold && SupportDevelopment.IsSupportDevelopmentAvailable)
+            if (count >= DevelopmentSupportThreshold && SupportDevelopment.IsAvailable)
             {
                 LocalSettingsService.DevelopmentSupportRequestCount = 0;
 
                 await MessageService.ShowSupportDevelopmentDialogAsync(
                     isStorePaymentProcessor: SupportDevelopment.IsStorePaymentProcessor,
-                    price: SupportDevelopment.SupportDevelopmentPrice,
+                    price: SupportDevelopment.Price,
                     supportDevelopmentCommand: SupportDevelopmentCommand
                 ).ConfigureAwait(true);
 
