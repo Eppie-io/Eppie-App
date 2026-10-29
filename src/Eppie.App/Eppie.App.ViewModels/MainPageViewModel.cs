@@ -27,6 +27,7 @@ using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using Eppie.App.ViewModels.Models;
 using Microsoft.Extensions.Logging;
 using Tuvi.App.ViewModels.Common;
 using Tuvi.App.ViewModels.Messages;
@@ -473,9 +474,13 @@ namespace Tuvi.App.ViewModels
     {
         public MailBoxesModel MailBoxesModel { get; private set; }
 
+        public SupportDevelopmentModel SupportDevelopment { get; set; }
+
         private ICommand _writeNewMessageCommand;
         public ICommand WriteNewMessageCommand => _writeNewMessageCommand ?? (_writeNewMessageCommand = new AsyncRelayCommand(() => WriteNewMessageAsync()));
 
+        private ICommand _supportDevelopmentCommand;
+        public ICommand SupportDevelopmentCommand => _supportDevelopmentCommand ?? (_supportDevelopmentCommand = new AsyncRelayCommand(() => SupportDevelopment?.SupportDevelopmentAsync()));
 
         public ObservableCollection<Problem> Problems { get; } = new ObservableCollection<Problem>();
 
@@ -541,6 +546,7 @@ namespace Tuvi.App.ViewModels
             try
             {
                 base.OnNavigatedTo(data);
+                InitializeSupportDevelopmentModel();
 
                 await UpdateAccountListAsync().ConfigureAwait(true);
 
@@ -609,7 +615,7 @@ namespace Tuvi.App.ViewModels
 
             _startupPopupAttempted = true;
 
-            await UpdateSupportDevelopmentButtonAsync().ConfigureAwait(true);
+            await SupportDevelopment.UpdateAsync().ConfigureAwait(true);
 
             //1) WhatsNew has priority
             if (await ShowWhatsNewIfNeededAsync().ConfigureAwait(true))
@@ -637,9 +643,9 @@ namespace Tuvi.App.ViewModels
             {
                 await MessageService.ShowWhatsNewDialogAsync(
                     version: BrandService.GetAppVersion(),
-                    isStorePaymentProcessor: IsStorePaymentProcessor,
-                    isSupportDevelopmentButtonVisible: IsSupportDevelopmentButtonVisible,
-                    price: SupportDevelopmentPrice,
+                    isStorePaymentProcessor: SupportDevelopment.IsStorePaymentProcessor,
+                    isSupportDevelopmentButtonVisible: SupportDevelopment.IsAvailable,
+                    price: SupportDevelopment.Price,
                     supportDevelopmentCommand: SupportDevelopmentCommand,
                     twitterUrl: TwitterPostLink
                 ).ConfigureAwait(true);
@@ -691,13 +697,13 @@ namespace Tuvi.App.ViewModels
 
             var count = LocalSettingsService.DevelopmentSupportRequestCount;
 
-            if (count >= DevelopmentSupportThreshold && IsSupportDevelopmentButtonVisible)
+            if (count >= DevelopmentSupportThreshold && SupportDevelopment.IsAvailable)
             {
                 LocalSettingsService.DevelopmentSupportRequestCount = 0;
 
                 await MessageService.ShowSupportDevelopmentDialogAsync(
-                    isStorePaymentProcessor: IsStorePaymentProcessor,
-                    price: SupportDevelopmentPrice,
+                    isStorePaymentProcessor: SupportDevelopment.IsStorePaymentProcessor,
+                    price: SupportDevelopment.Price,
                     supportDevelopmentCommand: SupportDevelopmentCommand
                 ).ConfigureAwait(true);
 
@@ -950,6 +956,16 @@ namespace Tuvi.App.ViewModels
         public void InitializeMailboxModel(ICommand mailBoxItemClick, ICommand mailBoxItemDrop)
         {
             MailBoxesModel = new MailBoxesModel(mailBoxItemClick, mailBoxItemDrop);
+        }
+
+        private void InitializeSupportDevelopmentModel()
+        {
+            if (SupportDevelopment is null)
+            {
+                SupportDevelopment = new SupportDevelopmentModel(AppStoreService, LauncherService, BrandService, ErrorHandler);
+            }
+
+            SupportDevelopment.Update();
         }
 
         public void ShowAllMessages(IErrorHandler errorHandler)

@@ -17,11 +17,25 @@
 // ---------------------------------------------------------------------------- //
 
 using System;
+using System.Windows.Input;
+using CommunityToolkit.Mvvm.Input;
+using Eppie.App.ViewModels.Models;
 
 namespace Tuvi.App.ViewModels
 {
     public class AboutPageViewModel : PageViewModel
     {
+        public SupportDevelopmentModel SupportDevelopment { get; private set; }
+
+        private ICommand _supportDevelopmentCommand;
+        public ICommand SupportDevelopmentCommand => _supportDevelopmentCommand ?? (_supportDevelopmentCommand = new AsyncRelayCommand(() => SupportDevelopment?.SupportDevelopmentAsync()));
+
+        public override void OnNavigatedTo(object data)
+        {
+            base.OnNavigatedTo(data);
+            InitializeSupportDevelopmentModel();
+        }
+
         public async void RequestReview()
         {
             try
@@ -36,6 +50,15 @@ namespace Tuvi.App.ViewModels
             {
                 OnError(ex);
             }
+        }
+
+        private void InitializeSupportDevelopmentModel()
+        {
+            if (SupportDevelopment is null)
+            {
+                SupportDevelopment = new SupportDevelopmentModel(AppStoreService, LauncherService, BrandService, ErrorHandler);
+            }
+            SupportDevelopment.Update();
         }
     }
 }
