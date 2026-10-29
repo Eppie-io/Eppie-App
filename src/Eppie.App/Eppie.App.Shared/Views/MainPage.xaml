@@ -107,7 +107,7 @@
                             Margin="4,8,4,0"
                             HorizontalAlignment="Stretch"
                             Style="{StaticResource BrandGradientButtonBaseStyle}"
-                            Visibility="{x:Bind ViewModel.IsSupportDevelopmentButtonVisible, Mode=OneWay}">
+                            Visibility="{x:Bind ViewModel.SupportDevelopment.IsSupportDevelopmentAvailable, Mode=OneWay}">
                         <Button.Flyout>
                             <Flyout>
                                 <Flyout.FlyoutPresenterStyle>
@@ -117,8 +117,8 @@
                                 </Flyout.FlyoutPresenterStyle>
                                 <components:SupportDevelopmentBlock MaxWidth="320"
                                                                     IsIconVisible="True"
-                                                                    IsStorePaymentProcessor="{x:Bind ViewModel.IsStorePaymentProcessor, Mode=OneWay}"
-                                                                    Price="{x:Bind ViewModel.SupportDevelopmentPrice, Mode=OneWay}"
+                                                                    IsStorePaymentProcessor="{x:Bind ViewModel.SupportDevelopment.IsStorePaymentProcessor, Mode=OneWay}"
+                                                                    Price="{x:Bind ViewModel.SupportDevelopment.SupportDevelopmentPrice, Mode=OneWay}"
                                                                     SupportDevelopmentCommand="{x:Bind ViewModel.SupportDevelopmentCommand}" />
                             </Flyout>
                         </Button.Flyout>
