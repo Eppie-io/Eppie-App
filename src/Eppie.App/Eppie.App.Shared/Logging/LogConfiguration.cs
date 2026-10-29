@@ -50,6 +50,9 @@ namespace Eppie.App.Logging
                          .Enrich.WithSensitiveDataMasking(options =>
                          {
                              options.Mode = MaskingMode.Globally;
+                             options.MaskProperties.Add(MaskProperty.WithDefaults("Folder"));
+                             options.MaskProperties.Add(MaskProperty.WithDefaults("FolderFullName"));
+                             options.MaskProperties.Add(MaskProperty.WithDefaults("Path"));
 #if DEBUG
                              options.MaskingOperators = new List<IMaskingOperator>
                              {
