@@ -17,8 +17,8 @@
 // ---------------------------------------------------------------------------- //
 
 using System;
-using Tuvi.App.ViewModels.Services;
 using Eppie.App.UI.Resources;
+using Tuvi.App.ViewModels.Services;
 using Tuvi.Core.Entities;
 
 #if WINDOWS_UWP
@@ -27,8 +27,7 @@ using Windows.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Data;
 #endif
 
-// ToDo: Change namespace
-namespace Tuvi.App.Converters
+namespace Eppie.App.UI.Converters
 {
     public abstract class ValueToStringConverter<T> : IValueConverter
     {

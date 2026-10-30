@@ -27,8 +27,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Data;
 #endif
 
-// ToDo: Change namespace
-namespace Tuvi.App.Converters
+namespace Eppie.App.UI.Converters
 {
     public class TimeSpanToDoubleConverter : IValueConverter
     {

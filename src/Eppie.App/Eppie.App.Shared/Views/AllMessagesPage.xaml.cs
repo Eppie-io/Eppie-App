@@ -16,7 +16,7 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-using Tuvi.App.IncrementalLoading;
+using Eppie.App.UI.IncrementalLoading;
 using Tuvi.App.ViewModels;
 
 #if WINDOWS_UWP
