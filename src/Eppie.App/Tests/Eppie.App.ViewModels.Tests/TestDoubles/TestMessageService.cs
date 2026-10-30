@@ -16,11 +16,8 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-using System;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using Tuvi.App.ViewModels;
-using Tuvi.App.ViewModels.Services;
+using Eppie.App.ViewModels.Services;
 using Tuvi.Core.Entities;
 
 namespace Eppie.App.ViewModels.Tests.TestDoubles

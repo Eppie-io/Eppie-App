@@ -20,18 +20,16 @@ using System;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-
 using Eppie.App.Helpers;
 using Eppie.App.Logging;
+using Eppie.App.Models;
 using Eppie.App.Services;
+using Eppie.App.ViewModels;
 using Eppie.App.ViewModels.Services;
+using Eppie.App.Views;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Eppie.App.Models;
-using Eppie.App.Views;
-using Tuvi.App.ViewModels;
-using Tuvi.App.ViewModels.Services;
 using Tuvi.Core;
 using Tuvi.Core.Entities;
 using Tuvi.OAuth2;
@@ -359,13 +357,13 @@ namespace Eppie.App
             }
         }
 
-        private static ElementTheme ToElementTheme(Tuvi.App.ViewModels.Services.AppTheme theme)
+        private static ElementTheme ToElementTheme(Eppie.App.ViewModels.Services.AppTheme theme)
         {
             switch (theme)
             {
-                case Tuvi.App.ViewModels.Services.AppTheme.Light:
+                case Eppie.App.ViewModels.Services.AppTheme.Light:
                     return ElementTheme.Light;
-                case Tuvi.App.ViewModels.Services.AppTheme.Dark:
+                case Eppie.App.ViewModels.Services.AppTheme.Dark:
                     return ElementTheme.Dark;
                 default:
                     return ElementTheme.Default;

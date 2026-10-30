@@ -17,7 +17,6 @@
 // ---------------------------------------------------------------------------- //
 
 using System;
-using Eppie.App.UI.Controls;
 using System.Threading.Tasks;
 using Microsoft.Web.WebView2.Core;
 using Windows.System;
@@ -51,14 +50,14 @@ namespace Eppie.App.UI.Controls
 
         public RelayCommand AllowExternalCommand { get; }
 
-        public Tuvi.App.ViewModels.ExternalContentDecider ExternalContentDecider
+        public Eppie.App.ViewModels.ExternalContentDecider ExternalContentDecider
         {
-            get => (Tuvi.App.ViewModels.ExternalContentDecider)GetValue(ExternalContentDeciderProperty);
+            get => (Eppie.App.ViewModels.ExternalContentDecider)GetValue(ExternalContentDeciderProperty);
             set => SetValue(ExternalContentDeciderProperty, value);
         }
 
         public static readonly DependencyProperty ExternalContentDeciderProperty =
-            DependencyProperty.Register(nameof(ExternalContentDecider), typeof(Tuvi.App.ViewModels.ExternalContentDecider), typeof(MessageControl), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(ExternalContentDecider), typeof(Eppie.App.ViewModels.ExternalContentDecider), typeof(MessageControl), new PropertyMetadata(null));
 
         public bool HasHtmlBody
         {

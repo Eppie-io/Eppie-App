@@ -20,7 +20,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using Tuvi.Core.Entities;
 
-namespace Tuvi.App.ViewModels
+namespace Eppie.App.ViewModels
 {
     public class ProtonAddressSettingsPageViewModel : BaseAddressSettingsPageViewModel
     {

@@ -16,7 +16,7 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-namespace Tuvi.App.ViewModels.Messages
+namespace Eppie.App.ViewModels.Messages
 {
     public sealed class MailtoActivationMessage
     {

@@ -18,7 +18,7 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Tuvi.App.ViewModels.Services;
+using Eppie.App.ViewModels.Services;
 using Windows.Storage;
 
 namespace Eppie.App.Services

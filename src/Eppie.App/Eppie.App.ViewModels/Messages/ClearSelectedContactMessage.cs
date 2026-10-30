@@ -18,7 +18,7 @@
 
 using CommunityToolkit.Mvvm.Messaging.Messages;
 
-namespace Tuvi.App.ViewModels.Messages
+namespace Eppie.App.ViewModels.Messages
 {
     public sealed class ClearSelectedContactMessage : ValueChangedMessage<bool>
     {

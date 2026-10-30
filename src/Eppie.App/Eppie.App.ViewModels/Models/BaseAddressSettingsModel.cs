@@ -20,11 +20,11 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Tuvi.App.ViewModels.Validation;
+using Eppie.App.ViewModels.Validation;
 using Tuvi.Core.Entities;
 using TuviPgpLib.Entities;
 
-namespace Tuvi.App.ViewModels
+namespace Eppie.App.ViewModels
 {
     public abstract class BaseAddressSettingsModel : ObservableObject
     {

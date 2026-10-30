@@ -18,7 +18,7 @@
 
 using NUnit.Framework;
 
-namespace Tuvi.App.ViewModels.Tests
+namespace Eppie.App.ViewModels.Tests
 {
     [TestFixture]
     public class ThemeSettingsTests

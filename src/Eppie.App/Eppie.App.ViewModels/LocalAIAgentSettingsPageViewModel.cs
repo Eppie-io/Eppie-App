@@ -25,10 +25,10 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Tuvi.App.ViewModels.Extensions;
+using Eppie.App.ViewModels.Extensions;
 using Tuvi.Core.Entities;
 
-namespace Tuvi.App.ViewModels
+namespace Eppie.App.ViewModels
 {
     public class LocalAIAgentSettings : ObservableObject
     {

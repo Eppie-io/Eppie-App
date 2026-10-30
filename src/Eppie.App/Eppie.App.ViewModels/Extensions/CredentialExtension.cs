@@ -20,7 +20,7 @@ using System.IdentityModel.Tokens.Jwt;
 using Finebits.Authorization.OAuth2.Types;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Tuvi.App.ViewModels.Extensions
+namespace Eppie.App.ViewModels.Extensions
 {
     public static class CredentialExtension
     {

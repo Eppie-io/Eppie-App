@@ -19,7 +19,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Tuvi.App.ViewModels
+namespace Eppie.App.ViewModels
 {
     public class DescOrderByDateMessageComparer : IExtendedComparer<MessageInfo>
     {

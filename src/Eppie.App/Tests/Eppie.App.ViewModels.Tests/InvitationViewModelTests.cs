@@ -21,7 +21,6 @@ using System.ComponentModel;
 
 using Eppie.App.ViewModels.Tests.TestDoubles;
 using NUnit.Framework;
-using Tuvi.App.ViewModels;
 using Tuvi.Core.Entities;
 
 namespace Eppie.App.ViewModels.Tests

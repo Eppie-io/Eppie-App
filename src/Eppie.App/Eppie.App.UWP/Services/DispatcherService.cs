@@ -18,7 +18,7 @@
 
 using System;
 using System.Threading.Tasks;
-using Tuvi.App.ViewModels.Services;
+using Eppie.App.ViewModels.Services;
 using Windows.UI.Core;
 
 namespace Eppie.App.Services

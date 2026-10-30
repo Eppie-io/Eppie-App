@@ -24,7 +24,7 @@ using System.Threading.Tasks;
 using Tuvi.Core.Entities;
 using Tuvi.OAuth2;
 
-namespace Tuvi.App.ViewModels
+namespace Eppie.App.ViewModels
 {
     public class AddressManagerPageViewModel : PageViewModel
     {

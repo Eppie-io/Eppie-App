@@ -20,13 +20,13 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
-using Tuvi.App.ViewModels.Validation;
+using Eppie.App.ViewModels.Validation;
 using Tuvi.Auth.Proton.Exceptions;
 using Tuvi.Core.Entities;
 using Tuvi.Proton;
 using Tuvi.Proton.Primitive.Messages.Errors;
 
-namespace Tuvi.App.ViewModels
+namespace Eppie.App.ViewModels
 {
     public enum ProtonConnectionStep
     {

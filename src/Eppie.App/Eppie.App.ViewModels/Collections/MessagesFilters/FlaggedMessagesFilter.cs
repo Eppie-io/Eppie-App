@@ -16,7 +16,7 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-namespace Tuvi.App.ViewModels
+namespace Eppie.App.ViewModels
 {
     public class FlaggedMessagesFilter : MessageFilter
     {

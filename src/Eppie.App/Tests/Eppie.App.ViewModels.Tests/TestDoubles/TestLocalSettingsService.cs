@@ -16,8 +16,8 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
+using Eppie.App.ViewModels.Services;
 using Microsoft.Extensions.Logging;
-using Tuvi.App.ViewModels.Services;
 using Tuvi.Core.Entities;
 
 namespace Eppie.App.ViewModels.Tests.TestDoubles

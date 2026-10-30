@@ -16,7 +16,7 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-using Tuvi.App.ViewModels.Services;
+using Eppie.App.ViewModels.Services;
 using Tuvi.Core.Entities;
 
 namespace Eppie.App.UI.Converters

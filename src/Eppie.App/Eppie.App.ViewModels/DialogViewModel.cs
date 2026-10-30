@@ -18,7 +18,7 @@
 
 using System;
 
-namespace Tuvi.App.ViewModels
+namespace Eppie.App.ViewModels
 {
     public class DialogViewModel : BaseViewModel
     {

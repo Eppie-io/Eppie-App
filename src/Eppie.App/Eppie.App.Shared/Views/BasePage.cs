@@ -22,7 +22,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Eppie.App.Helpers;
-using Tuvi.App.ViewModels;
+using Eppie.App.ViewModels;
 using Tuvi.Core.Entities;
 
 #if WINDOWS_UWP

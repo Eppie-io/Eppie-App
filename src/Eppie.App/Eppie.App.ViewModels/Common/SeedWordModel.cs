@@ -21,9 +21,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Tuvi.App.ViewModels.Validation;
+using Eppie.App.ViewModels.Validation;
 
-namespace Tuvi.App.ViewModels.Common
+namespace Eppie.App.ViewModels.Common
 {
     public class SeedPhraseModel : List<SeedWordModel>, INotifyPropertyChanged
     {

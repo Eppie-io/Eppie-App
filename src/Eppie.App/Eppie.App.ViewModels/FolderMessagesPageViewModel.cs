@@ -24,7 +24,7 @@ using System.Threading.Tasks;
 using Tuvi.Core;
 using Tuvi.Core.Entities;
 
-namespace Tuvi.App.ViewModels
+namespace Eppie.App.ViewModels
 {
     public class FolderMessagesPageViewModel : MessagesViewModel
     {

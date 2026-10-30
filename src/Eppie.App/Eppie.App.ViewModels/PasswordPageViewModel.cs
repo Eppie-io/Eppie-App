@@ -23,9 +23,9 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Tuvi.App.ViewModels.Validation;
+using Eppie.App.ViewModels.Validation;
 
-namespace Tuvi.App.ViewModels
+namespace Eppie.App.ViewModels
 {
     [Flags]
     public enum PasswordActions

@@ -21,7 +21,7 @@ using CommunityToolkit.Mvvm.Input;
 using NUnit.Framework;
 using Tuvi.Core.Entities;
 
-namespace Tuvi.App.ViewModels.Tests
+namespace Eppie.App.ViewModels.Tests
 {
     public class AddressSettingsApplyTests
     {

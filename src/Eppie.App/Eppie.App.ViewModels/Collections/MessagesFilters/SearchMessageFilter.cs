@@ -19,7 +19,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using Tuvi.Core.Entities;
 
-namespace Tuvi.App.ViewModels
+namespace Eppie.App.ViewModels
 {
     public class SearchMessageFilter : ObservableObject, ISearchFilter<MessageInfo>
     {

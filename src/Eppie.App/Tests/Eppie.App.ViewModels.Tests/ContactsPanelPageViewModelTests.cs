@@ -19,12 +19,11 @@
 using System.Diagnostics;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using Eppie.App.ViewModels.Common;
+using Eppie.App.ViewModels.Messages;
+using Eppie.App.ViewModels.Services;
 using Eppie.App.ViewModels.Tests.TestDoubles;
 using NUnit.Framework;
-using Tuvi.App.ViewModels;
-using Tuvi.App.ViewModels.Common;
-using Tuvi.App.ViewModels.Messages;
-using Tuvi.App.ViewModels.Services;
 using Tuvi.Core.Entities;
 
 namespace Eppie.App.ViewModels.Tests
@@ -46,11 +45,11 @@ namespace Eppie.App.ViewModels.Tests
             }
         }
 
-        private sealed class RecorderErrorHandler : Tuvi.App.ViewModels.Services.IErrorHandler
+        private sealed class RecorderErrorHandler : Eppie.App.ViewModels.Services.IErrorHandler
         {
             public readonly List<Exception> Errors = new();
 
-            public void SetMessageService(Tuvi.App.ViewModels.Services.IMessageService messageService)
+            public void SetMessageService(Eppie.App.ViewModels.Services.IMessageService messageService)
             {
             }
 
@@ -723,7 +722,7 @@ namespace Eppie.App.ViewModels.Tests
             }
         }
 
-        private sealed class ThrowingDispatcherService : Tuvi.App.ViewModels.Services.IDispatcherService
+        private sealed class ThrowingDispatcherService : Eppie.App.ViewModels.Services.IDispatcherService
         {
             private readonly Exception _exception;
 
@@ -739,7 +738,7 @@ namespace Eppie.App.ViewModels.Tests
             }
         }
 
-        private sealed class TestClipboardProvider : Tuvi.App.ViewModels.Services.IClipboardProvider
+        private sealed class TestClipboardProvider : Eppie.App.ViewModels.Services.IClipboardProvider
         {
             public string? LastSetContent { get; private set; }
 

@@ -24,7 +24,7 @@ using System.Linq;
 using System.Windows.Input;
 using CommunityToolkit.WinUI.Controls;
 using Eppie.App.UI.Converters;
-using Tuvi.App.ViewModels;
+using Eppie.App.ViewModels;
 using Tuvi.Core.Entities;
 
 #if WINDOWS_UWP

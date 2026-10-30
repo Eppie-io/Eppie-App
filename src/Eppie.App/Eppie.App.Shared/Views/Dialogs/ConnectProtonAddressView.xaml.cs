@@ -20,9 +20,8 @@ using System;
 using System.Threading.Tasks;
 using Eppie.App.Helpers;
 using Microsoft.Web.WebView2.Core;
-using Tuvi.App.ViewModels;
+using Eppie.App.ViewModels;
 using Tuvi.Core.Entities;
-using Windows.Web.Http;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;

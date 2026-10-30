@@ -18,8 +18,8 @@
 
 using System;
 using System.Threading.Tasks;
+using Eppie.App.ViewModels.Services;
 using Microsoft.Extensions.Logging;
-using Tuvi.App.ViewModels.Services;
 using Tuvi.Core.Logging;
 
 namespace Eppie.App.Services

@@ -20,7 +20,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using Tuvi.App.ViewModels.Services;
+using Eppie.App.ViewModels.Services;
 using Windows.ApplicationModel;
 
 namespace Eppie.App.Models

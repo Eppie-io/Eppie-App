@@ -16,7 +16,6 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 
 #if WINDOWS_UWP

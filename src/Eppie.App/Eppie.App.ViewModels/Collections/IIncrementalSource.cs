@@ -20,7 +20,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Tuvi.App.ViewModels
+namespace Eppie.App.ViewModels
 {
     /// <summary>
     /// This interface represents a data source whose items can be loaded incrementally.

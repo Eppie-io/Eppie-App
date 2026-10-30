@@ -16,10 +16,9 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-using Tuvi.App.ViewModels;
-using System.Windows.Input;
 using System.Diagnostics.CodeAnalysis;
-
+using System.Windows.Input;
+using Eppie.App.ViewModels;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;

@@ -4,7 +4,7 @@
                     xmlns:behaviors="using:Eppie.App.UI.Behaviors"
                     xmlns:controls="using:Eppie.App.UI.Controls"
                     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-                    xmlns:viewmodels="using:Tuvi.App.ViewModels">
+                    xmlns:viewmodels="using:Eppie.App.ViewModels">
 
     <DataTemplate x:Key="SuggestContactItemTemplate" x:DataType="viewmodels:ContactItem">
         <Grid Padding="2" BorderThickness="1">

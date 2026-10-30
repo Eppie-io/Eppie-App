@@ -23,9 +23,9 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.UI.Xaml.Controls;
 using Eppie.App.UI.Extensions;
-using Tuvi.App.ViewModels;
-using Tuvi.App.ViewModels.Messages;
-using Tuvi.App.ViewModels.Services;
+using Eppie.App.ViewModels;
+using Eppie.App.ViewModels.Messages;
+using Eppie.App.ViewModels.Services;
 using Eppie.App.UI.Common;
 
 #if WINDOWS_UWP

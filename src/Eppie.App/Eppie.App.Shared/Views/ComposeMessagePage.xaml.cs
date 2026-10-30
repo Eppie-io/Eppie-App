@@ -17,11 +17,8 @@
 // ---------------------------------------------------------------------------- //
 
 using System;
-using System.Globalization;
 using Eppie.App.Services;
-using Eppie.App.UI.Resources;
-using Tuvi.App.ViewModels;
-using Tuvi.Core.Entities;
+using Eppie.App.ViewModels;
 using Windows.ApplicationModel.DataTransfer;
 
 #if WINDOWS_UWP

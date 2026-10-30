@@ -18,7 +18,7 @@
 
 using System.Threading.Tasks;
 
-namespace Tuvi.App.ViewModels.Services
+namespace Eppie.App.ViewModels.Services
 {
     public interface IClipboardProvider
     {
