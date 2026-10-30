@@ -45,99 +45,12 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        public ICommand SupportDevelopmentCommand => new AsyncRelayCommand(SupportDevelopmentAsync);
         public ICommand OpenAllPgpKeysCommand => new RelayCommand(() => NavigationService?.NavigateToListPgpKeys());
-
-        private bool _isStorePaymentProcessor = true;
-        public bool IsStorePaymentProcessor
-        {
-            get => _isStorePaymentProcessor;
-            private set
-            {
-                _isStorePaymentProcessor = value;
-                OnPropertyChanged(nameof(IsStorePaymentProcessor));
-            }
-        }
-
-        private string _supportDevelopmentPrice;
-        public string SupportDevelopmentPrice
-        {
-            get => _supportDevelopmentPrice;
-            private set
-            {
-                _supportDevelopmentPrice = value;
-                OnPropertyChanged(nameof(SupportDevelopmentPrice));
-            }
-        }
-
-        private bool _isSupportDevelopmentButtonVisible;
-        public bool IsSupportDevelopmentButtonVisible
-        {
-            get => _isSupportDevelopmentButtonVisible;
-            private set
-            {
-                _isSupportDevelopmentButtonVisible = value;
-                OnPropertyChanged(nameof(IsSupportDevelopmentButtonVisible));
-            }
-        }
 
         public bool IsPreviewAvailable { get; }
 
-        private async void UpdateSupportDevelopmentButton()
-        {
-            try
-            {
-                await UpdateSupportDevelopmentButtonAsync().ConfigureAwait(true);
-            }
-            catch (Exception e)
-            {
-                OnError(e);
-            }
-        }
-
-        protected async Task UpdateSupportDevelopmentButtonAsync()
-        {
-            if (string.IsNullOrWhiteSpace(BrandService.GetDevelopmentSupport()))
-            {
-                IsSupportDevelopmentButtonVisible = false;
-                return;
-            }
-
-            try
-            {
-                IsSupportDevelopmentButtonVisible = !await AppStoreService.IsSubscriptionEnabledAsync().ConfigureAwait(true);
-
-                if (IsSupportDevelopmentButtonVisible)
-                {
-                    SupportDevelopmentPrice = await AppStoreService.GetSubscriptionPriceAsync().ConfigureAwait(true);
-                }
-            }
-            catch (NotImplementedException)
-            {
-                IsSupportDevelopmentButtonVisible = true;
-                IsStorePaymentProcessor = false;
-                SupportDevelopmentPrice = "$3";
-            }
-        }
-
-        private async Task SupportDevelopmentAsync()
-        {
-            try
-            {
-                await AppStoreService.BuySubscriptionAsync().ConfigureAwait(true);
-                UpdateSupportDevelopmentButton();
-            }
-            catch
-            {
-                await LauncherService.LaunchAsync(new Uri(BrandService.GetDevelopmentSupport())).ConfigureAwait(true);
-            }
-        }
-
         virtual public void OnNavigatedTo(object data)
         {
-            // ToDo: We shouldn't call this on every page, but for now we will do it here.
-            // We can move it to a more appropriate place later.
-            UpdateSupportDevelopmentButton();
         }
 
         virtual public void OnNavigatedFrom()

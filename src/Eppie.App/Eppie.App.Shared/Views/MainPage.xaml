@@ -38,7 +38,7 @@
                                   LeftPaneCommand="{x:Bind ToggleLeftPaneCommand}"
                                   MailboxesCommand="{x:Bind OpenMailboxesPanelCommand}"
                                   MainPageCommand="{x:Bind ShowAllMessagesCommand}"
-                                  SupportVisibility="{x:Bind ViewModel.IsSupportDevelopmentButtonVisible, Mode=OneWay}">
+                                  SupportVisibility="{x:Bind ViewModel.SupportDevelopment.IsAvailable, Mode=OneWay}">
             <components:NavigationBar.WhatsNewFlyout>
                 <Flyout x:Name="WhatsNewFlyout">
                     <Flyout.FlyoutPresenterStyle>
@@ -48,9 +48,9 @@
                         </Style>
                     </Flyout.FlyoutPresenterStyle>
                     <components:WhatsNewContent CloseRequested="OnWhatsNewClose"
-                                                IsStorePaymentProcessor="{x:Bind ViewModel.IsStorePaymentProcessor, Mode=OneWay}"
-                                                IsSupportDevelopmentButtonVisible="{x:Bind ViewModel.IsSupportDevelopmentButtonVisible, Mode=OneWay}"
-                                                Price="{x:Bind ViewModel.SupportDevelopmentPrice, Mode=OneWay}"
+                                                IsStorePaymentProcessor="{x:Bind ViewModel.SupportDevelopment.IsStorePaymentProcessor, Mode=OneWay}"
+                                                IsSupportDevelopmentButtonVisible="{x:Bind ViewModel.SupportDevelopment.IsAvailable, Mode=OneWay}"
+                                                Price="{x:Bind ViewModel.SupportDevelopment.Price, Mode=OneWay}"
                                                 SupportDevelopmentCommand="{x:Bind ViewModel.SupportDevelopmentCommand}"
                                                 TwitterUrl="{x:Bind ViewModel.TwitterPostLink, Mode=OneTime}"
                                                 Version="{Binding Source={StaticResource Brand}, Path=AppVersion}" />
@@ -65,8 +65,8 @@
                     </Flyout.FlyoutPresenterStyle>
                     <components:SupportDevelopmentBlock MaxWidth="320"
                                                         IsIconVisible="True"
-                                                        IsStorePaymentProcessor="{x:Bind ViewModel.IsStorePaymentProcessor, Mode=OneWay}"
-                                                        Price="{x:Bind ViewModel.SupportDevelopmentPrice, Mode=OneWay}"
+                                                        IsStorePaymentProcessor="{x:Bind ViewModel.SupportDevelopment.IsStorePaymentProcessor, Mode=OneWay}"
+                                                        Price="{x:Bind ViewModel.SupportDevelopment.Price, Mode=OneWay}"
                                                         SupportDevelopmentCommand="{x:Bind ViewModel.SupportDevelopmentCommand}" />
                 </Flyout>
             </components:NavigationBar.SupportFlyout>
