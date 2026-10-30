@@ -8,7 +8,7 @@
              xmlns:local="using:Eppie.App.UI.Components"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:toolkit="using:CommunityToolkit.WinUI"
-             xmlns:viewmodels="using:Tuvi.App.ViewModels"
+             xmlns:viewmodels="using:Eppie.App.ViewModels"
              d:DesignHeight="300"
              d:DesignWidth="400"
              mc:Ignorable="d">

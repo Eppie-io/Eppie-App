@@ -17,14 +17,13 @@
 // ---------------------------------------------------------------------------- //
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Eppie.App.Helpers;
 using Eppie.App.UI.IncrementalLoading;
 using Eppie.App.UI.Tools;
-using Tuvi.App.ViewModels;
+using Eppie.App.ViewModels;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml.Navigation;

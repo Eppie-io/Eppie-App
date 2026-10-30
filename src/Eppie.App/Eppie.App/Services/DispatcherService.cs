@@ -16,8 +16,8 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
+using Eppie.App.ViewModels.Services;
 using Microsoft.UI.Dispatching;
-using Tuvi.App.ViewModels.Services;
 
 namespace Eppie.App.Services
 {

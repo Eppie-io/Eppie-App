@@ -20,7 +20,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace Tuvi.App.ViewModels
+namespace Eppie.App.ViewModels
 {
     public enum AddressGroupType
     {

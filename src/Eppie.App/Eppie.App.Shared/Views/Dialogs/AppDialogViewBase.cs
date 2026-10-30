@@ -20,7 +20,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Eppie.App.Helpers;
 using Eppie.App.UI.Controls;
-using Tuvi.App.ViewModels;
+using Eppie.App.ViewModels;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;

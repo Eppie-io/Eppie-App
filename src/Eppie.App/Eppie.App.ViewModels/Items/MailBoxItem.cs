@@ -19,9 +19,8 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Tuvi.Core;
-using Tuvi.Core.Entities;
 
-namespace Tuvi.App.ViewModels
+namespace Eppie.App.ViewModels
 {
     public class MailBoxItem : ObservableObject
     {

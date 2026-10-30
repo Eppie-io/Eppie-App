@@ -17,10 +17,10 @@
 // ---------------------------------------------------------------------------- //
 
 using System.Collections;
-using System.Windows.Input;
-using Tuvi.App.ViewModels;
-using Eppie.App.UI.Resources;
 using System.Diagnostics.CodeAnalysis;
+using System.Windows.Input;
+using Eppie.App.UI.Resources;
+using Eppie.App.ViewModels;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
@@ -118,14 +118,14 @@ namespace Eppie.App.UI.Controls
         public static readonly DependencyProperty CopyContactAddressCommandProperty =
             DependencyProperty.Register(nameof(CopyContactAddressCommand), typeof(ICommand), typeof(ContactsListControl), new PropertyMetadata(null));
 
-        public Tuvi.App.ViewModels.Services.IClipboardProvider ClipboardProvider
+        public Eppie.App.ViewModels.Services.IClipboardProvider ClipboardProvider
         {
-            get { return (Tuvi.App.ViewModels.Services.IClipboardProvider)GetValue(ClipboardProviderProperty); }
+            get { return (Eppie.App.ViewModels.Services.IClipboardProvider)GetValue(ClipboardProviderProperty); }
             set { SetValue(ClipboardProviderProperty, value); }
         }
 
         public static readonly DependencyProperty ClipboardProviderProperty =
-            DependencyProperty.Register(nameof(ClipboardProvider), typeof(Tuvi.App.ViewModels.Services.IClipboardProvider), typeof(ContactsListControl), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(ClipboardProvider), typeof(Eppie.App.ViewModels.Services.IClipboardProvider), typeof(ContactsListControl), new PropertyMetadata(null));
 
         public ContactsListControl()
         {

@@ -25,12 +25,12 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using EmailValidation;
-using Tuvi.App.ViewModels.Common;
-using Tuvi.App.ViewModels.Extensions;
-using Tuvi.App.ViewModels.Services;
+using Eppie.App.ViewModels.Common;
+using Eppie.App.ViewModels.Extensions;
+using Eppie.App.ViewModels.Services;
 using Tuvi.Core.Entities;
 
-namespace Tuvi.App.ViewModels
+namespace Eppie.App.ViewModels
 {
     public class RemovableAttachment : DownloadableAttachment
     {
@@ -152,7 +152,7 @@ namespace Tuvi.App.ViewModels
             // If the sender is a Decentralized or Hybrid account, then the message encrypted and signed automatically
             IsSigned = IsEncrypted = Account.Email.IsDecentralized;
             IsChangeCryptographyEnabled = !Account.Email.IsDecentralized;
-            IsAdvancedSettingsVisible = !Proton.Extensions.IsProton(Account.Email) && !Account.Email.IsDecentralized;
+            IsAdvancedSettingsVisible = !Tuvi.Proton.Extensions.IsProton(Account.Email) && !Account.Email.IsDecentralized;
 
             UpdateMessageFooter();
 

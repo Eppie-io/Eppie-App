@@ -6,7 +6,7 @@
                            xmlns:extensions="using:Eppie.App.UI.Extensions"
                            xmlns:local="using:Eppie.App.Views"
                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                           xmlns:viewmodels="using:Tuvi.App.ViewModels"
+                           xmlns:viewmodels="using:Eppie.App.ViewModels"
                            Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
                            NavigationCacheMode="Enabled"
                            mc:Ignorable="d">

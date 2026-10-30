@@ -5,7 +5,7 @@
                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                      xmlns:local="using:Eppie.App.Views"
                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                     xmlns:viewmodels="using:Tuvi.App.ViewModels"
+                     xmlns:viewmodels="using:Eppie.App.ViewModels"
                      xmlns:xamarin="http://uno.ui/xamarin"
                      MaxWidth="480"
                      HorizontalAlignment="Left"

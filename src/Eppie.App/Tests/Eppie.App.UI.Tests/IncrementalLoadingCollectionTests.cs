@@ -18,8 +18,8 @@
 
 using System.ComponentModel;
 using Eppie.App.UI.IncrementalLoading;
+using Eppie.App.ViewModels;
 using NUnit.Framework;
-using Tuvi.App.ViewModels;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml.Data;

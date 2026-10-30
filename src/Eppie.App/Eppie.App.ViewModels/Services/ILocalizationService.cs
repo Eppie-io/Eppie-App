@@ -18,7 +18,7 @@
 
 using System.Collections.Generic;
 
-namespace Tuvi.App.ViewModels.Services
+namespace Eppie.App.ViewModels.Services
 {
     public interface ILocalizationService
     {

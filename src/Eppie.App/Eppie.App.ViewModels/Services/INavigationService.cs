@@ -16,12 +16,12 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-using Tuvi.App.ViewModels.Common;
+using Eppie.App.ViewModels.Common;
 using Tuvi.Core.Entities;
 using Tuvi.OAuth2;
 using TuviPgpLib.Entities;
 
-namespace Tuvi.App.ViewModels.Services
+namespace Eppie.App.ViewModels.Services
 {
     public interface INavigationService
     {

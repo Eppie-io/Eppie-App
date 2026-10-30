@@ -23,10 +23,10 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
-using Tuvi.App.ViewModels.Common;
+using Eppie.App.ViewModels.Common;
 using Tuvi.Core.Entities;
 
-namespace Tuvi.App.ViewModels
+namespace Eppie.App.ViewModels
 {
     public class CreateEppieAddressItem
     { }
@@ -339,7 +339,7 @@ namespace Tuvi.App.ViewModels
             TryCloseDialog();
         }
 
-        private static async Task SendEmailsAsync(Core.ITuviMail core, InviteMessageContext context, Action<Exception> onError)
+        private static async Task SendEmailsAsync(Tuvi.Core.ITuviMail core, InviteMessageContext context, Action<Exception> onError)
         {
             try
             {

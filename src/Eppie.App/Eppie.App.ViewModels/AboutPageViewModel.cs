@@ -21,7 +21,7 @@ using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using Eppie.App.ViewModels.Models;
 
-namespace Tuvi.App.ViewModels
+namespace Eppie.App.ViewModels
 {
     public class AboutPageViewModel : PageViewModel
     {

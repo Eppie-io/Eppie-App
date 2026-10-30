@@ -27,14 +27,14 @@ using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using Eppie.App.ViewModels.Common;
+using Eppie.App.ViewModels.Messages;
 using Eppie.App.ViewModels.Models;
+using Eppie.App.ViewModels.Services;
 using Microsoft.Extensions.Logging;
-using Tuvi.App.ViewModels.Common;
-using Tuvi.App.ViewModels.Messages;
-using Tuvi.App.ViewModels.Services;
 using Tuvi.Core.Entities;
 
-namespace Tuvi.App.ViewModels
+namespace Eppie.App.ViewModels
 {
     using AttachmentsCollection = List<Attachment>;
 

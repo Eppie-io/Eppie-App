@@ -21,10 +21,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using EmailValidation;
-using Tuvi.App.ViewModels.Services;
+using Eppie.App.ViewModels.Services;
 using Tuvi.Core.Entities;
 
-namespace Tuvi.App.ViewModels
+namespace Eppie.App.ViewModels
 {
     public class DecentralizedAddressSettingsModel : BaseAddressSettingsModel
     {

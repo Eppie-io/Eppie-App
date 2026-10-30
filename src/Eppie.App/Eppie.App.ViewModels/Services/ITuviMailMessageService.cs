@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Tuvi.Core.Entities;
 
-namespace Tuvi.App.ViewModels.Services
+namespace Eppie.App.ViewModels.Services
 {
     public interface ITuviMailMessageService : IMessageService
     {

@@ -17,7 +17,6 @@
 // ---------------------------------------------------------------------------- //
 
 using System.ComponentModel;
-using Tuvi.App.ViewModels;
 
 namespace Eppie.App.ViewModels.Tests.ManagedCollectionTests
 {

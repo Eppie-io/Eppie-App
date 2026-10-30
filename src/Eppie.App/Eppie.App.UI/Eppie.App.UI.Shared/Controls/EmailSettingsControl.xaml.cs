@@ -17,11 +17,10 @@
 // ---------------------------------------------------------------------------- //
 
 using System;
-using Tuvi.App.ViewModels;
-using Tuvi.App.ViewModels.Services;
-using System.Windows.Input;
 using System.Diagnostics.CodeAnalysis;
-
+using System.Windows.Input;
+using Eppie.App.ViewModels;
+using Eppie.App.ViewModels.Services;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;

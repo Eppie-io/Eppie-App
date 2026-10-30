@@ -16,9 +16,8 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-using Tuvi.App.ViewModels.Validation;
 using System.Diagnostics.CodeAnalysis;
-
+using Eppie.App.ViewModels.Validation;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;

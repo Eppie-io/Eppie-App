@@ -8,7 +8,7 @@
              xmlns:local="using:Eppie.App.UI.Controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:shared="using:Eppie.App"
-             xmlns:viewmodels="using:Tuvi.App.ViewModels"
+             xmlns:viewmodels="using:Eppie.App.ViewModels"
              xmlns:views="using:Eppie.App.Views"
              xmlns:winui="using:Microsoft.UI.Xaml.Controls"
              xmlns:xamarin="http://uno.ui/xamarin"

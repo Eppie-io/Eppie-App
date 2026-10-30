@@ -21,7 +21,7 @@ using System.ComponentModel;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace Tuvi.App.ViewModels.Validation
+namespace Eppie.App.ViewModels.Validation
 {
     public interface IValidatableProperty : INotifyPropertyChanged
     {

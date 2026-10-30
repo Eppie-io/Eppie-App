@@ -19,7 +19,7 @@
 using System;
 using Tuvi.Core.Entities;
 
-namespace Tuvi.App.ViewModels
+namespace Eppie.App.ViewModels
 {
     /// <summary>
     /// Immutable decision value for external content processing.

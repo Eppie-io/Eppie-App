@@ -16,10 +16,10 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-using Tuvi.App.ViewModels.Validation;
+using Eppie.App.ViewModels.Validation;
 using Tuvi.Core.Entities;
 
-namespace Tuvi.App.ViewModels
+namespace Eppie.App.ViewModels
 {
     public class EmailAddressSettingsModel : BaseAddressSettingsModel
     {

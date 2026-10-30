@@ -17,7 +17,6 @@
 // ---------------------------------------------------------------------------- //
 
 using NUnit.Framework;
-using Tuvi.App.ViewModels;
 
 namespace Eppie.App.ViewModels.Tests.ManagedCollectionTestSuite
 {

@@ -23,7 +23,7 @@ using Windows.Globalization;
 
 namespace Eppie.App.Services
 {
-    public class LocalizationService : Tuvi.App.ViewModels.Services.ILocalizationService
+    public class LocalizationService : Eppie.App.ViewModels.Services.ILocalizationService
     {
         public IReadOnlyList<string> ManifestLanguages => GetManifestLanguages();
 

@@ -23,7 +23,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Tuvi.App.ViewModels;
+using Eppie.App.ViewModels;
 using Windows.Foundation;
 
 #if WINDOWS_UWP

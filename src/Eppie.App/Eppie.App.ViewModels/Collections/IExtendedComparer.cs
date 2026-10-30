@@ -18,7 +18,7 @@
 
 using System.Collections.Generic;
 
-namespace Tuvi.App.ViewModels
+namespace Eppie.App.ViewModels
 {
     public interface IExtendedComparer<T> : IComparer<T>, IEqualityComparer<T>
     {

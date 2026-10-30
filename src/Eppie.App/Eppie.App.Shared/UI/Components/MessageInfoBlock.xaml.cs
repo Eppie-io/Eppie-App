@@ -16,7 +16,6 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using Eppie.App.UI.Resources;
 using Tuvi.Core.Entities;

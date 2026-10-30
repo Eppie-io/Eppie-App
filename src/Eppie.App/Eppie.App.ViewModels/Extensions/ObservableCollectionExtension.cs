@@ -20,7 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace Tuvi.App.ViewModels.Extensions
+namespace Eppie.App.ViewModels.Extensions
 {
     public static class ObservableCollectionExtension
     {

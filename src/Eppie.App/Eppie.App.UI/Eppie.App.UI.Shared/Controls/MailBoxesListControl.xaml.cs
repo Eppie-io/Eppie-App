@@ -16,12 +16,11 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-using Tuvi.App.ViewModels;
-using Windows.ApplicationModel.DataTransfer;
-using Windows.Foundation;
 using System.Diagnostics.CodeAnalysis;
 using Eppie.App.UI.Resources;
-
+using Eppie.App.ViewModels;
+using Windows.ApplicationModel.DataTransfer;
+using Windows.Foundation;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
