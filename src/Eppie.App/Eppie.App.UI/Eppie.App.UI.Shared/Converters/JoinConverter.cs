@@ -24,8 +24,7 @@ using Windows.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Data;
 #endif
 
-// ToDo: Change namespace
-namespace Tuvi.App.Converters
+namespace Eppie.App.UI.Converters
 {
     public class JoinConverter<TObject, TParam> : IValueConverter
     {

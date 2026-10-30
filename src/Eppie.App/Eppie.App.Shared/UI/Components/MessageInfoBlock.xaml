@@ -10,7 +10,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
              xmlns:toolkit="using:CommunityToolkit.WinUI"
-             xmlns:tuvi_converters="using:Tuvi.App.Converters"
              d:DesignHeight="300"
              d:DesignWidth="400"
              mc:Ignorable="d">
@@ -46,13 +45,13 @@
             <Setter Property="BorderBrush" Value="{ThemeResource AvatarHighlightedBrush}" />
         </Style>
 
-        <tuvi_converters:BoolToStyleConverter x:Key="BoolToAvatarStyleConverter"
-                                              FalseValue="{StaticResource DefaultPersonPictureStyle}"
-                                              TrueValue="{StaticResource AvatarHighlightedStyle}" />
+        <converters:BoolToStyleConverter x:Key="BoolToAvatarStyleConverter"
+                                         FalseValue="{StaticResource DefaultPersonPictureStyle}"
+                                         TrueValue="{StaticResource AvatarHighlightedStyle}" />
 
-        <tuvi_converters:BoolToStyleConverter x:Key="SecureStyleConverter"
-                                              FalseValue="{StaticResource TertiaryFontIconStyle}"
-                                              TrueValue="{StaticResource DefaultFontIconStyle}" />
+        <converters:BoolToStyleConverter x:Key="SecureStyleConverter"
+                                         FalseValue="{StaticResource TertiaryFontIconStyle}"
+                                         TrueValue="{StaticResource DefaultFontIconStyle}" />
 
         <converters:RecipientConverter x:Key="RecipientConverter" />
         <converters:ListRecipientsConverter x:Key="ListRecipientsConverter" />

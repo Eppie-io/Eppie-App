@@ -29,8 +29,7 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Markup;
 #endif
 
-// ToDo: Change namespace
-namespace Tuvi.App.Converters
+namespace Eppie.App.UI.Converters
 {
     [ContentProperty(Name = "Converters")]
     public class ConverterChain : IValueConverter

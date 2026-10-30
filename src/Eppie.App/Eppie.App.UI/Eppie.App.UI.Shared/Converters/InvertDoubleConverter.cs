@@ -24,8 +24,7 @@ using Windows.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Data;
 #endif
 
-// ToDo: Change namespace
-namespace Tuvi.App.Converters
+namespace Eppie.App.UI.Converters
 {
     public sealed partial class InvertDoubleConverter : IValueConverter
     {

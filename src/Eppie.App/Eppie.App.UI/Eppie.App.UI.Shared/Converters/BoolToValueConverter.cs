@@ -33,8 +33,7 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Media;
 #endif
 
-// ToDo: Change namespace
-namespace Tuvi.App.Converters
+namespace Eppie.App.UI.Converters
 {
     public class BoolToValueConverter<T> : IValueConverter
     {

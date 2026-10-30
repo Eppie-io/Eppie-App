@@ -16,7 +16,6 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-using Tuvi.App.Converters;
 using Tuvi.App.ViewModels.Services;
 using Tuvi.Core.Entities;
 
