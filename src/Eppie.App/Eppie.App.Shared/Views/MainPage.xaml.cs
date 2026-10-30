@@ -21,10 +21,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using Eppie.App.ViewModels;
+using Eppie.App.ViewModels.Messages;
+using Eppie.App.ViewModels.Services;
 using Eppie.App.UI.Common;
-using Tuvi.App.ViewModels;
-using Tuvi.App.ViewModels.Messages;
-using Tuvi.App.ViewModels.Services;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml.Navigation;

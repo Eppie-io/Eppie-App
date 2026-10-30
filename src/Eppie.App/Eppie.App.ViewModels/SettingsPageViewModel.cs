@@ -24,10 +24,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
+using Eppie.App.ViewModels.Services;
 using Microsoft.Extensions.Logging;
-using Tuvi.App.ViewModels.Services;
 
-namespace Tuvi.App.ViewModels
+namespace Eppie.App.ViewModels
 {
     public class SettingsPageViewModel : PageViewModel
     {

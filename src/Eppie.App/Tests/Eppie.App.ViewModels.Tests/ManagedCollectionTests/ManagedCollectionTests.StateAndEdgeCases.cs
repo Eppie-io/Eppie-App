@@ -19,7 +19,6 @@
 using System.Collections.Specialized;
 using System.ComponentModel;
 using NUnit.Framework;
-using Tuvi.App.ViewModels;
 using static Eppie.App.ViewModels.Tests.ManagedCollectionTests.ManagedCollectionTestHelpers;
 
 namespace Eppie.App.ViewModels.Tests.ManagedCollectionTestSuite

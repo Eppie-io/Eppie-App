@@ -5,7 +5,7 @@
                               xmlns:local="using:Eppie.App.Views"
                               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                               xmlns:sharedControls="using:Eppie.App.UI.Controls"
-                              xmlns:viewmodels="using:Tuvi.App.ViewModels"
+                              xmlns:viewmodels="using:Eppie.App.ViewModels"
                               mc:Ignorable="d">
 
     <local:MailboxesPanelPageBase.DataContext>

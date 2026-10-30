@@ -17,7 +17,6 @@
 // ---------------------------------------------------------------------------- //
 
 using NUnit.Framework;
-using Tuvi.App.ViewModels;
 using Tuvi.Core.Entities;
 
 namespace Eppie.App.ViewModels.Tests

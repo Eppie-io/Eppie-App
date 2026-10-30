@@ -18,8 +18,8 @@
 
 using System;
 using CommunityToolkit.Mvvm.Messaging;
-using Tuvi.App.ViewModels.Messages;
-using Tuvi.App.ViewModels.Services;
+using Eppie.App.ViewModels.Messages;
+using Eppie.App.ViewModels.Services;
 
 namespace Eppie.App.Services
 {

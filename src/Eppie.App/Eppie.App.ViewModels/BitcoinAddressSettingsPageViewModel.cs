@@ -21,10 +21,10 @@ using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
-using Tuvi.App.ViewModels.Services;
+using Eppie.App.ViewModels.Services;
 using Tuvi.Core.Entities;
 
-namespace Tuvi.App.ViewModels
+namespace Eppie.App.ViewModels
 {
     public class BitcoinAddressSettingsPageViewModel : DecentralizedAddressSettingsPageViewModel
     {

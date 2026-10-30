@@ -20,7 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Tuvi.App.ViewModels.Helpers
+namespace Eppie.App.ViewModels.Helpers
 {
     /// <summary>
     /// Parses mailto: URIs according to RFC 6068.

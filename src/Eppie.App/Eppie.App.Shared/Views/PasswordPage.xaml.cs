@@ -16,7 +16,7 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-using Tuvi.App.ViewModels;
+using Eppie.App.ViewModels;
 
 namespace Eppie.App.Views
 {

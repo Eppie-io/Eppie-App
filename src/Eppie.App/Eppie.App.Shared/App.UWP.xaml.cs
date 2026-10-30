@@ -20,9 +20,9 @@
 
 using System;
 using Eppie.App.Authorization;
+using Eppie.App.ViewModels;
 using Eppie.App.Views;
 using Microsoft.Services.Store.Engagement;
-using Tuvi.App.ViewModels;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -169,7 +169,7 @@ namespace Eppie.App
             {
                 ProtocolAuthenticationBroker.CompleteAuthentication(args.Uri);
             }
-            else if (string.Equals(args.Uri.Scheme, Tuvi.App.ViewModels.Helpers.MailtoUriParser.MailtoScheme, StringComparison.OrdinalIgnoreCase))
+            else if (string.Equals(args.Uri.Scheme, Eppie.App.ViewModels.Helpers.MailtoUriParser.MailtoScheme, StringComparison.OrdinalIgnoreCase))
             {
                 PendingMailtoService?.SetPendingMailtoUri(args.Uri);
             }

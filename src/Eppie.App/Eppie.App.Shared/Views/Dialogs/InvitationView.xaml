@@ -10,7 +10,7 @@
                           xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
                           xmlns:toolkit="using:CommunityToolkit.WinUI"
                           xmlns:toolkitcontrols="using:CommunityToolkit.WinUI.Controls"
-                          xmlns:viewmodels="using:Tuvi.App.ViewModels"
+                          xmlns:viewmodels="using:Eppie.App.ViewModels"
                           d:DesignHeight="300"
                           d:DesignWidth="400"
                           mc:Ignorable="d">

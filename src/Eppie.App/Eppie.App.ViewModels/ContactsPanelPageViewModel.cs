@@ -25,11 +25,11 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using Tuvi.App.ViewModels.Common;
-using Tuvi.App.ViewModels.Messages;
+using Eppie.App.ViewModels.Common;
+using Eppie.App.ViewModels.Messages;
 using Tuvi.Core.Entities;
 
-namespace Tuvi.App.ViewModels
+namespace Eppie.App.ViewModels
 {
     public class ContactsPanelPageViewModel : PageViewModel, IControlModel, IIncrementalSource<ContactItem>, IDisposable
     {

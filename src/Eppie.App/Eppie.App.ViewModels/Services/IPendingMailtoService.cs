@@ -18,7 +18,7 @@
 
 using System;
 
-namespace Tuvi.App.ViewModels.Services
+namespace Eppie.App.ViewModels.Services
 {
     public interface IPendingMailtoService
     {

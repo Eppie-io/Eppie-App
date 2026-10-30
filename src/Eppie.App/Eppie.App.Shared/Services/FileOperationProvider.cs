@@ -23,7 +23,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Eppie.App.Common;
 using Eppie.App.UI.Tools;
-using Tuvi.App.ViewModels.Services;
+using Eppie.App.ViewModels.Services;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.System;

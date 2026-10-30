@@ -17,10 +17,7 @@
 // ---------------------------------------------------------------------------- //
 
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 using System.Windows.Input;
-using Eppie.App.UI.Resources;
-using Tuvi.Core.Entities;
 
 
 #if WINDOWS_UWP

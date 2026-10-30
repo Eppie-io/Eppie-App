@@ -23,7 +23,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Tuvi.Core.Entities;
 
-namespace Tuvi.App.ViewModels
+namespace Eppie.App.ViewModels
 {
     public class ContactMessagesPageViewModel : MessagesViewModel
     {

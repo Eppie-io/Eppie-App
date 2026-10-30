@@ -22,13 +22,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Eppie.App.ViewModels.Services;
-using Tuvi.App.ViewModels.Services;
 using Tuvi.Core.Entities;
 using Tuvi.Core.Web.BackupService.Client;
 using Tuvi.OAuth2;
 using Tuvi.Proton;
 
-namespace Tuvi.App.ViewModels
+namespace Eppie.App.ViewModels
 {
     public class BaseViewModel : ObservableValidator
     {

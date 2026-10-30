@@ -20,10 +20,10 @@ using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
-using Tuvi.App.ViewModels.Common;
-using Tuvi.App.ViewModels.Services;
+using Eppie.App.ViewModels.Common;
+using Eppie.App.ViewModels.Services;
 
-namespace Tuvi.App.ViewModels
+namespace Eppie.App.ViewModels
 {
     public class SeedGeneratePageViewModel : PageViewModel
     {

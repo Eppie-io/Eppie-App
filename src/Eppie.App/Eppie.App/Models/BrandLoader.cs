@@ -18,7 +18,7 @@
 
 using System.Diagnostics;
 using System.Reflection;
-using Tuvi.App.ViewModels.Services;
+using Eppie.App.ViewModels.Services;
 
 namespace Eppie.App.Models
 {

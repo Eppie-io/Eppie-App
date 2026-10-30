@@ -20,7 +20,7 @@ using System;
 using Microsoft.Extensions.Logging;
 using Tuvi.Core.Entities;
 
-namespace Tuvi.App.ViewModels.Services
+namespace Eppie.App.ViewModels.Services
 {
     /// <summary>
     /// Application theme options

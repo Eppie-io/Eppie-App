@@ -18,7 +18,7 @@
 
 using System;
 using Eppie.App.UI.Resources;
-using Tuvi.App.ViewModels.Services;
+using Eppie.App.ViewModels.Services;
 using Tuvi.Core.Entities;
 
 #if WINDOWS_UWP

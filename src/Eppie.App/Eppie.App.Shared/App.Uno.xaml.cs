@@ -18,9 +18,9 @@
 
 #if !WINDOWS_UWP
 
+using Eppie.App.ViewModels;
 using Eppie.App.Views;
 using Microsoft.UI.Windowing;
-using Tuvi.App.ViewModels;
 using Windows.Foundation;
 using Windows.Graphics;
 using Windows.UI.ViewManagement;
@@ -81,7 +81,7 @@ namespace Eppie.App
                 }
 
                 if (Uri.TryCreate(arguments, UriKind.Absolute, out var uri) &&
-                    string.Equals(uri.Scheme, Tuvi.App.ViewModels.Helpers.MailtoUriParser.MailtoScheme, StringComparison.OrdinalIgnoreCase))
+                    string.Equals(uri.Scheme, Eppie.App.ViewModels.Helpers.MailtoUriParser.MailtoScheme, StringComparison.OrdinalIgnoreCase))
                 {
                     PendingMailtoService?.SetPendingMailtoUri(uri);
                 }

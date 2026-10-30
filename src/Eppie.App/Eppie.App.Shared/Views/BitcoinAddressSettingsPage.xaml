@@ -10,7 +10,7 @@
                                       xmlns:local="using:Eppie.App.Views"
                                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                                       xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-                                      xmlns:viewmodels="using:Tuvi.App.ViewModels"
+                                      xmlns:viewmodels="using:Eppie.App.ViewModels"
                                       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
                                       mc:Ignorable="d">
 

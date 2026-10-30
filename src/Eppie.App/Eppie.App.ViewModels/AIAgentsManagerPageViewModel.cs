@@ -24,7 +24,7 @@ using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using Tuvi.Core.Entities;
 
-namespace Tuvi.App.ViewModels
+namespace Eppie.App.ViewModels
 {
     public class AIAgentsManagerPageViewModel : PageViewModel
     {

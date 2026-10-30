@@ -21,9 +21,9 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using Eppie.App.Helpers;
 using Eppie.App.Logging;
+using Eppie.App.ViewModels;
+using Eppie.App.ViewModels.Services;
 using Microsoft.Extensions.Logging;
-using Tuvi.App.ViewModels;
-using Tuvi.App.ViewModels.Services;
 using Tuvi.Core.Entities;
 using Windows.Storage;
 
@@ -58,11 +58,11 @@ namespace Eppie.App.Services
         /// <summary>
         /// Property to store the UI theme
         /// </summary>
-        public Tuvi.App.ViewModels.Services.AppTheme Theme
+        public Eppie.App.ViewModels.Services.AppTheme Theme
         {
             get
             {
-                return GetEnumOption(Tuvi.App.ViewModels.Services.AppTheme.Default);
+                return GetEnumOption(Eppie.App.ViewModels.Services.AppTheme.Default);
             }
             set
             {

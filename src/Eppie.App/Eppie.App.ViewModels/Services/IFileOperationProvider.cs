@@ -19,7 +19,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Tuvi.App.ViewModels.Services
+namespace Eppie.App.ViewModels.Services
 {
     public class AttachedFileInfo
     {

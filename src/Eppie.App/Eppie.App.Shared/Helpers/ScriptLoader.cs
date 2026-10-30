@@ -16,8 +16,6 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-using System;
-
 namespace Eppie.App.Helpers
 {
     public class ScriptLoader

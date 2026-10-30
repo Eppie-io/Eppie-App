@@ -18,12 +18,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Windows.Input;
-using Tuvi.App.ViewModels;
-using Windows.ApplicationModel.DataTransfer;
 using System.Diagnostics.CodeAnalysis;
-
-
+using System.Windows.Input;
+using Eppie.App.ViewModels;
+using Windows.ApplicationModel.DataTransfer;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml;

@@ -25,7 +25,7 @@ using EmailValidation;
 using Tuvi.Core.Entities;
 using Tuvi.Core.Utils;
 
-namespace Tuvi.App.ViewModels.Common
+namespace Eppie.App.ViewModels.Common
 {
     using AttachmentsCollection = List<Attachment>;
 

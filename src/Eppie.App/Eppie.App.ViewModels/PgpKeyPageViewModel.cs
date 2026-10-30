@@ -22,12 +22,12 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
-using Tuvi.App.ViewModels.Common;
-using Tuvi.App.ViewModels.Services;
+using Eppie.App.ViewModels.Common;
+using Eppie.App.ViewModels.Services;
 using Tuvi.Core.Entities;
 using TuviPgpLib.Entities;
 
-namespace Tuvi.App.ViewModels
+namespace Eppie.App.ViewModels
 {
     public class PgpKeyPageViewModel : PageViewModel
     {

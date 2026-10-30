@@ -18,9 +18,9 @@
 
 using System;
 using Eppie.App.Views;
-using Tuvi.App.ViewModels;
-using Tuvi.App.ViewModels.Common;
-using Tuvi.App.ViewModels.Services;
+using Eppie.App.ViewModels;
+using Eppie.App.ViewModels.Common;
+using Eppie.App.ViewModels.Services;
 using Tuvi.Core.Entities;
 using Tuvi.OAuth2;
 using TuviPgpLib.Entities;

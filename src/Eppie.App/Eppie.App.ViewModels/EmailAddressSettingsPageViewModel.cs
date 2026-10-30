@@ -20,13 +20,12 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
+using Eppie.App.ViewModels.Extensions;
 using Finebits.Authorization.OAuth2.Abstractions;
 using Finebits.Authorization.OAuth2.Types;
-using Tuvi.App.ViewModels.Extensions;
 using Tuvi.Core.Entities;
-using Tuvi.OAuth2;
 
-namespace Tuvi.App.ViewModels
+namespace Eppie.App.ViewModels
 {
     public class EmailAddressSettingsPageViewModel : BaseAddressSettingsPageViewModel
     {
@@ -107,9 +106,9 @@ namespace Tuvi.App.ViewModels
                 {
                     await InitModelAsync(EmailAddressSettingsModel.Create(accountData), false).ConfigureAwait(true);
                 }
-                else if (data is OAuth2.MailService mailService && mailService != OAuth2.MailService.Unknown)
+                else if (data is Tuvi.OAuth2.MailService mailService && mailService != Tuvi.OAuth2.MailService.Unknown)
                 {
-                    await InitModelAsync(new OAuth2EmailAddressSettingsModel(DefaultAccountConfig.CreateDefaultOAuth2Account(mailService)), true).ConfigureAwait(true);
+                    await InitModelAsync(new OAuth2EmailAddressSettingsModel(Tuvi.OAuth2.DefaultAccountConfig.CreateDefaultOAuth2Account(mailService)), true).ConfigureAwait(true);
 
                     await LoginAsync(mailService).ConfigureAwait(true);
                 }
@@ -278,9 +277,9 @@ namespace Tuvi.App.ViewModels
             }
         }
 
-        private static OAuth2.MailService GetMailService(string mailServiceName)
+        private static Tuvi.OAuth2.MailService GetMailService(string mailServiceName)
         {
-            if (Enum.TryParse(mailServiceName, out OAuth2.MailService mailService))
+            if (Enum.TryParse(mailServiceName, out Tuvi.OAuth2.MailService mailService))
             {
                 return mailService;
             }
@@ -288,7 +287,7 @@ namespace Tuvi.App.ViewModels
             throw new ArgumentException($"'{mailServiceName}' email service is not supported.", nameof(mailServiceName));
         }
 
-        private async Task LoginAsync(OAuth2.MailService mailService, string userId = null)
+        private async Task LoginAsync(Tuvi.OAuth2.MailService mailService, string userId = null)
         {
             try
             {
@@ -382,7 +381,7 @@ namespace Tuvi.App.ViewModels
             return string.IsNullOrEmpty(userId) || string.Equals(profile.Email, userId, StringComparison.OrdinalIgnoreCase);
         }
 
-        private void OnAuthorizationCompleted(UserProfile userProfile, OAuth2.MailService mailService, Credential credential)
+        private void OnAuthorizationCompleted(UserProfile userProfile, Tuvi.OAuth2.MailService mailService, Credential credential)
         {
             AddressSettingsModel.Email.Value = userProfile.Email;
 

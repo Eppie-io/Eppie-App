@@ -18,7 +18,7 @@
 
 using System.ComponentModel;
 
-namespace Tuvi.App.ViewModels
+namespace Eppie.App.ViewModels
 {
     public interface ISearchFilter<TSource> : IFilter<TSource>, INotifyPropertyChanged
     {
