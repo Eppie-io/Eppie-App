@@ -22,8 +22,8 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Eppie.App.Helpers;
+using Eppie.App.UI.IncrementalLoading;
 using Eppie.App.UI.Tools;
-using Tuvi.App.IncrementalLoading;
 using Tuvi.App.ViewModels;
 
 #if WINDOWS_UWP

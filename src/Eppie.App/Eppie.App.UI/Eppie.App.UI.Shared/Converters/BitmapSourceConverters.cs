@@ -16,9 +16,9 @@
 //                                                                              //
 // ---------------------------------------------------------------------------- //
 
-using Tuvi.Core.Entities;
 using System;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Tuvi.Core.Entities;
 
 #if WINDOWS_UWP
 using Windows.UI.Xaml.Data;
@@ -28,7 +28,7 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Media.Imaging;
 #endif
 
-namespace Tuvi.App.Converters
+namespace Eppie.App.UI.Converters
 {
     public class ImageInfoToBitmapConverter : IValueConverter
     {
