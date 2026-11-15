@@ -128,3 +128,4 @@ runs:
       uses: finebits/github-actions/devhub/uno-platform/setup@3b3b9346c9a22b70e763cbe808ea82eb1e3e8afd # v3.0.1
       with:
         uno-check-skip: ${{ inputs.uno-check-skip }}
+        uno-sdk-version: '6.7.30'
