@@ -106,6 +106,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Uwp.Controls.TokenizingTextBox" />
+    <PackageReference Include="CommunityToolkit.Uwp.Controls.Sizers" />
     <PackageReference Include="CommunityToolkit.Uwp.Extensions" />
     <PackageReference Include="CommunityToolkit.Uwp.Triggers" />
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" />

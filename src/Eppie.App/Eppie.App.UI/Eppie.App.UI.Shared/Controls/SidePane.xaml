@@ -1,0 +1,123 @@
+﻿<UserControl x:Class="Eppie.App.UI.Controls.SidePane"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="using:Eppie.App.UI.Controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:toolkit="using:CommunityToolkit.WinUI"
+             d:DesignHeight="300"
+             d:DesignWidth="400"
+             mc:Ignorable="d">
+
+
+    <UserControl.Resources>
+        <local:SidePanePlacement x:Key="LeftSidePane">Left</local:SidePanePlacement>
+        <local:SidePanePlacement x:Key="RightSidePane">Right</local:SidePanePlacement>
+    </UserControl.Resources>
+
+    <Grid x:Name="RootGrid" SizeChanged="OnSizeChanged">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" MinWidth="{x:Bind ChildMinWidth, Mode=OneWay}" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <!--  This ChildContent element is placed first because it needs to be displayed below the SidePaneContent.  -->
+            <Border x:Name="ChildContent"
+                    Grid.Column="2"
+                    BorderThickness="4"
+                    Child="{x:Bind Child, Mode=OneWay}" />
+
+            <Border x:Name="SidePaneContent"
+                    Grid.Column="0"
+                    Width="{x:Bind OpenPaneLength, Mode=OneWay}"
+                    MinWidth="{x:Bind OpenPaneMinLength, Mode=OneWay}"
+                    Child="{x:Bind Pane, Mode=OneWay}"
+                    SizeChanged="OnSidePaneSizeChanged" />
+
+            <controls:ContentSizer x:Name="BoundaryLine"
+                                   Grid.Column="1"
+                                   Width="{x:Bind BoundaryLineSize, Mode=OneWay}"
+                                   MinWidth="{x:Bind BoundaryLineSize, Mode=OneWay}"
+                                   MaxWidth="{x:Bind BoundaryLineSize, Mode=OneWay}"
+                                   IsThumbVisible="{x:Bind IsThumbVisible, Mode=OneWay}"
+                                   TargetControl="{x:Bind SidePaneContent}" />
+        </Grid>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="PaneStates">
+                <VisualState x:Name="Opened">
+                    <VisualState.StateTriggers>
+                        <toolkit:IsEqualStateTrigger Value="{x:Bind IsPaneOpen, Mode=OneWay}" To="True" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="BoundaryLine.Visibility" Value="Visible" />
+                        <Setter Target="SidePaneContent.Visibility" Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Closed">
+                    <VisualState.StateTriggers>
+                        <toolkit:IsEqualStateTrigger Value="{x:Bind IsPaneOpen, Mode=OneWay}" To="False" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="BoundaryLine.Visibility" Value="Collapsed" />
+                        <Setter Target="SidePaneContent.Visibility" Value="Collapsed" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+            <VisualStateGroup x:Name="PlacementStates">
+                <VisualState x:Name="Left">
+                    <VisualState.StateTriggers>
+                        <toolkit:IsEqualStateTrigger Value="{x:Bind PanePlacement, Mode=OneWay}" To="{StaticResource LeftSidePane}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SidePaneContent.(Grid.Column)" Value="0" />
+                        <Setter Target="BoundaryLine.(Grid.Column)" Value="1" />
+                        <Setter Target="BoundaryLine.IsDragInverted" Value="False" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Right">
+                    <VisualState.StateTriggers>
+                        <toolkit:IsEqualStateTrigger Value="{x:Bind PanePlacement, Mode=OneWay}" To="{StaticResource RightSidePane}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="BoundaryLine.(Grid.Column)" Value="3" />
+                        <Setter Target="BoundaryLine.IsDragInverted" Value="True" />
+                        <Setter Target="SidePaneContent.(Grid.Column)" Value="4" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+
+            <VisualStateGroup x:Name="LayoutStates" CurrentStateChanged="OnLayoutStateChanged">
+                <VisualState x:Name="Normal">
+                    <VisualState.StateTriggers>
+                        <toolkit:ControlSizeTrigger MinWidth="{x:Bind local:SidePane.GetNormalLayoutWidth(OpenPaneMaxLength, ChildMinWidth, BoundaryLineSize), Mode=OneWay}" TargetElement="{x:Bind RootGrid, Mode=OneWay}" />
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="Narrow">
+                    <VisualState.StateTriggers>
+                        <toolkit:ControlSizeTrigger MinWidth="{x:Bind local:SidePane.GetCompactLayoutWidth(OpenPaneMinLength, ChildMinWidth, BoundaryLineSize), Mode=OneWay}"
+                                                    MaxWidth="{x:Bind local:SidePane.GetNormalLayoutWidth(OpenPaneMaxLength, ChildMinWidth, BoundaryLineSize), Mode=OneWay}"
+                                                    TargetElement="{x:Bind RootGrid, Mode=OneWay}" />
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="Compact">
+                    <VisualState.StateTriggers>
+                        <toolkit:ControlSizeTrigger MaxWidth="{x:Bind local:SidePane.GetCompactLayoutWidth(OpenPaneMinLength, ChildMinWidth, BoundaryLineSize), Mode=OneWay}" TargetElement="{x:Bind RootGrid, Mode=OneWay}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="BoundaryLine.MinWidth" Value="0" />
+                        <Setter Target="BoundaryLine.MaxWidth" Value="0" />
+                        <Setter Target="BoundaryLine.Width" Value="0" />
+                        <Setter Target="SidePaneContent.MinWidth" Value="0" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+
+        </VisualStateManager.VisualStateGroups>
+    </Grid>
+</UserControl>
