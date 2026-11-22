@@ -150,7 +150,7 @@
         "os": "windows-2025-vs2026",
         "prerequisites": {
             "msbuild": "true",
-            "uno-platform": "false"
+            "uno-platform": "true"
         },
         "restore": {
             "tool": "msbuild",
@@ -186,7 +186,7 @@
         "os": "windows-2025-vs2026",
         "prerequisites": {
             "msbuild": "true",
-            "uno-platform": "false"
+            "uno-platform": "true"
         },
         "restore": {
             "tool": "msbuild",
@@ -222,7 +222,7 @@
         "os": "windows-2025-vs2026",
         "prerequisites": {
             "msbuild": "true",
-            "uno-platform": "false"
+            "uno-platform": "true"
         },
         "restore": {
             "tool": "msbuild",
