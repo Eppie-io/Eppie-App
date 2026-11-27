@@ -60,11 +60,11 @@ namespace Eppie.App.UI.Controls
 
         public ICommand ResetCommand
         {
-            get { return (ICommand)GetValue(CancelCommandProperty); }
-            set { SetValue(CancelCommandProperty, value); }
+            get { return (ICommand)GetValue(ResetCommandProperty); }
+            set { SetValue(ResetCommandProperty, value); }
         }
 
-        public static readonly DependencyProperty CancelCommandProperty =
+        public static readonly DependencyProperty ResetCommandProperty =
             DependencyProperty.Register(nameof(ResetCommand), typeof(ICommand), typeof(AdvancedSettingsControl), new PropertyMetadata(null));
 
 

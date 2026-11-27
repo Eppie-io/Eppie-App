@@ -117,10 +117,10 @@ namespace Eppie.App.UI.Controls
 
         public ICommand CreateHybridAddressCommand
         {
-            get { return (ICommand)GetValue(CreateHybridAddressProperty); }
-            set { SetValue(CreateHybridAddressProperty, value); }
+            get { return (ICommand)GetValue(CreateHybridAddressCommandProperty); }
+            set { SetValue(CreateHybridAddressCommandProperty, value); }
         }
-        public static readonly DependencyProperty CreateHybridAddressProperty =
+        public static readonly DependencyProperty CreateHybridAddressCommandProperty =
             DependencyProperty.Register(nameof(CreateHybridAddressCommand), typeof(ICommand), typeof(EmailSettingsControl), new PropertyMetadata(null));
 
         public bool ShowHybridAddressButton

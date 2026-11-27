@@ -7,7 +7,6 @@
                               xmlns:local="using:Eppie.App.Views"
                               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                               xmlns:toolkit="using:CommunityToolkit.WinUI"
-                              xmlns:triggers="using:Eppie.App.UI.Triggers"
                               xmlns:viewmodels="using:Eppie.App.ViewModels"
                               Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
                               mc:Ignorable="d">
@@ -75,170 +74,180 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <ScrollViewer x:Name="ScrollArea"
-                      Grid.Row="0"
-                      Grid.RowSpan="3"
-                      Grid.Column="2"
-                      Grid.ColumnSpan="2"
-                      Margin="0,0,-24,0"
-                      Padding="0,76,24,24"
-                      HorizontalScrollBarVisibility="Disabled"
-                      HorizontalScrollMode="Disabled"
-                      VerticalScrollBarVisibility="Auto"
-                      VerticalScrollMode="Auto"
-                      ZoomMode="Disabled">
-            <Grid>
+        <Grid Grid.Row="0"
+              Grid.RowSpan="3"
+              Grid.Column="2"
+              Grid.ColumnSpan="2"
+              Margin="0,0,-24,0"
+              Padding="0,76,24,24">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100*" MaxWidth="{StaticResource MainAreaMaxWidth}" />
+                <ColumnDefinition Width="1*" MinWidth="{StaticResource SideAreaMinWidth}" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!--  Subject  -->
+            <controls:PromptTextInputControl x:Uid="MessageSubjectBox"
+                                             Margin="0,0,0,16"
+                                             HorizontalAlignment="Stretch"
+                                             VerticalAlignment="Top"
+                                             Text="{x:Bind ViewModel.Subject, Mode=TwoWay}" />
+
+            <Grid Grid.Row="1"
+                  Padding="24,12,24,20"
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Top"
+                  Background="{ThemeResource LayerFillColorDefaultBrush}"
+                  CornerRadius="{ThemeResource ControlCornerRadius}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="100*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="100*" MaxWidth="{StaticResource MainAreaMaxWidth}" />
-                    <ColumnDefinition Width="1*" MinWidth="{StaticResource SideAreaMinWidth}" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <StackPanel HorizontalAlignment="Stretch"
-                            VerticalAlignment="Top"
-                            Orientation="Vertical">
+                <!--  Receiver (To)  -->
+                <TextBlock x:Uid="MessageTo"
+                           Grid.Row="0"
+                           Grid.Column="0"
+                           Margin="{StaticResource HorizontalMargin}"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Center" />
 
-                    <!--  Subject  -->
-                    <controls:PromptTextInputControl x:Uid="MessageSubjectBox"
-                                                     Margin="0,0,0,16"
+                <controls:TokenizingEmailBox x:Uid="MessageReceiverBox"
+                                             Grid.Row="0"
+                                             Grid.Column="1"
+                                             HorizontalAlignment="Stretch"
+                                             VerticalAlignment="Center"
+                                             Contacts="{x:Bind ViewModel.Contacts, Mode=OneWay}"
+                                             ExtraCommand="{x:Bind ViewModel.ToggleHiddenCopyCommand, Mode=OneWay}"
+                                             IsExtraButtonVisible="True"
+                                             SelectedContacts="{x:Bind ViewModel.To, Mode=OneWay}"
+                                             SuggestedItemTemplate="{StaticResource SuggestContactItemTemplate}"
+                                             TokenItemTemplate="{StaticResource TokenContactItemTemplate}"
+                                             UntokenizedContact="{x:Bind ViewModel.UntokenizedContactTo, Mode=TwoWay}">
+                    <controls:TokenizingEmailBox.ExtraButtonContent>
+                        <Viewbox HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <IconSourceElement IconSource="{toolkit:FontIconSource Glyph={StaticResource HiddenCopyGlyph}}" />
+                        </Viewbox>
+                    </controls:TokenizingEmailBox.ExtraButtonContent>
+                </controls:TokenizingEmailBox>
+
+                <Grid Grid.Row="1"
+                      Grid.Column="0"
+                      Margin="{StaticResource BlindCarbonCopyMargin}"
+                      Visibility="{x:Bind ViewModel.IsHiddenCopyVisible, Mode=OneWay}">
+                    <Viewbox Margin="{StaticResource HorizontalMargin}"
+                             HorizontalAlignment="Left"
+                             VerticalAlignment="Center">
+                        <IconSourceElement IconSource="{toolkit:FontIconSource Glyph={StaticResource HiddenCopyGlyph}}" />
+                    </Viewbox>
+                </Grid>
+
+                <!--  Hidden copy (BCC)  -->
+                <controls:TokenizingEmailBox x:Uid="BlindCarbonCopyBox"
+                                             Grid.Row="1"
+                                             Grid.Column="1"
+                                             Margin="{StaticResource BlindCarbonCopyMargin}"
+                                             HorizontalAlignment="Stretch"
+                                             VerticalAlignment="Center"
+                                             Contacts="{x:Bind ViewModel.Contacts, Mode=OneWay}"
+                                             IsExtraButtonVisible="False"
+                                             SelectedContacts="{x:Bind ViewModel.HiddenCopy, Mode=OneWay}"
+                                             SuggestedItemTemplate="{StaticResource SuggestContactItemTemplate}"
+                                             TokenItemTemplate="{StaticResource TokenContactItemTemplate}"
+                                             UntokenizedContact="{x:Bind ViewModel.UntokenizedContactHiddenCopy, Mode=TwoWay}"
+                                             Visibility="{x:Bind ViewModel.IsHiddenCopyVisible, Mode=OneWay}" />
+
+                <Grid Grid.Row="2"
+                      Grid.ColumnSpan="2"
+                      Margin="0,28,0,0"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch"
+                      AllowDrop="True"
+                      DragOver="OnDragOver"
+                      Drop="OnDrop">
+                    <ScrollViewer x:Name="ScrollArea"
+                                  HorizontalContentAlignment="Stretch"
+                                  VerticalContentAlignment="Stretch"
+                                  HorizontalScrollBarVisibility="Disabled"
+                                  HorizontalScrollMode="Disabled"
+                                  VerticalScrollBarVisibility="Auto"
+                                  VerticalScrollMode="Auto"
+                                  ZoomMode="Disabled">
+                        <controls:EditMessageControl x:Uid="EditMessageBox"
+                                                     MinHeight="{StaticResource MessageEditorMinHeight}"
                                                      HorizontalAlignment="Stretch"
-                                                     VerticalAlignment="Top"
-                                                     Text="{x:Bind ViewModel.Subject, Mode=TwoWay}" />
+                                                     VerticalAlignment="Stretch"
+                                                     AIAgentProcessedBody="{x:Bind ViewModel.MessageInfo.AIAgentProcessedBody, Mode=OneWay}"
+                                                     Html="{x:Bind ViewModel.HtmlBody, Mode=TwoWay}"
+                                                     Text="{x:Bind ViewModel.TextBody, Mode=TwoWay}"
+                                                     Visibility="{x:Bind ViewModel.LoadingContent, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+                    </ScrollViewer>
 
-                    <Grid Padding="24,12,24,20"
-                          HorizontalAlignment="Stretch"
-                          VerticalAlignment="Top"
-                          Background="{ThemeResource LayerFillColorDefaultBrush}"
-                          CornerRadius="{ThemeResource ControlCornerRadius}">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" MinHeight="{StaticResource MessageEditorMinHeight}" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-
-                        <!--  Receiver (To)  -->
-                        <TextBlock x:Uid="MessageTo"
-                                   Grid.Row="0"
-                                   Grid.Column="0"
-                                   Margin="{StaticResource HorizontalMargin}"
-                                   HorizontalAlignment="Left"
-                                   VerticalAlignment="Center" />
-
-                        <controls:TokenizingEmailBox x:Uid="MessageReceiverBox"
-                                                     Grid.Row="0"
-                                                     Grid.Column="1"
-                                                     HorizontalAlignment="Stretch"
-                                                     VerticalAlignment="Center"
-                                                     Contacts="{x:Bind ViewModel.Contacts, Mode=OneWay}"
-                                                     ExtraCommand="{x:Bind ViewModel.ToggleHiddenCopyCommand, Mode=OneWay}"
-                                                     IsExtraButtonVisible="True"
-                                                     SelectedContacts="{x:Bind ViewModel.To, Mode=OneWay}"
-                                                     SuggestedItemTemplate="{StaticResource SuggestContactItemTemplate}"
-                                                     TokenItemTemplate="{StaticResource TokenContactItemTemplate}"
-                                                     UntokenizedContact="{x:Bind ViewModel.UntokenizedContactTo, Mode=TwoWay}">
-                            <controls:TokenizingEmailBox.ExtraButtonContent>
-                                <Viewbox HorizontalAlignment="Center" VerticalAlignment="Center">
-                                    <IconSourceElement IconSource="{toolkit:FontIconSource Glyph={StaticResource HiddenCopyGlyph}}" />
-                                </Viewbox>
-                            </controls:TokenizingEmailBox.ExtraButtonContent>
-                        </controls:TokenizingEmailBox>
-
-                        <Grid Grid.Row="1"
-                              Grid.Column="0"
-                              Margin="{StaticResource BlindCarbonCopyMargin}"
-                              Visibility="{x:Bind ViewModel.IsHiddenCopyVisible, Mode=OneWay}">
-                            <Viewbox Margin="{StaticResource HorizontalMargin}"
-                                     HorizontalAlignment="Left"
-                                     VerticalAlignment="Center">
-                                <IconSourceElement IconSource="{toolkit:FontIconSource Glyph={StaticResource HiddenCopyGlyph}}" />
-                            </Viewbox>
-                        </Grid>
-
-                        <!--  Hidden copy (BCC)  -->
-                        <controls:TokenizingEmailBox x:Uid="BlindCarbonCopyBox"
-                                                     Grid.Row="1"
-                                                     Grid.Column="1"
-                                                     Margin="{StaticResource BlindCarbonCopyMargin}"
-                                                     HorizontalAlignment="Stretch"
-                                                     VerticalAlignment="Center"
-                                                     Contacts="{x:Bind ViewModel.Contacts, Mode=OneWay}"
-                                                     IsExtraButtonVisible="False"
-                                                     SelectedContacts="{x:Bind ViewModel.HiddenCopy, Mode=OneWay}"
-                                                     SuggestedItemTemplate="{StaticResource SuggestContactItemTemplate}"
-                                                     TokenItemTemplate="{StaticResource TokenContactItemTemplate}"
-                                                     UntokenizedContact="{x:Bind ViewModel.UntokenizedContactHiddenCopy, Mode=TwoWay}"
-                                                     Visibility="{x:Bind ViewModel.IsHiddenCopyVisible, Mode=OneWay}" />
-
-                        <Grid Grid.Row="2"
-                              Grid.ColumnSpan="2"
-                              Margin="0,28,0,0"
-                              HorizontalAlignment="Stretch"
-                              VerticalAlignment="Stretch"
-                              AllowDrop="True"
-                              DragOver="OnDragOver"
-                              Drop="OnDrop">
-
-                            <controls:EditMessageControl x:Uid="EditMessageBox"
-                                                         HorizontalAlignment="Stretch"
-                                                         VerticalAlignment="Stretch"
-                                                         AIAgentProcessedBody="{x:Bind ViewModel.MessageInfo.AIAgentProcessedBody, Mode=OneWay}"
-                                                         Html="{x:Bind ViewModel.HtmlBody, Mode=TwoWay}"
-                                                         Text="{x:Bind ViewModel.TextBody, Mode=TwoWay}"
-                                                         Visibility="{x:Bind ViewModel.LoadingContent, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
-
-                            <!--  UnoBug: Android doesn't have Visibility=Collapsed for ProgressRing.  -->
-                            <Grid Visibility="{x:Bind ViewModel.LoadingContent, Mode=OneWay}">
-                                <ProgressRing Width="{StaticResource ProgressRingSize}"
-                                              Height="{StaticResource ProgressRingSize}"
-                                              HorizontalAlignment="Center"
-                                              VerticalAlignment="Center"
-                                              IsActive="True" />
-                            </Grid>
-                        </Grid>
-
-                        <!--  Attachments  -->
-                        <!--  Note: Background="Transparent" is used to allow drag and drop operations on the entire Border element  -->
-                        <Border Grid.Row="3"
-                                Grid.ColumnSpan="2"
-                                AllowDrop="True"
-                                Background="Transparent"
-                                DragOver="OnDragOver"
-                                Drop="OnDrop"
-                                Visibility="{x:Bind ViewModel.LoadingContent, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}">
-                            <controls:SimpleExpander x:Uid="AttachedFilesTitle"
-                                                     Margin="0,24,0,0"
-                                                     GlyphPosition="Left"
-                                                     IsExpanded="True"
-                                                     Visibility="{x:Bind ViewModel.HasAttachments, Mode=OneWay}">
-                                <controls:AttachmentRepeaterControl Margin="0,16,0,0"
-                                                                    VerticalAlignment="Top"
-                                                                    ItemTemplate="{StaticResource RemovableAttachmentItemTemplate}"
-                                                                    Items="{x:Bind ViewModel.Attachments, Mode=OneWay}" />
-                            </controls:SimpleExpander>
-                        </Border>
-
-                        <components:ComposeMessageFooter x:Name="Footer"
-                                                         Grid.Row="4"
-                                                         Grid.ColumnSpan="2"
-                                                         Margin="0,36,0,0"
-                                                         HorizontalAlignment="Stretch"
-                                                         VerticalAlignment="Stretch"
-                                                         HorizontalContentAlignment="Stretch"
-                                                         VerticalContentAlignment="Stretch"
-                                                         AttachCommand="{StaticResource AttachUICommand}"
-                                                         DeleteMessageCommand="{StaticResource DeleteMessageUICommand}"
-                                                         SendMessageCommand="{StaticResource SendMessageUICommand}"
-                                                         SenderItemsSource="{x:Bind ViewModel.SenderAddresses, Mode=OneWay}"
-                                                         SenderSelectedIndex="{x:Bind ViewModel.SenderAddressIndex, Mode=TwoWay}" />
+                    <!--  UnoBug: Android doesn't have Visibility=Collapsed for ProgressRing.  -->
+                    <Grid Visibility="{x:Bind ViewModel.LoadingContent, Mode=OneWay}">
+                        <ProgressRing Width="{StaticResource ProgressRingSize}"
+                                      Height="{StaticResource ProgressRingSize}"
+                                      HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"
+                                      IsActive="True" />
                     </Grid>
-                </StackPanel>
+                </Grid>
+
+                <!--  Attachments  -->
+                <!--  Note: Background="Transparent" is used to allow drag and drop operations on the entire Border element  -->
+                <Border Grid.Row="3"
+                        Grid.ColumnSpan="2"
+                        AllowDrop="True"
+                        Background="Transparent"
+                        DragOver="OnDragOver"
+                        Drop="OnDrop"
+                        Visibility="{x:Bind ViewModel.LoadingContent, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                    <controls:SimpleExpander Margin="0,24,0,0"
+                                             GlyphPosition="Left"
+                                             Header="{x:Bind ViewModel.AttachmentsHeader, Mode=OneWay}"
+                                             IsExpanded="True"
+                                             Visibility="{x:Bind ViewModel.HasAttachments, Mode=OneWay}">
+                        <ScrollViewer MinHeight="56"
+                                      MaxHeight="124"
+                                      Margin="0,16,0,0"
+                                      VerticalAlignment="Top"
+                                      HorizontalScrollBarVisibility="Disabled"
+                                      HorizontalScrollMode="Disabled"
+                                      VerticalScrollBarVisibility="Auto"
+                                      VerticalScrollMode="Auto"
+                                      ZoomMode="Disabled">
+                            <controls:AttachmentRepeaterControl VerticalAlignment="Top"
+                                                                ItemTemplate="{StaticResource RemovableAttachmentItemTemplate}"
+                                                                Items="{x:Bind ViewModel.Attachments, Mode=OneWay}" />
+                        </ScrollViewer>
+                    </controls:SimpleExpander>
+                </Border>
+
+                <components:ComposeMessageFooter x:Name="Footer"
+                                                 Grid.Row="4"
+                                                 Grid.ColumnSpan="2"
+                                                 Margin="0,36,0,0"
+                                                 HorizontalAlignment="Stretch"
+                                                 VerticalAlignment="Stretch"
+                                                 HorizontalContentAlignment="Stretch"
+                                                 VerticalContentAlignment="Stretch"
+                                                 AttachCommand="{StaticResource AttachUICommand}"
+                                                 DeleteMessageCommand="{StaticResource DeleteMessageUICommand}"
+                                                 SendMessageCommand="{StaticResource SendMessageUICommand}"
+                                                 SenderItemsSource="{x:Bind ViewModel.SenderAddresses, Mode=OneWay}"
+                                                 SenderSelectedIndex="{x:Bind ViewModel.SenderAddressIndex, Mode=TwoWay}" />
             </Grid>
-        </ScrollViewer>
+        </Grid>
 
         <!--  Header  -->
         <!--  Save Draft and Back  -->
@@ -307,40 +316,5 @@
         </Grid>
 
         <!--  End Header  -->
-
-        <Grid x:Name="AttachedFooter"
-              Grid.Row="4"
-              Grid.Column="2"
-              Margin="0,0,0,24"
-              Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-              Visibility="Collapsed">
-            <Border Padding="24,20,24,20"
-                    Background="{ThemeResource LayerFillColorDefaultBrush}"
-                    CornerRadius="{ThemeResource ControlCornerRadius}">
-                <components:ComposeMessageFooter HorizontalAlignment="Stretch"
-                                                 VerticalAlignment="Stretch"
-                                                 HorizontalContentAlignment="Stretch"
-                                                 VerticalContentAlignment="Stretch"
-                                                 AttachCommand="{StaticResource AttachUICommand}"
-                                                 DeleteMessageCommand="{StaticResource DeleteMessageUICommand}"
-                                                 SendMessageCommand="{StaticResource SendMessageUICommand}"
-                                                 SenderItemsSource="{x:Bind ViewModel.SenderAddresses, Mode=OneWay}"
-                                                 SenderSelectedIndex="{x:Bind ViewModel.SenderAddressIndex, Mode=TwoWay}" />
-            </Border>
-        </Grid>
-
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup>
-                <VisualState x:Name="ScrollVisibleState">
-                    <VisualState.StateTriggers>
-                        <triggers:VerticalScrollVisibilityTrigger TargetScrollViewer="{x:Bind ScrollArea}" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="Footer.Opacity" Value="0" />
-                        <Setter Target="AttachedFooter.Visibility" Value="Visible" />
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
     </Grid>
 </local:ComposeMessagePageBase>

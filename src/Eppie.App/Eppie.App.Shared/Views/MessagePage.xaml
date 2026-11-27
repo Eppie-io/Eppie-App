@@ -304,9 +304,9 @@
             <Border Grid.Row="2"
                     Grid.ColumnSpan="2"
                     Visibility="{x:Bind ViewModel.LoadingContent, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}">
-                <controls:SimpleExpander x:Uid="AttachedFilesTitle"
-                                         Margin="0,24,0,0"
+                <controls:SimpleExpander Margin="0,24,0,0"
                                          GlyphPosition="Left"
+                                         Header="{x:Bind ViewModel.AttachmentsHeader, Mode=OneWay}"
                                          IsExpanded="True"
                                          Visibility="{x:Bind ViewModel.MessageInfo.HasAttachments, Mode=OneWay}">
                     <ScrollViewer MinHeight="56"
