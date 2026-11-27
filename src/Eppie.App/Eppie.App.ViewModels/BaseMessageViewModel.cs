@@ -19,10 +19,12 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
+using System.Globalization;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
+using Eppie.App.ViewModels.Helpers;
 using Eppie.App.ViewModels.Services;
 using Tuvi.Core.Entities;
 
@@ -34,13 +36,7 @@ namespace Eppie.App.ViewModels
         public MessageInfo MessageInfo
         {
             get { return _messageInfo; }
-            set
-            {
-                if (SetProperty(ref _messageInfo, value))
-                {
-                    SubscribeOnAttachmentsChange(_messageInfo);
-                }
-            }
+            set { SetProperty(ref _messageInfo, value); }
         }
 
         private bool _isLocalAIEnabled;
@@ -51,6 +47,11 @@ namespace Eppie.App.ViewModels
         }
 
         public ObservableCollection<Attachment> Attachments { get; } = new ObservableCollection<Attachment>();
+
+        public string AttachmentsHeader => Attachments.Count == 0 ? string.Empty : string.Format(
+            CultureInfo.CurrentCulture,
+            GetLocalizedString("AttachmentsHeader"),
+            FileSizeFormatter.Format(Attachments.Sum(attachment => attachment.Data.LongLength)));
 
         private bool _canDelete = true;
         public bool CanDelete
@@ -86,6 +87,7 @@ namespace Eppie.App.ViewModels
         {
             GoBackCommand = new AsyncRelayCommand(() => GoBackAsync(true), () => CanGoBack);
             DeleteMessageAndGoBackCommand = new AsyncRelayCommand(DeleteMessageAndGoBackAsync, () => CanDelete);
+            Attachments.CollectionChanged += (sender, e) => OnPropertyChanged(nameof(AttachmentsHeader));
         }
 
         public override async void OnNavigatedTo(object data)
@@ -124,19 +126,6 @@ namespace Eppie.App.ViewModels
             {
                 CanDelete = true;
                 OnError(e);
-            }
-        }
-
-        private void SubscribeOnAttachmentsChange(MessageInfo messageInfo)
-        {
-            messageInfo.PropertyChanged += NotifyOnAttachmentsChange;
-        }
-
-        private void NotifyOnAttachmentsChange(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(MessageInfo.Attachments))
-            {
-                OnPropertyChanged(nameof(Attachments));
             }
         }
 

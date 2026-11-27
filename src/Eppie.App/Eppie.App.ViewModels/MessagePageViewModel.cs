@@ -25,6 +25,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using Eppie.App.ViewModels.Common;
+using Eppie.App.ViewModels.Helpers;
 using Tuvi.Core.Entities;
 
 namespace Eppie.App.ViewModels
@@ -35,27 +36,10 @@ namespace Eppie.App.ViewModels
         public ICommand OpenCommand { get; set; }
 
         public string FileExtension => Path.GetExtension(FileName)?.TrimStart('.').ToUpperInvariant() ?? string.Empty;
-        public string FileSize => FormatFileSize(Data.Length);
+        public string FileSize => FileSizeFormatter.Format(Data.LongLength);
 
         // ToDo: this needs to be implemented
         public ImageInfo FileThumbnail { get; set; }
-
-        // ToDo: can be moved to Tools
-        private static string FormatFileSize(long bytes)
-        {
-            const int BaseSize = 1024;
-            string[] units = { "B", "KB", "MB", "GB", "TB", "PB", "EB" };
-            double size = bytes;
-            int unitIndex = 0;
-
-            while (size >= BaseSize && unitIndex < units.Length - 1)
-            {
-                size /= BaseSize;
-                unitIndex++;
-            }
-
-            return $"{size:0.##} {units[unitIndex]}";
-        }
     }
 
     public static class DownloadableAttachmentConvertor
